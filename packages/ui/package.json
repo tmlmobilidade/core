@@ -70,6 +70,6 @@
 		"ts-node-dev": "^2.0.0",
 		"tslib": "^2.6.2",
 		"tsx": "^4.19.2",
-		"typescript": "^5.4.5"
+		"typescript": "^5.7.3"
 	}
 }

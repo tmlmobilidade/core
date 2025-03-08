@@ -1,0 +1,45 @@
+.root {
+    position: sticky;
+    top: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--size-spacing-sm);
+    padding: var(--size-spacing-sm);
+    background-color: var(--color-system-background-100);
+    border-bottom: 1px solid var(--color-system-border-100);
+}
+
+.label {
+    color: var(--color-system-text-300);
+    text-transform: uppercase;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--font-line-height-xs);
+}
+
+.item {
+    cursor: pointer;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--font-line-height-xs);
+    text-transform: uppercase;
+    user-select: none;
+
+    border: 2px solid var(--color-system-border-100);
+    border-radius: var(--border-radius-xl);
+
+    padding: 2px 10px;
+
+    &[aria-active="true"] {
+        background-color: var(--color-primary);
+        border-color: var(--color-secondary);
+        color: var(--color-contrast);
+    }
+}
+
+.itemsWrapper {
+    flex-grow: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--size-spacing-sm);
+}

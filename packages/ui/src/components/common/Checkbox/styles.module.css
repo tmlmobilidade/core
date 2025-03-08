@@ -1,0 +1,48 @@
+.inner {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 24px;
+	width: 24px;
+}
+
+.input {
+	outline: 2px solid var(--color-system-text-300);
+	border-radius: var(--border-radius-sm);
+}
+
+.input:checked,
+.input[data-indeterminate='true'] {
+	background-color: var(--color-primary);
+	outline-color: var(--color-secondary);
+}
+
+.labelWrapper {
+	display: flex;
+	flex-direction: column;
+	gap: var(--size-spacing-xs);
+}
+
+.label {
+	font-size: var(--font-size-base);
+	line-height: var(--font-line-height-base);
+	font-weight: var(--font-weight-semibold);
+	color: var(--color-system-text-100);
+	margin: 0;
+}
+
+.description {
+	font-size: var(--font-size-sm);
+	line-height: var(--font-line-height-sm);
+	font-weight: var(--font-weight-medium);
+	color: var(--color-system-text-200);
+	margin: 0;
+}
+
+.error {
+	font-size: var(--font-size-sm);
+	line-height: var(--font-line-height-sm);
+	font-weight: var(--font-weight-medium);
+	margin: 0;
+	color: var(--color-status-danger-primary);
+}

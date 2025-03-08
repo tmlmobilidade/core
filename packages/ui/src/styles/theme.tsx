@@ -1,0 +1,72 @@
+/* * */
+
+import { Button, createTheme, MantineThemeOverride, PasswordInput, Textarea, TextInput } from '@mantine/core';
+
+/* * */
+
+import ButtonOverride from './mantine/button.module.css';
+import PasswordInputOverride from './mantine/password-input.module.css';
+import TextInputOverrideSm from './mantine/text-input-sm.module.css';
+import TextInputOverride from './mantine/text-input.module.css';
+
+/* * */
+
+export const themeData: MantineThemeOverride = createTheme({
+	components: {
+
+		Button: Button.extend({
+			classNames: () => {
+				const defaultClasses = {
+					...ButtonOverride,
+				};
+				return defaultClasses;
+			},
+		}),
+
+		PasswordInput: PasswordInput.extend({
+			classNames: () => {
+				const defaultClasses = {
+					// PasswordInput is very similar to TextInput. The only difference is that
+					// the 'input' field is wrapped by an outer div, with the class '.input'.
+					// The actual 'input' field is named '.innerInput'. It is necessary to
+					// map the 'input' field styles to the '.innerInput' class and apply reset styles
+					// to the '.input' class, otherwise the input will appear to be rendered twice.
+					innerInput: TextInputOverride.input,
+					input: PasswordInputOverride.input,
+					root: TextInputOverride.root,
+					wrapper: TextInputOverride.wrapper,
+				};
+				return defaultClasses;
+			},
+		}),
+
+		Textarea: Textarea.extend({
+			classNames: (_, props) => {
+				const defaultClasses = {
+					...TextInputOverride,
+					...(props.size === 'sm' && TextInputOverrideSm),
+					...(props.variant === 'white' && {
+						input: TextInputOverrideSm.variantWhite,
+						section: TextInputOverrideSm.variantWhite,
+					}),
+				};
+				return defaultClasses;
+			},
+		}),
+
+		TextInput: TextInput.extend({
+			classNames: (_, props) => {
+				const defaultClasses = {
+					...TextInputOverride,
+					...(props.size === 'sm' && TextInputOverrideSm),
+					...(props.variant === 'white' && {
+						input: TextInputOverrideSm.variantWhite,
+						section: TextInputOverrideSm.variantWhite,
+					}),
+				};
+				return defaultClasses;
+			},
+		}),
+
+	},
+});

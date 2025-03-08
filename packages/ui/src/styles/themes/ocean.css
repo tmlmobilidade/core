@@ -1,0 +1,19 @@
+
+
+:root[data-theme="ocean"] {
+	--color-primary: #005adc;
+	--color-secondary: #0041a0;
+	--color-background: #e6f0ff;
+	--color-contrast: #ffffff;
+	--color-shadow: #000a5040;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root[data-theme="ocean"] {
+		--color-primary: #2864b9;
+		--color-secondary: #1e4b96;
+		--color-background: #1e283c;
+		--color-contrast: #b4d2ff;
+		--color-shadow: #00083d40;
+	}
+}

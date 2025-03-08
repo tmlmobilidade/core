@@ -1,0 +1,22 @@
+import fs from 'fs';
+
+export function buildStyles() {
+	// Read all necessary files first
+	const indexCss = fs.readFileSync('dist/src/index.css');
+	const resetCss = fs.readFileSync('src/styles/reset.css');
+	const themes = fs.readdirSync('src/styles/themes');
+	const themeContents = themes.map(theme => fs.readFileSync(`src/styles/themes/${theme}`));
+	const mantineStyles = fs.readFileSync('node_modules/@mantine/core/styles.layer.css');
+	const mantineNotificationsStyles = fs.readFileSync('node_modules/@mantine/notifications/styles.layer.css');
+	const mantineDatesStyles = fs.readFileSync('node_modules/@mantine/dates/styles.layer.css');
+
+	// Concatenate all contents
+	const allStyles = Buffer.concat([resetCss, indexCss, ...themeContents, mantineStyles, mantineNotificationsStyles, mantineDatesStyles]);
+
+	// Write all styles to the destination file
+	fs.writeFileSync('dist/styles.css', allStyles);
+
+	// Remove unnecessary files
+	fs.rmSync('dist/src/index.css');
+	// fs.rmSync('dist/cjs/index.css');
+}

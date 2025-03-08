@@ -1,0 +1,123 @@
+/* * */
+/* WRAPPER */
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+	position: relative;
+}
+
+/* * */
+/* INPUT */
+
+.input {
+	height: auto;
+	max-height: none;
+	font-size: var(--font-size-base);
+	line-height: 1;
+	padding: 0 15px;
+	border: 2px solid var(--color-system-text-300);
+	border-radius: var(--border-radius-sm);
+	background-color: var(--color-system-background-100);
+	font-weight: var(--font-weight-medium);
+	
+	& input::placeholder {
+		color: var(--color-system-text-300);
+		font-weight: var(--font-weight-medium);
+		font-size: var(--font-size-base);
+	}
+
+	& * {
+		background-color: transparent;
+	}
+}
+
+.placeholder {
+	color: var(--color-system-text-300);
+	font-weight: var(--font-weight-medium);
+	font-size: var(--font-size-base);
+}
+
+.pillInputWrapper {
+	position: relative;
+	padding: 0;
+	margin-top: 1px;
+
+	& > * {
+		border: none;
+	}
+}
+
+.pillInputField {
+	margin-right: 20px;
+}
+
+.icon {
+	color: var(--color-system-text-200);
+}
+
+.pillClearButton {
+	position: absolute;
+	right: 20px;
+	top: 4px;
+}
+
+/* * */
+/* PILL */
+
+.pill {
+	background-color: var(--color-system-background-200);
+    border-radius: var(--border-radius-xs);
+	font-size: var(--font-size-sm);
+	font-weight: var(--font-weight-medium);
+	box-shadow: 1px 2px 3px 1px rgba(0, 0, 0, 0.15);
+}
+
+/* * */
+/* LABEL */
+
+.label {
+	color: var(--color-system-text-100);
+	font-size: var(--font-size-base);
+	font-weight: var(--font-weight-semibold);
+}
+
+.labelWrapper {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+/* * */
+/* DESCRIPTION */
+
+.description {
+	margin-top: 0;
+	margin-bottom: 0;
+	color: var(--color-system-text-200);
+	font-size: var(--font-size-sm);
+	font-weight: var(--font-weight-medium);
+}
+
+/* * */
+/* ERROR */
+
+.error {
+	margin-top: 0;
+	margin-bottom: 0;
+	color: var(--color-status-danger-primary);
+	font-size: var(--font-size-sm);
+	font-weight: var(--font-weight-medium);
+}
+
+/* * */
+/* DROPDOWN */
+
+.dropdownWrapper {
+	background-color: var(--color-system-background-100);
+	border-radius: var(--border-radius-sm);
+	border: 2px solid var(--color-system-text-300);
+	box-shadow: 1px 2px 3px 1px rgba(0, 0, 0, 0.15);
+	margin-top: 10px;
+	width: 100% !important;
+}

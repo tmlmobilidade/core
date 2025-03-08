@@ -1,0 +1,17 @@
+:root[data-theme="pool"] {
+	--color-primary: #28c8a0;
+	--color-secondary: #0a966e;
+	--color-background: #e6fff5;
+	--color-contrast: #ffffff;
+	--color-shadow: #0a643c40;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root[data-theme="pool"] {
+		--color-primary: #1eaa8c;
+		--color-secondary: #0a966e;
+		--color-background: #1e2d28;
+		--color-contrast: #0a3228;
+		--color-shadow: #05231440;
+	}
+}

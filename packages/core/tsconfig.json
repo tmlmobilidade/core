@@ -1,0 +1,14 @@
+{
+	"extends": "@tmlmobilidade/tsconfig/base.json",
+	"compilerOptions": {
+		"outDir": "dist",
+		"paths": {
+			"@/*": ["./src/*"],
+			"@test/*": ["./test/*"]
+		},
+		"strictNullChecks": true,
+		"types": ["jest", "node"]
+	},
+	"include": ["src/**/*.ts", "test/**/*.ts", "scripts/**/*.ts"],
+	"exclude": ["node_modules", "dist"]
+}

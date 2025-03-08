@@ -1,0 +1,20 @@
+.root {
+    max-width: 100%;
+}
+
+.tableWrapper {
+    background-color: var(--color-system-background-100);
+    color: var(--color-system-text-100);
+    overflow-x: auto;
+    max-width: 100%;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.body {
+    overflow-y: auto;
+}
+  

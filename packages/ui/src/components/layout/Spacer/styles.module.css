@@ -1,0 +1,41 @@
+.sizexs {
+    --spacer-size: var(--size-spacing-xs);
+}
+
+.sizesm {
+    --spacer-size: var(--size-spacing-sm);
+}
+
+.sizemd {
+    --spacer-size: var(--size-spacing-md);
+}
+
+.sizelg {
+    --spacer-size: var(--size-spacing-lg);
+}
+
+.sizexl {
+    --spacer-size: var(--size-spacing-xl);
+}
+
+.size2xl {
+    --spacer-size: var(--size-spacing-2xl);
+}
+
+.size3xl {
+    --spacer-size: var(--size-spacing-3xl);
+}
+
+.size4xl {
+    --spacer-size: var(--size-spacing-4xl);
+}
+
+.orientationvertical {
+    width: 100%;
+    height: var(--spacer-size);
+}
+
+.orientationhorizontal {
+    width: var(--spacer-size);
+    height: 100%;
+}

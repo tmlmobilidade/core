@@ -1,0 +1,6 @@
+.dropdown {
+    background-color: var(--color-system-background-200);
+    display: flex;
+    gap: var(--size-spacing-sm);
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}

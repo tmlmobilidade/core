@@ -1,0 +1,19 @@
+.root {
+	background-color: var(--color-background);
+    color: var(--color-primary);
+}
+
+.indicator {
+    background-color: var(--color-primary);
+    color: var(--color-contrast);
+    border-color: var(--color-primary);
+}
+
+.label {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-primary);
+}
+
+.label[data-active="true"] {
+    color: var(--color-contrast);
+}

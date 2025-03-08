@@ -1,0 +1,29 @@
+{
+	"name": "tmlmobilidade",
+	"version": "1.0.0",
+	"description": "",
+	"author": "",
+	"license": "ISC",
+	"keywords": [],
+	"main": "index.js",
+	"scripts": {
+		"build": "turbo build",
+		"dev": "turbo dev",
+		"lint": "turbo lint",
+		"clean": "sh cleanup.sh"
+	},
+	"dependencies": {
+		"turbo": "^2.4.4"
+	},
+	"packageManager": "pnpm@10.6.1",
+	"peerDependencyRules": {
+		"allowedVersions": {
+			"react": "^18.x || ^19.x",
+			"react-dom": "^18.x || ^19.x"
+		},
+		"ignoreMissing": [
+			"react",
+			"react-dom"
+		]
+	}
+}

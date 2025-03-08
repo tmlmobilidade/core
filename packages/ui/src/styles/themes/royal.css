@@ -1,0 +1,18 @@
+
+:root[data-theme="royal"] {
+	--color-primary: #6e3cc8;
+	--color-secondary: #460a96;
+	--color-background: #f0f0ff;
+	--color-contrast: #ffffff;
+	--color-shadow: #1e0a4640;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root[data-theme="royal"] {
+		--color-primary: #783cc8;
+		--color-secondary: #460a96;
+		--color-background: #1e1e46;
+		--color-contrast: #ebe1ff;
+		--color-shadow: #1e0a4640;
+	}
+}

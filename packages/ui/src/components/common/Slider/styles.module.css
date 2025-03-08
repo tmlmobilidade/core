@@ -1,0 +1,16 @@
+.thumb {
+    border: 2px solid var(--color-secondary);
+    background-color: var(--color-contrast);
+}
+
+.track::before {
+    background-color: var(--color-system-text-300);
+}
+
+.bar {
+    background-color: var(--color-primary);
+}
+
+.mark {
+    background-color: var(--color-system-background-100);
+}

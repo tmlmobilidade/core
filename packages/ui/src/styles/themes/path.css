@@ -1,0 +1,17 @@
+:root[data-theme="path"] {
+	--color-primary: #a09682;
+	--color-secondary: #8c826e;
+	--color-background: #f0f0eb;
+	--color-contrast: #ffffff;
+	--color-shadow: #32322d40;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root[data-theme="path"] {
+		--color-primary: #6e6a64;
+		--color-secondary: #5f5a55;
+		--color-background: #232328;
+		--color-contrast: #d2cdc8;
+		--color-shadow: #32322d40;
+	}
+}

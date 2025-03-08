@@ -1,0 +1,17 @@
+:root[data-theme="street"] {
+	--color-primary: #8cd200;
+	--color-secondary: #7dbe00;
+	--color-background: #f0ffdc;
+	--color-contrast: #ffffff;
+	--color-shadow: #283c1440;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root[data-theme="street"] {
+		--color-primary: #82be00;
+		--color-secondary: #64a000;
+		--color-background: #3c4137;
+		--color-contrast: #1e320a;
+		--color-shadow: #283c1440;
+	}
+}

@@ -1,0 +1,30 @@
+# SECRETS
+.env
+.env.*
+!.env.example
+
+.key
+.pem
+.cert
+
+secrets/**/*.json
+!secrets/**/*.example.*
+!secrets/**/*.example
+
+# NODE_MODULES
+node_modules
+
+# PACKAGE-LOCK
+package-lock.json
+pnpm-lock.yaml
+
+# BUILD & CACHE
+dist
+out
+build
+.next
+.turbo
+.eslintcache
+
+# OS
+.DS_Store

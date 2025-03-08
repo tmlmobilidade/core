@@ -1,0 +1,32 @@
+/* * */
+/* SURFACE / ROOT */
+
+.root {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: flex-start;
+	width: 100%;
+	background-color: var(--color-system-background-100);
+	border: 2px solid var(--color-system-border-100);
+	border-radius: 5px;
+	box-shadow: 0 1px 3px 0 rgb(0 0 0 / 5%);
+}
+
+/* SURFACE / PADDING */
+
+.root[data-padding='sm'] {
+	padding: var(--size-spacing-sm);
+}
+
+.root[data-padding='md'] {
+	padding: var(--size-spacing-md);
+}
+
+.root[data-padding='lg'] {
+	padding: var(--size-spacing-lg);
+}
+
+.root[data-padding='xl'] {
+	padding: var(--size-spacing-xl);
+}

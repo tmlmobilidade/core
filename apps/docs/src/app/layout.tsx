@@ -2,8 +2,9 @@ import type { ReactNode } from 'react';
 
 /* * */
 
-import './global.css';
 import '@tmlmobilidade/ui/styles-no-reset.css';
+
+import './global.css';
 
 /* * */
 

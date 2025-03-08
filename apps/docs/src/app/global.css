@@ -3,3 +3,40 @@
 @import 'fumadocs-ui/css/preset.css';
 
 @source '../../node_modules/fumadocs-ui/dist/**/*.js';
+
+a, button {
+    cursor: pointer;
+}
+
+:root {
+    --color-fd-background: var(--color-system-background-100);
+    --color-fd-foreground: var(--color-system-foreground-100);
+    
+    --color-fd-muted: var(--color-system-background-300);
+    --color-fd-muted-foreground: var(--color-system-foreground-300);
+    
+    --color-fd-popover: var(--color-system-background-200);
+    --color-fd-popover-foreground: var(--color-system-foreground-200);
+
+    --color-fd-card: var(--color-system-background-200);
+    --color-fd-card-foreground: var(--color-system-foreground-200);
+    
+    --color-fd-border: var(--color-system-border-100);
+    
+    --color-fd-primary: #FFBF00;
+    --color-fd-primary-foreground: var(--color-brand-cmet-200);
+    
+    --color-fd-secondary: var(--color-system-background-200);
+    --color-fd-secondary-foreground: var(--color-system-foreground-200);
+    
+    --color-fd-accent: var(--color-system-background-300);
+    --color-fd-accent-foreground: var(--color-system-foreground-300);
+    
+    --color-fd-ring: var(--color-system-border-100);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-fd-primary: var(--color-brand-navegante-100);
+    }
+}

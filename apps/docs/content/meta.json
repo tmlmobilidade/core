@@ -1,0 +1,9 @@
+{
+	"pages": [
+		"---Common---",
+		"...common",
+		"---Layout---",
+		"...layout"
+	],
+	"root": true
+}

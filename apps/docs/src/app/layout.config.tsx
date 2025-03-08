@@ -8,13 +8,7 @@ import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
  * Docs Layout: app/docs/layout.tsx
  */
 export const baseOptions: BaseLayoutProps = {
-	links: [
-		{
-			active: 'nested-url',
-			text: 'Documentation',
-			url: '/docs',
-		},
-	],
+	i18n: true,
 	nav: {
 		title: (
 			<>
@@ -26,7 +20,7 @@ export const baseOptions: BaseLayoutProps = {
 				>
 					<circle cx={12} cy={12} fill="currentColor" r={12} />
 				</svg>
-				My App
+				TML Mobilidade
 			</>
 		),
 	},

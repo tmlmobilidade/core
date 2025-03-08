@@ -1,5 +1,7 @@
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
 
+import { ThemeDark, ThemeLight, Themer, TMLogoDark, TMLogoLight } from '@tmlmobilidade/ui';
+
 /**
  * Shared layout configurations
  *
@@ -8,20 +10,24 @@ import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
  * Docs Layout: app/docs/layout.tsx
  */
 export const baseOptions: BaseLayoutProps = {
+	disableThemeSwitch: true,
+	githubUrl: 'https://github.com/tmlmobilidade',
 	i18n: true,
+	// links: [
+	// 	{
+	// 		external: true,
+	// 		text: 'Website',
+	// 		url: 'https://tmlmobilidade.pt',
+	// 	},
+	// ],
 	nav: {
 		title: (
-			<>
-				<svg
-					aria-label="Logo"
-					height="24"
-					width="24"
-					xmlns="http://www.w3.org/2000/svg"
-				>
-					<circle cx={12} cy={12} fill="currentColor" r={12} />
-				</svg>
-				TML Mobilidade
-			</>
+			<div className="px-4 pb-4">
+				<Themer
+					dark={<TMLogoDark />}
+					light={<TMLogoLight />}
+				/>
+			</div>
 		),
 	},
 };

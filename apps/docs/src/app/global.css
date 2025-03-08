@@ -40,3 +40,23 @@ a, button {
         --color-fd-primary: var(--color-brand-navegante-100);
     }
 }
+
+.theme-light {
+	display: contents;
+}
+
+@media (prefers-color-scheme: dark) {
+	.theme-light {
+		display: none;
+	}
+}
+
+.theme-dark {
+	display: contents;
+}
+
+@media (prefers-color-scheme: light) {
+	.theme-dark {
+		display: none;
+	}
+}

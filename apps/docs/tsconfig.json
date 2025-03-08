@@ -16,6 +16,7 @@
 		"src/**/*.ts",
 		"src/**/*.tsx",
 		".next/types/**/*.ts",
+		"content/**/*.tsx",
 		"next-env.d.ts"
 	],
 	"exclude": [

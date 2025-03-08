@@ -1,11 +1,12 @@
 {
 	"extends": "@tmlmobilidade/tsconfig/next.json",
 	"compilerOptions": {
-		"rootDir": ".",
+		"baseUrl": ".",
 		"outDir": "dist",
 		"paths": {
-			"@/*": ["./src/*"],
-		}
+			"@/*": ["src/*"]
+		},
+		"rootDir": "."
 	},
 	"include": ["src/**/*.ts", "src/**/*.tsx", "scripts/**/*.ts", "source.config.ts"],
 	"exclude": ["node_modules", "dist"]

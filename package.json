@@ -13,6 +13,7 @@
 		"clean": "sh cleanup.sh"
 	},
 	"dependencies": {
+		"@carrismetropolitana/eslint": "20250303.2009.45",
 		"turbo": "^2.4.4"
 	},
 	"packageManager": "pnpm@10.6.1",

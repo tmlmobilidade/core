@@ -10,6 +10,7 @@
 		"start": "next start"
 	},
 	"dependencies": {
+		"@tabler/icons-react": "3.26.0",
 		"@tmlmobilidade/ui": "workspace:*",
 		"fumadocs-core": "15.0.15",
 		"fumadocs-mdx": "11.5.6",

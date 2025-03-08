@@ -1,9 +1,11 @@
 {
 	"pages": [
-		"---Common---",
-		"...common",
-		"---Layout---",
-		"...layout"
+		"index",
+		"getting-started",
+		"---Core---",
+		"...core",
+		"---UI---",
+		"...ui"
 	],
 	"root": true
 }

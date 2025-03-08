@@ -1,0 +1,28 @@
+{
+	"pages": [
+		"action-icon/index",
+		"app-logos/index",
+		"badge/index",
+		"button/index",
+		"checkbox/index",
+		"combobox/index",
+		"component-wrapper/index",
+		"date-time-picker/index",
+		"delete-action-icon/index",
+		"description/index",
+		"file-button/index",
+		"label/index",
+		"menu/index",
+		"password-input/index",
+		"segmented-control/index",
+		"slider/index",
+		"switch/index",
+		"tag/index",
+		"text/index",
+		"text-area/index",
+		"text-input/index",
+		"tooltip/index",
+		"tree/index"
+	],
+	"title": "Common"
+}

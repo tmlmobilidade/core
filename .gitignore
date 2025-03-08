@@ -26,5 +26,11 @@ build
 .turbo
 .eslintcache
 
+# generated content
+.contentlayer
+.content-collections
+.source
+
 # OS
 .DS_Store
+

@@ -76,7 +76,7 @@
 	},
 	"devDependencies": {
 		"@carrismetropolitana/eslint": "20250303.2009.45",
-		"@tmlmobilidade/tsconfig": "20250306.1604.11",
+		"@tmlmobilidade/tsconfig": "workspace:*",
 		"@types/bcrypt": "5.0.2",
 		"@types/jest": "29.5.14",
 		"@types/luxon": "3.4.2",

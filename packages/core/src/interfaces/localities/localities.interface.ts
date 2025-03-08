@@ -1,6 +1,6 @@
 import { MongoCollectionClass } from '@/classes/mongo-collection.class';
-import { AsyncSingletonProxy } from '@/utils';
 import { CreateLocalityDto, Locality, UpdateLocalityDto } from '@/types';
+import { AsyncSingletonProxy } from '@/utils';
 import { Filter, IndexDescription } from 'mongodb';
 
 class LocalitiesClass extends MongoCollectionClass<Locality, CreateLocalityDto, UpdateLocalityDto> {

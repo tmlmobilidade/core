@@ -1,8 +1,8 @@
 /* * */
 
 import { MongoCollectionClass } from '@/classes/mongo-collection.class';
-import { AsyncSingletonProxy } from '@/utils';
 import { CreateZoneDto, UpdateZoneDto, Zone } from '@/types';
+import { AsyncSingletonProxy } from '@/utils';
 import { Filter, IndexDescription } from 'mongodb';
 
 /* * */

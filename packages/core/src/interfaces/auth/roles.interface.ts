@@ -1,7 +1,7 @@
 import { MongoCollectionClass } from '@/classes/mongo-collection.class';
 import { HttpException, HttpStatus } from '@/lib';
-import { AsyncSingletonProxy } from '@/utils';
 import { CreateRoleDto, Role, UpdateRoleDto } from '@/types';
+import { AsyncSingletonProxy } from '@/utils';
 import { Filter, IndexDescription, UpdateResult } from 'mongodb';
 
 class RolesClass extends MongoCollectionClass<Role, CreateRoleDto, UpdateRoleDto> {

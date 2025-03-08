@@ -1,8 +1,8 @@
 import { roles, sessions, users } from '@/interfaces';
 import HttpException from '@/lib/http-exception';
 import HttpStatus from '@/lib/http-status';
-import { AsyncSingletonProxy } from '@/utils';
 import { LoginDto, Permission, Session } from '@/types';
+import { AsyncSingletonProxy } from '@/utils';
 import { generateRandomString, generateRandomToken, getPermission, getUnixTimestamp } from '@/utils';
 import bcrypt from 'bcryptjs';
 

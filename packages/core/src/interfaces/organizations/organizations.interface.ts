@@ -1,7 +1,7 @@
 import { MongoCollectionClass } from '@/classes/mongo-collection.class';
 import { HttpException, HttpStatus } from '@/lib';
-import { AsyncSingletonProxy } from '@/utils';
 import { CreateOrganizationDto, Organization, UpdateOrganizationDto } from '@/types';
+import { AsyncSingletonProxy } from '@/utils';
 import { Filter, IndexDescription, UpdateResult } from 'mongodb';
 
 class OrganizationsClass extends MongoCollectionClass<Organization, CreateOrganizationDto, UpdateOrganizationDto> {

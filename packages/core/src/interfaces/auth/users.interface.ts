@@ -1,6 +1,6 @@
 import { MongoCollectionClass } from '@/classes/mongo-collection.class';
-import { AsyncSingletonProxy } from '@/utils';
 import { CreateUserDto, UpdateUserDto, User } from '@/types';
+import { AsyncSingletonProxy } from '@/utils';
 import { Filter, IndexDescription, Sort, WithId } from 'mongodb';
 
 type NewType = string;

@@ -1,7 +1,7 @@
 import { MongoCollectionClass } from '@/classes/mongo-collection.class';
 import { HttpException, HttpStatus } from '@/lib';
-import { AsyncSingletonProxy } from '@/utils';
 import { CreateVerificationTokenDto, UpdateVerificationTokenDto, VerificationToken } from '@/types';
+import { AsyncSingletonProxy } from '@/utils';
 import { IndexDescription, UpdateResult } from 'mongodb';
 
 class VerificationTokensClass extends MongoCollectionClass<VerificationToken, CreateVerificationTokenDto, UpdateVerificationTokenDto> {

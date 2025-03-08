@@ -3,10 +3,10 @@
 import { MongoCollectionClass } from '@/classes/mongo-collection.class';
 import { HttpStatus } from '@/lib';
 import { HttpException } from '@/lib';
-import { AsyncSingletonProxy } from '@/utils';
 import { StorageFactory } from '@/providers/storage/storage.factory';
 import { IStorageProvider } from '@/providers/storage/storage.interface';
 import { CreateFileDto, File, UpdateFileDto } from '@/types';
+import { AsyncSingletonProxy } from '@/utils';
 import { generateRandomString } from '@/utils';
 import { DeleteResult, IndexDescription, InsertOneResult } from 'mongodb';
 

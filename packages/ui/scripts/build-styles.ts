@@ -12,9 +12,11 @@ export function buildStyles() {
 
 	// Concatenate all contents
 	const allStyles = Buffer.concat([resetCss, indexCss, ...themeContents, mantineStyles, mantineNotificationsStyles, mantineDatesStyles]);
+	const noResetStyles = Buffer.concat([indexCss, ...themeContents, mantineStyles, mantineNotificationsStyles, mantineDatesStyles]);
 
 	// Write all styles to the destination file
 	fs.writeFileSync('dist/styles.css', allStyles);
+	fs.writeFileSync('dist/styles-no-reset.css', noResetStyles);
 
 	// Remove unnecessary files
 	fs.rmSync('dist/src/index.css');

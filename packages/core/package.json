@@ -26,8 +26,8 @@
 	],
 	"scripts": {
 		"build": "rimraf ./dist && tsup",
+		"build:types": "tsx scripts/build-types.ts && rimraf dist && tsup --config ./tsup-types.config.ts",
 		"clean": "sh cleanup.sh",
-		"dev": "dotenv-run -- tsx src/stops/index.ts",
 		"docker:local": "docker compose -f docker/local/compose.local.yaml up -d",
 		"docker:local-down": "docker compose -f docker/local/compose.local.yaml down",
 		"lint": "eslint",

@@ -7,7 +7,7 @@ import { defineConfig, Options } from 'tsup';
 const baseConfig: Partial<Options> = {
 	clean: true,
 	dts: true,
-	format: ['esm'],
+	format: ['esm', 'cjs'],
 	sourcemap: true,
 };
 

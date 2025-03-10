@@ -30,6 +30,7 @@ build
 .contentlayer
 .content-collections
 .source
+coverage
 
 # OS
 .DS_Store

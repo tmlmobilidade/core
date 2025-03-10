@@ -15,6 +15,12 @@
 		"start": {
 			"dependsOn": ["^build", "^start"],
 			"outputs": ["dist/**"]
+		},
+		"test": {
+			"dependsOn": ["^test"]
+		},
+		"test:prod": {
+			"dependsOn": ["^test:prod"]
 		}
 	},
 	"ui": "tui"

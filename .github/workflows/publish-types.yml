@@ -19,32 +19,20 @@ on:
 
 jobs:
 
-  lint:
-    runs-on: ubuntu-latest
-    
-    strategy:
-      matrix:
-        node-version: [20]
+  test-core:
+    name: 'Test Core'
+    uses: ./.github/workflows/test-core.yml
+    with:
+      node-version: 20
 
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: ./.github/actions/setup-node
-        with:
-          node-version: ${{ matrix.node-version }}
-
-      - name: Linting
-        run: pnpm lint --filter=@tmlmobilidade/core
-
-
-
-  build:
+  build-and-publish:
+    name: 'Build & Publish Types'
     strategy:
       matrix:
         node-version: [20]
 
     runs-on: ubuntu-latest
-    needs: lint
+    needs: test-core
     steps:
       - uses: actions/checkout@v4
 
@@ -53,29 +41,5 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Build package
-        run: |
-          cd packages/core
-          pnpm build:types
-
-  publish:
-    strategy:
-      matrix:
-        node-version: [20]
-
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: ./.github/actions/setup-node
-        with:
-          node-version: ${{ matrix.node-version }}
-
-      - name: Bump package version
-        run: npx @helperkits/bumper bump
-
-      - name: Publish package to NPM
-        run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-
+        working-directory: packages/core
+        run: pnpm build:types

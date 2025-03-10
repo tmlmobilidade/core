@@ -1,0 +1,43 @@
+name: 'Test Core'
+
+on:
+  pull_request:
+    branches:
+      - production
+    paths:
+      - 'packages/core/src/**/*'
+
+
+  workflow_call:
+    inputs:
+      node-version:
+        required: true
+        type: string
+
+jobs:
+    
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: ./.github/actions/setup-node
+      with:
+        node-version: ${{ inputs.node-version }}
+
+    - name: Linting
+      run: pnpm lint --filter=@tmlmobilidade/core
+
+  # test:
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #   - uses: actions/checkout@v4
+
+  #   - uses: ./.github/actions/setup-node
+  #     with:
+  #       node-version: ${{ inputs.node-version }}
+
+  #   - name: Test
+  #     run: pnpm test:prod --filter=@tmlmobilidade/core

@@ -131,11 +131,6 @@ class AuthProvider {
 		await sessions.deleteOne({ token: session_token });
 	}
 
-	public async resetPassword(email: string, password: string) {
-		// TODO: Implement password reset
-		throw new Error('Not implemented');
-	}
-
 	public async sendPasswordResetEmail(user_id: string) {
 		// TODO: Implement email sending
 		throw new Error('Not implemented');
@@ -143,11 +138,6 @@ class AuthProvider {
 
 	public async sendVerificationEmail(user_id: string) {
 		// TODO: Implement email sending
-		throw new Error('Not implemented');
-	}
-
-	public async verifyEmail(token: string) {
-		// TODO: Implement email verification
 		throw new Error('Not implemented');
 	}
 }

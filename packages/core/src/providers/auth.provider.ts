@@ -136,11 +136,6 @@ class AuthProvider {
 		throw new Error('Not implemented');
 	}
 
-	public async sendEmailVerification(user_id: string) {
-		// TODO: Implement email sending
-		throw new Error('Not implemented');
-	}
-
 	public async sendPasswordResetEmail(user_id: string) {
 		// TODO: Implement email sending
 		throw new Error('Not implemented');

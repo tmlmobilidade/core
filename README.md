@@ -1,10 +1,10 @@
 ## 👋 Olá Developer
 
-This post is your starting point for getting up to speed with the `tmlmobilidade` monorepo. Our goal is to empower you to contribute effectively to our shared codebase while maintaining the consistency and quality we value as a team.
+This post is your starting point for getting up to speed with the `tmlmobilidade/core` monorepo. Our goal is to empower you to contribute effectively to our shared codebase while maintaining the consistency and quality we value as a team.
 
 ## 📦 The Monorepo
 
-The `tmlmobilidade` monorepo is the central hub for our technology solutions at TML. Built with modern tools like Turborepo, Next.js, Fastify, and MongoDB, it houses packages such as `@tmlmobilidade/core` for backend logic and `@tmlmobilidade/ui` for our user interface components. Whether you're here to build APIs, craft UI elements, or optimize workflows, you'll find a structured yet flexible environment to work in.
+The `tmlmobilidade/core` monorepo is the central hub for our technology solutions at TML. Built with modern tools like Turborepo, Next.js, Fastify, and MongoDB, it houses packages such as `@tmlmobilidade/interfaces` for connecting to data, `@tmlmobilidade/utils` for common logic and `@tmlmobilidade/ui` for our user interface components. Whether you're here to build APIs, craft UI elements, or optimize workflows, you'll find a structured yet flexible environment to work in.
 
 Before diving into the details, here’s a quick rundown of what you’ll need to know:
 
@@ -30,4 +30,4 @@ We have a [code of conduct](/code-of-conduct) that we expect all contributors to
 
 ## 📝 License
 
-This project is licensed under the [GNU AFFERO GENERAL PUBLIC LICENSE](https://www.github.com/tmlmobilidade/tmlmobilidade/blob/main/LICENSE).
+This project is licensed under the [GNU AFFERO GENERAL PUBLIC LICENSE](https://www.github.com/tmlmobilidade/core/blob/main/LICENSE).

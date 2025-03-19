@@ -1,3 +1,10 @@
+/* eslint-disable perfectionist/sort-exports */
+
+/* * */
+export * from '@/types/common.js'; // This is the first export because it is used in files bellow
+
+/* * */
+
 export * from '@/interfaces/agencies/agency.type.js';
 export * from '@/interfaces/alerts/alert.type.js';
 export * from '@/interfaces/apex-t11/apex-t11.type.js';
@@ -15,5 +22,3 @@ export * from '@/interfaces/rides/ride.type.js';
 export * from '@/interfaces/stops/stop.type.js';
 export * from '@/interfaces/vehicle-events/vehicle-event.type.js';
 export * from '@/interfaces/zones/zone.type.js';
-
-export * from '@/types/common.js';

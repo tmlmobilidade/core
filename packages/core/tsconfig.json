@@ -1,13 +1,11 @@
 {
 	"extends": "@tmlmobilidade/tsconfig/lib.json",
 	"compilerOptions": {
-		"baseUrl": ".",
 		"outDir": "dist",
 		"paths": {
 			"@/*": ["./src/*"],
 			"@test/*": ["./test/*"]
 		},
-		"rootDir": ".",
 		"types": ["jest", "node"]
 	},
 	"include": ["src/**/*.ts", "test/**/*.ts", "scripts/**/*.ts"],

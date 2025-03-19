@@ -18,13 +18,17 @@ jobs:
     name: 'Publish to NPM'
     runs-on: ubuntu-latest
     steps:
+
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: ./.github/actions/setup-node
-        with:
-          node-version: 20
+      # - name: Setup Node
+      #   uses: ./.github/actions/setup-node
+      #   with:
+      #     node-version: 20
+
+      - name: Checkout repository
+        uses: actions/checkout@main
 
       - name: Bump package version
         working-directory: packages/tsconfig

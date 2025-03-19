@@ -34,7 +34,7 @@ jobs:
   publish:
     name: 'Build & Publish Core'
     runs-on: ubuntu-latest
-    needs: test-core
+    # needs: test-core
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4

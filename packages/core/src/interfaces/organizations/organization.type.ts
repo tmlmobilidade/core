@@ -1,5 +1,5 @@
 import { DocumentSchema } from '@/types/index.js';
-import z from 'zod';
+import { z } from 'zod';
 
 export const OrganizationSchema = DocumentSchema.extend({
 	code: z.string(),

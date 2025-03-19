@@ -2,7 +2,7 @@
 
 import { DocumentSchema, type OperationalDate, type UnixTimestamp } from '@/types/index.js';
 import { validateOperationalDate } from '@/utils/index.js';
-import z from 'zod';
+import { z } from 'zod';
 
 /* * */
 

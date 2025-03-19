@@ -2,7 +2,7 @@
 
 import { DocumentSchema } from '@/types/index.js';
 import { GeoJSON } from 'geojson';
-import z from 'zod';
+import { z } from 'zod';
 
 /* * */
 

@@ -1,7 +1,7 @@
 /* * */
 
 import { DocumentSchema, type UnixTimestamp } from '@/types/index.js';
-import z from 'zod';
+import { z } from 'zod';
 
 /* * */
 

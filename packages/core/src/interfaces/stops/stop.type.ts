@@ -1,7 +1,7 @@
 /* * */
 
 import { CommentSchema, DocumentSchema } from '@/types/index.js';
-import z from 'zod';
+import { z } from 'zod';
 
 /* * */
 

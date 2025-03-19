@@ -6,7 +6,7 @@ import { createSchemaFactory } from '@/lib/schema.factory.js';
 import { type UnixTimestamp } from '@/types/index.js';
 import { generateRandomString, getUnixTimestamp } from '@/utils/index.js';
 import { Collection, DeleteResult, Document, Filter, IndexDescription, InsertOneResult, MongoClientOptions, OptionalUnlessRequiredId, Sort, UpdateOptions, UpdateResult, WithId } from 'mongodb';
-import z from 'zod';
+import { z } from 'zod';
 
 /* * */
 

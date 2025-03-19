@@ -38,24 +38,24 @@
 	},
 	"exports": {
 		"./interfaces": {
-			"types": "./dist/src/interfaces/index.d.ts",
-			"import": "./dist/src/interfaces/index.js"
+			"default": "./dist/src/interfaces/index.js",
+			"types": "./dist/src/interfaces/index.d.ts"
 		},
 		"./lib": {
-			"types": "./dist/src/lib/index.d.ts",
-			"import": "./dist/src/lib/index.js"
+			"default": "./dist/src/lib/index.js",
+			"types": "./dist/src/lib/index.d.ts"
 		},
 		"./providers": {
-			"types": "./dist/src/providers/index.d.ts",
-			"import": "./dist/src/providers/index.js"
+			"default": "./dist/src/providers/index.js",
+			"types": "./dist/src/providers/index.d.ts"
 		},
 		"./types": {
-			"types": "./dist/src/types/index.d.ts",
-			"import": "./dist/src/types/index.js"
+			"default": "./dist/src/types/index.js",
+			"types": "./dist/src/types/index.d.ts"
 		},
 		"./utils": {
-			"types": "./dist/src/utils/index.d.ts",
-			"import": "./dist/src/utils/index.js"
+			"default": "./dist/src/utils/index.js",
+			"types": "./dist/src/utils/index.d.ts"
 		}
 	},
 	"dependencies": {

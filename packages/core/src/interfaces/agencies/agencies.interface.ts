@@ -4,7 +4,7 @@ import { MongoCollectionClass } from '@/classes/mongo-collection.class';
 import { Agency, AgencySchema, CreateAgencyDto, UpdateAgencyDto, UpdateAgencySchema } from '@/types';
 import { AsyncSingletonProxy } from '@/utils';
 import { Filter, IndexDescription } from 'mongodb';
-import z from 'zod';
+import { z } from 'zod';
 
 /* * */
 

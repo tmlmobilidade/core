@@ -16,11 +16,15 @@
 	},
 	"dependencies": {
 		"@carrismetropolitana/eslint": "20250303.2009.45",
-		"eslint": "^9.22.0",
-		"tsx": "^4.19.3",
-		"turbo": "^2.4.4"
+		"eslint": "9.22.0",
+		"tsx": "4.19.3",
+		"turbo": "2.4.4"
 	},
-	"packageManager": "pnpm@10.6.1",
+	"workspaces": [
+		"apps/*",
+		"packages/*"
+	],
+	"packageManager": "npm@11.2.0",
 	"peerDependencyRules": {
 		"allowedVersions": {
 			"react": "^18.x || ^19.x",

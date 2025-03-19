@@ -1,8 +1,8 @@
 /* * */
 
-import { MongoCollectionClass } from '@/classes/mongo-collection.class';
-import { CreateHashedTripDto, HashedTrip, UpdateHashedTripDto } from '@/interfaces/hashed-trips/hashed-trip.type';
-import { AsyncSingletonProxy } from '@/utils';
+import { MongoCollectionClass } from '@/classes/mongo-collection.class.js';
+import { CreateHashedTripDto, HashedTrip, UpdateHashedTripDto } from '@/types/index.js';
+import { AsyncSingletonProxy } from '@/utils/index.js';
 import { IndexDescription } from 'mongodb';
 
 /* * */

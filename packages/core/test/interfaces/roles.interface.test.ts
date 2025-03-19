@@ -1,6 +1,6 @@
-import { roles } from '@/interfaces';
-import { HttpException, HttpStatus } from '@/lib';
-import { CreateRoleDto } from '@/types';
+import { roles } from '@/interfaces/index.js';
+import { HttpException, HttpStatus } from '@/lib/index.js';
+import { CreateRoleDto } from '@/types/index.js';
 
 const newRole: CreateRoleDto = {
 	name: 'Admin',

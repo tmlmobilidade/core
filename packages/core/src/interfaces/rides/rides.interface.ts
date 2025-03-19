@@ -1,8 +1,8 @@
 /* * */
 
-import { MongoCollectionClass } from '@/classes/mongo-collection.class';
-import { CreateRideDto, Ride, UpdateRideDto } from '@/interfaces/rides/ride.type';
-import { AsyncSingletonProxy } from '@/utils';
+import { MongoCollectionClass } from '@/classes/mongo-collection.class.js';
+import { CreateRideDto, Ride, UpdateRideDto } from '@/types/index.js';
+import { AsyncSingletonProxy } from '@/utils/index.js';
 import { Filter, IndexDescription } from 'mongodb';
 
 /* * */

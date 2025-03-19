@@ -1,6 +1,6 @@
-import { hashedShapes } from '@/interfaces';
-import { HttpException } from '@/lib';
-import { CreateHashedShapeDto } from '@/types';
+import { hashedShapes } from '@/interfaces/index.js';
+import { HttpException } from '@/lib/index.js';
+import { CreateHashedShapeDto } from '@/types/index.js';
 
 const newHashedShape: CreateHashedShapeDto = {
 	_id: 'hashed_shape_1',

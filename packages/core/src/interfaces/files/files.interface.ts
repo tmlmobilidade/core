@@ -1,13 +1,13 @@
 /* * */
 
-import { MongoCollectionClass } from '@/classes/mongo-collection.class';
-import { HttpStatus } from '@/lib';
-import { HttpException } from '@/lib';
-import { StorageFactory } from '@/providers/storage/storage.factory';
-import { IStorageProvider } from '@/providers/storage/storage.interface';
-import { CreateFileDto, File, UpdateFileDto } from '@/types';
-import { AsyncSingletonProxy } from '@/utils';
-import { generateRandomString } from '@/utils';
+import { MongoCollectionClass } from '@/classes/mongo-collection.class.js';
+import { HttpStatus } from '@/lib/index.js';
+import { HttpException } from '@/lib/index.js';
+import { StorageFactory } from '@/providers/storage/storage.factory.js';
+import { IStorageProvider } from '@/providers/storage/storage.interface.js';
+import { CreateFileDto, File, UpdateFileDto } from '@/types/index.js';
+import { AsyncSingletonProxy } from '@/utils/index.js';
+import { generateRandomString } from '@/utils/index.js';
 import { DeleteResult, IndexDescription, InsertOneResult } from 'mongodb';
 
 /* * */

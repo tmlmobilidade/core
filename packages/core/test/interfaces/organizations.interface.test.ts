@@ -1,6 +1,6 @@
-import { organizations } from '@/interfaces';
-import { HttpException, HttpStatus } from '@/lib';
-import { CreateOrganizationDto } from '@/types';
+import { organizations } from '@/interfaces/index.js';
+import { HttpException, HttpStatus } from '@/lib/index.js';
+import { CreateOrganizationDto } from '@/types/index.js';
 
 const newOrganization: CreateOrganizationDto = {
 	code: 'ORG_1',

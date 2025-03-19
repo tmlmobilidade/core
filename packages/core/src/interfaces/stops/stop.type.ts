@@ -1,6 +1,6 @@
 /* * */
 
-import { CommentSchema, DocumentSchema } from '@/types/common';
+import { CommentSchema, DocumentSchema } from '@/types/index.js';
 import z from 'zod';
 
 /* * */

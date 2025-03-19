@@ -1,6 +1,6 @@
-import { alerts } from '@/interfaces';
-import { HttpException } from '@/lib';
-import { CreateAlertDto } from '@/types';
+import { alerts } from '@/interfaces/index.js';
+import { HttpException } from '@/lib/index.js';
+import { CreateAlertDto } from '@/types/index.js';
 
 const newAlert: CreateAlertDto = {
 	active_period_end_date: undefined,

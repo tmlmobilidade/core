@@ -1,6 +1,6 @@
 /* * */
 
-import { DocumentSchema } from '@/types/common';
+import { DocumentSchema } from '@/types/index.js';
 import { GeoJSON } from 'geojson';
 import z from 'zod';
 

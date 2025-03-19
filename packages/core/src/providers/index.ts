@@ -1,7 +1,7 @@
-export * from './auth.provider';
-export * from './email.provider';
+export * from './auth.provider.js';
+export * from './email.provider.js';
 
 // Storage
-export * from './storage/s3-storage.provider';
-export * from './storage/storage.factory';
-export * from './storage/storage.interface';
+export * from './storage/s3-storage.provider.js';
+export * from './storage/storage.factory.js';
+export * from './storage/storage.interface.js';

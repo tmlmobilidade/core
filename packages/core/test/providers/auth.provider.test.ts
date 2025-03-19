@@ -2,12 +2,12 @@
  * Unit tests for authProvider
  */
 
-import { roles, sessions, users } from '@/interfaces';
-import HttpException from '@/lib/http-exception';
-import HttpStatus from '@/lib/http-status';
-import { authProvider } from '@/providers';
-import { Email, LoginDto, Session } from '@/types';
-import { mockUsers } from '@test/data/db-mock';
+import { roles, sessions, users } from '@/interfaces/index.js';
+import HttpException from '@/lib/http-exception.js';
+import HttpStatus from '@/lib/http-status.js';
+import { authProvider } from '@/providers/index.js';
+import { Email, LoginDto, Session } from '@/types/index.js';
+import { mockUsers } from '@test/data/db-mock.js';
 import bcrypt from 'bcryptjs';
 
 // Mock bcrypt

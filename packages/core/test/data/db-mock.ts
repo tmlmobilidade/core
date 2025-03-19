@@ -1,5 +1,5 @@
-import { CreateAgencyDto, CreateAlertDto, CreateMunicipalityDto, CreateOrganizationDto, CreateRoleDto, CreateStopDto, CreateUserDto, CreateZoneDto, Email, Permission, Stop, User } from '@/types';
-import { validateOperationalDate } from '@/utils';
+import { CreateAgencyDto, CreateAlertDto, CreateMunicipalityDto, CreateOrganizationDto, CreateRoleDto, CreateStopDto, CreateUserDto, CreateZoneDto, Email, Permission, Stop, User } from '@/types/index.js';
+import { validateOperationalDate } from '@/utils/index.js';
 
 export const mockPermissions: Permission<unknown>[] = [
 	// Write

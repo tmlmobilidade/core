@@ -1,7 +1,7 @@
 /* * */
 
-import { DocumentSchema, type UnixTimestamp } from '@/types/common';
-import { validateUnixTimestamp } from '@/utils';
+import { DocumentSchema, type UnixTimestamp } from '@/types/index.js';
+import { validateUnixTimestamp } from '@/utils/index.js';
 import { z } from 'zod';
 
 export const PermissionSchema = z.object({

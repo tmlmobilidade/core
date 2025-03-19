@@ -1,4 +1,4 @@
-import { AgencySchema, AlertSchema, FileSchema, HashedShapeSchema, HashedTripSchema, MunicipalitySchema, OrganizationSchema, PlanSchema, RideSchema, RoleSchema, SessionSchema, StopSchema, UpdateAgencySchema, UpdateAlertSchema, UpdateFileSchema, UpdateHashedShapeSchema, UpdateHashedTripSchema, UpdateMunicipalitySchema, UpdateOrganizationSchema, UpdatePlanSchema, UpdateRideSchema, UpdateRoleSchema, UpdateStopSchema, UpdateUserSchema, UpdateZoneSchema, UserSchema, VerificationTokenSchema, ZoneSchema } from '@/types';
+import { AgencySchema, AlertSchema, FileSchema, HashedShapeSchema, HashedTripSchema, MunicipalitySchema, OrganizationSchema, PlanSchema, RideSchema, RoleSchema, SessionSchema, StopSchema, UpdateAgencySchema, UpdateAlertSchema, UpdateFileSchema, UpdateHashedShapeSchema, UpdateHashedTripSchema, UpdateMunicipalitySchema, UpdateOrganizationSchema, UpdatePlanSchema, UpdateRideSchema, UpdateRoleSchema, UpdateStopSchema, UpdateUserSchema, UpdateZoneSchema, UserSchema, VerificationTokenSchema, ZoneSchema } from '@/types/index.js';
 
 export function createSchemaFactory(collectionName: string) {
 	switch (collectionName) {

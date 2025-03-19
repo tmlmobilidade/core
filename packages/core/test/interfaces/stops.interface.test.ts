@@ -1,7 +1,7 @@
-import { stops } from '@/interfaces';
-import { HttpException } from '@/lib';
-import { CreateStopDto } from '@/types';
-import { mockStops } from '@test/data/db-mock';
+import { stops } from '@/interfaces/index.js';
+import { HttpException } from '@/lib/index.js';
+import { CreateStopDto } from '@/types/index.js';
+import { mockStops } from '@test/data/db-mock.js';
 
 const newStop: CreateStopDto = {
 	...mockStops[0],

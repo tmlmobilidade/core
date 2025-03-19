@@ -1,4 +1,4 @@
-import { convertObject } from '@/utils/convert-object.utils';
+import { convertObject } from '@/utils/convert-object.utils.js';
 
 import {
 	expectedObject,
@@ -9,7 +9,7 @@ import {
 	sourceObjectWithInvalidFieldTypes,
 	sourceObjectWithOptionalFieldMissing,
 	sourceObjectWithRequiredFieldMissing,
-} from '../data/convert-object';
+} from '../data/convert-object.js';
 
 describe('convertObject', () => {
 	it('should convert an object to the expected format if all fields are present', () => {

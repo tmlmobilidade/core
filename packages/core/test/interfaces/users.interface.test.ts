@@ -1,8 +1,8 @@
-import { users } from '@/interfaces';
-import { HttpException } from '@/lib';
-import { CreateUserDto, Email } from '@/types';
-import { generateRandomString } from '@/utils';
-import { mockUsers } from '@test/data/db-mock';
+import { users } from '@/interfaces/index.js';
+import { HttpException } from '@/lib/index.js';
+import { CreateUserDto, Email } from '@/types/index.js';
+import { generateRandomString } from '@/utils/index.js';
+import { mockUsers } from '@test/data/db-mock.js';
 import { Sort } from 'mongodb';
 
 const newUser: CreateUserDto = {

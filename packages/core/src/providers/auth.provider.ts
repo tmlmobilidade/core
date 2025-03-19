@@ -1,9 +1,9 @@
-import { roles, sessions, users } from '@/interfaces';
-import HttpException from '@/lib/http-exception';
-import HttpStatus from '@/lib/http-status';
-import { LoginDto, Permission, Session } from '@/types';
-import { AsyncSingletonProxy } from '@/utils';
-import { generateRandomString, generateRandomToken, getPermission, getUnixTimestamp } from '@/utils';
+import { roles, sessions, users } from '@/interfaces/index.js';
+import HttpException from '@/lib/http-exception.js';
+import HttpStatus from '@/lib/http-status.js';
+import { LoginDto, Permission, Session } from '@/types/index.js';
+import { AsyncSingletonProxy } from '@/utils/index.js';
+import { generateRandomString, generateRandomToken, getPermission, getUnixTimestamp } from '@/utils/index.js';
 import bcrypt from 'bcryptjs';
 
 class AuthProvider {

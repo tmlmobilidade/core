@@ -1,4 +1,4 @@
-import { Permission } from '@/interfaces/auth/auth.type';
+import { Permission } from '@/interfaces/auth/auth.type.js';
 import { mergekit } from 'mergekit';
 
 /**

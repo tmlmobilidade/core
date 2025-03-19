@@ -1,6 +1,6 @@
 /* * */
 
-import { validateUnixTimestamp } from '@/utils';
+import { validateUnixTimestamp } from '@/utils/index.js';
 import { type DeleteResult as MongoDeleteResult, type InsertOneResult as MongoInsertOneResult, type UpdateResult as MongoUpdateResult } from 'mongodb';
 import z from 'zod';
 

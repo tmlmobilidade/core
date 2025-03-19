@@ -1,8 +1,8 @@
 /* * */
 
-import { MongoCollectionClass } from '@/classes/mongo-collection.class';
-import { ApexT11 } from '@/interfaces/apex-t11/apex-t11.type';
-import { AsyncSingletonProxy } from '@/utils';
+import { MongoCollectionClass } from '@/classes/mongo-collection.class.js';
+import { ApexT11 } from '@/types/index.js';
+import { AsyncSingletonProxy } from '@/utils/index.js';
 import { IndexDescription } from 'mongodb';
 
 /* * */

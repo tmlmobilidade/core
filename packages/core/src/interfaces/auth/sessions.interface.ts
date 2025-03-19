@@ -1,7 +1,7 @@
-import { MongoCollectionClass } from '@/classes/mongo-collection.class';
-import { HttpException, HttpStatus } from '@/lib';
-import { CreateSessionDto, Session, UpdateSessionDto } from '@/types';
-import { AsyncSingletonProxy } from '@/utils';
+import { MongoCollectionClass } from '@/classes/mongo-collection.class.js';
+import { HttpException, HttpStatus } from '@/lib/index.js';
+import { CreateSessionDto, Session, UpdateSessionDto } from '@/types/index.js';
+import { AsyncSingletonProxy } from '@/utils/index.js';
 import { IndexDescription, UpdateResult } from 'mongodb';
 
 class SessionsClass extends MongoCollectionClass<Session, CreateSessionDto, UpdateSessionDto> {

@@ -1,6 +1,6 @@
 /* * */
 
-import { DocumentSchema, type UnixTimestamp } from '@/types/common';
+import { DocumentSchema, type UnixTimestamp } from '@/types/index.js';
 import z from 'zod';
 
 /* * */

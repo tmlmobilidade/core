@@ -1,6 +1,6 @@
-import { zones } from '@/interfaces';
-import { HttpException } from '@/lib';
-import { CreateZoneDto } from '@/types';
+import { zones } from '@/interfaces/index.js';
+import { HttpException } from '@/lib/index.js';
+import { CreateZoneDto } from '@/types/index.js';
 
 const newZone: CreateZoneDto = {
 	border_color: '#000000',

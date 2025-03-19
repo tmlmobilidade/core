@@ -1,8 +1,8 @@
 /* * */
 
-import { MongoCollectionClass } from '@/classes/mongo-collection.class';
-import { VehicleEvent } from '@/interfaces/vehicle-events/vehicle-event.type';
-import { AsyncSingletonProxy } from '@/utils';
+import { MongoCollectionClass } from '@/classes/mongo-collection.class.js';
+import { VehicleEvent } from '@/types/index.js';
+import { AsyncSingletonProxy } from '@/utils/index.js';
 import { IndexDescription } from 'mongodb';
 
 /* * */

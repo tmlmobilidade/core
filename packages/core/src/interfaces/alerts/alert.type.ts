@@ -102,17 +102,25 @@ export type ReferenceType = z.infer<typeof referenceTypeSchema>;
 export interface Alert
 	extends Omit<
 		z.infer<typeof AlertSchema>,
-		'cause'
+		'active_period_end_date'
+		| 'active_period_start_date'
+		| 'cause'
 		| 'created_at'
 		| 'effect'
+		| 'publish_end_date'
+		| 'publish_start_date'
 		| 'publish_status'
 		| 'reference_type'
 		| 'type'
 		| 'updated_at'
 	> {
+	active_period_end_date: null | undefined | UnixTimestamp
+	active_period_start_date: UnixTimestamp
 	cause: Cause
 	created_at: UnixTimestamp
 	effect: Effect
+	publish_end_date: null | undefined | UnixTimestamp
+	publish_start_date: UnixTimestamp
 	publish_status: PublishStatus
 	reference_type: ReferenceType
 	type: AlertType
@@ -122,14 +130,22 @@ export interface Alert
 export interface CreateAlertDto
 	extends Omit<
 		z.infer<typeof CreateAlertSchema>,
-		'cause'
+		'active_period_end_date'
+		| 'active_period_start_date'
+		| 'cause'
 		| 'effect'
+		| 'publish_end_date'
+		| 'publish_start_date'
 		| 'publish_status'
 		| 'reference_type'
 		| 'type'
 	> {
+	active_period_end_date: null | undefined | UnixTimestamp
+	active_period_start_date: UnixTimestamp
 	cause: Cause
 	effect: Effect
+	publish_end_date: null | undefined | UnixTimestamp
+	publish_start_date: UnixTimestamp
 	publish_status: PublishStatus
 	reference_type: ReferenceType
 	type: AlertType

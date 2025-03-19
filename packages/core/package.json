@@ -30,7 +30,7 @@
 		"clean": "sh cleanup.sh",
 		"docker:local": "docker compose -f docker/local/compose.local.yaml up -d",
 		"docker:local-down": "docker compose -f docker/local/compose.local.yaml down",
-		"lint": "eslint",
+		"lint": "eslint && tsc --noEmit",
 		"lint:fix": "eslint --fix",
 		"test": "jest",
 		"test:prod": "jest --silent --coverage",

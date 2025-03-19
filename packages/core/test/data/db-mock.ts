@@ -1,5 +1,5 @@
 import { CreateAgencyDto, CreateAlertDto, CreateMunicipalityDto, CreateOrganizationDto, CreateRoleDto, CreateStopDto, CreateUserDto, CreateZoneDto, Email, Permission, Stop, User } from '@/types/index.js';
-import { validateOperationalDate } from '@/utils/index.js';
+import { getUnixTimestamp, validateOperationalDate } from '@/utils/index.js';
 
 export const mockPermissions: Permission<unknown>[] = [
 	// Write
@@ -329,7 +329,7 @@ export const mockAgencies: CreateAgencyDto[] = [
 export const mockAlerts: CreateAlertDto[] = [
 	{
 		active_period_end_date: undefined,
-		active_period_start_date: new Date(),
+		active_period_start_date: getUnixTimestamp(),
 		cause: 'ACCIDENT',
 		created_by: '1',
 		description: '',
@@ -340,8 +340,8 @@ export const mockAlerts: CreateAlertDto[] = [
 		municipality_ids: [
 			'649b4cce0ac399a0115319e3',
 		],
-		publish_end_date: new Date('20240201'),
-		publish_start_date: new Date('20240101'),
+		publish_end_date: getUnixTimestamp(),
+		publish_start_date: getUnixTimestamp(),
 		publish_status: 'PUBLISHED',
 		reference_type: 'STOP',
 		references: [{
@@ -352,8 +352,8 @@ export const mockAlerts: CreateAlertDto[] = [
 		type: 'PLANNED',
 	},
 	{
-		active_period_end_date: new Date(),
-		active_period_start_date: new Date(),
+		active_period_end_date: getUnixTimestamp(),
+		active_period_start_date: getUnixTimestamp(),
 		cause: 'ACCIDENT',
 		created_by: '1',
 		description: '',
@@ -364,8 +364,8 @@ export const mockAlerts: CreateAlertDto[] = [
 		municipality_ids: [
 			'649b4cce0ac399a0115319e3',
 		],
-		publish_end_date: new Date('20240201'),
-		publish_start_date: new Date('20240101'),
+		publish_end_date: getUnixTimestamp(),
+		publish_start_date: getUnixTimestamp(),
 		publish_status: 'PUBLISHED',
 		reference_type: 'LINE',
 		references: [{
@@ -376,8 +376,8 @@ export const mockAlerts: CreateAlertDto[] = [
 		type: 'PLANNED',
 	},
 	{
-		active_period_end_date: new Date(),
-		active_period_start_date: new Date(),
+		active_period_end_date: getUnixTimestamp(),
+		active_period_start_date: getUnixTimestamp(),
 		cause: 'ACCIDENT',
 		created_by: '1',
 		description: '',
@@ -388,8 +388,8 @@ export const mockAlerts: CreateAlertDto[] = [
 		municipality_ids: [
 			'649b4cce0ac399a0115319e3',
 		],
-		publish_end_date: new Date('20240201'),
-		publish_start_date: new Date('20240101'),
+		publish_end_date: getUnixTimestamp(),
+		publish_start_date: getUnixTimestamp(),
 		publish_status: 'PUBLISHED',
 		reference_type: 'AGENCY',
 		references: [{

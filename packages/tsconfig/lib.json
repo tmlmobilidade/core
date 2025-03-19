@@ -3,9 +3,8 @@
 	"extends": "./nodejs.json",
 	"compilerOptions": {
 
-		"module": "preserve",
+		"module": "ES2022",
 		"moduleResolution": "bundler",
-		"noEmit": true,
 
 		"declaration": true
 

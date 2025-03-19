@@ -1,6 +1,7 @@
 /* * */
 
 import { DocumentSchema, type UnixTimestamp } from '@/types/index.js';
+import { validateUnixTimestamp } from '@/utils/index.js';
 import { z } from 'zod';
 
 /* * */
@@ -62,8 +63,8 @@ export const referenceTypeSchema = z.enum(REFERENCE_TYPE_VALUES);
 
 // Base schema for alerts with common validation rules
 export const AlertSchema = DocumentSchema.extend({
-	active_period_end_date: z.coerce.date().transform(val => new Date(val)).nullish(),
-	active_period_start_date: z.coerce.date().transform(val => new Date(val)),
+	active_period_end_date: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullish(),
+	active_period_start_date: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp'),
 	cause: causeSchema,
 	created_by: z.string().min(1),
 	description: z.string(),
@@ -72,8 +73,8 @@ export const AlertSchema = DocumentSchema.extend({
 	info_url: z.string().url().optional().or(z.literal('')),
 	modified_by: z.string().min(1),
 	municipality_ids: z.array(z.string().min(1)),
-	publish_end_date: z.coerce.date().transform(val => new Date(val)).nullish(),
-	publish_start_date: z.coerce.date().transform(val => new Date(val)),
+	publish_end_date: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullish(),
+	publish_start_date: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp'),
 	publish_status: publishStatusSchema,
 	reference_type: referenceTypeSchema,
 	references: z.array(z.object({

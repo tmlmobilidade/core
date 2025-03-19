@@ -29,7 +29,6 @@ export const mockUsers: CreateUserDto[] = [
 			'1',
 			'2',
 		],
-		password_hash: 'hashedPassword',
 		permissions: [],
 		phone: '1234567890',
 		role_ids: [
@@ -45,7 +44,6 @@ export const mockUsers: CreateUserDto[] = [
 		first_name: 'Reader',
 		last_name: 'User',
 		organization_ids: [],
-		password_hash: 'hashedPassword',
 		permissions: [
 			mockPermissions[4],
 		],
@@ -63,7 +61,6 @@ export const mockUsers: CreateUserDto[] = [
 		first_name: 'Permission',
 		last_name: 'User',
 		organization_ids: [],
-		password_hash: 'hashedPassword',
 		permissions: [
 			mockPermissions[1],
 		],

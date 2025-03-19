@@ -50,9 +50,13 @@ jobs:
           node-version: '22'
           registry-url: 'https://registry.npmjs.org'
 
+      - name: Install dependencies
+        working-directory: .
+        run: npm install
+
       - name: Build package
-        working-directory: packages/core
-        run: npm run build
+        working-directory: .
+        run: npm run build:core
 
       - name: Bump package version
         working-directory: packages/core

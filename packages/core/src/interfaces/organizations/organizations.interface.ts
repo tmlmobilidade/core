@@ -44,7 +44,7 @@ class OrganizationsClass extends MongoCollectionClass<Organization, CreateOrgani
 	/**
 	 * Disable Update Many
 	 */
-	async updateMany(): Promise<UpdateResult<Organization>> {
+	override async updateMany(): Promise<UpdateResult<Organization>> {
 		throw new HttpException(HttpStatus.METHOD_NOT_ALLOWED, 'Method not allowed for organizations');
 	}
 

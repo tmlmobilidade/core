@@ -8,6 +8,7 @@
 	"main": "index.js",
 	"scripts": {
 		"build": "turbo build",
+		"build:core": "turbo build --filter=@tmlmobilidade/core",
 		"dev": "turbo dev",
 		"lint": "turbo lint",
 		"clean": "sh cleanup.sh",

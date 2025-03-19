@@ -33,7 +33,7 @@ class RolesClass extends MongoCollectionClass<Role, CreateRoleDto, UpdateRoleDto
 	/**
 	 * Disable Update Many
 	 */
-	async updateMany(): Promise<UpdateResult<Role>> {
+	override async updateMany(): Promise<UpdateResult<Role>> {
 		throw new HttpException(HttpStatus.METHOD_NOT_ALLOWED, 'Method not allowed for roles');
 	}
 

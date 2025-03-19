@@ -33,7 +33,7 @@ class VerificationTokensClass extends MongoCollectionClass<VerificationToken, Cr
 	/**
 	 * Disable Update Many
 	 */
-	async updateMany(): Promise<UpdateResult<VerificationToken>> {
+	override async updateMany(): Promise<UpdateResult<VerificationToken>> {
 		throw new HttpException(HttpStatus.METHOD_NOT_ALLOWED, 'Method not allowed for verification tokens');
 	}
 

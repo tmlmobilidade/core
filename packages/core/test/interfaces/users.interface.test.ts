@@ -74,7 +74,7 @@ describe('UsersClass', () => {
 
 	describe('findByRole', () => {
 		it('should find users by their role ID', async () => {
-			const roleId = mockUsers[0].role_ids[0];
+			const roleId = mockUsers[0]?.role_ids[0];
 			const result = await users.findByRole(roleId);
 
 			expect(result).toBeDefined();

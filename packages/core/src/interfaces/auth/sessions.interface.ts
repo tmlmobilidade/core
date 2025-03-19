@@ -23,7 +23,7 @@ class SessionsClass extends MongoCollectionClass<Session, CreateSessionDto, Upda
 	/**
 	 * Disable Update Many
 	 */
-	async updateMany(): Promise<UpdateResult<Session>> {
+	override async updateMany(): Promise<UpdateResult<Session>> {
 		throw new HttpException(HttpStatus.METHOD_NOT_ALLOWED, 'Method not allowed for sessions');
 	}
 

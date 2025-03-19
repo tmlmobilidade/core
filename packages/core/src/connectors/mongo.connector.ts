@@ -1,4 +1,4 @@
-import { Collection, Db, DbOptions, MongoClient, MongoClientOptions } from 'mongodb';
+import { Collection, Db, DbOptions, Document, MongoClient, MongoClientOptions } from 'mongodb';
 
 export class MongoConnector {
 	/**

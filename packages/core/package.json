@@ -26,7 +26,7 @@
 	],
 	"scripts": {
 		"build": "rimraf ./dist && tsc && resolve-tspaths",
-		"build:types": "rimraf ./dist && tsc -p tsconfig.types.json && resolve-tspaths && sh ./scripts/build-types.sh",
+		"build:types": "rimraf ./dist && tsc -p tsconfig.types.json && resolve-tspaths && tsx ./scripts/build-types.ts",
 		"clean": "sh cleanup.sh",
 		"docker:local": "docker compose -f docker/local/compose.local.yaml up -d",
 		"docker:local-down": "docker compose -f docker/local/compose.local.yaml down",

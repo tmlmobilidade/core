@@ -1,5 +1,5 @@
 name: "Setup Node Environment"
-description: "Sets up Node.js with pnpm and installs dependencies"
+description: "Sets up Node.js with npm and installs dependencies"
 
 inputs:
   node-version:
@@ -10,15 +10,20 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Install pnpm
-      uses: pnpm/action-setup@v4
-
     - name: Use Node.js ${{ inputs.node-version }}
       uses: actions/setup-node@v4
       with:
         node-version: ${{ inputs.node-version }}
         registry-url: https://registry.npmjs.org
-        cache: "pnpm"
+        cache: "npm"
+
+    - name: Configurar cache do npm
+      uses: actions/cache@v4
+      with:
+        path: ~/.npm # Cache da pasta global do npm
+        key: npm-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+        restore-keys: |
+          npm-${{ runner.os }}-
 
     - name: Cache turbo build setup
       uses: actions/cache@v4
@@ -30,4 +35,4 @@ runs:
 
     - name: Install dependencies
       shell: bash
-      run: pnpm install && pnpm add -g npx
+      run: npm ci

@@ -1,4 +1,4 @@
-import z from 'zod';
+import { z } from 'zod';
 
 export const expectedObjectSchema = z.object({
 	a: z.number(),

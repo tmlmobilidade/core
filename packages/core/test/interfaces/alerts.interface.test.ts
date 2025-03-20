@@ -1,10 +1,11 @@
-import { alerts } from '@/interfaces';
-import { HttpException } from '@/lib';
-import { CreateAlertDto } from '@/types';
+import { alerts } from '@/interfaces/index.js';
+import { HttpException } from '@/lib/index.js';
+import { CreateAlertDto } from '@/types/index.js';
+import { getUnixTimestamp } from '@/utils/index.js';
 
 const newAlert: CreateAlertDto = {
 	active_period_end_date: undefined,
-	active_period_start_date: new Date(),
+	active_period_start_date: getUnixTimestamp(),
 	cause: 'UNKNOWN_CAUSE',
 	created_by: '1',
 	description: 'Test Alert',
@@ -14,7 +15,7 @@ const newAlert: CreateAlertDto = {
 	modified_by: '1',
 	municipality_ids: ['municipality_1'],
 	publish_end_date: undefined,
-	publish_start_date: new Date(),
+	publish_start_date: getUnixTimestamp(),
 	publish_status: 'PUBLISHED',
 	reference_type: 'LINE',
 	references: [

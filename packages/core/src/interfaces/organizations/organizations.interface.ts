@@ -1,7 +1,7 @@
-import { MongoCollectionClass } from '@/classes/mongo-collection.class';
-import { HttpException, HttpStatus } from '@/lib';
-import { CreateOrganizationDto, Organization, UpdateOrganizationDto } from '@/types';
-import { AsyncSingletonProxy } from '@/utils';
+import { MongoCollectionClass } from '@/classes/mongo-collection.class.js';
+import { HttpException, HttpStatus } from '@/lib/index.js';
+import { CreateOrganizationDto, Organization, UpdateOrganizationDto } from '@/types/index.js';
+import { AsyncSingletonProxy } from '@/utils/index.js';
 import { Filter, IndexDescription, UpdateResult } from 'mongodb';
 
 class OrganizationsClass extends MongoCollectionClass<Organization, CreateOrganizationDto, UpdateOrganizationDto> {
@@ -44,7 +44,7 @@ class OrganizationsClass extends MongoCollectionClass<Organization, CreateOrgani
 	/**
 	 * Disable Update Many
 	 */
-	async updateMany(): Promise<UpdateResult<Organization>> {
+	override async updateMany(): Promise<UpdateResult<Organization>> {
 		throw new HttpException(HttpStatus.METHOD_NOT_ALLOWED, 'Method not allowed for organizations');
 	}
 

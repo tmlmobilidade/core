@@ -45,8 +45,8 @@ jobs:
           node-version: 20
 
       - name: Build package
-        working-directory: packages/core
-        run: pnpm build
+        working-directory: .
+        run: npm run build:core
 
       - name: Bump package version
         working-directory: packages/core

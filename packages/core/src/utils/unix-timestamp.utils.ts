@@ -1,6 +1,6 @@
 /* * */
 
-import { OPERATIONAL_DATE_FORMAT, type OperationalDate, type UnixTimestamp } from '@/types';
+import { OPERATIONAL_DATE_FORMAT, type OperationalDate, type UnixTimestamp } from '@/types/index.js';
 import { DateTime } from 'luxon';
 
 /**

@@ -1,7 +1,7 @@
-import { verificationTokens } from '@/interfaces';
-import { HttpException } from '@/lib';
-import { CreateVerificationTokenDto } from '@/types';
-import { generateRandomString } from '@/utils';
+import { verificationTokens } from '@/interfaces/index.js';
+import { HttpException } from '@/lib/index.js';
+import { CreateVerificationTokenDto } from '@/types/index.js';
+import { generateRandomString } from '@/utils/index.js';
 
 const newToken: CreateVerificationTokenDto = {
 	expires: new Date(Date.now() + 3600000), // 1 hour from now

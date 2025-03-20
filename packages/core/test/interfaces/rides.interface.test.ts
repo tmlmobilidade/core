@@ -1,9 +1,9 @@
 /* * */
 
-import { rides } from '@/interfaces';
-import { HttpException } from '@/lib';
-import { CreateRideDto } from '@/types';
-import { getUnixTimestamp, validateOperationalDate } from '@/utils';
+import { rides } from '@/interfaces/index.js';
+import { HttpException } from '@/lib/index.js';
+import { CreateRideDto } from '@/types/index.js';
+import { getUnixTimestamp, validateOperationalDate } from '@/utils/index.js';
 
 /* * */
 

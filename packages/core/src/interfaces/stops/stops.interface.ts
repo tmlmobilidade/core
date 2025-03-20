@@ -1,8 +1,8 @@
 /* * */
 
-import { MongoCollectionClass } from '@/classes/mongo-collection.class';
-import { CreateStopDto, Stop, UpdateStopDto } from '@/interfaces/stops/stop.type';
-import { AsyncSingletonProxy } from '@/utils';
+import { MongoCollectionClass } from '@/classes/mongo-collection.class.js';
+import { CreateStopDto, Stop, UpdateStopDto } from '@/types/index.js';
+import { AsyncSingletonProxy } from '@/utils/index.js';
 import { Filter, IndexDescription, Sort } from 'mongodb';
 
 /* * */

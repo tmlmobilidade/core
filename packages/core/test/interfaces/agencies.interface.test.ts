@@ -1,7 +1,7 @@
-import { agencies } from '@/interfaces/agencies/agencies.interface';
-import { HttpException } from '@/lib';
-import { CreateAgencyDto } from '@/types';
-import { validateOperationalDate } from '@/utils';
+import { agencies } from '@/interfaces/agencies/agencies.interface.js';
+import { HttpException } from '@/lib/index.js';
+import { CreateAgencyDto } from '@/types/index.js';
+import { validateOperationalDate } from '@/utils/index.js';
 
 const newAgency: CreateAgencyDto = {
 	code: 'NEW_AGENCY',

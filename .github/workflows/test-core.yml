@@ -27,7 +27,7 @@ jobs:
         node-version: ${{ inputs.node-version }}
 
     - name: Linting
-      run: pnpm lint --filter=@tmlmobilidade/core
+      run: npm run lint --workspace=packages/core
 
   # test:
   #   runs-on: ubuntu-latest

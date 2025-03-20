@@ -1,8 +1,8 @@
-import { MongoConnector } from '@/connectors/mongo.connector';
+import { MongoConnector } from '@/connectors/mongo.connector.js';
 import { Db } from 'mongodb';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 
-import { mockAgencies, mockAlerts, mockMunicipalities, mockOrganizations, mockPermissions, mockRoles, mockStops, mockUsers, mockZones } from './data/db-mock';
+import { mockAgencies, mockAlerts, mockMunicipalities, mockOrganizations, mockPermissions, mockRoles, mockStops, mockUsers, mockZones } from './data/db-mock.js';
 
 let mongoServer: MongoMemoryServer;
 let db: Db;

@@ -1,8 +1,7 @@
 /* * */
 
-import { AsyncSingletonProxy } from '@/utils';
+import { AsyncSingletonProxy } from '@/utils/index.js';
 import nodemailer from 'nodemailer';
-import SMTPTransport from 'nodemailer/lib/smtp-transport';
 
 /* * */
 
@@ -36,7 +35,7 @@ class EmailProvider {
 			if (!process.env.TML_PROVIDER_EMAIL_SERVER_HOST) throw new Error('Missing TML_PROVIDER_EMAIL_SERVER_HOST environment variable!');
 			if (!process.env.TML_PROVIDER_EMAIL_SERVER_PORT) throw new Error('Missing TML_PROVIDER_EMAIL_SERVER_PORT environment variable!');
 			// Create the SMTP transporter
-			const smtpTransportOptions: SMTPTransport.Options = {
+			const smtpTransportOptions = {
 				auth: {
 					pass: process.env.TML_PROVIDER_EMAIL_SERVER_PASSWORD,
 					user: process.env.TML_PROVIDER_EMAIL_SERVER_USER,

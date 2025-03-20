@@ -1,5 +1,5 @@
-import { S3StorageProvider, S3StorageProviderConfiguration } from './s3-storage.provider';
-import { IStorageProvider } from './storage.interface';
+import { S3StorageProvider, S3StorageProviderConfiguration } from './s3-storage.provider.js';
+import { IStorageProvider } from './storage.interface.js';
 
 export type StorageConfiguration = {
 	aws_config: S3StorageProviderConfiguration

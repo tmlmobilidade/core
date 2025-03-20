@@ -1,4 +1,4 @@
-import z from 'zod';
+import { z } from 'zod';
 
 /**
  * Convert an object to match a Zod schema's shape.

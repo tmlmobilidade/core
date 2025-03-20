@@ -15,7 +15,6 @@ secrets/**/*.json
 node_modules
 
 # PACKAGE-LOCK
-package-lock.json
 # pnpm-lock.yaml
 
 # BUILD & CACHE

@@ -1,4 +1,4 @@
-import HttpStatus from './http-status';
+import HttpStatus from './http-status.js';
 
 class HttpException extends Error {
 	readonly statusCode: number;

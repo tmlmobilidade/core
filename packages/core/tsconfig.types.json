@@ -1,0 +1,12 @@
+{
+	"compilerOptions": {
+		"outDir": "dist",
+		"paths": {
+			"@/*": ["./src/*"]
+		},
+		"rootDir": ".",
+		"types": ["node"]
+	},
+	"extends": "@tmlmobilidade/tsconfig/lib.json",
+	"include": ["src/core-types.ts"]
+}

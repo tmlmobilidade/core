@@ -12,9 +12,9 @@ const newPackageJson = {
 	...originalPackageJson,
 	exports: {
 		'.': {
-			types: './dist/src/core-types.d.ts',
-			import: './dist/src/core-types.mjs',
-			require: './dist/src/core-types.js',
+			types: './dist/core-types.d.ts',
+			import: './dist/core-types.mjs',
+			require: './dist/core-types.js',
 		},
 	},
 	name: '@tmlmobilidade/core-types',

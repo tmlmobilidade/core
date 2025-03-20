@@ -43,3 +43,13 @@ jobs:
       - name: Build package
         working-directory: packages/core
         run: npm run build:types
+
+      - name: Bump package version
+        working-directory: packages/core
+        run: npx @helperkits/bumper bump
+
+      - name: Publish package to NPM
+        working-directory: packages/core
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}

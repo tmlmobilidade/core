@@ -5,7 +5,7 @@
 
 		"module": "NodeNext",
 		"moduleResolution": "nodenext",
-
+		"strictNullChecks": true,
 		"declaration": true
 
 	}

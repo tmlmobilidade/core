@@ -100,7 +100,7 @@ class AuthProvider {
 			throw new HttpException(HttpStatus.UNAUTHORIZED, 'User not found');
 		}
 
-		const password_hash = await bcrypt.compare(dto.password, user.password_hash);
+		const password_hash = await bcrypt.compare(dto.password, user.password_hash ?? '');
 
 		if (!password_hash) {
 			throw new HttpException(HttpStatus.UNAUTHORIZED, 'Invalid password');

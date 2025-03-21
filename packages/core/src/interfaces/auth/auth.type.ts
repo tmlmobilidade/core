@@ -83,19 +83,19 @@ export const PasswordRequirementsSchema = z.object({
 			} : undefined,
 			minLowerCase: CONDITIONS.minLowerCase > 0 ? {
 				message: 'Password must contain at least one lowercase character',
-				valid: password.match(/[a-z]/)?.length >= CONDITIONS.minLowerCase,
+				valid: (password.match(/[a-z]/) || []).length >= CONDITIONS.minLowerCase,
 			} : undefined,
 			minNumber: CONDITIONS.minNumber > 0 ? {
 				message: 'Password must contain at least one number',
-				valid: password.match(/\d/)?.length >= CONDITIONS.minNumber,
+				valid: (password.match(/\d/) || []).length >= CONDITIONS.minNumber,
 			} : undefined,
 			minSpecialChar: CONDITIONS.minSpecialChar > 0 ? {
 				message: 'Password must contain at least one special character',
-				valid: password.match(/[`!@#$%^&*()_\-+=[\]{};':"\\|,.<>/?~ ]/)?.length >= CONDITIONS.minSpecialChar,
+				valid: (password.match(/[`!@#$%^&*()_\-+=[\]{};':"\\|,.<>/?~ ]/) || []).length >= CONDITIONS.minSpecialChar,
 			} : undefined,
 			minUpperCase: CONDITIONS.minUpperCase > 0 ? {
 				message: 'Password must contain at least one uppercase character',
-				valid: password.match(/[A-Z]/)?.length >= CONDITIONS.minUpperCase,
+				valid: (password.match(/[A-Z]/) || []).length >= CONDITIONS.minUpperCase,
 			} : undefined,
 		};
 

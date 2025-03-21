@@ -1,10 +1,12 @@
 import { roles, sessions, users } from '@/interfaces/index.js';
 import HttpException from '@/lib/http-exception.js';
 import HttpStatus from '@/lib/http-status.js';
-import { LoginDto, Permission, Session } from '@/types/index.js';
+import { CreateUserDto, LoginDto, Permission, Session } from '@/types/index.js';
 import { AsyncSingletonProxy } from '@/utils/index.js';
 import { generateRandomString, generateRandomToken, getPermission, getUnixTimestamp } from '@/utils/index.js';
 import bcrypt from 'bcryptjs';
+
+import { emailProvider } from './email.provider.js';
 
 class AuthProvider {
 	private static _instance: AuthProvider;
@@ -131,14 +133,27 @@ class AuthProvider {
 		await sessions.deleteOne({ token: session_token });
 	}
 
-	public async sendPasswordResetEmail(user_id: string) {
-		// TODO: Implement email sending
-		throw new Error('Not implemented');
-	}
+	public async register(createUserDto: CreateUserDto) {
+		// Generate a verification token
+		const verification_token = generateRandomToken();
 
-	public async sendVerificationEmail(user_id: string) {
-		// TODO: Implement email sending
-		throw new Error('Not implemented');
+		// Create user without password
+		const userToCreate = {
+			...createUserDto,
+			verification_token_ids: [verification_token],
+		};
+
+		const result = await users.insertOne(userToCreate);
+
+		if (!result.acknowledged) {
+			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Error creating user');
+		}
+
+		emailProvider.send({
+			html: `<p>Click the link below to verify your email: <a href="${process.env.FRONTEND_URL}/verify-email?token=${verification_token}">Verify Email</a></p>`,
+			subject: 'Verify your email',
+			to: createUserDto.email,
+		});
 	}
 }
 

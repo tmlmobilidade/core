@@ -5,7 +5,7 @@ import nodemailer from 'nodemailer';
 
 /* * */
 
-class EmailProvider {
+export class EmailProvider {
 	//
 
 	private static _instance: EmailProvider;
@@ -59,9 +59,20 @@ class EmailProvider {
 	 * @param emailOptions - The email options.
 	 * @returns A promise that resolves when the email is sent.
      */
-	async send(emailOptions: nodemailer.SendMailOptions) {
+	async send({
+		html,
+		subject,
+		to,
+		...options
+	}: nodemailer.SendMailOptions) {
 		try {
-			await this._smtp_transporter.sendMail(emailOptions);
+			await this._smtp_transporter.sendMail({
+				...this._smtp_transporter.options,
+				html,
+				subject,
+				to,
+				...options,
+			});
 		}
 		catch (error) {
 			throw new Error('Error sending email', { cause: error });

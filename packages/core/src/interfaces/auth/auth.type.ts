@@ -23,28 +23,26 @@ export const UserSchema = DocumentSchema.extend({
 	bio: z.string().nullish(),
 	email: z.string().email(),
 	email_verified: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullish(),
-	first_name: z.string(),
-	last_name: z.string(),
+	first_name: z.string().nonempty(),
+	last_name: z.string().nonempty(),
 	organization_ids: z.array(z.string()).default([]),
-	password_hash: z.string(),
+	password_hash: z.string().nullish(),
 	permissions: z.array(PermissionSchema),
-	phone: z.string(),
+	phone: z.string().nullish(),
 	role_ids: z.array(z.string()).default([]),
 	session_ids: z.array(z.string()).default([]),
 	verification_token_ids: z.array(z.string()).default([]),
 }).strict();
 
 export const CreateUserSchema = UserSchema.omit({ _id: true, created_at: true, password_hash: true, updated_at: true });
-export const UpdateUserSchema = CreateUserSchema.partial().extend({
-	password_hash: z.string().optional(),
-});
+export const UpdateUserSchema = CreateUserSchema.partial();
 
 export interface User extends Omit<z.infer<typeof UserSchema>, 'created_at' | 'email_verified' | 'updated_at'> {
 	created_at: UnixTimestamp
 	email_verified?: UnixTimestamp
 	updated_at: UnixTimestamp
 }
-export interface CreateUserDto extends Omit<z.infer<typeof CreateUserSchema>, 'email_verified' | 'password_hash'> {
+export interface CreateUserDto extends Omit<z.infer<typeof CreateUserSchema>, 'email_verified'> {
 	email_verified?: UnixTimestamp
 }
 export type UpdateUserDto = Partial<CreateUserDto> & { password_hash?: string };

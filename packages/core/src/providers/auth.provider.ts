@@ -2,7 +2,7 @@ import { roles, sessions, users, verificationTokens } from '@/interfaces/index.j
 import HttpException from '@/lib/http-exception.js';
 import HttpStatus from '@/lib/http-status.js';
 import { CreateUserDto, LoginDto, Permission, Session } from '@/types/index.js';
-import { AsyncSingletonProxy, getUnixTimestampFromJSDate, getUnixTimestampFromSeconds } from '@/utils/index.js';
+import { AsyncSingletonProxy, getUnixTimestampFromJSDate } from '@/utils/index.js';
 import { generateRandomString, generateRandomToken, getPermission, getUnixTimestamp } from '@/utils/index.js';
 import bcrypt from 'bcryptjs';
 import { DateTime } from 'luxon';

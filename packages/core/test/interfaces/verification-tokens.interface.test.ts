@@ -1,10 +1,11 @@
 import { verificationTokens } from '@/interfaces/index.js';
 import { HttpException } from '@/lib/index.js';
 import { CreateVerificationTokenDto } from '@/types/index.js';
-import { generateRandomString } from '@/utils/index.js';
+import { generateRandomString, getUnixTimestampFromJSDate } from '@/utils/index.js';
+import { DateTime } from 'luxon';
 
 const newToken: CreateVerificationTokenDto = {
-	expires: new Date(Date.now() + 3600000), // 1 hour from now
+	expires_at: getUnixTimestampFromJSDate(DateTime.now().plus({ hours: 1 }).toJSDate()),
 	token: 'test_verification_token',
 	user_id: generateRandomString({ length: 10 }),
 };

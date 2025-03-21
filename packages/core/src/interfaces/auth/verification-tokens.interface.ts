@@ -39,7 +39,7 @@ class VerificationTokensClass extends MongoCollectionClass<VerificationToken, Cr
 
 	protected getCollectionIndexes(): IndexDescription[] {
 		return [
-			{ background: true, key: { expires: 1 } },
+			{ background: true, key: { expires_at: 1 } },
 			{ background: true, key: { token: 1 }, unique: true },
 		];
 	}

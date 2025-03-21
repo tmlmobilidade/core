@@ -1,10 +1,11 @@
-import { roles, sessions, users } from '@/interfaces/index.js';
+import { roles, sessions, users, verificationTokens } from '@/interfaces/index.js';
 import HttpException from '@/lib/http-exception.js';
 import HttpStatus from '@/lib/http-status.js';
 import { CreateUserDto, LoginDto, Permission, Session } from '@/types/index.js';
-import { AsyncSingletonProxy } from '@/utils/index.js';
+import { AsyncSingletonProxy, getUnixTimestampFromJSDate, getUnixTimestampFromSeconds } from '@/utils/index.js';
 import { generateRandomString, generateRandomToken, getPermission, getUnixTimestamp } from '@/utils/index.js';
 import bcrypt from 'bcryptjs';
+import { DateTime } from 'luxon';
 
 import { emailProvider } from './email.provider.js';
 
@@ -140,13 +141,22 @@ class AuthProvider {
 		// Create user without password
 		const userToCreate = {
 			...createUserDto,
-			verification_token_ids: [verification_token],
 		};
 
 		const result = await users.insertOne(userToCreate);
 
+		const verification_token_result = await verificationTokens.insertOne({
+			expires_at: getUnixTimestampFromJSDate(DateTime.now().plus({ days: 7 }).toJSDate()),
+			token: verification_token,
+			user_id: result.insertedId.toString(),
+		});
+
 		if (!result.acknowledged) {
 			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Error creating user');
+		}
+
+		if (!verification_token_result.acknowledged) {
+			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Error creating verification token');
 		}
 
 		emailProvider.send({

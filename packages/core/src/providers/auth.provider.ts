@@ -150,7 +150,7 @@ class AuthProvider {
 		}
 
 		emailProvider.send({
-			html: `<p>Click the link below to verify your email: <a href="${process.env.FRONTEND_URL}/verify-email?token=${verification_token}">Verify Email</a></p>`,
+			html: `<p>Click the link below to verify your email: <a target="_blank" href="${process.env.NEXT_PUBLIC_URL}/verification?token=${verification_token}">Verify Email</a></p>`,
 			subject: 'Verify your email',
 			to: createUserDto.email,
 		});

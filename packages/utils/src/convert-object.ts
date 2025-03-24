@@ -4,16 +4,14 @@ import { z } from 'zod';
 
 /**
  * Convert an object to match a Zod schema's shape.
- *
  * @param source - The source object to convert
  * @param template - The Zod schema to validate against
  * @returns The converted object containing only the fields defined in the schema
  * @throws {Error} If a required field is missing from the source object
  */
-export function convertObject<T extends z.ZodObject<z.ZodRawShape>>(
-	source: unknown,
-	template: T,
-): z.infer<T> {
+export function convertObject<T extends z.ZodObject<z.ZodRawShape>>(source: unknown, template: T): z.infer<T> {
+	//
+
 	const templateKeys = Object.keys(template.shape);
 	const result: Record<any, unknown> = {};
 

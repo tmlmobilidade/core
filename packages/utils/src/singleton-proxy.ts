@@ -1,6 +1,5 @@
 /**
  * Creates a proxy for a singleton class that delays method access until the instance is initialized.
- *
  * @param cls - A class with a static `getInstance` method that returns a promise resolving to the class instance.
  * @returns A proxy object that intercepts method calls and ensures the instance is initialized before invoking them.
  */

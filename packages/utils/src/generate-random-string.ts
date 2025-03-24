@@ -1,15 +1,16 @@
-/**
- * Creates a random string of a given length and type.
- *
- * @param length - The length of the string to generate.
- * @param type - The type of characters to include in the string.
- * @returns A random string of the specified length.
- */
+/* * */
+
 interface GenerateRandomStringOptions {
 	length?: number
 	type?: 'alphanumeric' | 'numeric'
 }
 
+/**
+ * Creates a random string of a given length and type.
+ * @param length - The length of the string to generate.
+ * @param type - The type of characters to include in the string.
+ * @returns A random string of the specified length.
+ */
 export function generateRandomString({ length = 6, type = 'alphanumeric' }: GenerateRandomStringOptions = {}): string {
 	//
 

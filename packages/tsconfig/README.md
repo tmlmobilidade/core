@@ -11,7 +11,7 @@ Centralize and standardize TypeScript settings across all projects, ensuring con
 
 ### Instalation
 ```
-npm install -D @tml/tsconfig
+npm install -D @tmlmobilidade/tsconfig
 ```
 
 ### Options

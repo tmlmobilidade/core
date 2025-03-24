@@ -1,4 +1,6 @@
-import { Permission } from '@tmlmobilidade/types';
+/* * */
+
+import { type Permission } from '@tmlmobilidade/types';
 import { mergekit } from 'mergekit';
 
 /**

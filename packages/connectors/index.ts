@@ -1,6 +1,6 @@
 /* * */
 
-export * from './src/mongo.js';
-export * from './src/postgres.js';
-export * from './src/ssh-tunnel.js';
-// export * from './src/trino.connector.js';
+export * from '@/mongo.js';
+export * from '@/postgres.js';
+export * from '@/ssh-tunnel.js';
+export * from '@/trino.connector.js';

@@ -7,7 +7,7 @@ import { generateRandomString, generateRandomToken, getPermission, getUnixTimest
 import bcrypt from 'bcryptjs';
 import { DateTime } from 'luxon';
 
-import { emailProvider } from '../email/email.provider.js';
+import { emailProvider } from '../email/email.js';
 
 class AuthProvider {
 	private static _instance: AuthProvider;

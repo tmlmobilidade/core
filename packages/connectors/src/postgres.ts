@@ -1,9 +1,15 @@
-import { Client, ClientConfig } from 'pg';
+/* * */
+
+import { Client, type ClientConfig } from 'pg';
+
+/* * */
 
 export interface PostgresConfig {
 	options?: ClientConfig
 	uri: string
 }
+
+/* * */
 
 export class PostgresConnector {
 	private client: Client;

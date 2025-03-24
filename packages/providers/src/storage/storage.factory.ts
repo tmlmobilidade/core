@@ -1,4 +1,4 @@
-import { S3StorageProvider, S3StorageProviderConfiguration } from './s3-storage.provider.js';
+import { S3StorageProvider, S3StorageProviderConfiguration } from './s3-storage.js';
 import { IStorageProvider } from './storage.interface.js';
 
 export type StorageConfiguration = {

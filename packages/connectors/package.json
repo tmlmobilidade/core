@@ -21,30 +21,28 @@
 		"access": "public"
 	},
 	"type": "module",
-	"files": [
-		"dist/"
-	],
+	"files": ["dist/"],
+	"types": "dist/index.d.ts",
 	"scripts": {
 		"build": "rimraf ./dist && tsc && resolve-tspaths",
 		"clean": "sh cleanup.sh",
 		"lint": "eslint && tsc --noEmit",
 		"lint:fix": "eslint --fix"
 	},
-	"exports": {
-		"types": "./dist/src/index.d.ts"
-	},
+	"module": "dist/src/index.js",
 	"dependencies": {
-		"zod": "1.0.0"
+		"mongodb": "6.15.0",
+		"pg": "8.14.1",
+		"trino-client": "0.2.6",
+		"tunnel-ssh": "5.2.0"
 	},
 	"devDependencies": {
 		"@carrismetropolitana/eslint": "20250303.2009.45",
-		"@dotenv-run/cli": "1.3.6",
 		"@tmlmobilidade/tsconfig": "*",
-		"@types/luxon": "3.4.2",
-		"@types/node": "22.13.10",
+		"@types/node": "22.13.13",
+		"@types/pg": "8.11.11",
 		"resolve-tspaths": "0.8.23",
 		"rimraf": "6.0.1",
-		"turbo": "2.4.4",
 		"typescript": "5.8.2"
 	}
 }

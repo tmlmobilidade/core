@@ -21,9 +21,9 @@
 		"access": "public"
 	},
 	"type": "module",
-	"files": [
-		"dist/"
-	],
+	"module": "dist/src/index.js",
+	"files": ["dist/"],
+	"types": "dist/index.d.ts",
 	"scripts": {
 		"build": "rimraf ./dist && tsc && resolve-tspaths",
 		"build:types": "npx tsx scripts/build-types.ts && npx rimraf ./dist && npx tsup --config tsup-types.config.ts",
@@ -35,10 +35,6 @@
 		"test": "jest",
 		"test:prod": "jest --silent --coverage",
 		"test:watch": "jest --watch"
-	},
-	"exports": {
-		"default": "./dist/src/index.js",
-		"types": "./dist/src/index.d.ts"
 	},
 	"dependencies": {
 		"@dotenv-run/cli": "1.3.6",

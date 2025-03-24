@@ -1,7 +1,9 @@
-export * from './src/convert-object.js';
-export * from './src/generate-random-string.js';
-export * from './src/generate-random-token.js';
-export * from './src/operational-date.js';
-export * from './src/permissions.js';
-export * from './src/singleton-proxy.js';
-export * from './src/unix-timestamp.js';
+/* * */
+
+export * from '@/convert-object.js';
+export * from '@/generate-random-string.js';
+export * from '@/generate-random-token.js';
+export * from '@/operational-date.js';
+export * from '@/permissions.js';
+export * from '@/singleton-proxy.js';
+export * from '@/unix-timestamp.js';

@@ -1,7 +1,10 @@
-import type { AddressInfo, Server } from 'net';
-import type { ForwardOptions, ServerOptions, SshOptions, TunnelOptions } from 'tunnel-ssh';
+/* * */
 
+import { type AddressInfo, type Server } from 'node:net';
+import { type ForwardOptions, type ServerOptions, type SshOptions, type TunnelOptions } from 'tunnel-ssh';
 import { createTunnel } from 'tunnel-ssh';
+
+/* * */
 
 export interface SshConfig {
 	forwardOptions: ForwardOptions
@@ -13,6 +16,8 @@ export interface SshConfig {
 export interface SshTunnelConnectorOptions {
 	maxRetries?: number
 }
+
+/* * */
 
 export class SshTunnelConnector {
 	private static _instance: SshTunnelConnector;

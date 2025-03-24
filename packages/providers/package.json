@@ -21,17 +21,14 @@
 		"access": "public"
 	},
 	"type": "module",
-	"files": [
-		"dist/"
-	],
+	"module": "dist/src/index.js",
+	"files": ["dist/"],
+	"types": "dist/index.d.ts",
 	"scripts": {
 		"build": "rimraf ./dist && tsc && resolve-tspaths",
 		"clean": "sh cleanup.sh",
 		"lint": "eslint && tsc --noEmit",
 		"lint:fix": "eslint --fix"
-	},
-	"exports": {
-		"types": "./dist/src/index.d.ts"
 	},
 	"dependencies": {
 		"zod": "1.0.0"

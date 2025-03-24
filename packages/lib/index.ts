@@ -1,8 +1,8 @@
 /* * */
 
-export * from './src/http-exception.js';
-export * from './src/http-status.js';
-export * from './src/mongo-error.js';
-export * from './src/permissions.js';
-export * from './src/schema.factory.js';
-export * from './src/classes/mongo-collection.class.js';
+export * from '@/http-exception.js';
+export * from '@/http-status.js';
+export * from '@/mongo-collection.js';
+export * from '@/mongo-error.js';
+export * from '@/permissions.js';
+export * from '@/schema.factory.js';

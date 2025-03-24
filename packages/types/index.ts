@@ -1,23 +1,25 @@
-/* * */
-
-export * from './src/common.js'; // This is the first export because it is used in files bellow
+/* eslint-disable perfectionist/sort-exports */
 
 /* * */
 
-export * from './src/agency.js';
-export * from './src/alert.js';
-export * from './src/apex-t11.js';
-export * from './src/apex-t19.js';
-export * from './src/auth.js';
-export * from './src/file.js';
-export * from './src/hashed-shape.js';
-export * from './src/hashed-trip.js';
-export * from './src/locality.js';
-export * from './src/municipality.js';
-export * from './src/organization.js';
-export * from './src/plan.js';
-export * from './src/plan.js';
-export * from './src/ride.js';
-export * from './src/stop.js';
-export * from './src/vehicle-event.js';
-export * from './src/zone.js';
+export * from '@/common.js'; // This is the first export because it is used in files bellow
+
+/* * */
+
+export * from '@/agency.js';
+export * from '@/alert.js';
+export * from '@/apex-t11.js';
+export * from '@/apex-t19.js';
+export * from '@/auth.js';
+export * from '@/file.js';
+export * from '@/hashed-shape.js';
+export * from '@/hashed-trip.js';
+export * from '@/locality.js';
+export * from '@/municipality.js';
+export * from '@/organization.js';
+export * from '@/plan.js';
+export * from '@/plan.js';
+export * from '@/ride.js';
+export * from '@/stop.js';
+export * from '@/vehicle-event.js';
+export * from '@/zone.js';

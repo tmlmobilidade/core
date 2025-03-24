@@ -1,6 +1,6 @@
 import { organizations } from '@/interfaces/index.js';
-import { HttpException, HttpStatus } from '@/lib/index.js';
-import { CreateOrganizationDto } from '@/types/index.js';
+import { HttpException, HttpStatus } from '@tmlmobilidade/lib';
+import { CreateOrganizationDto } from '@tmlmobilidade/types';
 
 const newOrganization: CreateOrganizationDto = {
 	code: 'ORG_1',

@@ -1,7 +1,7 @@
 import { sessions } from '@/interfaces/index.js';
-import { HttpException, HttpStatus } from '@/lib/index.js';
-import { CreateSessionDto } from '@/types/index.js';
-import { generateRandomString } from '@/utils/index.js';
+import { HttpException, HttpStatus } from '@tmlmobilidade/lib';
+import { CreateSessionDto } from '@tmlmobilidade/types';
+import { generateRandomString } from '@tmlmobilidade/utils';
 
 let insertedSessionId: string;
 const userId = generateRandomString({ length: 10 });

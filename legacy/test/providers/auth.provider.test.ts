@@ -6,7 +6,7 @@ import { roles, sessions, users } from '@/interfaces/index.js';
 import HttpException from '@/lib/http-exception.js';
 import HttpStatus from '@/lib/http-status.js';
 import { authProvider } from '@/providers/index.js';
-import { Email, LoginDto, Session } from '@/types/index.js';
+import { Email, LoginDto, Session } from '@tmlmobilidade/types';
 import { mockUsers } from '@test/data/db-mock.js';
 import bcrypt from 'bcryptjs';
 

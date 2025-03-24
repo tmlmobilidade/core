@@ -1,7 +1,7 @@
 import { users } from '@/interfaces/index.js';
-import { HttpException } from '@/lib/index.js';
-import { CreateUserDto, Email } from '@/types/index.js';
-import { generateRandomString } from '@/utils/index.js';
+import { HttpException } from '@tmlmobilidade/lib';
+import { CreateUserDto, Email } from '@tmlmobilidade/types';
+import { generateRandomString } from '@tmlmobilidade/utils';
 import { mockUsers } from '@test/data/db-mock.js';
 import { Sort } from 'mongodb';
 

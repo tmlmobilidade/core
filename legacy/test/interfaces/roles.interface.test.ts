@@ -1,6 +1,6 @@
 import { roles } from '@/interfaces/index.js';
-import { HttpException, HttpStatus } from '@/lib/index.js';
-import { CreateRoleDto } from '@/types/index.js';
+import { HttpException, HttpStatus } from '@tmlmobilidade/lib';
+import { CreateRoleDto } from '@tmlmobilidade/types';
 
 const newRole: CreateRoleDto = {
 	name: 'Admin',

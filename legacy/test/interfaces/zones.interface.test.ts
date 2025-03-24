@@ -1,6 +1,6 @@
 import { zones } from '@/interfaces/index.js';
-import { HttpException } from '@/lib/index.js';
-import { CreateZoneDto } from '@/types/index.js';
+import { HttpException } from '@tmlmobilidade/lib';
+import { CreateZoneDto } from '@tmlmobilidade/types';
 
 const newZone: CreateZoneDto = {
 	border_color: '#000000',

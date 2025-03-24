@@ -1,6 +1,6 @@
 import { municipalities } from '@/interfaces/index.js';
-import { HttpException } from '@/lib/index.js';
-import { CreateMunicipalityDto } from '@/types/index.js';
+import { HttpException } from '@tmlmobilidade/lib';
+import { CreateMunicipalityDto } from '@tmlmobilidade/types';
 
 const newMunicipality: CreateMunicipalityDto = {
 	border_color: '',

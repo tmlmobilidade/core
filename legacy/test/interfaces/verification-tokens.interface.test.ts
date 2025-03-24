@@ -1,7 +1,7 @@
 import { verificationTokens } from '@/interfaces/index.js';
-import { HttpException } from '@/lib/index.js';
-import { CreateVerificationTokenDto } from '@/types/index.js';
-import { generateRandomString, getUnixTimestampFromJSDate } from '@/utils/index.js';
+import { HttpException } from '@tmlmobilidade/lib';
+import { CreateVerificationTokenDto } from '@tmlmobilidade/types';
+import { generateRandomString, getUnixTimestampFromJSDate } from '@tmlmobilidade/utils';
 import { DateTime } from 'luxon';
 
 const newToken: CreateVerificationTokenDto = {

@@ -1,7 +1,7 @@
 import { agencies } from '@/interfaces/agencies/agencies.interface.js';
-import { HttpException } from '@/lib/index.js';
-import { CreateAgencyDto } from '@/types/index.js';
-import { validateOperationalDate } from '@/utils/index.js';
+import { HttpException } from '@tmlmobilidade/lib';
+import { CreateAgencyDto } from '@tmlmobilidade/types';
+import { validateOperationalDate } from '@tmlmobilidade/utils';
 
 const newAgency: CreateAgencyDto = {
 	code: 'NEW_AGENCY',

@@ -1,6 +1,6 @@
 import { hashedShapes } from '@/interfaces/index.js';
-import { HttpException } from '@/lib/index.js';
-import { CreateHashedShapeDto } from '@/types/index.js';
+import { HttpException } from '@tmlmobilidade/lib';
+import { CreateHashedShapeDto } from '@tmlmobilidade/types';
 
 const newHashedShape: CreateHashedShapeDto = {
 	_id: 'hashed_shape_1',

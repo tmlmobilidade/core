@@ -1,9 +1,9 @@
 /* * */
 
 import { rides } from '@/interfaces/index.js';
-import { HttpException } from '@/lib/index.js';
-import { CreateRideDto } from '@/types/index.js';
-import { getUnixTimestamp, validateOperationalDate } from '@/utils/index.js';
+import { HttpException } from '@tmlmobilidade/lib';
+import { CreateRideDto } from '@tmlmobilidade/types';
+import { getUnixTimestamp, validateOperationalDate } from '@tmlmobilidade/utils';
 
 /* * */
 

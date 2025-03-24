@@ -1,5 +1,5 @@
-import { CreateAgencyDto, CreateAlertDto, CreateMunicipalityDto, CreateOrganizationDto, CreateRoleDto, CreateStopDto, CreateUserDto, CreateZoneDto, Email, Permission, Stop, User } from '@/types/index.js';
-import { getUnixTimestamp, validateOperationalDate } from '@/utils/index.js';
+import { CreateAgencyDto, CreateAlertDto, CreateMunicipalityDto, CreateOrganizationDto, CreateRoleDto, CreateStopDto, CreateUserDto, CreateZoneDto, Email, Permission, Stop, User } from '@tmlmobilidade/types';
+import { getUnixTimestamp, validateOperationalDate } from '@tmlmobilidade/utils';
 
 export const mockPermissions: Permission<unknown>[] = [
 	// Write

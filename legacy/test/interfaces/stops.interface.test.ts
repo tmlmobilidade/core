@@ -1,6 +1,6 @@
 import { stops } from '@/interfaces/index.js';
-import { HttpException } from '@/lib/index.js';
-import { CreateStopDto } from '@/types/index.js';
+import { HttpException } from '@tmlmobilidade/lib';
+import { CreateStopDto } from '@tmlmobilidade/types';
 import { mockStops } from '@test/data/db-mock.js';
 
 const newStop: CreateStopDto = {

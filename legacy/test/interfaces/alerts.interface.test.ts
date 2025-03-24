@@ -1,7 +1,7 @@
 import { alerts } from '@/interfaces/index.js';
-import { HttpException } from '@/lib/index.js';
-import { CreateAlertDto } from '@/types/index.js';
-import { getUnixTimestamp } from '@/utils/index.js';
+import { HttpException } from '@tmlmobilidade/lib';
+import { CreateAlertDto } from '@tmlmobilidade/types';
+import { getUnixTimestamp } from '@tmlmobilidade/utils';
 
 const newAlert: CreateAlertDto = {
 	active_period_end_date: undefined,

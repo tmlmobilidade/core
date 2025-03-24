@@ -1,6 +1,6 @@
 import { hashedTrips } from '@/interfaces/index.js';
-import { HttpException } from '@/lib/index.js';
-import { CreateHashedTripDto } from '@/types/index.js';
+import { HttpException } from '@tmlmobilidade/lib';
+import { CreateHashedTripDto } from '@tmlmobilidade/types';
 
 const newHashedTrip: CreateHashedTripDto = {
 	_id: 'hashed_trip_1',

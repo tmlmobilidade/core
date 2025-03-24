@@ -1,6 +1,6 @@
 /* * */
 
-import { CommentSchema, DocumentSchema } from '@/types/index.js';
+import { CommentSchema, DocumentSchema, UnixTimestamp } from '@/types/index.js';
 import { z } from 'zod';
 
 /* * */
@@ -182,6 +182,12 @@ export const StopSchema = DocumentSchema.extend({
 export const CreateStopSchema = StopSchema;
 export const UpdateStopSchema = CreateStopSchema.partial();
 
-export type Stop = z.infer<typeof StopSchema>;
-export type CreateStopDto = z.infer<typeof CreateStopSchema>;
+export type Stop = Omit<z.infer<typeof StopSchema>, 'created_at' | 'updated_at'> & {
+	created_at: UnixTimestamp
+	updated_at: UnixTimestamp
+};
+export type CreateStopDto = Omit<z.infer<typeof CreateStopSchema>, 'created_at' | 'updated_at'> & {
+	created_at?: UnixTimestamp
+	updated_at?: UnixTimestamp
+};
 export type UpdateStopDto = Partial<CreateStopDto>;

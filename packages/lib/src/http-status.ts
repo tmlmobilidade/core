@@ -1,5 +1,6 @@
 /* eslint-disable perfectionist/sort-objects */
-const HttpStatus = Object.freeze({
+
+export const HttpStatus = Object.freeze({
 	/* 100s */
 	CONTINUE: 100,
 	SWITCHING_PROTOCOLS: 101,
@@ -58,5 +59,3 @@ const HttpStatus = Object.freeze({
 	GATEWAY_TIMEOUT: 504,
 	HTTP_VERSION_NOT_SUPPORTED: 505,
 });
-
-export default HttpStatus;

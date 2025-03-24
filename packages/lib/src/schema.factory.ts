@@ -1,4 +1,8 @@
-import { AgencySchema, AlertSchema, FileSchema, HashedShapeSchema, HashedTripSchema, MunicipalitySchema, OrganizationSchema, PlanSchema, RideSchema, RoleSchema, SessionSchema, StopSchema, UpdateAgencySchema, UpdateAlertSchema, UpdateFileSchema, UpdateHashedShapeSchema, UpdateHashedTripSchema, UpdateMunicipalitySchema, UpdateOrganizationSchema, UpdatePlanSchema, UpdateRideSchema, UpdateRoleSchema, UpdateStopSchema, UpdateUserSchema, UpdateZoneSchema, UserSchema, VerificationTokenSchema, ZoneSchema } from '@/types/index.js';
+/* * */
+
+import { AgencySchema, AlertSchema, FileSchema, HashedShapeSchema, HashedTripSchema, MunicipalitySchema, OrganizationSchema, PlanSchema, RideSchema, RoleSchema, SessionSchema, StopSchema, UpdateAgencySchema, UpdateAlertSchema, UpdateFileSchema, UpdateHashedShapeSchema, UpdateHashedTripSchema, UpdateMunicipalitySchema, UpdateOrganizationSchema, UpdatePlanSchema, UpdateRideSchema, UpdateRoleSchema, UpdateStopSchema, UpdateUserSchema, UpdateZoneSchema, UserSchema, VerificationTokenSchema, ZoneSchema } from '@tmlmobilidade/types';
+
+/* * */
 
 export function createSchemaFactory(collectionName: string) {
 	switch (collectionName) {

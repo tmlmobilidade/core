@@ -1,6 +1,10 @@
-import HttpStatus from './http-status.js';
+/* * */
 
-class HttpException extends Error {
+import { HttpStatus } from '@/http-status.js';
+
+/* * */
+
+export class HttpException extends Error {
 	readonly statusCode: number;
 
 	constructor(statusCode: number, message: string, cause?: unknown) {
@@ -10,5 +14,3 @@ class HttpException extends Error {
 		this.cause = cause;
 	}
 }
-
-export default HttpException;

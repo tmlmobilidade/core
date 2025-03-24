@@ -1,5 +1,6 @@
 /* eslint-disable perfectionist/sort-objects */
-const MongoError = Object.freeze({
+
+export const MongoError = Object.freeze({
 	INTERNAL_ERROR: 1,
 	BAD_VALUE: 2,
 	NO_SUCH_KEY: 4,
@@ -355,5 +356,3 @@ const MongoError = Object.freeze({
 	OUT_OF_DISK_SPACE: 14031,
 	CLIENT_MARKED_KILLED: 46841,
 });
-
-export default MongoError;

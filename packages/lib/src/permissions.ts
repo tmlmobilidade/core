@@ -1,4 +1,4 @@
-const Permissions = Object.freeze({
+export const Permissions = Object.freeze({
 	agencies: {
 		actions: {
 			create: 'create',
@@ -120,5 +120,3 @@ const Permissions = Object.freeze({
 		scope: 'users',
 	},
 });
-
-export { Permissions };

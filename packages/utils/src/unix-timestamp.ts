@@ -1,21 +1,7 @@
 /* * */
 
-import { OPERATIONAL_DATE_FORMAT, type OperationalDate, type UnixTimestamp } from '@/types/index.js';
+import { OPERATIONAL_DATE_FORMAT, type OperationalDate, type UnixTimestamp } from '@tmlmobilidade/types';
 import { DateTime } from 'luxon';
-
-/**
- * This function validates if a number is a valid Unix Timestamp, in milliseconds.
- * It is assumed the number will always be greater than 10^10 (1e10) to ensure it is in milliseconds.
- * Throws an error if the date is invalid.
- * @param milliseconds - The number to be validated.
- * @returns The given number as a UnixTimestamp.
- */
-export function validateUnixTimestamp(milliseconds: number): UnixTimestamp {
-	if (milliseconds < 1e10) throw new Error(`Invalid value '${milliseconds}', expected a number in milliseconds but received a number smaller than 1e10`);
-	const parsedDate = DateTime.fromMillis(milliseconds);
-	if (!parsedDate.isValid) throw new Error(`Invalid date '${milliseconds}, explanation: ${parsedDate.invalidExplanation}`);
-	return parsedDate.toMillis() as UnixTimestamp;
-}
 
 /**
  * Returns the current Unix Timestamp, in milliseconds.

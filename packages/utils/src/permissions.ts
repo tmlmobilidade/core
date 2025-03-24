@@ -1,4 +1,4 @@
-import { Permission } from '@/interfaces/auth/auth.type.js';
+import { Permission } from '@tmlmobilidade/types';
 import { mergekit } from 'mergekit';
 
 /**

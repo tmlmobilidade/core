@@ -1,7 +1,6 @@
 /* * */
 
-import { DocumentSchema, type UnixTimestamp } from '@/common.js';
-import { validateUnixTimestamp } from '@tmlmobilidade/utils';
+import { DocumentSchema, type UnixTimestamp, validateUnixTimestamp } from '@/common.js';
 import { z } from 'zod';
 
 export const PermissionSchema = z.object({

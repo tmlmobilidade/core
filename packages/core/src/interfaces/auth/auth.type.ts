@@ -39,11 +39,13 @@ export const UpdateUserSchema = CreateUserSchema.extend({ password_hash: z.strin
 
 export interface User extends Omit<z.infer<typeof UserSchema>, 'created_at' | 'email_verified' | 'updated_at'> {
 	created_at: UnixTimestamp
-	email_verified?: UnixTimestamp
+	email_verified?: null | UnixTimestamp
 	updated_at: UnixTimestamp
 }
-export interface CreateUserDto extends Omit<z.infer<typeof CreateUserSchema>, 'email_verified'> {
-	email_verified?: UnixTimestamp
+export interface CreateUserDto extends Omit<z.infer<typeof CreateUserSchema>, 'created_at' | 'email_verified' | 'updated_at'> {
+	created_at?: UnixTimestamp
+	email_verified?: null | UnixTimestamp
+	updated_at?: UnixTimestamp
 }
 export type UpdateUserDto = Partial<CreateUserDto> & { password_hash?: string };
 

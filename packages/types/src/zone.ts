@@ -1,6 +1,6 @@
 import type { GeoJSON } from 'geojson';
 
-import { DocumentSchema } from '@/types/index.js';
+import { DocumentSchema } from '@/common.js';
 import { z } from 'zod';
 
 export const ZoneSchema = DocumentSchema.extend({

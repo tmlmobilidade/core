@@ -1,7 +1,7 @@
 /* * */
 
-import { DocumentSchema, type OperationalDate, type UnixTimestamp } from '@/types/index.js';
-import { validateOperationalDate, validateUnixTimestamp } from '@/utils/index.js';
+import { DocumentSchema, type OperationalDate, type UnixTimestamp } from '@/common.js';
+import { validateOperationalDate, validateUnixTimestamp } from '@tmlmobilidade/utils';
 import { z } from 'zod';
 
 /* * */

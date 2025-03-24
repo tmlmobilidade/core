@@ -1,4 +1,4 @@
-import { DocumentSchema } from '@/types/index.js';
+import { DocumentSchema } from '@/common.js';
 import { z } from 'zod';
 
 export const FileSchema = DocumentSchema.extend({

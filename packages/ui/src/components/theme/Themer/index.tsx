@@ -1,6 +1,5 @@
 'use client';
 
-
 /**
  * Use to show children only when light theme is active. Hidden otherwise.
  * @param {React.ReactElement} children The content to display in light theme.

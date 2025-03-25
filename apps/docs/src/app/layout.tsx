@@ -1,32 +1,29 @@
-import type { ReactNode } from 'react';
+/* * */
+
+import 'fumadocs-ui/style.css';
+import '@tmlmobilidade/ui/dist/styles-no-reset.css';
 
 /* * */
 
-import '@tmlmobilidade/ui/styles-no-reset.css';
-
-import './global.css';
-
-/* * */
-
-import { ThemeProvider } from '@tmlmobilidade/ui';
+import { ThemeContextProvider } from '@tmlmobilidade/ui';
 import { RootProvider } from 'fumadocs-ui/provider';
-import { Work_Sans } from 'next/font/google';
 
-const workSans = Work_Sans({
-	display: 'swap',
-	subsets: ['latin'],
-	variable: '--font-work-sans',
-	weight: ['600', '700'],
-});
+/* * */
 
-export default function Layout({ children }: { children: ReactNode }) {
+export default function RootLayout({ children }: { children: React.ReactElement }) {
 	return (
-		<html className={workSans.className} lang="en" suppressHydrationWarning>
-			<body>
+		<html lang="en" suppressHydrationWarning>
+			<body
+				style={{
+					display: 'flex',
+					flexDirection: 'column',
+					minHeight: '100vh',
+				}}
+			>
 				<RootProvider>
-					<ThemeProvider fontFamilyStyle={workSans.style.fontFamily} initialTheme="ocean">
+					<ThemeContextProvider>
 						{children}
-					</ThemeProvider>
+					</ThemeContextProvider>
 				</RootProvider>
 			</body>
 		</html>

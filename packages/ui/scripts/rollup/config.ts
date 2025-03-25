@@ -36,9 +36,7 @@ export function rollupConfig(): RollupOptions[] {
 				},
 			],
 			plugins: [
-				tsConfigPaths({
-					logLevel: 'warn',
-				}),
+				tsConfigPaths(),
 				nodeResolve({
 					allowExportsFolderMapping: false,
 				}),
@@ -60,7 +58,10 @@ export function rollupConfig(): RollupOptions[] {
 			external: [/\.css$/],
 			input: 'src/index.ts',
 			output: [{ file: 'dist/index.d.ts', format: 'esm' }],
-			plugins: [dts()],
+			plugins: [
+				tsConfigPaths(),
+				dts(),
+			],
 		},
 	];
 }

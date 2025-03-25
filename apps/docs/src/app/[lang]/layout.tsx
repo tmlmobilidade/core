@@ -1,5 +1,5 @@
 import { I18nProvider, type Translations } from 'fumadocs-ui/i18n';
-import { RootProvider } from 'fumadocs-ui/provider';
+// import { RootProvider } from 'fumadocs-ui/provider';
 
 const pt: Partial<Translations> = {
 	chooseLanguage: 'Escolher idioma',
@@ -37,16 +37,12 @@ export default async function RootLayout({
 	const lang = (await params).lang;
 
 	return (
-		<html lang={lang}>
-			<body>
-				<I18nProvider
-					locale={lang}
-					locales={locales}
-					translations={{ pt }[lang]}
-				>
-					<RootProvider>{children}</RootProvider>
-				</I18nProvider>
-			</body>
-		</html>
+		<I18nProvider
+			locale={lang}
+			locales={locales}
+			translations={{ pt }[lang]}
+		>
+			{children}
+		</I18nProvider>
 	);
 }

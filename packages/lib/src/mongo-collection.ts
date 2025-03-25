@@ -22,7 +22,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	 *
 	 * @returns A promise that resolves to an array of all documents
 	 */
-	async all() {
+	public async all() {
 		return await this.mongoCollection.find().toArray();
 	}
 
@@ -31,7 +31,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	 * @param options Optional Mongo client connection options
 	 * @throws {Error} If connection fails
 	 */
-	async connect(options?: MongoClientOptions) {
+	public async connect(options?: MongoClientOptions) {
 		//
 
 		const dbUri = process.env[this.getEnvName()];
@@ -69,7 +69,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	 * @param filter - The filter criteria to match documents
 	 * @returns A promise that resolves to the count of matching documents
 	 */
-	async count(filter?: Filter<T>): Promise<number> {
+	public async count(filter?: Filter<T>): Promise<number> {
 		return this.mongoCollection.countDocuments(filter);
 	}
 
@@ -79,7 +79,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	 * @param id - The ID of the document to delete
 	 * @returns A promise that resolves to the result of the delete operation
 	 */
-	async deleteById(id: string): Promise<DeleteResult> {
+	public async deleteById(id: string): Promise<DeleteResult> {
 		return this.mongoCollection.deleteOne({ _id: { $eq: id } } as unknown as Filter<T>);
 	}
 
@@ -89,7 +89,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	 * @param filter - The filter criteria to match documents to delete
 	 * @returns A promise that resolves to the result of the delete operation
 	 */
-	async deleteMany(filter: Filter<T>): Promise<DeleteResult> {
+	public async deleteMany(filter: Filter<T>): Promise<DeleteResult> {
 		return this.mongoCollection.deleteMany(filter);
 	}
 
@@ -99,14 +99,14 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	 * @param filter - The filter criteria to match the document to delete
 	 * @returns A promise that resolves to the result of the delete operation
 	 */
-	async deleteOne(filter: Filter<T>): Promise<DeleteResult> {
+	public async deleteOne(filter: Filter<T>): Promise<DeleteResult> {
 		return this.mongoCollection.deleteOne(filter);
 	}
 
 	/**
 	 * Disconnects from the MongoDB database.
 	 */
-	async disconnect() {
+	public async disconnect() {
 		await this.mongoConnector.disconnect();
 	}
 
@@ -116,7 +116,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	 * @param key - The key to find distinct values for
 	 * @returns A promise that resolves to an array of distinct values for the given key
 	 */
-	async distinct<K extends keyof T>(key: K): Promise<T[K][]> {
+	public async distinct<K extends keyof T>(key: K): Promise<T[K][]> {
 		return this.mongoCollection.distinct(key as string);
 	}
 
@@ -126,7 +126,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	 * @param id - The ID of the document to find
 	 * @returns A promise that resolves to the matching document or null if not found
 	 */
-	async findById(id: string): Promise<null | WithId<T>> {
+	public async findById(id: string): Promise<null | WithId<T>> {
 		return this.mongoCollection.findOne({ _id: { $eq: id } } as unknown as Filter<T>);
 	}
 
@@ -139,7 +139,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	 * @param sort - (Optional) sort specification
 	 * @returns A promise that resolves to an array of matching documents
 	 */
-	async findMany(filter?: Filter<T>, perPage?: number, page?: number, sort?: Sort): Promise<WithId<T>[]> {
+	public async findMany(filter?: Filter<T>, perPage?: number, page?: number, sort?: Sort): Promise<WithId<T>[]> {
 		const query = this.mongoCollection.find(filter ?? {});
 		if (perPage) query.limit(perPage);
 		if (page && perPage) query.skip(perPage * (page - 1));
@@ -153,7 +153,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	 * @param filter - The filter criteria to match the document
 	 * @returns A promise that resolves to the matching document or null if not found
 	 */
-	async findOne(filter: Filter<T>): Promise<null | WithId<T>> {
+	public async findOne(filter: Filter<T>): Promise<null | WithId<T>> {
 		return this.mongoCollection.findOne(filter);
 	}
 
@@ -162,7 +162,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	 *
 	 * @returns The MongoDB collection instance
 	 */
-	async getCollection(): Promise<Collection<T>> {
+	public async getCollection(): Promise<Collection<T>> {
 		return this.mongoCollection;
 	}
 
@@ -172,7 +172,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	 * @param doc - The document to insert
 	 * @returns A promise that resolves to the result of the insert operation
 	 */
-	async insertOne(doc: TCreate & { _id?: string, created_at?: UnixTimestamp, updated_at?: UnixTimestamp }, { unsafe = false } = {}): Promise<InsertOneResult<T>> {
+	public async insertOne(doc: TCreate & { _id?: string, created_at?: UnixTimestamp, updated_at?: UnixTimestamp }, { unsafe = false } = {}): Promise<InsertOneResult<T>> {
 		const newDocument = {
 			...doc,
 			_id: doc._id || generateRandomString({ length: 5 }),
@@ -209,7 +209,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	 * @param updateFields - The fields to update in the document
 	 * @returns A promise that resolves to the result of the update operation
 	 */
-	async updateById(id: string, updateFields: TUpdate): Promise<UpdateResult> {
+	public async updateById(id: string, updateFields: TUpdate): Promise<UpdateResult> {
 		return this.updateOne({ _id: { $eq: id } } as unknown as Filter<T>, updateFields);
 	}
 
@@ -241,7 +241,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	 * @param updateFields - The fields to update in the documents
 	 * @returns A promise that resolves to the result of the update operation
 	 */
-	async updateMany(filter: Filter<T>, updateFields: Partial<T>) {
+	public async updateMany(filter: Filter<T>, updateFields: Partial<T>) {
 		let parsedUpdateFields = updateFields;
 		if (this.updateSchema) {
 			try {
@@ -263,7 +263,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	 * @param options - The options for the update operation
 	 * @returns A promise that resolves to the result of the update operation
 	 */
-	async updateOne(filter: Filter<T>, updateFields: TUpdate, options?: UpdateOptions): Promise<UpdateResult> {
+	public async updateOne(filter: Filter<T>, updateFields: TUpdate, options?: UpdateOptions): Promise<UpdateResult> {
 		let parsedUpdateFields = updateFields;
 		if (this.updateSchema) {
 			try {

@@ -1,6 +1,6 @@
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
 
-import { ThemeDark, ThemeLight, Themer, TMLogoDark, TMLogoLight } from '@tmlmobilidade/ui';
+import { Themer, TMLogoDark, TMLogoLight } from '@tmlmobilidade/ui';
 
 /**
  * Shared layout configurations

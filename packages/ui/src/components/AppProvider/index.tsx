@@ -2,21 +2,17 @@
 
 /* * */
 
+import { MapOptionsContextProvider } from '@/contexts/MapOptions.context';
+import { MeContextProvider } from '@/contexts/Me.context';
+import { ThemeContextProvider } from '@/contexts/Theme.context';
 import { MapProvider } from '@vis.gl/react-maplibre';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
+import { type PropsWithChildren } from 'react';
 import { SWRConfig, type SWRConfiguration } from 'swr';
-
-import { MapOptionsContextProvider } from '../providers/MapOptions.context';
-import { MeContextProvider, type MeContextProviderProps } from '../providers/Me.context';
-import { ThemeProvider, type ThemeProviderProps } from '../theme';
 
 /* * */
 
-export interface AppProviderProps extends MeContextProviderProps, ThemeProviderProps {
-	children: React.ReactNode
-}
-
-export function AppProvider({ children, fontFamilyStyle, initialSidebar, initialTheme, initialUser, meApiUrl }: AppProviderProps) {
+export function AppProvider({ children }: PropsWithChildren) {
 	//
 
 	//
@@ -46,19 +42,19 @@ export function AppProvider({ children, fontFamilyStyle, initialSidebar, initial
 	// B. Render components
 
 	return (
-		<ThemeProvider fontFamilyStyle={fontFamilyStyle} initialTheme={initialTheme}>
-			<SWRConfig value={swrSettings}>
-				<NuqsAdapter>
+		<SWRConfig value={swrSettings}>
+			<NuqsAdapter>
+				<ThemeContextProvider>
 					<MapOptionsContextProvider>
 						<MapProvider>
-							<MeContextProvider initialSidebar={initialSidebar} initialUser={initialUser} meApiUrl={meApiUrl}>
+							<MeContextProvider>
 								{children}
 							</MeContextProvider>
 						</MapProvider>
 					</MapOptionsContextProvider>
-				</NuqsAdapter>
-			</SWRConfig>
-		</ThemeProvider>
+				</ThemeContextProvider>
+			</NuqsAdapter>
+		</SWRConfig>
 	);
 
 	//

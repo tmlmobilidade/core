@@ -1,7 +1,11 @@
+/* * */
+
 import { watch } from 'rollup';
 
 import { buildStyles } from './build-styles';
-import rollupConfig from './rollup/config';
+import { rollupConfig } from './rollup/config';
+
+/* * */
 
 async function watchBuild() {
 	console.log('Starting watch mode...');
@@ -37,5 +41,7 @@ async function watchBuild() {
 	process.on('SIGTERM', () => watcher.close());
 	process.on('SIGINT', () => watcher.close());
 }
+
+/* * */
 
 watchBuild();

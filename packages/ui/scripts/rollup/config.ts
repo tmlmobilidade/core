@@ -1,12 +1,17 @@
+/* * */
+
 import commonjs from '@rollup/plugin-commonjs';
-import resolve from '@rollup/plugin-node-resolve';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
-import { RollupOptions } from 'rollup';
-import dts from 'rollup-plugin-dts';
+import { type RollupOptions } from 'rollup';
+import { dts } from 'rollup-plugin-dts';
 import postcss from 'rollup-plugin-postcss';
-import preserveDirectives from 'rollup-preserve-directives';
+import tsConfigPaths from 'rollup-plugin-tsconfig-paths';
+import { preserveDirective } from 'rollup-preserve-directives';
 
 import packageJson from '../../package.json';
+
+/* * */
 
 // List of peer dependencies
 const external = [
@@ -14,17 +19,14 @@ const external = [
 	...Object.keys(packageJson.dependencies || {}),
 ];
 
+/* * */
+
 export function rollupConfig(): RollupOptions[] {
 	return [
 		{
 			external,
 			input: 'src/index.ts',
 			output: [
-				// {
-				// 	file: packageJson.main,
-				// 	format: 'cjs',
-				// 	sourcemap: true,
-				// },
 				{
 					dir: 'dist/src',
 					format: 'esm',
@@ -34,8 +36,11 @@ export function rollupConfig(): RollupOptions[] {
 				},
 			],
 			plugins: [
-				preserveDirectives(),
-				resolve(),
+				tsConfigPaths(),
+				nodeResolve({
+					allowExportsFolderMapping: false,
+				}),
+				preserveDirective(),
 				commonjs(),
 				typescript({
 					declarationDir: 'dist/src',
@@ -44,18 +49,25 @@ export function rollupConfig(): RollupOptions[] {
 					tsconfig: './tsconfig.json',
 				}),
 				postcss({
+					autoModules: true,
 					extract: 'index.css',
-					modules: true,
+					sourceMap: true,
 				}),
 			],
 		},
 		{
 			external: [/\.css$/],
 			input: 'src/index.ts',
-			output: [{ file: 'dist/index.d.ts', format: 'esm' }],
-			plugins: [dts()],
+			output: [
+				{
+					file: 'dist/index.d.ts',
+					format: 'esm',
+				},
+			],
+			plugins: [
+				tsConfigPaths(),
+				dts(),
+			],
 		},
 	];
 }
-
-export default rollupConfig;

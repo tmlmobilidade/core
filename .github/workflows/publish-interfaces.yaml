@@ -1,0 +1,47 @@
+name: 'interfaces | Publish to npm'
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - production
+    paths:
+      - 'packages/interfaces/**/*'
+      - '.github/workflows/publish-interfaces.yml'
+  push:
+    branches:
+      - production
+    paths:
+      - 'packages/interfaces/**/*'
+      - '.github/workflows/publish-interfaces.yml'
+
+jobs:
+
+  # # # # # # # # # # # # # # # # # # # # #
+  # # # # # # # # # # # # # # # # # # # # #
+
+  publish:
+    name: 'Publish package'
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - uses: ./.github/actions/setup-node
+        with:
+          node-version: 20
+
+      - name: Build package
+        working-directory: .
+        run: npm run build:interfaces
+
+      - name: Bump package version
+        working-directory: packages/interfaces
+        run: npx @helperkits/bumper bump
+
+      - name: Publish package to NPM
+        working-directory: packages/interfaces
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}

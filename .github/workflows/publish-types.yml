@@ -1,4 +1,4 @@
-name: 'Publish Types'
+name: 'types | Publish to npm'
 
 on:
   workflow_dispatch:
@@ -6,50 +6,42 @@ on:
     branches:
       - production
     paths:
-      - 'packages/core/src/**/*.type.ts'
-      - 'packages/core/src/utils/**/*.ts'
+      - 'packages/types/**/*'
       - '.github/workflows/publish-types.yml'
   push:
     branches:
       - production
     paths:
-      - 'packages/core/src/**/*.type.ts'
-      - 'packages/core/src/utils/**/*.ts'
+      - 'packages/types/**/*'
       - '.github/workflows/publish-types.yml'
 
 jobs:
 
-  test-core:
-    name: 'Test Core'
-    uses: ./.github/workflows/test-core.yml
-    with:
-      node-version: 20
+  # # # # # # # # # # # # # # # # # # # # #
+  # # # # # # # # # # # # # # # # # # # # #
 
-  build-and-publish:
-    name: 'Build & Publish Types'
-    strategy:
-      matrix:
-        node-version: [20]
-
+  publish:
+    name: 'Publish package'
     runs-on: ubuntu-latest
-    needs: test-core
     steps:
-      - uses: actions/checkout@v4
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - uses: ./.github/actions/setup-node
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 20
 
       - name: Build package
-        working-directory: packages/core
+        working-directory: .
         run: npm run build:types
 
       - name: Bump package version
-        working-directory: packages/core
+        working-directory: packages/types
         run: npx @helperkits/bumper bump
 
       - name: Publish package to NPM
-        working-directory: packages/core
+        working-directory: packages/types
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}

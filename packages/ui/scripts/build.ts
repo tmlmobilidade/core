@@ -1,6 +1,10 @@
+/* * */
+
 import { buildStyles } from './build-styles';
-import compile from './rollup/compile';
-import rollupConfig from './rollup/config';
+import { compile } from './rollup/compile';
+import { rollupConfig } from './rollup/config';
+
+/* * */
 
 async function build() {
 	console.log('Building UI...');

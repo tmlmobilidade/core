@@ -1,9 +1,8 @@
-
 :root[data-theme="royal"] {
 	--color-primary: #6e3cc8;
 	--color-secondary: #460a96;
 	--color-background: #f0f0ff;
-	--color-contrast: #ffffff;
+	--color-contrast: #fff;
 	--color-shadow: #1e0a4640;
 }
 

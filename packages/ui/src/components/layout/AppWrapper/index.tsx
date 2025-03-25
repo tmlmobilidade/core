@@ -19,12 +19,9 @@ export interface AppWrapperProps {
 	sidebarItems: SidebarItemProps[]
 }
 
-export default function AppWrapper({
-	children,
-	headerProps,
-	icon,
-	sidebarItems,
-}: AppWrapperProps) {
+/* * */
+
+export default function AppWrapper({ children, headerProps, icon, sidebarItems }: AppWrapperProps) {
 	const appIcon = () => {
 		if (icon && typeof icon === 'object' && 'href' in icon) {
 			return <a href={icon.href}>{icon.icon}</a>;

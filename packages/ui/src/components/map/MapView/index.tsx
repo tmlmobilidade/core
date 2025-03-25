@@ -2,7 +2,7 @@
 
 /* * */
 
-import { useMapOptionsContext } from '@/components/providers/MapOptions.context';
+import { type MapStyle, useMapOptionsContext } from '@/contexts/MapOptions.context';
 import { IconsMap } from '@/settings/assets.settings';
 import { mapDefaultConfig } from '@/settings/map.settings';
 import Map, { FullscreenControl, GeolocateControl, MapLayerMouseEvent, MapRef, NavigationControl, ScaleControl, useMap, ViewStateChangeEvent } from '@vis.gl/react-maplibre';
@@ -25,8 +25,6 @@ const MAP_LOAD_ASSETS = [
 ];
 
 /* * */
-
-export type MapStyle = 'map' | 'satellite';
 
 interface Props {
 	children: React.ReactNode

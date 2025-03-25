@@ -1,0 +1,14 @@
+{
+	"extends": "@tmlmobilidade/tsconfig/lib.json",
+	"compilerOptions": {
+		"outDir": "dist",
+		"paths": {
+			"@/*": ["./src/*"],
+			"@test/*": ["./test/*"]
+		},
+		"rootDir": ".",
+		"types": ["node"]
+	},
+	"include": ["src/**/*.ts", "test/**/*.ts", "scripts/**/*.ts", "tsup-types.config.ts"],
+	"exclude": ["node_modules", "dist"]
+}

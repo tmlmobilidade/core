@@ -2,7 +2,7 @@
 
 /* * */
 
-const meApiUrl = '/api/me';
+const meApiUrl = process.env.NEXT_PUBLIC_AUTH_URL + '/api/me';
 
 /* * */
 

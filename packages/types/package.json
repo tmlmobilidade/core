@@ -21,7 +21,7 @@
 		"access": "public"
 	},
 	"type": "module",
-	"module": "dist/src/index.js",
+	"module": "dist/index.js",
 	"files": ["dist/"],
 	"types": "dist/index.d.ts",
 	"scripts": {

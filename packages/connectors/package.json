@@ -29,7 +29,7 @@
 		"lint": "eslint && tsc --noEmit",
 		"lint:fix": "eslint --fix"
 	},
-	"module": "dist/src/index.js",
+	"module": "dist/index.js",
 	"dependencies": {
 		"mongodb": "6.15.0",
 		"pg": "8.14.1",

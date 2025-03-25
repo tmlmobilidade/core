@@ -9,7 +9,7 @@
 	},
 	"type": "module",
 	"files": ["dist"],
-	"module": "dist/src/index.js",
+	"module": "dist/index.js",
 	"types": "dist/index.d.ts",
 	"scripts": {
 		"build": "npm run clean && tsx scripts/build.ts",

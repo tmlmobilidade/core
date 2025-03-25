@@ -20,33 +20,28 @@ jobs:
   # # # # # # # # # # # # # # # # # # # # #
   # # # # # # # # # # # # # # # # # # # # #
 
-  test-ui:
-    name: 'Test UI'
-    uses: ./.github/workflows/test-ui.yml
-    with:
-      node-version: 20
-
   publish:
-    name: 'Build & Publish UI'
+    name: 'Publish package'
     runs-on: ubuntu-latest
-    needs: test-ui
     steps:
-      - uses: actions/checkout@v4
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - uses: ./.github/actions/setup-node
         with:
           node-version: 20
 
+      - name: Build package
+        working-directory: .
+        run: npm run build:utils
+
       - name: Bump package version
-        working-directory: packages/ui
+        working-directory: packages/utils
         run: npx @helperkits/bumper bump
 
-      - name: Build UI
-        working-directory: packages/ui
-        run: pnpm build
-
-      - name: Publish UI
-        working-directory: packages/ui
+      - name: Publish package to NPM
+        working-directory: packages/utils
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}

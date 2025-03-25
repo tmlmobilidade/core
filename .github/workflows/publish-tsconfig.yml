@@ -22,23 +22,16 @@ jobs:
   # # # # # # # # # # # # # # # # # # # # #
 
   publish:
-    name: 'Publish to NPM'
+    name: 'Publish package'
     runs-on: ubuntu-latest
     steps:
 
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup NodeJS
-        uses: actions/setup-node@v2
+      - uses: ./.github/actions/setup-node
         with:
-          node-version: '22'
-          registry-url: 'https://registry.npmjs.org'
-
-      # - name: Setup Node
-      #   uses: ./.github/actions/setup-node
-      #   with:
-      #     node-version: 20
+          node-version: 20
 
       - name: Bump package version
         working-directory: packages/tsconfig

@@ -49,15 +49,21 @@ export function rollupConfig(): RollupOptions[] {
 					tsconfig: './tsconfig.json',
 				}),
 				postcss({
+					autoModules: true,
 					extract: 'index.css',
-					modules: true,
+					sourceMap: true,
 				}),
 			],
 		},
 		{
 			external: [/\.css$/],
 			input: 'src/index.ts',
-			output: [{ file: 'dist/index.d.ts', format: 'esm' }],
+			output: [
+				{
+					file: 'dist/index.d.ts',
+					format: 'esm',
+				},
+			],
 			plugins: [
 				tsConfigPaths(),
 				dts(),

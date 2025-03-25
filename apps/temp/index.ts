@@ -1,4 +1,4 @@
-import { PasswordRequirementsSchema } from '@tmlmobilidade/core/types';
+import { PasswordRequirementsSchema } from '@tmlmobilidade/types';
 
 const validPassword = 'Password123!';
 const invalidPassword = 'P123wefefef';

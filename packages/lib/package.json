@@ -21,9 +21,12 @@
 		"access": "public"
 	},
 	"type": "module",
-	"module": "dist/index.js",
-	"files": ["dist/"],
-	"types": "dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.js"
+		}
+	},
 	"scripts": {
 		"build": "rimraf ./dist && tsc && resolve-tspaths",
 		"clean": "sh cleanup.sh",
@@ -34,7 +37,7 @@
 		"zod": "3.24.2"
 	},
 	"devDependencies": {
-		"@carrismetropolitana/eslint": "20250303.2009.45",
+		"@carrismetropolitana/eslint": "20250325.1926.5",
 		"@tmlmobilidade/connectors": "*",
 		"@tmlmobilidade/tsconfig": "*",
 		"@tmlmobilidade/types": "*",

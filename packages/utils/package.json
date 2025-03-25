@@ -21,9 +21,12 @@
 		"access": "public"
 	},
 	"type": "module",
-	"module": "dist/index.js",
-	"files": ["dist/"],
-	"types": "dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.js"
+		}
+	},
 	"scripts": {
 		"build": "rimraf ./dist && tsc && resolve-tspaths",
 		"build:types": "npx tsx scripts/build-types.ts && npx rimraf ./dist && npx tsup --config tsup-types.config.ts",
@@ -37,13 +40,13 @@
 		"test:watch": "jest --watch"
 	},
 	"dependencies": {
-		"luxon": "3.5.0",
+		"luxon": "3.6.0",
 		"mergekit": "3.0.6",
 		"uuid": "11.1.0",
 		"zod": "3.24.2"
 	},
 	"devDependencies": {
-		"@carrismetropolitana/eslint": "20250303.2009.45",
+		"@carrismetropolitana/eslint": "20250325.1926.5",
 		"@tmlmobilidade/tsconfig": "*",
 		"@tmlmobilidade/types": "*",
 		"@types/luxon": "3.4.2",

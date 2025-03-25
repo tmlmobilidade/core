@@ -22,7 +22,7 @@
 		"test:prod": "turbo test:prod"
 	},
 	"dependencies": {
-		"@carrismetropolitana/eslint": "20250303.2009.45",
+		"@carrismetropolitana/eslint": "20250325.1926.5",
 		"eslint": "9.23.0",
 		"tsx": "4.19.3",
 		"turbo": "2.4.4"

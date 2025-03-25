@@ -1,12 +1,19 @@
-name: 'Publish TSConfig'
+name: 'tsconfig | Publish to npm'
 
 on:
   workflow_dispatch:
+  pull_request:
+    branches:
+      - production
+    paths:
+      - 'packages/tsconfig/**/*'
+      - '.github/workflows/publish-tsconfig.yml'
   push:
     branches:
       - production
     paths:
-      - packages/tsconfig/**
+      - 'packages/tsconfig/**/*'
+      - '.github/workflows/publish-tsconfig.yml'
 
 jobs:
   #

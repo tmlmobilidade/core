@@ -1,4 +1,4 @@
-name: 'Publish Types'
+name: 'types | Publish to npm'
 
 on:
   workflow_dispatch:
@@ -6,15 +6,13 @@ on:
     branches:
       - production
     paths:
-      - 'packages/core/src/**/*.type.ts'
-      - 'packages/core/src/utils/**/*.ts'
+      - 'packages/types/**/*'
       - '.github/workflows/publish-types.yml'
   push:
     branches:
       - production
     paths:
-      - 'packages/core/src/**/*.type.ts'
-      - 'packages/core/src/utils/**/*.ts'
+      - 'packages/types/**/*'
       - '.github/workflows/publish-types.yml'
 
 jobs:

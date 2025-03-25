@@ -1,4 +1,4 @@
-name: 'ui | Publish to npm'
+name: 'lib | Publish to npm'
 
 on:
   workflow_dispatch:
@@ -6,14 +6,14 @@ on:
     branches:
       - production
     paths:
-      - 'packages/ui/**/*'
-      - '.github/workflows/publish-ui.yml'
+      - 'packages/lib/**/*'
+      - '.github/workflows/publish-lib.yml'
   push:
     branches:
       - production
     paths:
-      - 'packages/ui/**/*'
-      - '.github/workflows/publish-ui.yml'
+      - 'packages/lib/**/*'
+      - '.github/workflows/publish-lib.yml'
 
 jobs:
 

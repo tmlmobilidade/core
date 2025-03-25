@@ -1,4 +1,4 @@
-name: 'Publish Core'
+name: 'interfaces | Publish to npm'
 
 on:
   workflow_dispatch:
@@ -6,15 +6,14 @@ on:
     branches:
       - production
     paths:
-      - 'packages/core/src/**/*'
-      - '.github/workflows/publish-core.yml'
+      - 'packages/interfaces/**/*'
+      - '.github/workflows/publish-interfaces.yml'
   push:
     branches:
       - production
     paths:
-      - 'packages/core/src/**/*'
-      - 'packages/core/tsconfig.json'
-      - '.github/workflows/publish-core.yml'
+      - 'packages/interfaces/**/*'
+      - '.github/workflows/publish-interfaces.yml'
 
 jobs:
 

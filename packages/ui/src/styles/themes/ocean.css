@@ -1,10 +1,8 @@
-
-
 :root[data-theme="ocean"] {
 	--color-primary: #005adc;
 	--color-secondary: #0041a0;
 	--color-background: #e6f0ff;
-	--color-contrast: #ffffff;
+	--color-contrast: #fff;
 	--color-shadow: #000a5040;
 }
 

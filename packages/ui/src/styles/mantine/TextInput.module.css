@@ -26,6 +26,10 @@
 	color: var(--color-system-text-300);
 }
 
+.input:focus {
+	background-color: var(--color-system-background-100);
+}
+
 .wrapper[data-with-left-section="true"] .input {
 	padding-left: calc(var(--size-spacing-sm) + 30px);
 }
@@ -33,9 +37,7 @@
 .wrapper[data-with-right-section="true"] .input {
 	padding-right: calc(var(--size-spacing-sm) + 30px);
 }
-.input:focus {
-	background-color: var(--color-system-background-100);
-}
+
 
 /* * */
 /* LABEL */

@@ -1,5 +1,7 @@
+/* stylelint-disable unit-allowed-list */
+
 * {
-	font-family: var(--font-family);
+	font-family: "Work_Sans", sans-serif;
 }
 
 body {
@@ -247,11 +249,12 @@ body {
 }
 
 /* * */
+
 .hidden {
 	display: none;
 }
 
-.full-width {
+.fullWidth {
 	width: 100% !important;
 }
 

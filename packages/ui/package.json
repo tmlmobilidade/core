@@ -8,9 +8,7 @@
 		"directory": "dist"
 	},
 	"type": "module",
-	"files": [
-		"dist"
-	],
+	"files": ["dist"],
 	"module": "dist/src/index.js",
 	"types": "dist/index.d.ts",
 	"scripts": {
@@ -65,6 +63,7 @@
 		"rollup": "4.37.0",
 		"rollup-plugin-dts": "6.2.1",
 		"rollup-plugin-postcss": "4.0.2",
+		"rollup-plugin-tsconfig-paths": "1.5.2",
 		"rollup-preserve-directives": "1.1.3",
 		"swr": "2.3.3",
 		"ts-node-dev": "2.0.0",

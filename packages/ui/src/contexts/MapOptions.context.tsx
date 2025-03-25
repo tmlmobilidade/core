@@ -1,13 +1,13 @@
-'use client';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { MapRef } from '@vis.gl/react-maplibre';
+
+
 /* * */
 
 import * as turf from '@turf/turf';
+import { MapRef } from '@vis.gl/react-maplibre';
 import maplibregl from 'maplibre-gl';
 import { createContext, useContext, useEffect, useState } from 'react';
-
-import { MapStyle } from '../map';
 
 /* * */
 
@@ -20,6 +20,8 @@ const DEFAULT_OPTIONS = {
 };
 
 /* * */
+
+export type MapStyle = 'map' | 'satellite';
 
 interface MapOptionsContextState {
 	actions: {

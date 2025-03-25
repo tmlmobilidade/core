@@ -1,14 +1,12 @@
 'use client';
 
-/* * */
 
 /**
  * Use to show children only when light theme is active. Hidden otherwise.
- * @param {ReactNode} children The content to display in light theme.
- * @returns {JSX.Element} The rendered ThemeLight component.
+ * @param {React.ReactElement} children The content to display in light theme.
+ * @returns {React.ReactElement} The rendered ThemeLight component.
  */
-
-export function ThemeLight({ children }: { children: React.ReactNode }) {
+export function ThemeLight({ children }: { children: React.ReactNode }): React.ReactElement {
 	return (
 		<div className="theme-light">
 			{children}
@@ -18,11 +16,10 @@ export function ThemeLight({ children }: { children: React.ReactNode }) {
 
 /**
  * Use to show children only when dark theme is active. Hidden otherwise.
- * @param {ReactNode} children The content to display in dark theme.
- * @returns {JSX.Element} The rendered ThemeDark component.
+ * @param {React.ReactNode} children The content to display in dark theme.
+ * @returns {React.ReactElement} The rendered ThemeDark component.
  */
-
-export function ThemeDark({ children }: { children: React.ReactNode }) {
+export function ThemeDark({ children }: { children: React.ReactNode }): React.ReactElement {
 	return (
 		<div className="theme-dark">
 			{children}
@@ -32,12 +29,11 @@ export function ThemeDark({ children }: { children: React.ReactNode }) {
 
 /**
  * ThemeSwitch component to automatically toggle children components between dark and light themes.
- * @param {ReactNode} dark The content to display in dark theme.
- * @param {ReactNode} light The content to display in light theme.
- * @returns {JSX.Element} The rendered ThemeSwitch component.
+ * @param {React.ReactNode} dark The content to display in dark theme.
+ * @param {React.ReactNode} light The content to display in light theme.
+ * @returns {React.ReactElement} The rendered ThemeSwitch component.
  */
-
-export function Themer({ dark, light }: { dark: React.ReactNode, light: React.ReactNode }) {
+export function Themer({ dark, light }: { dark: React.ReactNode, light: React.ReactNode }): React.ReactElement {
 	return (
 		<>
 			<ThemeDark>

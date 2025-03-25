@@ -4,15 +4,17 @@ import { Button, createTheme, MantineThemeOverride, PasswordInput, Textarea, Tex
 
 /* * */
 
-import ButtonOverride from './mantine/button.module.css';
-import PasswordInputOverride from './mantine/password-input.module.css';
-import TextInputOverrideSm from './mantine/text-input-sm.module.css';
-import TextInputOverride from './mantine/text-input.module.css';
+import ButtonOverride from '@/styles/mantine/Button.module.css';
+import PasswordInputOverride from '@/styles/mantine/PasswordInput.module.css';
+import TextInputOverrideSm from '@/styles/mantine/TextInput-sm.module.css';
+import TextInputOverride from '@/styles/mantine/TextInput.module.css';
 
 /* * */
 
 export const themeData: MantineThemeOverride = createTheme({
 	components: {
+
+		/* * */
 
 		Button: Button.extend({
 			classNames: () => {
@@ -22,6 +24,8 @@ export const themeData: MantineThemeOverride = createTheme({
 				return defaultClasses;
 			},
 		}),
+
+		/* * */
 
 		PasswordInput: PasswordInput.extend({
 			classNames: () => {
@@ -40,6 +44,8 @@ export const themeData: MantineThemeOverride = createTheme({
 			},
 		}),
 
+		/* * */
+
 		Textarea: Textarea.extend({
 			classNames: (_, props) => {
 				const defaultClasses = {
@@ -54,6 +60,8 @@ export const themeData: MantineThemeOverride = createTheme({
 			},
 		}),
 
+		/* * */
+
 		TextInput: TextInput.extend({
 			classNames: (_, props) => {
 				const defaultClasses = {
@@ -67,6 +75,8 @@ export const themeData: MantineThemeOverride = createTheme({
 				return defaultClasses;
 			},
 		}),
+
+		/* * */
 
 	},
 });

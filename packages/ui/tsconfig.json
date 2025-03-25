@@ -34,6 +34,6 @@
 		"strict": true, /* Enable all strict type-checking options. */
 		"target": "esnext" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
 	},
-	"include": ["src/**/*", "scripts/**/*", "../../apps/docs/components/datatable"],
+	"include": ["src/**/*", "scripts/**/*"],
 	"exclude": ["node_modules", "dist"]
 }

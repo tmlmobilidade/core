@@ -1,14 +1,6 @@
-/* * */
-
-export * from './AppProvider';
-export * from './common';
-export * from './datatable';
-export * from './layout';
-export * from './map';
-
-/* Providers */
-export { useMapOptionsContext } from './providers/MapOptions.context';
-export { useMeContext } from './providers/Me.context';
-
-/* Theme */
-export * from './theme';
+export * from '@/components/AppProvider';
+export * from '@/components/common';
+export * from '@/components/datatable';
+export * from '@/components/layout';
+export * from '@/components/map';
+export * from '@/components/theme';

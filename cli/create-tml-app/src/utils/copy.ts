@@ -41,7 +41,7 @@ export async function upgradePackages({
 		return;
 	}
 
-	await ncu({
+	await ncu.run({
 		filter: packages,
 		packageFile: packageJsonPath,
 		upgrade: true,

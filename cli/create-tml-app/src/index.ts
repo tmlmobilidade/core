@@ -1,9 +1,9 @@
 import chalk from 'chalk';
 
-import { PACKAGES_TO_UPGRADE, REPLACE_FILE_PATHS, TEMPLATE_STRING, TITLE_TEXT } from './consts';
-import { copyApp, copyMonorepo, getAvailableApps, replaceInFile, upgradePackages } from './utils/copy';
-import { logger } from './utils/logger';
-import { getProjectName, getProjectScope, selectApps, selectProjectType } from './utils/prompts';
+import { PACKAGES_TO_UPGRADE, REPLACE_FILE_PATHS, TEMPLATE_STRING, TITLE_TEXT } from './consts.js';
+import { copyApp, copyMonorepo, getAvailableApps, replaceInFile, upgradePackages } from './utils/copy.js';
+import { logger } from './utils/logger.js';
+import { getProjectName, getProjectScope, selectApps, selectProjectType } from './utils/prompts.js';
 
 /* * */
 

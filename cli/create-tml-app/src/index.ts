@@ -1,9 +1,11 @@
+import { TITLE_TEXT } from './consts';
 import { getAvailableApps } from './utils/copy';
 import { getProjectName, selectApps, selectProjectType } from './utils/prompts';
-
 /* * */
 
 async function main() {
+	console.log(TITLE_TEXT);
+
 	const projectType = await selectProjectType();
 
 	if (projectType === 'monorepo') {

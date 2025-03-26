@@ -1,10 +1,27 @@
 {
 	"name": "@tmlmobilidade/create-tml-app",
 	"version": "1.0.0",
-	"author": "",
+	"author": "Jusi Monteiro & João Vasconcelos",
 	"license": "ISC",
-	"keywords": [],
-	"main": "index.js",
+	"keywords": [
+		"tml",
+		"tmlmobilidade",
+		"create-tml-app",
+		"carrismetropolitana"
+	],
+	"type": "module",
+	"files": [
+		"dist",
+		"template",
+		"README.md",
+		"LICENSE",
+		"CHANGELOG.md",
+		"package.json"
+	],
+	"main": "dist/index.js",
+	"bin": {
+		"create-tml-app": "./dist/index.js"
+	},
 	"scripts": {
 		"build": "rimraf ./dist && tsc && resolve-tspaths",
 		"dev": "tsx src/index.ts",

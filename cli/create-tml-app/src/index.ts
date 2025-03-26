@@ -33,14 +33,14 @@ async function main() {
 
 		// Copy Selected Applications
 		for (const app of selectedApps) {
-			logger.info(`Copying ${app}...`);
 			logger.clearPreviousLine();
+			logger.info(`Copying ${app}...`);
 			await copyApp(app, projectName + '/apps/' + app);
 
 			// Replace template file paths
 			if (REPLACE_FILE_PATHS[app]) {
-				logger.info(`Replacing template file paths in ${app}...`);
 				logger.clearPreviousLine();
+				logger.info(`Replacing template file paths in ${app}...`);
 				for (const filePath of REPLACE_FILE_PATHS[app]) {
 					const filePathWithProjectName = projectName + '/apps/' + app + '/' + filePath;
 					await replaceInFile(filePathWithProjectName, TEMPLATE_STRING, projectScope);
@@ -48,8 +48,8 @@ async function main() {
 			}
 
 			// Upgrade Packages
-			logger.info(`Upgrading packages in ${app}...`);
 			logger.clearPreviousLine();
+			logger.info(`Upgrading packages in ${app}...`);
 			await upgradePackages({
 				packageJsonPath: projectName + '/apps/' + app + '/package.json',
 				packages: PACKAGES_TO_UPGRADE,
@@ -57,8 +57,8 @@ async function main() {
 		}
 
 		// Upgrade Packages in Root
-		logger.info('Upgrading packages in root...');
 		logger.clearPreviousLine();
+		logger.info('Upgrading packages in root...');
 		await upgradePackages({
 			packageJsonPath: projectName + '/package.json',
 			packages: PACKAGES_TO_UPGRADE,
@@ -75,8 +75,8 @@ async function main() {
 		await copyApp(projectName, projectName);
 
 		// Replace template file paths
-		logger.info('Replacing template file paths...');
 		logger.clearPreviousLine();
+		logger.info('Replacing template file paths...');
 		if (REPLACE_FILE_PATHS[projectName]) {
 			for (const filePath of REPLACE_FILE_PATHS[projectName]) {
 				logger.info(`Replacing template file paths in ${filePath}...`);
@@ -86,8 +86,8 @@ async function main() {
 		}
 
 		// Upgrade Packages
-		logger.info('Upgrading packages...');
 		logger.clearPreviousLine();
+		logger.info('Upgrading packsages...');
 		await upgradePackages({
 			packageJsonPath: projectName + '/package.json',
 			packages: PACKAGES_TO_UPGRADE,

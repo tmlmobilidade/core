@@ -1,10 +1,9 @@
 import { existsSync } from 'fs';
 import { cp, readdir, readFile, writeFile } from 'fs/promises';
 import ncu from 'npm-check-updates';
-import path, { resolve } from 'path';
+import { resolve } from 'path';
 
-const __dirname = path.dirname(__filename);
-const TEMPLATES_DIR = resolve(__dirname, '..', '..', 'template');
+const TEMPLATES_DIR = resolve(new URL('.', import.meta.url).pathname, '..', '..', 'template');
 
 export async function getAvailableApps(): Promise<string[]> {
 	return await readdir(resolve(TEMPLATES_DIR, 'apps'));

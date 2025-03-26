@@ -8,9 +8,13 @@
 		"directory": "dist"
 	},
 	"type": "module",
-	"files": ["dist"],
-	"module": "dist/index.js",
-	"types": "dist/index.d.ts",
+	"files": ["dist/"],
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.js"
+		}
+	},
 	"scripts": {
 		"build": "npm run clean && tsx scripts/build.ts",
 		"clean": "rm -rf dist",

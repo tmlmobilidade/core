@@ -1,17 +1,17 @@
-import { authProvider } from '@tmlmobilidade/interfaces';
+import { fetchData } from '@/utils/http';
 import { HttpException, HttpStatus } from '@tmlmobilidade/lib';
 import { Permission } from '@tmlmobilidade/types';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
 declare module 'fastify' {
 	export interface FastifyRequest {
-		permissions?: Permission<unknown>
+		permissions?: Permission<unknown> // Changed T to unknown to resolve the error
 	}
 }
 
-export default function authorizationMiddleware(
-	scope?: string,
-	action?: string,
+export default function authorizationMiddleware<T = unknown>( // Added default type for T
+	scope: string,
+	action: string,
 ) {
 	return async (
 		request: FastifyRequest,
@@ -26,14 +26,24 @@ export default function authorizationMiddleware(
 			);
 		}
 
-		// If no scope or action is provided, only check if the user is authenticated
-		if (!scope && !action) {
-			return;
-		}
-
 		try {
-			const permissions = await authProvider.getPermission(token, scope, action);
-			request.permissions = permissions;
+			const res = await fetchData<Permission<T>>(
+				`${process.env.NEXT_PUBLIC_AUTH_URL}/permissions?resource=${scope}&action=${action}`,
+				'GET',
+				undefined,
+				{
+					Cookie: `session_token=${token}`,
+				},
+			);
+
+			if (res.status !== HttpStatus.OK) {
+				throw new HttpException(
+					res.status,
+					res.error,
+				);
+			}
+
+			request.permissions = res.data;
 		}
 		catch (error) {
 			reply

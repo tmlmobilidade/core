@@ -35,7 +35,7 @@ jobs:
         run: npx @helperkits/bumper bump
 
       - name: Publish package to NPM
-        working-directory: packages/connectors
+        working-directory: cli/create-tml-app
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}

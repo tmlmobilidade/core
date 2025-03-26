@@ -1,11 +1,10 @@
 /* * */
 
+import FastifyService from '@/services/fastify.service.js';
 import cookie from '@fastify/cookie';
 import cors from '@fastify/cors';
 import fastifyMultipart from '@fastify/multipart';
 import { FastifyServerOptions } from 'fastify';
-
-import FastifyService from '@/services/fastify.service.js';
 
 /* * */
 

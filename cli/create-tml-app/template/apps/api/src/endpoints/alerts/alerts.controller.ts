@@ -1,6 +1,6 @@
 import { alerts } from '@tmlmobilidade/interfaces';
-import { Alert } from '@tmlmobilidade/types';
 import { HttpStatus } from '@tmlmobilidade/lib';
+import { Alert } from '@tmlmobilidade/types';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
 /**
@@ -48,7 +48,7 @@ export class AlertsController {
 				.send(error);
 		}
 	}
-	
+
 	/**
 	 * Retrieves all alerts, sorted by creation date descending
 	 * @param request Fastify request

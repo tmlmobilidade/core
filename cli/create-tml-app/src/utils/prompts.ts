@@ -22,6 +22,20 @@ export async function getProjectName() {
 	return projectName as string;
 }
 
+export async function getProjectScope(defaultScope: string) {
+	const projectScope = (await text({
+		message: 'What is your project scope? (eg. sae-alerts)',
+		placeholder: defaultScope,
+	})) ?? defaultScope;
+
+	if (isCancel(projectScope)) {
+		cancel('Operation cancelled');
+		process.exit(0);
+	}
+
+	return projectScope as string;
+}
+
 export async function selectProjectType() {
 	const repoType = await select({
 		message: 'Select the type of project you want to create',

@@ -1,16 +1,49 @@
-import { readdir, cp } from 'fs/promises';
+import { existsSync } from 'fs';
+import { cp, readdir, readFile, writeFile } from 'fs/promises';
+import ncu from 'npm-check-updates';
 import path, { resolve } from 'path';
 
 const __dirname = path.dirname(__filename);
-const TEMPLATES_DIR = resolve(__dirname, "..", "..", "template", "apps");
+const TEMPLATES_DIR = resolve(__dirname, '..', '..', 'template');
 
 export async function getAvailableApps(): Promise<string[]> {
-  return await readdir(TEMPLATES_DIR);
+	return await readdir(resolve(TEMPLATES_DIR, 'apps'));
 }
 
 export async function copyApp(appName: string, targetDir: string): Promise<void> {
-  const appPath = resolve(TEMPLATES_DIR, appName);
-  const targetPath = resolve(process.cwd(), targetDir);
-  
-  await cp(appPath, targetPath, { recursive: true });
+	const appPath = resolve(TEMPLATES_DIR, 'apps', appName);
+	const targetPath = resolve(process.cwd(), targetDir);
+
+	await cp(appPath, targetPath, { recursive: true });
+}
+
+export async function copyMonorepo(targetDir: string): Promise<void> {
+	const appPath = resolve(TEMPLATES_DIR, 'base');
+	const targetPath = resolve(process.cwd(), targetDir);
+
+	await cp(appPath, targetPath, { recursive: true });
+}
+
+export async function replaceInFile(filePath: string, search: string, replace: string): Promise<void> {
+	const content = await readFile(filePath, 'utf8');
+	await writeFile(filePath, content.replace(search, replace));
+}
+
+export async function upgradePackages({
+	packageJsonPath,
+	packages,
+}: {
+	packageJsonPath: string
+	packages: string[]
+}): Promise<void> {
+	// Check if package.json exists
+	if (!existsSync(packageJsonPath)) {
+		return;
+	}
+
+	await ncu({
+		filter: packages,
+		packageFile: packageJsonPath,
+		upgrade: true,
+	});
 }

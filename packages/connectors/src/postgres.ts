@@ -1,5 +1,6 @@
 /* * */
 
+import pg from 'pg';
 import { Client, type ClientConfig } from 'pg';
 
 /* * */
@@ -15,7 +16,7 @@ export class PostgresConnector {
 	private client: Client;
 
 	constructor(config: PostgresConfig) {
-		this.client = new Client({ connectionString: config.uri, ...config.options });
+		this.client = new pg.Client({ connectionString: config.uri, ...config.options });
 	}
 
 	/**

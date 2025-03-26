@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import chalk from 'chalk';
 
 import { PACKAGES_TO_UPGRADE, REPLACE_FILE_PATHS, TEMPLATE_STRING, TITLE_TEXT } from './consts.js';

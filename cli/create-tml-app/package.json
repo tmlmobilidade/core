@@ -1,5 +1,5 @@
 {
-	"name": "@tmlmobilidade/create-tml-app",
+	"name": "create-tml-app",
 	"version": "1.0.0",
 	"author": "Jusi Monteiro & João Vasconcelos",
 	"license": "ISC",
@@ -19,6 +19,9 @@
 		"package.json"
 	],
 	"main": "dist/index.js",
+	"exports": {
+		".": "./dist/index.js"
+	},
 	"bin": {
 		"create-tml-app": "./dist/index.js"
 	},

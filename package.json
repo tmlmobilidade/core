@@ -8,7 +8,7 @@
 	"main": "index.js",
 	"scripts": {
 		"build": "turbo build",
-		"build:create-tml-app": "turbo build --filter=@tmlmobilidade/create-tml-app",
+		"build:create-tml-app": "turbo build --filter=create-tml-app",
 		"build:connectors": "turbo build --filter=@tmlmobilidade/connectors",
 		"build:interfaces": "turbo build --filter=@tmlmobilidade/interfaces",
 		"build:lib": "turbo build --filter=@tmlmobilidade/lib",

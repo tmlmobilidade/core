@@ -29,7 +29,8 @@
 	},
 	"workspaces": [
 		"apps/*",
-		"packages/*"
+		"packages/*",
+		"cli/*"
 	],
 	"packageManager": "npm@11.2.0",
 	"peerDependencyRules": {

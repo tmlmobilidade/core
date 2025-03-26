@@ -1,7 +1,7 @@
 /* * */
 
 import pg from 'pg';
-import { Client, type ClientConfig } from 'pg';
+import { type Client, type ClientConfig } from 'pg';
 
 /* * */
 

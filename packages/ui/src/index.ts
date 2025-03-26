@@ -1,10 +1,9 @@
 import '@/styles/index.css';
 
-export * from './lib/map.utils';
-
-export * from '@/components';
-export * from '@/contexts';
-export * from '@/hooks';
+export * from '@/components/index';
+export * from '@/contexts/index';
+export * from '@/hooks/index';
+export * from '@/lib/map.utils';
 
 /* Mantine */
 export * from '@mantine/form';

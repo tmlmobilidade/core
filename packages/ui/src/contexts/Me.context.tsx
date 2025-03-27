@@ -4,7 +4,6 @@
 
 const meApiUrl = process.env.NEXT_PUBLIC_AUTH_URL + '/api/users/me';
 
-import { SidebarItemProps } from '@/components';
 /* * */
 
 import { swrFetcher } from '@/lib/http';
@@ -48,14 +47,14 @@ export const MeContextProvider = ({ children }: PropsWithChildren) => {
 	//
 	// B. Fetch data
 
-	const { data, error, isLoading } = useSWR<{ sidebar: SidebarItemProps[], user: User }>(meApiUrl, swrFetcher);
+	const { data, error, isLoading } = useSWR<User>(meApiUrl, swrFetcher);
 
 	//
 	// C. Handle actions
 
 	useEffect(() => {
-		if (!data?.user) return;
-		setUserState(data.user);
+		if (!data) return;
+		setUserState(data);
 	}, [data]);
 
 	//

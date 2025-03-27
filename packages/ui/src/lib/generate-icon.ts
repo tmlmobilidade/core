@@ -2,17 +2,18 @@
 
 /* * */
 
-import * as Icon from '@tabler/icons-react';
-import { createElement } from 'react';
+// import * as Icon from '@tabler/icons-react';
+// import { createElement } from 'react';
 
 /* * */
 
 export function generateIcon(name: string): React.ReactNode {
-	const IconComponent = Icon[name as keyof typeof Icon];
+	return null;
+	// const IconComponent = Icon[name as keyof typeof Icon];
 
-	if (!IconComponent) {
-		return null;
-	}
+	// if (!IconComponent) {
+	// 	return null;
+	// }
 
-	return createElement(IconComponent as React.FunctionComponent);
+	// return createElement(IconComponent as React.FunctionComponent);
 }

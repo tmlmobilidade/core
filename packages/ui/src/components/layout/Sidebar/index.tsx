@@ -3,7 +3,7 @@
 /* * */
 
 import { useIsActiveDomain } from '@/hooks/use-is-active-domain';
-import { generateIcon } from '@/lib/generate-icon';
+// import { generateIcon } from '@/lib/generate-icon';
 import { cn } from '@/lib/utils';
 import { ActionIcon, Tooltip } from '@mantine/core';
 
@@ -22,9 +22,7 @@ export interface SidebarProps {
 	items: SidebarItemProps[]
 }
 
-export default function Sidebar({
-	items,
-}: SidebarProps) {
+export default function Sidebar({ items }: SidebarProps) {
 	//
 	// A. Render components
 	return (
@@ -67,7 +65,8 @@ function SidebarItem({
 						[styles.selected]: isActive,
 					})}
 				>
-					{typeof icon === 'string' ? generateIcon(icon) : icon}
+					{icon}
+					{/* {typeof icon === 'string' ? generateIcon(icon) : icon} */}
 				</ActionIcon>
 			</a>
 		</Tooltip>

@@ -1,5 +1,10 @@
 /* * */
 
+import '@/styles/font.css';
+import '@/styles/index.css';
+
+/* * */
+
 import { Button, createTheme, MantineThemeOverride, PasswordInput, Textarea, TextInput } from '@mantine/core';
 
 /* * */

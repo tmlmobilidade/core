@@ -6,7 +6,6 @@ import { MapOptionsContextProvider } from '@/contexts/MapOptions.context';
 import { MeContextProvider } from '@/contexts/Me.context';
 import { ThemeContextProvider } from '@/contexts/Theme.context';
 import { MapProvider } from '@vis.gl/react-maplibre';
-// import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import { type PropsWithChildren } from 'react';
 import { SWRConfig, type SWRConfiguration } from 'swr';
 
@@ -43,7 +42,6 @@ export function AppProvider({ children }: PropsWithChildren) {
 
 	return (
 		<SWRConfig value={swrSettings}>
-			{/* <NuqsAdapter> */}
 			<ThemeContextProvider>
 				<MapOptionsContextProvider>
 					<MapProvider>
@@ -53,7 +51,6 @@ export function AppProvider({ children }: PropsWithChildren) {
 					</MapProvider>
 				</MapOptionsContextProvider>
 			</ThemeContextProvider>
-			{/* </NuqsAdapter> */}
 		</SWRConfig>
 	);
 

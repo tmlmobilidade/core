@@ -11,6 +11,7 @@ import { IconAlertTriangle, IconBusStop, IconChartArrowsVertical, IconDeviceMobi
 import { apps } from '@tmlmobilidade/lib';
 import { Permission } from '@tmlmobilidade/types';
 import { getPermission } from '@tmlmobilidade/utils';
+import { useMemo } from 'react';
 
 import styles from './styles.module.css';
 
@@ -60,8 +61,14 @@ function SidebarItem({
 }: SidebarItemProps & { classNames?: { navButton?: string } }) {
 	//
 	// A. Setup Variables
-	const isActive = useIsActiveDomain(href);
 	const { data: { user } } = useMeContext();
+
+	const isDisabled = useMemo(() => {
+		const userPermission = getPermission(user?.permissions as unknown as Permission<unknown>[], permission.scope, permission.action);
+		return !userPermission || (userPermission.action !== permission.action || userPermission.scope !== permission.scope);
+	}, [user?.permissions, permission]);
+
+	const isActive = useIsActiveDomain(href) && !isDisabled;
 
 	let icon = null;
 	switch (_id) {
@@ -93,7 +100,7 @@ function SidebarItem({
 				<ActionIcon
 					size="xl"
 					className={cn(styles.navButton, classNames?.navButton, {
-						[styles.disabled]: !getPermission(user?.permissions as unknown as Permission<unknown>[], permission.scope, permission.action),
+						[styles.disabled]: isDisabled,
 						[styles.selected]: isActive,
 					})}
 				>

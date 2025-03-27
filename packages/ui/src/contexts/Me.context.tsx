@@ -8,14 +8,14 @@ const meApiUrl = process.env.NEXT_PUBLIC_AUTH_URL + '/api/users/me';
 
 import { swrFetcher } from '@/lib/http';
 import { type User } from '@tmlmobilidade/types';
-import { createContext, PropsWithChildren, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, PropsWithChildren, useContext, useMemo } from 'react';
 import useSWR from 'swr';
 
 /* * */
 
 interface MeContextState {
 	data: {
-		user: null | User
+		user: undefined | User
 	}
 	flags: {
 		error: null | string
@@ -41,37 +41,25 @@ export const MeContextProvider = ({ children }: PropsWithChildren) => {
 	//
 
 	//
-	// A. Setup variables
-
-	const [userState, setUserState] = useState<MeContextState['data']['user']>(null);
-	//
-	// B. Fetch data
+	// A. Fetch data
 
 	const { data, error, isLoading } = useSWR<User>(meApiUrl, swrFetcher);
 
 	//
-	// C. Handle actions
-
-	useEffect(() => {
-		if (!data) return;
-		setUserState(data);
-	}, [data]);
-
-	//
-	// D. Define context value
+	// B. Define context value
 
 	const contextValue: MeContextState = useMemo(() => ({
 		data: {
-			user: userState,
+			user: data,
 		},
 		flags: {
 			error: error,
 			loading: isLoading,
 		},
-	}), [userState, isLoading, error]);
+	}), [data, isLoading, error]);
 
 	//
-	// E. Render components
+	// C. Render components
 
 	if (contextValue.flags.loading) {
 		return <div>loading me...</div>;

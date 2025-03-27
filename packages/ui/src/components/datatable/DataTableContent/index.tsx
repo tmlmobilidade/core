@@ -8,7 +8,6 @@ import { DataTableHeader } from '@/components/datatable/DataTableHeader';
 import { DataTableRow } from '@/components/datatable/DataTableRow';
 import { DataTableTitle } from '@/components/datatable/DataTableTitle';
 import { cn, getValueAtPath } from '@/lib/utils';
-import { Table } from '@mantine/core';
 import { ViewportList } from 'react-viewport-list';
 
 import styles from './styles.module.css';
@@ -37,9 +36,9 @@ export function DataTableContent<T>({ classnames, columns, maxHeight, onRowClick
 				className={cn(styles.tableWrapper, classnames?.tableWrapper)}
 				style={{ maxHeight: maxHeight || '100%' }}
 			>
-				<Table className={cn(styles.table, classnames?.table, 'block')}>
+				<div className={cn(styles.table, classnames?.table, 'block')}>
 					<DataTableHeader columns={columns} />
-					<Table.Tbody>
+					<div className={cn(styles.tableBody, classnames?.body)}>
 						<ViewportList itemMargin={0} items={dataTableContext.data.records}>
 							{(record, rowIndex) => (
 								<DataTableRow
@@ -52,8 +51,8 @@ export function DataTableContent<T>({ classnames, columns, maxHeight, onRowClick
 								/>
 							)}
 						</ViewportList>
-					</Table.Tbody>
-				</Table>
+					</div>
+				</div>
 			</div>
 		</div>
 	);

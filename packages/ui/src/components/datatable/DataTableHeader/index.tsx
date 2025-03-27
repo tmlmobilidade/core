@@ -6,7 +6,6 @@ import ActionIcon from '@/components/common/ActionIcon';
 import { DataTableColumn } from '@/components/datatable/datatable.type';
 import { useDataTableContext } from '@/components/datatable/DataTableContext';
 import { cn } from '@/lib/utils';
-import { Table } from '@mantine/core';
 import { IconArrowDownRhombus, IconArrowsUpDown, IconArrowUpRhombus } from '@tabler/icons-react';
 
 import styles from './styles.module.css';
@@ -53,10 +52,10 @@ export function DataTableHeader<T = Record<string, unknown>>({ columns }: Props<
 	};
 
 	return (
-		<Table.Thead className={cn(styles.header)}>
-			<Table.Tr className={cn(styles.row)}>
+		<div className={cn(styles.header)}>
+			<div className={cn(styles.row)}>
 				{columns.map((column, idx) => (
-					<Table.Th
+					<div
 						key={idx}
 						className={cn(styles.cell)}
 						style={{
@@ -73,10 +72,10 @@ export function DataTableHeader<T = Record<string, unknown>>({ columns }: Props<
 							{column.title}
 							{column.sortable && renderSortIcon(column)}
 						</div>
-					</Table.Th>
+					</div>
 				))}
-			</Table.Tr>
-		</Table.Thead>
+			</div>
+		</div>
 	);
 
 	//

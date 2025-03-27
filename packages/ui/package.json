@@ -33,7 +33,6 @@
 		"@vis.gl/react-maplibre": "8.x",
 		"maplibre-gl": "5.x",
 		"next": "14.x || 15.x",
-		"nuqs": "2.x",
 		"react": "18.x || 19.x",
 		"react-dom": "18.x || 19.x",
 		"swr": "2.x"
@@ -48,7 +47,6 @@
 		"@tabler/icons-react": "3.31.0",
 		"@types/geojson": "7946.0.16",
 		"clsx": "2.1.1",
-		"js-cookie": "3.0.5",
 		"luxon": "3.6.0",
 		"react-viewport-list": "7.1.2"
 	},
@@ -58,7 +56,6 @@
 		"@rollup/plugin-typescript": "12.1.2",
 		"@turf/helpers": "7.2.0",
 		"@turf/turf": "7.2.0",
-		"@types/js-cookie": "3.0.6",
 		"@types/luxon": "3.4.2",
 		"@types/node": "22.13.13",
 		"@types/react": "19.0.12",
@@ -66,7 +63,6 @@
 		"@vis.gl/react-maplibre": "8.0.1",
 		"maplibre-gl": "5.2.0",
 		"nodemon": "3.1.9",
-		"nuqs": "2.4.1",
 		"postcss": "8.5.3",
 		"react": "19.0.0",
 		"react-dom": "19.0.0",

@@ -58,6 +58,11 @@ async function main() {
 			});
 		}
 
+		// Replace env variables
+		logger.clearPreviousLine();
+		logger.info('Replacing env variables...');
+		await replaceInFile(projectName + '/package.json', TEMPLATE_STRING, projectScope);
+
 		// Upgrade Packages in Root
 		logger.clearPreviousLine();
 		logger.info('Upgrading packages in root...');

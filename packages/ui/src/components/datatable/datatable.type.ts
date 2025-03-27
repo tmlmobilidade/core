@@ -49,74 +49,6 @@ export interface DataTableColumn<T> {
 
 }
 
-export interface DataTableColumnProps<T = Record<string, unknown>> {
-	/**
-	 * The columns to be displayed in the table.
-	 */
-	columns: DataTableColumn<T>[]
-}
-
-export interface DataTableProps<T> {
-
-	/**
-	 * The classnames to be applied to the table.
-	 */
-	classnames?: Partial<
-		Record<'body' | 'cell' | 'footer' | 'header' | 'root' | 'row' | 'table' | 'tableWrapper', string>
-	>
-
-	/**
-	 * The column configuration for the table.
-	 */
-	columns: DataTableColumn<T>[]
-
-	/**
-	 * The maximum height of the table in pixels.
-	 * @default 100%
-	 */
-	maxHeight?: number
-
-	/**
-	 * Callback function to handle row click events.
-	 * @param record - The data record for the clicked row.
-	 */
-	onRowClick?: (record: T) => void
-
-	/**
-	 * Callback function to handle row context menu events.
-	 * @param record - The data record for the row where the context menu was triggered.
-	 */
-	onRowContextMenu?: (record: T) => void
-
-	/**
-	 * Callback function to handle row double-click events.
-	 * @param record - The data record for the double-clicked row.
-	 */
-	onRowDoubleClick?: (record: T) => void
-
-	/**
-	 * The data to be displayed in the table.
-	 */
-	records: T[]
-
-	/**
-	 * The id of the table.
-	 */
-	rowIdAccessor?: keyof T | (string & {})
-
-	/**
-	 * Whether the table should have a search input.
-	 * @default false
-	 */
-	search?: DataTableSearchProps<T>
-
-	/**
-	 * The title of the table.
-	 */
-	title?: string
-
-}
-
 export interface DataTableSearchProps<T> {
 
 	/**
@@ -150,19 +82,5 @@ export interface DataTableSearchProps<T> {
 	 * The current value of the search input.
 	 */
 	value?: string
-
-}
-
-export interface DataTableTitleProps<T> {
-
-	/**
-	 * The search configuration for the table.
-	 */
-	search?: DataTableSearchProps<T>
-
-	/**
-	 * The title of the table.
-	 */
-	title?: string
 
 }

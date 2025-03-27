@@ -2,11 +2,11 @@
 
 /* * */
 
-import { DataTableProps } from '@/components/datatable/datatable.type';
+import { Props as DataTableProps } from '@/components/datatable/DataTable';
 import { useDataTableContext } from '@/components/datatable/DataTableContext';
-import DataTableHeader from '@/components/datatable/DataTableHeader';
-import DataTableRow from '@/components/datatable/DataTableRow';
-import DataTableTitle from '@/components/datatable/DataTableTitle';
+import { DataTableHeader } from '@/components/datatable/DataTableHeader';
+import { DataTableRow } from '@/components/datatable/DataTableRow';
+import { DataTableTitle } from '@/components/datatable/DataTableTitle';
 import { cn, getValueAtPath } from '@/lib/utils';
 import { Table } from '@mantine/core';
 import { ViewportList } from 'react-viewport-list';
@@ -15,7 +15,11 @@ import styles from './styles.module.css';
 
 /* * */
 
-export function DataTableContent<T>({ classnames, columns, maxHeight, onRowClick, onRowContextMenu, onRowDoubleClick, rowIdAccessor, search, title }: Omit<DataTableProps<T>, 'records'>) {
+type Props<T> = Omit<DataTableProps<T>, 'records'>;
+
+/* * */
+
+export function DataTableContent<T>({ classnames, columns, maxHeight, onRowClick, onRowContextMenu, onRowDoubleClick, rowIdAccessor, search, title }: Props<T>) {
 	//
 
 	//

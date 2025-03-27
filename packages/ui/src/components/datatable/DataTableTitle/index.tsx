@@ -3,7 +3,7 @@
 /* * */
 
 import TextInput from '@/components/common/TextInput';
-import { DataTableTitleProps } from '@/components/datatable/datatable.type';
+import { DataTableSearchProps } from '@/components/datatable/datatable.type';
 import { useDataTableContext } from '@/components/datatable/DataTableContext';
 import React from 'react';
 
@@ -11,7 +11,23 @@ import styles from './styles.module.css';
 
 /* * */
 
-export function DataTableTitle<T>({ search, title }: DataTableTitleProps<T>) {
+interface Props<T> {
+
+	/**
+	 * The search configuration for the table.
+	 */
+	search?: DataTableSearchProps<T>
+
+	/**
+	 * The title of the table.
+	 */
+	title?: string
+
+}
+
+/* * */
+
+export function DataTableTitle<T>({ search, title }: Props<T>) {
 	//
 
 	//

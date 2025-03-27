@@ -1,7 +1,7 @@
 /* * */
 
 import 'fumadocs-ui/style.css';
-import '@tmlmobilidade/ui/dist/styles-no-reset.css';
+import '@tmlmobilidade/ui/styles-no-reset';
 
 /* * */
 

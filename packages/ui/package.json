@@ -24,7 +24,7 @@
 	"scripts": {
 		"build": "npm run clean && tsx scripts/build.ts",
 		"clean": "rm -rf dist",
-		"dev2": "npm run clean && tsx scripts/watch.ts",
+		"dev": "npm run clean && tsx scripts/watch.ts",
 		"lint": "eslint ./src"
 	},
 	"description": "",

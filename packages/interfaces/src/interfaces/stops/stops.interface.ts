@@ -1,6 +1,6 @@
 /* * */
 
-import { MongoCollectionClass } from '@tmlmobilidade/lib';
+import { MongoCollectionClass } from '@/mongo-collection.js';
 import { CreateStopDto, Stop, UpdateStopDto } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
 import { Filter, IndexDescription, Sort } from 'mongodb';

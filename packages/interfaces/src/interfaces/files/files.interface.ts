@@ -1,7 +1,7 @@
 /* * */
 
 import { IStorageProvider, StorageFactory } from '@/providers/index.js';
-import { MongoCollectionClass } from '@tmlmobilidade/lib';
+import { MongoCollectionClass } from '@/mongo-collection.js';
 import { HttpStatus } from '@tmlmobilidade/lib';
 import { HttpException } from '@tmlmobilidade/lib';
 import { CreateFileDto, File, UpdateFileDto } from '@tmlmobilidade/types';

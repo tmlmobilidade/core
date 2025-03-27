@@ -1,6 +1,6 @@
 /* * */
 
-import { MongoCollectionClass } from '@tmlmobilidade/lib';
+import { MongoCollectionClass } from '@/mongo-collection.js';
 import { CreateHashedTripDto, HashedTrip, UpdateHashedTripDto } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
 import { IndexDescription } from 'mongodb';

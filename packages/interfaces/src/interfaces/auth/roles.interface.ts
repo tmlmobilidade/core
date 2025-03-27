@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus } from '@tmlmobilidade/lib';
-import { MongoCollectionClass } from '@tmlmobilidade/lib';
+import { MongoCollectionClass } from '@/mongo-collection.js';
 import { CreateRoleDto, Role, UpdateRoleDto } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
 import { Filter, IndexDescription, UpdateResult } from 'mongodb';

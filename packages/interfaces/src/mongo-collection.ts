@@ -1,9 +1,7 @@
 /* * */
 
-import { HttpException } from '@/http-exception.js';
-import { HttpStatus } from '@/http-status.js';
-import { createSchemaFactory } from '@/schema.factory.js';
 import { MongoConnector } from '@tmlmobilidade/connectors';
+import { createSchemaFactory, HttpException, HttpStatus } from '@tmlmobilidade/lib';
 import { type UnixTimestamp } from '@tmlmobilidade/types';
 import { generateRandomString, getUnixTimestamp } from '@tmlmobilidade/utils';
 import { Collection, DeleteResult, Document, Filter, IndexDescription, InsertOneResult, MongoClientOptions, OptionalUnlessRequiredId, Sort, UpdateOptions, UpdateResult, WithId } from 'mongodb';

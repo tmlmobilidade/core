@@ -1,4 +1,4 @@
-import { MongoCollectionClass } from '@tmlmobilidade/lib';
+import { MongoCollectionClass } from '@/mongo-collection.js';
 import { HttpException, HttpStatus } from '@tmlmobilidade/lib';
 import { CreateVerificationTokenDto, UpdateVerificationTokenDto, VerificationToken } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';

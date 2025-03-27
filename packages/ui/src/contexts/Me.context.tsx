@@ -16,7 +16,6 @@ import useSWR from 'swr';
 
 interface MeContextState {
 	data: {
-		sidebar: SidebarItemProps[]
 		user: null | User
 	}
 	flags: {
@@ -46,7 +45,6 @@ export const MeContextProvider = ({ children }: PropsWithChildren) => {
 	// A. Setup variables
 
 	const [userState, setUserState] = useState<MeContextState['data']['user']>(null);
-	const [sidebarState, setSidebarState] = useState<MeContextState['data']['sidebar']>([]);
 	//
 	// B. Fetch data
 
@@ -60,24 +58,18 @@ export const MeContextProvider = ({ children }: PropsWithChildren) => {
 		setUserState(data.user);
 	}, [data]);
 
-	useEffect(() => {
-		if (!data?.sidebar) return;
-		setSidebarState(data.sidebar);
-	}, [data]);
-
 	//
 	// D. Define context value
 
 	const contextValue: MeContextState = useMemo(() => ({
 		data: {
-			sidebar: sidebarState,
 			user: userState,
 		},
 		flags: {
 			error: error,
 			loading: isLoading,
 		},
-	}), [userState, sidebarState, isLoading, error]);
+	}), [userState, isLoading, error]);
 
 	//
 	// E. Render components

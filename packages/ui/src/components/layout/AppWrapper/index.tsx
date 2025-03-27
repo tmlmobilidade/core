@@ -37,7 +37,7 @@ export default function AppWrapper({ children, icon }: AppWrapperProps) {
 		<div className={styles.container}>
 			<div className={styles.appIcon}>{appIcon()}</div>
 			<Header userName={data.user?.first_name} />
-			<Sidebar items={data.sidebar} />
+			<Sidebar />
 			<div className={styles.content}>{children}</div>
 		</div>
 	);

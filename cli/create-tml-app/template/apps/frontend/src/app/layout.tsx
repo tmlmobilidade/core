@@ -2,7 +2,7 @@
 
 import '@tmlmobilidade/ui/styles';
 import { Routes } from '@/lib/routes';
-import { AppProvider } from '@tmlmobilidade/ui';
+import { AppProvider, AppWrapper } from '@tmlmobilidade/ui';
 import { cookies as nextCookies } from 'next/headers';
 import { redirect, RedirectType } from 'next/navigation';
 
@@ -27,7 +27,9 @@ export default async function Layout({
 		<html lang="en" suppressHydrationWarning>
 			<body>
 				<AppProvider>
-					{children}
+					<AppWrapper>
+						{children}
+					</AppWrapper>
 				</AppProvider>
 			</body>
 		</html>

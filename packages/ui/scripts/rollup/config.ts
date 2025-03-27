@@ -25,13 +25,13 @@ export function rollupConfig(): RollupOptions[] {
 	return [
 		{
 			external,
-			input: 'src/index.ts',
+			input: './index.ts',
 			output: [
 				{
-					dir: 'dist/src',
+					dir: 'dist',
 					format: 'esm',
 					preserveModules: true,
-					preserveModulesRoot: 'src',
+					preserveModulesRoot: '.',
 					sourcemap: true,
 				},
 			],
@@ -43,9 +43,7 @@ export function rollupConfig(): RollupOptions[] {
 				preserveDirective(),
 				commonjs(),
 				typescript({
-					declarationDir: 'dist/src',
 					exclude: ['**/*.test.tsx', '**/*.test.ts', '**/*.stories.tsx', '**/*.stories.ts', 'scripts/**'],
-					outDir: 'dist/src',
 					tsconfig: './tsconfig.json',
 				}),
 				postcss({
@@ -57,7 +55,7 @@ export function rollupConfig(): RollupOptions[] {
 		},
 		{
 			external: [/\.css$/],
-			input: 'src/index.ts',
+			input: './index.ts',
 			output: [
 				{
 					file: 'dist/index.d.ts',

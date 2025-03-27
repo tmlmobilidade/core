@@ -12,7 +12,7 @@ const rootDir = path.resolve(__dirname, '..', '..', '..');
 
 export function buildStyles() {
 	// Read all necessary files first
-	const indexCss = fs.readFileSync('dist/src/index.css');
+	const indexCss = fs.readFileSync('dist/index.css');
 	const resetCss = fs.readFileSync('src/styles/reset.css');
 	const themes = fs.readdirSync('src/styles/themes');
 
@@ -31,6 +31,6 @@ export function buildStyles() {
 	fs.writeFileSync('dist/styles-no-reset.css', noResetStyles);
 
 	// Remove unnecessary files
-	fs.rmSync('dist/src/index.css');
+	fs.rmSync('dist/index.css');
 	// fs.rmSync('dist/cjs/index.css');
 }

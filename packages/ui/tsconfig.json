@@ -7,9 +7,9 @@
 		"allowUnreachableCode": false /* Disable error reporting for unreachable code. */,
 
 		"baseUrl": ".",
-		"declaration": true /* Generate .d.ts files from TypeScript and JavaScript files in your project. */,
-		"declarationDir": "types" /* Specify the output directory for generated declaration files. */,
-		"emitDeclarationOnly": true /* Only output d.ts files and not JavaScript files. */,
+		"declaration": false /* Generate .d.ts files from TypeScript and JavaScript files in your project. */,
+		// "declarationDir": "types" /* Specify the output directory for generated declaration files. */,
+		// "emitDeclarationOnly": true /* Only output d.ts files and not JavaScript files. */,
 		"esModuleInterop": true /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */,
 		"forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
 		"jsx": "react-jsx" /* Specify what JSX code is generated. */,
@@ -23,7 +23,7 @@
 		"noUncheckedIndexedAccess": true /* Add 'undefined' to a type when accessed using an index. */,
 		"noUnusedLocals": true /* Enable error reporting when local variables aren't read. */,
 		"noUnusedParameters": true /* Raise an error when a function parameter isn't read. */,
-		"outDir": "dist" /* Specify an output folder for all emitted files. */,
+		// "outDir": "dist" /* Specify an output folder for all emitted files. */,
 		"paths": {
 			"@/*": ["src/*"]
 		},
@@ -34,6 +34,6 @@
 		"strict": true, /* Enable all strict type-checking options. */
 		"target": "esnext" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
 	},
-	"include": ["src/**/*", "scripts/**/*"],
+	"include": ["src/**/*", "scripts/**/*", "index.ts"],
 	"exclude": ["node_modules", "dist"]
 }

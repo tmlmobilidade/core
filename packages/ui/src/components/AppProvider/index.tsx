@@ -10,6 +10,8 @@ import { MapProvider } from '@vis.gl/react-maplibre';
 import { type PropsWithChildren } from 'react';
 import { SWRConfig, type SWRConfiguration } from 'swr';
 
+import { AppWrapper } from '../layout';
+
 /* * */
 
 export function AppProvider({ children }: PropsWithChildren) {

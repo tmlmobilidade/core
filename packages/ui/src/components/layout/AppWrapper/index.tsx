@@ -9,23 +9,18 @@ import styles from './styles.module.css';
 
 /* * */
 
-export interface HeaderProps {
-	user_name?: string
-}
-
 export interface AppWrapperProps {
 	children: React.ReactNode
-	headerProps?: HeaderProps
 	icon?: React.ReactNode | { href: string, icon: React.ReactNode }
 }
 
 /* * */
 
-export default function AppWrapper({ children, headerProps, icon }: AppWrapperProps) {
+export default function AppWrapper({ children, icon }: AppWrapperProps) {
 	//
 	// A. Setup variables
 
-	const { data: { sidebar } } = useMeContext();
+	const { data } = useMeContext();
 
 	const appIcon = () => {
 		if (icon && typeof icon === 'object' && 'href' in icon) {
@@ -41,8 +36,8 @@ export default function AppWrapper({ children, headerProps, icon }: AppWrapperPr
 	return (
 		<div className={styles.container}>
 			<div className={styles.appIcon}>{appIcon()}</div>
-			<Header {...headerProps} />
-			<Sidebar items={sidebar} />
+			<Header userName={data.user?.first_name} />
+			<Sidebar items={data.sidebar} />
 			<div className={styles.content}>{children}</div>
 		</div>
 	);

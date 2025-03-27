@@ -5,7 +5,6 @@
 import { useState } from 'react';
 
 // import AppOptions from '../Options';
-import { HeaderProps } from '..';
 import styles from './styles.module.css';
 
 /* * */
@@ -14,7 +13,7 @@ const greetings = ['Olá', 'Hi', 'Hey', 'Oi', 'Hallo', 'Ciao', 'Hej'];
 
 /* * */
 
-export default function Header({ user_name }: HeaderProps) {
+export default function Header({ userName }: { userName?: string }) {
 	//
 
 	//
@@ -27,7 +26,7 @@ export default function Header({ user_name }: HeaderProps) {
 
 	return (
 		<div className={styles.container}>
-			<p className={styles.greeting}>{drawnGreeting} {user_name}</p>
+			<p className={styles.greeting}>{drawnGreeting} {userName}</p>
 			<div className={styles.options}>
 				{/* <AppOptions /> */}
 			</div>

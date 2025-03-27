@@ -1,6 +1,6 @@
 /* * */
 
-import '@tmlmobilidade/ui/dist/styles.css';
+import '@tmlmobilidade/ui/styles';
 import { Routes } from '@/lib/routes';
 import { AppProvider } from '@tmlmobilidade/ui';
 import { cookies as nextCookies } from 'next/headers';

@@ -105,7 +105,6 @@ function SidebarItem({
 					})}
 				>
 					{icon}
-					{/* {typeof icon === 'string' ? generateIcon(icon) : icon} */}
 				</ActionIcon>
 			</a>
 		</Tooltip>

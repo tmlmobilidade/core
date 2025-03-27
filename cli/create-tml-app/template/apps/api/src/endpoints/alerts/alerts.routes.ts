@@ -1,12 +1,12 @@
 /* * */
 
-import authorizationMiddleware from '@/middleware/authorization.middleware';
-import FastifyService from '@/services/fastify.service';
+import authorizationMiddleware from '@/middleware/authorization.middleware.js';
+import FastifyService from '@/services/fastify.service.js';
 import { Permissions } from '@tmlmobilidade/lib';
 import { Alert } from '@tmlmobilidade/types';
 import { FastifyInstance } from 'fastify';
 
-import { AlertsController } from './alerts.controller';
+import { AlertsController } from './alerts.controller.js';
 
 /* * */
 
@@ -39,18 +39,6 @@ server.register(
 				),
 			},
 			AlertsController.getById,
-		);
-
-		// GET /alerts/:id/image
-		instance.get(
-			'/:id/image',
-			{
-				preHandler: authorizationMiddleware<Alert>(
-					Permissions.alerts.scope,
-					Permissions.alerts.actions.read,
-				),
-			},
-			AlertsController.getImage,
 		);
 
 		// POST /alerts
@@ -88,33 +76,6 @@ server.register(
 			},
 			AlertsController.delete,
 		);
-
-		// POST /alerts/:id/image
-		instance.post(
-			'/:id/image',
-			{
-				preHandler: authorizationMiddleware<Alert>(
-					Permissions.alerts.scope,
-					Permissions.alerts.actions.update,
-				),
-			},
-			AlertsController.uploadImage,
-		);
-
-		// DELETE /alerts/:id/image
-		instance.delete(
-			'/:id/image',
-			{
-				preHandler: authorizationMiddleware<Alert>(
-					Permissions.alerts.scope,
-					Permissions.alerts.actions.update,
-				),
-			},
-			AlertsController.deleteImage,
-		);
-
-		// GET /alerts/gtfs
-		instance.get('/gtfs', AlertsController.getGtfs);
 
 		next();
 	},

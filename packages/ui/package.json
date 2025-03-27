@@ -16,6 +16,9 @@
 		},
 		"./styles": {
 			"default": "./dist/styles.css"
+		},
+		"./styles-no-reset": {
+			"default": "./dist/styles-no-reset.css"
 		}
 	},
 	"scripts": {

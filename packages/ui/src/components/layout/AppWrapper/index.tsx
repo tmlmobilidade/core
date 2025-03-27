@@ -1,8 +1,9 @@
 'use client';
 
+import { useMeContext } from '@/contexts/Me.context';
 /* * */
 
-import Sidebar, { SidebarItemProps } from '../Sidebar';
+import Sidebar from '../Sidebar';
 import Header from './Header';
 import styles from './styles.module.css';
 
@@ -15,13 +16,17 @@ export interface HeaderProps {
 export interface AppWrapperProps {
 	children: React.ReactNode
 	headerProps?: HeaderProps
-	icon: React.ReactNode | { href: string, icon: React.ReactNode }
-	sidebarItems: SidebarItemProps[]
+	icon?: React.ReactNode | { href: string, icon: React.ReactNode }
 }
 
 /* * */
 
-export default function AppWrapper({ children, headerProps, icon, sidebarItems }: AppWrapperProps) {
+export default function AppWrapper({ children, headerProps, icon }: AppWrapperProps) {
+	//
+	// A. Setup variables
+
+	const { data: { sidebar } } = useMeContext();
+
 	const appIcon = () => {
 		if (icon && typeof icon === 'object' && 'href' in icon) {
 			return <a href={icon.href}>{icon.icon}</a>;
@@ -30,11 +35,14 @@ export default function AppWrapper({ children, headerProps, icon, sidebarItems }
 		return icon;
 	};
 
+	//
+	// B. Render components
+
 	return (
 		<div className={styles.container}>
 			<div className={styles.appIcon}>{appIcon()}</div>
 			<Header {...headerProps} />
-			<Sidebar items={sidebarItems} />
+			<Sidebar items={sidebar} />
 			<div className={styles.content}>{children}</div>
 		</div>
 	);

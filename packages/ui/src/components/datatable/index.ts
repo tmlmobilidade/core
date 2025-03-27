@@ -1,2 +1,2 @@
-export { default as DataTable } from './DataTable';
-export * from './datatable.type';
+export * from '@/components/datatable/DataTable';
+export * from '@/components/datatable/datatable.type';

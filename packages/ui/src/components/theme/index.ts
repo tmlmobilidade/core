@@ -1,2 +1,2 @@
-export * from './Themer';
-export * from './ThemeSwitcher';
+export * from '@/components/theme/Themer';
+export * from '@/components/theme/ThemeSwitcher';

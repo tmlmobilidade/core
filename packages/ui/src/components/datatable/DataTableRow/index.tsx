@@ -2,24 +2,32 @@
 
 /* * */
 
+import { DataTableColumn } from '@/components/datatable/datatable.type';
 import { cn } from '@/lib/utils';
 import { getValueAtPath } from '@/lib/utils';
 import { Table } from '@mantine/core';
 
-import { DataTableRowProps } from '../datatable.type';
 import styles from './styles.module.css';
 
-export default function DataTableRow<T = Record<string, unknown>>({
-	columns,
-	onRowClick,
-	onRowContextMenu,
-	onRowDoubleClick,
-	record,
-}: DataTableRowProps<T> & {
-	onRowClick?: (record: T) => void
-	onRowContextMenu?: (record: T) => void
-	onRowDoubleClick?: (record: T) => void
-}) {
+/* * */
+
+interface Props<T = Record<string, unknown>> {
+
+	/**
+	 * The column configuration for the row.
+	 */
+	columns: DataTableColumn<T>[]
+
+	/**
+	 * The data record for the row.
+	 */
+	record: T
+
+}
+
+/* * */
+
+export function DataTableRow<T = Record<string, unknown>>({ columns, onRowClick, onRowContextMenu, onRowDoubleClick, record }: Props<T> & { onRowClick?: (record: T) => void, onRowContextMenu?: (record: T) => void, onRowDoubleClick?: (record: T) => void }) {
 	return (
 		<Table.Tr
 			className={cn(styles.row)}

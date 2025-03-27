@@ -1,37 +1,40 @@
 'use client';
 
 /* * */
+
+import ActionIcon from '@/components/common/ActionIcon';
+import { DataTableColumn } from '@/components/datatable/datatable.type';
+import { useDataTableContext } from '@/components/datatable/DataTableContext';
 import { cn } from '@/lib/utils';
 import { Table } from '@mantine/core';
-import {
-	IconArrowDownRhombus,
-	IconArrowsUpDown,
-	IconArrowUpRhombus,
-} from '@tabler/icons-react';
+import { IconArrowDownRhombus, IconArrowsUpDown, IconArrowUpRhombus } from '@tabler/icons-react';
 
-import ActionIcon from '../../common/ActionIcon';
-import { DataTableColumn, DataTableHeaderProps } from '../datatable.type';
-import { useDataTableContext } from '../DataTableContext';
 import styles from './styles.module.css';
+
 /* * */
 
-export default function DataTableHeader<T = Record<string, unknown>>({
-	columns,
-}: DataTableHeaderProps<T>) {
-	//
-	// A. Setup Variables
+interface Props<T = Record<string, unknown>> {
+	/**
+	 * The columns to be displayed in the table header.
+	 */
+	columns: DataTableColumn<T>[]
+}
 
-	const {
-		actions: { handleSort },
-		filters: { sortState },
-	} = useDataTableContext<T>();
+/* * */
+
+export function DataTableHeader<T = Record<string, unknown>>({ columns }: Props<T>) {
+	//
 
 	//
-	// C. Render Components
+	// A. Setup variables
+
+	const { actions: { handleSort }, filters: { sortState } } = useDataTableContext<T>();
+
+	//
+	// B. Render components
 
 	const renderSortIcon = (column: DataTableColumn<T>) => {
 		if (!column.sortable) return null;
-
 		return (
 			<ActionIcon variant="muted">
 				{sortState?.accessor === column.accessor ? (
@@ -75,4 +78,6 @@ export default function DataTableHeader<T = Record<string, unknown>>({
 			</Table.Tr>
 		</Table.Thead>
 	);
+
+	//
 }

@@ -1,27 +1,36 @@
 'use client';
 
+/* * */
+
+import TextInput from '@/components/common/TextInput';
+import { DataTableTitleProps } from '@/components/datatable/datatable.type';
+import { useDataTableContext } from '@/components/datatable/DataTableContext';
 import React from 'react';
 
-import TextInput from '../../common/TextInput';
-import { DataTableTitleProps } from '../datatable.type';
-import { useDataTableContext } from '../DataTableContext';
 import styles from './styles.module.css';
 
-export default function DataTableTitle<T>({ search, title }: DataTableTitleProps<T>) {
+/* * */
+
+export function DataTableTitle<T>({ search, title }: DataTableTitleProps<T>) {
 	//
-	// A. Setup Variables
+
+	//
+	// A. Setup variables
+
 	if (!title && !search) return null;
 
 	const { actions: { updateFilterBySearchQuery }, filters: { searchQuery } } = useDataTableContext<T>();
 
 	//
-	// B. Handle Actions
+	// B. Handle actions
+
 	const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		updateFilterBySearchQuery(event.target.value);
 	};
 
 	//
-	// C. Render Components
+	// C. Render components
+
 	return (
 		<div className={styles.root}>
 			<div className={styles.title}>{title && title}</div>
@@ -32,4 +41,6 @@ export default function DataTableTitle<T>({ search, title }: DataTableTitleProps
 			)}
 		</div>
 	);
+
+	//
 }

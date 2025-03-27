@@ -1,14 +1,16 @@
 'use client';
 
+/* * */
+
+import { DataTableSearchProps } from '@/components/datatable/datatable.type';
 import { useSearchQuery } from '@/hooks/use-search-query';
 import { tryParseDateToTimestamp } from '@/lib/utils';
 import { getValueAtPath } from '@/lib/utils';
 import { createContext, ReactNode, useCallback, useContext, useMemo, useState } from 'react';
 
-import { DataTableSearchProps } from '../datatable.type';
+/* * */
 
-// Define the context type
-interface DataTableContextType<T> {
+interface DataTableContextState<T> {
 	actions: {
 		clearSearchQuery: () => void
 		handleSort: (accessor: string) => void
@@ -39,17 +41,30 @@ interface SortState {
 	order: SortOrder
 }
 
-const DataTableContext = createContext<DataTableContextType<unknown> | undefined>(undefined);
+/* * */
 
-// Provider component
-export function DataTableProvider<T>({ children, initialRecords, searchAccessors }: DataTableProviderProps<T>) {
+const DataTableContext = createContext<DataTableContextState<unknown> | undefined>(undefined);
+
+export function useDataTableContext<T>(): DataTableContextState<T> {
+	const context = useContext(DataTableContext);
+	if (!context) {
+		throw new Error('useDataTableContext must be used within a DataTableContextProvider');
+	}
+	return context as DataTableContextState<T>;
+}
+
+/* * */
+
+export function DataTableContextProvider<T>({ children, initialRecords, searchAccessors }: DataTableProviderProps<T>) {
+	//
+
 	//
 	// A. Setup Variables
-	const [sortState, setSortState] = useState<DataTableContextType<T>['filters']['sortState']>(null);
-	const { filteredData: searchQueryData, searchQuery, setSearchQuery } = useSearchQuery<T>(initialRecords, {
-		accessors: searchAccessors,
-		debounce: 200,
-	});
+
+	const [sortState, setSortState] = useState<DataTableContextState<T>['filters']['sortState']>(null);
+
+	const { filteredData: searchQueryData, searchQuery, setSearchQuery } = useSearchQuery<T>(initialRecords, { accessors: searchAccessors, debounce: 200 });
+
 	//
 	// B. Transform Data
 
@@ -92,6 +107,7 @@ export function DataTableProvider<T>({ children, initialRecords, searchAccessors
 
 	//
 	// C. Handle Actions
+
 	const handleSort = useCallback((accessor: string) => {
 		if (sortState?.accessor === accessor) {
 			const newOrder = sortState.order === 'asc' ? 'desc' : sortState.order === 'desc' ? null : 'asc';
@@ -112,7 +128,8 @@ export function DataTableProvider<T>({ children, initialRecords, searchAccessors
 
 	//
 	// D. Define context value
-	const contextValue: DataTableContextType<T> = {
+
+	const contextValue: DataTableContextState<T> = {
 		actions: {
 			clearSearchQuery,
 			handleSort,
@@ -131,18 +148,12 @@ export function DataTableProvider<T>({ children, initialRecords, searchAccessors
 
 	//
 	// E. Render Components
+
 	return (
 		<DataTableContext.Provider value={contextValue}>
 			{children}
 		</DataTableContext.Provider>
 	);
-};
 
-// Custom hook for consuming the context
-export function useDataTableContext<T>(): DataTableContextType<T> {
-	const context = useContext(DataTableContext);
-	if (!context) {
-		throw new Error('useDataTableContext must be used within a DataTableProvider');
-	}
-	return context as DataTableContextType<T>;
+	//
 };

@@ -1,6 +1,5 @@
 'use client';
 
-
 /* * */
 
 import { AVAILABLE_THEMES, useThemeContext } from '@/contexts/Theme.context';

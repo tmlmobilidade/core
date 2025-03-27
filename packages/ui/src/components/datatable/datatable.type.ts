@@ -1,4 +1,5 @@
 export interface DataTableColumn<T> {
+
 	/**
 	 * Column accessor.
 	 * You can use dot-notation for nested objects property drilling.
@@ -45,6 +46,7 @@ export interface DataTableColumn<T> {
 	 * @default 100%
 	 */
 	width?: number
+
 }
 
 export interface DataTableColumnProps<T = Record<string, unknown>> {
@@ -54,14 +56,8 @@ export interface DataTableColumnProps<T = Record<string, unknown>> {
 	columns: DataTableColumn<T>[]
 }
 
-export interface DataTableHeaderProps<T = Record<string, unknown>> {
-	/**
-	 * The columns to be displayed in the table header.
-	 */
-	columns: DataTableColumn<T>[]
-}
-
 export interface DataTableProps<T> {
+
 	/**
 	 * The classnames to be applied to the table.
 	 */
@@ -118,21 +114,11 @@ export interface DataTableProps<T> {
 	 * The title of the table.
 	 */
 	title?: string
-}
 
-export interface DataTableRowProps<T = Record<string, unknown>> {
-	/**
-	 * The column configuration for the row.
-	 */
-	columns: DataTableColumn<T>[]
-
-	/**
-	 * The data record for the row.
-	 */
-	record: T
 }
 
 export interface DataTableSearchProps<T> {
+
 	/**
 	 * The list of accessors to be used for searching.
 	 */
@@ -164,9 +150,11 @@ export interface DataTableSearchProps<T> {
 	 * The current value of the search input.
 	 */
 	value?: string
+
 }
 
 export interface DataTableTitleProps<T> {
+
 	/**
 	 * The search configuration for the table.
 	 */
@@ -176,4 +164,5 @@ export interface DataTableTitleProps<T> {
 	 * The title of the table.
 	 */
 	title?: string
+
 }

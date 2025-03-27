@@ -27,7 +27,7 @@
 	},
 	"scripts": {
 		"build": "rimraf ./dist && tsc && resolve-tspaths",
-		"dev": "tsx src/index.ts",
+		"dev2": "tsx src/index.ts",
 		"lint": "eslint . && tsc --noEmit",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},

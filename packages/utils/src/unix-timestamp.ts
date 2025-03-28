@@ -34,3 +34,12 @@ export function getUnixTimestampFromSeconds(seconds: number): UnixTimestamp {
 	if (!parsedDate.isValid) throw new Error(`Invalid date '${seconds}, explanation: ${parsedDate.invalidExplanation}`);
 	return parsedDate.toMillis() as UnixTimestamp;
 }
+
+/**
+ * Returns a JS Date object from a Unix Timestamp.
+ * @param unixTimestamp - The Unix Timestamp to convert. in UTC.
+ * @returns The JS Date object in local timezone.
+ */
+export function getJSDateFromUnixTimestamp(unixTimestamp: UnixTimestamp): Date {
+	return DateTime.fromMillis(unixTimestamp).toLocal().toJSDate();
+}

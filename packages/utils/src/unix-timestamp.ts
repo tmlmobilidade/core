@@ -41,5 +41,5 @@ export function getUnixTimestampFromSeconds(seconds: number): UnixTimestamp {
  * @returns The JS Date object in local timezone.
  */
 export function getJSDateFromUnixTimestamp(unixTimestamp: UnixTimestamp): Date {
-	return DateTime.fromMillis(unixTimestamp).toLocal().toJSDate();
+	return DateTime.fromMillis(unixTimestamp, { zone: 'utc' }).toLocal().toJSDate();
 }

@@ -1,14 +1,14 @@
 /* * */
 
 import fs from 'fs';
-import path from 'path';
+// import path from 'path';
 
 /* * */
 
-const __filename = new URL(import.meta.url).pathname;
-const __dirname = path.dirname(__filename);
+// const __filename = new URL(import.meta.url).pathname;
+// const __dirname = path.dirname(__filename);
 
-const rootDir = path.resolve(__dirname, '..', '..', '..');
+// const rootDir = path.resolve(__dirname, '..', '..', '..');
 
 export function buildStyles() {
 	// Read all necessary files first
@@ -18,13 +18,13 @@ export function buildStyles() {
 
 	const themeContents = themes.map(theme => fs.readFileSync(`src/styles/themes/${theme}`));
 
-	const mantineStyles = fs.readFileSync(path.resolve(rootDir, 'node_modules/@mantine/core/styles.layer.css'));
-	const mantineNotificationsStyles = fs.readFileSync(path.resolve(rootDir, 'node_modules/@mantine/notifications/styles.layer.css'));
-	const mantineDatesStyles = fs.readFileSync(path.resolve(rootDir, 'node_modules/@mantine/dates/styles.layer.css'));
+	// const mantineStyles = fs.readFileSync(path.resolve(rootDir, 'node_modules/@mantine/core/styles.layer.css'));
+	// const mantineNotificationsStyles = fs.readFileSync(path.resolve(rootDir, 'node_modules/@mantine/notifications/styles.layer.css'));
+	// const mantineDatesStyles = fs.readFileSync(path.resolve(rootDir, 'node_modules/@mantine/dates/styles.layer.css'));
 
 	// Concatenate all contents
-	const allStyles = Buffer.concat([resetCss, indexCss, ...themeContents, mantineStyles, mantineNotificationsStyles, mantineDatesStyles]);
-	const noResetStyles = Buffer.concat([indexCss, ...themeContents, mantineStyles, mantineNotificationsStyles, mantineDatesStyles]);
+	const allStyles = Buffer.concat([resetCss, Buffer.from('\n'), indexCss, Buffer.from('\n'), ...themeContents.flatMap(theme => [theme, Buffer.from('\n')])]); // , mantineStyles, mantineNotificationsStyles, mantineDatesStyles]);
+	const noResetStyles = Buffer.concat([indexCss, ...themeContents]); // , mantineStyles, mantineNotificationsStyles, mantineDatesStyles]);
 
 	// Write all styles to the destination file
 	fs.writeFileSync('dist/styles.css', allStyles);

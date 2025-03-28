@@ -1,14 +1,25 @@
-.row {
-    border-bottom: 1px solid var(--color-system-border-100);
+/* * */
+/* ROW */
 
-    &:hover {
-        background-color: var(--color-system-background-200);
-    }
+.row {
+	display: flex;
+	background-color: var(--color-system-background-100);
+    border-bottom: 1px solid var(--color-system-border-100);
 }
 
+.row:hover {
+	background-color: var(--color-system-background-200);
+}
+
+/* * */
+/* * */
+/* * */
+
 .cell {
-    font-weight: var(--font-weight-semibold);
+	display: flex;
+	padding: var(--size-spacing-md);
     font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
     line-height: var(--font-line-height-base);
     color: var(--color-system-text-100);
 }
@@ -16,8 +27,8 @@
 .maxWidth {
     & * {
         overflow: hidden;
-        white-space: nowrap;
         text-overflow: ellipsis;
+        white-space: nowrap;
     }
 }
 

@@ -38,7 +38,7 @@ export function DataTableContent<T>({ classnames, columns, maxHeight, onRowClick
 			>
 				<div className={cn(styles.table, classnames?.table, 'block')}>
 					<DataTableHeader columns={columns} />
-					<div className={cn(styles.tableBody, classnames?.body)}>
+					<div className={cn(styles.body, classnames?.body)}>
 						<ViewportList itemMargin={0} items={dataTableContext.data.records}>
 							{(record, rowIndex) => (
 								<DataTableRow

@@ -27,7 +27,7 @@ export function DataTableHeader<T = Record<string, unknown>>({ columns }: Props<
 	//
 	// A. Setup variables
 
-	const { actions: { handleSort }, filters: { sortState } } = useDataTableContext<T>();
+	const dataTableContext = useDataTableContext<T>();
 
 	//
 	// B. Render components
@@ -36,10 +36,10 @@ export function DataTableHeader<T = Record<string, unknown>>({ columns }: Props<
 		if (!column.sortable) return null;
 		return (
 			<ActionIcon variant="muted">
-				{sortState?.accessor === column.accessor ? (
-					sortState.order === 'asc' ? (
+				{dataTableContext.filters.sort_state?.accessor === column.accessor ? (
+					dataTableContext.filters.sort_state.order === 'asc' ? (
 						<IconArrowUpRhombus size={18} />
-					) : sortState.order === 'desc' ? (
+					) : dataTableContext.filters.sort_state.order === 'desc' ? (
 						<IconArrowDownRhombus size={18} />
 					) : (
 						<IconArrowsUpDown size={18} />
@@ -61,13 +61,14 @@ export function DataTableHeader<T = Record<string, unknown>>({ columns }: Props<
 						style={{
 							maxWidth: column.width,
 							minWidth: column.width ?? 'max-content',
+							width: dataTableContext.data.column_widths?.[column.accessor as string] ?? column.width,
 						}}
 					>
 						<div
 							className={styles.cellContent}
 							onClick={() =>
 								column.sortable
-								&& handleSort(column.sortKey ?? String(column.accessor))}
+								&& dataTableContext.actions.handleSort(column.sortKey ?? String(column.accessor))}
 						>
 							{column.title}
 							{column.sortable && renderSortIcon(column)}

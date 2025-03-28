@@ -73,10 +73,7 @@ export interface Props<T> {
 
 export function DataTable<T>({ records, ...props }: Props<T>) {
 	return (
-		<DataTableContextProvider
-			initialRecords={records}
-			searchAccessors={props.search?.accessors ?? []}
-		>
+		<DataTableContextProvider columns={props.columns} initialRecords={records} searchAccessors={props.search?.accessors ?? []}>
 			<DataTableContent {...props} />
 		</DataTableContextProvider>
 	);

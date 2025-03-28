@@ -2,11 +2,11 @@
 
 /* * */
 
-import { DataTableSearchProps } from '@/components/datatable/datatable.type';
+import { DataTableColumn, DataTableSearchProps } from '@/components/datatable/datatable.type';
 import { useSearchQuery } from '@/hooks/use-search-query';
 import { tryParseDateToTimestamp } from '@/lib/utils';
 import { getValueAtPath } from '@/lib/utils';
-import { createContext, ReactNode, useCallback, useContext, useMemo, useState } from 'react';
+import { createContext, ReactNode, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 /* * */
 
@@ -14,21 +14,24 @@ interface DataTableContextState<T> {
 	actions: {
 		clearSearchQuery: () => void
 		handleSort: (accessor: string) => void
+		handleUpdateColumnWidth: (column: string, width: number) => void
 		updateFilterBySearchQuery: (query: string) => void
 	}
 	data: {
-		initialRecords: T[]
+		column_widths?: Record<string, number>
+		initial_records: T[]
 		records: T[]
 	}
 	filters: {
-		searchQuery?: string
-		sortState: null | SortState
+		search_query?: string
+		sort_state: null | SortState
 	}
 }
 
 // Define the props for the provider component
 interface DataTableProviderProps<T> {
 	children: ReactNode
+	columns: DataTableColumn<T>[]
 	initialRecords: T[]
 	searchAccessors: DataTableSearchProps<T>['accessors']
 }
@@ -55,18 +58,19 @@ export function useDataTableContext<T>(): DataTableContextState<T> {
 
 /* * */
 
-export function DataTableContextProvider<T>({ children, initialRecords, searchAccessors }: DataTableProviderProps<T>) {
+export function DataTableContextProvider<T>({ children, columns, initialRecords, searchAccessors }: DataTableProviderProps<T>) {
 	//
 
 	//
-	// A. Setup Variables
+	// A. Setup variables
 
-	const [sortState, setSortState] = useState<DataTableContextState<T>['filters']['sortState']>(null);
+	const [sortState, setSortState] = useState<DataTableContextState<T>['filters']['sort_state']>(null);
+	const [columnWidths, setColumnWidths] = useState<DataTableContextState<T>['data']['column_widths']>({});
 
 	const { filteredData: searchQueryData, searchQuery, setSearchQuery } = useSearchQuery<T>(initialRecords, { accessors: searchAccessors, debounce: 200 });
 
 	//
-	// B. Transform Data
+	// B. Transform data
 
 	const filteredAndSortedData = useMemo(() => {
 		let filteredData: T[] = searchQueryData;
@@ -105,8 +109,19 @@ export function DataTableContextProvider<T>({ children, initialRecords, searchAc
 		return filteredData;
 	}, [initialRecords, sortState, searchQueryData]);
 
+	useEffect(() => {
+		// Set initial column widths
+		const initialWidths: Record<string, number> = {};
+		columns.forEach((column) => {
+			if (column.width) {
+				initialWidths[String(column.accessor)] = column.width;
+			}
+		});
+		setColumnWidths(initialWidths);
+	}, [columns]);
+
 	//
-	// C. Handle Actions
+	// C. Handle actions
 
 	const handleSort = useCallback((accessor: string) => {
 		if (sortState?.accessor === accessor) {
@@ -126,6 +141,13 @@ export function DataTableContextProvider<T>({ children, initialRecords, searchAc
 		setSearchQuery(undefined);
 	}, []);
 
+	const handleUpdateColumnWidth = useCallback((column: string, width: number) => {
+		setColumnWidths(prev => ({
+			...prev,
+			[column]: width,
+		}));
+	}, []);
+
 	//
 	// D. Define context value
 
@@ -133,21 +155,23 @@ export function DataTableContextProvider<T>({ children, initialRecords, searchAc
 		actions: {
 			clearSearchQuery,
 			handleSort,
+			handleUpdateColumnWidth,
 			updateFilterBySearchQuery,
 		},
 		data: {
-			initialRecords,
+			column_widths: columnWidths,
+			initial_records: initialRecords,
 			records: filteredAndSortedData,
 		},
 		filters: {
-			searchQuery,
-			sortState,
+			search_query: searchQuery,
+			sort_state: sortState,
 		},
 
 	};
 
 	//
-	// E. Render Components
+	// E. Render components
 
 	return (
 		<DataTableContext.Provider value={contextValue}>

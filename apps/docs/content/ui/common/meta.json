@@ -11,6 +11,7 @@
 		"delete-action-icon/index",
 		"description/index",
 		"file-button/index",
+		"datatable/index",
 		"label/index",
 		"menu/index",
 		"password-input/index",

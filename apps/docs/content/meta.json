@@ -2,6 +2,7 @@
 	"pages": [
 		"index",
 		"getting-started",
+		"create-tml-app",
 		"---Core---",
 		"...core",
 		"---UI---",

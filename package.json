@@ -17,6 +17,7 @@
 		"build:ui": "turbo build --filter=@tmlmobilidade/ui",
 		"build:utils": "turbo build --filter=@tmlmobilidade/utils",
 		"dev": "turbo dev",
+		"dev:docs": "turbo dev --filter=@tmlmobilidade/docs",
 		"lint": "turbo lint",
 		"clean": "sh cleanup.sh",
 		"test": "turbo test",

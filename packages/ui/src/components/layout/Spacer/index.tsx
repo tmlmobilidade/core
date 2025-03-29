@@ -7,8 +7,8 @@ import styles from './styles.module.css';
 /* * */
 
 interface Props {
-	orientation: 'horizontal' | 'vertical'
-	size: 'full' | 'lg' | 'md' | 'sm'
+	orientation?: 'horizontal' | 'vertical'
+	size?: 'full' | 'lg' | 'md' | 'sm'
 }
 
 /* * */

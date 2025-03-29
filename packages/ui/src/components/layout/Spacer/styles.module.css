@@ -1,7 +1,7 @@
 /* * */
 /* CONTAINER */
 
-.element {
+.container {
 	display: flex;
 	background-color: red;
 }
@@ -9,31 +9,31 @@
 /* * */
 /* PROPS / SIZE */
 
-.element[data-size="full"] {
+.container[data-size="full"] {
     --spacer-size: 100%;
 }
 
-.element[data-size="lg"] {
+.container[data-size="lg"] {
 	--spacer-size: var(--size-spacing-lg);
 }
 
-.element[data-size="md"] {
+.container[data-size="md"] {
 	--spacer-size: var(--size-spacing-md);
 }
 
-.element[data-size="sm"] {
+.container[data-size="sm"] {
 	--spacer-size: var(--size-spacing-sm);
 }
 
 /* * */
 /* PROPS / ORIENTATION */
 
-.element[data-orientation="vertical"] {
+.container[data-orientation="vertical"] {
 	width: 2px;
     height: var(--spacer-size);
 }
 
-.element[data-orientation="horizontal"] {
+.container[data-orientation="horizontal"] {
     width: var(--spacer-size);
     height: 2px;
 }

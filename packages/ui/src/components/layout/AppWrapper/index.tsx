@@ -1,7 +1,8 @@
 'use client';
 
-import { useMeContext } from '@/contexts/Me.context';
 /* * */
+
+import { useMeContext } from '@/contexts/Me.context';
 
 import Sidebar from '../Sidebar';
 import Header from './Header';
@@ -20,7 +21,7 @@ export default function AppWrapper({ children, icon }: AppWrapperProps) {
 	//
 	// A. Setup variables
 
-	const { data } = useMeContext();
+	const meContext = useMeContext();
 
 	const appIcon = () => {
 		if (icon && typeof icon === 'object' && 'href' in icon) {
@@ -36,7 +37,7 @@ export default function AppWrapper({ children, icon }: AppWrapperProps) {
 	return (
 		<div className={styles.container}>
 			<div className={styles.appIcon}>{appIcon()}</div>
-			<Header userName={data.user?.first_name} />
+			<Header userName={meContext.data.user?.first_name} />
 			<Sidebar />
 			<div className={styles.content}>{children}</div>
 		</div>

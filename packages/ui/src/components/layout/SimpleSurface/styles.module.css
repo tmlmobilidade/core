@@ -13,7 +13,8 @@
 	box-shadow: 0 1px 3px 0 rgb(0 0 0 / 5%);
 }
 
-/* SURFACE / PADDING */
+/* * */
+/* PROPS / PADDING */
 
 .root[data-padding='sm'] {
 	padding: var(--size-spacing-sm);
@@ -29,4 +30,19 @@
 
 .root[data-padding='xl'] {
 	padding: var(--size-spacing-xl);
+}
+
+/* * */
+/* PROPS / OVERFLOW */
+
+.root[data-overflow='auto'] {
+	overflow: auto;
+}
+
+.root[data-overflow='hidden'] {
+	overflow: hidden;
+}
+
+.root[data-overflow='scroll'] {
+	overflow: scroll;
 }

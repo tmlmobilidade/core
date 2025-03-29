@@ -16,7 +16,7 @@ interface Props {
 export function Spacer({ orientation = 'horizontal', size = 'full' }: Props) {
 	return (
 		<div
-			className={styles.container}
+			className={styles.element}
 			data-orientation={orientation}
 			data-size={size}
 		/>

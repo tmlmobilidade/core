@@ -1,41 +1,39 @@
-.sizexs {
+/* * */
+/* CONTAINER */
+
+.element {
+	display: flex;
+	background-color: blue;
+}
+
+/* * */
+/* PROPS / SIZE */
+
+.element[data-size="full"] {
     --spacer-size: var(--size-spacing-xs);
 }
 
-.sizesm {
+.element[data-size="sm"] {
     --spacer-size: var(--size-spacing-sm);
 }
 
-.sizemd {
+.element[data-size="md"] {
     --spacer-size: var(--size-spacing-md);
 }
 
-.sizelg {
+.element[data-size="lg"] {
     --spacer-size: var(--size-spacing-lg);
 }
 
-.sizexl {
-    --spacer-size: var(--size-spacing-xl);
-}
+/* * */
+/* PROPS / ORIENTATION */
 
-.size2xl {
-    --spacer-size: var(--size-spacing-2xl);
-}
-
-.size3xl {
-    --spacer-size: var(--size-spacing-3xl);
-}
-
-.size4xl {
-    --spacer-size: var(--size-spacing-4xl);
-}
-
-.orientationvertical {
-    width: 100%;
+.element[data-orientation="vertical"] {
+	width: 2px;
     height: var(--spacer-size);
 }
 
-.orientationhorizontal {
+.element[data-orientation="horizontal"] {
     width: var(--spacer-size);
-    height: 100%;
+    height: 2px;
 }

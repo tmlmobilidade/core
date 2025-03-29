@@ -2,30 +2,23 @@
 
 /* * */
 
-import { cn } from '@/lib/utils';
-
 import styles from './styles.module.css';
 
-interface SpacerProps {
-	className?: string
+/* * */
+
+interface Props {
 	orientation: 'horizontal' | 'vertical'
-	size: '2xl' | '3xl' | '4xl' | 'lg' | 'md' | 'sm' | 'xl' | 'xs'
+	size: 'full' | 'lg' | 'md' | 'sm'
 }
 
-export default function Spacer({ className, orientation, size }: SpacerProps) {
-	const sizeClass = `size${size}`;
-	const orientationClass = `orientation${orientation}`;
+/* * */
 
+export function Spacer({ orientation, size }: Props) {
 	return (
 		<div
-			className={cn(
-				styles[sizeClass],
-				styles[orientationClass],
-				className,
-			)}
-			style={{
-				minHeight: orientation === 'horizontal' ? '100%' : undefined,
-			}}
+			className={styles.container}
+			data-orientation={orientation}
+			data-size={size}
 		/>
 	);
 }

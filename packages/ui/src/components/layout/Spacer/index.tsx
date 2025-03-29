@@ -13,7 +13,7 @@ interface Props {
 
 /* * */
 
-export function Spacer({ orientation, size }: Props) {
+export function Spacer({ orientation = 'horizontal', size = 'full' }: Props) {
 	return (
 		<div
 			className={styles.container}

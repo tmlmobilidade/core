@@ -10,7 +10,7 @@
 /* PROPS / SIZE */
 
 .element[data-size="full"] {
-    --spacer-size: var(--size-spacing-xs);
+    --spacer-size: 100%;
 }
 
 .element[data-size="lg"] {

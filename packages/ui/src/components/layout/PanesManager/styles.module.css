@@ -1,0 +1,42 @@
+/* * */
+/* CONTAINER */
+
+.container {
+	display: grid;
+	width: 100%;
+}
+
+.ignore {
+	display: contents;
+}
+
+/* * */
+/* PANE WRAPPER */
+
+.paneWrapper {
+	display: flex;
+	width: 100%;
+}
+
+/* * */
+/* GRIP */
+
+.grip {
+	width: calc(var(--grip-width) - 10px);
+	height: 100px;
+	margin: auto 5px;
+	cursor: ew-resize;
+	background-color: var(--color-system-border-100);
+	border-radius: 999px;
+}
+
+.grip:hover {
+	background-color: var(--color-system-text-300);
+	opacity: 0.75;
+}
+
+.grip:active {
+	cursor: ew-resize;
+	background-color: var(--color-system-text-300);
+	opacity: 1;
+}

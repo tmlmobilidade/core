@@ -3,10 +3,10 @@
 /* * */
 
 import { DataTableColumn } from '@/components/datatable/datatable.type';
+import { useDataTableContext } from '@/components/datatable/DataTableContext';
 import { cn } from '@/lib/utils';
 import { getValueAtPath } from '@/lib/utils';
 
-import { useDataTableContext } from '../DataTableContext';
 import styles from './styles.module.css';
 
 /* * */

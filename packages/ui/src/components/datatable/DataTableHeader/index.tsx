@@ -61,7 +61,7 @@ export function DataTableHeader<T = Record<string, unknown>>({ columns }: Props<
 						style={{
 							maxWidth: column.width,
 							minWidth: column.width ?? 'max-content',
-							width: dataTableContext.data.column_widths?.[column.accessor as string] ?? column.width,
+							// width: dataTableContext.data.column_widths?.[column.accessor as string] ?? column.width,
 						}}
 					>
 						<div

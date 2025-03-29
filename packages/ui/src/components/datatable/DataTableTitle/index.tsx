@@ -35,13 +35,13 @@ export function DataTableTitle<T>({ search, title }: Props<T>) {
 
 	if (!title && !search) return null;
 
-	const { actions: { updateFilterBySearchQuery }, filters: { searchQuery } } = useDataTableContext<T>();
+	const dataTableContext = useDataTableContext<T>();
 
 	//
 	// B. Handle actions
 
 	const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		updateFilterBySearchQuery(event.target.value);
+		dataTableContext.actions.updateFilterBySearchQuery(event.target.value);
 	};
 
 	//
@@ -52,7 +52,7 @@ export function DataTableTitle<T>({ search, title }: Props<T>) {
 			<div className={styles.title}>{title && title}</div>
 			{search && !search.hidden && (
 				<div className={styles.filters}>
-					<TextInput onChange={handleSearchChange} placeholder={search.placeholder} value={searchQuery} />
+					<TextInput onChange={handleSearchChange} placeholder={search.placeholder} value={dataTableContext.filters.search_query} />
 				</div>
 			)}
 		</div>

@@ -13,16 +13,16 @@
     --spacer-size: var(--size-spacing-xs);
 }
 
-.element[data-size="sm"] {
-    --spacer-size: var(--size-spacing-sm);
+.element[data-size="lg"] {
+	--spacer-size: var(--size-spacing-lg);
 }
 
 .element[data-size="md"] {
-    --spacer-size: var(--size-spacing-md);
+	--spacer-size: var(--size-spacing-md);
 }
 
-.element[data-size="lg"] {
-    --spacer-size: var(--size-spacing-lg);
+.element[data-size="sm"] {
+	--spacer-size: var(--size-spacing-sm);
 }
 
 /* * */

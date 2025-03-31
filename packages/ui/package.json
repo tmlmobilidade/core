@@ -50,7 +50,7 @@
 		"@tmlmobilidade/utils": "*",
 		"@types/geojson": "7946.0.16",
 		"clsx": "2.1.1",
-		"luxon": "3.6.0",
+		"luxon": "3.6.1",
 		"react-viewport-list": "7.1.2"
 	},
 	"devDependencies": {

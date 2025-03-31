@@ -51,12 +51,12 @@ export function SidebarItem({ _id, href, label, permission }: SidebarItemProps) 
 				data-disabled={isDisabled}
 				href={href}
 			>
-				{_id === 'alerts' && <IconAlertTriangle />}
-				{_id === 'auth' && <IconUser />}
-				{_id === 'controller' && <IconChartArrowsVertical />}
-				{_id === 'equipments' && <IconDeviceMobile />}
-				{_id === 'pulse' && <IconListCheck />}
-				{_id === 'stops' && <IconBusStop />}
+				{_id === 'alerts' && <IconAlertTriangle size={30} />}
+				{_id === 'auth' && <IconUser size={30} />}
+				{_id === 'controller' && <IconChartArrowsVertical size={30} />}
+				{_id === 'equipments' && <IconDeviceMobile size={30} />}
+				{_id === 'pulse' && <IconListCheck size={30} />}
+				{_id === 'stops' && <IconBusStop size={30} />}
 			</a>
 			<span className={styles.tooltip}>
 				{label}

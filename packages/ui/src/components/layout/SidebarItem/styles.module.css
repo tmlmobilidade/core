@@ -50,11 +50,12 @@
 
 .tooltip {
 	position: absolute;
-	left: 75px;
+	left: 65px;
 	display: none;
-	padding: 5px 10px;
-	font-size: 12px;
+	padding: 10px;
+	font-size: 16px;
 	font-weight: var(--font-weight-semibold);
+	line-height: 1;
 	color: var(--color-system-background-100);
 	text-transform: uppercase;
 	background-color: var(--color-system-text-100);

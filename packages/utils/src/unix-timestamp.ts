@@ -39,7 +39,34 @@ export function getUnixTimestampFromSeconds(seconds: number): UnixTimestamp {
  * Returns a JS Date object from a Unix Timestamp.
  * @param unixTimestamp - The Unix Timestamp to convert. in UTC.
  * @returns The JS Date object in local timezone.
+ * @deprecated Use `getDateStringFromUnixTimestamp` instead.
  */
 export function getJSDateFromUnixTimestamp(unixTimestamp: UnixTimestamp): Date {
 	return DateTime.fromMillis(unixTimestamp, { zone: 'utc' }).toLocal().toJSDate();
+}
+
+/**
+ * Returns a formatted date string from a UnixTimestamp.
+ * @param timestamp - The Unix Timestamp to convert. UnixTimestamps are always in UTC.
+ * @param options - Optional formatting options.
+ * @param options.format - The format to use. Defaults to 'yyyy-MM-dd'.
+ * @param options.timezone - The timezone to use. Defaults to 'local'.
+ * @returns The formatted date string.
+ */
+export function getDateStringFromUnixTimestamp(timestamp: UnixTimestamp, options?: { format?: string, timezone?: string }): string {
+	const date = DateTime.fromMillis(timestamp, { zone: 'utc' }).setZone(options?.timezone || 'local');
+	return date.toFormat(options?.format || 'yyyy-MM-dd');
+}
+
+/**
+ * Returns a formatted date string from Unix seconds.
+ * @param timestamp - The Unix seconds to convert in UTC.
+ * @param options - Optional formatting options.
+ * @param options.format - The format to use. Defaults to 'yyyy-MM-dd'.
+ * @param options.timezone - The timezone to use. Defaults to 'local'.
+ * @returns The formatted date string.
+ */
+export function getDateStringFromUnixSeconds(timestamp: number, options?: { format?: string, timezone?: string }): string {
+	const convertedUnixTimestamp = getUnixTimestampFromSeconds(timestamp);
+	return getDateStringFromUnixTimestamp(convertedUnixTimestamp, options);
 }

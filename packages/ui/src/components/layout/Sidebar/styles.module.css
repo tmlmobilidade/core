@@ -2,54 +2,26 @@
 /* CONTAINER */
 
 .container {
-	height: 100%;
+	z-index: 25;
 	display: flex;
 	flex-direction: column;
 	gap: var(--size-spacing-xs);
 	justify-content: space-between;
-	z-index: 25;
+	height: 100%;
 	overflow-y: auto;
-	border-right: 1px solid var(--color-system-border-100);
 	background-color: var(--color-system-background-100);
-	box-shadow: 0 0 10px -5px rgba(0, 0, 0, 0.2);
+	border-right: 1px solid var(--color-system-border-100);
+	box-shadow: 0 0 10px -5px rgb(0 0 0 / 20%);
 }
 
 /* * */
 /* NAV WRAPPER */
 
 .navWrapper {
-	width: 100%;
 	display: flex;
 	flex-direction: column;
-	align-items: center;
 	gap: var(--size-spacing-md);
+	align-items: center;
+	width: 100%;
 	padding: var(--size-spacing-lg);
-}
-
-/* * */
-/* NAV BUTTON */
-
-.navButton {
-	font-size: 26px;
-	color: var(--color-system-text-100);
-	background-color: transparent;
-	border: 2px solid transparent;
-	border-radius: var(--border-radius-xs);
-	transition: all 0.5s ease-in;
-
-	&.selected {
-		color: var(--color-contrast);
-		background-color: var(--color-primary);
-		border-color: var(--color-secondary);
-	}
-	
-	&.disabled {
-		color: var(--color-system-text-300);
-		cursor: not-allowed;
-	}
-
-	&:hover:not(.disabled) {
-		color: var(--color-contrast);
-		background-color: var(--color-secondary);
-	}
 }

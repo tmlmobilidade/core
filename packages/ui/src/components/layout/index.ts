@@ -1,10 +1,10 @@
 export { default as AppWrapper } from './AppWrapper';
 export { default as Grid } from './Grid';
 export { default as Section } from './Section';
-export { SidebarItemProps } from './Sidebar';
-export { default as Sidebar } from './Sidebar';
 export { SimpleSurface } from './SimpleSurface';
 export { default as Surface } from './Surface';
 export * from '@/components/layout/Pane';
 export * from '@/components/layout/PanesManager';
+export * from '@/components/layout/Sidebar';
+export * from '@/components/layout/SidebarItem';
 export * from '@/components/layout/Spacer';

@@ -18,7 +18,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	width: 100%;
+	width: 50px;
 	aspect-ratio: 1;
 	font-size: 30px;
 	color: var(--color-system-text-100);
@@ -52,8 +52,9 @@
 	position: absolute;
 	left: 75px;
 	display: none;
-	padding: 8px;
-	font-weight: var(--font-weight-bold);
+	padding: 5px 10px;
+	font-size: 12px;
+	font-weight: var(--font-weight-semibold);
 	color: var(--color-system-background-100);
 	text-transform: uppercase;
 	background-color: var(--color-system-text-100);

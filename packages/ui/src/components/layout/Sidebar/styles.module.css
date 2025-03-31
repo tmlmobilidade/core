@@ -23,5 +23,5 @@
 	gap: var(--size-spacing-md);
 	align-items: center;
 	width: 100%;
-	padding: var(--size-spacing-lg);
+	padding: var(--size-spacing-sm);
 }

@@ -6,6 +6,8 @@
 	flex-direction: row;
 	align-items: center;
 	justify-content: flex-start;
+	width: 100%;
+	aspect-ratio: 1;
 }
 
 /* * */

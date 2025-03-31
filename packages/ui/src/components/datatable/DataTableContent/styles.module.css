@@ -6,15 +6,11 @@
     max-width: 100%;
     overflow-x: auto;
     color: var(--color-system-text-100);
-	background-color: yellow;
-
-    /* background-color: var(--color-system-background-100); */
 }
 
 .table {
     width: 100%;
     border-collapse: collapse;
-	background-color: aqua;
 }
 
 .tableBody {

@@ -3,12 +3,20 @@
 
 .container {
 	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-start;
 }
 
 /* * */
 /* ICON */
 
 .icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	aspect-ratio: 1;
 	font-size: 26px;
 	color: var(--color-system-text-100);
 	background-color: transparent;
@@ -38,6 +46,9 @@
 /* TOOLTIP */
 
 .tooltip {
-
-	/* * */
+	position: absolute;
+	left: 50px;
+	padding: 10px;
+	color: #000;
+	background-color: blue;
 }

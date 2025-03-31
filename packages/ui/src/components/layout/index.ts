@@ -1,8 +1,8 @@
-export { default as AppWrapper } from './AppWrapper';
 export { default as Grid } from './Grid';
 export { default as Section } from './Section';
 export { SimpleSurface } from './SimpleSurface';
 export { default as Surface } from './Surface';
+export * from '@/components/layout/AppWrapper';
 export * from '@/components/layout/Pane';
 export * from '@/components/layout/PanesManager';
 export * from '@/components/layout/Sidebar';

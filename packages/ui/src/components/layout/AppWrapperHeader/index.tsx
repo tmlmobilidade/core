@@ -13,7 +13,7 @@ const greetings = ['Olá', 'Hi', 'Hey', 'Oi', 'Hallo', 'Ciao', 'Hej'];
 
 /* * */
 
-export default function Header({ userName }: { userName?: string }) {
+export function AppWrapperHeader({ userName }: { userName?: string }) {
 	//
 
 	//

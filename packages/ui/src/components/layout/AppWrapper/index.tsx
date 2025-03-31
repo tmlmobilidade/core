@@ -2,22 +2,22 @@
 
 /* * */
 
+import { AppWrapperHeader } from '@/components/layout/AppWrapperHeader';
+import { Sidebar } from '@/components/layout/Sidebar';
 import { useMeContext } from '@/contexts/Me.context';
 
-import Sidebar from '../Sidebar';
-import Header from './Header';
 import styles from './styles.module.css';
 
 /* * */
 
-export interface AppWrapperProps {
+interface Props {
 	children: React.ReactNode
 	icon?: React.ReactNode | { href: string, icon: React.ReactNode }
 }
 
 /* * */
 
-export default function AppWrapper({ children, icon }: AppWrapperProps) {
+export function AppWrapper({ children, icon }: Props) {
 	//
 	// A. Setup variables
 
@@ -37,7 +37,7 @@ export default function AppWrapper({ children, icon }: AppWrapperProps) {
 	return (
 		<div className={styles.container}>
 			<div className={styles.appIcon}>{appIcon()}</div>
-			<Header userName={meContext.data.user?.first_name} />
+			<AppWrapperHeader userName={meContext.data.user?.first_name} />
 			<Sidebar />
 			<div className={styles.content}>{children}</div>
 		</div>

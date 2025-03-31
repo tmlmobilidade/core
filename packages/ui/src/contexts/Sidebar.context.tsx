@@ -6,7 +6,7 @@ const meApiUrl = process.env.NEXT_PUBLIC_AUTH_URL + '/api/me';
 
 /* * */
 
-import { type SidebarItemProps } from '@/components/layout/Sidebar';
+import { type SidebarItemProps } from '@/components/layout/SidebarItem';
 import { swrFetcher } from '@/lib/http';
 import { createContext, PropsWithChildren, useContext, useEffect, useMemo, useState } from 'react';
 import useSWR from 'swr';

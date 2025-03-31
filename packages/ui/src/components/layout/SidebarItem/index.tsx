@@ -13,7 +13,7 @@ import styles from './styles.module.css';
 
 /* * */
 
-interface Props {
+export interface SidebarItemProps {
 	_id: string
 	href: string
 	label: string
@@ -22,7 +22,7 @@ interface Props {
 
 /* * */
 
-export function SidebarItem({ _id, href, label, permission }: Props) {
+export function SidebarItem({ _id, href, label, permission }: SidebarItemProps) {
 	//
 
 	//

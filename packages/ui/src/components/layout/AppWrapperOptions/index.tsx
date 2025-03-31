@@ -4,7 +4,7 @@
 
 import { IconLogin, IconSettings } from '@tabler/icons-react';
 
-import { ActionIcon, Menu } from '../../../common';
+import { ActionIcon, Menu } from '../../common';
 
 /* * */
 
@@ -12,7 +12,7 @@ import { ActionIcon, Menu } from '../../../common';
 // 	apiUrl: string
 // }
 
-export default function AppOptions() {
+export function AppWrapperOptions() {
 	//
 
 	//

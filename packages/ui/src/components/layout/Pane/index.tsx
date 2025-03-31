@@ -17,7 +17,7 @@ interface Props {
 
 export function Pane({ children, header }: Props) {
 	return (
-		<SimpleSurface>
+		<SimpleSurface height="full">
 			{header && <div className={styles.header}>{header}</div>}
 			{children && <div className={styles.children}>{children}</div>}
 		</SimpleSurface>

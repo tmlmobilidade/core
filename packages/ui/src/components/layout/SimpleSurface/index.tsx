@@ -8,7 +8,7 @@ import styles from './styles.module.css';
 
 interface SurfaceProps {
 	children: React.ReactNode
-	height: 'auto' | 'full'
+	height?: 'auto' | 'full'
 	overflow?: 'auto' | 'hidden' | 'scroll'
 	padding?: 'lg' | 'md' | 'sm' | 'xl'
 }

@@ -20,7 +20,7 @@
 .navWrapper {
 	display: flex;
 	flex-direction: column;
-	gap: var(--size-spacing-md);
+	gap: 0;
 	align-items: center;
 	width: 100%;
 	padding: var(--size-spacing-sm);

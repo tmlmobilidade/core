@@ -15,7 +15,7 @@ interface SectionProps {
 
 /* * */
 
-export default function Section({ alignItems = 'flex-start', children, flexDirection = 'column', gap, justifyContent = 'flex-start', padding = 'md' }: SectionProps) {
+export function Section({ alignItems = 'flex-start', children, flexDirection = 'column', gap, justifyContent = 'flex-start', padding = 'md' }: SectionProps) {
 	return (
 		<div
 			className={styles.root}

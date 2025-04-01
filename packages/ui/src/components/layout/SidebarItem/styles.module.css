@@ -42,10 +42,11 @@
 
 .icon[data-disabled='true'],
 .icon[data-disabled='true']:hover {
-	color: var(--color-system-text-300);
+	color: var(--color-system-text-100);
 	pointer-events: none;
 	cursor: not-allowed;
 	background-color: transparent;
+	opacity: 0.5;
 }
 
 /* * */

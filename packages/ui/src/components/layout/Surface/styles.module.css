@@ -1,5 +1,5 @@
 /* * */
-/* SURFACE / ROOT */
+/* ROOT */
 
 .root {
 	display: flex;
@@ -37,23 +37,4 @@
 
 .root[data-overflow='scroll'] {
 	overflow: scroll;
-}
-
-/* * */
-/* PROPS / PADDING */
-
-.root[data-padding='sm'] {
-	padding: var(--size-spacing-sm);
-}
-
-.root[data-padding='md'] {
-	padding: var(--size-spacing-md);
-}
-
-.root[data-padding='lg'] {
-	padding: var(--size-spacing-lg);
-}
-
-.root[data-padding='xl'] {
-	padding: var(--size-spacing-xl);
 }

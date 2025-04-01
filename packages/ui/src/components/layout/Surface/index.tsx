@@ -8,12 +8,11 @@ interface SurfaceProps {
 	children: React.ReactNode
 	height?: 'auto' | 'full'
 	overflow?: 'auto' | 'hidden' | 'scroll'
-	padding?: 'lg' | 'md' | 'sm' | 'xl'
 }
 
-export function Surface({ children, height = 'auto', overflow = 'hidden', padding }: SurfaceProps) {
+export function Surface({ children, height = 'auto', overflow = 'hidden' }: SurfaceProps) {
 	return (
-		<div className={styles.root} data-height={height} data-overflow={overflow} data-padding={padding}>
+		<div className={styles.root} data-height={height} data-overflow={overflow}>
 			{children}
 		</div>
 	);

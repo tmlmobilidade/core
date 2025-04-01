@@ -7,26 +7,26 @@ export default function PaneExample() {
 		<ComponentWrapper>
 			<PanesManager
 				panes={[
-					<Pane header={(
+					<Pane header={[
 						<>
 							<Label size="lg" caps>Header</Label>
 							<Spacer />
 							<Label size="lg" caps>Aside</Label>
-						</>
-					)}
+						</>,
+					]}
 					>
 						<Text>Content</Text>
 						<Text>Content</Text>
 						<Text>Content</Text>
 						<Text>Content</Text>
 					</Pane>,
-					<Pane header={(
+					<Pane header={[
 						<>
 							<Label size="lg" caps>Header</Label>
 							<Spacer />
 							<Label size="lg" caps>Aside</Label>
-						</>
-					)}
+						</>,
+					]}
 					>
 						<Text>Content</Text>
 						<Text>Content</Text>

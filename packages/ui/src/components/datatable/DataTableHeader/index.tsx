@@ -5,7 +5,6 @@
 import ActionIcon from '@/components/common/ActionIcon';
 import { DataTableColumn } from '@/components/datatable/datatable.type';
 import { useDataTableContext } from '@/components/datatable/DataTableContext';
-import { cn } from '@/lib/utils';
 import { IconArrowDownRhombus, IconArrowsUpDown, IconArrowUpRhombus } from '@tabler/icons-react';
 
 import styles from './styles.module.css';
@@ -52,30 +51,28 @@ export function DataTableHeader<T = Record<string, unknown>>({ columns }: Props<
 	};
 
 	return (
-		<div className={cn(styles.header)}>
-			<div className={cn(styles.row)}>
-				{columns.map((column, idx) => (
+		<div className={styles.header}>
+			{columns.map((column, idx) => (
+				<div
+					key={idx}
+					className={styles.cell}
+					style={{
+						maxWidth: column.width,
+						minWidth: column.width ?? 'max-content',
+						// width: dataTableContext.data.column_widths?.[column.accessor as string] ?? column.width,
+					}}
+				>
 					<div
-						key={idx}
-						className={cn(styles.cell)}
-						style={{
-							maxWidth: column.width,
-							minWidth: column.width ?? 'max-content',
-							// width: dataTableContext.data.column_widths?.[column.accessor as string] ?? column.width,
-						}}
+						className={styles.cellContent}
+						onClick={() =>
+							column.sortable
+							&& dataTableContext.actions.handleSort(column.sortKey ?? String(column.accessor))}
 					>
-						<div
-							className={styles.cellContent}
-							onClick={() =>
-								column.sortable
-								&& dataTableContext.actions.handleSort(column.sortKey ?? String(column.accessor))}
-						>
-							{column.title}
-							{column.sortable && renderSortIcon(column)}
-						</div>
+						{column.title}
+						{column.sortable && renderSortIcon(column)}
 					</div>
-				))}
-			</div>
+				</div>
+			))}
 		</div>
 	);
 

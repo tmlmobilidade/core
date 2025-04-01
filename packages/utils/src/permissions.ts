@@ -10,12 +10,8 @@ import { mergekit } from 'mergekit';
  * @param action - The action of the permission
  * @returns The permission
  */
-export function getPermission(
-	permissions: Permission<unknown>[],
-	scope: string,
-	action: string,
-): Permission<unknown> {
-	return mergekit([...permissions], {
+export function getPermission(permissions: Permission<unknown>[], scope: string, action: string): Permission<unknown> {
+	return mergekit([...(permissions ?? [])], {
 		appendArrays: true,
 		dedupArrays: true,
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { ComponentWrapper, DataTable, DataTableColumn } from '@tmlmobilidade/ui';
+import { AppProvider, AppWrapper, ComponentWrapper, DataTable, DataTableColumn, Pane } from '@tmlmobilidade/ui';
 
 interface SampleObject {
 	_id: string
@@ -9,31 +9,26 @@ interface SampleObject {
 }
 
 const sampleData: SampleObject[] = [
-	{
-		_id: 'ABC',
-		publish_status: 'published',
-		title: 'Sample Title 1',
-	},
-	{
-		_id: 'DEF',
-		publish_status: 'published',
-		title: 'Sample Title 1',
-	},
-	{
-		_id: 'GHI',
-		publish_status: 'published',
-		title: 'Sample Title 1',
-	},
-	{
-		_id: 'JKL',
-		publish_status: 'published',
-		title: 'Sample Title 1',
-	},
-	{
-		_id: 'MNO',
-		publish_status: 'published',
-		title: 'Sample Title 1',
-	},
+	{ _id: '1', publish_status: 'published', title: 'Sample Title 1' },
+	{ _id: '2', publish_status: 'published', title: 'Sample Title 1' },
+	{ _id: '3', publish_status: 'published', title: 'Sample Title 1' },
+	{ _id: '4', publish_status: 'published', title: 'Sample Title 1' },
+	{ _id: '5', publish_status: 'published', title: 'Sample Title 1' },
+	{ _id: '6', publish_status: 'published', title: 'Sample Title 1' },
+	{ _id: '7', publish_status: 'published', title: 'Sample Title 1' },
+	{ _id: '8', publish_status: 'published', title: 'Sample Title 1' },
+	{ _id: '9', publish_status: 'published', title: 'Sample Title 1' },
+	{ _id: '10', publish_status: 'published', title: 'Sample Title 1' },
+	{ _id: '11', publish_status: 'published', title: 'Sample Title 1' },
+	{ _id: '12', publish_status: 'published', title: 'Sample Title 1' },
+	{ _id: '13', publish_status: 'published', title: 'Sample Title 1' },
+	{ _id: '14', publish_status: 'published', title: 'Sample Title 1' },
+	{ _id: '15', publish_status: 'published', title: 'Sample Title 1' },
+	{ _id: '16', publish_status: 'published', title: 'Sample Title 1' },
+	{ _id: '17', publish_status: 'published', title: 'Sample Title 1' },
+	{ _id: '18', publish_status: 'published', title: 'Sample Title 1' },
+	{ _id: '19', publish_status: 'published', title: 'Sample Title 1' },
+	{ _id: '20', publish_status: 'published', title: 'Sample Title 1' },
 ];
 
 export default function DatatableExample() {
@@ -46,13 +41,19 @@ export default function DatatableExample() {
 	];
 
 	return (
-		// <ComponentWrapper>
-		<DataTable
-			columns={columns}
-			records={sampleData}
-			rowIdAccessor="_id"
-			title="Título"
-		/>
-		// </ComponentWrapper>
+		<ComponentWrapper>
+			{/* <AppProvider> */}
+			{/* <AppWrapper> */}
+			<Pane>
+				<DataTable
+					columns={columns}
+					records={sampleData}
+					rowIdAccessor="_id"
+					title="Título"
+				/>
+			</Pane>
+			{/* </AppWrapper> */}
+			{/* </AppProvider> */}
+		</ComponentWrapper>
 	);
 }

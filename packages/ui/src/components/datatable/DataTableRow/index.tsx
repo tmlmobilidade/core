@@ -28,13 +28,19 @@ interface Props<T = Record<string, unknown>> {
 /* * */
 
 export function DataTableRow<T = Record<string, unknown>>({ columns, onRowClick, onRowContextMenu, onRowDoubleClick, record }: Props<T> & { onRowClick?: (record: T) => void, onRowContextMenu?: (record: T) => void, onRowDoubleClick?: (record: T) => void }) {
-//
+	//
+
+	//
+	// A. Setup variables
 
 	const dataTableContext = useDataTableContext<T>();
 
+	//
+	// B. Render components
+
 	return (
 		<div
-			className={cn(styles.row)}
+			className={styles.row}
 			onClick={() => onRowClick && onRowClick(record)}
 			onContextMenu={() => onRowContextMenu && onRowContextMenu(record)}
 			onDoubleClick={() => onRowDoubleClick && onRowDoubleClick(record)}
@@ -58,4 +64,6 @@ export function DataTableRow<T = Record<string, unknown>>({ columns, onRowClick,
 			))}
 		</div>
 	);
+
+	//
 }

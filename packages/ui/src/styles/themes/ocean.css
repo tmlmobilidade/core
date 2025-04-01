@@ -1,17 +1,17 @@
 :root[data-theme="ocean"] {
-	--color-primary: #005adc;
-	--color-secondary: #0041a0;
-	--color-background: #e6f0ff;
-	--color-contrast: #fff;
-	--color-shadow: #000a5040;
+	--color-primary: #005ADC;
+	--color-secondary: #0041A0;
+	--color-background: #E6F0FF;
+	--color-contrast: #FFF;
+	--color-shadow: #000A5040;
 }
 
 @media (prefers-color-scheme: dark) {
 	:root[data-theme="ocean"] {
-		--color-primary: #2864b9;
-		--color-secondary: #1e4b96;
-		--color-background: #1e283c;
-		--color-contrast: #b4d2ff;
-		--color-shadow: #00083d40;
+		--color-primary: #2864B9;
+		--color-secondary: #1E4B96;
+		--color-background: #1E283C;
+		--color-contrast: #CDE1FF;
+		--color-shadow: #00083D40;
 	}
 }

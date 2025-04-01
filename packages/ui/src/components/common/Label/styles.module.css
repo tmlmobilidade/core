@@ -14,10 +14,16 @@
 }
 
 /* * */
+/* LABEL / OVERFLOW */
+
+.label[data-overflow="true"] {
+	overflow: hidden;
+}
+
+/* * */
 /* LABEL / SINGLE LINE */
 
 .label[data-single-line="true"] {
-	overflow: hidden;
 	text-overflow: ellipsis;
 	line-clamp: 1;
 	white-space: nowrap;

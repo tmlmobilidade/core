@@ -11,13 +11,13 @@ import styles from './styles.module.css';
 const GRIP_WIDTH = 20; // Pixels
 const MIN_PANE_FRACTION = 0.3; // Smallest size a pane can have in fraction units
 
-interface Props {
+interface PanesManagerProps {
 	panes: ReactNode[]
 }
 
 /* * */
 
-export function PanesManager({ panes }: Props) {
+export function PanesManager({ panes }: PanesManagerProps) {
 	//
 
 	//

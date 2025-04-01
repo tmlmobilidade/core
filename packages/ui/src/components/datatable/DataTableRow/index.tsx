@@ -11,7 +11,7 @@ import styles from './styles.module.css';
 
 /* * */
 
-interface Props<T = Record<string, unknown>> {
+interface DataTableRowProps<T = Record<string, unknown>> {
 
 	/**
 	 * The column configuration for the row.
@@ -27,7 +27,7 @@ interface Props<T = Record<string, unknown>> {
 
 /* * */
 
-export function DataTableRow<T = Record<string, unknown>>({ columns, onRowClick, onRowContextMenu, onRowDoubleClick, record }: Props<T> & { onRowClick?: (record: T) => void, onRowContextMenu?: (record: T) => void, onRowDoubleClick?: (record: T) => void }) {
+export function DataTableRow<T = Record<string, unknown>>({ columns, onRowClick, onRowContextMenu, onRowDoubleClick, record }: DataTableRowProps<T> & { onRowClick?: (record: T) => void, onRowContextMenu?: (record: T) => void, onRowDoubleClick?: (record: T) => void }) {
 	//
 
 	//

@@ -1,0 +1,58 @@
+/* * */
+/* TITLE WRAPPER */
+
+.titleWrapper {
+    margin-right: var(--size-spacing-md);
+}
+
+/* * */
+/* TITLE */
+
+.title {
+    color: var(--color-system-text-100);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--font-line-height-xl);
+    font-size: var(--font-size-xl);
+    text-transform: uppercase;
+    margin: 0;
+}
+
+/* * */
+/* DESCRIPTION */
+
+.description {
+    color: var(--color-system-text-200);
+    font-size: var(--font-size-base);
+    line-height: var(--font-line-height-base);
+    font-weight: var(--font-weight-semibold);
+}
+
+/* * */
+/* CONTROL */
+
+.control {
+    background-color: var(--color-system-background-100);
+    padding: 0 var(--size-spacing-md);
+}
+
+/* * */
+/* PANEL */
+
+.content {
+    padding: 0;
+}
+
+/* * */
+/* CHEVRON */
+
+.chevron {
+    &[data-rotate] {
+      transform: rotate(-90deg);
+    }
+    width: var(--font-size-xl);
+    height: var(--font-size-xl);
+}
+
+.icon {
+    color: var(--color-system-border-100);
+}

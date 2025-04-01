@@ -8,7 +8,7 @@ import { DataTableContextProvider } from '@/components/datatable/DataTableContex
 
 /* * */
 
-export interface Props<T> {
+export interface DataTableProps<T> {
 
 	/**
 	 * The classnames to be applied to the table.
@@ -71,7 +71,7 @@ export interface Props<T> {
 
 /* * */
 
-export function DataTable<T>({ records, ...props }: Props<T>) {
+export function DataTable<T>({ records, ...props }: DataTableProps<T>) {
 	return (
 		<DataTableContextProvider
 			columns={props.columns}

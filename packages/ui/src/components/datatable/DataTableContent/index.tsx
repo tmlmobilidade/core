@@ -2,7 +2,7 @@
 
 /* * */
 
-import { Props as DataTableProps } from '@/components/datatable/DataTable';
+import { DataTableProps } from '@/components/datatable/DataTable';
 import { useDataTableContext } from '@/components/datatable/DataTableContext';
 import { DataTableHeader } from '@/components/datatable/DataTableHeader';
 import { DataTableRow } from '@/components/datatable/DataTableRow';

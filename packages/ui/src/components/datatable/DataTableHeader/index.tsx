@@ -11,7 +11,7 @@ import styles from './styles.module.css';
 
 /* * */
 
-interface Props<T = Record<string, unknown>> {
+interface DataTableHeaderProps<T = Record<string, unknown>> {
 	/**
 	 * The columns to be displayed in the table header.
 	 */
@@ -20,7 +20,7 @@ interface Props<T = Record<string, unknown>> {
 
 /* * */
 
-export function DataTableHeader<T = Record<string, unknown>>({ columns }: Props<T>) {
+export function DataTableHeader<T = Record<string, unknown>>({ columns }: DataTableHeaderProps<T>) {
 	//
 
 	//

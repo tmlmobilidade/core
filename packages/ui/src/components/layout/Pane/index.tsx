@@ -1,14 +1,12 @@
-'use client';
-
 /* * */
 
-import { SimpleSurface } from '@/components/layout/SimpleSurface';
+import { Surface } from '@/components/layout/Surface';
 
 import styles from './styles.module.css';
 
 /* * */
 
-interface Props {
+interface PaneProps {
 
 	/**
 	 * A set of or a single React component to be rendered inside
@@ -28,9 +26,9 @@ interface Props {
 
 /* * */
 
-export function Pane({ children, header }: Props) {
+export function Pane({ children, header }: PaneProps) {
 	return (
-		<SimpleSurface height="full">
+		<Surface height="full">
 			{header && (
 				<div className={styles.headerWrapper}>
 					{header.map((headerItem, index) => (
@@ -39,6 +37,6 @@ export function Pane({ children, header }: Props) {
 				</div>
 			)}
 			{children && <div className={styles.children}>{children}</div>}
-		</SimpleSurface>
+		</Surface>
 	);
 }

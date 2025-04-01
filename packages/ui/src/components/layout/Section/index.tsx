@@ -1,53 +1,31 @@
-'use client';
-
-import { Accordion, AccordionStylesNames } from '@mantine/core';
-import { IconCaretLeftFilled } from '@tabler/icons-react';
-import React from 'react';
+/* * */
 
 import styles from './styles.module.css';
 
+/* * */
+
 interface SectionProps {
+	alignItems?: 'center' | 'flex-end' | 'flex-start'
 	children: React.ReactNode
-	classNames?: Partial<Record<AccordionStylesNames, string>>
-	description?: string
-	icon?: React.ReactNode
-	title: string
-	titleAs?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
+	flexDirection?: 'column' | 'row'
+	gap?: 'lg' | 'md' | 'sm' | null
+	justifyContent?: 'center' | 'flex-end' | 'flex-start' | 'space-between'
+	padding?: 'lg' | 'md' | 'sm' | null
 }
 
-export default function Section({
-	children,
-	classNames,
-	description,
-	icon,
-	title,
-	titleAs = 'h2',
-}: SectionProps) {
-	//
-	// B. Render Component
-	const renderControl = () => {
-		return (
-			<div className={styles.titleWrapper}>
-				{icon && icon}
-				{React.createElement(
-					titleAs,
-					{ className: styles.title },
-					title,
-				)}
-				{description && <p className={styles.description}>{description}</p>}
-			</div>
-		);
-	};
+/* * */
 
+export default function Section({ alignItems = 'flex-start', children, flexDirection = 'column', gap, justifyContent = 'flex-start', padding = 'md' }: SectionProps) {
 	return (
-		<Accordion
-			chevron={<IconCaretLeftFilled className={styles.icon} />}
-			classNames={{ ...styles, ...classNames }}
+		<div
+			className={styles.root}
+			data-align-items={alignItems}
+			data-flex-direction={flexDirection}
+			data-gap={gap}
+			data-justify-content={justifyContent}
+			data-padding={padding}
 		>
-			<Accordion.Item value="section">
-				<Accordion.Control>{renderControl()}</Accordion.Control>
-				<Accordion.Panel>{children}</Accordion.Panel>
-			</Accordion.Item>
-		</Accordion>
+			{children}
+		</div>
 	);
 }

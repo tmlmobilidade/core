@@ -8,7 +8,7 @@ const meApiUrl = process.env.NEXT_PUBLIC_AUTH_URL + '/api/users/me';
 
 import { swrFetcher } from '@/lib/http';
 import { type User } from '@tmlmobilidade/types';
-import { createContext, PropsWithChildren, useContext, useMemo } from 'react';
+import { createContext, type PropsWithChildren, useContext, useMemo } from 'react';
 import useSWR from 'swr';
 
 /* * */

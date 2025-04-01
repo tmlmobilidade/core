@@ -1,58 +1,77 @@
 /* * */
-/* TITLE WRAPPER */
+/* ROOT */
 
-.titleWrapper {
-    margin-right: var(--size-spacing-md);
+.root {
+    display: flex;
 }
 
 /* * */
-/* TITLE */
+/* PROPS / FLEX DIRECTION */
 
-.title {
-    color: var(--color-system-text-100);
-    font-weight: var(--font-weight-bold);
-    line-height: var(--font-line-height-xl);
-    font-size: var(--font-size-xl);
-    text-transform: uppercase;
-    margin: 0;
+.root[data-flex-direction="row"] {
+	flex-direction: row;
+}
+
+.root[data-flex-direction="column"] {
+	flex-direction: column;
 }
 
 /* * */
-/* DESCRIPTION */
+/* PROPS / ALIGN ITEMS */
 
-.description {
-    color: var(--color-system-text-200);
-    font-size: var(--font-size-base);
-    line-height: var(--font-line-height-base);
-    font-weight: var(--font-weight-semibold);
+.root[data-align-items="flex-start"] {
+	align-items: flex-start;
+}
+
+.root[data-align-items="center"] {
+	align-items: center;
+}
+
+.root[data-align-items="flex-end"] {
+	align-items: flex-end;
 }
 
 /* * */
-/* CONTROL */
+/* PROPS / JUSTIFY CONTENT */
 
-.control {
-    background-color: var(--color-system-background-100);
-    padding: 0 var(--size-spacing-md);
+.root[data-justify-content="flex-start"] {
+	justify-content: flex-start;
+}
+
+.root[data-justify-content="center"] {
+	justify-content: center;
+}
+
+.root[data-justify-content="flex-end"] {
+	justify-content: flex-end;
 }
 
 /* * */
-/* PANEL */
+/* PROPS / GAP */
 
-.content {
-    padding: 0;
+.root[data-gap="sm"] {
+	gap: var(--size-spacing-sm);
+}
+
+.root[data-gap="md"] {
+	gap: var(--size-spacing-md);
+}
+
+.root[data-gap="lg"] {
+	gap: var(--size-spacing-lg);
 }
 
 /* * */
-/* CHEVRON */
+/* PROPS / PADDING */
 
-.chevron {
-    &[data-rotate] {
-      transform: rotate(-90deg);
-    }
-    width: var(--font-size-xl);
-    height: var(--font-size-xl);
+.root[data-padding="sm"] {
+	padding: var(--size-spacing-sm);
 }
 
-.icon {
-    color: var(--color-system-border-100);
+.root[data-padding="md"] {
+	padding: var(--size-spacing-md);
+}
+
+.root[data-padding="lg"] {
+	padding: var(--size-spacing-lg);
 }

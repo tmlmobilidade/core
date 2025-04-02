@@ -13,6 +13,7 @@
 .label {
     font-weight: var(--font-weight-semibold);
     color: var(--color-primary);
+	text-transform: uppercase;
 }
 
 .label[data-active="true"] {

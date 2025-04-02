@@ -99,3 +99,10 @@
 	background-color: var(--color-status-danger-primary);
 	box-shadow: 0 1px 3px 0 rgb(0 0 0 / 15%);
 }
+
+/* * */
+/* PROPS / CLICKABLE */
+
+.tag[data-clickable='true'] {
+	cursor: pointer;
+}

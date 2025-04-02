@@ -4,6 +4,7 @@
 .root {
 	height: 40px;
 	padding: 0 15px;
+	overflow: visible;
 	cursor: pointer;
 	user-select: none;
 	background-color: red;

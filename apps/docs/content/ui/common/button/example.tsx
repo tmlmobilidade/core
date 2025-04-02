@@ -1,11 +1,15 @@
 'use client';
 
-import { Button, ComponentWrapper } from '@tmlmobilidade/ui';
+import { Button, ComponentWrapper, Section, Spacer } from '@tmlmobilidade/ui';
 
 export default function ButtonExample() {
 	return (
 		<ComponentWrapper>
-			<Button />
+			<Section flexDirection="row" gap="md">
+				<Button label="Hello!" />
+				<Spacer />
+				<Button label="Hello!" />
+			</Section>
 		</ComponentWrapper>
 	);
 }

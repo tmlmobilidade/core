@@ -1,6 +1,6 @@
 'use client';
 
-import { ComponentWrapper, SegmentedControl } from '@tmlmobilidade/ui';
+import { ComponentWrapper, Section, SegmentedControl } from '@tmlmobilidade/ui';
 import { useState } from 'react';
 
 export default function SegmentedControlExample() {
@@ -8,7 +8,10 @@ export default function SegmentedControlExample() {
 
 	return (
 		<ComponentWrapper>
-			<SegmentedControl className="flex-1" data={['Bus 🚌', 'Train 🚂', 'Bike 🚲']} onChange={value => setValue(value)} value={value} />
+			<Section flexDirection="row" gap="md">
+				<SegmentedControl data={['Bus 🚌', 'Train 🚂', 'Bike 🚲']} onChange={value => setValue(value)} value={value} />
+				<SegmentedControl data={['Bus 🚌', 'Train 🚂', 'Bike 🚲']} onChange={value => setValue(value)} value={value} fullWidth />
+			</Section>
 		</ComponentWrapper>
 	);
 };

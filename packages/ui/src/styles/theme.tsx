@@ -11,12 +11,13 @@ import '@/styles/index.css';
 
 /* * */
 
-import { Button, createTheme, MantineThemeOverride, PasswordInput, Textarea, TextInput } from '@mantine/core';
+import { Button, createTheme, MantineThemeOverride, PasswordInput, SegmentedControl, Textarea, TextInput } from '@mantine/core';
 
 /* * */
 
 import ButtonOverride from '@/styles/mantine/Button.module.css';
 import PasswordInputOverride from '@/styles/mantine/PasswordInput.module.css';
+import SegmentedControlOverride from '@/styles/mantine/SegmentedControl.module.css';
 import TextInputOverrideSm from '@/styles/mantine/TextInput-sm.module.css';
 import TextInputOverride from '@/styles/mantine/TextInput.module.css';
 
@@ -50,6 +51,19 @@ export const themeData: MantineThemeOverride = createTheme({
 					input: PasswordInputOverride.input,
 					root: TextInputOverride.root,
 					wrapper: TextInputOverride.wrapper,
+				};
+				return defaultClasses;
+			},
+		}),
+
+		/* * */
+
+		SegmentedControl: SegmentedControl.extend({
+			classNames: () => {
+				const defaultClasses = {
+					indicator: SegmentedControlOverride.indicator,
+					label: SegmentedControlOverride.label,
+					root: SegmentedControlOverride.root,
 				};
 				return defaultClasses;
 			},

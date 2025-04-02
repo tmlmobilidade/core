@@ -1,11 +1,12 @@
 .root {
-	background-color: var(--color-background);
+	overflow: visible;
     color: var(--color-primary);
+	background-color: var(--color-background);
 }
 
 .indicator {
-    background-color: var(--color-primary);
     color: var(--color-contrast);
+    background-color: var(--color-primary);
     border-color: var(--color-primary);
 }
 

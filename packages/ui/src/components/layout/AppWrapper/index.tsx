@@ -24,7 +24,7 @@ export function AppWrapper({ children }: PropsWithChildren) {
 
 	return (
 		<div className={styles.container}>
-			<div className={styles.appLogo}>GO</div>
+			<div className={styles.appLogo} />
 			<AppWrapperHeader userName={meContext.data.user?.first_name} />
 			<Sidebar />
 			<div className={styles.content}>{children}</div>

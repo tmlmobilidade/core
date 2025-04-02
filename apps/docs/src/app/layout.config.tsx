@@ -12,7 +12,7 @@ import { Themer, TMLogoDark, TMLogoLight } from '@tmlmobilidade/ui';
 export const baseOptions: BaseLayoutProps = {
 	disableThemeSwitch: true,
 	githubUrl: 'https://github.com/tmlmobilidade',
-	i18n: true,
+	i18n: false,
 	// links: [
 	// 	{
 	// 		external: true,

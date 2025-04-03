@@ -1,10 +1,17 @@
+/* * */
+
 import { MongoCollectionClass } from '@/mongo-collection.js';
-import { CreateMunicipalityDto, Municipality, UpdateMunicipalityDto } from '@tmlmobilidade/types';
+import { CreateMunicipalityDto, Municipality, MunicipalitySchema, UpdateMunicipalityDto, UpdateMunicipalitySchema } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
 import { Filter, IndexDescription } from 'mongodb';
+import { z } from 'zod';
+
+/* * */
 
 class MunicipalitiesClass extends MongoCollectionClass<Municipality, CreateMunicipalityDto, UpdateMunicipalityDto> {
 	private static _instance: MunicipalitiesClass;
+	protected override createSchema: z.ZodSchema = MunicipalitySchema;
+	protected override updateSchema: z.ZodSchema = UpdateMunicipalitySchema;
 
 	private constructor() {
 		super();

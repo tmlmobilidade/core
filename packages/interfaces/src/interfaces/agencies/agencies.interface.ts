@@ -10,6 +10,8 @@ import { z } from 'zod';
 
 class AgenciesClass extends MongoCollectionClass<Agency, CreateAgencyDto, UpdateAgencyDto> {
 	private static _instance: AgenciesClass;
+	protected override createSchema: z.ZodSchema = AgencySchema;
+	protected override updateSchema: z.ZodSchema = UpdateAgencySchema;
 
 	private constructor() {
 		super();

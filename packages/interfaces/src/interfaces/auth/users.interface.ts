@@ -1,12 +1,19 @@
+/* * */
+
 import { MongoCollectionClass } from '@/mongo-collection.js';
-import { CreateUserDto, UpdateUserDto, User } from '@tmlmobilidade/types';
+import { CreateUserDto, UpdateUserDto, UpdateUserSchema, User, UserSchema } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
 import { Filter, IndexDescription, Sort, WithId } from 'mongodb';
+import { z } from 'zod';
+
+/* * */
 
 type NewType = string;
 
 class UsersClass extends MongoCollectionClass<User, CreateUserDto, UpdateUserDto> {
 	private static _instance: UsersClass;
+	protected override createSchema: z.ZodSchema = UserSchema;
+	protected override updateSchema: z.ZodSchema = UpdateUserSchema;
 
 	private constructor() {
 		super();

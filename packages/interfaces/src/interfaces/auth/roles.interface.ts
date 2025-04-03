@@ -1,11 +1,18 @@
-import { HttpException, HttpStatus } from '@tmlmobilidade/lib';
+/* * */
+
 import { MongoCollectionClass } from '@/mongo-collection.js';
-import { CreateRoleDto, Role, UpdateRoleDto } from '@tmlmobilidade/types';
+import { HttpException, HttpStatus } from '@tmlmobilidade/lib';
+import { CreateRoleDto, Role, RoleSchema, UpdateRoleDto, UpdateRoleSchema } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
 import { Filter, IndexDescription, UpdateResult } from 'mongodb';
+import { z } from 'zod';
+
+/* * */
 
 class RolesClass extends MongoCollectionClass<Role, CreateRoleDto, UpdateRoleDto> {
 	private static _instance: RolesClass;
+	protected override createSchema: z.ZodSchema = RoleSchema;
+	protected override updateSchema: z.ZodSchema = UpdateRoleSchema;
 
 	private constructor() {
 		super();

@@ -1,11 +1,18 @@
+/* * */
+
 import { MongoCollectionClass } from '@/mongo-collection.js';
 import { HttpException, HttpStatus } from '@tmlmobilidade/lib';
-import { CreateSessionDto, Session, UpdateSessionDto } from '@tmlmobilidade/types';
+import { CreateSessionDto, Session, SessionSchema, UpdateSessionDto } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
 import { IndexDescription, UpdateResult } from 'mongodb';
+import { z } from 'zod';
+
+/* * */
 
 class SessionsClass extends MongoCollectionClass<Session, CreateSessionDto, UpdateSessionDto> {
 	private static _instance: SessionsClass;
+	protected override createSchema: z.ZodSchema = SessionSchema;
+	protected override updateSchema: z.ZodSchema = SessionSchema;
 
 	private constructor() {
 		super();

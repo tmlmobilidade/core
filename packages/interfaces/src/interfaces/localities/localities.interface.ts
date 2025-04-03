@@ -1,10 +1,17 @@
+/* * */
+
 import { MongoCollectionClass } from '@/mongo-collection.js';
-import { CreateLocalityDto, Locality, UpdateLocalityDto } from '@tmlmobilidade/types';
+import { CreateLocalityDto, CreateLocalitySchema, Locality, UpdateLocalityDto, UpdateLocalitySchema } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
 import { Filter, IndexDescription } from 'mongodb';
+import { z } from 'zod';
+
+/* * */
 
 class LocalitiesClass extends MongoCollectionClass<Locality, CreateLocalityDto, UpdateLocalityDto> {
 	private static _instance: LocalitiesClass;
+	protected override createSchema: z.ZodSchema = CreateLocalitySchema;
+	protected override updateSchema: z.ZodSchema = UpdateLocalitySchema;
 
 	private constructor() {
 		super();

@@ -1,7 +1,7 @@
 /* * */
 
 import { MongoConnector } from '@tmlmobilidade/connectors';
-import { createSchemaFactory, HttpException, HttpStatus } from '@tmlmobilidade/lib';
+import { HttpException, HttpStatus } from '@tmlmobilidade/lib';
 import { type UnixTimestamp } from '@tmlmobilidade/types';
 import { generateRandomString, getUnixTimestamp } from '@tmlmobilidade/utils';
 import { Collection, DeleteResult, Document, Filter, IndexDescription, InsertOneResult, MongoClientOptions, OptionalUnlessRequiredId, Sort, UpdateOptions, UpdateResult, WithId } from 'mongodb';
@@ -48,12 +48,6 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 			// TODO: This should be refactored as indexes should be created in the database setup script
 			if (process.env.NODE_ENV === 'test' && this.getCollectionIndexes().length > 0) {
 				await this.mongoCollection.createIndexes(this.getCollectionIndexes());
-			}
-			// Create schemas, if any are defined
-			const schemas = createSchemaFactory(this.getCollectionName());
-			if (schemas) {
-				this.createSchema = schemas[0];
-				this.updateSchema = schemas[1];
 			}
 		}
 		catch (error) {

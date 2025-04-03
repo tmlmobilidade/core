@@ -1,11 +1,18 @@
+/* * */
+
 import { MongoCollectionClass } from '@/mongo-collection.js';
 import { HttpException, HttpStatus } from '@tmlmobilidade/lib';
-import { CreateVerificationTokenDto, UpdateVerificationTokenDto, VerificationToken } from '@tmlmobilidade/types';
+import { CreateVerificationTokenDto, UpdateVerificationTokenDto, VerificationToken, VerificationTokenSchema } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
 import { IndexDescription, UpdateResult } from 'mongodb';
+import { z } from 'zod';
+
+/* * */
 
 class VerificationTokensClass extends MongoCollectionClass<VerificationToken, CreateVerificationTokenDto, UpdateVerificationTokenDto> {
 	private static _instance: VerificationTokensClass;
+	protected override createSchema: z.ZodSchema = VerificationTokenSchema;
+	protected override updateSchema: z.ZodSchema = VerificationTokenSchema;
 
 	private constructor() {
 		super();

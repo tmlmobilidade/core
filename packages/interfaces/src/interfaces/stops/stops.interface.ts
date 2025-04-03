@@ -1,14 +1,17 @@
 /* * */
 
 import { MongoCollectionClass } from '@/mongo-collection.js';
-import { CreateStopDto, Stop, UpdateStopDto } from '@tmlmobilidade/types';
+import { CreateStopDto, Stop, StopSchema, UpdateStopDto, UpdateStopSchema } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
 import { Filter, IndexDescription, Sort } from 'mongodb';
+import { z } from 'zod';
 
 /* * */
 
 class StopsClass extends MongoCollectionClass<Stop, CreateStopDto, UpdateStopDto> {
 	private static _instance: StopsClass;
+	protected override createSchema: z.ZodSchema = StopSchema;
+	protected override updateSchema: z.ZodSchema = UpdateStopSchema;
 
 	private constructor() {
 		super();

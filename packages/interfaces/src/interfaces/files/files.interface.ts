@@ -1,18 +1,21 @@
 /* * */
 
-import { IStorageProvider, StorageFactory } from '@/providers/index.js';
 import { MongoCollectionClass } from '@/mongo-collection.js';
+import { IStorageProvider, StorageFactory } from '@/providers/index.js';
 import { HttpStatus } from '@tmlmobilidade/lib';
 import { HttpException } from '@tmlmobilidade/lib';
-import { CreateFileDto, File, UpdateFileDto } from '@tmlmobilidade/types';
+import { CreateFileDto, File, FileSchema, UpdateFileDto, UpdateFileSchema } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
 import { generateRandomString } from '@tmlmobilidade/utils';
 import { DeleteResult, IndexDescription, InsertOneResult } from 'mongodb';
+import { z } from 'zod';
 
 /* * */
 
 class FilesClass extends MongoCollectionClass<File, CreateFileDto, UpdateFileDto> {
 	private static _instance: FilesClass;
+	protected override createSchema: z.ZodSchema = FileSchema;
+	protected override updateSchema: z.ZodSchema = UpdateFileSchema;
 	private readonly bucketName: string;
 	private readonly storageService: IStorageProvider;
 

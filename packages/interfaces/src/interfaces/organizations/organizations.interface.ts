@@ -1,11 +1,18 @@
+/* * */
+
 import { MongoCollectionClass } from '@/mongo-collection.js';
 import { HttpException, HttpStatus } from '@tmlmobilidade/lib';
-import { CreateOrganizationDto, Organization, UpdateOrganizationDto } from '@tmlmobilidade/types';
+import { CreateOrganizationDto, Organization, OrganizationSchema, UpdateOrganizationDto, UpdateOrganizationSchema } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
 import { Filter, IndexDescription, UpdateResult } from 'mongodb';
+import { z } from 'zod';
+
+/* * */
 
 class OrganizationsClass extends MongoCollectionClass<Organization, CreateOrganizationDto, UpdateOrganizationDto> {
 	private static _instance: OrganizationsClass;
+	protected override createSchema: z.ZodSchema = OrganizationSchema;
+	protected override updateSchema: z.ZodSchema = UpdateOrganizationSchema;
 
 	private constructor() {
 		super();

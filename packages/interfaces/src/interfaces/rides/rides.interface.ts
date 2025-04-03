@@ -1,14 +1,17 @@
 /* * */
 
 import { MongoCollectionClass } from '@/mongo-collection.js';
-import { CreateRideDto, Ride, UpdateRideDto } from '@tmlmobilidade/types';
+import { CreateRideDto, Ride, RideSchema, UpdateRideDto, UpdateRideSchema } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
 import { Filter, IndexDescription } from 'mongodb';
+import { z } from 'zod';
 
 /* * */
 
 class RidesClass extends MongoCollectionClass<Ride, CreateRideDto, UpdateRideDto> {
 	private static _instance: RidesClass;
+	protected override createSchema: z.ZodSchema = RideSchema;
+	protected override updateSchema: z.ZodSchema = UpdateRideSchema;
 
 	private constructor() {
 		super();

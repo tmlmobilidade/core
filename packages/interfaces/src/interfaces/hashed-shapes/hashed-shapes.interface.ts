@@ -1,14 +1,17 @@
 /* * */
 
 import { MongoCollectionClass } from '@/mongo-collection.js';
-import { CreateHashedShapeDto, HashedShape, UpdateHashedShapeDto } from '@tmlmobilidade/types';
+import { CreateHashedShapeDto, HashedShape, HashedShapeSchema, UpdateHashedShapeDto, UpdateHashedShapeSchema } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
 import { IndexDescription } from 'mongodb';
+import { z } from 'zod';
 
 /* * */
 
 class HashedShapesClass extends MongoCollectionClass<HashedShape, CreateHashedShapeDto, UpdateHashedShapeDto> {
 	private static _instance: HashedShapesClass;
+	protected override createSchema: z.ZodSchema = HashedShapeSchema;
+	protected override updateSchema: z.ZodSchema = UpdateHashedShapeSchema;
 
 	private constructor() {
 		super();

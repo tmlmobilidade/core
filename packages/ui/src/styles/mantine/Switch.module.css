@@ -2,8 +2,6 @@
 /* ROOT */
 
 .root {
-	cursor: pointer;
-
 	--switch-height-xs: 24px;
     --switch-height-sm: 24px;
     --switch-height-md: 24px;
@@ -25,6 +23,10 @@
     --switch-track-label-padding-lg: 1px;
     --switch-track-label-padding-xl: 1px;
     --switch-color: var(--color-secondary);
+}
+
+.root * {
+	cursor: pointer;
 }
 
 
@@ -62,6 +64,7 @@
 	gap: var(--size-spacing-sm);
 	align-items: center;
 	justify-content: center;
+	cursor: pointer;
 }
 
 

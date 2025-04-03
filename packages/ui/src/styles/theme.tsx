@@ -11,13 +11,14 @@ import '@/styles/index.css';
 
 /* * */
 
-import { Button, createTheme, MantineThemeOverride, PasswordInput, SegmentedControl, Textarea, TextInput } from '@mantine/core';
+import { Button, createTheme, MantineThemeOverride, PasswordInput, SegmentedControl, Switch, Textarea, TextInput } from '@mantine/core';
 
 /* * */
 
 import ButtonOverride from '@/styles/mantine/Button.module.css';
 import PasswordInputOverride from '@/styles/mantine/PasswordInput.module.css';
 import SegmentedControlOverride from '@/styles/mantine/SegmentedControl.module.css';
+import SwitchOverride from '@/styles/mantine/Switch.module.css';
 import TextInputOverrideSm from '@/styles/mantine/TextInput-sm.module.css';
 import TextInputOverride from '@/styles/mantine/TextInput.module.css';
 
@@ -25,8 +26,6 @@ import TextInputOverride from '@/styles/mantine/TextInput.module.css';
 
 export const themeData: MantineThemeOverride = createTheme({
 	components: {
-
-		/* * */
 
 		Button: Button.extend({
 			classNames: () => {
@@ -36,8 +35,6 @@ export const themeData: MantineThemeOverride = createTheme({
 				return defaultClasses;
 			},
 		}),
-
-		/* * */
 
 		PasswordInput: PasswordInput.extend({
 			classNames: () => {
@@ -56,8 +53,6 @@ export const themeData: MantineThemeOverride = createTheme({
 			},
 		}),
 
-		/* * */
-
 		SegmentedControl: SegmentedControl.extend({
 			classNames: () => {
 				const defaultClasses = {
@@ -69,7 +64,14 @@ export const themeData: MantineThemeOverride = createTheme({
 			},
 		}),
 
-		/* * */
+		Switch: Switch.extend({
+			classNames: () => {
+				const defaultClasses = {
+					...SwitchOverride,
+				};
+				return defaultClasses;
+			},
+		}),
 
 		Textarea: Textarea.extend({
 			classNames: (_, props) => {
@@ -85,8 +87,6 @@ export const themeData: MantineThemeOverride = createTheme({
 			},
 		}),
 
-		/* * */
-
 		TextInput: TextInput.extend({
 			classNames: (_, props) => {
 				const defaultClasses = {
@@ -100,8 +100,6 @@ export const themeData: MantineThemeOverride = createTheme({
 				return defaultClasses;
 			},
 		}),
-
-		/* * */
 
 	},
 });

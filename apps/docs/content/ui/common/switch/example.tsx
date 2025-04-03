@@ -1,11 +1,14 @@
 'use client';
 
-import { ComponentWrapper, Switch } from '@tmlmobilidade/ui';
+import { ComponentWrapper, Section, Switch } from '@tmlmobilidade/ui';
 
 export default function SwitchExample() {
 	return (
 		<ComponentWrapper>
-			<Switch />
+			<Section gap="md">
+				<Switch />
+				<Switch label="Hello" />
+			</Section>
 		</ComponentWrapper>
 	);
 }

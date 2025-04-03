@@ -1,7 +1,5 @@
 export { default as ActionIcon } from './ActionIcon';
-export * from './AppLogos';
 export { default as Badge } from './Badge';
-export { Button } from './Button';
 export { default as Checkbox } from './Checkbox';
 export { default as Combobox, DataItem } from './Combobox';
 export { default as ComponentWrapper } from './ComponentWrapper';
@@ -9,15 +7,20 @@ export { default as DateTimePicker } from './DateTimePicker';
 export { default as DeleteActionIcon } from './DeleteActionIcon';
 export { default as Description } from './Description';
 export { default as FileButton } from './FileButton';
-export { Label } from './Label';
 export { default as Menu } from './Menu';
-export { PasswordInput } from './PasswordInput';
 export { default as SegmentedControl } from './SegmentedControl';
 export { default as Slider } from './Slider';
-export { default as Switch } from './Switch';
-export { Tag } from './Tag';
 export { default as Text } from './Text';
 export { default as TextArea } from './TextArea';
 export { default as TextInput } from './TextInput';
 export { default as Tooltip } from './Tooltip';
-export * from './Tree';
+
+/* * */
+
+export * from '@/components/common/AppLogos';
+export * from '@/components/common/Button';
+export * from '@/components/common/Label';
+export * from '@/components/common/PasswordInput';
+export * from '@/components/common/Switch';
+export * from '@/components/common/Tag';
+export * from '@/components/common/Tree';

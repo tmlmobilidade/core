@@ -1,12 +1,12 @@
 .button {
-    transition: all 300ms ease-in;
+    width: fit-content;
+    min-width: fit-content;
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-semibold);
     border: 2px solid transparent;
     border-radius: var(--border-radius-xs);
-    font-size: var(--font-size-base);
-    font-weight: var(--font-weight-semibold);
-    width: fit-content;
     box-shadow: 0 1px 3px 0 var(--color-shadow);
-    min-width: fit-content;
+    transition: all 300ms ease-in;
 }
 
 .fontxs {
@@ -18,7 +18,7 @@
 }
 
 .fontbase {
-    font-size: var(--font-size-base);
+    font-size: var(--font-size-md);
 }
 
 .fontlg {
@@ -45,95 +45,95 @@
 }
 
 .primary {
+	color: var(--color-primary);
 	background-color: var(--color-background);
     border-color: var(--color-primary);
-	color: var(--color-primary);
 }
 
 .primary[data-active="true"] {
-	background-color: var(--color-primary);
     color: var(--color-contrast);
+	background-color: var(--color-primary);
 }
 
 .secondary {
+	color: var(--color-secondary);
 	background-color: var(--color-background);
     border-color: var(--color-secondary);
-	color: var(--color-secondary);
 }
 
 .secondary[data-active="true"] {
-	background-color: var(--color-secondary);
     color: var(--color-contrast);
+	background-color: var(--color-secondary);
 }
 
 .muted {
+	color: var(--color-system-text-100);
     background-color: var(--color-system-background-200);
     border-color: var(--color-system-text-100);
-	color: var(--color-system-text-100);
 }
 
 .disabled {
+    color: var(--color-system-text-300);
     background-color: var(--color-system-background-300);
     border-color: var(--color-system-text-300);
-    color: var(--color-system-text-300);
 }
 
 .danger {
+	color: var(--color-status-danger-primary);
 	background-color: var(--color-status-danger-contrast);
     border-color: var(--color-status-danger-primary);
-	color: var(--color-status-danger-primary);
 }
 
 .danger[data-active="true"] {
+    color: var(--color-status-danger-contrast);
 	background-color: var(--color-status-danger-primary);
     border-color: var(--color-status-danger-contrast);
-    color: var(--color-status-danger-contrast);
 }
 
 .info {
+	color: var(--color-status-info-primary);
 	background-color: var(--color-status-info-contrast);
     border-color: var(--color-status-info-primary);
-	color: var(--color-status-info-primary);
 }
 
 .info[data-active="true"] {
+    color: var(--color-status-info-contrast);
 	background-color: var(--color-status-info-primary);
     border-color: var(--color-status-info-contrast);
-    color: var(--color-status-info-contrast);
 }
 
 .success {
+	color: var(--color-status-success-primary);
 	background-color: var(--color-status-success-contrast);
     border-color: var(--color-status-success-primary);
-	color: var(--color-status-success-primary);
 }
 
 .success[data-active="true"] {
+    color: var(--color-status-success-contrast);
 	background-color: var(--color-status-success-primary);
     border-color: var(--color-status-success-contrast);
-    color: var(--color-status-success-contrast);
 }
 
 .warning {
+	color: var(--color-status-warning-primary);
 	background-color: var(--color-status-warning-contrast);
     border-color: var(--color-status-warning-primary);
-	color: var(--color-status-warning-primary);
 }
 
 .warning[data-active="true"] {
+    color: var(--color-status-warning-contrast);
 	background-color: var(--color-status-warning-primary);
     border-color: var(--color-status-warning-contrast);
-    color: var(--color-status-warning-contrast);
 }
 
 .active {
+	color: var(--color-status-active-primary);
 	background-color: var(--color-status-active-contrast);
     border-color: var(--color-status-active-primary);
-	color: var(--color-status-active-primary);
 }
 
 .active[data-active="true"] {
+    color: var(--color-status-active-contrast);
 	background-color: var(--color-status-active-primary);
     border-color: var(--color-status-active-contrast);
-    color: var(--color-status-active-contrast);
 }

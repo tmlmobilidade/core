@@ -24,7 +24,9 @@ export function Sidebar() {
 				))}
 			</div>
 			<Spacer orientation="vertical" />
-			<ThemeSwitcher />
+			<div className={styles.navWrapper}>
+				<ThemeSwitcher />
+			</div>
 		</div>
 	);
 }

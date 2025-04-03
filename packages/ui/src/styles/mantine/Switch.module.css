@@ -2,6 +2,8 @@
 /* ROOT */
 
 .root {
+	cursor: pointer;
+
 	--switch-height-xs: 24px;
     --switch-height-sm: 24px;
     --switch-height-md: 24px;

@@ -2,12 +2,10 @@
 
 /* * */
 
-import { AVAILABLE_THEMES, useThemeContext } from '@/contexts/Theme.context';
-import { getCssVariableValue } from '@/lib/getCssVariableValue';
+import { Label } from '@/components/common/Label';
+import { Section } from '@/components/layout/Section';
+import { AVAILABLE_THEMES, type ThemeType, useThemeContext } from '@/contexts/Theme.context';
 import { ColorSwatch, Menu } from '@mantine/core';
-import { useEffect, useState } from 'react';
-
-import styles from './styles.module.css';
 
 /* * */
 
@@ -24,28 +22,11 @@ export function ThemeSwitcher({ onThemeChange }: ThemeSwitcherProps) {
 	// A. Setup variables
 
 	const themeContext = useThemeContext();
-	const [themeColors, setThemeColors] = useState<Record<string, string>>({});
 
 	//
 	// B. Handle actions
 
-	useEffect(() => {
-		// Function to get primary colors for all themes
-		const getThemeColors = () => {
-			const colors: Record<string, string> = {};
-			AVAILABLE_THEMES.forEach((theme) => {
-				// Set the data-theme attribute to get the correct CSS variables
-				document.documentElement.setAttribute('data-theme', theme);
-				// Get the primary color from the CSS variables
-				const primaryColor = getCssVariableValue('--color-primary')?.trim();
-				colors[theme] = primaryColor ?? '';
-			});
-			setThemeColors(colors);
-		};
-		getThemeColors();
-	}, []);
-
-	const handleThemeChange = (theme: typeof AVAILABLE_THEMES[number]) => {
+	const handleThemeChange = (theme: ThemeType) => {
 		themeContext.actions.activateTheme(theme);
 		onThemeChange?.(theme);
 	};
@@ -54,16 +35,19 @@ export function ThemeSwitcher({ onThemeChange }: ThemeSwitcherProps) {
 	// C. Render components
 
 	return (
-		<Menu classNames={styles}>
+		<Menu>
 			<Menu.Target>
 				<div style={{ cursor: 'pointer' }}>
-					<ColorSwatch color={themeColors[themeContext.data.active_theme] ?? ''} />
+					<ColorSwatch color="var(--color-primary)" />
 				</div>
 			</Menu.Target>
 			<Menu.Dropdown>
-				{AVAILABLE_THEMES.map(t => (
-					<Menu.Item key={t} value={t}>
-						<ColorSwatch color={themeColors[t] ?? ''} onClick={() => handleThemeChange(t)} />
+				{AVAILABLE_THEMES.map(item => (
+					<Menu.Item key={item._id} onClick={() => handleThemeChange(item._id)} value={item._id}>
+						<Section alignItems="center" flexDirection="row" gap="sm" padding={null}>
+							<ColorSwatch color={item.primary_color} />
+							<Label caps singleLine>{item.name}</Label>
+						</Section>
 					</Menu.Item>
 				))}
 			</Menu.Dropdown>

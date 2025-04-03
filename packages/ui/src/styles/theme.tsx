@@ -11,6 +11,15 @@ import '@/styles/index.css';
 
 /* * */
 
+import '@/styles/themes/ocean.css';
+import '@/styles/themes/park.css';
+import '@/styles/themes/path.css';
+import '@/styles/themes/pool.css';
+import '@/styles/themes/royal.css';
+import '@/styles/themes/street.css';
+
+/* * */
+
 import { Button, createTheme, MantineThemeOverride, PasswordInput, SegmentedControl, Slider, Switch, Text, Textarea, TextInput } from '@mantine/core';
 
 /* * */

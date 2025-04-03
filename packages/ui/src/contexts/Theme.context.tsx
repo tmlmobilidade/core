@@ -11,16 +11,25 @@ import { createContext, type PropsWithChildren, useContext, useEffect, useMemo, 
 
 /* * */
 
-export const AVAILABLE_THEMES = ['ocean', 'park', 'path', 'pool', 'royal', 'street'] as const;
+export const AVAILABLE_THEMES = [
+	{ _id: 'ocean', name: 'Ocean', primary_color: 'var(--theme-ocean-color-primary)' },
+	{ _id: 'park', name: 'Park', primary_color: 'var(--theme-park-color-primary)' },
+	{ _id: 'path', name: 'Path', primary_color: 'var(--theme-path-color-primary)' },
+	{ _id: 'pool', name: 'Pool', primary_color: 'var(--theme-pool-color-primary)' },
+	{ _id: 'royal', name: 'Royal', primary_color: 'var(--theme-royal-color-primary)' },
+	{ _id: 'street', name: 'Street', primary_color: 'var(--theme-street-color-primary)' },
+] as const;
 
 /* * */
 
+export type ThemeType = (typeof AVAILABLE_THEMES)[number]['_id'];
+
 interface ThemeContextState {
 	actions: {
-		activateTheme: (theme: typeof AVAILABLE_THEMES[number]) => void
+		activateTheme: (theme: ThemeType) => void
 	}
 	data: {
-		active_theme: typeof AVAILABLE_THEMES[number]
+		active_theme: ThemeType
 	}
 }
 
@@ -44,7 +53,7 @@ export const ThemeContextProvider = ({ children }: PropsWithChildren) => {
 	//
 	// A. Setup variables
 
-	const [activeTheme, setActiveTheme] = useState<typeof AVAILABLE_THEMES[number]>(AVAILABLE_THEMES[0]);
+	const [activeTheme, setActiveTheme] = useState<ThemeType>(AVAILABLE_THEMES[0]._id);
 
 	const mantineDatesSettings: Partial<DatesProviderSettings> = {
 		firstDayOfWeek: 1,
@@ -61,7 +70,7 @@ export const ThemeContextProvider = ({ children }: PropsWithChildren) => {
 		document.documentElement.setAttribute('data-theme', activeTheme);
 	}, [activeTheme]);
 
-	const handleActivateTheme = (theme: typeof AVAILABLE_THEMES[number]) => {
+	const handleActivateTheme = (theme: ThemeType) => {
 		setActiveTheme(theme);
 	};
 

@@ -1,11 +1,14 @@
 'use client';
 
-import { ComponentWrapper, ThemeSwitcher } from '@tmlmobilidade/ui';
+import { Button, ComponentWrapper, Section, ThemeSwitcher } from '@tmlmobilidade/ui';
 
 export default function ThemeSwitcherExample() {
 	return (
 		<ComponentWrapper>
-			<ThemeSwitcher />
+			<Section gap="md">
+				<ThemeSwitcher />
+				<Button label="Hello" />
+			</Section>
 		</ComponentWrapper>
 	);
 }

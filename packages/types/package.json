@@ -44,7 +44,7 @@
 		"@carrismetropolitana/eslint": "20250325.1926.5",
 		"@tmlmobilidade/tsconfig": "*",
 		"@types/luxon": "3.6.0",
-		"@types/node": "22.13.17",
+		"@types/node": "22.14.0",
 		"resolve-tspaths": "0.8.23",
 		"rimraf": "6.0.1",
 		"turbo": "2.4.4",

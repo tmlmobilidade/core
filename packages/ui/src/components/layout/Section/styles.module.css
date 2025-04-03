@@ -50,6 +50,10 @@
 /* * */
 /* PROPS / GAP */
 
+.root[data-gap="xs"] {
+	gap: var(--size-spacing-xs);
+}
+
 .root[data-gap="sm"] {
 	gap: var(--size-spacing-sm);
 }

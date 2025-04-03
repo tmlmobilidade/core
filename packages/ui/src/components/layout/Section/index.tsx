@@ -8,7 +8,7 @@ interface SectionProps {
 	alignItems?: 'center' | 'flex-end' | 'flex-start'
 	children: React.ReactNode
 	flexDirection?: 'column' | 'row'
-	gap?: 'lg' | 'md' | 'sm' | null
+	gap?: 'lg' | 'md' | 'sm' | 'xs' | null
 	justifyContent?: 'center' | 'flex-end' | 'flex-start' | 'space-between'
 	padding?: 'lg' | 'md' | 'sm' | null
 }

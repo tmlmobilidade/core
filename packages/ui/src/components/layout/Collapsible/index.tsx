@@ -13,13 +13,16 @@ import styles from './styles.module.css';
 interface CollapsibleProps {
 	children: React.ReactNode
 	classNames?: Partial<Record<MantineAccordionStylesNames, string>>
+	defaultOpen?: boolean
 	description?: string
 	icon?: React.ReactNode
 	title: string
 	titleAs?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
 }
 
-export function Collapsible({ children, classNames, description, icon, title, titleAs = 'h2' }: CollapsibleProps) {
+/* * */
+
+export function Collapsible({ children, classNames, defaultOpen = false, description, icon, title, titleAs = 'h2' }: CollapsibleProps) {
 	//
 
 	//
@@ -43,6 +46,7 @@ export function Collapsible({ children, classNames, description, icon, title, ti
 		<MantineAccordion
 			chevron={<IconCaretLeftFilled className={styles.icon} />}
 			classNames={{ ...styles, ...classNames }}
+			defaultValue={defaultOpen ? 'section' : undefined}
 		>
 			<MantineAccordion.Item value="section">
 				<MantineAccordion.Control>{renderControl()}</MantineAccordion.Control>

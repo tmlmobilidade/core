@@ -22,7 +22,7 @@
 	padding: var(--size-spacing-md);
     font-size: var(--font-size-base);
     font-weight: var(--font-weight-semibold);
-    line-height: var(--font-line-height-base);
+    line-height: var(font-line-height);
     color: var(--color-system-text-100);
 }
 

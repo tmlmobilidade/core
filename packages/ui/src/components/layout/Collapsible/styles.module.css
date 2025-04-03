@@ -9,30 +9,30 @@
 /* TITLE */
 
 .title {
-    color: var(--color-system-text-100);
-    font-weight: var(--font-weight-bold);
-    line-height: var(--font-line-height-xl);
-    font-size: var(--font-size-xl);
-    text-transform: uppercase;
     margin: 0;
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    line-height: var(font-line-height);
+    color: var(--color-system-text-100);
+    text-transform: uppercase;
 }
 
 /* * */
 /* DESCRIPTION */
 
 .description {
-    color: var(--color-system-text-200);
     font-size: var(--font-size-base);
-    line-height: var(--font-line-height-base);
     font-weight: var(--font-weight-semibold);
+    line-height: var(font-line-height);
+    color: var(--color-system-text-200);
 }
 
 /* * */
 /* CONTROL */
 
 .control {
-    background-color: var(--color-system-background-100);
     padding: 0 var(--size-spacing-md);
+    background-color: var(--color-system-background-100);
 }
 
 /* * */

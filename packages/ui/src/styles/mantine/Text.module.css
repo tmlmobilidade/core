@@ -1,0 +1,13 @@
+/* * */
+/* ROOT */
+
+.root {
+    color: var(--color-system-text-100);
+}
+
+/* * */
+/* PROPS / SIZE */
+
+.root[data-size='xs'] {
+	font-size: var(--font-size-xs);
+}

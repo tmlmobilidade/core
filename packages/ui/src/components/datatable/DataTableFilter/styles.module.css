@@ -12,7 +12,7 @@
 .label {
     font-size: var(--font-size-xs);
     font-weight: var(--font-weight-semibold);
-    line-height: var(--font-line-height-xs);
+    line-height: var(font-line-height);
     color: var(--color-system-text-300);
     text-transform: uppercase;
 }

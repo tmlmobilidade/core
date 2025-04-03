@@ -47,7 +47,7 @@
 	margin: 0;
 	font-size: var(--font-size-base);
 	font-weight: var(--font-weight-medium);
-	line-height: var(--font-line-height-base);
+	line-height: var(font-line-height);
 	color: var(--color-system-text-100);
 }
 
@@ -59,6 +59,6 @@
 	margin: 0;
 	font-size: var(--font-size-sm);
 	font-weight: var(--font-weight-medium);
-	line-height: var(--font-line-height-sm);
+	line-height: var(font-line-height);
 	color: var(--color-system-text-200);
 }

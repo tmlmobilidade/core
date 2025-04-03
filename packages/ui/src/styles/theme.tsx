@@ -11,7 +11,7 @@ import '@/styles/index.css';
 
 /* * */
 
-import { Button, createTheme, MantineThemeOverride, PasswordInput, SegmentedControl, Slider, Switch, Textarea, TextInput } from '@mantine/core';
+import { Button, createTheme, MantineThemeOverride, PasswordInput, SegmentedControl, Slider, Switch, Text, Textarea, TextInput } from '@mantine/core';
 
 /* * */
 
@@ -20,6 +20,7 @@ import PasswordInputOverride from '@/styles/mantine/PasswordInput.module.css';
 import SegmentedControlOverride from '@/styles/mantine/SegmentedControl.module.css';
 import SliderOverride from '@/styles/mantine/Slider.module.css';
 import SwitchOverride from '@/styles/mantine/Switch.module.css';
+import TextOverride from '@/styles/mantine/Text.module.css';
 import TextInputOverrideSm from '@/styles/mantine/TextInput-sm.module.css';
 import TextInputOverride from '@/styles/mantine/TextInput.module.css';
 
@@ -78,6 +79,15 @@ export const themeData: MantineThemeOverride = createTheme({
 			classNames: () => {
 				const defaultClasses = {
 					...SwitchOverride,
+				};
+				return defaultClasses;
+			},
+		}),
+
+		Text: Text.extend({
+			classNames: () => {
+				const defaultClasses = {
+					...TextOverride,
 				};
 				return defaultClasses;
 			},

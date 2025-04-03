@@ -121,12 +121,7 @@ body {
 	/* * */
 	/* FONT / LINE-HEIGHT */
 
-	--font-line-height-xs: 1rem; /* 16px */
-	--font-line-height-sm: 1.25rem; /* 20px */
-	--font-line-height-base: 1.5rem; /* 24px */
-	--font-line-height-lg: 1.75rem; /* 28px */
-	--font-line-height-xl: 1.75rem; /* 28px */
-	--font-line-height-2xl: 2rem; /* 32px */
+	--font-line-height: 1.4;
 
 	/* * */
 	/* BORDER-RADIUS */

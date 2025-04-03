@@ -4,13 +4,13 @@
 .input {
 	height: auto;
 	max-height: none;
-	font-size: var(--font-size-sm);
-	line-height: 1;
 	padding: 10px 15px;
+	font-size: var(--font-size-sm);
+	font-weight: var(--font-weight-medium);
+	line-height: 1;
+	background-color: var(--color-system-background-100);
 	border: 2px solid var(--color-system-text-300);
 	border-radius: var(--border-radius-sm);
-	background-color: var(--color-system-background-100);
-	font-weight: var(--font-weight-medium);
 }
 
 .input::placeholder {
@@ -27,8 +27,8 @@
 
 .input.variantWhite {
 	color: var(--color-primary-black);
-	border-color: #bebec8;
 	background-color: var(--color-primary-white);
+	border-color: #bebec8;
 }
 
 /* * */
@@ -50,17 +50,17 @@
 }
 
 .sizeSm{
-	line-height: var(--font-line-height-sm);
 	font-size: 1px;
+	line-height: var(font-line-height);
 }
 
 /* * */
 /* LABEL */
 
 .label {
-	color: var(--color-system-text-100);
 	font-size: var(--font-size-sm);
 	font-weight: var(--font-weight-medium);
+	color: var(--color-system-text-100);
 }
 
 /* * */
@@ -69,7 +69,7 @@
 .description {
 	margin-top: 0;
 	margin-bottom: 0;
-	color: var(--color-system-text-200);
 	font-size: var(--font-size-sm);
 	font-weight: var(--font-weight-medium);
+	color: var(--color-system-text-200);
 }

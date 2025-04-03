@@ -35,8 +35,8 @@
 		"lint:fix": "eslint --fix"
 	},
 	"dependencies": {
-		"@aws-sdk/client-s3": "3.779.0",
-		"@aws-sdk/s3-request-presigner": "3.779.0",
+		"@aws-sdk/client-s3": "3.782.0",
+		"@aws-sdk/s3-request-presigner": "3.782.0",
 		"@tmlmobilidade/lib": "*",
 		"@tmlmobilidade/tsconfig": "*",
 		"@tmlmobilidade/types": "*",

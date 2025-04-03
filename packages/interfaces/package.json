@@ -49,7 +49,7 @@
 	},
 	"devDependencies": {
 		"@carrismetropolitana/eslint": "20250325.1926.5",
-		"@types/luxon": "3.6.0",
+		"@types/luxon": "3.6.1",
 		"@types/node": "22.14.0",
 		"@types/nodemailer": "6.4.17",
 		"resolve-tspaths": "0.8.23",

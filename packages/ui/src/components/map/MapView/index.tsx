@@ -5,8 +5,8 @@
 import { type MapStyle, useMapOptionsContext } from '@/contexts/MapOptions.context';
 import { IconsMap } from '@/settings/assets.settings';
 import { mapDefaultConfig } from '@/settings/map.settings';
-import Map, { FullscreenControl, GeolocateControl, MapLayerMouseEvent, MapRef, NavigationControl, ScaleControl, useMap, ViewStateChangeEvent } from '@vis.gl/react-maplibre';
 import { useCallback, useEffect, useState } from 'react';
+import Map, { FullscreenControl, GeolocateControl, MapLayerMouseEvent, MapRef, NavigationControl, ScaleControl, useMap, ViewStateChangeEvent } from 'react-map-gl/maplibre';
 
 import styles from './styles.module.css';
 

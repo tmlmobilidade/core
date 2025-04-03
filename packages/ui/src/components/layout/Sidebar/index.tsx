@@ -1,6 +1,8 @@
 /* * */
 
 import { SidebarItem } from '@/components/layout/SidebarItem';
+import { Spacer } from '@/components/layout/Spacer';
+import { ThemeSwitcher } from '@/components/theme/ThemeSwitcher';
 import { apps } from '@tmlmobilidade/lib';
 
 import styles from './styles.module.css';
@@ -21,6 +23,8 @@ export function Sidebar() {
 					/>
 				))}
 			</div>
+			<Spacer orientation="vertical" />
+			<ThemeSwitcher />
 		</div>
 	);
 }

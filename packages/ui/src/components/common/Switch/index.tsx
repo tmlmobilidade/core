@@ -2,7 +2,7 @@
 
 /* * */
 
-import { Switch as MantineSwitch, SwitchProps as MantineSwitchProps } from '@mantine/core';
+import { Switch as MantineSwitch, type SwitchProps as MantineSwitchProps } from '@mantine/core';
 
 /* * */
 

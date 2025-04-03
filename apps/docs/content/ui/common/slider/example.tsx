@@ -5,7 +5,7 @@ import { ComponentWrapper, Slider } from '@tmlmobilidade/ui';
 export default function SliderExample() {
 	return (
 		<ComponentWrapper>
-			<Slider />
+			<Slider defaultValue={50} marks={[{ label: '20%', value: 20 }]} />
 		</ComponentWrapper>
 	);
 }

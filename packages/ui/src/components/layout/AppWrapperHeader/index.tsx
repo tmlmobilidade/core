@@ -2,34 +2,45 @@
 
 /* * */
 
+import { Skeleton } from '@mantine/core';
 import { useState } from 'react';
 
-// import AppOptions from '../Options';
 import styles from './styles.module.css';
 
 /* * */
 
-const greetings = ['Olá', 'Hi', 'Hey', 'Oi', 'Hallo', 'Ciao', 'Hej'];
+const AVAILABLE_GREETINGS = ['Olá', 'Hi', 'Hey', 'Oi', 'Hallo', 'Ciao', 'Hej'];
 
 /* * */
 
-export function AppWrapperHeader({ userName }: { userName?: string }) {
+interface AppWrapperHeaderProps {
+	userName?: string
+}
+
+/* * */
+
+export function AppWrapperHeader({ userName }: AppWrapperHeaderProps) {
 	//
 
 	//
 	// A. Setup variables
 
-	const [drawnGreeting] = useState(greetings[(greetings.length * Math.random()) | 0]);
+	const [drawnGreeting] = useState(AVAILABLE_GREETINGS[(AVAILABLE_GREETINGS.length * Math.random()) | 0]);
 
 	//
 	// B. Render components
 
+	if (!userName) {
+		return (
+			<div className={styles.container}>
+				<Skeleton h={18} w={120} />
+			</div>
+		);
+	}
+
 	return (
 		<div className={styles.container}>
 			<p className={styles.greeting}>{drawnGreeting} {userName}</p>
-			<div className={styles.options}>
-				{/* <AppOptions /> */}
-			</div>
 		</div>
 	);
 

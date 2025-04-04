@@ -53,9 +53,9 @@ export function SidebarItem({ _id, href, label, permission }: SidebarItemProps) 
 			>
 				{_id === 'alerts' && <IconAlertTriangle size={26} />}
 				{_id === 'auth' && <IconUser size={26} />}
-				{_id === 'controller' && <IconChartArrowsVertical size={26} />}
+				{_id === 'controller' && <IconListCheck size={26} />}
 				{_id === 'equipments' && <IconDeviceMobile size={26} />}
-				{_id === 'pulse' && <IconListCheck size={26} />}
+				{_id === 'pulse' && <IconChartArrowsVertical size={26} />}
 				{_id === 'stops' && <IconBusStop size={26} />}
 			</a>
 			<span className={styles.tooltip}>

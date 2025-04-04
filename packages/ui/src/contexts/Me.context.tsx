@@ -61,9 +61,9 @@ export const MeContextProvider = ({ children }: PropsWithChildren) => {
 	//
 	// C. Render components
 
-	if (contextValue.flags.loading) {
-		return <div>loading me...</div>;
-	}
+	// if (contextValue.flags.loading) {
+	// 	return <div>loading me...</div>;
+	// }
 
 	return (
 		<MeContext.Provider value={contextValue}>

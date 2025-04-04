@@ -2,6 +2,7 @@
 
 /* * */
 
+import { Label } from '@/components/common';
 import { Skeleton } from '@mantine/core';
 import { useState } from 'react';
 
@@ -9,7 +10,7 @@ import styles from './styles.module.css';
 
 /* * */
 
-const AVAILABLE_GREETINGS = ['Olá', 'Hi', 'Hey', 'Oi', 'Hallo', 'Ciao', 'Hej'];
+const AVAILABLE_GREETINGS = ['Olá', 'Hi', 'Hey', 'Oi', 'Hallo', 'Hola', 'Ciao', 'Hej'];
 
 /* * */
 
@@ -40,7 +41,7 @@ export function AppWrapperHeader({ userName }: AppWrapperHeaderProps) {
 
 	return (
 		<div className={styles.container}>
-			<p className={styles.greeting}>{drawnGreeting} {userName}</p>
+			<Label size="sm" caps singleLine>{drawnGreeting} {userName}</Label>
 		</div>
 	);
 

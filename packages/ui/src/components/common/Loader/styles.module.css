@@ -16,6 +16,13 @@
 /* * */
 /* PROPS / SIZE */
 
+.root[data-size="sm"] {
+	--container-size: 24px;
+	--blade-size: 7px;
+	--blade-thickness: 3px;
+	--blade-tightness: 1.25;
+}
+
 .root[data-size="md"] {
 	--container-size: 40px;
 	--blade-size: 10px;

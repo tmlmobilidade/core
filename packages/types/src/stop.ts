@@ -64,6 +64,8 @@ export const StopSchema = DocumentSchema.extend({
 		.array(z.string())
 		.default([]),
 
+	region_id: z.string(),
+
 	//
 	// Infrastructure
 

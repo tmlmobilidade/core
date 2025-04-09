@@ -42,6 +42,10 @@ export const StopSchema = DocumentSchema.extend({
 	latitude: z
 		.number(),
 
+	line_ids: z
+		.array(z.string())
+		.default([]),
+
 	locality_id: z
 		.string()
 		.nullish(),

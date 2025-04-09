@@ -60,6 +60,10 @@ export const StopSchema = DocumentSchema.extend({
 		.string()
 		.nullish(),
 
+	pattern_ids: z
+		.array(z.string())
+		.default([]),
+
 	//
 	// Infrastructure
 

@@ -64,7 +64,12 @@ export const StopSchema = DocumentSchema.extend({
 		.array(z.string())
 		.default([]),
 
-	region_id: z.string(),
+	region_id: z
+		.string(),
+
+	route_ids: z
+		.array(z.string())
+		.default([]),
 
 	//
 	// Infrastructure

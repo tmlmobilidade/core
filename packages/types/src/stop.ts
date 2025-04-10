@@ -53,10 +53,6 @@ export const StopSchema = DocumentSchema.extend({
 	latitude: z
 		.number(),
 
-	// line_ids: z
-	// 	.array(z.string())
-	// 	.default([]),
-
 	locality_id: z
 		.string()
 		.nullish(),
@@ -70,17 +66,6 @@ export const StopSchema = DocumentSchema.extend({
 	parish_id: z
 		.string()
 		.nullish(),
-
-	// pattern_ids: z
-	// 	.array(z.string())
-	// 	.default([]),
-
-	// region_id: z
-	// 	.string(),
-
-	// route_ids: z
-	// 	.array(z.string())
-	// 	.default([]),
 
 	//
 	// Infrastructure

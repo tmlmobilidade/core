@@ -17,8 +17,6 @@ const STATUS_VALUES = [
 	'pending', 'accepted', 'declined',
 ] as const;
 
-/* * */
-
 //
 // Define schemas using constants
 export const scopeSchema = z.enum(SCOPE_VALUES);

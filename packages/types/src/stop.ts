@@ -1,6 +1,6 @@
 /* * */
 
-import { CommentSchema, DocumentSchema, UnixTimestamp } from '@/common.js';
+import { CommentSchema, DocumentSchema, UnixTimestamp, validateUnixTimestamp } from '@/common.js';
 import { z } from 'zod';
 
 /* * */
@@ -14,11 +14,22 @@ export const StopSchema = DocumentSchema.extend({
 		.string()
 		.length(6),
 
+	is_archived: z
+		.boolean()
+		.default(false),
+
+	is_locked: z
+		.boolean()
+		.default(false),
+
 	jurisdiction: z
 		.enum(['ip', 'municipality', 'other', 'unknown'])
 		.default('unknown'),
 
 	name: z
+		.string(),
+
+	new_name: z
 		.string(),
 
 	operational_status: z
@@ -42,9 +53,9 @@ export const StopSchema = DocumentSchema.extend({
 	latitude: z
 		.number(),
 
-	line_ids: z
-		.array(z.string())
-		.default([]),
+	// line_ids: z
+	// 	.array(z.string())
+	// 	.default([]),
 
 	locality_id: z
 		.string()
@@ -60,16 +71,16 @@ export const StopSchema = DocumentSchema.extend({
 		.string()
 		.nullish(),
 
-	pattern_ids: z
-		.array(z.string())
-		.default([]),
+	// pattern_ids: z
+	// 	.array(z.string())
+	// 	.default([]),
 
-	region_id: z
-		.string(),
+	// region_id: z
+	// 	.string(),
 
-	route_ids: z
-		.array(z.string())
-		.default([]),
+	// route_ids: z
+	// 	.array(z.string())
+	// 	.default([]),
 
 	//
 	// Infrastructure
@@ -133,25 +144,13 @@ export const StopSchema = DocumentSchema.extend({
 	//
 	// Checks
 
-	last_infrastructure_check: z
-		.coerce
-		.date()
-		.nullish(),
+	last_infrastructure_check: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullish(),
 
-	last_infrastructure_maintenance: z
-		.coerce
-		.date()
-		.nullish(),
+	last_infrastructure_maintenance: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullish(),
 
-	last_schedules_check: z
-		.coerce
-		.date()
-		.nullish(),
+	last_schedules_check: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullish(),
 
-	last_schedules_maintenance: z
-		.coerce
-		.date()
-		.nullish(),
+	last_schedules_maintenance: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullish(),
 
 	//
 	// Facilities
@@ -186,11 +185,26 @@ export const StopSchema = DocumentSchema.extend({
 		.default([]),
 
 	//
+	// Images & Files
+
+	file_ids: z
+		.array(z.string())
+		.default([]),
+
+	image_ids: z
+		.array(z.string())
+		.default([]),
+
+	//
 	// Notes & Comments
 
 	comments: z
 		.array(CommentSchema)
 		.default([]),
+
+	observations: z
+		.string()
+		.nullish(),
 
 }).strict();
 

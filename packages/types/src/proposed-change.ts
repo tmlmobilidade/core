@@ -5,15 +5,34 @@ import { z } from 'zod';
 
 /* * */
 
+//
+// Define constants for enum values for better maintainability
+
+const SCOPE_VALUES = [
+	'stop',
+	'lines',
+] as const;
+
+const STATUS_VALUES = [
+	'pending', 'accepted', 'declined',
+] as const;
+
+/* * */
+
+//
+// Define schemas using constants
+export const scopeSchema = z.enum(SCOPE_VALUES);
+export const statusSchema = z.enum(STATUS_VALUES).default('pending');
+
 export const ProposedChangeSchema = DocumentSchema.extend({
 
 	field_path: z.string(),
 
 	field_value: z.any(),
 
-	scope: z.enum(['stop', 'lines']),
+	scope: scopeSchema,
 
-	status: z.enum(['pending', 'accepted', 'declined']).default('pending'),
+	status: statusSchema,
 
 	target_id: z.string(),
 
@@ -21,13 +40,44 @@ export const ProposedChangeSchema = DocumentSchema.extend({
 
 }).strict();
 
-export const CreateProposedChangeSchema = ProposedChangeSchema;
-export const UpdateProposedChangeSchema = CreateProposedChangeSchema.partial();
+export const CreateProposedChangeSchema = ProposedChangeSchema
+	.omit({ _id: true, created_at: true, updated_at: true });
 
-export type ProposedChange = Omit<z.infer<typeof ProposedChangeSchema>, 'created_at' | 'updated_at'> & {
+export const UpdateProposedChangeSchema = ProposedChangeSchema
+	.omit({ _id: true, created_at: true, updated_at: true })
+	.partial();
+
+//
+// Define types based on schemas
+
+export type Scope = z.infer<typeof scopeSchema>;
+export type Status = z.infer<typeof statusSchema>;
+
+//
+// Define the Alert interface
+
+export interface ProposedChange
+	extends Omit<
+		z.infer<typeof ProposedChangeSchema>,
+		'created_at'
+		| 'field_path'
+		| 'field_value'
+		| 'scope'
+		| 'status'
+		| 'target_id'
+		| 'updated_at'
+		| 'user_id'
+	> {
 	created_at: UnixTimestamp
+	field_path: string
+	field_value: unknown
+	scope: Scope
+	status: Status
+	target_id: string
 	updated_at: UnixTimestamp
-};
+	user_id: string
+}
+
 export type CreateProposedChangeDto = Omit<z.infer<typeof CreateProposedChangeSchema>, 'created_at' | 'updated_at'> & {
 	created_at?: UnixTimestamp
 	updated_at?: UnixTimestamp

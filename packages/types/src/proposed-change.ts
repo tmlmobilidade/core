@@ -1,6 +1,6 @@
 /* * */
 
-import { CommentSchema, DocumentSchema, UnixTimestamp } from '@/common.js';
+import { DocumentSchema, UnixTimestamp } from '@/common.js';
 import { z } from 'zod';
 
 /* * */

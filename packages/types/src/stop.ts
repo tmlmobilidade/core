@@ -5,6 +5,61 @@ import { z } from 'zod';
 
 /* * */
 
+//
+// Define constants for enum values for better maintainability
+
+const JURISDICTION_VALUES = [
+	'ip',
+	'municipality',
+	'other',
+	'unknown',
+] as const;
+
+const OPERATIONAL_STATUS_VALUES = [
+	'active',
+	'inactive',
+	'provisional',
+	'seasonal',
+	'voided',
+] as const;
+
+const BENCH_STATUS_VALUES = [
+	'not_applicable',
+	'unknown',
+	'is_missing',
+	'is_damaged',
+	'is_ok',
+] as const;
+
+const DOCKING_BAY_TYPE_VALUES = [
+	'unknown',
+	'simple_interaction',
+	'cut_in_road_without_marks',
+	'cut_in_road_with_marks',
+	'island',
+	'peninsula',
+] as const;
+
+const ELECTRICITY_STATUS_VALUES = [
+	'available',
+	'unavailable',
+	'unknown',
+] as const;
+
+const FLAG_STATUS_VALUES = [
+	'not_applicable', 'unknown', 'is_missing', 'is_damaged', 'is_ok',
+] as const;
+
+//
+// Define schemas using constants
+
+export const jurisdictionSchema = z.enum(JURISDICTION_VALUES).default('unknown');
+export const operationalStatusSchema = z.enum(OPERATIONAL_STATUS_VALUES).default('inactive');
+export const benchStatusSchema = z.enum(BENCH_STATUS_VALUES).default('unknown');
+export const dockingBayTypeSchema = z.enum(DOCKING_BAY_TYPE_VALUES).default('unknown');
+export const electricityStatusSchema = z.enum(ELECTRICITY_STATUS_VALUES).default('unknown');
+export const flagStatusSchema = z.enum(FLAG_STATUS_VALUES).default('unknown');
+
 export const StopSchema = DocumentSchema.extend({
 
 	//
@@ -22,9 +77,7 @@ export const StopSchema = DocumentSchema.extend({
 		.boolean()
 		.default(false),
 
-	jurisdiction: z
-		.enum(['ip', 'municipality', 'other', 'unknown'])
-		.default('unknown'),
+	jurisdiction: jurisdictionSchema,
 
 	name: z
 		.string(),
@@ -32,9 +85,7 @@ export const StopSchema = DocumentSchema.extend({
 	new_name: z
 		.string(),
 
-	operational_status: z
-		.enum(['active', 'inactive', 'provisional', 'seasonal', 'voided'])
-		.default('inactive'),
+	operational_status: operationalStatusSchema,
 
 	short_name: z
 		.string()
@@ -70,21 +121,13 @@ export const StopSchema = DocumentSchema.extend({
 	//
 	// Infrastructure
 
-	bench_status: z
-		.enum(['not_applicable', 'unknown', 'is_missing', 'is_damaged', 'is_ok'])
-		.default('unknown'),
+	bench_status: benchStatusSchema,
 
-	docking_bay_type: z
-		.enum(['unknown', 'simple_interaction', 'cut_in_road_without_marks', 'cut_in_road_with_marks', 'island', 'peninsula'])
-		.default('unknown'),
+	docking_bay_type: dockingBayTypeSchema,
 
-	electricity_status: z
-		.enum(['available', 'unavailable', 'unknown'])
-		.default('unknown'),
+	electricity_status: electricityStatusSchema,
 
-	flag_status: z
-		.enum(['not_applicable', 'unknown', 'is_missing', 'is_damaged', 'is_ok'])
-		.default('unknown'),
+	flag_status: flagStatusSchema,
 
 	lighting_status: z
 		.enum(['confortable', 'damaged', 'insuficient', 'moderate', 'unavailable', 'unknown'])
@@ -129,13 +172,29 @@ export const StopSchema = DocumentSchema.extend({
 	//
 	// Checks
 
-	last_infrastructure_check: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullish(),
+	last_infrastructure_check: z
+		.number()
+		.transform(validateUnixTimestamp)
+		.brand('UnixTimestamp')
+		.nullish(),
 
-	last_infrastructure_maintenance: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullish(),
+	last_infrastructure_maintenance: z
+		.number()
+		.transform(validateUnixTimestamp)
+		.brand('UnixTimestamp')
+		.nullish(),
 
-	last_schedules_check: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullish(),
+	last_schedules_check: z
+		.number()
+		.transform(validateUnixTimestamp)
+		.brand('UnixTimestamp')
+		.nullish(),
 
-	last_schedules_maintenance: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullish(),
+	last_schedules_maintenance: z
+		.number()
+		.transform(validateUnixTimestamp)
+		.brand('UnixTimestamp')
+		.nullish(),
 
 	//
 	// Facilities
@@ -195,6 +254,16 @@ export const StopSchema = DocumentSchema.extend({
 
 export const CreateStopSchema = StopSchema;
 export const UpdateStopSchema = CreateStopSchema.partial();
+
+//
+// Define types based on schemas
+
+export type Jurisdiction = z.infer<typeof jurisdictionSchema>;
+export type OperationalStatus = z.infer<typeof operationalStatusSchema>;
+export type BenchStatus = z.infer<typeof benchStatusSchema>;
+export type DockingBayType = z.infer<typeof dockingBayTypeSchema>;
+export type ElectricityStatus = z.infer<typeof electricityStatusSchema>;
+export type FlagStatus = z.infer<typeof flagStatusSchema>;
 
 export type Stop = Omit<z.infer<typeof StopSchema>, 'created_at' | 'updated_at'> & {
 	created_at: UnixTimestamp

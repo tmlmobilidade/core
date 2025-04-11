@@ -54,6 +54,10 @@ const LIGHTNING_STATUS_VALUES = [
 	'confortable', 'damaged', 'insuficient', 'moderate', 'unavailable', 'unknown',
 ] as const;
 
+const PAVEMENT_TYPE_VALUES = [
+	'asphalt', 'concrete', 'dirt', 'grass', 'gravel', 'portuguese_stones', 'unknown',
+] as const;
+
 //
 // Define schemas using constants
 
@@ -64,6 +68,7 @@ export const dockingBayTypeSchema = z.enum(DOCKING_BAY_TYPE_VALUES).default('unk
 export const electricityStatusSchema = z.enum(ELECTRICITY_STATUS_VALUES).default('unknown');
 export const flagStatusSchema = z.enum(FLAG_STATUS_VALUES).default('unknown');
 export const lightningStatusSchema = z.enum(LIGHTNING_STATUS_VALUES).default('unknown');
+export const pavementTypeSchema = z.enum(PAVEMENT_TYPE_VALUES).default('unknown');
 
 export const StopSchema = DocumentSchema.extend({
 
@@ -136,9 +141,7 @@ export const StopSchema = DocumentSchema.extend({
 
 	lighting_status: lightningStatusSchema,
 
-	pavement_type: z
-		.enum(['asphalt', 'concrete', 'dirt', 'grass', 'gravel', 'portuguese_stones', 'unknown'])
-		.default('unknown'),
+	pavement_type: pavementTypeSchema,
 
 	pole_status: z
 		.enum(['not_applicable', 'unknown', 'is_missing', 'is_damaged', 'is_ok'])
@@ -268,6 +271,7 @@ export type DockingBayType = z.infer<typeof dockingBayTypeSchema>;
 export type ElectricityStatus = z.infer<typeof electricityStatusSchema>;
 export type FlagStatus = z.infer<typeof flagStatusSchema>;
 export type LightningStatus = z.infer<typeof lightningStatusSchema>;
+export type PavementType = z.infer<typeof pavementTypeSchema>;
 
 export type Stop = Omit<z.infer<typeof StopSchema>, 'created_at' | 'updated_at'> & {
 	created_at: UnixTimestamp

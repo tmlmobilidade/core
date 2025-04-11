@@ -53,7 +53,7 @@ export type Scope = z.infer<typeof scopeSchema>;
 export type Status = z.infer<typeof statusSchema>;
 
 //
-// Define the Alert interface
+// Define the Proposed Change interface
 
 export interface ProposedChange
 	extends Omit<

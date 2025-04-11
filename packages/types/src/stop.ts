@@ -154,6 +154,7 @@ export const shelterStatusSchema = z.enum(SHELTER_STATUS_VALUES).default('unknow
 export const sidewalkTypeSchema = z.enum(SIDEWALK_TYPE_VALUES).default('unknown');
 export const connectionsSchema = z.array(z.enum(CONNECTIONS_VALUES)).default([]);
 export const facilitiesSchema = z.array(z.enum(FACILITIES_VALUES)).default([]);
+export const commentSchema = z.array(CommentSchema).default([]);
 
 export const StopSchema = DocumentSchema.extend({
 
@@ -284,9 +285,7 @@ export const StopSchema = DocumentSchema.extend({
 	//
 	// Notes & Comments
 
-	comments: z
-		.array(CommentSchema)
-		.default([]),
+	comments: commentSchema,
 
 	observations: z
 		.string()
@@ -314,13 +313,102 @@ export type ShelterStatus = z.infer<typeof shelterStatusSchema>;
 export type SidewalkType = z.infer<typeof sidewalkTypeSchema>;
 export type Connections = z.infer<typeof connectionsSchema>;
 export type Facilities = z.infer<typeof facilitiesSchema>;
+export type Comment = z.infer<typeof commentSchema>;
 
-export type Stop = Omit<z.infer<typeof StopSchema>, 'created_at' | 'updated_at'> & {
-	created_at: UnixTimestamp
-	updated_at: UnixTimestamp
-};
+// export type Stop = Omit<z.infer<typeof StopSchema>, 'created_at' | 'updated_at'> & {
+// 	created_at: UnixTimestamp
+// 	updated_at: UnixTimestamp
+// };
+
 export type CreateStopDto = Omit<z.infer<typeof CreateStopSchema>, 'created_at' | 'updated_at'> & {
 	created_at?: UnixTimestamp
 	updated_at?: UnixTimestamp
 };
 export type UpdateStopDto = Partial<CreateStopDto>;
+
+//
+// Define the Alert interface
+
+export interface Stop
+	extends Omit<
+		z.infer<typeof StopSchema>,
+		'bench_status'
+		| 'comments'
+		| 'created_at'
+		| 'district_id'
+		| 'docking_bay_type'
+		| 'electricity_status'
+		| 'facilities'
+		| 'file_ids'
+		| 'flag_status'
+		| 'image_ids'
+		| 'is_archived'
+		| 'is_locked'
+		| 'jurisdiction'
+		| 'last_infrastructure_check'
+		| 'last_infrastructure_maintenance'
+		| 'last_schedules_check'
+		| 'last_schedules_maintenance'
+		| 'latitude'
+		| 'lighting_status'
+		| 'locality_id'
+		| 'longitude'
+		| 'municipality_id'
+		| 'name'
+		| 'new_name'
+		| 'observations'
+		| 'operational_status'
+		| 'parish_id'
+		| 'pavement_type'
+		| 'pole_status'
+		| 'road_type'
+		| 'shelter_code'
+		| 'shelter_maintainer'
+		| 'shelter_make'
+		| 'shelter_model'
+		| 'shelter_status'
+		| 'short_name'
+		| 'sidewalk_type'
+		| 'tts_name'
+		| 'updated_at'
+	> {
+	bench_status: BenchStatus
+	comments: Comment[]
+	created_at: UnixTimestamp
+	district_id: string
+	docking_bay_type: DockingBayType
+	electricity_status: ElectricityStatus
+	facilities: Facilities
+	file_ids: string[]
+	flag_status: FlagStatus
+	image_ids: string[]
+	is_archived: boolean
+	is_locked: boolean
+	jurisdiction: Jurisdiction
+	last_infrastructure_check: UnixTimestamp
+	last_infrastructure_maintenance: UnixTimestamp
+	last_schedules_check: UnixTimestamp
+	last_schedules_maintenance:	UnixTimestamp
+	latitude: number
+	lighting_status: LightningStatus
+	locality_id: string
+	longitude: number
+	municipality_id: string
+	name: string
+	new_name: string
+	observations: string
+	operational_status: OperationalStatus
+	parish_id: string
+	pavement_type: PavementType
+	pole_status: PoleStatus
+	road_type: RoadType
+	shelter_code: string
+	shelter_maintainer: string
+	shelter_make: string
+	shelter_model: string
+	shelter_status: ShelterStatus
+	short_name: string
+	sidewalk_type: SidewalkType
+	tts_name: string
+	updated_at: UnixTimestamp
+}

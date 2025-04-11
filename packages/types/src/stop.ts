@@ -1,6 +1,6 @@
 /* * */
 
-import { CommentSchema, DocumentSchema, UnixTimestamp, validateUnixTimestamp } from '@/common.js';
+import { CommentSchema, DocumentSchema, UnixTimestamp, unixTimeStampSchema } from '@/common.js';
 import { z } from 'zod';
 
 /* * */
@@ -135,11 +135,6 @@ const FACILITIES_VALUES = [
 //
 // Define schemas using constants
 
-export const unixTimeStampSchema = z
-	.number()
-	.transform(validateUnixTimestamp)
-	.brand('UnixTimestamp')
-	.nullish();
 export const jurisdictionSchema = z.enum(JURISDICTION_VALUES).default('unknown');
 export const operationalStatusSchema = z.enum(OPERATIONAL_STATUS_VALUES).default('inactive');
 export const benchStatusSchema = z.enum(BENCH_STATUS_VALUES).default('unknown');
@@ -256,13 +251,13 @@ export const StopSchema = DocumentSchema.extend({
 	//
 	// Checks
 
-	last_infrastructure_check: unixTimeStampSchema,
+	last_infrastructure_check: unixTimeStampSchema.nullish(),
 
-	last_infrastructure_maintenance: unixTimeStampSchema,
+	last_infrastructure_maintenance: unixTimeStampSchema.nullish(),
 
-	last_schedules_check: unixTimeStampSchema,
+	last_schedules_check: unixTimeStampSchema.nullish(),
 
-	last_schedules_maintenance: unixTimeStampSchema,
+	last_schedules_maintenance: unixTimeStampSchema.nullish(),
 
 	//
 	// Facilities
@@ -327,7 +322,7 @@ export type CreateStopDto = Omit<z.infer<typeof CreateStopSchema>, 'created_at' 
 export type UpdateStopDto = Partial<CreateStopDto>;
 
 //
-// Define the Alert interface
+// Define the Stop interface
 
 export interface Stop
 	extends Omit<

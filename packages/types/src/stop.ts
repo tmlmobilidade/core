@@ -102,6 +102,11 @@ const SIDEWALK_TYPE_VALUES = [
 //
 // Define schemas using constants
 
+export const unixTimeStampSchema = z
+	.number()
+	.transform(validateUnixTimestamp)
+	.brand('UnixTimestamp')
+	.nullish();
 export const jurisdictionSchema = z.enum(JURISDICTION_VALUES).default('unknown');
 export const operationalStatusSchema = z.enum(OPERATIONAL_STATUS_VALUES).default('inactive');
 export const benchStatusSchema = z.enum(BENCH_STATUS_VALUES).default('unknown');
@@ -215,29 +220,13 @@ export const StopSchema = DocumentSchema.extend({
 	//
 	// Checks
 
-	last_infrastructure_check: z
-		.number()
-		.transform(validateUnixTimestamp)
-		.brand('UnixTimestamp')
-		.nullish(),
+	last_infrastructure_check: unixTimeStampSchema,
 
-	last_infrastructure_maintenance: z
-		.number()
-		.transform(validateUnixTimestamp)
-		.brand('UnixTimestamp')
-		.nullish(),
+	last_infrastructure_maintenance: unixTimeStampSchema,
 
-	last_schedules_check: z
-		.number()
-		.transform(validateUnixTimestamp)
-		.brand('UnixTimestamp')
-		.nullish(),
+	last_schedules_check: unixTimeStampSchema,
 
-	last_schedules_maintenance: z
-		.number()
-		.transform(validateUnixTimestamp)
-		.brand('UnixTimestamp')
-		.nullish(),
+	last_schedules_maintenance: unixTimeStampSchema,
 
 	//
 	// Facilities

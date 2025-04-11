@@ -65,7 +65,6 @@ export function validateUnixTimestamp(milliseconds: number): UnixTimestamp {
 export const DocumentSchema = z.object({
 	_id: z.string(),
 	created_at: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullish(),
-	is_locked: z.boolean().default(false),
 	updated_at: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullish(),
 });
 

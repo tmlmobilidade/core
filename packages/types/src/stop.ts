@@ -62,6 +62,10 @@ const POLE_STATUS_VALUES = [
 	'not_applicable', 'unknown', 'is_missing', 'is_damaged', 'is_ok',
 ] as const;
 
+const ROAD_TYPE_VALUES = [
+	'complementary_itinerary', 'highway', 'main_itinerary', 'national_road', 'regional_road', 'secondary_road', 'unknown',
+] as const;
+
 //
 // Define schemas using constants
 
@@ -74,6 +78,7 @@ export const flagStatusSchema = z.enum(FLAG_STATUS_VALUES).default('unknown');
 export const lightningStatusSchema = z.enum(LIGHTNING_STATUS_VALUES).default('unknown');
 export const pavementTypeSchema = z.enum(PAVEMENT_TYPE_VALUES).default('unknown');
 export const poleStatusSchema = z.enum(POLE_STATUS_VALUES).default('unknown');
+export const roadTypeSchema = z.enum(ROAD_TYPE_VALUES).default('unknown');
 
 export const StopSchema = DocumentSchema.extend({
 
@@ -150,9 +155,7 @@ export const StopSchema = DocumentSchema.extend({
 
 	pole_status: poleStatusSchema,
 
-	road_type: z
-		.enum(['complementary_itinerary', 'highway', 'main_itinerary', 'national_road', 'regional_road', 'secondary_road', 'unknown'])
-		.default('unknown'),
+	road_type: roadTypeSchema,
 
 	shelter_code: z
 		.string()
@@ -276,6 +279,7 @@ export type FlagStatus = z.infer<typeof flagStatusSchema>;
 export type LightningStatus = z.infer<typeof lightningStatusSchema>;
 export type PavementType = z.infer<typeof pavementTypeSchema>;
 export type PoleStatus = z.infer<typeof poleStatusSchema>;
+export type RoadType = z.infer<typeof roadTypeSchema>;
 
 export type Stop = Omit<z.infer<typeof StopSchema>, 'created_at' | 'updated_at'> & {
 	created_at: UnixTimestamp

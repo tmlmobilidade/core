@@ -47,23 +47,52 @@ const ELECTRICITY_STATUS_VALUES = [
 ] as const;
 
 const FLAG_STATUS_VALUES = [
-	'not_applicable', 'unknown', 'is_missing', 'is_damaged', 'is_ok',
+	'not_applicable',
+	'unknown',
+	'is_missing',
+	'is_damaged',
+	'is_ok',
 ] as const;
 
 const LIGHTNING_STATUS_VALUES = [
-	'confortable', 'damaged', 'insuficient', 'moderate', 'unavailable', 'unknown',
+	'confortable',
+	'damaged',
+	'insuficient',
+	'moderate',
+	'unavailable',
+	'unknown',
 ] as const;
 
 const PAVEMENT_TYPE_VALUES = [
-	'asphalt', 'concrete', 'dirt', 'grass', 'gravel', 'portuguese_stones', 'unknown',
+	'asphalt',
+	'concrete',
+	'dirt',
+	'grass',
+	'gravel',
+	'portuguese_stones',
+	'unknown',
 ] as const;
 
 const POLE_STATUS_VALUES = [
-	'not_applicable', 'unknown', 'is_missing', 'is_damaged', 'is_ok',
+	'not_applicable',
+	'unknown',
+	'is_missing',
+	'is_damaged',
+	'is_ok',
 ] as const;
 
 const ROAD_TYPE_VALUES = [
-	'complementary_itinerary', 'highway', 'main_itinerary', 'national_road', 'regional_road', 'secondary_road', 'unknown',
+	'complementary_itinerary',
+	'highway',
+	'main_itinerary',
+	'national_road',
+	'regional_road',
+	'secondary_road',
+	'unknown',
+] as const;
+
+const SHELTER_STATUS_VALUES = [
+	'not_applicable', 'unknown', 'is_missing', 'is_damaged', 'is_ok',
 ] as const;
 
 //
@@ -79,6 +108,7 @@ export const lightningStatusSchema = z.enum(LIGHTNING_STATUS_VALUES).default('un
 export const pavementTypeSchema = z.enum(PAVEMENT_TYPE_VALUES).default('unknown');
 export const poleStatusSchema = z.enum(POLE_STATUS_VALUES).default('unknown');
 export const roadTypeSchema = z.enum(ROAD_TYPE_VALUES).default('unknown');
+export const shelterStatusSchema = z.enum(SHELTER_STATUS_VALUES).default('unknown');
 
 export const StopSchema = DocumentSchema.extend({
 
@@ -173,9 +203,7 @@ export const StopSchema = DocumentSchema.extend({
 		.string()
 		.nullish(),
 
-	shelter_status: z
-		.enum(['not_applicable', 'unknown', 'is_missing', 'is_damaged', 'is_ok'])
-		.default('unknown'),
+	shelter_status: shelterStatusSchema,
 
 	sidewalk_type: z
 		.enum(['unknown', 'none', 'gutter', 'inaccessible', 'is_ok'])
@@ -280,6 +308,7 @@ export type LightningStatus = z.infer<typeof lightningStatusSchema>;
 export type PavementType = z.infer<typeof pavementTypeSchema>;
 export type PoleStatus = z.infer<typeof poleStatusSchema>;
 export type RoadType = z.infer<typeof roadTypeSchema>;
+export type ShelterStatus = z.infer<typeof shelterStatusSchema>;
 
 export type Stop = Omit<z.infer<typeof StopSchema>, 'created_at' | 'updated_at'> & {
 	created_at: UnixTimestamp

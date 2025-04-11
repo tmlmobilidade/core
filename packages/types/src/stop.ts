@@ -92,11 +92,44 @@ const ROAD_TYPE_VALUES = [
 ] as const;
 
 const SHELTER_STATUS_VALUES = [
-	'not_applicable', 'unknown', 'is_missing', 'is_damaged', 'is_ok',
+	'not_applicable',
+	'unknown',
+	'is_missing',
+	'is_damaged',
+	'is_ok',
 ] as const;
 
 const SIDEWALK_TYPE_VALUES = [
-	'unknown', 'none', 'gutter', 'inaccessible', 'is_ok',
+	'unknown',
+	'none',
+	'gutter',
+	'inaccessible',
+	'is_ok',
+] as const;
+
+const CONNECTIONS_VALUES = [
+	'ferry',
+	'light_rail',
+	'subway',
+	'train',
+	'boat',
+	'airport',
+	'bike_sharing',
+	'bike_parking',
+	'car_parking',
+] as const;
+
+const FACILITIES_VALUES = [
+	'fire_station',
+	'health_clinic',
+	'historic_building',
+	'hospital',
+	'police_station',
+	'school',
+	'shopping',
+	'transit_office',
+	'university',
+	'pip',
 ] as const;
 
 //
@@ -119,6 +152,8 @@ export const poleStatusSchema = z.enum(POLE_STATUS_VALUES).default('unknown');
 export const roadTypeSchema = z.enum(ROAD_TYPE_VALUES).default('unknown');
 export const shelterStatusSchema = z.enum(SHELTER_STATUS_VALUES).default('unknown');
 export const sidewalkTypeSchema = z.enum(SIDEWALK_TYPE_VALUES).default('unknown');
+export const connectionsSchema = z.array(z.enum(CONNECTIONS_VALUES)).default([]);
+export const facilitiesSchema = z.array(z.enum(FACILITIES_VALUES)).default([]);
 
 export const StopSchema = DocumentSchema.extend({
 
@@ -231,34 +266,9 @@ export const StopSchema = DocumentSchema.extend({
 	//
 	// Facilities
 
-	connections: z
-		.array(z.enum([
-			'ferry',
-			'light_rail',
-			'subway',
-			'train',
-			'boat',
-			'airport',
-			'bike_sharing',
-			'bike_parking',
-			'car_parking',
-		]))
-		.default([]),
+	connections: connectionsSchema,
 
-	facilities: z
-		.array(z.enum([
-			'fire_station',
-			'health_clinic',
-			'historic_building',
-			'hospital',
-			'police_station',
-			'school',
-			'shopping',
-			'transit_office',
-			'university',
-			'pip',
-		]))
-		.default([]),
+	facilities: facilitiesSchema,
 
 	//
 	// Images & Files
@@ -302,6 +312,8 @@ export type PoleStatus = z.infer<typeof poleStatusSchema>;
 export type RoadType = z.infer<typeof roadTypeSchema>;
 export type ShelterStatus = z.infer<typeof shelterStatusSchema>;
 export type SidewalkType = z.infer<typeof sidewalkTypeSchema>;
+export type Connections = z.infer<typeof connectionsSchema>;
+export type Facilities = z.infer<typeof facilitiesSchema>;
 
 export type Stop = Omit<z.infer<typeof StopSchema>, 'created_at' | 'updated_at'> & {
 	created_at: UnixTimestamp

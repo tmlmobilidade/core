@@ -36,7 +36,7 @@
 		"@clack/core": "0.4.2",
 		"@clack/prompts": "0.10.1",
 		"chalk": "5.4.1",
-		"npm-check-updates": "17.1.16"
+		"npm-check-updates": "17.1.18"
 	},
 	"devDependencies": {
 		"@tmlmobilidade/tsconfig": "*",

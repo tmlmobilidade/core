@@ -77,8 +77,26 @@ export interface ProposedChange
 	user_id: string
 }
 
-export type CreateProposedChangeDto = Omit<z.infer<typeof CreateProposedChangeSchema>, 'created_at' | 'updated_at'> & {
-	created_at?: UnixTimestamp
-	updated_at?: UnixTimestamp
-};
-export type UpdateProposedChangeDto = Partial<CreateProposedChangeDto>;
+export interface CreateProposedChangeDto
+	extends Omit<
+		z.infer<typeof CreateProposedChangeSchema>,
+		'created_at'
+		| 'field_path'
+		| 'field_value'
+		| 'scope'
+		| 'status'
+		| 'target_id'
+		| 'updated_at'
+		| 'user_id'
+	> {
+	created_at: UnixTimestamp
+	field_path: string
+	field_value: unknown
+	scope: Scope
+	status: Status
+	target_id: string
+	updated_at: UnixTimestamp
+	user_id: string
+}
+
+export type UpdateProposedChangeDto = Partial<Omit<CreateProposedChangeDto, 'created_by'>>;

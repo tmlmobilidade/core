@@ -15,6 +15,7 @@ export * from '@/interfaces/localities/localities.interface.js';
 export * from '@/interfaces/municipalities/municipalities.interface.js';
 export * from '@/interfaces/organizations/organizations.interface.js';
 export * from '@/interfaces/plans/plans.interface.js';
+export * from '@/interfaces/proposedChanges/proposedChanges.interface.js';
 export * from '@/interfaces/rides/rides.interface.js';
 export * from '@/interfaces/stops/stops.interface.js';
 export * from '@/interfaces/vehicle-events/vehicle-events.interface.js';

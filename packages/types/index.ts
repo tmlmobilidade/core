@@ -23,3 +23,4 @@ export * from '@/ride.js';
 export * from '@/stop.js';
 export * from '@/vehicle-event.js';
 export * from '@/zone.js';
+export * from '@/proposed-change.js';

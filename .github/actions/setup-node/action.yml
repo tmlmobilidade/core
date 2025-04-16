@@ -31,7 +31,7 @@ runs:
         cache: "npm"
 
     - name: Configurar cache do npm
-      if: ${{ inputs.with-npm-cache }}
+      if: ${{ inputs.with-npm-cache == 'true' || inputs.with-npm-cache == true }}
       uses: actions/cache@v4
       with:
         path: ~/.npm # Cache da pasta global do npm
@@ -40,7 +40,7 @@ runs:
           npm-${{ runner.os }}-
 
     - name: Cache turbo build setup
-      if: ${{ inputs.with-turbo-cache }}
+      if: ${{ inputs.with-turbo-cache == 'true' || inputs.with-turbo-cache == true }}
       uses: actions/cache@v4
       with:
         path: .turbo

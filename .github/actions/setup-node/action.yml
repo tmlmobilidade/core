@@ -29,6 +29,7 @@ runs:
         node-version: ${{ inputs.node-version }}
         registry-url: https://registry.npmjs.org
         cache: "npm"
+        cache-dependency-path: ${{ inputs.directory }}/package-lock.json
 
     - name: Configurar cache do npm
       if: ${{ inputs.with-npm-cache == 'true' || inputs.with-npm-cache == true }}

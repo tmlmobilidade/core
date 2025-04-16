@@ -10,13 +10,18 @@ inputs:
     description: "Working directory"
     required: true
     default: "."
+  with-npm-cache:
+    description: "Whether to use npm cache"
+    required: false
+    default: "true"
+  with-turbo-cache:
+    description: "Whether to use turbo cache"
+    required: false
+    default: "true"
 
 runs:
   using: "composite"
   steps:
-    - name: Go to directory
-      shell: bash
-      run: cd ${{ inputs.directory }}
 
     - name: Use Node.js ${{ inputs.node-version }}
       uses: actions/setup-node@v4
@@ -26,14 +31,16 @@ runs:
         cache: "npm"
 
     - name: Configurar cache do npm
+      if: ${{ inputs.with-npm-cache }}
       uses: actions/cache@v4
       with:
         path: ~/.npm # Cache da pasta global do npm
-        key: npm-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+        key: npm-${{ runner.os }}-${{ hashFiles('${{ inputs.directory }}/package-lock.json') }}
         restore-keys: |
           npm-${{ runner.os }}-
 
     - name: Cache turbo build setup
+      if: ${{ inputs.with-turbo-cache }}
       uses: actions/cache@v4
       with:
         path: .turbo

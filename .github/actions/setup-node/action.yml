@@ -6,7 +6,7 @@ inputs:
     description: "Node.js version"
     required: true
     default: "20"
-  working-directory:
+  directory:
     description: "Working directory"
     required: true
     default: "."
@@ -16,7 +16,7 @@ runs:
   steps:
     - name: Use Node.js ${{ inputs.node-version }}
       uses: actions/setup-node@v4
-      working-directory: ${{ inputs.working-directory }}
+      working-directory: ${{ inputs.directory }}
       with:
         node-version: ${{ inputs.node-version }}
         registry-url: https://registry.npmjs.org
@@ -24,7 +24,7 @@ runs:
 
     - name: Configurar cache do npm
       uses: actions/cache@v4
-      working-directory: ${{ inputs.working-directory }}
+      working-directory: ${{ inputs.directory }}
       with:
         path: ~/.npm # Cache da pasta global do npm
         key: npm-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
@@ -33,7 +33,7 @@ runs:
 
     - name: Cache turbo build setup
       uses: actions/cache@v4
-      working-directory: ${{ inputs.working-directory }}
+      working-directory: ${{ inputs.directory }}
       with:
         path: .turbo
         key: ${{ runner.os }}-turbo-${{ github.sha }}
@@ -43,4 +43,4 @@ runs:
     - name: Install dependencies
       shell: bash
       run: npm ci
-      working-directory: ${{ inputs.working-directory }}
+      working-directory: ${{ inputs.directory }}

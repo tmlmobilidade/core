@@ -14,6 +14,10 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: Go to directory
+      shell: bash
+      run: cd ${{ inputs.directory }}
+
     - name: Use Node.js ${{ inputs.node-version }}
       uses: actions/setup-node@v4
       with:
@@ -40,4 +44,3 @@ runs:
     - name: Install dependencies
       shell: bash
       run: npm ci
-      working-directory: ${{ inputs.directory }}

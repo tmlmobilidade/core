@@ -51,7 +51,7 @@
 		"@tmlmobilidade/tsconfig": "*",
 		"@tmlmobilidade/types": "*",
 		"@types/luxon": "3.6.2",
-		"@types/node": "22.14.0",
+		"@types/node": "22.14.1",
 		"resolve-tspaths": "0.8.23",
 		"rimraf": "6.0.1",
 		"turbo": "2.5.0",

@@ -310,7 +310,7 @@ export type Facilities = z.infer<typeof facilitiesSchema>;
 export type Comment = z.infer<typeof commentSchema>;
 
 export const CreateStopSchema = StopSchema
-	.omit({ _id: true, created_at: true, updated_at: true });
+	.omit({ created_at: true, updated_at: true });
 
 export const UpdateStopSchema = StopSchema
 	.omit({ _id: true, created_at: true, updated_at: true })

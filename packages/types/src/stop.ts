@@ -259,6 +259,8 @@ export const StopSchema = DocumentSchema.extend({
 
 	last_schedules_maintenance: unixTimeStampSchema.nullish(),
 
+	last_shelter_installation: unixTimeStampSchema.nullish(),
+
 	//
 	// Facilities
 
@@ -337,6 +339,7 @@ export interface Stop
 		| 'last_infrastructure_maintenance'
 		| 'last_schedules_check'
 		| 'last_schedules_maintenance'
+		| 'last_shelter_installation'
 		| 'latitude'
 		| 'lighting_status'
 		| 'locality_id'
@@ -377,6 +380,7 @@ export interface Stop
 	last_infrastructure_maintenance: UnixTimestamp
 	last_schedules_check: UnixTimestamp
 	last_schedules_maintenance:	UnixTimestamp
+	last_shelter_installation:	UnixTimestamp
 	latitude: number
 	lighting_status: LightningStatus
 	locality_id: string
@@ -421,6 +425,7 @@ export interface CreateStopDto
 		| 'last_infrastructure_maintenance'
 		| 'last_schedules_check'
 		| 'last_schedules_maintenance'
+		| 'last_shelter_installation'
 		| 'latitude'
 		| 'lighting_status'
 		| 'locality_id'
@@ -461,6 +466,7 @@ export interface CreateStopDto
 	last_infrastructure_maintenance: UnixTimestamp
 	last_schedules_check: UnixTimestamp
 	last_schedules_maintenance:	UnixTimestamp
+	last_shelter_installation:	UnixTimestamp
 	latitude: number
 	lighting_status: LightningStatus
 	locality_id: string

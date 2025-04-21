@@ -189,6 +189,10 @@ export const StopSchema = DocumentSchema.extend({
 	//
 	// Location
 
+	affectation: z
+		.array(z.string())
+		.default([]),
+
 	district_id: z
 		.string(),
 
@@ -322,7 +326,8 @@ export const UpdateStopSchema = StopSchema
 export interface Stop
 	extends Omit<
 		z.infer<typeof StopSchema>,
-		'bench_status'
+		'affectation'
+		| 'bench_status'
 		| 'comments'
 		| 'created_at'
 		| 'district_id'
@@ -363,6 +368,7 @@ export interface Stop
 		| 'tts_name'
 		| 'updated_at'
 	> {
+	affectation: string[]
 	bench_status: BenchStatus
 	comments: Comment[]
 	created_at: UnixTimestamp
@@ -408,7 +414,8 @@ export interface Stop
 export interface CreateStopDto
 	extends Omit<
 		z.infer<typeof CreateStopSchema>,
-		'bench_status'
+		'affectation'
+		| 'bench_status'
 		| 'comments'
 		| 'created_at'
 		| 'district_id'
@@ -449,6 +456,7 @@ export interface CreateStopDto
 		| 'tts_name'
 		| 'updated_at'
 	> {
+	affectation: string[]
 	bench_status: BenchStatus
 	comments: Comment[]
 	created_at: UnixTimestamp

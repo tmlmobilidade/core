@@ -52,3 +52,21 @@ export function getOperationalDate(timestamp?: DateTime | string, format?: strin
 
 	//
 }
+
+/**
+ * Converts an operational date to a JavaScript Date object.
+ * The returned date will be set to 04:00 (start of operational day).
+ *
+ * @param operationalDate - The operational date in yyyyLLdd format
+ * @returns A JavaScript Date object set to 04:00 of the operational date
+ */
+export function operationalDateToJsDate(operationalDate: OperationalDate): Date {
+	const dateTime = DateTime.fromFormat(operationalDate, 'yyyyLLdd')
+		.set({ hour: 4, millisecond: 0, minute: 0, second: 0 });
+
+	if (!dateTime.isValid) {
+		throw new Error(`Invalid operational date format: ${operationalDate}, expected format: yyyyLLdd`);
+	}
+
+	return dateTime.toJSDate();
+}

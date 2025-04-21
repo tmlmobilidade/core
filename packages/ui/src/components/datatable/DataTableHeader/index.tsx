@@ -63,6 +63,7 @@ export function DataTableHeader<T = Record<string, unknown>>({ columns }: DataTa
 				>
 					<div
 						className={styles.cellContent}
+						data-center={column.center}
 						onClick={() =>
 							column.sortable
 							&& dataTableContext.actions.handleSort(column.sortKey ?? String(column.accessor))}

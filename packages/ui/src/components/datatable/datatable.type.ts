@@ -8,6 +8,12 @@ export interface DataTableColumn<T> {
 	accessor: keyof T | (string & {})
 
 	/**
+	 * Center the column content.
+	 * @default false
+	 */
+	center?: boolean
+
+	/**
 	 * Whether the column is hidden.
 	 * @default false
 	 */

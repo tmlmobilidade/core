@@ -48,7 +48,7 @@ export function DataTableRow<T = Record<string, unknown>>({ columns, onRowClick,
 			{columns.map((column, colIndex) => (
 				<div
 					key={colIndex}
-					className={cn(styles.cell, column.width ? styles.maxWidth : styles.fullWidth)}
+					className={cn(styles.cell, column.width ? styles.maxWidth : styles.fullWidth, column.center && styles.center)}
 					style={{
 						maxWidth: column.width,
 						minWidth: column.width,

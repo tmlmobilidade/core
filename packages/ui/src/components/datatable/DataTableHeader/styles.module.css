@@ -25,7 +25,3 @@
     align-items: center;
     justify-content: space-between;
 }
-
-.cellContent[data-center="true"] {
-    justify-content: center;
-}

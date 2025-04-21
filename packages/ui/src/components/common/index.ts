@@ -3,6 +3,7 @@ export { default as Badge } from './Badge';
 export { default as Checkbox } from './Checkbox';
 export { default as Combobox, DataItem } from './Combobox';
 export { default as ComponentWrapper } from './ComponentWrapper';
+export { default as DatePicker } from './DatePicker';
 export { default as DateTimePicker } from './DateTimePicker';
 export { default as DeleteActionIcon } from './DeleteActionIcon';
 export { default as Description } from './Description';

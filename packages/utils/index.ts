@@ -1,6 +1,7 @@
 /* * */
 
 export * from '@/convert-object.js';
+export * from '@/files.js';
 export * from '@/generate-random-string.js';
 export * from '@/generate-random-token.js';
 export * from '@/operational-date.js';

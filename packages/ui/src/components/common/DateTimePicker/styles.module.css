@@ -67,8 +67,8 @@
 /* DESCRIPTION */
 
 .description {
-	margin-top: var(--size-spacing-xs);
-	margin-bottom: var(--size-spacing-xs);
+	margin-top: 0;
+	margin-bottom: 0;
 	font-size: var(--font-size-sm);
 	font-weight: var(--font-weight-medium);
 	color: var(--color-system-text-200);

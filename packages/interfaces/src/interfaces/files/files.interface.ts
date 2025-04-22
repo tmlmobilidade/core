@@ -5,7 +5,7 @@ import { IStorageProvider, StorageFactory } from '@/providers/index.js';
 import { HttpStatus } from '@tmlmobilidade/lib';
 import { HttpException } from '@tmlmobilidade/lib';
 import { CreateFileDto, File, FileSchema, UpdateFileDto, UpdateFileSchema } from '@tmlmobilidade/types';
-import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
+import { AsyncSingletonProxy, getFileExtension } from '@tmlmobilidade/utils';
 import { generateRandomString } from '@tmlmobilidade/utils';
 import { DeleteResult, IndexDescription, InsertOneResult } from 'mongodb';
 import { z } from 'zod';
@@ -130,7 +130,7 @@ class FilesClass extends MongoCollectionClass<File, CreateFileDto, UpdateFileDto
 	 */
 	public async upload(file: Buffer, createFileDto: CreateFileDto): Promise<InsertOneResult<File>> {
 		const _id = generateRandomString({ length: 5 });
-		await this.storageService.uploadFile(`${createFileDto.scope}/${createFileDto.resource_id}/${_id}`, file);
+		await this.storageService.uploadFile(`${createFileDto.scope}/${createFileDto.resource_id}/${_id}`, getFileExtension(createFileDto.name), file);
 		return await this.insertOne({ ...createFileDto, _id });
 	}
 

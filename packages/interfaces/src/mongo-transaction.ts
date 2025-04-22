@@ -19,8 +19,12 @@ export class Transaction {
 		await this.session.endSession();
 	}
 
+	getSession() {
+		return this.session;
+	}
+
 	async start() {
-		this.session = await this.mongoConnector.client.startSession();
+		this.session = this.mongoConnector.client.startSession();
 		this.session.startTransaction();
 	}
 }

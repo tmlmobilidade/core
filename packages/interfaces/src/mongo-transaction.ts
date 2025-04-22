@@ -1,3 +1,11 @@
+/**
+ * NOTE: TRANSACTIONS ARE ONLY SUPPORTED BY REPLICA SETS
+ *
+ * Transaction numbers are only allowed on a replica set member or mongos
+ *
+ * @see https://www.mongodb.com/docs/manual/core/transactions-operations/
+ */
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { MongoConnector } from '@tmlmobilidade/connectors';
 import { ClientSession } from 'mongodb';
@@ -24,7 +32,7 @@ export class Transaction {
 	}
 
 	async start() {
-		this.session = this.mongoConnector.client.startSession();
+		this.session = (await this.mongoConnector).client.startSession();
 		this.session.startTransaction();
 	}
 }

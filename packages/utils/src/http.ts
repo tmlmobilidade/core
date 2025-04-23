@@ -88,7 +88,7 @@ export async function fetchData<T>(
  * const response = await multipartFetch('/api/upload', formData);
  * ```
  */
-export async function multipartFetch(url: string, formData: FormData) {
+export async function multipartFetch<T>(url: string, formData: FormData): Promise<HttpResponse<T>> {
 	try {
 		const response = await fetch(url, {
 			body: formData,
@@ -107,7 +107,7 @@ export async function multipartFetch(url: string, formData: FormData) {
 		}
 
 		return {
-			data,
+			data: data as T,
 			error: null,
 			status: response.status,
 		};
@@ -131,10 +131,10 @@ export async function multipartFetch(url: string, formData: FormData) {
  * const response = await uploadFile('/api/upload', file);
  * ```
  */
-export async function uploadFile(url: string, file: File) {
+export async function uploadFile<T>(url: string, file: File): Promise<HttpResponse<T>> {
 	const formData = new FormData();
 	formData.append('file', file, file.name);
-	return await multipartFetch(url, formData);
+	return await multipartFetch<T>(url, formData);
 }
 
 /**
@@ -146,7 +146,7 @@ export async function uploadFile(url: string, file: File) {
  * const data = await swrFetcher('/api/users/123');
  * ```
  */
-export const swrFetcher = async (url: string) => {
+export const swrFetcher = async <T>(url: string): Promise<T> => {
 	const res = await fetch(url, { credentials: 'include' });
 	const data = await res.json();
 
@@ -154,5 +154,5 @@ export const swrFetcher = async (url: string) => {
 		throw new Error((data as ErrorResponse).message);
 	}
 
-	return data;
+	return data as T;
 };

@@ -38,22 +38,40 @@ export class Transaction {
 }
 
 export class TransactionManager {
+	private transactions = new Map<MongoCollectionClass<any, any, any>, Transaction>();
+
 	constructor(private collections: MongoCollectionClass<any, any, any>[]) {}
 
 	async withTransaction<T>(
-		callback: (collections: MongoCollectionClass<any, any, any>[], transaction: Transaction) => Promise<T>,
+		callback: (collections: MongoCollectionClass<any, any, any>[], transactions: Map<MongoCollectionClass<any, any, any>, Transaction>) => Promise<T>,
 	): Promise<T> {
-		const transaction = new Transaction(this.collections[0].getMongoConnector());
-
 		try {
-			await transaction.start();
-			const result = await callback(this.collections, transaction);
-			await transaction.commit();
+			// Start transactions for each collection
+			for (const collection of this.collections) {
+				const transaction = new Transaction(collection.getMongoConnector());
+				await transaction.start();
+				this.transactions.set(collection, transaction);
+			}
+
+			// Execute callback with collections and transaction map
+			const result = await callback(this.collections, this.transactions);
+
+			// If successful, commit all transactions
+			await Promise.all(
+				Array.from(this.transactions.values()).map(transaction => transaction.commit()),
+			);
+
 			return result;
 		}
 		catch (error) {
-			await transaction.abort();
+			// If any error occurs, abort all transactions
+			for (const transaction of this.transactions.values()) {
+				await transaction.abort();
+			}
 			throw error;
+		}
+		finally {
+			this.transactions.clear();
 		}
 	}
 }

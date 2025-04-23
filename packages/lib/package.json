@@ -37,7 +37,6 @@
 	"dependencies": {
 		"@tmlmobilidade/connectors": "*",
 		"@tmlmobilidade/types": "*",
-		"@tmlmobilidade/utils": "*",
 		"zod": "3.24.2"
 	},
 	"devDependencies": {

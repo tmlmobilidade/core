@@ -24,10 +24,10 @@
 		"test:prod": "turbo test:prod"
 	},
 	"dependencies": {
-		"@carrismetropolitana/eslint": "20250325.1926.5",
-		"eslint": "9.24.0",
+		"@carrismetropolitana/eslint": "20250418.42.41",
+		"eslint": "9.25.1",
 		"tsx": "4.19.3",
-		"turbo": "2.5.0"
+		"turbo": "2.5.1"
 	},
 	"workspaces": [
 		"apps/*",

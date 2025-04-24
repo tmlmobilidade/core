@@ -36,16 +36,16 @@
 	},
 	"module": "dist/index.js",
 	"dependencies": {
-		"mongodb": "6.15.0",
-		"pg": "8.14.1",
+		"mongodb": "6.16.0",
+		"pg": "8.15.5",
 		"trino-client": "0.2.6",
 		"tunnel-ssh": "5.2.0"
 	},
 	"devDependencies": {
-		"@carrismetropolitana/eslint": "20250325.1926.5",
+		"@carrismetropolitana/eslint": "20250418.42.41",
 		"@tmlmobilidade/tsconfig": "*",
-		"@types/node": "22.14.1",
-		"@types/pg": "8.11.13",
+		"@types/node": "22.15.0",
+		"@types/pg": "8.11.14",
 		"resolve-tspaths": "0.8.23",
 		"rimraf": "6.0.1",
 		"typescript": "5.8.3"

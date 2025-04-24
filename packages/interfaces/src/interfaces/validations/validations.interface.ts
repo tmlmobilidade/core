@@ -41,7 +41,7 @@ class ValidationsClass extends MongoCollectionClass<Validation, CreateValidation
 	}
 
 	protected getCollectionName(): string {
-		return 'plans';
+		return 'validations';
 	}
 
 	protected getEnvName(): string {
@@ -51,4 +51,4 @@ class ValidationsClass extends MongoCollectionClass<Validation, CreateValidation
 
 /* * */
 
-export const plans = AsyncSingletonProxy(ValidationsClass);
+export const validations = AsyncSingletonProxy(ValidationsClass);

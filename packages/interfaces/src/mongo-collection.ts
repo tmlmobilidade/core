@@ -173,8 +173,8 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 		const newDocument = {
 			...doc,
 			_id: doc._id || generateRandomString({ length: 5 }),
-			created_at: doc.created_at || Dates.now().unixTimestamp,
-			updated_at: doc.updated_at || Dates.now().unixTimestamp,
+			created_at: doc.created_at || Dates.now().unix_timestamp,
+			updated_at: doc.updated_at || Dates.now().unix_timestamp,
 		} as unknown as OptionalUnlessRequiredId<T>;
 
 		if (!doc._id) {
@@ -251,7 +251,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 			}
 		}
 
-		return this.mongoCollection.updateMany(filter, { $set: { ...parsedUpdateFields, updated_at: Dates.now().unixTimestamp } } as unknown as Partial<T>, options);
+		return this.mongoCollection.updateMany(filter, { $set: { ...parsedUpdateFields, updated_at: Dates.now().unix_timestamp } } as unknown as Partial<T>, options);
 	}
 
 	/**
@@ -273,7 +273,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 			}
 		}
 
-		return this.mongoCollection.updateOne(filter, { $set: { ...parsedUpdateFields, updated_at: Dates.now().unixTimestamp } } as unknown as Partial<T>, options);
+		return this.mongoCollection.updateOne(filter, { $set: { ...parsedUpdateFields, updated_at: Dates.now().unix_timestamp } } as unknown as Partial<T>, options);
 	}
 
 	// Abstract method for subclasses to provide the MongoDB collection indexes

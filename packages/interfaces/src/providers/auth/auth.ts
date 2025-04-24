@@ -108,9 +108,9 @@ class AuthProvider {
 
 		const session: Session = {
 			_id: generateRandomString(),
-			created_at: Dates.now().unixTimestamp,
+			created_at: Dates.now().unix_timestamp,
 			token: generateRandomToken(),
-			updated_at: Dates.now().unixTimestamp,
+			updated_at: Dates.now().unix_timestamp,
 			user_id: user._id.toString(),
 		};
 
@@ -146,7 +146,7 @@ class AuthProvider {
 		const result = await users.insertOne(userToCreate);
 
 		const verification_token_result = await verificationTokens.insertOne({
-			expires_at: Dates.now().plus({ days: 7 }).unixTimestamp,
+			expires_at: Dates.now().plus({ days: 7 }).unix_timestamp,
 			token: verification_token,
 			user_id: result.insertedId.toString(),
 		});

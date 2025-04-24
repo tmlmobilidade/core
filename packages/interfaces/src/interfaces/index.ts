@@ -17,6 +17,6 @@ export * from '@/interfaces/organizations/organizations.interface.js';
 export * from '@/interfaces/plans/plans.interface.js';
 export * from '@/interfaces/rides/rides.interface.js';
 export * from '@/interfaces/stops/stops.interface.js';
-export * from '@/interfaces/validations/index.js';
+export * from '@/interfaces/validations/validations.interface.js';
 export * from '@/interfaces/vehicle-events/vehicle-events.interface.js';
 export * from '@/interfaces/zones/zones.interface.js';

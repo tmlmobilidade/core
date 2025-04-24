@@ -18,7 +18,7 @@ export * from '@/locality.js';
 export * from '@/municipality.js';
 export * from '@/organization.js';
 export * from '@/plan.js';
-export * from '@/plan.js';
+export * from '@/validation.js';
 export * from '@/ride.js';
 export * from '@/stop.js';
 export * from '@/vehicle-event.js';

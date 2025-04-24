@@ -2,6 +2,7 @@
 
 export * from '@/interfaces/agencies/agencies.interface.js';
 export * from '@/interfaces/alerts/alerts.interface.js';
+export * from '@/interfaces/apex-t3/apex-t3.interface.js';
 export * from '@/interfaces/apex-t11/apex-t11.interface.js';
 export * from '@/interfaces/apex-t19/apex-t19.interface.js';
 export * from '@/interfaces/auth/roles.interface.js';

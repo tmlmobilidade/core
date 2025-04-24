@@ -10,7 +10,7 @@ import { FeederStatusSchema } from './plan.js';
 export const ValidationSchema = DocumentSchema.extend({
 	agency_id: z.string(),
 	feeder_status: FeederStatusSchema,
-	file: z.string().nullish(),
+	file: z.string(),
 	is_locked: z.boolean(),
 	valid_from: z.string().transform(validateOperationalDate).brand('OperationalDate'),
 	valid_until: z.string().transform(validateOperationalDate).brand('OperationalDate'),

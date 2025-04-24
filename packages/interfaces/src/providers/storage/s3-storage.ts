@@ -168,7 +168,7 @@ export class S3StorageProvider implements IStorageProvider {
 	 * @param key - The file path and name in S3.
 	 * @param body - The content to upload, either as a string, buffer, or readable stream.
 	 */
-	async uploadFile(key: string, extension: string, body: Buffer | Readable | string): Promise<void> {
+	async uploadFile(key: string, body: Buffer | Readable | string): Promise<void> {
 		try {
 			await this.checkBucket();
 			const command = new PutObjectCommand({
@@ -177,7 +177,7 @@ export class S3StorageProvider implements IStorageProvider {
 				Key: key,
 			});
 			await this.s3Client.send(command);
-			console.log(`File uploaded successfully to ${this.bucketName}/${key}.${extension}`);
+			console.log(`File uploaded successfully to ${this.bucketName}/${key}`);
 		}
 		catch (error) {
 			console.error('Error uploading file:', error);

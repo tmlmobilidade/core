@@ -3,8 +3,8 @@
 import { MongoConnector } from '@tmlmobilidade/connectors';
 import { HttpException, HttpStatus } from '@tmlmobilidade/lib';
 import { type UnixTimestamp } from '@tmlmobilidade/types';
-import { generateRandomString, getUnixTimestamp } from '@tmlmobilidade/utils';
-import { Collection, DeleteResult, Document, Filter, IndexDescription, InsertOneOptions, InsertOneResult, MongoClientOptions, OptionalUnlessRequiredId, Sort, UpdateOptions, UpdateResult, WithId } from 'mongodb';
+import { Dates, generateRandomString } from '@tmlmobilidade/utils';
+import { Collection, DeleteOptions, DeleteResult, Document, Filter, IndexDescription, InsertOneOptions, InsertOneResult, MongoClientOptions, OptionalUnlessRequiredId, Sort, UpdateOptions, UpdateResult, WithId } from 'mongodb';
 import { z } from 'zod';
 
 /* * */
@@ -71,8 +71,8 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	 * @param id - The ID of the document to delete
 	 * @returns A promise that resolves to the result of the delete operation
 	 */
-	public async deleteById(id: string): Promise<DeleteResult> {
-		return this.mongoCollection.deleteOne({ _id: { $eq: id } } as unknown as Filter<T>);
+	public async deleteById(id: string, options?: DeleteOptions): Promise<DeleteResult> {
+		return this.mongoCollection.deleteOne({ _id: { $eq: id } } as unknown as Filter<T>, options);
 	}
 
 	/**
@@ -173,8 +173,8 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 		const newDocument = {
 			...doc,
 			_id: doc._id || generateRandomString({ length: 5 }),
-			created_at: doc.created_at || getUnixTimestamp(),
-			updated_at: doc.updated_at || getUnixTimestamp(),
+			created_at: doc.created_at || Dates.now().unixTimestamp,
+			updated_at: doc.updated_at || Dates.now().unixTimestamp,
 		} as unknown as OptionalUnlessRequiredId<T>;
 
 		if (!doc._id) {
@@ -251,7 +251,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 			}
 		}
 
-		return this.mongoCollection.updateMany(filter, { $set: { ...parsedUpdateFields, updated_at: getUnixTimestamp() } } as unknown as Partial<T>, options);
+		return this.mongoCollection.updateMany(filter, { $set: { ...parsedUpdateFields, updated_at: Dates.now().unixTimestamp } } as unknown as Partial<T>, options);
 	}
 
 	/**
@@ -273,7 +273,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 			}
 		}
 
-		return this.mongoCollection.updateOne(filter, { $set: { ...parsedUpdateFields, updated_at: getUnixTimestamp() } } as unknown as Partial<T>, options);
+		return this.mongoCollection.updateOne(filter, { $set: { ...parsedUpdateFields, updated_at: Dates.now().unixTimestamp } } as unknown as Partial<T>, options);
 	}
 
 	// Abstract method for subclasses to provide the MongoDB collection indexes

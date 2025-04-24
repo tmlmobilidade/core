@@ -1,7 +1,7 @@
 /* * */
 
 import { OperationalDate, UnixTimestamp } from '@tmlmobilidade/types';
-import { DateTime } from 'luxon';
+import { DateTime, type DurationObjectUnits } from 'luxon';
 
 import { type DatesFormat, Formats, OPERATIONAL_DATE_FORMAT } from './format.js';
 import { type TimezoneIdentified, timezoneList, timezoneListSchema } from './types.js';
@@ -147,6 +147,46 @@ class Dates {
 			jsDate: DateTime.now().toJSDate(),
 			operationalDate: this.prototype.getOperationalDate(unixTimestamp),
 			unixTimestamp,
+		});
+	}
+
+	/**
+	 * Returns a new Dates object with the current date and time minus a duration
+	 * @param duration - The duration to subtract
+	 * @returns A new Dates object with the current date and time minus a duration
+	 */
+	minus(duration: DurationObjectUnits): Dates {
+		if (!this.iso) {
+			throw new Error('ISO date is not set');
+		}
+
+		const dateTime = DateTime.fromISO(this.iso).minus(duration);
+
+		return new Dates({
+			iso: dateTime.toISO(),
+			jsDate: dateTime.toJSDate(),
+			operationalDate: this.getOperationalDate(dateTime.toMillis() as UnixTimestamp),
+			unixTimestamp: dateTime.toMillis() as UnixTimestamp,
+		});
+	}
+
+	/**
+	 * Returns a new Dates object with the current date and time plus a duration
+	 * @param duration - The duration to add
+	 * @returns A new Dates object with the current date and time plus a duration
+	 */
+	plus(duration: DurationObjectUnits): Dates {
+		if (!this.iso) {
+			throw new Error('ISO date is not set');
+		}
+
+		const dateTime = DateTime.fromISO(this.iso).plus(duration);
+
+		return new Dates({
+			iso: dateTime.toISO(),
+			jsDate: dateTime.toJSDate(),
+			operationalDate: this.getOperationalDate(dateTime.toMillis() as UnixTimestamp),
+			unixTimestamp: dateTime.toMillis() as UnixTimestamp,
 		});
 	}
 

@@ -10,10 +10,10 @@ import { type TimezoneIdentified, timezoneList, timezoneListSchema } from './typ
 
 interface DatesConstructor {
 	iso: null | string
-	jsDate: Date
-	operationalDate: OperationalDate
+	js_date: Date
+	operational_date: OperationalDate
 	timezone?: TimezoneIdentified
-	unixTimestamp: UnixTimestamp
+	unix_timestamp: UnixTimestamp
 }
 
 /* * */
@@ -30,26 +30,26 @@ class Dates {
 	//
 	// Instance properties
 	public iso: null | string;
-	public jsDate: Date;
-	public operationalDate: OperationalDate;
+	public js_date: Date;
+	public operational_date: OperationalDate;
 	public timezone: TimezoneIdentified;
 
-	public unixTimestamp: UnixTimestamp;
+	public unix_timestamp: UnixTimestamp;
 
 	//
 	// Constructor
 	constructor({
 		iso,
-		jsDate,
-		operationalDate,
+		js_date,
+		operational_date,
 		timezone = 'Europe/Lisbon',
-		unixTimestamp,
+		unix_timestamp,
 	}: DatesConstructor) {
 		this.timezone = timezone;
-		this.operationalDate = operationalDate;
-		this.unixTimestamp = unixTimestamp;
+		this.operational_date = operational_date;
+		this.unix_timestamp = unix_timestamp;
 		this.iso = iso ?? null;
-		this.jsDate = jsDate;
+		this.js_date = js_date;
 	}
 
 	//
@@ -65,9 +65,9 @@ class Dates {
 
 		return new Dates({
 			iso: dateTime.toISO(),
-			jsDate: dateTime.toJSDate(),
-			operationalDate: this.prototype.getOperationalDate(dateTime.toMillis() as UnixTimestamp),
-			unixTimestamp: dateTime.toMillis() as UnixTimestamp,
+			js_date: dateTime.toJSDate(),
+			operational_date: this.prototype.getOperationalDate(dateTime.toMillis() as UnixTimestamp),
+			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
 		});
 	}
 
@@ -81,9 +81,9 @@ class Dates {
 
 		return new Dates({
 			iso: dateTime.toISO(),
-			jsDate: dateTime.toJSDate(),
-			operationalDate: this.prototype.getOperationalDate(dateTime.toMillis() as UnixTimestamp),
-			unixTimestamp: dateTime.toMillis() as UnixTimestamp,
+			js_date: dateTime.toJSDate(),
+			operational_date: this.prototype.getOperationalDate(dateTime.toMillis() as UnixTimestamp),
+			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
 		});
 	}
 
@@ -97,9 +97,9 @@ class Dates {
 
 		return new Dates({
 			iso: dateTime.toISO(),
-			jsDate: dateTime.toJSDate(),
-			operationalDate: this.prototype.getOperationalDate(dateTime.toMillis() as UnixTimestamp),
-			unixTimestamp: dateTime.toMillis() as UnixTimestamp,
+			js_date: dateTime.toJSDate(),
+			operational_date: this.prototype.getOperationalDate(dateTime.toMillis() as UnixTimestamp),
+			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
 		});
 	}
 
@@ -113,9 +113,9 @@ class Dates {
 
 		return new Dates({
 			iso: dateTime.toISO(),
-			jsDate: dateTime.toJSDate(),
-			operationalDate: dateTime.toFormat(OPERATIONAL_DATE_FORMAT) as OperationalDate,
-			unixTimestamp: dateTime.toMillis() as UnixTimestamp,
+			js_date: dateTime.toJSDate(),
+			operational_date: dateTime.toFormat(OPERATIONAL_DATE_FORMAT) as OperationalDate,
+			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
 		});
 	}
 
@@ -129,9 +129,9 @@ class Dates {
 
 		return new Dates({
 			iso: dateTime.toISO(),
-			jsDate: dateTime.toJSDate(),
-			operationalDate: this.prototype.getOperationalDate(dateTime.toMillis() as UnixTimestamp),
-			unixTimestamp: dateTime.toMillis() as UnixTimestamp,
+			js_date: dateTime.toJSDate(),
+			operational_date: this.prototype.getOperationalDate(dateTime.toMillis() as UnixTimestamp),
+			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
 		});
 	}
 
@@ -140,13 +140,13 @@ class Dates {
 	 * @returns {Dates} A new Dates object with the current date and time
 	 */
 	static now(): Dates {
-		const unixTimestamp = DateTime.now().toMillis() as UnixTimestamp;
+		const unix_timestamp = DateTime.now().toMillis() as UnixTimestamp;
 
 		return new Dates({
 			iso: DateTime.now().toISO(),
-			jsDate: DateTime.now().toJSDate(),
-			operationalDate: this.prototype.getOperationalDate(unixTimestamp),
-			unixTimestamp,
+			js_date: DateTime.now().toJSDate(),
+			operational_date: this.prototype.getOperationalDate(unix_timestamp),
+			unix_timestamp,
 		});
 	}
 
@@ -164,9 +164,9 @@ class Dates {
 
 		return new Dates({
 			iso: dateTime.toISO(),
-			jsDate: dateTime.toJSDate(),
-			operationalDate: this.getOperationalDate(dateTime.toMillis() as UnixTimestamp),
-			unixTimestamp: dateTime.toMillis() as UnixTimestamp,
+			js_date: dateTime.toJSDate(),
+			operational_date: this.getOperationalDate(dateTime.toMillis() as UnixTimestamp),
+			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
 		});
 	}
 
@@ -184,9 +184,9 @@ class Dates {
 
 		return new Dates({
 			iso: dateTime.toISO(),
-			jsDate: dateTime.toJSDate(),
-			operationalDate: this.getOperationalDate(dateTime.toMillis() as UnixTimestamp),
-			unixTimestamp: dateTime.toMillis() as UnixTimestamp,
+			js_date: dateTime.toJSDate(),
+			operational_date: this.getOperationalDate(dateTime.toMillis() as UnixTimestamp),
+			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
 		});
 	}
 
@@ -199,14 +199,14 @@ class Dates {
      */
 	setZone(timezone: TimezoneIdentified): Dates {
 		this.timezone = timezone;
-		const dateTime = DateTime.fromMillis(this.unixTimestamp).setZone(timezone);
+		const dateTime = DateTime.fromMillis(this.unix_timestamp).setZone(timezone);
 
 		return new Dates({
-			iso: DateTime.fromMillis(this.unixTimestamp).setZone(timezone).toISO(),
-			jsDate: dateTime.toJSDate(),
-			operationalDate: this.getOperationalDate(dateTime.toMillis() as UnixTimestamp),
+			iso: DateTime.fromMillis(this.unix_timestamp).setZone(timezone).toISO(),
+			js_date: dateTime.toJSDate(),
+			operational_date: this.getOperationalDate(dateTime.toMillis() as UnixTimestamp),
 			timezone,
-			unixTimestamp: dateTime.toMillis() as UnixTimestamp,
+			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
 		});
 	}
 
@@ -246,22 +246,22 @@ class Dates {
 		// Check if the time is between 00:00 and 03:59.
 		// The operational date is between 04:00 and 03:59 of the following day.
 
-		let operationalDate: string;
+		let operational_date: string;
 
 		if (dateObject.hour < 4) {
 			// If true, return the previous day in the yyyyLLdd format
 			const previousDay = dateObject.minus({ days: 1 });
-			operationalDate = previousDay.toFormat('yyyyLLdd');
+			operational_date = previousDay.toFormat('yyyyLLdd');
 		}
 		else {
 			// Else, return the current day in the yyyyLLdd format
-			operationalDate = dateObject.toFormat('yyyyLLdd');
+			operational_date = dateObject.toFormat('yyyyLLdd');
 		}
 
 		//
 		// Validate the operational date and return it
 
-		return operationalDate as OperationalDate;
+		return operational_date as OperationalDate;
 
 		//
 	}

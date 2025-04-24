@@ -18,11 +18,11 @@ export const ApexT3Schema = DocumentSchema.extend({
 	payment_method: z.number(),
 	price: z.number(),
 	product_id: z.string(),
-	product_quantity: z.number(),
+	product_qty: z.number(),
 	received_at: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp'),
 	stop_id: z.string().optional(),
 	trip_id: z.string().optional(),
-	units_quantity: z.number(),
+	units_qty: z.number(),
 	vehicle_id: z.string().optional(),
 }).strict();
 

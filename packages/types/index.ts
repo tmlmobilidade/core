@@ -2,12 +2,13 @@
 
 /* * */
 
-export * from '@/common.js'; // This is the first export because it is used in files bellow
+export * from '@/common.js'; // This is the first export because it is used in files below
 
 /* * */
 
 export * from '@/agency.js';
 export * from '@/alert.js';
+export * from '@/apex-t3.js';
 export * from '@/apex-t11.js';
 export * from '@/apex-t19.js';
 export * from '@/auth.js';

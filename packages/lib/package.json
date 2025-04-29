@@ -35,7 +35,6 @@
 		"lint:fix": "eslint --fix"
 	},
 	"dependencies": {
-		"@tmlmobilidade/connectors": "*",
 		"@tmlmobilidade/types": "*",
 		"zod": "3.24.3"
 	},

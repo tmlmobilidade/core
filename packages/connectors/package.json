@@ -21,7 +21,9 @@
 		"access": "public"
 	},
 	"type": "module",
-	"files": ["dist/"],
+	"files": [
+		"dist/"
+	],
 	"exports": {
 		".": {
 			"types": "./dist/index.d.ts",
@@ -36,6 +38,9 @@
 	},
 	"module": "dist/index.js",
 	"dependencies": {
+		"@tmlmobilidade/utils": "*",
+		"@types/amqplib": "^0.10.7",
+		"amqplib": "^0.10.7",
 		"mongodb": "6.16.0",
 		"pg": "8.15.5",
 		"trino-client": "0.2.6",

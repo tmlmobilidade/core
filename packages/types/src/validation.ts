@@ -3,15 +3,16 @@
 import { DocumentSchema, type OperationalDate, type UnixTimestamp, validateOperationalDate } from '@/common.js';
 import { z } from 'zod';
 
+import { GTFSValidatorSummarySchema } from './gtfs-validation-summary.js';
 import { FeederStatusSchema } from './plan.js';
-
 /* * */
 
 export const ValidationSchema = DocumentSchema.extend({
 	agency_id: z.string(),
 	feeder_status: FeederStatusSchema,
-	file: z.string(),
+	file_id: z.string().optional(),
 	is_locked: z.boolean(),
+	summary: GTFSValidatorSummarySchema.optional(),
 	valid_from: z.string().transform(validateOperationalDate).brand('OperationalDate'),
 	valid_until: z.string().transform(validateOperationalDate).brand('OperationalDate'),
 }).strict();

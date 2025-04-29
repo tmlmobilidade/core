@@ -6,7 +6,7 @@ export const GTFSValidatorMessageSchema = z.object({
 	field: z.string(),
 	fileName: z.string(),
 	message: z.string(),
-	row: z.number(),
+	rows: z.array(z.number()),
 	severity: z.enum(['error', 'info', 'warning']),
 	validation_id: z.string(),
 });

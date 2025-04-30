@@ -413,7 +413,6 @@ export interface CreateStopDto
 		'affectation'
 		| 'bench_status'
 		| 'comments'
-		| 'created_at'
 		| 'district_id'
 		| 'docking_bay_type'
 		| 'electricity_status'
@@ -450,12 +449,10 @@ export interface CreateStopDto
 		| 'short_name'
 		| 'sidewalk_type'
 		| 'tts_name'
-		| 'updated_at'
 	> {
 	affectation: string[]
 	bench_status: BenchStatus
 	comments: Comment[]
-	created_at: UnixTimestamp
 	district_id: string
 	docking_bay_type: DockingBayType
 	electricity_status: ElectricityStatus
@@ -492,7 +489,6 @@ export interface CreateStopDto
 	short_name: string
 	sidewalk_type: SidewalkType
 	tts_name: string
-	updated_at: UnixTimestamp
 }
 
 export type UpdateStopDto = Partial<Omit<CreateStopDto, 'created_by'>>;

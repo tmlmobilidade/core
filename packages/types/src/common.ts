@@ -46,6 +46,11 @@ export type UnixTimestamp = number & {
 	__brand: 'UnixTimestamp'
 };
 
+export const unixTimeStampSchema = z
+	.number()
+	.transform(validateUnixTimestamp)
+	.brand('UnixTimestamp');
+
 /**
  * This function validates if a number is a valid Unix Timestamp, in milliseconds.
  * It is assumed the number will always be greater than 10^10 (1e10) to ensure it is in milliseconds.

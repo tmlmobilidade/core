@@ -21,7 +21,9 @@
 		"access": "public"
 	},
 	"type": "module",
-	"files": ["dist/"],
+	"files": [
+		"dist/"
+	],
 	"exports": {
 		".": {
 			"types": "./dist/index.d.ts",

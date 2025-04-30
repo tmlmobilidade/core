@@ -35,17 +35,15 @@
 		"lint:fix": "eslint --fix"
 	},
 	"dependencies": {
-		"@tmlmobilidade/connectors": "*",
 		"@tmlmobilidade/types": "*",
-		"@tmlmobilidade/utils": "*",
-		"zod": "3.24.2"
+		"zod": "3.24.3"
 	},
 	"devDependencies": {
-		"@carrismetropolitana/eslint": "20250325.1926.5",
+		"@carrismetropolitana/eslint": "20250418.42.41",
 		"@tmlmobilidade/tsconfig": "*",
-		"@types/node": "22.14.0",
+		"@types/node": "22.15.0",
 		"resolve-tspaths": "0.8.23",
 		"rimraf": "6.0.1",
-		"typescript": "5.8.2"
+		"typescript": "5.8.3"
 	}
 }

@@ -5,9 +5,9 @@ import { IStorageProvider, StorageFactory } from '@/providers/index.js';
 import { HttpStatus } from '@tmlmobilidade/lib';
 import { HttpException } from '@tmlmobilidade/lib';
 import { CreateFileDto, File, FileSchema, UpdateFileDto, UpdateFileSchema } from '@tmlmobilidade/types';
-import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
+import { AsyncSingletonProxy, getFileExtension } from '@tmlmobilidade/utils';
 import { generateRandomString } from '@tmlmobilidade/utils';
-import { DeleteResult, IndexDescription, InsertOneResult } from 'mongodb';
+import { DeleteOptions, DeleteResult, IndexDescription, InsertOneOptions, InsertOneResult } from 'mongodb';
 import { z } from 'zod';
 
 /* * */
@@ -72,7 +72,7 @@ class FilesClass extends MongoCollectionClass<File, CreateFileDto, UpdateFileDto
 	 * @param file_id - The unique identifier of the file in the database.
 	 * @returns The file that was deleted.
 	 */
-	public override async deleteById(file_id: string): Promise<DeleteResult> {
+	public override async deleteById(file_id: string, options?: DeleteOptions): Promise<DeleteResult> {
 		const file = await this.findOne({ _id: file_id });
 
 		if (!file) {
@@ -80,7 +80,7 @@ class FilesClass extends MongoCollectionClass<File, CreateFileDto, UpdateFileDto
 		}
 
 		await this.storageService.deleteFile(`${file.scope}/${file.resource_id}/${file._id}`);
-		return await super.deleteById(file_id);
+		return await super.deleteById(file_id, options);
 	}
 
 	/**
@@ -109,7 +109,7 @@ class FilesClass extends MongoCollectionClass<File, CreateFileDto, UpdateFileDto
 			if (!file) {
 				throw new HttpException(HttpStatus.NOT_FOUND, 'File not found');
 			}
-			key = `${file.scope}/${file.resource_id}/${file._id}`; // Use the file's storage key
+			key = `${file.scope}/${file.resource_id}/${file._id}.${getFileExtension(file.name)}`; // Use the file's storage key
 		}
 
 		// Check if key exists
@@ -128,10 +128,10 @@ class FilesClass extends MongoCollectionClass<File, CreateFileDto, UpdateFileDto
 	 * @param createFileDto - The file type to create.
 	 * @returns The file that was uploaded.
 	 */
-	public async upload(file: Buffer, createFileDto: CreateFileDto): Promise<InsertOneResult<File>> {
+	public async upload(file: Buffer, createFileDto: CreateFileDto, options: InsertOneOptions): Promise<InsertOneResult<File>> {
 		const _id = generateRandomString({ length: 5 });
-		await this.storageService.uploadFile(`${createFileDto.scope}/${createFileDto.resource_id}/${_id}`, file);
-		return await this.insertOne({ ...createFileDto, _id });
+		await this.storageService.uploadFile(`${createFileDto.scope}/${createFileDto.resource_id}/${_id}.${getFileExtension(createFileDto.name)}`, file);
+		return await this.insertOne({ ...createFileDto, _id }, { options });
 	}
 
 	protected getCollectionIndexes(): IndexDescription[] {

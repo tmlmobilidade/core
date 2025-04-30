@@ -5,9 +5,12 @@ import { z } from 'zod';
 
 /* * */
 
+const FEEDER_STATUS = ['waiting', 'processing', 'success', 'error'] as const;
+export const FeederStatusSchema = z.enum(FEEDER_STATUS);
+
 export const PlanSchema = DocumentSchema.extend({
 	agency_id: z.string(),
-	feeder_status: z.enum(['waiting', 'processing', 'success', 'error']),
+	feeder_status: FeederStatusSchema,
 	is_approved: z.boolean(),
 	is_locked: z.boolean(),
 	operation_file: z.string().nullish(),
@@ -21,6 +24,8 @@ export const CreatePlanSchema = PlanSchema.omit({ _id: true, created_at: true, u
 export const UpdatePlanSchema = CreatePlanSchema.partial();
 
 /* * */
+
+export type FeederStatus = z.infer<typeof FeederStatusSchema>;
 
 export interface Plan extends Omit<z.infer<typeof PlanSchema>, 'created_at' | 'updated_at' | 'valid_from' | 'valid_until'> {
 	created_at: UnixTimestamp

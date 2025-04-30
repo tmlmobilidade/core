@@ -5,8 +5,8 @@
 import { MapOptionsContextProvider } from '@/contexts/MapOptions.context';
 import { MeContextProvider } from '@/contexts/Me.context';
 import { ThemeContextProvider } from '@/contexts/Theme.context';
-import { MapProvider } from 'react-map-gl/maplibre';
 import { type PropsWithChildren } from 'react';
+import { MapProvider } from 'react-map-gl/maplibre';
 import { SWRConfig, type SWRConfiguration } from 'swr';
 
 /* * */

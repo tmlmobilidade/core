@@ -80,3 +80,7 @@
 .root[data-padding="lg"] {
 	padding: var(--size-spacing-lg);
 }
+
+.root[data-padding="none"] {
+	padding: 0;
+}

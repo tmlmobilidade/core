@@ -2,6 +2,7 @@
 
 export * from '@/interfaces/agencies/agencies.interface.js';
 export * from '@/interfaces/alerts/alerts.interface.js';
+export * from '@/interfaces/apex-t3/apex-t3.interface.js';
 export * from '@/interfaces/apex-t11/apex-t11.interface.js';
 export * from '@/interfaces/apex-t19/apex-t19.interface.js';
 export * from '@/interfaces/auth/roles.interface.js';
@@ -18,5 +19,6 @@ export * from '@/interfaces/plans/plans.interface.js';
 export * from '@/interfaces/proposedChanges/proposedChanges.interface.js';
 export * from '@/interfaces/rides/rides.interface.js';
 export * from '@/interfaces/stops/stops.interface.js';
+export * from '@/interfaces/validations/validations.interface.js';
 export * from '@/interfaces/vehicle-events/vehicle-events.interface.js';
 export * from '@/interfaces/zones/zones.interface.js';

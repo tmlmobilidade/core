@@ -10,7 +10,7 @@ interface SectionProps {
 	flexDirection?: 'column' | 'row'
 	gap?: 'lg' | 'md' | 'sm' | 'xs' | null
 	justifyContent?: 'center' | 'flex-end' | 'flex-start' | 'space-between'
-	padding?: 'lg' | 'md' | 'sm' | null
+	padding?: 'lg' | 'md' | 'none' | 'sm' | null
 }
 
 /* * */

@@ -3,8 +3,8 @@
 import { MongoConnector } from '@tmlmobilidade/connectors';
 import { HttpException, HttpStatus } from '@tmlmobilidade/lib';
 import { type UnixTimestamp } from '@tmlmobilidade/types';
-import { generateRandomString, getUnixTimestamp } from '@tmlmobilidade/utils';
-import { Collection, DeleteResult, Document, Filter, IndexDescription, InsertOneResult, MongoClientOptions, OptionalUnlessRequiredId, Sort, UpdateOptions, UpdateResult, WithId } from 'mongodb';
+import { Dates, generateRandomString } from '@tmlmobilidade/utils';
+import { Collection, DeleteOptions, DeleteResult, Document, Filter, IndexDescription, InsertOneOptions, InsertOneResult, MongoClientOptions, OptionalUnlessRequiredId, Sort, UpdateOptions, UpdateResult, WithId } from 'mongodb';
 import { z } from 'zod';
 
 /* * */
@@ -71,8 +71,8 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	 * @param id - The ID of the document to delete
 	 * @returns A promise that resolves to the result of the delete operation
 	 */
-	public async deleteById(id: string): Promise<DeleteResult> {
-		return this.mongoCollection.deleteOne({ _id: { $eq: id } } as unknown as Filter<T>);
+	public async deleteById(id: string, options?: DeleteOptions): Promise<DeleteResult> {
+		return this.mongoCollection.deleteOne({ _id: { $eq: id } } as unknown as Filter<T>, options);
 	}
 
 	/**
@@ -158,18 +158,23 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 		return this.mongoCollection;
 	}
 
+	public getMongoConnector() {
+		return this.mongoConnector;
+	}
+
 	/**
 	 * Inserts a single document into the collection.
 	 *
 	 * @param doc - The document to insert
+	 * @param options - The options for the insert operation
 	 * @returns A promise that resolves to the result of the insert operation
 	 */
-	public async insertOne(doc: TCreate & { _id?: string, created_at?: UnixTimestamp, updated_at?: UnixTimestamp }, { unsafe = false } = {}): Promise<InsertOneResult<T>> {
+	public async insertOne(doc: TCreate & { _id?: string, created_at?: UnixTimestamp, updated_at?: UnixTimestamp }, { options, unsafe = false }: { options?: InsertOneOptions, unsafe?: boolean } = {}): Promise<InsertOneResult<T>> {
 		const newDocument = {
 			...doc,
 			_id: doc._id || generateRandomString({ length: 5 }),
-			created_at: doc.created_at || getUnixTimestamp(),
-			updated_at: doc.updated_at || getUnixTimestamp(),
+			created_at: doc.created_at || Dates.now().unix_timestamp,
+			updated_at: doc.updated_at || Dates.now().unix_timestamp,
 		} as unknown as OptionalUnlessRequiredId<T>;
 
 		if (!doc._id) {
@@ -191,7 +196,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 			}
 		}
 
-		return this.mongoCollection.insertOne(parsedDocument);
+		return this.mongoCollection.insertOne(parsedDocument, options);
 	}
 
 	/**
@@ -199,10 +204,11 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	 *
 	 * @param filter - The filter criteria to match the document to update
 	 * @param updateFields - The fields to update in the document
+	 * @param options - The options for the update operation
 	 * @returns A promise that resolves to the result of the update operation
 	 */
-	public async updateById(id: string, updateFields: TUpdate): Promise<UpdateResult> {
-		return this.updateOne({ _id: { $eq: id } } as unknown as Filter<T>, updateFields);
+	public async updateById(id: string, updateFields: TUpdate, options?: UpdateOptions): Promise<UpdateResult> {
+		return this.updateOne({ _id: { $eq: id } } as unknown as Filter<T>, updateFields, options);
 	}
 
 	// /**
@@ -231,9 +237,10 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	 *
 	 * @param filter - The filter criteria to match documents to update
 	 * @param updateFields - The fields to update in the documents
+	 * @param options - The options for the update operation
 	 * @returns A promise that resolves to the result of the update operation
 	 */
-	public async updateMany(filter: Filter<T>, updateFields: Partial<T>) {
+	public async updateMany(filter: Filter<T>, updateFields: Partial<T>, options?: UpdateOptions) {
 		let parsedUpdateFields = updateFields;
 		if (this.updateSchema) {
 			try {
@@ -244,7 +251,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 			}
 		}
 
-		return this.mongoCollection.updateMany(filter, { $set: { ...parsedUpdateFields, updated_at: getUnixTimestamp() } } as unknown as Partial<T>);
+		return this.mongoCollection.updateMany(filter, { $set: { ...parsedUpdateFields, updated_at: Dates.now().unix_timestamp } } as unknown as Partial<T>, options);
 	}
 
 	/**
@@ -266,7 +273,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 			}
 		}
 
-		return this.mongoCollection.updateOne(filter, { $set: { ...parsedUpdateFields, updated_at: getUnixTimestamp() } } as unknown as Partial<T>, options);
+		return this.mongoCollection.updateOne(filter, { $set: { ...parsedUpdateFields, updated_at: Dates.now().unix_timestamp } } as unknown as Partial<T>, options);
 	}
 
 	// Abstract method for subclasses to provide the MongoDB collection indexes

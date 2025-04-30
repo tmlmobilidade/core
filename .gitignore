@@ -4,8 +4,13 @@
 !.env.example
 
 .key
+*.key
+
 .pem
+*.pem
+
 .cert
+*.cert
 
 secrets/**/*.json
 !secrets/**/*.example.*

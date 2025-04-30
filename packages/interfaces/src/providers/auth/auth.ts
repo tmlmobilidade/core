@@ -4,9 +4,8 @@ import { roles, sessions, users, verificationTokens } from '@/interfaces/index.j
 import { emailProvider } from '@/providers/email/email.js';
 import { HttpException, HttpStatus } from '@tmlmobilidade/lib';
 import { CreateUserDto, LoginDto, Permission, Session } from '@tmlmobilidade/types';
-import { AsyncSingletonProxy, generateRandomString, generateRandomToken, getPermission, getUnixTimestamp, getUnixTimestampFromJSDate } from '@tmlmobilidade/utils';
+import { AsyncSingletonProxy, Dates, generateRandomString, generateRandomToken, getPermission } from '@tmlmobilidade/utils';
 import bcrypt from 'bcryptjs';
-import { DateTime } from 'luxon';
 
 /* * */
 
@@ -109,9 +108,9 @@ class AuthProvider {
 
 		const session: Session = {
 			_id: generateRandomString(),
-			created_at: getUnixTimestamp(),
+			created_at: Dates.now().unix_timestamp,
 			token: generateRandomToken(),
-			updated_at: getUnixTimestamp(),
+			updated_at: Dates.now().unix_timestamp,
 			user_id: user._id.toString(),
 		};
 
@@ -147,7 +146,7 @@ class AuthProvider {
 		const result = await users.insertOne(userToCreate);
 
 		const verification_token_result = await verificationTokens.insertOne({
-			expires_at: getUnixTimestampFromJSDate(DateTime.now().plus({ days: 7 }).toJSDate()),
+			expires_at: Dates.now().plus({ days: 7 }).unix_timestamp,
 			token: verification_token,
 			user_id: result.insertedId.toString(),
 		});

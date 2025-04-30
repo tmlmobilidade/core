@@ -107,6 +107,7 @@ export const ApexT11Schema = DocumentSchema.extend({
 	received_at: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp'),
 	stop_id: z.string(),
 	trip_id: z.string(),
+	units_qty: z.number().optional(),
 	validation_status: z.nativeEnum(ValidationStatus),
 	vehicle_id: z.string(),
 }).strict();

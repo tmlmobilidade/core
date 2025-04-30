@@ -1,0 +1,56 @@
+name: plans
+
+# secrets:
+#   backupd_config:
+#     file: ./backupd.yaml
+
+services:
+  #
+
+  # # # # # # # # # # # # # # # # # # # # #
+  # # # # # # # # # # # # # # # # # # # # #
+
+  watchtower:
+    image: containrrr/watchtower
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 30s
+      resources:
+        limits:
+          memory: 100mb
+    logging:
+      options:
+        max-size: '1m'
+        max-file: '1'
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - WATCHTOWER_POLL_INTERVAL=60
+      - WATCHTOWER_CLEANUP=TRUE
+      - WATCHTOWER_INCLUDE_STOPPED=TRUE
+      - WATCHTOWER_REVIVE_STOPPED=TRUE
+      - WATCHTOWER_ROLLING_RESTART=TRUE
+
+  # # # # # # # # # # # # # # # # # # # # #
+  # # # # # # # # # # # # # # # # # # # # #
+
+  plans-db:
+    image: mongo:latest
+    command: mongod --bind_ip_all --auth
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - ./init-plans.sh:/docker-entrypoint-initdb.d/init.sh
+      - ./plans-db-data:/data/db
+    env_file:
+      - .env
+
+  # # # # # # # # # # # # # # # # # # # # #
+  # # # # # # # # # # # # # # # # # # # # #
+
+  # backupd:
+  #   image: ghcr.io/tmlmobilidade/backupd:production
+  #   secrets:
+  #     - backupd_config

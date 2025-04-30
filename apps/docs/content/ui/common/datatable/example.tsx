@@ -1,6 +1,6 @@
 'use client';
 
-import { AppProvider, AppWrapper, ComponentWrapper, DataTable, DataTableColumn, Pane } from '@tmlmobilidade/ui';
+import { ComponentWrapper, DataTable, DataTableColumn, Pane } from '@tmlmobilidade/ui';
 
 interface SampleObject {
 	_id: string

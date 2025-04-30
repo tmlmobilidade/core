@@ -69,6 +69,16 @@ export const Permissions = Object.freeze({
 		},
 		scope: 'organizations',
 	},
+	plans: {
+		actions: {
+			create: 'create',
+			delete: 'delete',
+			list: 'list',
+			read: 'read',
+			update: 'update',
+		},
+		scope: 'plans',
+	},
 	rides: {
 		actions: {
 			create: 'create',

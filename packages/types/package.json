@@ -39,17 +39,17 @@
 	"dependencies": {
 		"geojson": "0.5.0",
 		"luxon": "3.6.1",
-		"mongodb": "6.15.0",
-		"zod": "3.24.2"
+		"mongodb": "6.16.0",
+		"zod": "3.24.3"
 	},
 	"devDependencies": {
-		"@carrismetropolitana/eslint": "20250325.1926.5",
+		"@carrismetropolitana/eslint": "20250418.42.41",
 		"@tmlmobilidade/tsconfig": "*",
-		"@types/luxon": "3.6.1",
-		"@types/node": "22.14.0",
+		"@types/luxon": "3.6.2",
+		"@types/node": "22.15.0",
 		"resolve-tspaths": "0.8.23",
 		"rimraf": "6.0.1",
-		"turbo": "2.5.0",
-		"typescript": "5.8.2"
+		"turbo": "2.5.1",
+		"typescript": "5.8.3"
 	}
 }

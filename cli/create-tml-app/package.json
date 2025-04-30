@@ -33,16 +33,16 @@
 	},
 	"description": "",
 	"dependencies": {
-		"@clack/core": "^0.4.1",
-		"@clack/prompts": "^0.10.0",
-		"chalk": "^5.4.1",
-		"npm-check-updates": "^17.1.16"
+		"@clack/core": "0.4.2",
+		"@clack/prompts": "0.10.1",
+		"chalk": "5.4.1",
+		"npm-check-updates": "18.0.1"
 	},
 	"devDependencies": {
 		"@tmlmobilidade/tsconfig": "*",
-		"@types/node": "^22.14.0",
-		"resolve-tspaths": "^0.8.23",
-		"rimraf": "^6.0.1",
-		"tsx": "^4.19.3"
+		"@types/node": "22.15.0",
+		"resolve-tspaths": "0.8.23",
+		"rimraf": "6.0.1",
+		"tsx": "4.19.3"
 	}
 }

@@ -32,14 +32,6 @@ export const truncate = (str: null | string, length: number): null | string => {
 };
 
 /**
- * Fetches data from a given URL and returns the JSON response.
- * @param {...Parameters<typeof fetch>} args - The arguments to pass to the fetch function.
- * @returns {Promise<any>} - A promise that resolves to the JSON response.
- */
-export const fetcher = (...args: Parameters<typeof fetch>): Promise<any> =>
-	fetch(...args).then(res => res.json());
-
-/**
  * Capitalizes first letters of words in string.
  * @param {string} str String to be modified
  * @param {boolean=false} lower Whether all other letters should be lowercased

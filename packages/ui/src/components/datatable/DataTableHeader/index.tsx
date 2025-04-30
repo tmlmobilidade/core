@@ -59,11 +59,11 @@ export function DataTableHeader<T = Record<string, unknown>>({ columns }: DataTa
 					style={{
 						maxWidth: column.width,
 						minWidth: column.width ?? 'max-content',
-						// width: dataTableContext.data.column_widths?.[column.accessor as string] ?? column.width,
 					}}
 				>
 					<div
 						className={styles.cellContent}
+						data-center={column.center}
 						onClick={() =>
 							column.sortable
 							&& dataTableContext.actions.handleSort(column.sortKey ?? String(column.accessor))}

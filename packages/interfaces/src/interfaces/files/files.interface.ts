@@ -7,7 +7,7 @@ import { HttpException } from '@tmlmobilidade/lib';
 import { CreateFileDto, File, FileSchema, UpdateFileDto, UpdateFileSchema } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy, getFileExtension } from '@tmlmobilidade/utils';
 import { generateRandomString } from '@tmlmobilidade/utils';
-import { DeleteOptions, DeleteResult, IndexDescription, InsertOneOptions, InsertOneResult } from 'mongodb';
+import { DeleteOptions, DeleteResult, IndexDescription, InsertOneOptions, InsertOneResult, WithId } from 'mongodb';
 import { z } from 'zod';
 
 /* * */
@@ -81,6 +81,21 @@ class FilesClass extends MongoCollectionClass<File, CreateFileDto, UpdateFileDto
 
 		await this.storageService.deleteFile(`${file.scope}/${file.resource_id}/${file._id}`);
 		return await super.deleteById(file_id, options);
+	}
+
+	/**
+	 * Retrieves a file from the database and adds the signed URL to the file object.
+	 * @param file_id - The unique identifier of the file in the database.
+	 * @returns The file with the signed URL.
+	 */
+	public override async findById(...args: Parameters<typeof MongoCollectionClass.prototype.findById>): Promise<null | WithId<File>> {
+		const file = await super.findById(...args);
+		if (!file) {
+			return null;
+		}
+
+		file.url = await this.getFileUrl({ file_id: file._id });
+		return file;
 	}
 
 	/**

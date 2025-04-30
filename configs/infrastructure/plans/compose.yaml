@@ -63,6 +63,5 @@ services:
     ports:
       - 5672:5672 # amqp
       - 15672:15672 # management
-    environment:
-      - RABBITMQ_DEFAULT_USER=user
-      - RABBITMQ_DEFAULT_PASS=password
+    env_file:
+      - .env

@@ -28,15 +28,21 @@ export const apps = [
 		permission: { action: Permissions.municipalities.actions.list, scope: Permissions.municipalities.scope },
 	},
 	{
-		_id: 'pulse',
-		href: isDevelopment ? 'http://localhost:51003' : 'https://pulse.sae.carrismetropolitana.pt',
-		label: 'Performance',
-		permission: { action: Permissions.rides.actions.list, scope: Permissions.rides.scope },
-	},
-	{
 		_id: 'stops',
-		href: isDevelopment ? 'http://localhost:51004' : 'https://stops.sae.carrismetropolitana.pt',
+		href: isDevelopment ? 'http://localhost:51003' : 'https://stops.sae.carrismetropolitana.pt',
 		label: 'Paragens',
 		permission: { action: Permissions.stops.actions.list, scope: Permissions.stops.scope },
+	},
+	{
+		_id: 'plans',
+		href: isDevelopment ? 'http://localhost:51004' : 'https://plans.sae.carrismetropolitana.pt',
+		label: 'Planos',
+		permission: { action: Permissions.plans.actions.list, scope: Permissions.plans.scope },
+	},
+	{
+		_id: 'validations',
+		href: isDevelopment ? 'http://localhost:51004/' : 'https://plans.sae.carrismetropolitana.pt/validations',
+		label: 'Validações',
+		permission: { action: Permissions.validations.actions.list, scope: Permissions.validations.scope },
 	},
 ];

@@ -4,7 +4,7 @@
 
 import { useMeContext } from '@/contexts';
 import { useIsActiveDomain } from '@/hooks/use-is-active-domain';
-import { IconAlertTriangle, IconBusStop, IconChartArrowsVertical, IconDeviceMobile, IconListCheck, IconUser } from '@tabler/icons-react';
+import { IconAlertTriangle, IconBusStop, IconChartArrowsVertical, IconDeviceMobile, IconFileCertificate, IconFileCheck, IconListCheck, IconUser } from '@tabler/icons-react';
 import { Permission } from '@tmlmobilidade/types';
 import { getPermission } from '@tmlmobilidade/utils';
 import { useMemo } from 'react';
@@ -57,6 +57,8 @@ export function SidebarItem({ _id, href, label, permission }: SidebarItemProps) 
 				{_id === 'equipments' && <IconDeviceMobile size={26} />}
 				{_id === 'pulse' && <IconChartArrowsVertical size={26} />}
 				{_id === 'stops' && <IconBusStop size={26} />}
+				{_id === 'plans' && <IconFileCertificate size={26} />}
+				{_id === 'validations' && <IconFileCheck size={26} />}
 			</a>
 			<span className={styles.tooltip}>
 				{label}

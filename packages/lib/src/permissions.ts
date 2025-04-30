@@ -129,4 +129,14 @@ export const Permissions = Object.freeze({
 		},
 		scope: 'users',
 	},
+	validations: {
+		actions: {
+			create: 'create',
+			delete: 'delete',
+			list: 'list',
+			read: 'read',
+			update: 'update',
+		},
+		scope: 'validations',
+	},
 });

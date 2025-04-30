@@ -189,10 +189,6 @@ export const StopSchema = DocumentSchema.extend({
 	//
 	// Location
 
-	affectation: z
-		.array(z.string())
-		.default([]),
-
 	district_id: z
 		.string(),
 

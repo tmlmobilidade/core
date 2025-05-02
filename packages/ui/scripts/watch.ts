@@ -40,6 +40,8 @@ async function watchBuild() {
 	// Handle process termination
 	process.on('SIGTERM', () => watcher.close());
 	process.on('SIGINT', () => watcher.close());
+	process.on('exit', () => watcher.close());
+
 }
 
 /* * */

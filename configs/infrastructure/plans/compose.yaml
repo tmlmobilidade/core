@@ -1,9 +1,5 @@
 name: plans
 
-# secrets:
-#   backupd_config:
-#     file: ./backupd.yaml
-
 services:
   #
 
@@ -65,3 +61,16 @@ services:
       - 15672:15672 # management
     env_file:
       - .env
+
+  # # # # # # # # # # # # # # # # # # # # #
+  # # # # # # # # # # # # # # # # # # # # #
+
+  backupd:
+    image: ghcr.io/tmlmobilidade/backupd:production
+    volumes:
+      - ./backupd-data:/data/backups
+      - ./backupd.yaml:/config.yaml
+    environment:
+      - CONFIG_PATH=/config.yaml
+    depends_on:
+      - plans-db

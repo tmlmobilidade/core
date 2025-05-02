@@ -53,3 +53,5 @@ services:
       - ./backupd.yaml:/config.yaml
     environment:
       - CONFIG_PATH=/config.yaml
+    depends_on:
+      - alerts-db

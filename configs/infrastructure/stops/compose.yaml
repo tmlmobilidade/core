@@ -1,9 +1,5 @@
 name: stops
 
-# secrets:
-#   backupd_config:
-#     file: ./backupd.yaml
-
 services:
   #
 
@@ -58,7 +54,13 @@ services:
   # # # # # # # # # # # # # # # # # # # # #
   # # # # # # # # # # # # # # # # # # # # #
 
-  # backupd:
-  #   image: ghcr.io/tmlmobilidade/backupd:production
-  #   secrets:
-  #     - backupd_config
+  backupd:
+    image: ghcr.io/tmlmobilidade/backupd:production
+    volumes:
+      - ./backupd-data:/data/backups
+      - ./backupd.yaml:/config.yaml
+    environment:
+      - CONFIG_PATH=/config.yaml
+    depends_on:
+      - stops-db
+

@@ -29,7 +29,7 @@ storage:
     access_key_id: YOUR_ACCESS_KEY_ID
     secret_access_key: YOUR_SECRET_ACCESS_KEY
     bucket_name: YOUR_BUCKET_NAME
-    endpoint: YOUR_ENDPOINT
+    endpoint: YOUR_ENDPOINT # https://<account_id>.r2.cloudflarestorage.com
 
 # The Database Configuration
 database:

@@ -12,6 +12,9 @@
 .cert
 *.cert
 
+backupd.yaml
+!backupd.example.yaml
+
 secrets/**/*.json
 !secrets/**/*.example.*
 !secrets/**/*.example

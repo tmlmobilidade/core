@@ -1,11 +1,9 @@
-import { StorageConfiguration, StorageFactory } from '@tmlmobilidade/core/providers';
+import { StorageConfiguration, StorageFactory } from '@tmlmobilidade/interfaces';
 
-import { BackupService } from './backup/backup.service';
-import { loadConfig } from './config/config-loader';
-import { DatabaseConfiguration, DatabaseFactory } from './database/database.factory';
-import { MailerService } from './mailer/mailer.service';
-
-// const config = loadConfig('/run/secrets/backupd_config');
+import { BackupService } from './backup/backup.service.js';
+import { loadConfig } from './config/config-loader.js';
+import { DatabaseConfiguration, DatabaseFactory } from './database/database.factory.js';
+import { MailerService } from './mailer/mailer.service.js';
 
 const config = loadConfig('./config.yaml');
 

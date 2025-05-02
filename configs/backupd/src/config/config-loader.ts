@@ -2,7 +2,7 @@
 import * as fs from 'fs';
 import * as yaml from 'yaml';
 
-import { AppConfig } from './config-types';
+import { AppConfig } from './config-types.js';
 
 function validateConfig(config: AppConfig) {
 	//

@@ -1,6 +1,6 @@
-import { IDatabaseService } from './database.interface';
-import { MongoDbConfig, MongoDbService } from './mongo.service';
-import { PostgresConfig, PostgresService } from './postgres.service';
+import { IDatabaseService } from './database.interface.js';
+import { MongoDbConfig, MongoDbService } from './mongo.service.js';
+import { PostgresConfig, PostgresService } from './postgres.service.js';
 
 export interface DatabaseConfiguration {
 	mongodb_config?: MongoDbConfig

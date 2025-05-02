@@ -4,7 +4,7 @@ import fs from 'fs';
 import { Collection, Db, DbOptions, MongoClient, MongoClientOptions } from 'mongodb';
 import path from 'path';
 
-import { IDatabaseService } from './database.interface';
+import { IDatabaseService } from './database.interface.js';
 
 export interface MongoDbConfig {
 	options?: MongoClientOptions

@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { Client, ClientConfig } from 'pg';
 
-import { IDatabaseService } from './database.interface';
+import { IDatabaseService } from './database.interface.js';
 
 export interface PostgresConfig {
 	options?: ClientConfig
@@ -30,7 +30,7 @@ export class PostgresService implements IDatabaseService {
 
 			// Prepare the pg_dump command arguments
 			const args = [
-				'--dbname', this.client.connectionParameters.connectionString,
+				'--dbname', this.client.database,
 				'--format', 'custom',
 				'--file', outputPath,
 			];
@@ -82,7 +82,7 @@ export class PostgresService implements IDatabaseService {
      * Restores the database from the provided backup file.
      */
 	async restore(backupPath: string): Promise<void> {
-		const command = `pg_restore --dbname="${this.client.connectionParameters.connectionString}" --file="${backupPath}"`;
+		const command = `pg_restore --dbname="${this.client.database}" --file="${backupPath}"`;
 		exec(command, (error, stdout, stderr) => {
 			if (error) {
 				console.error(`⤷ Error running pg_restore: ${stderr}`);

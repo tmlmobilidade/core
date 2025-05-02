@@ -1,8 +1,8 @@
-import { BackupConfig } from '@/backup/backup.service';
-import { MongoDbConfig } from '@/database/mongo.service';
-import { PostgresConfig } from '@/database/postgres.service';
-import { EmailConfig } from '@/mailer/mailer.service';
-import { S3StorageProviderConfiguration } from '@tmlmobilidade/core/providers';
+import { BackupConfig } from '@/backup/backup.service.js';
+import { MongoDbConfig } from '@/database/mongo.service.js';
+import { PostgresConfig } from '@/database/postgres.service.js';
+import { EmailConfig } from '@/mailer/mailer.service.js';
+import { S3StorageProviderConfiguration } from '@tmlmobilidade/interfaces';
 
 export interface StorageConfig {
 	aws_config?: S3StorageProviderConfiguration

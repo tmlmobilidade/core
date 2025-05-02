@@ -1,5 +1,5 @@
-import { IDatabaseService } from '@/database/database.interface';
-import { IStorageProvider } from '@tmlmobilidade/core/providers';
+import { IDatabaseService } from '@/database/database.interface.js';
+import { IStorageProvider } from '@tmlmobilidade/interfaces';
 import fs from 'fs';
 import path from 'path';
 

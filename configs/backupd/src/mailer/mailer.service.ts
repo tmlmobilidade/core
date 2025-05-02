@@ -41,12 +41,12 @@ export class MailerService {
 		}
 	}
 
-	public async sendFailureMail(): Promise<void> {
+	public async sendFailureMail(error: string): Promise<void> {
 		this.config.mail_options.subject = 'Backup failed';
 
 		const mail_options = {
 			...this.config.mail_options,
-			html: '<p>Backup failed</p>',
+			html: `<p>Backup failed</p><p>${error}</p>`,
 			subject: `${this.config.mail_options.subject}: Backup failed`,
 		};
 

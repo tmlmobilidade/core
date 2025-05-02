@@ -43,7 +43,7 @@ async function main() {
 		console.error('Error during backup:', error);
 
 		if (config.email?.send_failure) {
-			await mailer.sendFailureMail();
+			await mailer.sendFailureMail(error.message);
 		}
 	}
 	finally {

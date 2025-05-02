@@ -28,7 +28,7 @@ export class S3StorageProvider implements IStorageProvider {
 				secretAccessKey: config.secret_access_key,
 			},
 			endpoint: config.endpoint,
-			region: config.region || 'eu-south-2', // Default region, Spain
+			region: config.region,
 		});
 		this.bucketName = config.bucket_name;
 	}

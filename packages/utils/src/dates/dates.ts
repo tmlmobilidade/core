@@ -1,7 +1,7 @@
 /* * */
 
 import { OperationalDate, UnixTimestamp } from '@tmlmobilidade/types';
-import { DateTime, type DurationObjectUnits } from 'luxon';
+import { type DateObjectUnits, DateTime, type DurationObjectUnits } from 'luxon';
 
 import { type DatesFormat, Formats, OPERATIONAL_DATE_FORMAT } from './format.js';
 import { type TimezoneIdentified, timezoneList, timezoneListSchema } from './types.js';
@@ -23,28 +23,24 @@ class Dates {
 
 	//
 	// Static properties
+
 	static get FORMATS() { return Formats; }
 	static get TIMEZONE_LIST() { return timezoneList; }
 	static get TIMEZONE_LIST_VALUES() { return timezoneListSchema.Values; }
 
 	//
 	// Instance properties
+
 	public iso: null | string;
 	public js_date: Date;
 	public operational_date: OperationalDate;
 	public timezone: TimezoneIdentified;
-
 	public unix_timestamp: UnixTimestamp;
 
 	//
 	// Constructor
-	constructor({
-		iso,
-		js_date,
-		operational_date,
-		timezone = 'Europe/Lisbon',
-		unix_timestamp,
-	}: DatesConstructor) {
+
+	constructor({ iso, js_date, operational_date, timezone = 'Europe/Lisbon', unix_timestamp }: DatesConstructor) {
 		this.timezone = timezone;
 		this.operational_date = operational_date;
 		this.unix_timestamp = unix_timestamp;
@@ -54,6 +50,7 @@ class Dates {
 
 	//
 	// Static methods
+
 	/**
 	 * Creates a Dates object from a string using a specified format
 	 * @param text - The date/time string to parse
@@ -78,7 +75,6 @@ class Dates {
 	 */
 	static fromJSDate(date: Date): Dates {
 		const dateTime = DateTime.fromJSDate(date);
-
 		return new Dates({
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
@@ -94,7 +90,6 @@ class Dates {
 	 */
 	static fromMillis(millis: number): Dates {
 		const dateTime = DateTime.fromMillis(millis);
-
 		return new Dates({
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
@@ -110,7 +105,6 @@ class Dates {
 	 */
 	static fromOperationalDate(date: OperationalDate | string): Dates {
 		const dateTime = DateTime.fromFormat(date, OPERATIONAL_DATE_FORMAT);
-
 		return new Dates({
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
@@ -126,7 +120,6 @@ class Dates {
 	 */
 	static fromSeconds(seconds: number): Dates {
 		const dateTime = DateTime.fromSeconds(seconds);
-
 		return new Dates({
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
@@ -141,7 +134,6 @@ class Dates {
 	 */
 	static now(): Dates {
 		const unix_timestamp = DateTime.now().toMillis() as UnixTimestamp;
-
 		return new Dates({
 			iso: DateTime.now().toISO(),
 			js_date: DateTime.now().toJSDate(),
@@ -190,8 +182,26 @@ class Dates {
 		});
 	}
 
-	//
-	// Instance methods
+	/**
+     * Sets the date or time for the Dates object.
+     * @param timezone - The timezone to set in the format of an IANA timezone
+     * @returns The Dates object
+     */
+	set(dateOrTime: DateObjectUnits): Dates {
+		if (!this.iso) {
+			throw new Error('ISO date is not set');
+		}
+
+		const dateTime = DateTime.fromISO(this.iso).set(dateOrTime);
+
+		return new Dates({
+			iso: dateTime.toISO(),
+			js_date: dateTime.toJSDate(),
+			operational_date: this.getOperationalDate(dateTime.toMillis() as UnixTimestamp),
+			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
+		});
+	}
+
 	/**
      * Sets the timezone for the Dates object
      * @param timezone - The timezone to set in the format of an IANA timezone
@@ -211,10 +221,10 @@ class Dates {
 	}
 
 	/**
-     * Returns the date as a string in the specified format
-     * @param format - The format string (see Luxon tokens documentation)
-     * @returns The date as a string in the specified format
-     */
+	 * Returns the date as a string in the specified format
+	 * @param format - The format string (see Luxon tokens documentation)
+	 * @returns The date as a string in the specified format
+	 */
 	toLocaleString(format: DatesFormat, locale?: string): string {
 		if (!this.iso) {
 			throw new Error('ISO date is not set');
@@ -231,12 +241,13 @@ class Dates {
 
 	//
 	// Private methods
+
 	/**
-    * Returns the operational date based on the provided timestamp and format.
-    *
-    * @param timestamp - The timestamp to be parsed.
-    * @returns The operational date in the yyyyLLdd format.
-    */
+	 * Returns the operational date based on the provided timestamp and format.
+	 *
+	 * @param timestamp - The timestamp to be parsed.
+	 * @returns The operational date in the yyyyLLdd format.
+	 */
 	private getOperationalDate(timestamp: UnixTimestamp): OperationalDate {
 		//
 		// Get the date object

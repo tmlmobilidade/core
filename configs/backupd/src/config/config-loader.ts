@@ -119,9 +119,22 @@ function validateConfig(config: AppConfig) {
 		if (typeof send_failure !== 'boolean') {
 			throw new Error('\'email.send_failure\' should be a boolean.');
 		}
+
 		if (!mail_options) {
 			throw new Error('Missing \'mail_options\' in email configuration.');
 		}
+		else {
+			if (!mail_options.from || typeof mail_options.from !== 'string') {
+				throw new Error('\'from\' in \'mail_options\' configuration should be a string.');
+			}
+			if (!mail_options.subject || typeof mail_options.subject !== 'string') {
+				throw new Error('\'subject\' in \'mail_options\' configuration should be a string.');
+			}
+			if (!mail_options.to || typeof mail_options.to !== 'string' && !Array.isArray(mail_options.to)) {
+				throw new Error('\'to\' in \'mail_options\' configuration should be a string or an array of strings.');
+			}
+		}
+
 		if (!smtp) {
 			throw new Error('Missing \'smtp\' configuration in email.');
 		}

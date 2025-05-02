@@ -44,6 +44,6 @@ jobs:
         uses: docker/build-push-action@master
         with:
           push: true
-          context: ./configs/backupd
+          context: .
           file: ./configs/backupd/Dockerfile
           tags: ghcr.io/tmlmobilidade/backupd:${{ github.ref_name }}

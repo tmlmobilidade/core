@@ -58,7 +58,6 @@ export function SidebarItem({ _id, href, label, permission }: SidebarItemProps) 
 				{_id === 'pulse' && <IconChartArrowsVertical size={26} />}
 				{_id === 'stops' && <IconBusStop size={26} />}
 				{_id === 'plans' && <IconFileCertificate size={26} />}
-				{_id === 'validations' && <IconFileCheck size={26} />}
 			</a>
 			<span className={styles.tooltip}>
 				{label}

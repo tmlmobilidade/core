@@ -3,15 +3,20 @@
 import { useEffect, useState } from 'react';
 
 export function useIsActivePage(href: string) {
+	if (typeof window === 'undefined') {
+		return false;
+	}
+
 	const [isActive, setIsActive] = useState(false);
 
 	useEffect(() => {
 		const handleRouteChange = () => {
 			const pathname = window.location.pathname;
+			console.log(href, pathname);
 			if (href === pathname || (href === '/' && pathname === '/')) {
 				setIsActive(true);
 			}
-			else if (href && pathname.includes(href) && href !== '/') {
+			else if (href && href.includes(pathname) && href !== '/') {
 				setIsActive(true);
 			}
 			else {
@@ -30,7 +35,7 @@ export function useIsActivePage(href: string) {
 			window.removeEventListener('pushState', handleRouteChange);
 			window.removeEventListener('replaceState', handleRouteChange);
 		};
-	}, [href]);
+	}, [href, window.location.pathname]);
 
 	return isActive;
 }

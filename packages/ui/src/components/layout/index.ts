@@ -8,5 +8,6 @@ export * from '@/components/layout/PanesManager';
 export * from '@/components/layout/Section';
 export * from '@/components/layout/Sidebar';
 export * from '@/components/layout/SidebarItem';
+export * from '@/components/layout/SidebarSubItem';
 export * from '@/components/layout/Spacer';
 export * from '@/components/layout/Surface';

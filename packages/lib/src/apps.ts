@@ -39,10 +39,4 @@ export const apps = [
 		label: 'Planos',
 		permission: { action: Permissions.plans.actions.list, scope: Permissions.plans.scope },
 	},
-	{
-		_id: 'validations',
-		href: isDevelopment ? 'http://localhost:51004/' : 'https://plans.sae.carrismetropolitana.pt/validations',
-		label: 'Validações',
-		permission: { action: Permissions.validations.actions.list, scope: Permissions.validations.scope },
-	},
 ];

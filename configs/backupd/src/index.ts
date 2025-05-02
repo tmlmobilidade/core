@@ -5,27 +5,27 @@ import { loadConfig } from './config/config-loader.js';
 import { DatabaseConfiguration, DatabaseFactory } from './database/database.factory.js';
 import { MailerService } from './mailer/mailer.service.js';
 
-const config = loadConfig('./config.yaml');
-
-const databaseConfig: DatabaseConfiguration = {
-	mongodb_config: config.database.mongodb_config,
-	postgres_config: config.database.postgres_config,
-	type: config.database.type,
-};
-
-const storageConfig: StorageConfiguration = {
-	aws_config: config.storage.aws_config,
-	cloudflare_config: config.storage.r2_config,
-	type: config.storage.type,
-};
-
-// Create database and storage services
-const database = DatabaseFactory.create(databaseConfig);
-const storage = StorageFactory.create(storageConfig);
-const backup = new BackupService(config.backup, database, storage);
-const mailer = new MailerService(config.email);
-
 async function main() {
+	const config = loadConfig(process.env.CONFIG_PATH || './config.yaml');
+
+	const databaseConfig: DatabaseConfiguration = {
+		mongodb_config: config.database.mongodb_config,
+		postgres_config: config.database.postgres_config,
+		type: config.database.type,
+	};
+
+	const storageConfig: StorageConfiguration = {
+		aws_config: config.storage.aws_config,
+		cloudflare_config: config.storage.r2_config,
+		type: config.storage.type,
+	};
+
+	// Create database and storage services
+	const database = DatabaseFactory.create(databaseConfig);
+	const storage = StorageFactory.create(storageConfig);
+	const backup = new BackupService(config.backup, database, storage);
+	const mailer = new MailerService(config.email);
+
 	console.log('Running backup...');
 
 	try {
@@ -55,6 +55,8 @@ async function main() {
 	main();
 }
 
-main().catch((err) => {
+main().catch(async (err) => {
 	console.error(err);
+	await new Promise(resolve => setTimeout(resolve, 1000 * 60)); // Wait for 1 minute before running again
+	main();
 });

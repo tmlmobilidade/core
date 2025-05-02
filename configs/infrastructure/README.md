@@ -31,7 +31,7 @@ This script will create the following resources:
 
 To setup the `backupd` service, to create a `backupd.yaml` file in the **same folder as the docker compose file**, based on `backupd.example.yaml`.
 
-See the [Backupd](https://github.com/tmlmobilidade/configs/blob/production/backupd/README.md) for more information.
+See the [Backupd](https://github.com/tmlmobilidade/core/blob/production/configs/backupd/README.md) for more information.
 
 ### 3. Run the docker compose file
 

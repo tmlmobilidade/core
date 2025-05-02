@@ -51,7 +51,7 @@ async function main() {
 		await database.disconnect();
 	}
 
-	await new Promise(resolve => setTimeout(resolve, config.backup.interval * 1000));
+	await new Promise(resolve => setTimeout(resolve, config.backup.interval * 1000 * 60));
 	main();
 }
 

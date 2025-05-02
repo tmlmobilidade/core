@@ -102,6 +102,9 @@ function validateConfig(config: AppConfig) {
 	else if (config.backup.max_remote_backups <= 0 || typeof config.backup.max_remote_backups !== 'number') {
 		throw new Error('\'max_remote_backups\' must be a number greater than 0 in \'backup\' configuration.');
 	}
+	else if (!config.backup.remote_destination) {
+		throw new Error('\'remote_destination\' is not set in \'backup\' configuration.');
+	}
 
 	//
 	// Validate Email configuration

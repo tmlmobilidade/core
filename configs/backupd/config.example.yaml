@@ -68,6 +68,8 @@ backup:
   interval: 360 # 6 hour
   # Backup destination directory.
   destination: PATH_TO_BACKUP_DESTINATION_DIRECTORY
+  # The remote destination directory.
+  remote_destination: PATH_TO_REMOTE_DESTINATION_DIRECTORY
   # The maximum number of backups to keep. (If undefined or 0, no backups will be deleted.)
   max_remote_backups: 10
   # The maximum number of backup files to keep in the storage. (If set to 0, no backups will be stored in the device storage.)

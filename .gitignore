@@ -13,6 +13,7 @@
 *.cert
 
 backupd.yaml
+backupd.*.yaml
 !backupd.example.yaml
 
 secrets/**/*.json

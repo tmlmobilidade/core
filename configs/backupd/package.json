@@ -10,22 +10,22 @@
 		"start": "npm run build && node dist/index.js"
 	},
 	"dependencies": {
-		"@aws-sdk/client-s3": "^3.800.0",
-		"@helperkits/logger": "^20240703.1726.24",
+		"@aws-sdk/client-s3": "3.802.0",
+		"@helperkits/logger": "20240703.1726.24",
 		"@tmlmobilidade/interfaces": "*",
-		"@types/archiver": "^6.0.3",
-		"archiver": "^7.0.1",
-		"mongodb": "^6.16.0",
-		"nodemailer": "^6.10.1",
-		"pg": "^8.15.6",
+		"@types/archiver": "6.0.3",
+		"archiver": "7.0.1",
+		"mongodb": "6.16.0",
+		"nodemailer": "7.0.2",
+		"pg": "8.15.6",
 		"resolve-tspaths": "0.8.23",
-		"rimraf": "^6.0.1",
-		"yaml": "^2.7.1"
+		"rimraf": "6.0.1",
+		"yaml": "2.7.1"
 	},
 	"devDependencies": {
 		"@tmlmobilidade/tsconfig": "*",
-		"@types/node": "^22.15.3",
-		"@types/nodemailer": "^6.4.17",
+		"@types/node": "22.15.3",
+		"@types/nodemailer": "6.4.17",
 		"typescript": "5.8.3"
 	}
 }

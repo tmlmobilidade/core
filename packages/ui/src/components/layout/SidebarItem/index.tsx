@@ -4,7 +4,7 @@
 
 import { useMeContext } from '@/contexts';
 import { useIsActiveDomain } from '@/hooks/use-is-active-domain';
-import { IconAlertTriangle, IconBusStop, IconChartArrowsVertical, IconDeviceMobile, IconFileCertificate, IconFileCheck, IconListCheck, IconUser } from '@tabler/icons-react';
+import { IconAlertTriangle, IconBusStop, IconChartArrowsVertical, IconDeviceMobile, IconFileCertificate, IconListCheck, IconUser } from '@tabler/icons-react';
 import { Permission } from '@tmlmobilidade/types';
 import { getPermission } from '@tmlmobilidade/utils';
 import { useMemo } from 'react';

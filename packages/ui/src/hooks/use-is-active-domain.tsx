@@ -7,7 +7,7 @@ export function useIsActiveDomain(domain: string) {
 
 	useEffect(() => {
 		const handleRouteChange = () => {
-			const currentDomain = window.location.hostname;
+			const currentDomain = window.location.href;
 			const currentPort = process.env.NODE_ENV === 'development' ? `:${window.location.port}` : '';
 
 			if (domain.includes(currentDomain) && domain.includes(currentPort)) {

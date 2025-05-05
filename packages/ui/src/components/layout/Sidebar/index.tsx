@@ -30,8 +30,8 @@ export function Sidebar({ submenu }: { submenu?: SidebarSubItemProps[] }) {
 					<ThemeSwitcher />
 				</div>
 			</div>
-			<div className={styles.container}>
-				{submenu && (
+			{submenu && (
+				<div className={styles.container}>
 					<div className={styles.navWrapper}>
 						{submenu.map(item => (
 							<SidebarSubItem
@@ -44,8 +44,8 @@ export function Sidebar({ submenu }: { submenu?: SidebarSubItemProps[] }) {
 							/>
 						))}
 					</div>
-				)}
-			</div>
+				</div>
+			)}
 		</div>
 	);
 }

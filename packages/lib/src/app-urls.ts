@@ -1,5 +1,7 @@
 /* * */
 
+import { type Environment, getCurrentEnvironment } from '@/environment.js';
+
 /**
  * This file contains the list of URLs
  * for each application for each environment.
@@ -50,16 +52,16 @@ export const APP_BASE_URLS = Object.freeze({
  * @param environment The environment to get the URL for. If not provided, it will use the ENVIRONMENT environment variable.
  * @returns The base URL for the given app and environment
  */
-export function getAppBaseUrl(app: keyof typeof APP_BASE_URLS, environment?: string): string {
+export function getAppBaseUrl(app: keyof typeof APP_BASE_URLS, environment?: Environment): string {
 	// Get the desired app object
 	const appUrl = APP_BASE_URLS[app];
 	if (!appUrl) throw new Error(`App URL for ${app} not found`);
 	// Extract the current app environment either from the parameter
 	// or automatically from the set environment variable.
-	const currentEnvironment = environment ? environment : process.env.ENVIRONMENT ?? 'development';
+	const currentEnvironment = environment || getCurrentEnvironment();
 	// Get the base URL for the current environment
 	const baseUrl = appUrl[currentEnvironment as keyof typeof appUrl];
-	if (!baseUrl) throw new Error(`URL for ${environment} environment not found`);
+	if (!baseUrl) throw new Error(`URL for ${currentEnvironment} environment not found`);
 	// Return the URL
 	return baseUrl;
 }

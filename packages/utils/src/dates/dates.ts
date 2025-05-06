@@ -143,6 +143,57 @@ class Dates {
 	}
 
 	/**
+	 * Returns the time remaining until a given unix_timestamp (in ms) from now,
+	 * as an object with minutes, hours, and days (all as floats, not rounded).
+	 * @param unix_timestamp - The target timestamp in milliseconds
+	 * @returns { minutes: number, hours: number, days: number }
+	 */
+	static timeUntil(unix_timestamp: UnixTimestamp): { days: number, hours: number, minutes: number } {
+		const now = Date.now();
+		const diffMs = unix_timestamp - now;
+
+		const minutes = diffMs / (1000 * 60);
+		const hours = diffMs / (1000 * 60 * 60);
+		const days = diffMs / (1000 * 60 * 60 * 24);
+
+		return { days, hours, minutes };
+	}
+
+	/**
+	 * Returns a human-readable, localized string for the time remaining until a given unix_timestamp (in ms) from now.
+	 * @param unix_timestamp - The target timestamp in milliseconds
+	 * @param locale - Optional locale string (e.g., 'en', 'pt')
+	 * @returns A localized string like "2 days, 3 hours, 15 minutes"
+	 */
+	static timeUntilLocaleString(unix_timestamp: UnixTimestamp, locale: 'en' | 'pt' = 'pt'): string {
+		const now = Date.now();
+		const diffMs = unix_timestamp - now;
+
+		const parts: string[] = [];
+
+		if (diffMs < 60 * 1000) {
+			return locale === 'en' ? 'Arriving' : 'A Chegar';
+		}
+
+		const totalMinutes = Math.round(diffMs / (1000 * 60));
+		const days = Math.floor(totalMinutes / (60 * 24));
+		const hours = Math.floor((totalMinutes % (60 * 24)) / 60);
+		const minutes = totalMinutes % 60;
+
+		if (days > 0) {
+			parts.push(`${days} ${days === 1 ? locale === 'en' ? 'day' : 'dia' : locale === 'en' ? 'days' : 'dias'}`);
+		}
+		if (hours > 0) {
+			parts.push(`${hours} ${hours === 1 ? locale === 'en' ? 'hour' : 'hora' : locale === 'en' ? 'hours' : 'horas'}`);
+		}
+		if (minutes > 0 || parts.length === 0) {
+			parts.push(`${minutes} ${minutes === 1 ? locale === 'en' ? 'minute' : 'minuto' : locale === 'en' ? 'minutes' : 'minutos'}`);
+		}
+
+		return parts.join(', ');
+	}
+
+	/**
 	 * Returns a new Dates object with the current date and time minus a duration
 	 * @param duration - The duration to subtract
 	 * @returns A new Dates object with the current date and time minus a duration
@@ -279,3 +330,6 @@ class Dates {
 }
 
 export { Dates, DatesFormat, TimezoneIdentified };
+
+//
+//

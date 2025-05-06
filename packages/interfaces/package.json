@@ -35,8 +35,8 @@
 		"lint:fix": "eslint --fix"
 	},
 	"dependencies": {
-		"@aws-sdk/client-s3": "3.802.0",
-		"@aws-sdk/s3-request-presigner": "3.802.0",
+		"@aws-sdk/client-s3": "3.803.0",
+		"@aws-sdk/s3-request-presigner": "3.803.0",
 		"@tmlmobilidade/connectors": "*",
 		"@tmlmobilidade/lib": "*",
 		"@tmlmobilidade/tsconfig": "*",
@@ -51,7 +51,7 @@
 	"devDependencies": {
 		"@carrismetropolitana/eslint": "20250418.42.41",
 		"@types/luxon": "3.6.2",
-		"@types/node": "22.15.3",
+		"@types/node": "22.15.12",
 		"@types/nodemailer": "6.4.17",
 		"resolve-tspaths": "0.8.23",
 		"rimraf": "6.0.1",

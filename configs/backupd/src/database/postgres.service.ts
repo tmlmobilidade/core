@@ -1,9 +1,12 @@
+/* * */
+
+import { IDatabaseService } from '@/database/database.interface.js';
 import { exec, spawn } from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
-import { Client, ClientConfig } from 'pg';
+import { Client, type ClientConfig } from 'pg';
 
-import { IDatabaseService } from './database.interface.js';
+/* * */
 
 export interface PostgresConfig {
 	options?: ClientConfig
@@ -11,7 +14,7 @@ export interface PostgresConfig {
 }
 
 export class PostgresService implements IDatabaseService {
-	private client: Client;
+	private client: InstanceType<typeof Client>;
 
 	constructor(config: PostgresConfig) {
 		this.client = new Client({ connectionString: config.uri, ...config.options });

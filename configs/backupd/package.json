@@ -2,8 +2,8 @@
 	"name": "@tmlmobilidade/backupd",
 	"version": "1.0.0",
 	"license": "MIT",
-	"main": "index.js",
 	"type": "module",
+	"main": "index.js",
 	"scripts": {
 		"build": "npm run clean && tsc && resolve-tspaths",
 		"clean": "rimraf dist",
@@ -23,6 +23,7 @@
 		"yaml": "2.7.1"
 	},
 	"devDependencies": {
+		"@carrismetropolitana/eslint": "20250418.42.41",
 		"@tmlmobilidade/tsconfig": "*",
 		"@types/node": "22.15.14",
 		"@types/nodemailer": "6.4.17",

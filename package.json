@@ -20,7 +20,7 @@
 		"dev:docs": "turbo dev --filter=@tmlmobilidade/docs",
 		"lint": "turbo lint",
 		"clean": "sh scripts/cleanup.sh",
-		"yalc:push": "sh scripts/yalc.sh",
+		"yalc:push": "command -v yalc >/dev/null 2>&1 && sh scripts/yalc.sh || echo 'yalc not installed, skipping yalc push...'",
 		"test": "turbo test",
 		"test:prod": "turbo test:prod"
 	},

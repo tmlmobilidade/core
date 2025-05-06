@@ -28,7 +28,7 @@
 		"@carrismetropolitana/eslint": "20250418.42.41",
 		"eslint": "9.26.0",
 		"tsx": "4.19.4",
-		"turbo": "2.5.2"
+		"turbo": "2.5.3"
 	},
 	"workspaces": [
 		"apps/*",

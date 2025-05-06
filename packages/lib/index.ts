@@ -1,6 +1,7 @@
 /* * */
 
 export * from '@/agencies.js';
+export * from '@/app-urls.js';
 export * from '@/http-exception.js';
 export * from '@/http-status.js';
 export * from '@/mime-types.js';

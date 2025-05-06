@@ -84,3 +84,18 @@
 .root[data-padding="none"] {
 	padding: 0;
 }
+
+/* * */
+/* PROPS / FLEX WRAP */
+
+.root[data-flex-wrap] {
+	flex-wrap: wrap;
+}
+
+.root[data-flex-wrap="nowrap"] {
+	flex-wrap: nowrap;
+}
+
+.root[data-flex-wrap="wrap-reverse"] {
+	flex-wrap: wrap-reverse;
+}

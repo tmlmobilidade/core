@@ -1,7 +1,6 @@
 /* * */
 
-import pg from 'pg';
-import { type Client, type ClientConfig } from 'pg';
+import { Client, type ClientConfig } from 'pg';
 
 /* * */
 
@@ -13,10 +12,10 @@ export interface PostgresConfig {
 /* * */
 
 export class PostgresConnector {
-	private client: Client;
+	private client: InstanceType<typeof Client>;
 
 	constructor(config: PostgresConfig) {
-		this.client = new pg.Client({ connectionString: config.uri, ...config.options });
+		this.client = new Client({ connectionString: config.uri, ...config.options });
 	}
 
 	/**

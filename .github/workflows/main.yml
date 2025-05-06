@@ -30,7 +30,6 @@ jobs:
   # # # # # # # # # # # # # # # # # # # # #
 
   publish-lib:
-    name: 'Publish Lib'
     runs-on: ubuntu-latest
     needs: version-number
     steps:
@@ -46,7 +45,7 @@ jobs:
         run: npm run build:lib
         # # #
       - name: Bump package version
-        working-directory: packages/connectors
+        working-directory: packages/lib
         run: npm version --no-git-tag-version ${{ needs.version-number.outputs.version_number }}
         # # #
       - name: Publish package to NPM
@@ -59,7 +58,6 @@ jobs:
   # # # # # # # # # # # # # # # # # # # # #
 
   publish-connectors:
-    name: 'Publish Connectors'
     runs-on: ubuntu-latest
     needs: version-number
     steps:
@@ -83,13 +81,3 @@ jobs:
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-
-  # # # # # # # # # # # # # # # # # # # # #
-  # # # # # # # # # # # # # # # # # # # # #
-
-#   publish-connectors2:
-#     name: 'Publish Connectors'
-#     needs: publish-connectors
-#     uses: ./.github/workflows/publish-connectors.yml
-#     with:
-#       version_number: ${{ needs.version-number.outputs.version_number }}

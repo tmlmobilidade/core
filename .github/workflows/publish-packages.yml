@@ -124,10 +124,6 @@ jobs:
       - name: Setup NodeJS
         uses: ./.github/actions/setup-node
         # # #
-      - name: Build package
-        working-directory: .
-        run: npm run build:tsconfig
-        # # #
       - name: Bump package version
         working-directory: packages/tsconfig
         run: npm version --no-git-tag-version ${{ needs.version-number.outputs.version_number }}

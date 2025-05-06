@@ -2,12 +2,9 @@
 
 /* * */
 
-const meApiUrl = process.env.NEXT_PUBLIC_AUTH_URL + '/api/me';
-
-/* * */
-
 import { type SidebarItemProps } from '@/components/layout/SidebarItem';
 import { swrFetcher } from '@/lib/http';
+import { getAppBaseUrl } from '@tmlmobilidade/lib';
 import { createContext, type PropsWithChildren, useContext, useEffect, useMemo, useState } from 'react';
 import useSWR from 'swr';
 
@@ -42,6 +39,8 @@ export const SidebarContextProvider = ({ children }: PropsWithChildren) => {
 
 	//
 	// A. Setup variables
+
+	const meApiUrl = getAppBaseUrl('auth') + '/api/me';
 
 	const [sidebarState, setSidebarState] = useState<SidebarContextState['data']['sidebar']>([]);
 

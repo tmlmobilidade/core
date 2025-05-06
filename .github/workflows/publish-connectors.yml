@@ -30,7 +30,7 @@ jobs:
         run: npm run build:connectors
 
       - name: Bump package version
-        run: echo "Bumping version to ${{ inputs.version_number }}"
+        run: npm version --no-git-tag-version ${{ inputs.version_number }}
 
       - name: Publish package to NPM
         working-directory: packages/connectors

@@ -1,19 +1,12 @@
 name: 'lib | Publish to npm'
 
 on:
-  workflow_dispatch:
-  pull_request:
-    branches:
-      - production
-    paths:
-      - 'packages/lib/**/*'
-      - '.github/workflows/publish-lib.yml'
-  push:
-    branches:
-      - production
-    paths:
-      - 'packages/lib/**/*'
-      - '.github/workflows/publish-lib.yml'
+    workflow_call:
+        inputs:
+            version_number:
+                required: true
+                default: 'latest'
+                type: 'string'
 
 jobs:
 
@@ -37,8 +30,7 @@ jobs:
         run: npm run build:lib
 
       - name: Bump package version
-        working-directory: packages/lib
-        run: npx @helperkits/bumper bump
+        run: npm version --no-git-tag-version ${{ inputs.version_number }}
 
       - name: Publish package to NPM
         working-directory: packages/lib

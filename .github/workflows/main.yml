@@ -1,0 +1,30 @@
+name: 'Main'
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - production
+
+jobs:
+
+  # # # # # # # # # # # # # # # # # # # # #
+  # # # # # # # # # # # # # # # # # # # # #
+
+  generate-version-number:
+    name: 'Set hard coded version number'
+    runs-on: ubuntu-latest
+    steps:
+        - name: Set hard coded version number
+          run: |
+            echo "OLA"
+    outputs:
+        version_number: 'v32'
+
+  publish:
+    name: 'Publish package'
+    needs: generate-version-number
+    uses: ./.github/workflows/publish-connectors.yml
+    with:
+        version_number: ${{ needs.generate-version-number.outputs.version_number }}
+

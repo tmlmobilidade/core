@@ -87,9 +87,9 @@ jobs:
   # # # # # # # # # # # # # # # # # # # # #
   # # # # # # # # # # # # # # # # # # # # #
 
-  publish-connectors2:
-    name: 'Publish Connectors'
-    needs: publish-connectors
-    uses: ./.github/workflows/publish-connectors.yml
-    with:
-      version_number: ${{ needs.version-number.outputs.version_number }}
+#   publish-connectors2:
+#     name: 'Publish Connectors'
+#     needs: publish-connectors
+#     uses: ./.github/workflows/publish-connectors.yml
+#     with:
+#       version_number: ${{ needs.version-number.outputs.version_number }}

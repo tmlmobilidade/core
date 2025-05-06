@@ -12,30 +12,26 @@ jobs:
   # # # # # # # # # # # # # # # # # # # # #
 
   version-number:
-    name: 'Generate new version number'
     runs-on: ubuntu-latest
     steps:
-      - name: Generate new version number
-        id: get-version-number
+      - id: generate-version-number
         run: |
           version="$(date +%Y%m%d).$(date +%H%M).$(date +%S)"
           echo "Generated version: $version"
           echo "version_number=$version" >> "$GITHUB_OUTPUT"
     outputs:
-      version_number: ${{ steps.get-version-number.outputs.version_number }}
+      version_number: ${{ steps.generate-version-number.outputs.version_number }}
 
   # # # # # # # # # # # # # # # # # # # # #
   # # # # # # # # # # # # # # # # # # # # #
 
-  publish:
-    name: 'Publish package'
+  publish-connectors:
     needs: version-number
     uses: ./.github/workflows/publish-connectors.yml
     with:
       version_number: ${{ needs.version-number.outputs.version_number }}
 
-  publish2:
-    name: 'Publish package'
+  publish-lib:
     needs: version-number
     uses: ./.github/workflows/publish-lib.yml
     with:

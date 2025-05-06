@@ -47,16 +47,19 @@ export const APP_BASE_URLS = Object.freeze({
 /**
  * Get the URL for a given app and environment.
  * @param app The app ID
- * @param environment The environment to get the URL for
+ * @param environment The environment to get the URL for. If not provided, it will use the ENVIRONMENT environment variable.
  * @returns The base URL for the given app and environment
  */
-export function getAppBaseUrl(app: keyof typeof APP_BASE_URLS, environment = 'development'): string {
+export function getAppBaseUrl(app: keyof typeof APP_BASE_URLS, environment?: string): string {
 	// Get the desired app object
 	const appUrl = APP_BASE_URLS[app];
 	if (!appUrl) throw new Error(`App URL for ${app} not found`);
-	// Get the desired environment value
-	const url = appUrl[environment as keyof typeof appUrl];
-	if (!url) throw new Error(`URL for ${environment} environment not found`);
+	// Extract the current app environment either from the parameter
+	// or automatically from the set environment variable.
+	const currentEnvironment = environment ? environment : process.env.ENVIRONMENT;
+	// Get the base URL for the current environment
+	const baseUrl = appUrl[currentEnvironment as keyof typeof appUrl];
+	if (!baseUrl) throw new Error(`URL for ${environment} environment not found`);
 	// Return the URL
-	return url;
+	return baseUrl;
 }

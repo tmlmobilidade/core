@@ -40,7 +40,7 @@ export const MeContextProvider = ({ children }: PropsWithChildren) => {
 	//
 	// A. Fetch data
 
-	const { data, error, isLoading } = useSWR<User>(`${getAppBaseUrl('auth', process.env.ENVIRONMENT)}/api/users/me`, swrFetcher);
+	const { data, error, isLoading } = useSWR<User>(`${getAppBaseUrl('auth')}/api/users/me`, swrFetcher);
 
 	//
 	// B. Define context value

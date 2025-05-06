@@ -2,7 +2,7 @@
 
 import { roles, sessions, users, verificationTokens } from '@/interfaces/index.js';
 import { emailProvider } from '@/providers/email/email.js';
-import { HttpException, HttpStatus } from '@tmlmobilidade/lib';
+import { getAppBaseUrl, HttpException, HttpStatus } from '@tmlmobilidade/lib';
 import { CreateUserDto, LoginDto, Permission, Session } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy, Dates, generateRandomString, generateRandomToken, getPermission } from '@tmlmobilidade/utils';
 import bcrypt from 'bcryptjs';
@@ -160,7 +160,7 @@ class AuthProvider {
 		}
 
 		emailProvider.send({
-			html: `<p>Click the link below to verify your email: <a target="_blank" href="${process.env.NEXT_PUBLIC_URL}/verification?token=${verification_token}">Verify Email</a></p>`,
+			html: `<p>Click the link below to verify your email: <a target="_blank" href="${getAppBaseUrl('auth')}/verification?token=${verification_token}">Verify Email</a></p>`,
 			subject: 'Verify your email',
 			to: createUserDto.email,
 		});

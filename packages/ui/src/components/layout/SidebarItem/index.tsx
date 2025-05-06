@@ -4,8 +4,7 @@
 
 import { useMeContext } from '@/contexts';
 import { useIsActiveDomain } from '@/hooks/use-is-active-domain';
-import { IconAlertTriangle, IconBusStop, IconChartArrowsVertical, IconDeviceMobile, IconFileCertificate, IconFileCheck, IconListCheck, IconUser } from '@tabler/icons-react';
-import { Permission } from '@tmlmobilidade/types';
+import { type Permission } from '@tmlmobilidade/types';
 import { getPermission } from '@tmlmobilidade/utils';
 import { useMemo } from 'react';
 
@@ -14,15 +13,15 @@ import styles from './styles.module.css';
 /* * */
 
 export interface SidebarItemProps {
-	_id: string
 	href: string
+	icon: React.ReactNode
 	label: string
 	permission: Permission<unknown>
 }
 
 /* * */
 
-export function SidebarItem({ _id, href, label, permission }: SidebarItemProps) {
+export function SidebarItem({ href, icon, label, permission }: SidebarItemProps) {
 	//
 
 	//
@@ -51,14 +50,7 @@ export function SidebarItem({ _id, href, label, permission }: SidebarItemProps) 
 				data-disabled={isDisabled}
 				href={href}
 			>
-				{_id === 'alerts' && <IconAlertTriangle size={26} />}
-				{_id === 'auth' && <IconUser size={26} />}
-				{_id === 'controller' && <IconListCheck size={26} />}
-				{_id === 'equipments' && <IconDeviceMobile size={26} />}
-				{_id === 'pulse' && <IconChartArrowsVertical size={26} />}
-				{_id === 'stops' && <IconBusStop size={26} />}
-				{_id === 'plans' && <IconFileCertificate size={26} />}
-				{_id === 'validations' && <IconFileCheck size={26} />}
+				{icon}
 			</a>
 			<span className={styles.tooltip}>
 				{label}

@@ -21,22 +21,42 @@ jobs:
           echo "Generated version: $version"
           echo "version_number=$version" >> "$GITHUB_OUTPUT"
     outputs:
-      version_number: ${{ steps.generate-version-number.outputs.version_number }}
+      version-number: ${{ steps.generate-version-number.outputs.version-number }}
 
   # # # # # # # # # # # # # # # # # # # # #
   # # # # # # # # # # # # # # # # # # # # #
 
-  publish-connectors:
-    name: 'Publish Connectors'
-    needs: version-number
-    uses: ./.github/workflows/publish-connectors.yml
-    with:
-      version_number: ${{ needs.version-number.outputs.version_number }}
+#   publish-connectors:
+#     name: 'Publish Connectors'
+#     needs: version-number
+#     uses: ./.github/workflows/publish-connectors.yml
+#     with:
+#       version_number: ${{ needs.version-number.outputs.version-number }}
+
+  # # # # # # # # # # # # # # # # # # # # #
+  # # # # # # # # # # # # # # # # # # # # #
 
   publish-lib:
     name: 'Publish Lib'
+    runs-on: ubuntu-latest
     needs: version-number
-    uses: ./.github/workflows/publish-lib.yml
-    with:
-      version_number: ${{ needs.version-number.outputs.version_number }}
-
+    steps:
+        # # #
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        # # #
+      - name: Setup NodeJS
+        uses: ./.github/actions/setup-node
+        # # #
+      - name: Build package
+        working-directory: .
+        run: npm run build:lib
+        # # #
+      - name: Bump package version
+        run: npm version --no-git-tag-version ${{ needs.version-number.outputs.version-number }}
+        # # #
+      - name: Publish package to NPM
+        working-directory: packages/lib
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}

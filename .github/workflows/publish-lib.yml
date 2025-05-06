@@ -16,20 +16,20 @@ jobs:
     name: 'Publish package'
     runs-on: ubuntu-latest
     steps:
-
+        # # #
       - name: Checkout repository
         uses: actions/checkout@v4
-
+        # # #
       - name: Setup NodeJS
         uses: ./.github/actions/setup-node
-
+        # # #
       - name: Build package
         working-directory: .
         run: npm run build:lib
-
+        # # #
       - name: Bump package version
         run: npm version --no-git-tag-version ${{ inputs.version_number }}
-
+        # # #
       - name: Publish package to NPM
         working-directory: packages/lib
         run: npm publish --access public

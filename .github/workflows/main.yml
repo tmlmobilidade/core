@@ -34,28 +34,9 @@ jobs:
       version_number: ${{ needs.version-number.outputs.version_number }}
 
   publish-lib:
-    name: 'Publish package'
-    runs-on: ubuntu-latest
+    name: 'Publish Lib'
     needs: version-number
-    steps:
-
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - uses: ./.github/actions/setup-node
-        with:
-          node-version: 20
-
-      - name: Build package
-        working-directory: .
-        run: npm run build:lib
-
-      - name: Bump package version
-        run: npm version --no-git-tag-version ${{ inputs.version_number }}
-
-      - name: Publish package to NPM
-        working-directory: packages/lib
-        run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+    uses: ./.github/workflows/publish-lib.yml
+    with:
+      version_number: ${{ needs.version-number.outputs.version_number }}
 

@@ -3,8 +3,9 @@
 	"extends": "./base.json",
 	"compilerOptions": {
 
-		"module": "NodeNext",
-		"moduleResolution": "nodenext",
+		"module": "esnext",
+		"moduleResolution": "bundler",
+
 		"outDir": "dist",
 
 		"lib": ["es2022", "dom", "dom.iterable"],

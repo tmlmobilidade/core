@@ -58,7 +58,6 @@ export const ThemeContextProvider = ({ children }: PropsWithChildren) => {
 	const mantineDatesSettings: Partial<DatesProviderSettings> = {
 		firstDayOfWeek: 1,
 		locale: 'pt',
-		timezone: 'Europe/Lisbon',
 		weekendDays: [6, 0],
 	};
 

@@ -56,7 +56,7 @@ export function getAppBaseUrl(app: keyof typeof APP_BASE_URLS, environment?: str
 	if (!appUrl) throw new Error(`App URL for ${app} not found`);
 	// Extract the current app environment either from the parameter
 	// or automatically from the set environment variable.
-	const currentEnvironment = environment ? environment : process.env.ENVIRONMENT;
+	const currentEnvironment = environment ? environment : process.env.ENVIRONMENT ?? 'development';
 	// Get the base URL for the current environment
 	const baseUrl = appUrl[currentEnvironment as keyof typeof appUrl];
 	if (!baseUrl) throw new Error(`URL for ${environment} environment not found`);

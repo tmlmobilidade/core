@@ -1,3 +1,5 @@
+'use client';
+
 /* * */
 
 import { SidebarItem } from '@/components/layout/SidebarItem';

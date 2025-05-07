@@ -16,6 +16,7 @@
 		"build:types": "turbo build --filter=@tmlmobilidade/types && npm run yalc:push",
 		"build:ui": "turbo build --filter=@tmlmobilidade/ui && npm run yalc:push",
 		"build:utils": "turbo build --filter=@tmlmobilidade/utils && npm run yalc:push",
+		"build:packages": "turbo build --filter=./packages/* && npm run yalc:push",
 		"dev": "turbo dev",
 		"dev:docs": "turbo dev --filter=@tmlmobilidade/docs",
 		"lint": "turbo lint",

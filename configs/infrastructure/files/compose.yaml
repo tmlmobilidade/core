@@ -33,15 +33,23 @@ services:
 
   files-db:
     image: mongo:latest
-    command: mongod --bind_ip_all --auth
     restart: always
     ports:
       - 27017:27017
     volumes:
-      - ./init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh
+      - ./files-entrypoint.sh:/docker-entrypoint-initdb.d/init.sh:ro
+      - ./files-keyfile.key:/data/replica.key
       - ./files-db-data:/data/db
     env_file:
       - .env
+    entrypoint:
+      - bash
+      - -c
+      - |
+          chmod 400 /data/replica.key
+          chown 999:999 /data/replica.key
+          exec docker-entrypoint.sh $$@
+    command: mongod --bind_ip_all --auth --replSet rs0 --keyFile /data/replica.key --port 27017
 
   # # # # # # # # # # # # # # # # # # # # #
   # # # # # # # # # # # # # # # # # # # # #

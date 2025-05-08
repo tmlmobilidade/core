@@ -3,6 +3,14 @@
 mongosh <<EOF_MONGO
 use admin
 
+// Initialize the replica set
+rs.initiate()
+
+// Wait for replica set initiation
+while (!rs.isMaster().ismaster) {
+	sleep(1000);
+}
+
 // Create the admin user
 db.createUser({
 	user: "admin",

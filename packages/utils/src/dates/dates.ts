@@ -1,10 +1,9 @@
 /* * */
 
+import { type DatesFormat, Formats, OPERATIONAL_DATE_FORMAT } from '@/dates/format.js';
+import { type TimezoneIdentified, timezoneList, timezoneListSchema } from '@/dates/types.js';
 import { OperationalDate, UnixTimestamp } from '@tmlmobilidade/types';
 import { type DateObjectUnits, DateTime, type DurationObjectUnits } from 'luxon';
-
-import { type DatesFormat, Formats, OPERATIONAL_DATE_FORMAT } from './format.js';
-import { type TimezoneIdentified, timezoneList, timezoneListSchema } from './types.js';
 
 /* * */
 
@@ -59,7 +58,21 @@ class Dates {
 	 */
 	static fromFormat(text: string, format: string): Dates {
 		const dateTime = DateTime.fromFormat(text, format);
+		return new Dates({
+			iso: dateTime.toISO(),
+			js_date: dateTime.toJSDate(),
+			operational_date: this.prototype.getOperationalDate(dateTime.toMillis() as UnixTimestamp),
+			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
+		});
+	}
 
+	/**
+	 * Creates a Dates object from a string in the ISO 8601 format
+	 * @param isoText - The date/time string to parse
+	 * @returns A new Dates object parsed from the string
+	 */
+	static fromISO(isoText: string): Dates {
+		const dateTime = DateTime.fromISO(isoText);
 		return new Dates({
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),

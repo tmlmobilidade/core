@@ -1,33 +1,32 @@
 /* * */
 
 import { MongoCollectionClass } from '@/mongo-collection.js';
-import { ApexT11 } from '@tmlmobilidade/types';
+import { ApexInspectionDecision } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
 import { IndexDescription } from 'mongodb';
 
 /* * */
 
-class ApexT11Class extends MongoCollectionClass<ApexT11, ApexT11, ApexT11> {
-	private static _instance: ApexT11Class;
+class ApexInspectionDecisionsClass extends MongoCollectionClass<ApexInspectionDecision, ApexInspectionDecision, ApexInspectionDecision> {
+	private static _instance: ApexInspectionDecisionsClass;
 
 	private constructor() {
 		super();
 	}
 
 	public static async getInstance() {
-		if (!ApexT11Class._instance) {
-			const instance = new ApexT11Class();
+		if (!ApexInspectionDecisionsClass._instance) {
+			const instance = new ApexInspectionDecisionsClass();
 			await instance.connect();
-			ApexT11Class._instance = instance;
+			ApexInspectionDecisionsClass._instance = instance;
 		}
-		return ApexT11Class._instance;
+		return ApexInspectionDecisionsClass._instance;
 	}
 
 	protected getCollectionIndexes(): IndexDescription[] {
 		return [
 			{ background: true, key: { created_at: 1 } },
 			{ background: true, key: { received_at: 1 } },
-			{ background: true, key: { card_serial_number: 1 } },
 			{ background: true, key: { agency_id: 1 } },
 			// eslint-disable-next-line perfectionist/sort-objects
 			{ background: true, key: { trip_id: 1, created_at: 1 } },
@@ -36,14 +35,14 @@ class ApexT11Class extends MongoCollectionClass<ApexT11, ApexT11, ApexT11> {
 	}
 
 	protected getCollectionName(): string {
-		return 'apex_t11';
+		return 'apex_inspection_decisions';
 	}
 
 	protected getEnvName(): string {
-		return 'TML_INTERFACE_APEX_T11';
+		return 'TML_INTERFACE_APEX_INSPECTION_DECISIONS';
 	}
 }
 
 /* * */
 
-export const apexT11 = AsyncSingletonProxy(ApexT11Class);
+export const apexInspectionDecisions = AsyncSingletonProxy(ApexInspectionDecisionsClass);

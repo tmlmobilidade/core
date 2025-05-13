@@ -100,10 +100,10 @@ export const ApexValidationSchema = ApexTransactionSchema.extend({
 	card_serial_number: z.string(),
 	card_type_id: z.string(),
 	event_type: z.number(),
-	on_board_sale_transaction_id: z.string(),
+	on_board_sale_transaction_id: z.string().optional(),
 	product_id: z.string(),
 	product_type: z.enum(['monthly', 'on-board-sale', 'prepaid']),
-	refund_transaction_id: z.string(),
+	refund_transaction_id: z.string().optional(),
 	units_qty: z.number().optional(),
 	validation_status: z.nativeEnum(ApexValidationStatus),
 }).strict();

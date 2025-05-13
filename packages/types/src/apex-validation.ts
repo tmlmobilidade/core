@@ -1,11 +1,12 @@
 /* * */
 
-import { DocumentSchema, type UnixTimestamp, validateUnixTimestamp } from '@/common.js';
+import { ApexTransactionSchema } from '@/apex-common.js';
+import { type UnixTimestamp } from '@/common.js';
 import { z } from 'zod';
 
 /* * */
 
-export enum ValidationStatus {
+export enum ApexValidationStatus {
 
 	/**
 	 * VALID:
@@ -94,22 +95,17 @@ export enum ValidationStatus {
 
 /* * */
 
-export const ApexT11Schema = DocumentSchema.extend({
-	agency_id: z.string(),
-	apex_version: z.string(),
+export const ApexValidationSchema = ApexTransactionSchema.extend({
+	card_physical_type: z.string(),
 	card_serial_number: z.string(),
-	device_id: z.string(),
-	line_id: z.string(),
-	mac_ase_counter_value: z.number(),
-	mac_sam_serial_number: z.number(),
-	pattern_id: z.string(),
+	card_type_id: z.string(),
+	event_type: z.number(),
+	on_board_sale_transaction_id: z.string(),
 	product_id: z.string(),
-	received_at: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp'),
-	stop_id: z.string(),
-	trip_id: z.string(),
+	product_type: z.enum(['monthly', 'on-board-sale', 'prepaid']),
+	refund_transaction_id: z.string(),
 	units_qty: z.number().optional(),
-	validation_status: z.nativeEnum(ValidationStatus),
-	vehicle_id: z.string(),
+	validation_status: z.nativeEnum(ApexValidationStatus),
 }).strict();
 
 /**
@@ -119,7 +115,7 @@ export const ApexT11Schema = DocumentSchema.extend({
  * or not, and with which conditions. A validation also contains information about the card holder's card, the vehicle,
  * the validator machine, the route, and the time and location of the validation.
  */
-export interface ApexT11 extends Omit<z.infer<typeof ApexT11Schema>, 'created_at' | 'received_at' | 'updated_at'> {
+export interface ApexValidation extends Omit<z.infer<typeof ApexValidationSchema>, 'created_at' | 'received_at' | 'updated_at'> {
 	created_at: UnixTimestamp
 	received_at: UnixTimestamp
 	updated_at: UnixTimestamp
@@ -128,4 +124,4 @@ export interface ApexT11 extends Omit<z.infer<typeof ApexT11Schema>, 'created_at
 /**
  * Validation statuses that are considered valid for the card holder to travel.
  */
-export const ALLOWED_VALIDATION_STATUSES = [ValidationStatus._0_ContractValid, ValidationStatus._4_CardInWhiteList, ValidationStatus._5_ProfileInWhiteList, ValidationStatus._6_Interchange];
+export const ALLOWED_VALIDATION_STATUSES = [ApexValidationStatus._0_ContractValid, ApexValidationStatus._4_CardInWhiteList, ApexValidationStatus._5_ProfileInWhiteList, ApexValidationStatus._6_Interchange];

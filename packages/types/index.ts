@@ -8,9 +8,9 @@ export * from '@/common.js'; // This is the first export because it is used in f
 
 export * from '@/agency.js';
 export * from '@/alert.js';
-export * from '@/apex-t3.js';
-export * from '@/apex-t11.js';
-export * from '@/apex-t19.js';
+export * from '@/apex-on-board-sale.js';
+export * from '@/apex-validation.js';
+export * from '@/apex-location.js';
 export * from '@/auth.js';
 export * from '@/file.js';
 export * from '@/hashed-shape.js';

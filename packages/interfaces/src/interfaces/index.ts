@@ -2,9 +2,12 @@
 
 export * from '@/interfaces/agencies/agencies.interface.js';
 export * from '@/interfaces/alerts/alerts.interface.js';
-export * from '@/interfaces/apex-t3/apex-t3.interface.js';
-export * from '@/interfaces/apex-t11/apex-t11.interface.js';
-export * from '@/interfaces/apex-t19/apex-t19.interface.js';
+export * from '@/interfaces/apex-inspection-decisions/apex-inspection-decisions.interface.js';
+export * from '@/interfaces/apex-inspections/apex-inspections.interface.js';
+export * from '@/interfaces/apex-locations/apex-locations.interface.js';
+export * from '@/interfaces/apex-on-board-refunds/apex-on-board-refunds.interface.js';
+export * from '@/interfaces/apex-on-board-sales/apex-on-board-sales.interface.js';
+export * from '@/interfaces/apex-validations/apex-validations.interface.js';
 export * from '@/interfaces/auth/roles.interface.js';
 export * from '@/interfaces/auth/sessions.interface.js';
 export * from '@/interfaces/auth/users.interface.js';

@@ -10,6 +10,7 @@ export const ApexOnBoardRefundSchema = ApexTransactionSchema.extend({
 	card_physical_type: z.number(),
 	card_serial_number: z.string(),
 	invoice_number: z.string().optional(),
+	is_enriched: z.boolean(),
 	on_board_sale_transaction_id: z.string().optional(),
 	payment_method: z.number(),
 	price: z.number(),

@@ -7,16 +7,21 @@ import { z } from 'zod';
 /* * */
 
 export const ApexOnBoardRefundSchema = ApexTransactionSchema.extend({
-	card_physical_type: z.string(),
+	card_physical_type: z.number(),
 	card_serial_number: z.string(),
-	card_type_id: z.string(),
-	invoice_number: z.string(),
-	on_board_sale_transaction_id: z.string(),
+	invoice_number: z.string().optional(),
+	on_board_sale_transaction_id: z.string().optional(),
 	payment_method: z.number(),
 	price: z.number(),
 	product_id: z.string(),
 	product_qty: z.number(),
-	validation_transaction_id: z.string(),
+	validation_transaction_id: z.string().optional(),
+	// Overrides
+	line_id: z.string().optional(),
+	pattern_id: z.string().optional(),
+	stop_id: z.string().optional(),
+	trip_id: z.string().optional(),
+	vehicle_id: z.string().optional(),
 }).strict();
 
 /**

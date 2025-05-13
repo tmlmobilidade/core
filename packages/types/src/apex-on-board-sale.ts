@@ -20,9 +20,11 @@ export const ApexOnBoardSaleSchema = ApexTransactionSchema.extend({
 }).strict();
 
 /**
- * APEX T3 are APEX transactions of type 3 that are generated whenever a sale of a product occurs.
- * Sales can be inside vehicles, at vending machines, or at ticket offices, and they can be
- * of travel products (like tickets) or non-travel products (like merch and other items).
+ * APEX OnBoard Sales are APEX transactions of type 3 that are generated whenever a sale
+ * of an on-board ticket occurs. Even though sales can be of anything (tickets, cards, contracts, merchandising items)
+ * and anywhere (inside vehicles, at vending machines, at ticket offices or online), here they are already filtered
+ * for on-board ticket sales inside vehicles only. Sales of tickets when inside vehicles also generate a validation transaction.
+ * Sales can be refunded, and refunds are also APEX transactions of type 3.
  */
 export interface ApexOnBoardSale extends Omit<z.infer<typeof ApexOnBoardSaleSchema>, 'created_at' | 'received_at' | 'updated_at'> {
 	created_at: UnixTimestamp

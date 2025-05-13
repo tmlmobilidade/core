@@ -20,9 +20,9 @@ export const ApexOnBoardRefundSchema = ApexTransactionSchema.extend({
 }).strict();
 
 /**
- * APEX T3 are APEX transactions of type 3 that are generated whenever a sale of a product occurs.
- * Refunds can be inside vehicles, at vending machines, or at ticket offices, and they can be
- * of travel products (like tickets) or non-travel products (like merch and other items).
+ * APEX OnBoard Refunds are APEX transactions of type 3 that are generated whenever a refund
+ * of an on-board ticket occurs. Even though refunds can be generated for any sale, here they are already filtered
+ * for on-board ticket refunds inside vehicles only. Refunds are always associated with an on-board sale transaction.
  */
 export interface ApexOnBoardRefund extends Omit<z.infer<typeof ApexOnBoardRefundSchema>, 'created_at' | 'received_at' | 'updated_at'> {
 	created_at: UnixTimestamp

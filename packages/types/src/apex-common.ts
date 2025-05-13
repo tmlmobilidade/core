@@ -3,8 +3,11 @@
 import { DocumentSchema, validateUnixTimestamp } from '@/common.js';
 import { z } from 'zod';
 
-/* * */
-
+/**
+ * Standard properties for all APEX transactions.
+ * These properties are common to all APEX transactions and are used to identify
+ * the transaction, the device that generated it, and the time it was received.
+ */
 export const ApexTransactionSchema = DocumentSchema.extend({
 	agency_id: z.string(),
 	apex_transaction_type: z.number(),

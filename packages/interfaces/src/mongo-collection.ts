@@ -207,7 +207,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	 * @param options - The options for the update operation
 	 * @returns A promise that resolves to the result of the update operation
 	 */
-	public async updateById(id: string, updateFields: Partial<TUpdate>, options?: UpdateOptions): Promise<UpdateResult> {
+	public async updateById(id: string, updateFields: TUpdate, options?: UpdateOptions): Promise<UpdateResult> {
 		return this.updateOne({ _id: { $eq: id } } as unknown as Filter<T>, updateFields, options);
 	}
 
@@ -262,7 +262,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	 * @param options - The options for the update operation
 	 * @returns A promise that resolves to the result of the update operation
 	 */
-	public async updateOne(filter: Filter<T>, updateFields: Partial<TUpdate>, options?: UpdateOptions): Promise<UpdateResult> {
+	public async updateOne(filter: Filter<T>, updateFields: TUpdate, options?: UpdateOptions): Promise<UpdateResult> {
 		let parsedUpdateFields = updateFields;
 		if (this.updateSchema) {
 			try {

@@ -96,7 +96,7 @@ export enum ApexValidationStatus {
 /* * */
 
 export const SimplifiedApexValidationSchema = SimplifiedApexBaseSchema.extend({
-	card_physical_type: z.string(),
+	card_physical_type: z.number(),
 	card_serial_number: z.string(),
 	card_type_id: z.string(),
 	event_type: z.number(),

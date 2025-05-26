@@ -1,26 +1,26 @@
 /* * */
 
 import { MongoCollectionClass } from '@/mongo-collection.js';
-import { ApexInspection } from '@tmlmobilidade/types';
+import { SimplifiedApexInspection } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
 import { IndexDescription } from 'mongodb';
 
 /* * */
 
-class ApexInspectionsClass extends MongoCollectionClass<ApexInspection, ApexInspection, ApexInspection> {
-	private static _instance: ApexInspectionsClass;
+class SimplifiedApexInspectionsClass extends MongoCollectionClass<SimplifiedApexInspection, SimplifiedApexInspection, SimplifiedApexInspection> {
+	private static _instance: SimplifiedApexInspectionsClass;
 
 	private constructor() {
 		super();
 	}
 
 	public static async getInstance() {
-		if (!ApexInspectionsClass._instance) {
-			const instance = new ApexInspectionsClass();
+		if (!SimplifiedApexInspectionsClass._instance) {
+			const instance = new SimplifiedApexInspectionsClass();
 			await instance.connect();
-			ApexInspectionsClass._instance = instance;
+			SimplifiedApexInspectionsClass._instance = instance;
 		}
-		return ApexInspectionsClass._instance;
+		return SimplifiedApexInspectionsClass._instance;
 	}
 
 	protected getCollectionIndexes(): IndexDescription[] {
@@ -35,14 +35,14 @@ class ApexInspectionsClass extends MongoCollectionClass<ApexInspection, ApexInsp
 	}
 
 	protected getCollectionName(): string {
-		return 'apex_inspections';
+		return 'simplified_apex_inspections';
 	}
 
 	protected getEnvName(): string {
-		return 'TML_INTERFACE_APEX_INSPECTIONS';
+		return 'TML_INTERFACE_SIMPLIFIED_APEX_INSPECTIONS';
 	}
 }
 
 /* * */
 
-export const apexInspections = AsyncSingletonProxy(ApexInspectionsClass);
+export const simplifiedApexInspections = AsyncSingletonProxy(SimplifiedApexInspectionsClass);

@@ -1,26 +1,26 @@
 /* * */
 
 import { MongoCollectionClass } from '@/mongo-collection.js';
-import { ApexOnBoardRefund } from '@tmlmobilidade/types';
+import { SimplifiedApexOnBoardRefund } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
 import { IndexDescription } from 'mongodb';
 
 /* * */
 
-class ApexOnBoardRefundsClass extends MongoCollectionClass<ApexOnBoardRefund, ApexOnBoardRefund, ApexOnBoardRefund> {
-	private static _instance: ApexOnBoardRefundsClass;
+class SimplifiedApexOnBoardRefundsClass extends MongoCollectionClass<SimplifiedApexOnBoardRefund, SimplifiedApexOnBoardRefund, SimplifiedApexOnBoardRefund> {
+	private static _instance: SimplifiedApexOnBoardRefundsClass;
 
 	private constructor() {
 		super();
 	}
 
 	public static async getInstance() {
-		if (!ApexOnBoardRefundsClass._instance) {
-			const instance = new ApexOnBoardRefundsClass();
+		if (!SimplifiedApexOnBoardRefundsClass._instance) {
+			const instance = new SimplifiedApexOnBoardRefundsClass();
 			await instance.connect();
-			ApexOnBoardRefundsClass._instance = instance;
+			SimplifiedApexOnBoardRefundsClass._instance = instance;
 		}
-		return ApexOnBoardRefundsClass._instance;
+		return SimplifiedApexOnBoardRefundsClass._instance;
 	}
 
 	protected getCollectionIndexes(): IndexDescription[] {
@@ -36,14 +36,14 @@ class ApexOnBoardRefundsClass extends MongoCollectionClass<ApexOnBoardRefund, Ap
 	}
 
 	protected getCollectionName(): string {
-		return 'apex_on_board_refunds';
+		return 'simplified_apex_on_board_refunds';
 	}
 
 	protected getEnvName(): string {
-		return 'TML_INTERFACE_APEX_ON_BOARD_REFUNDS';
+		return 'TML_INTERFACE_SIMPLIFIED_APEX_ON_BOARD_REFUNDS';
 	}
 }
 
 /* * */
 
-export const apexOnBoardRefunds = AsyncSingletonProxy(ApexOnBoardRefundsClass);
+export const simplifiedApexOnBoardRefunds = AsyncSingletonProxy(SimplifiedApexOnBoardRefundsClass);

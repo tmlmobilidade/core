@@ -1,26 +1,26 @@
 /* * */
 
 import { MongoCollectionClass } from '@/mongo-collection.js';
-import { ApexValidation } from '@tmlmobilidade/types';
+import { SimplifiedApexValidation } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
 import { IndexDescription } from 'mongodb';
 
 /* * */
 
-class ApexValidationsClass extends MongoCollectionClass<ApexValidation, ApexValidation, ApexValidation> {
-	private static _instance: ApexValidationsClass;
+class SimplifiedApexValidationsClass extends MongoCollectionClass<SimplifiedApexValidation, SimplifiedApexValidation, SimplifiedApexValidation> {
+	private static _instance: SimplifiedApexValidationsClass;
 
 	private constructor() {
 		super();
 	}
 
 	public static async getInstance() {
-		if (!ApexValidationsClass._instance) {
-			const instance = new ApexValidationsClass();
+		if (!SimplifiedApexValidationsClass._instance) {
+			const instance = new SimplifiedApexValidationsClass();
 			await instance.connect();
-			ApexValidationsClass._instance = instance;
+			SimplifiedApexValidationsClass._instance = instance;
 		}
-		return ApexValidationsClass._instance;
+		return SimplifiedApexValidationsClass._instance;
 	}
 
 	protected getCollectionIndexes(): IndexDescription[] {
@@ -36,14 +36,14 @@ class ApexValidationsClass extends MongoCollectionClass<ApexValidation, ApexVali
 	}
 
 	protected getCollectionName(): string {
-		return 'apex_validations';
+		return 'simplified_apex_validations';
 	}
 
 	protected getEnvName(): string {
-		return 'TML_INTERFACE_APEX_VALIDATIONS';
+		return 'TML_INTERFACE_SIMPLIFIED_APEX_VALIDATIONS';
 	}
 }
 
 /* * */
 
-export const apexValidations = AsyncSingletonProxy(ApexValidationsClass);
+export const simplifiedApexValidations = AsyncSingletonProxy(SimplifiedApexValidationsClass);

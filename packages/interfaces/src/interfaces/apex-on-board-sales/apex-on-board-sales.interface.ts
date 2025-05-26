@@ -1,26 +1,26 @@
 /* * */
 
 import { MongoCollectionClass } from '@/mongo-collection.js';
-import { ApexOnBoardSale } from '@tmlmobilidade/types';
+import { SimplifiedApexOnBoardSale } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
 import { IndexDescription } from 'mongodb';
 
 /* * */
 
-class ApexOnBoardSalesClass extends MongoCollectionClass<ApexOnBoardSale, ApexOnBoardSale, ApexOnBoardSale> {
-	private static _instance: ApexOnBoardSalesClass;
+class SimplifiedApexOnBoardSalesClass extends MongoCollectionClass<SimplifiedApexOnBoardSale, SimplifiedApexOnBoardSale, SimplifiedApexOnBoardSale> {
+	private static _instance: SimplifiedApexOnBoardSalesClass;
 
 	private constructor() {
 		super();
 	}
 
 	public static async getInstance() {
-		if (!ApexOnBoardSalesClass._instance) {
-			const instance = new ApexOnBoardSalesClass();
+		if (!SimplifiedApexOnBoardSalesClass._instance) {
+			const instance = new SimplifiedApexOnBoardSalesClass();
 			await instance.connect();
-			ApexOnBoardSalesClass._instance = instance;
+			SimplifiedApexOnBoardSalesClass._instance = instance;
 		}
-		return ApexOnBoardSalesClass._instance;
+		return SimplifiedApexOnBoardSalesClass._instance;
 	}
 
 	protected getCollectionIndexes(): IndexDescription[] {
@@ -36,14 +36,14 @@ class ApexOnBoardSalesClass extends MongoCollectionClass<ApexOnBoardSale, ApexOn
 	}
 
 	protected getCollectionName(): string {
-		return 'apex_on_board_sales';
+		return 'simplified_apex_on_board_sales';
 	}
 
 	protected getEnvName(): string {
-		return 'TML_INTERFACE_APEX_ON_BOARD_SALES';
+		return 'TML_INTERFACE_SIMPLIFIED_APEX_ON_BOARD_SALES';
 	}
 }
 
 /* * */
 
-export const apexOnBoardSales = AsyncSingletonProxy(ApexOnBoardSalesClass);
+export const simplifiedApexOnBoardSales = AsyncSingletonProxy(SimplifiedApexOnBoardSalesClass);

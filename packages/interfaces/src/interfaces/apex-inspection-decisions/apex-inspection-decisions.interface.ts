@@ -1,26 +1,26 @@
 /* * */
 
 import { MongoCollectionClass } from '@/mongo-collection.js';
-import { ApexInspectionDecision } from '@tmlmobilidade/types';
+import { SimplifiedApexInspectionDecision } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
 import { IndexDescription } from 'mongodb';
 
 /* * */
 
-class ApexInspectionDecisionsClass extends MongoCollectionClass<ApexInspectionDecision, ApexInspectionDecision, ApexInspectionDecision> {
-	private static _instance: ApexInspectionDecisionsClass;
+class SimplifiedApexInspectionDecisionsClass extends MongoCollectionClass<SimplifiedApexInspectionDecision, SimplifiedApexInspectionDecision, SimplifiedApexInspectionDecision> {
+	private static _instance: SimplifiedApexInspectionDecisionsClass;
 
 	private constructor() {
 		super();
 	}
 
 	public static async getInstance() {
-		if (!ApexInspectionDecisionsClass._instance) {
-			const instance = new ApexInspectionDecisionsClass();
+		if (!SimplifiedApexInspectionDecisionsClass._instance) {
+			const instance = new SimplifiedApexInspectionDecisionsClass();
 			await instance.connect();
-			ApexInspectionDecisionsClass._instance = instance;
+			SimplifiedApexInspectionDecisionsClass._instance = instance;
 		}
-		return ApexInspectionDecisionsClass._instance;
+		return SimplifiedApexInspectionDecisionsClass._instance;
 	}
 
 	protected getCollectionIndexes(): IndexDescription[] {
@@ -35,14 +35,14 @@ class ApexInspectionDecisionsClass extends MongoCollectionClass<ApexInspectionDe
 	}
 
 	protected getCollectionName(): string {
-		return 'apex_inspection_decisions';
+		return 'simplified_apex_inspection_decisions';
 	}
 
 	protected getEnvName(): string {
-		return 'TML_INTERFACE_APEX_INSPECTION_DECISIONS';
+		return 'TML_INTERFACE_APEX_SIMPLIFIED_INSPECTION_DECISIONS';
 	}
 }
 
 /* * */
 
-export const apexInspectionDecisions = AsyncSingletonProxy(ApexInspectionDecisionsClass);
+export const simplifiedApexInspectionDecisions = AsyncSingletonProxy(SimplifiedApexInspectionDecisionsClass);

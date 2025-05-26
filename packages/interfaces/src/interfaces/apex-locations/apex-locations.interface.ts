@@ -1,26 +1,26 @@
 /* * */
 
 import { MongoCollectionClass } from '@/mongo-collection.js';
-import { ApexLocation } from '@tmlmobilidade/types';
+import { SimplifiedApexLocation } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
 import { IndexDescription } from 'mongodb';
 
 /* * */
 
-class ApexLocationsClass extends MongoCollectionClass<ApexLocation, ApexLocation, ApexLocation> {
-	private static _instance: ApexLocationsClass;
+class SimplifiedApexLocationsClass extends MongoCollectionClass<SimplifiedApexLocation, SimplifiedApexLocation, SimplifiedApexLocation> {
+	private static _instance: SimplifiedApexLocationsClass;
 
 	private constructor() {
 		super();
 	}
 
 	public static async getInstance() {
-		if (!ApexLocationsClass._instance) {
-			const instance = new ApexLocationsClass();
+		if (!SimplifiedApexLocationsClass._instance) {
+			const instance = new SimplifiedApexLocationsClass();
 			await instance.connect();
-			ApexLocationsClass._instance = instance;
+			SimplifiedApexLocationsClass._instance = instance;
 		}
-		return ApexLocationsClass._instance;
+		return SimplifiedApexLocationsClass._instance;
 	}
 
 	protected getCollectionIndexes(): IndexDescription[] {
@@ -35,14 +35,14 @@ class ApexLocationsClass extends MongoCollectionClass<ApexLocation, ApexLocation
 	}
 
 	protected getCollectionName(): string {
-		return 'apex_locations';
+		return 'simplified_apex_locations';
 	}
 
 	protected getEnvName(): string {
-		return 'TML_INTERFACE_APEX_LOCATIONS';
+		return 'TML_INTERFACE_SIMPLIFIED_APEX_LOCATIONS';
 	}
 }
 
 /* * */
 
-export const apexLocations = AsyncSingletonProxy(ApexLocationsClass);
+export const simplifiedApexLocations = AsyncSingletonProxy(SimplifiedApexLocationsClass);

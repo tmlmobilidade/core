@@ -42,38 +42,18 @@ export interface PCGI_ApexTransaction_Validation_V3 {
 		operatorLongID: string
 	}
 
-	paymentInfo: {
-		currency: number
-		invoiceNumber: string
-		paymentMethod: number
-		price: number
-		usageDays: number
-		usageValue: number
-		vatNumber: number
-	}
-
-	saleLoadInfo: {
-		contractNumber: number
-		greenlistItemID: string
-		greylistItemID: string
-		productLongID: string
-		productQuantity: number
-		profilesUsedCount: number
-		profilesUsedData: {
-			profileLongID: string
-		}[]
-		salesPackageID: string
-		SpatialValidityCount: number
-		spatialValidityDetail: {
-			productMatrixElementID: string
-			spatialValidityLongID: string
-			zonesCount: number
-		}[]
-		tickLoadDate: string
-		tickLoadMachCode: number
-		tickLoadNumbDaily: number
-		unitsQuantity: number
-		voucherNr: string
+	serviceInfo: {
+		blockID: string
+		dutyID: string
+		journeyID: string
+		lineLongID: string
+		onBehalfOfOperatorLongID: string
+		outOfBoundsType: number
+		patternLongID: string
+		stopLongID: string
+		validatorID: number
+		vehicleID: number
+		zoneLongID: string
 	}
 
 	signedData: {
@@ -89,6 +69,25 @@ export interface PCGI_ApexTransaction_Validation_V3 {
 		transactionDate: string
 		transactionGroupId: string
 		transactionId: string
+	}
+
+	validationInfo: {
+		calendarID: string
+		contractNumber: number
+		eventType: number
+		greylistItemsData: []
+		productLongID: string
+		profilesUsedData: {
+			profileLongID: string
+		}[]
+		spatialValidityLongID: string
+		tickLoadDate: string
+		tickLoadMachCode: number
+		tickLoadNumbDaily: number
+		unitsRemaining: number
+		validationStatus: number
+		validationType: number
+		validityPeriodID: string
 	}
 
 	versionInfo: {

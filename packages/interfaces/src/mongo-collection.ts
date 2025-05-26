@@ -240,7 +240,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	 * @param options - The options for the update operation
 	 * @returns A promise that resolves to the result of the update operation
 	 */
-	public async updateMany(filter: Filter<T>, updateFields: Partial<T>, options?: UpdateOptions) {
+	public async updateMany(filter: Filter<T>, updateFields: TUpdate, options?: UpdateOptions) {
 		let parsedUpdateFields = updateFields;
 		if (this.updateSchema) {
 			try {

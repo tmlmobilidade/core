@@ -1,5 +1,9 @@
-import { DocumentSchema } from '@/common.js';
+/* * */
+
+import { DocumentSchema } from '@/common/document.js';
 import { z } from 'zod';
+
+/* * */
 
 export const OrganizationSchema = DocumentSchema.extend({
 	code: z.string(),

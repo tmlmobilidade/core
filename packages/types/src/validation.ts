@@ -1,6 +1,8 @@
 /* * */
 
-import { DocumentSchema, type OperationalDate, type UnixTimestamp, validateOperationalDate } from '@/common.js';
+import { DocumentSchema } from '@/common/document.js';
+import { type OperationalDate, validateOperationalDate } from '@/common/operational-date.js';
+import { type UnixTimestamp } from '@/common/unix-timestamp.js';
 import { z } from 'zod';
 
 import { GTFSValidatorSummarySchema } from './gtfs-validation-summary.js';

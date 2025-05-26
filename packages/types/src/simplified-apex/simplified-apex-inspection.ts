@@ -1,17 +1,19 @@
 /* * */
 
-import { ApexTransactionSchema } from '@/apex-common.js';
-import { type UnixTimestamp } from '@/common.js';
+import { type UnixTimestamp } from '@/common/unix-timestamp.js';
+import { SimplifiedApexBaseSchema } from '@/simplified-apex/simplified-apex-base.js';
 import { z } from 'zod';
 
 /* * */
 
-export const ApexInspectionSchema = ApexTransactionSchema.extend({
+export const ApexInspectionSchema = SimplifiedApexBaseSchema.extend({
 	card_serial_number: z.string(),
-	contract_status: z.array(z.object({
-		number: z.number(),
-		status: z.number(),
-	})),
+	contract_status: z.array(
+		z.object({
+			number: z.number(),
+			status: z.number(),
+		}),
+	),
 	product_id: z.string(),
 }).strict();
 
@@ -20,7 +22,7 @@ export const ApexInspectionSchema = ApexTransactionSchema.extend({
  * These inspection transactions can be associated with an Inspection Decision transaction (T16) that contains
  * the final decision of the inspector to generate a fine.
  */
-export interface ApexInspection extends Omit<z.infer<typeof ApexInspectionSchema>, 'created_at' | 'received_at' | 'updated_at'> {
+export interface SimplifiedApexInspection extends Omit<z.infer<typeof ApexInspectionSchema>, 'created_at' | 'received_at' | 'updated_at'> {
 	created_at: UnixTimestamp
 	received_at: UnixTimestamp
 	updated_at: UnixTimestamp

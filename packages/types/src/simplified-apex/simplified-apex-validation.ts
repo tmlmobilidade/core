@@ -1,7 +1,7 @@
 /* * */
 
-import { ApexTransactionSchema } from '@/apex-common.js';
-import { type UnixTimestamp } from '@/common.js';
+import { type UnixTimestamp } from '@/common/unix-timestamp.js';
+import { SimplifiedApexBaseSchema } from '@/simplified-apex/simplified-apex-base.js';
 import { z } from 'zod';
 
 /* * */
@@ -95,7 +95,7 @@ export enum ApexValidationStatus {
 
 /* * */
 
-export const ApexValidationSchema = ApexTransactionSchema.extend({
+export const SimplifiedApexValidationSchema = SimplifiedApexBaseSchema.extend({
 	card_physical_type: z.string(),
 	card_serial_number: z.string(),
 	card_type_id: z.string(),
@@ -115,7 +115,7 @@ export const ApexValidationSchema = ApexTransactionSchema.extend({
  * or not, and with which conditions. A validation also contains information about the card holder's card, the vehicle,
  * the validator machine, the route, and the time and location of the validation.
  */
-export interface ApexValidation extends Omit<z.infer<typeof ApexValidationSchema>, 'created_at' | 'received_at' | 'updated_at'> {
+export interface SimplifiedApexValidation extends Omit<z.infer<typeof SimplifiedApexValidationSchema>, 'created_at' | 'received_at' | 'updated_at'> {
 	created_at: UnixTimestamp
 	received_at: UnixTimestamp
 	updated_at: UnixTimestamp
@@ -124,4 +124,9 @@ export interface ApexValidation extends Omit<z.infer<typeof ApexValidationSchema
 /**
  * Validation statuses that are considered valid for the card holder to travel.
  */
-export const ALLOWED_VALIDATION_STATUSES = [ApexValidationStatus._0_ContractValid, ApexValidationStatus._4_CardInWhiteList, ApexValidationStatus._5_ProfileInWhiteList, ApexValidationStatus._6_Interchange];
+export const ALLOWED_VALIDATION_STATUSES = [
+	ApexValidationStatus._0_ContractValid,
+	ApexValidationStatus._4_CardInWhiteList,
+	ApexValidationStatus._5_ProfileInWhiteList,
+	ApexValidationStatus._6_Interchange,
+];

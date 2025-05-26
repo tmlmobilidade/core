@@ -1,6 +1,10 @@
-import { DocumentSchema } from '@/common.js';
+/* * */
+
+import { DocumentSchema } from '@/common/document.js';
 import { type GeoJSON } from 'geojson';
 import { z } from 'zod';
+
+/* * */
 
 export const ZoneSchema = DocumentSchema.extend({
 	border_color: z.string(),

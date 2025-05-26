@@ -1,6 +1,7 @@
 /* * */
 
-import { DocumentSchema, validateUnixTimestamp } from '@/common.js';
+import { DocumentSchema } from '@/common/document.js';
+import { validateUnixTimestamp } from '@/common/unix-timestamp.js';
 import { z } from 'zod';
 
 /**
@@ -8,7 +9,7 @@ import { z } from 'zod';
  * These properties are common to all APEX transactions and are used to identify
  * the transaction, the device that generated it, and the time it was received.
  */
-export const ApexTransactionSchema = DocumentSchema.extend({
+export const SimplifiedApexBaseSchema = DocumentSchema.extend({
 	agency_id: z.string(),
 	apex_transaction_type: z.number(),
 	apex_version: z.string(),

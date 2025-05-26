@@ -1,12 +1,12 @@
 /* * */
 
-import { ApexTransactionSchema } from '@/apex-common.js';
-import { type UnixTimestamp } from '@/common.js';
+import { type UnixTimestamp } from '@/common/unix-timestamp.js';
+import { SimplifiedApexBaseSchema } from '@/simplified-apex/simplified-apex-base.js';
 import { z } from 'zod';
 
 /* * */
 
-export const ApexOnBoardSaleSchema = ApexTransactionSchema.extend({
+export const SimplifiedApexOnBoardSaleSchema = SimplifiedApexBaseSchema.extend({
 	card_physical_type: z.number(),
 	card_serial_number: z.string(),
 	invoice_number: z.string().optional(),
@@ -31,7 +31,7 @@ export const ApexOnBoardSaleSchema = ApexTransactionSchema.extend({
  * for on-board ticket sales inside vehicles only. Sales of tickets when inside vehicles also generate a validation transaction.
  * Sales can be refunded, and refunds are also APEX transactions of type 3.
  */
-export interface ApexOnBoardSale extends Omit<z.infer<typeof ApexOnBoardSaleSchema>, 'created_at' | 'received_at' | 'updated_at'> {
+export interface SimplifiedApexOnBoardSale extends Omit<z.infer<typeof SimplifiedApexOnBoardSaleSchema>, 'created_at' | 'received_at' | 'updated_at'> {
 	created_at: UnixTimestamp
 	received_at: UnixTimestamp
 	updated_at: UnixTimestamp

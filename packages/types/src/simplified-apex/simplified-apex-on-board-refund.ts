@@ -1,12 +1,12 @@
 /* * */
 
-import { ApexTransactionSchema } from '@/apex-common.js';
-import { type UnixTimestamp } from '@/common.js';
+import { type UnixTimestamp } from '@/common/unix-timestamp.js';
+import { SimplifiedApexBaseSchema } from '@/simplified-apex/simplified-apex-base.js';
 import { z } from 'zod';
 
 /* * */
 
-export const ApexOnBoardRefundSchema = ApexTransactionSchema.extend({
+export const SimplifiedApexOnBoardRefundSchema = SimplifiedApexBaseSchema.extend({
 	card_physical_type: z.number(),
 	card_serial_number: z.string(),
 	invoice_number: z.string().optional(),
@@ -29,7 +29,7 @@ export const ApexOnBoardRefundSchema = ApexTransactionSchema.extend({
  * of an on-board ticket occurs. Even though refunds can be generated for any sale, here they are already filtered
  * for on-board ticket refunds inside vehicles only. Refunds are always associated with an on-board sale transaction.
  */
-export interface ApexOnBoardRefund extends Omit<z.infer<typeof ApexOnBoardRefundSchema>, 'created_at' | 'received_at' | 'updated_at'> {
+export interface SimplifiedApexOnBoardRefund extends Omit<z.infer<typeof SimplifiedApexOnBoardRefundSchema>, 'created_at' | 'received_at' | 'updated_at'> {
 	created_at: UnixTimestamp
 	received_at: UnixTimestamp
 	updated_at: UnixTimestamp

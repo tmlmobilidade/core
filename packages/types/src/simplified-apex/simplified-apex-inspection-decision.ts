@@ -1,14 +1,12 @@
 /* * */
 
-import { ApexTransactionSchema } from '@/apex-common.js';
-import { type UnixTimestamp } from '@/common.js';
+import { type UnixTimestamp } from '@/common/unix-timestamp.js';
+import { SimplifiedApexBaseSchema } from '@/simplified-apex/simplified-apex-base.js';
 import { z } from 'zod';
 
 /* * */
 
-/* * */
-
-export const ApexInspectionDecisionSchema = ApexTransactionSchema.extend({
+export const ApexInspectionDecisionSchema = SimplifiedApexBaseSchema.extend({
 	final_decision: z.number(),
 	inspection_transaction_id: z.string(),
 }).strict();
@@ -19,7 +17,7 @@ export const ApexInspectionDecisionSchema = ApexTransactionSchema.extend({
  * transaction (T15) that contains the details of the inspection.
  * The final decision can be one of the following:
  */
-export interface ApexInspectionDecision extends Omit<z.infer<typeof ApexInspectionDecisionSchema>, 'created_at' | 'received_at' | 'updated_at'> {
+export interface SimplifiedApexInspectionDecision extends Omit<z.infer<typeof ApexInspectionDecisionSchema>, 'created_at' | 'received_at' | 'updated_at'> {
 	created_at: UnixTimestamp
 	received_at: UnixTimestamp
 	updated_at: UnixTimestamp

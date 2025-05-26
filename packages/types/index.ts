@@ -1,19 +1,35 @@
 /* eslint-disable perfectionist/sort-exports */
 
 /* * */
+/* These are the first exports because they are used in files below */
 
-export * from '@/common.js'; // This is the first export because it is used in files below
+export * from '@/common/comment.js';
+export * from '@/common/document.js';
+export * from '@/common/email.js';
+export * from '@/common/mongo-operations.js';
+export * from '@/common/operational-date.js';
+export * from '@/common/unix-timestamp.js';
+
+/* * */
+
+export * from '@/pcgi/pcgi-apex-location.js';
+export * from '@/pcgi/pcgi-apex-sale.js';
+export * from '@/pcgi/pcgi-apex-validation.js';
+export * from '@/pcgi/pcgi-transaction-entity.js';
+
+/* * */
+
+export * from '@/simplified-apex/simplified-apex-inspection-decision.js';
+export * from '@/simplified-apex/simplified-apex-inspection.js';
+export * from '@/simplified-apex/simplified-apex-location.js';
+export * from '@/simplified-apex/simplified-apex-on-board-refund.js';
+export * from '@/simplified-apex/simplified-apex-on-board-sale.js';
+export * from '@/simplified-apex/simplified-apex-validation.js';
 
 /* * */
 
 export * from '@/agency.js';
 export * from '@/alert.js';
-export * from '@/apex-inspection-decision.js';
-export * from '@/apex-inspection.js';
-export * from '@/apex-location.js';
-export * from '@/apex-on-board-refund.js';
-export * from '@/apex-on-board-sale.js';
-export * from '@/apex-validation.js';
 export * from '@/auth.js';
 export * from '@/file.js';
 export * from '@/gtfs-validation-summary.js';

@@ -1,5 +1,9 @@
-import { DocumentSchema } from '@/common.js';
+/* * */
+
+import { DocumentSchema } from '@/common/document.js';
 import { z } from 'zod';
+
+/* * */
 
 export const FileSchema = DocumentSchema.extend({
 	created_by: z.string(),

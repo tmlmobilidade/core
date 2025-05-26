@@ -1,7 +1,10 @@
 /* * */
 
-import { CommentSchema, DocumentSchema, UnixTimestamp, unixTimeStampSchema } from '@/common.js';
+import { DocumentSchema } from '@/common/document.js';
+import { type UnixTimestamp, unixTimeStampSchema } from '@/common/unix-timestamp.js';
 import { z } from 'zod';
+
+import { CommentSchema } from './common/comment.js';
 
 /* * */
 

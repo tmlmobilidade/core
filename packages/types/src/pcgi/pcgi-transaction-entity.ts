@@ -3,7 +3,7 @@
 export interface PCGI_TransactionEntity {
 	_id: string
 	cardSerialNumber: string
-	createdAt: Date
+	createdAt: string
 	csvValue: string
 	decodeValue: string
 	duplicated: boolean
@@ -13,13 +13,13 @@ export interface PCGI_TransactionEntity {
 	isOK: boolean
 	isReprocessed: boolean
 	operatorLongId: string
-	respondedAt: Date
+	respondedAt: string
 	status: boolean
 	transaction: string
-	transactionDate: string
 	transactionId: string
+	transactionstring: string
 	transactionType: number
-	updatedAt: Date
-	validatedAt: Date
+	updatedAt: string
+	validatedAt: string
 	verified: boolean
 }

@@ -10,7 +10,7 @@ export type SeverityLevel = z.infer<typeof SeverityLevelSchema>;
 
 export const GTFSValidatorMessageSchema = z.object({
 	field: z.string(),
-	fileName: z.string(),
+	file_name: z.string(),
 	message: z.string(),
 	rows: z.array(z.number()),
 	severity: SeverityLevelSchema,

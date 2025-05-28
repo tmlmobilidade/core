@@ -29,7 +29,7 @@ export interface PCGI_ApexTransaction_Sale_V2 {
 		macVersion: number
 		raw: string
 		samModel: number
-		samSerialNumber: 2932387837
+		samSerialNumber: number
 		samTypeVersion: number
 		samWorkingMode: number
 		transactionCounter: number

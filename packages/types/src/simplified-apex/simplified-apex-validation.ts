@@ -1,8 +1,6 @@
 /* * */
 
 import { type UnixTimestamp } from '@/common/unix-timestamp.js';
-import { SimplifiedApexBaseSchema } from '@/simplified-apex/simplified-apex-base.js';
-import { z } from 'zod';
 
 /* * */
 
@@ -95,19 +93,6 @@ export enum ApexValidationStatus {
 
 /* * */
 
-export const SimplifiedApexValidationSchema = SimplifiedApexBaseSchema.extend({
-	card_physical_type: z.number(),
-	card_serial_number: z.string(),
-	card_type_id: z.string(),
-	event_type: z.number(),
-	on_board_sale_transaction_id: z.string().optional(),
-	product_id: z.string(),
-	product_type: z.enum(['monthly', 'on-board-sale', 'prepaid']),
-	refund_transaction_id: z.string().optional(),
-	units_qty: z.number().optional(),
-	validation_status: z.nativeEnum(ApexValidationStatus),
-}).strict();
-
 /**
  * APEX Validations are APEX transactions of type 11 that are generated when a card holder touches a validator
  * reader (ex: bus validator, subway gate). These validation transactions represent the card holder's right to travel
@@ -115,10 +100,50 @@ export const SimplifiedApexValidationSchema = SimplifiedApexBaseSchema.extend({
  * or not, and with which conditions. A validation also contains information about the card holder's card, the vehicle,
  * the validator machine, the route, and the time and location of the validation.
  */
-export interface SimplifiedApexValidation extends Omit<z.infer<typeof SimplifiedApexValidationSchema>, 'created_at' | 'received_at' | 'updated_at'> {
-	created_at: UnixTimestamp
-	received_at: UnixTimestamp
-	updated_at: UnixTimestamp
+export interface SimplifiedApexValidation {
+
+	_go_correlation__on_board_refund_id: string
+	_go_correlation__on_board_sale_id: string
+
+	_go_default__created_at: UnixTimestamp
+	_go_default__updated_at: UnixTimestamp
+
+	_go_enriched__is_valid: boolean
+
+	_id: string
+
+	card_info__card_number: string
+	card_info__card_physical_type: number
+	card_info__card_serial_number: string
+	card_info__card_type_id: string
+
+	mac__ase_counter_value: number
+	mac__sam_serial_number: number
+
+	operator_info__operator_long_id: string
+
+	service_info__block_id: string
+	service_info__duty_id: string
+	service_info__journey_id: string
+	service_info__line_long_id: string
+	service_info__on_behalf_of_operator_long_id: string
+	service_info__out_of_bounds_type: number
+	service_info__pattern_long_id: string
+	service_info__stop_long_id: string
+	service_info__validator_id: number
+	service_info__vehicle_id: number
+
+	transaction_info__apex_transaction_type: 11
+	transaction_info__transaction_date: string
+
+	validation_info__event_type: number
+	validation_info__product_long_id: string
+	validation_info__units_remaining: null | number
+	validation_info__validation_status: ApexValidationStatus
+	validation_info__validation_type: number
+
+	version_info__apex_version: string
+
 }
 
 /**

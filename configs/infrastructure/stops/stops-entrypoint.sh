@@ -1,5 +1,10 @@
 #!/bin/bash
 
+echo "+----------------------------------------------+"
+echo "|    Initializing MongoDB Entrypoint Script    |"
+echo "+----------------------------------------------+"
+
+
 mongosh <<EOF
 use admin
 
@@ -35,3 +40,7 @@ db.createUser({
 	roles: [ { role: "readWrite", db: "production" } ]
 })
 EOF
+
+echo "+----------------------------------------------+"
+echo "|      MongoDB replica set initialized         |"
+echo "+----------------------------------------------+"

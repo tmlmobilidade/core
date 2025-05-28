@@ -1,7 +1,7 @@
 /* * */
 
 import { MongoCollectionClass } from '@/mongo-collection.js';
-import { SimplifiedApexLocation } from '@tmlmobilidade/types';
+import { type SimplifiedApexLocation } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
 import { IndexDescription } from 'mongodb';
 

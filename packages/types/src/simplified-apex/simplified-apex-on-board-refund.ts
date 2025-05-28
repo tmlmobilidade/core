@@ -9,8 +9,8 @@ import { type UnixTimestamp } from '@/common/unix-timestamp.js';
  */
 export interface SimplifiedApexOnBoardRefund {
 
-	_go_correlation__on_board_sale_id: string
-	_go_correlation__validation_id: string
+	_go_correlation__on_board_sale_id: null | string
+	_go_correlation__validation_id: null | string
 
 	_go_default__created_at: UnixTimestamp
 	_go_default__updated_at: UnixTimestamp
@@ -26,21 +26,16 @@ export interface SimplifiedApexOnBoardRefund {
 
 	_id: string
 
-	card_info__card_number: string
 	card_info__card_physical_type: number
 	card_info__card_serial_number: string
-	card_info__card_type_id: string
 
 	mac__ase_counter_value: number
 	mac__sam_serial_number: number
 
 	operator_info__operator_long_id: string
 
-	payment_info__currency: number
-	payment_info__invoice_number: string
 	payment_info__payment_method: number
 	payment_info__price: number
-	payment_info__vat_number: number
 
 	sale_load_info__product_long_id: string
 	sale_load_info__product_quantity: number

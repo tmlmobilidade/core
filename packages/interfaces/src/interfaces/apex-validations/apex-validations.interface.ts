@@ -1,7 +1,7 @@
 /* * */
 
 import { MongoCollectionClass } from '@/mongo-collection.js';
-import { SimplifiedApexValidation } from '@tmlmobilidade/types';
+import { type SimplifiedApexValidation } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
 import { IndexDescription } from 'mongodb';
 

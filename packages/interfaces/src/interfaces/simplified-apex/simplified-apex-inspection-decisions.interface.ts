@@ -39,7 +39,7 @@ class SimplifiedApexInspectionDecisionsClass extends MongoCollectionClass<Simpli
 	}
 
 	protected getEnvName(): string {
-		return 'TML_INTERFACE_APEX_SIMPLIFIED_INSPECTION_DECISIONS';
+		return 'TML_INTERFACE_SIMPLIFIED_APEX_INSPECTION_DECISIONS';
 	}
 }
 

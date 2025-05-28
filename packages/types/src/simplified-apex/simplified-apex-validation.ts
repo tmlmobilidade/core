@@ -102,8 +102,8 @@ export enum ApexValidationStatus {
  */
 export interface SimplifiedApexValidation {
 
-	_go_correlation__on_board_refund_id: string
-	_go_correlation__on_board_sale_id: string
+	_go_correlation__on_board_refund_id: null | string
+	_go_correlation__on_board_sale_id: null | string
 
 	_go_default__created_at: UnixTimestamp
 	_go_default__updated_at: UnixTimestamp
@@ -122,16 +122,16 @@ export interface SimplifiedApexValidation {
 
 	operator_info__operator_long_id: string
 
-	service_info__block_id: string
-	service_info__duty_id: string
-	service_info__journey_id: string
-	service_info__line_long_id: string
+	service_info__block_id: null | string
+	service_info__duty_id: null | string
+	service_info__journey_id: null | string
+	service_info__line_long_id: null | string
 	service_info__on_behalf_of_operator_long_id: string
 	service_info__out_of_bounds_type: number
-	service_info__pattern_long_id: string
+	service_info__pattern_long_id: null | string
 	service_info__stop_long_id: string
 	service_info__validator_id: number
-	service_info__vehicle_id: number
+	service_info__vehicle_id: null | number
 
 	transaction_info__apex_transaction_type: 11
 	transaction_info__transaction_date: string

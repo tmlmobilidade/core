@@ -33,14 +33,14 @@
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"dependencies": {
-		"@clack/core": "0.4.2",
-		"@clack/prompts": "0.10.1",
+		"@clack/core": "0.5.0",
+		"@clack/prompts": "0.11.0",
 		"chalk": "5.4.1",
 		"npm-check-updates": "18.0.1"
 	},
 	"devDependencies": {
 		"@tmlmobilidade/tsconfig": "*",
-		"@types/node": "22.15.17",
+		"@types/node": "22.15.23",
 		"resolve-tspaths": "0.8.23",
 		"rimraf": "6.0.1",
 		"tsx": "4.19.4"

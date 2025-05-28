@@ -27,7 +27,7 @@
 	},
 	"dependencies": {
 		"@carrismetropolitana/eslint": "20250418.42.41",
-		"eslint": "9.26.0",
+		"eslint": "9.27.0",
 		"tsx": "4.19.4",
 		"turbo": "2.5.3"
 	},
@@ -37,7 +37,7 @@
 		"cli/*",
 		"configs/*"
 	],
-	"packageManager": "npm@11.3.0",
+	"packageManager": "npm@11.4.1",
 	"peerDependencyRules": {
 		"allowedVersions": {
 			"react": "^18.x || ^19.x",

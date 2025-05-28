@@ -21,7 +21,7 @@ export interface SimplifiedApexLocation {
 
 	operator_info__operator_long_id: string
 
-	transaction_info__apex_transaction_type: 6
+	transaction_info__apex_transaction_type: 19
 	transaction_info__transaction_date: string
 
 	validation_service_info__block_id: string

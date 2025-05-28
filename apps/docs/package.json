@@ -14,7 +14,7 @@
 		"@tmlmobilidade/ui": "*",
 		"fumadocs-core": "15.4.2",
 		"fumadocs-mdx": "11.6.6",
-		"fumadocs-openapi": "9.0.3",
+		"fumadocs-openapi": "9.0.4",
 		"fumadocs-typescript": "4.0.5",
 		"fumadocs-ui": "15.4.2",
 		"next": "15.3.2",
@@ -26,11 +26,11 @@
 	"devDependencies": {
 		"@tmlmobilidade/tsconfig": "*",
 		"@types/mdx": "2.0.13",
-		"@types/node": "22.15.23",
+		"@types/node": "22.15.24",
 		"@types/react": "19.1.6",
 		"@types/react-dom": "19.1.5",
 		"postcss": "8.5.3",
-		"tailwindcss": "4.1.7",
+		"tailwindcss": "4.1.8",
 		"typescript": "5.8.3"
 	}
 }

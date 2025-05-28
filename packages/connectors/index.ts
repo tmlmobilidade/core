@@ -1,5 +1,6 @@
 /* * */
 
+export * from '@/clickhouse.js';
 export * from '@/mongo.js';
 export * from '@/postgres.js';
 export * from '@/rabbitmq.js';

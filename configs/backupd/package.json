@@ -25,7 +25,7 @@
 	"devDependencies": {
 		"@carrismetropolitana/eslint": "20250418.42.41",
 		"@tmlmobilidade/tsconfig": "*",
-		"@types/node": "22.15.23",
+		"@types/node": "22.15.24",
 		"@types/nodemailer": "6.4.17",
 		"typescript": "5.8.3"
 	}

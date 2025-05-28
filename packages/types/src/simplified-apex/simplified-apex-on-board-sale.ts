@@ -11,20 +11,20 @@ import { type UnixTimestamp } from '@/common/unix-timestamp.js';
  */
 export interface SimplifiedApexOnBoardSale {
 
-	_go_correlation__on_board_refund_id: string
-	_go_correlation__validation_id: string
+	_go_correlation__on_board_refund_id: null | string
+	_go_correlation__validation_id: null | string
 
 	_go_default__created_at: UnixTimestamp
 	_go_default__updated_at: UnixTimestamp
 
-	_go_enriched__block_id: string
-	_go_enriched__duty_id: string
+	_go_enriched__block_id: null | string
+	_go_enriched__duty_id: null | string
 	_go_enriched__is_valid: boolean
-	_go_enriched__journey_id: string
-	_go_enriched__line_long_id: string
-	_go_enriched__pattern_long_id: string
-	_go_enriched__stop_long_id: string
-	_go_enriched__vehicle_id: string
+	_go_enriched__journey_id: null | string
+	_go_enriched__line_long_id: null | string
+	_go_enriched__pattern_long_id: null | string
+	_go_enriched__stop_long_id: null | string
+	_go_enriched__vehicle_id: null | string
 
 	_id: string
 
@@ -38,15 +38,14 @@ export interface SimplifiedApexOnBoardSale {
 
 	operator_info__operator_long_id: string
 
-	payment_info__currency: number
-	payment_info__invoice_number: string
+	payment_info__invoice_number: null | string
 	payment_info__payment_method: number
 	payment_info__price: number
-	payment_info__vat_number: number
+	payment_info__vat_number: null | number
 
 	sale_load_info__product_long_id: string
 	sale_load_info__product_quantity: number
-	sale_load_info__units_quantity: number
+	sale_load_info__units_quantity: null | number
 
 	transaction_info__apex_transaction_type: 3
 	transaction_info__transaction_date: string

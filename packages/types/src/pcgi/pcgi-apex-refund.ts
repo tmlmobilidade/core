@@ -1,24 +1,28 @@
 /* * */
 
 /**
- * APEX Sales or Refunds
+ * APEX Refund
  */
-export type PCGI_ApexTransaction_Sale = PCGI_ApexTransaction_Sale_V2;
+export type PCGI_ApexTransaction_Refund = PCGI_ApexTransaction_Refund_V2;
 
 /* * */
 
 /**
- * APEX Sales or Refunds
+ * APEX Refund
  */
-export interface PCGI_ApexTransaction_Sale_V2 {
+export interface PCGI_ApexTransaction_Refund_V2 {
 
 	cardInfo: {
-		cardIssuer: number
 		cardNetworkID: string
-		cardNumber: number
 		cardPhysicalType: number
 		cardSerialNumber: string
-		cardTypeID: string
+	}
+
+	loadCorrInfo: {
+		corrTickLoadDate: string
+		corrTickLoadMachCode: number
+		corrTickLoadNumbDaily: number
+		corrTransactionId: string
 	}
 
 	mac: {
@@ -44,47 +48,23 @@ export interface PCGI_ApexTransaction_Sale_V2 {
 
 	paymentInfo: {
 		currency: number
-		invoiceNumber: string
 		paymentMethod: number
 		price: number
-		usageDays: number
-		usageValue: number
-		vatNumber: number
 	}
 
 	saleLoadInfo: {
 		contractNumber: number
-		greenlistItemID: string
-		greylistItemID: string
 		productLongID: string
 		productQuantity: number
-		profilesUsedCount: number
-		profilesUsedData: {
-			profileLongID: string
-		}[]
 		salesPackageID: string
-		SpatialValidityCount: number
-		spatialValidityDetail: {
-			productMatrixElementID: string
-			spatialValidityLongID: string
-			zonesCount: number
-		}[]
 		tickLoadDate: string
 		tickLoadMachCode: number
 		tickLoadNumbDaily: number
 		unitsQuantity: number
-		voucherNr: string
-	}
-
-	signedData: {
-		contractBinaryRead: string
-		eventBinaryRead: string
-		eventBinaryWritten: string
-		raw: string
 	}
 
 	transactionInfo: {
-		apexTransactionType: 3
+		apexTransactionType: 6
 		apexTransactionVersion: '2.0'
 		transactionDate: string
 		transactionGroupId: string

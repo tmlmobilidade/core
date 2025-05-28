@@ -15,14 +15,14 @@ export interface SimplifiedApexOnBoardRefund {
 	_go_default__created_at: UnixTimestamp
 	_go_default__updated_at: UnixTimestamp
 
-	_go_enriched__block_id: string
-	_go_enriched__duty_id: string
+	_go_enriched__block_id: null | string
+	_go_enriched__duty_id: null | string
 	_go_enriched__is_valid: boolean
-	_go_enriched__journey_id: string
-	_go_enriched__line_long_id: string
-	_go_enriched__pattern_long_id: string
-	_go_enriched__stop_long_id: string
-	_go_enriched__vehicle_id: string
+	_go_enriched__journey_id: null | string
+	_go_enriched__line_long_id: null | string
+	_go_enriched__pattern_long_id: null | string
+	_go_enriched__stop_long_id: null | string
+	_go_enriched__vehicle_id: null | string
 
 	_id: string
 
@@ -44,7 +44,7 @@ export interface SimplifiedApexOnBoardRefund {
 
 	sale_load_info__product_long_id: string
 	sale_load_info__product_quantity: number
-	sale_load_info__units_quantity: number
+	sale_load_info__units_quantity: null | number
 
 	transaction_info__apex_transaction_type: 6
 	transaction_info__transaction_date: string

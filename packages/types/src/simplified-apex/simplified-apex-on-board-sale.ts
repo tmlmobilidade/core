@@ -28,10 +28,8 @@ export interface SimplifiedApexOnBoardSale {
 
 	_id: string
 
-	card_info__card_number: string
 	card_info__card_physical_type: number
 	card_info__card_serial_number: string
-	card_info__card_type_id: string
 
 	mac__ase_counter_value: number
 	mac__sam_serial_number: number

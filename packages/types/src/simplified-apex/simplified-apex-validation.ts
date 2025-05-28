@@ -112,7 +112,7 @@ export interface SimplifiedApexValidation {
 
 	_id: string
 
-	card_info__card_number: string
+	card_info__card_number: number
 	card_info__card_physical_type: number
 	card_info__card_serial_number: string
 	card_info__card_type_id: string

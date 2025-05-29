@@ -21,6 +21,8 @@ export const SimplifiedApexLocationSchema = DocumentSchema.extend({
 	vehicle_id: z.string(),
 }).strict();
 
+export const UpdateSimplifiedApexLocationSchema = SimplifiedApexLocationSchema.partial();
+
 /**
  * APEX Locations are APEX transactions of type 19 that are generated every time the
  * setContext or setLocation functions are called. These functions are used to set
@@ -33,3 +35,5 @@ export interface SimplifiedApexLocation extends Omit<z.infer<typeof SimplifiedAp
 	received_at: UnixTimestamp
 	updated_at: UnixTimestamp
 }
+
+export type UpdateSimplifiedApexLocationDto = Partial<SimplifiedApexLocation>;

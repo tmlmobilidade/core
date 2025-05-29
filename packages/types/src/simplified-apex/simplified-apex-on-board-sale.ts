@@ -31,6 +31,8 @@ export const SimplifiedApexOnBoardSaleSchema = DocumentSchema.extend({
 	vehicle_id: z.string().nullable(),
 }).strict();
 
+export const UpdateSimplifiedApexOnBoardSaleSchema = SimplifiedApexOnBoardSaleSchema.partial();
+
 /**
  * APEX OnBoard Sales are APEX transactions of type 3 that are generated whenever a sale
  * of an on-board ticket occurs. Even though sales can be of anything (tickets, cards, contracts, merchandising items)
@@ -43,3 +45,5 @@ export interface SimplifiedApexOnBoardSale extends Omit<z.infer<typeof Simplifie
 	received_at: UnixTimestamp
 	updated_at: UnixTimestamp
 }
+
+export type UpdateSimplifiedApexOnBoardSaleDto = Partial<SimplifiedApexOnBoardSale>;

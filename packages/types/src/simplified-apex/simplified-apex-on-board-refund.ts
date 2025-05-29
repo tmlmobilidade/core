@@ -31,6 +31,8 @@ export const SimplifiedApexOnBoardRefundSchema = DocumentSchema.extend({
 	vehicle_id: z.string().nullable(),
 }).strict();
 
+export const UpdateSimplifiedApexOnBoardRefundSchema = SimplifiedApexOnBoardRefundSchema.partial();
+
 /**
  * APEX OnBoard Refunds are APEX transactions of type 3 that are generated whenever a sale
  * of an on-board ticket occurs. Even though sales can be of anything (tickets, cards, contracts, merchandising items)
@@ -43,3 +45,5 @@ export interface SimplifiedApexOnBoardRefund extends Omit<z.infer<typeof Simplif
 	received_at: UnixTimestamp
 	updated_at: UnixTimestamp
 }
+
+export type UpdateSimplifiedApexOnBoardRefundDto = Partial<SimplifiedApexOnBoardRefund>;

@@ -116,6 +116,8 @@ export const SimplifiedApexValidationSchema = DocumentSchema.extend({
 	vehicle_id: z.string(),
 }).strict();
 
+export const UpdateSimplifiedApexValidationSchema = SimplifiedApexValidationSchema.partial();
+
 /**
  * APEX Validations are APEX transactions of type 11 that are generated when a card holder touches a validator
  * reader (ex: bus validator, subway gate). These validation transactions represent the card holder's right to travel
@@ -128,6 +130,8 @@ export interface SimplifiedApexValidation extends Omit<z.infer<typeof Simplified
 	received_at: UnixTimestamp
 	updated_at: UnixTimestamp
 }
+
+export type UpdateSimplifiedApexValidationDto = Partial<SimplifiedApexValidation>;
 
 /**
  * Validation statuses that are considered valid for the card holder to travel.

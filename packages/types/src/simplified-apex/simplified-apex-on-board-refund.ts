@@ -1,49 +1,45 @@
 /* * */
 
-import { type UnixTimestamp } from '@/common/unix-timestamp.js';
+import { DocumentSchema } from '@/common/document.js';
+import { type UnixTimestamp, validateUnixTimestamp } from '@/common/unix-timestamp.js';
+import { z } from 'zod';
+
+/* * */
+
+export const SimplifiedApexOnBoardRefundSchema = DocumentSchema.extend({
+	agency_id: z.string(),
+	apex_version: z.string(),
+	block_id: z.string().nullable(),
+	card_physical_type: z.number(),
+	card_serial_number: z.string(),
+	device_id: z.string(),
+	duty_id: z.string().nullable(),
+	is_valid: z.boolean(),
+	line_id: z.string().nullable(),
+	mac_ase_counter_value: z.number(),
+	mac_sam_serial_number: z.number(),
+	on_board_sale_id: z.string().nullable(),
+	pattern_id: z.string().nullable(),
+	payment_method: z.number(),
+	price: z.number(),
+	product_long_id: z.string(),
+	product_quantity: z.number(),
+	received_at: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp'),
+	stop_id: z.string().nullable(),
+	trip_id: z.string().nullable(),
+	validation_id: z.string().nullable(),
+	vehicle_id: z.string().nullable(),
+}).strict();
 
 /**
- * APEX OnBoard Refunds are APEX transactions of type 6 that are generated whenever a refund
- * of an on-board ticket occurs. Even though refunds can be generated for any sale, here they are already filtered
- * for on-board ticket refunds inside vehicles only. Refunds are always associated with an on-board sale transaction.
+ * APEX OnBoard Refunds are APEX transactions of type 3 that are generated whenever a sale
+ * of an on-board ticket occurs. Even though sales can be of anything (tickets, cards, contracts, merchandising items)
+ * and anywhere (inside vehicles, at vending machines, at ticket offices or online), here they are already filtered
+ * for on-board ticket sales inside vehicles only. Refunds of tickets when inside vehicles also generate a validation transaction.
+ * Refunds can be refunded, and refunds are also APEX transactions of type 3.
  */
-export interface SimplifiedApexOnBoardRefund {
-
-	_go_correlation__on_board_sale_id: null | string
-	_go_correlation__validation_id: null | string
-
-	_go_default__created_at: UnixTimestamp
-	_go_default__updated_at: UnixTimestamp
-
-	_go_enriched__block_id: null | string
-	_go_enriched__duty_id: null | string
-	_go_enriched__is_valid: boolean
-	_go_enriched__journey_id: null | string
-	_go_enriched__line_long_id: null | string
-	_go_enriched__pattern_long_id: null | string
-	_go_enriched__stop_long_id: null | string
-	_go_enriched__vehicle_id: null | string
-
-	_id: string
-
-	card_info__card_physical_type: number
-	card_info__card_serial_number: string
-
-	mac__ase_counter_value: number
-	mac__sam_serial_number: number
-
-	operator_info__operator_long_id: string
-
-	payment_info__payment_method: number
-	payment_info__price: number
-
-	sale_load_info__product_long_id: string
-	sale_load_info__product_quantity: number
-	sale_load_info__units_quantity: null | number
-
-	transaction_info__apex_transaction_type: 6
-	transaction_info__transaction_date: string
-
-	version_info__apex_version: string
-
+export interface SimplifiedApexOnBoardRefund extends Omit<z.infer<typeof SimplifiedApexOnBoardRefundSchema>, 'created_at' | 'received_at' | 'updated_at'> {
+	created_at: UnixTimestamp
+	received_at: UnixTimestamp
+	updated_at: UnixTimestamp
 }

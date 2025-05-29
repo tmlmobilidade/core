@@ -1,6 +1,35 @@
 /* * */
 
-import { type UnixTimestamp } from '@/common/unix-timestamp.js';
+import { DocumentSchema } from '@/common/document.js';
+import { type UnixTimestamp, validateUnixTimestamp } from '@/common/unix-timestamp.js';
+import { z } from 'zod';
+
+/* * */
+
+export const SimplifiedApexOnBoardSaleSchema = DocumentSchema.extend({
+	agency_id: z.string(),
+	apex_version: z.string(),
+	block_id: z.string().nullable(),
+	card_physical_type: z.number(),
+	card_serial_number: z.string(),
+	device_id: z.string(),
+	duty_id: z.string().nullable(),
+	is_valid: z.boolean(),
+	line_id: z.string().nullable(),
+	mac_ase_counter_value: z.number(),
+	mac_sam_serial_number: z.number(),
+	on_board_refund_id: z.string().nullable(),
+	pattern_id: z.string().nullable(),
+	payment_method: z.number(),
+	price: z.number(),
+	product_long_id: z.string(),
+	product_quantity: z.number(),
+	received_at: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp'),
+	stop_id: z.string().nullable(),
+	trip_id: z.string().nullable(),
+	validation_id: z.string().nullable(),
+	vehicle_id: z.string().nullable(),
+}).strict();
 
 /**
  * APEX OnBoard Sales are APEX transactions of type 3 that are generated whenever a sale
@@ -9,45 +38,8 @@ import { type UnixTimestamp } from '@/common/unix-timestamp.js';
  * for on-board ticket sales inside vehicles only. Sales of tickets when inside vehicles also generate a validation transaction.
  * Sales can be refunded, and refunds are also APEX transactions of type 3.
  */
-export interface SimplifiedApexOnBoardSale {
-
-	_go_correlation__on_board_refund_id: null | string
-	_go_correlation__validation_id: null | string
-
-	_go_default__created_at: UnixTimestamp
-	_go_default__updated_at: UnixTimestamp
-
-	_go_enriched__block_id: null | string
-	_go_enriched__duty_id: null | string
-	_go_enriched__is_valid: boolean
-	_go_enriched__journey_id: null | string
-	_go_enriched__line_long_id: null | string
-	_go_enriched__pattern_long_id: null | string
-	_go_enriched__stop_long_id: null | string
-	_go_enriched__vehicle_id: null | string
-
-	_id: string
-
-	card_info__card_physical_type: number
-	card_info__card_serial_number: string
-
-	mac__ase_counter_value: number
-	mac__sam_serial_number: number
-
-	operator_info__operator_long_id: string
-
-	payment_info__invoice_number: null | string
-	payment_info__payment_method: number
-	payment_info__price: number
-	payment_info__vat_number: null | number
-
-	sale_load_info__product_long_id: string
-	sale_load_info__product_quantity: number
-	sale_load_info__units_quantity: null | number
-
-	transaction_info__apex_transaction_type: 3
-	transaction_info__transaction_date: string
-
-	version_info__apex_version: string
-
+export interface SimplifiedApexOnBoardSale extends Omit<z.infer<typeof SimplifiedApexOnBoardSaleSchema>, 'created_at' | 'received_at' | 'updated_at'> {
+	created_at: UnixTimestamp
+	received_at: UnixTimestamp
+	updated_at: UnixTimestamp
 }

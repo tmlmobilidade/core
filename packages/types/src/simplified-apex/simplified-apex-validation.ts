@@ -1,6 +1,8 @@
 /* * */
 
-import { type UnixTimestamp } from '@/common/unix-timestamp.js';
+import { DocumentSchema } from '@/common/document.js';
+import { type UnixTimestamp, validateUnixTimestamp } from '@/common/unix-timestamp.js';
+import { z } from 'zod';
 
 /* * */
 
@@ -93,6 +95,27 @@ export enum ApexValidationStatus {
 
 /* * */
 
+export const SimplifiedApexValidationSchema = DocumentSchema.extend({
+	agency_id: z.string(),
+	apex_version: z.string(),
+	card_serial_number: z.string(),
+	device_id: z.string(),
+	is_valid: z.boolean(),
+	line_id: z.string(),
+	mac_ase_counter_value: z.number(),
+	mac_sam_serial_number: z.number(),
+	on_board_refund_id: z.string().nullable(),
+	on_board_sale_id: z.string().nullable(),
+	pattern_id: z.string(),
+	product_id: z.string(),
+	received_at: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp'),
+	stop_id: z.string(),
+	trip_id: z.string(),
+	units_qty: z.number().nullable(),
+	validation_status: z.nativeEnum(ApexValidationStatus),
+	vehicle_id: z.string(),
+}).strict();
+
 /**
  * APEX Validations are APEX transactions of type 11 that are generated when a card holder touches a validator
  * reader (ex: bus validator, subway gate). These validation transactions represent the card holder's right to travel
@@ -100,48 +123,10 @@ export enum ApexValidationStatus {
  * or not, and with which conditions. A validation also contains information about the card holder's card, the vehicle,
  * the validator machine, the route, and the time and location of the validation.
  */
-export interface SimplifiedApexValidation {
-
-	_go_correlation__on_board_refund_id: null | string
-	_go_correlation__on_board_sale_id: null | string
-
-	_go_default__created_at: UnixTimestamp
-	_go_default__updated_at: UnixTimestamp
-
-	_go_enriched__is_valid: boolean
-
-	_id: string
-
-	card_info__card_physical_type: number
-	card_info__card_serial_number: string
-
-	mac__ase_counter_value: number
-	mac__sam_serial_number: number
-
-	operator_info__operator_long_id: string
-
-	service_info__block_id: null | string
-	service_info__duty_id: null | string
-	service_info__journey_id: null | string
-	service_info__line_long_id: null | string
-	service_info__on_behalf_of_operator_long_id: string
-	service_info__out_of_bounds_type: number
-	service_info__pattern_long_id: null | string
-	service_info__stop_long_id: string
-	service_info__validator_id: number
-	service_info__vehicle_id: null | number
-
-	transaction_info__apex_transaction_type: 11
-	transaction_info__transaction_date: string
-
-	validation_info__event_type: number
-	validation_info__product_long_id: string
-	validation_info__units_remaining: null | number
-	validation_info__validation_status: ApexValidationStatus
-	validation_info__validation_type: number
-
-	version_info__apex_version: string
-
+export interface SimplifiedApexValidation extends Omit<z.infer<typeof SimplifiedApexValidationSchema>, 'created_at' | 'received_at' | 'updated_at'> {
+	created_at: UnixTimestamp
+	received_at: UnixTimestamp
+	updated_at: UnixTimestamp
 }
 
 /**

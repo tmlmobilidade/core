@@ -1,6 +1,25 @@
 /* * */
 
-import { type UnixTimestamp } from '@/common/unix-timestamp.js';
+import { DocumentSchema } from '@/common/document.js';
+import { type UnixTimestamp, validateUnixTimestamp } from '@/common/unix-timestamp.js';
+import { z } from 'zod';
+
+/* * */
+
+export const SimplifiedApexLocationSchema = DocumentSchema.extend({
+	agency_id: z.string(),
+	apex_version: z.string(),
+	device_id: z.string(),
+	is_valid: z.boolean(),
+	line_id: z.string(),
+	mac_ase_counter_value: z.number(),
+	mac_sam_serial_number: z.number(),
+	pattern_id: z.string(),
+	received_at: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp'),
+	stop_id: z.string(),
+	trip_id: z.string(),
+	vehicle_id: z.string(),
+}).strict();
 
 /**
  * APEX Locations are APEX transactions of type 19 that are generated every time the
@@ -9,33 +28,8 @@ import { type UnixTimestamp } from '@/common/unix-timestamp.js';
  * of products. In summary, these transactions are generated every time the vehicle has a change
  * in the current stop ID, trip ID, route ID, pattern ID, etc.
  */
-export interface SimplifiedApexLocation {
-
-	_go_default__created_at: UnixTimestamp
-	_go_default__updated_at: UnixTimestamp
-
-	_id: string
-
-	mac__ase_counter_value: number
-	mac__sam_serial_number: number
-
-	operator_info__operator_long_id: string
-
-	transaction_info__apex_transaction_type: 19
-	transaction_info__transaction_date: string
-
-	validation_service_info__block_id: string
-	validation_service_info__duty_id: string
-	validation_service_info__journey_id: string
-	validation_service_info__line_long_id: string
-	validation_service_info__on_behalf_of_operator_long_id: string
-	validation_service_info__operation_plan_id: string
-	validation_service_info__out_of_bounds_type: number
-	validation_service_info__pattern_long_id: string
-	validation_service_info__stop_long_id: string
-	validation_service_info__validator_id: number
-	validation_service_info__vehicle_id: number
-
-	version_info__apex_version: string
-
+export interface SimplifiedApexLocation extends Omit<z.infer<typeof SimplifiedApexLocationSchema>, 'created_at' | 'received_at' | 'updated_at'> {
+	created_at: UnixTimestamp
+	received_at: UnixTimestamp
+	updated_at: UnixTimestamp
 }

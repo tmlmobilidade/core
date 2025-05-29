@@ -1,13 +1,13 @@
 /* * */
 
 import { MongoCollectionClass } from '@/mongo-collection.js';
-import { type SimplifiedApexOnBoardSale } from '@tmlmobilidade/types';
+import { type SimplifiedApexOnBoardSale, type UpdateSimplifiedApexOnBoardSaleDto } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
 import { IndexDescription } from 'mongodb';
 
 /* * */
 
-class SimplifiedApexOnBoardSalesClass extends MongoCollectionClass<SimplifiedApexOnBoardSale, SimplifiedApexOnBoardSale, SimplifiedApexOnBoardSale> {
+class SimplifiedApexOnBoardSalesClass extends MongoCollectionClass<SimplifiedApexOnBoardSale, SimplifiedApexOnBoardSale, UpdateSimplifiedApexOnBoardSaleDto> {
 	private static _instance: SimplifiedApexOnBoardSalesClass;
 
 	private constructor() {

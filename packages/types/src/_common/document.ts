@@ -1,6 +1,6 @@
 /* * */
 
-import { validateUnixTimestamp } from '@/common/unix-timestamp.js';
+import { validateUnixTimestamp } from '@/_common/unix-timestamp.js';
 import { z } from 'zod';
 
 /* * */

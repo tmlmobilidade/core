@@ -1,6 +1,6 @@
 /* * */
 
-import { type UnixTimestamp } from '@/common/unix-timestamp.js';
+import { type UnixTimestamp } from '@/_common/unix-timestamp.js';
 
 /**
  * APEX Inspection are APEX transactions.

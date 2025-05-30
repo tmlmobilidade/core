@@ -10,7 +10,6 @@ export const SimplifiedApexLocationSchema = DocumentSchema.extend({
 	agency_id: z.string(),
 	apex_version: z.string(),
 	device_id: z.string(),
-	is_valid: z.boolean(),
 	line_id: z.string(),
 	mac_ase_counter_value: z.number(),
 	mac_sam_serial_number: z.number(),

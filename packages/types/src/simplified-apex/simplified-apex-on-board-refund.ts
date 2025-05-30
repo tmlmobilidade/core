@@ -14,7 +14,6 @@ export const SimplifiedApexOnBoardRefundSchema = DocumentSchema.extend({
 	card_serial_number: z.string(),
 	device_id: z.string(),
 	duty_id: z.string().nullable(),
-	is_valid: z.boolean(),
 	line_id: z.string().nullable(),
 	mac_ase_counter_value: z.number(),
 	mac_sam_serial_number: z.number(),

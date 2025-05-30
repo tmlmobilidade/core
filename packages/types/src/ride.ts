@@ -60,6 +60,7 @@ export const RideSchema = DocumentSchema.extend({
 	line_id: z.string(),
 	operational_date: z.string().transform(validateOperationalDate).brand('OperationalDate'),
 	passengers_estimated: z.number().nullable(),
+	passengers_observed: z.number().nullable(),
 	pattern_id: z.string(),
 	plan_id: z.string(),
 	route_id: z.string(),

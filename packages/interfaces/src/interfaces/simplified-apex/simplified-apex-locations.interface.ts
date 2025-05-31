@@ -31,6 +31,8 @@ class SimplifiedApexLocationsClass extends MongoCollectionClass<SimplifiedApexLo
 			// eslint-disable-next-line perfectionist/sort-objects
 			{ background: true, key: { trip_id: 1, created_at: 1 } },
 			{ background: true, key: { agency_id: 1, created_at: 1 } },
+			// eslint-disable-next-line perfectionist/sort-objects
+			{ background: true, key: { mac_sam_serial_number: 1, mac_ase_counter_value: 1 } },
 		];
 	}
 

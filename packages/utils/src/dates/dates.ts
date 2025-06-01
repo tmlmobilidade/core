@@ -35,15 +35,17 @@ class Dates {
 	public iso: null | string;
 	public js_date: Date;
 	public operational_date: OperationalDate;
+	public std_window: { end: UnixTimestamp, start: UnixTimestamp };
 	public unix_timestamp: UnixTimestamp;
 
 	//
 	// Constructor
 
-	constructor({ iso, js_date, operational_date, unix_timestamp }: DatesConstructor) {
+	constructor({ iso, js_date, operational_date, std_window, unix_timestamp }: DatesConstructor) {
 		this.iso = iso ?? null;
 		this.js_date = js_date;
 		this.operational_date = operational_date;
+		this.std_window = std_window;
 		this.unix_timestamp = unix_timestamp;
 	}
 

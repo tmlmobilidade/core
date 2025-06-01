@@ -42,7 +42,6 @@ class Dates {
 		this.js_date = js_date;
 		this.operational_date = operational_date;
 		this.unix_timestamp = unix_timestamp;
-		console.log(`Dates object created with ISO: ${this.iso}, Operational Date: ${this.operational_date}, Unix Timestamp: ${this.unix_timestamp}`);
 	}
 
 	//

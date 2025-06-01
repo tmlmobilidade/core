@@ -54,9 +54,10 @@ class Dates {
 	 * @param format - The format string (see Luxon tokens documentation)
 	 * @returns A new Dates object parsed from the string
 	 */
-	static fromFormat(text: string, format: string, timezone?: TimezoneIdentified): Dates {
-		const dateTime = DateTime.fromFormat(text, format);
-		if (timezone) dateTime.setZone(timezone);
+	static fromFormat(text: string, format: string, timezone: TimezoneIdentified = 'Europe/Lisbon'): Dates {
+		const dateTime = DateTime
+			.fromFormat(text, format)
+			.setZone(timezone);
 		return new Dates({
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
@@ -85,9 +86,10 @@ class Dates {
 	 * @param date - The JavaScript Date object to convert
 	 * @returns A new Dates object created from the Date
 	 */
-	static fromJSDate(date: Date, timezone?: TimezoneIdentified): Dates {
-		const dateTime = DateTime.fromJSDate(date);
-		if (timezone) dateTime.setZone(timezone);
+	static fromJSDate(date: Date, timezone: TimezoneIdentified = 'Europe/Lisbon'): Dates {
+		const dateTime = DateTime
+			.fromJSDate(date)
+			.setZone(timezone);
 		return new Dates({
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
@@ -101,9 +103,10 @@ class Dates {
 	 * @param millis - The number of milliseconds since Unix epoch
 	 * @returns A new Dates object created from the milliseconds timestamp
 	 */
-	static fromMillis(millis: number, timezone?: TimezoneIdentified): Dates {
-		const dateTime = DateTime.fromMillis(millis);
-		if (timezone) dateTime.setZone(timezone);
+	static fromMillis(millis: number, timezone: TimezoneIdentified = 'Europe/Lisbon'): Dates {
+		const dateTime = DateTime
+			.fromMillis(millis)
+			.setZone(timezone);
 		return new Dates({
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
@@ -117,9 +120,10 @@ class Dates {
 	 * @param date - The operational date in 'yyyyMMdd' format
 	 * @returns A new Dates object created from the operational date
 	 */
-	static fromOperationalDate(date: OperationalDate | string, timezone?: TimezoneIdentified): Dates {
-		const dateTime = DateTime.fromFormat(date, OPERATIONAL_DATE_FORMAT);
-		if (timezone) dateTime.setZone(timezone);
+	static fromOperationalDate(date: OperationalDate | string, timezone: TimezoneIdentified = 'Europe/Lisbon'): Dates {
+		const dateTime = DateTime
+			.fromFormat(date, OPERATIONAL_DATE_FORMAT)
+			.setZone(timezone);
 		return new Dates({
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
@@ -133,9 +137,10 @@ class Dates {
 	 * @param seconds - The number of seconds since Unix epoch
 	 * @returns A new Dates object created from the seconds timestamp
 	 */
-	static fromSeconds(seconds: number, timezone?: TimezoneIdentified): Dates {
-		const dateTime = DateTime.fromSeconds(seconds);
-		if (timezone) dateTime.setZone(timezone);
+	static fromSeconds(seconds: number, timezone: TimezoneIdentified = 'Europe/Lisbon'): Dates {
+		const dateTime = DateTime
+			.fromSeconds(seconds)
+			.setZone(timezone);
 		return new Dates({
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
@@ -216,9 +221,7 @@ class Dates {
 	 */
 	minus(duration: DurationObjectUnits): Dates {
 		if (!this.iso) throw new Error('ISO date is not set.');
-
 		const dateTime = DateTime.fromISO(this.iso).minus(duration);
-
 		return new Dates({
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
@@ -268,7 +271,6 @@ class Dates {
 	setZone(timezone: TimezoneIdentified): Dates {
 		if (!this.iso) throw new Error('ISO date is not set.');
 		const dateTime = DateTime.fromISO(this.iso).setZone(timezone);
-		this.timezone = timezone;
 		return new Dates({
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),

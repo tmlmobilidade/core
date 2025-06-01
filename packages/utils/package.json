@@ -45,7 +45,7 @@
 		"luxon": "3.6.1",
 		"mergekit": "3.0.6",
 		"uuid": "11.1.0",
-		"zod": "3.25.45"
+		"zod": "3.25.46"
 	},
 	"devDependencies": {
 		"@carrismetropolitana/eslint": "20250418.42.41",

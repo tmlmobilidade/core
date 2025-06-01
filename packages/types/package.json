@@ -40,7 +40,7 @@
 		"geojson": "0.5.0",
 		"luxon": "3.6.1",
 		"mongodb": "6.16.0",
-		"zod": "3.25.45"
+		"zod": "3.25.46"
 	},
 	"devDependencies": {
 		"@carrismetropolitana/eslint": "20250418.42.41",

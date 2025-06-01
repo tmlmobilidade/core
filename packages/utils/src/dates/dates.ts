@@ -11,6 +11,7 @@ interface DatesConstructor {
 	iso: null | string
 	js_date: Date
 	operational_date: OperationalDate
+	std_window: { end: UnixTimestamp, start: UnixTimestamp }
 	unix_timestamp: UnixTimestamp
 }
 
@@ -21,6 +22,8 @@ class Dates {
 
 	//
 	// Static properties
+
+	static readonly STANDARD_WINDOW_HOURS = 10;
 
 	static get FORMATS() { return Formats; }
 	static get TIMEZONE_LIST() { return timezoneList; }
@@ -63,6 +66,7 @@ class Dates {
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
 			operational_date: this.prototype.getOperationalDate(dateTime.toISO()),
+			std_window: this.prototype.getStandardWindowInterval(dateTime.toISO()),
 			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
 		});
 	}
@@ -79,6 +83,7 @@ class Dates {
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
 			operational_date: this.prototype.getOperationalDate(dateTime.toISO()),
+			std_window: this.prototype.getStandardWindowInterval(dateTime.toISO()),
 			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
 		});
 	}
@@ -96,6 +101,7 @@ class Dates {
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
 			operational_date: this.prototype.getOperationalDate(dateTime.toISO()),
+			std_window: this.prototype.getStandardWindowInterval(dateTime.toISO()),
 			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
 		});
 	}
@@ -114,6 +120,7 @@ class Dates {
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
 			operational_date: this.prototype.getOperationalDate(dateTime.toISO()),
+			std_window: this.prototype.getStandardWindowInterval(dateTime.toISO()),
 			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
 		});
 	}
@@ -131,6 +138,7 @@ class Dates {
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
 			operational_date: this.prototype.getOperationalDate(dateTime.toISO()),
+			std_window: this.prototype.getStandardWindowInterval(dateTime.toISO()),
 			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
 		});
 	}
@@ -148,6 +156,7 @@ class Dates {
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
 			operational_date: this.prototype.getOperationalDate(dateTime.toISO()),
+			std_window: this.prototype.getStandardWindowInterval(dateTime.toISO()),
 			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
 		});
 	}
@@ -165,6 +174,7 @@ class Dates {
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
 			operational_date: this.prototype.getOperationalDate(dateTime.toISO()),
+			std_window: this.prototype.getStandardWindowInterval(dateTime.toISO()),
 			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
 		});
 	}
@@ -183,6 +193,7 @@ class Dates {
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
 			operational_date: this.getOperationalDate(dateTime.toISO()),
+			std_window: this.getStandardWindowInterval(dateTime.toISO()),
 			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
 		});
 	}
@@ -201,6 +212,7 @@ class Dates {
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
 			operational_date: this.getOperationalDate(dateTime.toISO()),
+			std_window: this.getStandardWindowInterval(dateTime.toISO()),
 			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
 		});
 	}
@@ -219,6 +231,7 @@ class Dates {
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
 			operational_date: this.getOperationalDate(dateTime.toISO()),
+			std_window: this.getStandardWindowInterval(dateTime.toISO()),
 			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
 		});
 	}
@@ -240,6 +253,7 @@ class Dates {
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
 			operational_date: this.getOperationalDate(dateTime.toISO()),
+			std_window: this.getStandardWindowInterval(dateTime.toISO()),
 			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
 		});
 	}
@@ -312,7 +326,6 @@ class Dates {
 
 	/**
 	 * Returns the operational date based on the provided timestamp and format.
-	 *
 	 * @param timestamp - The timestamp to be parsed.
 	 * @returns The operational date in the yyyyLLdd format.
 	 */
@@ -347,6 +360,24 @@ class Dates {
 
 		//
 	}
+
+	/**
+	 * This function returns the start and end of the standard window interval for a given timestamp.
+	 * The standard window interval is the period in which is possible to receive data for a given ride.
+	 * Currently, the standard window starts 10 hours before and ends 10 hours after the scheduled ride start.
+	 * @param isoDate The ISO date string to calculate the standard window interval.
+	 * @returns An object containing the start and end of the standard window interval.
+	 */
+	private getStandardWindowInterval(isoDate: null | string): { end: UnixTimestamp, start: UnixTimestamp } {
+		if (!isoDate) throw new Error('ISO date is not set.');
+		const dateTime = DateTime.fromISO(isoDate, { setZone: true });
+		return {
+			end: dateTime.plus({ hours: Dates.STANDARD_WINDOW_HOURS }).toMillis() as UnixTimestamp,
+			start: dateTime.minus({ hours: Dates.STANDARD_WINDOW_HOURS }).toMillis() as UnixTimestamp,
+		};
+	}
+
+	//
 }
 
 /* * */

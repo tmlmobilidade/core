@@ -2,7 +2,7 @@
 
 import { type DatesFormat, Formats, OPERATIONAL_DATE_FORMAT } from '@/dates/format.js';
 import { type TimezoneIdentified, timezoneList, timezoneListSchema } from '@/dates/types.js';
-import { OperationalDate, UnixTimestamp } from '@tmlmobilidade/types';
+import { type OperationalDate, type UnixTimestamp } from '@tmlmobilidade/types';
 import { type DateObjectUnits, DateTime, type DurationObjectUnits } from 'luxon';
 
 /* * */
@@ -212,9 +212,7 @@ class Dates {
 	 * @returns A new Dates object with the current date and time minus a duration
 	 */
 	minus(duration: DurationObjectUnits): Dates {
-		if (!this.iso) {
-			throw new Error('ISO date is not set');
-		}
+		if (!this.iso) throw new Error('ISO date is not set');
 
 		const dateTime = DateTime.fromISO(this.iso).minus(duration);
 
@@ -232,12 +230,8 @@ class Dates {
 	 * @returns A new Dates object with the current date and time plus a duration
 	 */
 	plus(duration: DurationObjectUnits): Dates {
-		if (!this.iso) {
-			throw new Error('ISO date is not set');
-		}
-
+		if (!this.iso) throw new Error('ISO date is not set');
 		const dateTime = DateTime.fromISO(this.iso).plus(duration);
-
 		return new Dates({
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
@@ -252,12 +246,8 @@ class Dates {
      * @returns The Dates object
      */
 	set(dateOrTime: DateObjectUnits): Dates {
-		if (!this.iso) {
-			throw new Error('ISO date is not set');
-		}
-
+		if (!this.iso) throw new Error('ISO date is not set');
 		const dateTime = DateTime.fromISO(this.iso).set(dateOrTime);
-
 		return new Dates({
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
@@ -272,11 +262,11 @@ class Dates {
      * @returns The Dates object
      */
 	setZone(timezone: TimezoneIdentified): Dates {
+		if (!this.iso) throw new Error('ISO date is not set');
+		const dateTime = DateTime.fromISO(this.iso).setZone(timezone);
 		this.timezone = timezone;
-		const dateTime = DateTime.fromMillis(this.unix_timestamp).setZone(timezone);
-
 		return new Dates({
-			iso: DateTime.fromMillis(this.unix_timestamp).setZone(timezone).toISO(),
+			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
 			operational_date: this.getOperationalDate(dateTime.toMillis() as UnixTimestamp),
 			timezone,
@@ -290,16 +280,9 @@ class Dates {
 	 * @returns The date as a string in the specified format
 	 */
 	toLocaleString(format: DatesFormat, locale?: string): string {
-		if (!this.iso) {
-			throw new Error('ISO date is not set');
-		}
-
-		const dateTime = DateTime.fromISO(this.iso).setZone(this.timezone);
-
-		if (locale) {
-			dateTime.setLocale(locale);
-		}
-
+		if (!this.iso) throw new Error('ISO date is not set');
+		const dateTime = DateTime.fromISO(this.iso);
+		if (locale) dateTime.setLocale(locale);
 		return dateTime.toLocaleString(format);
 	}
 
@@ -342,7 +325,6 @@ class Dates {
 	}
 }
 
-export { Dates, DatesFormat, TimezoneIdentified };
+/* * */
 
-//
-//
+export { Dates, DatesFormat, TimezoneIdentified };

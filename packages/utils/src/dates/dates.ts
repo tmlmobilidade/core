@@ -48,10 +48,12 @@ class Dates {
 	// Static methods
 
 	/**
-	 * Creates a Dates object from a string using a specified format
-	 * @param text The date/time string to parse
-	 * @param format The format string (see Luxon tokens documentation)
-	 * @returns A new Dates object parsed from the string
+	 * Creates a Dates object from a date/time string in a specific format.
+	 * @param text The date/time string to parse.
+	 * @param format The format string to use for parsing the date/time.
+	 *   See Luxon documentation for format tokens: https://moment.github.io/luxon/#/formatting?id=table-of-tokens
+	 * @param timezone The timezone to set for the Dates object.
+	 * @returns A new Dates object parsed from the string.
 	 */
 	static fromFormat(text: string, format: string, timezone: 'local' | 'utc' | TimezoneIdentified): Dates {
 		const dateTime = DateTime
@@ -66,9 +68,10 @@ class Dates {
 	}
 
 	/**
-	 * Creates a Dates object from a string in the ISO 8601 format
-	 * @param isoText The date/time string to parse
-	 * @returns A new Dates object parsed from the string
+	 * Creates a Dates object from an ISO 8601 date/time string.
+	 * This method assumes the string has a timezone offset.
+	 * @param isoText The ISO 8601 date/time string to parse.
+	 * @returns A new Dates object created from the ISO string.
 	 */
 	static fromISO(isoText: string): Dates {
 		const dateTime = DateTime.fromISO(isoText, { setZone: true });
@@ -81,12 +84,14 @@ class Dates {
 	}
 
 	/**
-	 * Creates a Dates object from a JavaScript Date object
-	 * @param date The JavaScript Date object to convert
-	 * @returns A new Dates object created from the Date
+	 * Creates a Dates object from a JavaScript Date object.
+	 * @param date The JavaScript Date object to convert. It is assumed that the date is in UTC.
+	 * @returns A new Dates object created from the JavaScript Date.
 	 */
 	static fromJSDate(date: Date): Dates {
-		const dateTime = DateTime.fromJSDate(date);
+		const dateTime = DateTime
+			.fromJSDate(date)
+			.setZone('utc', { keepLocalTime: false });
 		return new Dates({
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
@@ -96,9 +101,10 @@ class Dates {
 	}
 
 	/**
-	 * Creates a Dates object from an operational date string.
-	 * @param date The operational date in 'yyyyMMdd' format
-	 * @returns A new Dates object created from the operational date
+	 * Creates a Dates object from an operational date string in 'yyyyMMdd' format.
+	 * @param date The operational date string in 'yyyyMMdd' format or an OperationalDate object.
+	 * @param timezone The timezone to set for the Dates object.
+	 * @returns A new Dates object created from the operational date.
 	 */
 	static fromOperationalDate(date: OperationalDate | string, timezone: 'local' | 'utc' | TimezoneIdentified): Dates {
 		const dateTime = DateTime
@@ -118,7 +124,9 @@ class Dates {
 	 * @returns A new Dates object created from the seconds timestamp
 	 */
 	static fromSeconds(seconds: number): Dates {
-		const dateTime = DateTime.fromSeconds(seconds);
+		const dateTime = DateTime
+			.fromSeconds(seconds)
+			.setZone('utc', { keepLocalTime: false });
 		return new Dates({
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
@@ -128,14 +136,14 @@ class Dates {
 	}
 
 	/**
-	 * Creates a Dates object from Unix epoch milliseconds
-	 * @param millis The number of milliseconds since Unix epoch
-	 * @returns A new Dates object created from the milliseconds timestamp
+	 * Creates a Dates object from Unix epoch in milliseconds.
+	 * @param millis The number of milliseconds since Unix epoch. Unix timestamp is always in UTC.
+	 * @returns A new Dates object created from the milliseconds timestamp.
 	 */
 	static fromUnixTimestamp(millis: number | UnixTimestamp): Dates {
 		const dateTime = DateTime
 			.fromMillis(millis)
-			.setZone('utc');
+			.setZone('utc', { keepLocalTime: false });
 		return new Dates({
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
@@ -145,13 +153,14 @@ class Dates {
 	}
 
 	/**
-	 * Returns a new Dates object with the current date and time
-	 * @returns {Dates} A new Dates object with the current date and time
+	 * Creates a Dates object with the current date and time.
+	 * @param timezone The timezone to set for the Dates object.
+	 * @returns A new Dates object with the current date and time in the specified timezone.
 	 */
 	static now(timezone: 'local' | 'utc' | TimezoneIdentified): Dates {
 		const dateTime = DateTime
 			.now()
-			.setZone(timezone, { keepLocalTime: true });
+			.setZone(timezone, { keepLocalTime: false });
 		return new Dates({
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),

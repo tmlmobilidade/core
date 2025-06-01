@@ -4,7 +4,7 @@ import { Dates } from './../../dist/src/dates/dates.js';
 // 	.fromUnixTimestamp(1754038800000);
 
 const result1 = Dates
-	.fromOperationalDate('20250715', 'Europe/Lisbon')
+	.now('Asia/Bangkok')
 	.set({ hour: 12 });
 
 const result2 = Dates

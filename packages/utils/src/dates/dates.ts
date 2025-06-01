@@ -11,7 +11,6 @@ interface DatesConstructor {
 	iso: null | string
 	js_date: Date
 	operational_date: OperationalDate
-	timezone?: TimezoneIdentified
 	unix_timestamp: UnixTimestamp
 }
 
@@ -39,8 +38,7 @@ class Dates {
 	//
 	// Constructor
 
-	constructor({ iso, js_date, operational_date, timezone = 'Europe/Lisbon', unix_timestamp }: DatesConstructor) {
-		this.timezone = timezone;
+	constructor({ iso, js_date, operational_date, unix_timestamp }: DatesConstructor) {
 		this.operational_date = operational_date;
 		this.unix_timestamp = unix_timestamp;
 		this.iso = iso ?? null;
@@ -56,12 +54,13 @@ class Dates {
 	 * @param format - The format string (see Luxon tokens documentation)
 	 * @returns A new Dates object parsed from the string
 	 */
-	static fromFormat(text: string, format: string): Dates {
+	static fromFormat(text: string, format: string, timezone?: TimezoneIdentified): Dates {
 		const dateTime = DateTime.fromFormat(text, format);
+		if (timezone) dateTime.setZone(timezone);
 		return new Dates({
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
-			operational_date: this.prototype.getOperationalDate(dateTime.toMillis() as UnixTimestamp),
+			operational_date: this.prototype.getOperationalDate(dateTime.toISO()),
 			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
 		});
 	}
@@ -76,7 +75,7 @@ class Dates {
 		return new Dates({
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
-			operational_date: this.prototype.getOperationalDate(dateTime.toMillis() as UnixTimestamp),
+			operational_date: this.prototype.getOperationalDate(dateTime.toISO()),
 			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
 		});
 	}
@@ -86,12 +85,13 @@ class Dates {
 	 * @param date - The JavaScript Date object to convert
 	 * @returns A new Dates object created from the Date
 	 */
-	static fromJSDate(date: Date): Dates {
+	static fromJSDate(date: Date, timezone?: TimezoneIdentified): Dates {
 		const dateTime = DateTime.fromJSDate(date);
+		if (timezone) dateTime.setZone(timezone);
 		return new Dates({
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
-			operational_date: this.prototype.getOperationalDate(dateTime.toMillis() as UnixTimestamp),
+			operational_date: this.prototype.getOperationalDate(dateTime.toISO()),
 			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
 		});
 	}
@@ -101,12 +101,13 @@ class Dates {
 	 * @param millis - The number of milliseconds since Unix epoch
 	 * @returns A new Dates object created from the milliseconds timestamp
 	 */
-	static fromMillis(millis: number): Dates {
+	static fromMillis(millis: number, timezone?: TimezoneIdentified): Dates {
 		const dateTime = DateTime.fromMillis(millis);
+		if (timezone) dateTime.setZone(timezone);
 		return new Dates({
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
-			operational_date: this.prototype.getOperationalDate(dateTime.toMillis() as UnixTimestamp),
+			operational_date: this.prototype.getOperationalDate(dateTime.toISO()),
 			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
 		});
 	}
@@ -116,8 +117,9 @@ class Dates {
 	 * @param date - The operational date in 'yyyyMMdd' format
 	 * @returns A new Dates object created from the operational date
 	 */
-	static fromOperationalDate(date: OperationalDate | string): Dates {
+	static fromOperationalDate(date: OperationalDate | string, timezone?: TimezoneIdentified): Dates {
 		const dateTime = DateTime.fromFormat(date, OPERATIONAL_DATE_FORMAT);
+		if (timezone) dateTime.setZone(timezone);
 		return new Dates({
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
@@ -131,12 +133,13 @@ class Dates {
 	 * @param seconds - The number of seconds since Unix epoch
 	 * @returns A new Dates object created from the seconds timestamp
 	 */
-	static fromSeconds(seconds: number): Dates {
+	static fromSeconds(seconds: number, timezone?: TimezoneIdentified): Dates {
 		const dateTime = DateTime.fromSeconds(seconds);
+		if (timezone) dateTime.setZone(timezone);
 		return new Dates({
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
-			operational_date: this.prototype.getOperationalDate(dateTime.toMillis() as UnixTimestamp),
+			operational_date: this.prototype.getOperationalDate(dateTime.toISO()),
 			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
 		});
 	}
@@ -146,24 +149,24 @@ class Dates {
 	 * @returns {Dates} A new Dates object with the current date and time
 	 */
 	static now(): Dates {
-		const unix_timestamp = DateTime.now().toMillis() as UnixTimestamp;
+		const dateTime = DateTime.now();
 		return new Dates({
-			iso: DateTime.now().toISO(),
-			js_date: DateTime.now().toJSDate(),
-			operational_date: this.prototype.getOperationalDate(unix_timestamp),
-			unix_timestamp,
+			iso: dateTime.toISO(),
+			js_date: dateTime.toJSDate(),
+			operational_date: this.prototype.getOperationalDate(dateTime.toISO()),
+			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
 		});
 	}
 
 	/**
 	 * Returns the time remaining until a given unix_timestamp (in ms) from now,
 	 * as an object with minutes, hours, and days (all as floats, not rounded).
-	 * @param unix_timestamp - The target timestamp in milliseconds
+	 * @param unixTimestamp - The target timestamp in milliseconds
 	 * @returns { minutes: number, hours: number, days: number }
 	 */
-	static timeUntil(unix_timestamp: UnixTimestamp): { days: number, hours: number, minutes: number } {
+	static timeUntil(unixTimestamp: UnixTimestamp): { days: number, hours: number, minutes: number } {
 		const now = Date.now();
-		const diffMs = unix_timestamp - now;
+		const diffMs = unixTimestamp - now;
 
 		const minutes = diffMs / (1000 * 60);
 		const hours = diffMs / (1000 * 60 * 60);
@@ -174,13 +177,13 @@ class Dates {
 
 	/**
 	 * Returns a human-readable, localized string for the time remaining until a given unix_timestamp (in ms) from now.
-	 * @param unix_timestamp - The target timestamp in milliseconds
+	 * @param unixTimestamp - The target timestamp in milliseconds
 	 * @param locale - Optional locale string (e.g., 'en', 'pt')
 	 * @returns A localized string like "2 days, 3 hours, 15 minutes"
 	 */
-	static timeUntilLocaleString(unix_timestamp: UnixTimestamp, locale: 'en' | 'pt' = 'pt'): string {
+	static timeUntilLocaleString(unixTimestamp: UnixTimestamp, locale: 'en' | 'pt' = 'pt'): string {
 		const now = Date.now();
-		const diffMs = unix_timestamp - now;
+		const diffMs = unixTimestamp - now;
 
 		const parts: string[] = [];
 
@@ -212,14 +215,14 @@ class Dates {
 	 * @returns A new Dates object with the current date and time minus a duration
 	 */
 	minus(duration: DurationObjectUnits): Dates {
-		if (!this.iso) throw new Error('ISO date is not set');
+		if (!this.iso) throw new Error('ISO date is not set.');
 
 		const dateTime = DateTime.fromISO(this.iso).minus(duration);
 
 		return new Dates({
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
-			operational_date: this.getOperationalDate(dateTime.toMillis() as UnixTimestamp),
+			operational_date: this.getOperationalDate(dateTime.toISO()),
 			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
 		});
 	}
@@ -230,12 +233,12 @@ class Dates {
 	 * @returns A new Dates object with the current date and time plus a duration
 	 */
 	plus(duration: DurationObjectUnits): Dates {
-		if (!this.iso) throw new Error('ISO date is not set');
+		if (!this.iso) throw new Error('ISO date is not set.');
 		const dateTime = DateTime.fromISO(this.iso).plus(duration);
 		return new Dates({
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
-			operational_date: this.getOperationalDate(dateTime.toMillis() as UnixTimestamp),
+			operational_date: this.getOperationalDate(dateTime.toISO()),
 			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
 		});
 	}
@@ -245,13 +248,14 @@ class Dates {
      * @param timezone - The timezone to set in the format of an IANA timezone
      * @returns The Dates object
      */
-	set(dateOrTime: DateObjectUnits): Dates {
-		if (!this.iso) throw new Error('ISO date is not set');
+	set(dateOrTime: DateObjectUnits, timezone?: TimezoneIdentified): Dates {
+		if (!this.iso) throw new Error('ISO date is not set.');
 		const dateTime = DateTime.fromISO(this.iso).set(dateOrTime);
+		if (timezone) dateTime.setZone(timezone);
 		return new Dates({
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
-			operational_date: this.getOperationalDate(dateTime.toMillis() as UnixTimestamp),
+			operational_date: this.getOperationalDate(dateTime.toISO()),
 			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
 		});
 	}
@@ -262,14 +266,13 @@ class Dates {
      * @returns The Dates object
      */
 	setZone(timezone: TimezoneIdentified): Dates {
-		if (!this.iso) throw new Error('ISO date is not set');
+		if (!this.iso) throw new Error('ISO date is not set.');
 		const dateTime = DateTime.fromISO(this.iso).setZone(timezone);
 		this.timezone = timezone;
 		return new Dates({
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
-			operational_date: this.getOperationalDate(dateTime.toMillis() as UnixTimestamp),
-			timezone,
+			operational_date: this.getOperationalDate(dateTime.toISO()),
 			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
 		});
 	}
@@ -280,7 +283,7 @@ class Dates {
 	 * @returns The date as a string in the specified format
 	 */
 	toLocaleString(format: DatesFormat, locale?: string): string {
-		if (!this.iso) throw new Error('ISO date is not set');
+		if (!this.iso) throw new Error('ISO date is not set.');
 		const dateTime = DateTime.fromISO(this.iso);
 		if (locale) dateTime.setLocale(locale);
 		return dateTime.toLocaleString(format);
@@ -295,10 +298,13 @@ class Dates {
 	 * @param timestamp - The timestamp to be parsed.
 	 * @returns The operational date in the yyyyLLdd format.
 	 */
-	private getOperationalDate(timestamp: UnixTimestamp): OperationalDate {
+	private getOperationalDate(isoDate: null | string): OperationalDate {
+		if (!isoDate) throw new Error('ISO date is not set.');
+
 		//
 		// Get the date object
-		const dateObject = DateTime.fromMillis(timestamp).setZone(this.timezone);
+
+		const dateObject = DateTime.fromISO(isoDate);
 
 		//
 		// Check if the time is between 00:00 and 03:59.
@@ -309,11 +315,11 @@ class Dates {
 		if (dateObject.hour < 4) {
 			// If true, return the previous day in the yyyyLLdd format
 			const previousDay = dateObject.minus({ days: 1 });
-			operational_date = previousDay.toFormat('yyyyLLdd');
+			operational_date = previousDay.toFormat(OPERATIONAL_DATE_FORMAT);
 		}
 		else {
 			// Else, return the current day in the yyyyLLdd format
-			operational_date = dateObject.toFormat('yyyyLLdd');
+			operational_date = dateObject.toFormat(OPERATIONAL_DATE_FORMAT);
 		}
 
 		//

@@ -3,7 +3,7 @@
 import { type DatesFormat, Formats, OPERATIONAL_DATE_FORMAT } from '@/dates/format.js';
 import { type TimezoneIdentified, timezoneList, timezoneListSchema } from '@/dates/types.js';
 import { type OperationalDate, type UnixTimestamp } from '@tmlmobilidade/types';
-import { type DateObjectUnits, DateTime, type DurationObjectUnits } from 'luxon';
+import { type DateObjectUnits, DateTime, type DateTimeUnit, type DurationObjectUnits } from 'luxon';
 
 /* * */
 
@@ -182,6 +182,25 @@ class Dates {
 	}
 
 	/**
+	 * Returns a new Dates object with the end of the specified unit.
+	 * @param unit The unit to set the end of, e.g., 'day', 'month', 'year', etc.
+	 * @returns A new Dates object with the end of the specified unit.
+	 */
+	endOf(unit: DateTimeUnit): Dates {
+		if (!this.iso) throw new Error('ISO date is not set.');
+		const dateTime = DateTime
+			.fromISO(this.iso, { setZone: true })
+			.endOf(unit);
+		return new Dates({
+			iso: dateTime.toISO(),
+			js_date: dateTime.toJSDate(),
+			operational_date: this.getOperationalDate(dateTime.toISO()),
+			std_window: this.getStandardWindowInterval(dateTime.toISO()),
+			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
+		});
+	}
+
+	/**
 	 * Returns a new Dates object with the current date and time minus a duration.
 	 * @param duration The duration to subtract
 	 * @returns A new Dates object with the current date and time minus a duration
@@ -251,6 +270,25 @@ class Dates {
 		const dateTime = DateTime
 			.fromISO(this.iso, { setZone: true })
 			.setZone(timezone, { keepLocalTime: method === 'rebase_utc' });
+		return new Dates({
+			iso: dateTime.toISO(),
+			js_date: dateTime.toJSDate(),
+			operational_date: this.getOperationalDate(dateTime.toISO()),
+			std_window: this.getStandardWindowInterval(dateTime.toISO()),
+			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
+		});
+	}
+
+	/**
+	 * Returns a new Dates object with the start of the specified unit.
+	 * @param unit The unit to set the start of, e.g., 'day', 'month', 'year', etc.
+	 * @returns A new Dates object with the start of the specified unit.
+	 */
+	startOf(unit: DateTimeUnit): Dates {
+		if (!this.iso) throw new Error('ISO date is not set.');
+		const dateTime = DateTime
+			.fromISO(this.iso, { setZone: true })
+			.startOf(unit);
 		return new Dates({
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),

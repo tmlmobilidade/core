@@ -50,8 +50,8 @@ class Dates {
 
 	/**
 	 * Creates a Dates object from a string using a specified format
-	 * @param text - The date/time string to parse
-	 * @param format - The format string (see Luxon tokens documentation)
+	 * @param text The date/time string to parse
+	 * @param format The format string (see Luxon tokens documentation)
 	 * @returns A new Dates object parsed from the string
 	 */
 	static fromFormat(text: string, format: string, timezone: TimezoneIdentified = 'Europe/Lisbon'): Dates {
@@ -68,7 +68,7 @@ class Dates {
 
 	/**
 	 * Creates a Dates object from a string in the ISO 8601 format
-	 * @param isoText - The date/time string to parse
+	 * @param isoText The date/time string to parse
 	 * @returns A new Dates object parsed from the string
 	 */
 	static fromISO(isoText: string): Dates {
@@ -83,7 +83,7 @@ class Dates {
 
 	/**
 	 * Creates a Dates object from a JavaScript Date object
-	 * @param date - The JavaScript Date object to convert
+	 * @param date The JavaScript Date object to convert
 	 * @returns A new Dates object created from the Date
 	 */
 	static fromJSDate(date: Date, timezone: TimezoneIdentified = 'Europe/Lisbon'): Dates {
@@ -100,7 +100,7 @@ class Dates {
 
 	/**
 	 * Creates a Dates object from Unix epoch milliseconds
-	 * @param millis - The number of milliseconds since Unix epoch
+	 * @param millis The number of milliseconds since Unix epoch
 	 * @returns A new Dates object created from the milliseconds timestamp
 	 */
 	static fromMillis(millis: number, timezone: TimezoneIdentified = 'Europe/Lisbon'): Dates {
@@ -117,7 +117,7 @@ class Dates {
 
 	/**
 	 * Creates a Dates object from an operational date string
-	 * @param date - The operational date in 'yyyyMMdd' format
+	 * @param date The operational date in 'yyyyMMdd' format
 	 * @returns A new Dates object created from the operational date
 	 */
 	static fromOperationalDate(date: OperationalDate | string, timezone: TimezoneIdentified = 'Europe/Lisbon'): Dates {
@@ -134,7 +134,7 @@ class Dates {
 
 	/**
 	 * Creates a Dates object from Unix epoch seconds
-	 * @param seconds - The number of seconds since Unix epoch
+	 * @param seconds The number of seconds since Unix epoch
 	 * @returns A new Dates object created from the seconds timestamp
 	 */
 	static fromSeconds(seconds: number, timezone: TimezoneIdentified = 'Europe/Lisbon'): Dates {
@@ -166,7 +166,7 @@ class Dates {
 	/**
 	 * Returns the time remaining until a given unix_timestamp (in ms) from now,
 	 * as an object with minutes, hours, and days (all as floats, not rounded).
-	 * @param unixTimestamp - The target timestamp in milliseconds
+	 * @param unixTimestamp The target timestamp in milliseconds
 	 * @returns { minutes: number, hours: number, days: number }
 	 */
 	static timeUntil(unixTimestamp: UnixTimestamp): { days: number, hours: number, minutes: number } {
@@ -182,8 +182,8 @@ class Dates {
 
 	/**
 	 * Returns a human-readable, localized string for the time remaining until a given unix_timestamp (in ms) from now.
-	 * @param unixTimestamp - The target timestamp in milliseconds
-	 * @param locale - Optional locale string (e.g., 'en', 'pt')
+	 * @param unixTimestamp The target timestamp in milliseconds
+	 * @param locale Optional locale string (e.g., 'en', 'pt')
 	 * @returns A localized string like "2 days, 3 hours, 15 minutes"
 	 */
 	static timeUntilLocaleString(unixTimestamp: UnixTimestamp, locale: 'en' | 'pt' = 'pt'): string {
@@ -215,8 +215,8 @@ class Dates {
 	}
 
 	/**
-	 * Returns a new Dates object with the current date and time minus a duration
-	 * @param duration - The duration to subtract
+	 * Returns a new Dates object with the current date and time minus a duration.
+	 * @param duration The duration to subtract
 	 * @returns A new Dates object with the current date and time minus a duration
 	 */
 	minus(duration: DurationObjectUnits): Dates {
@@ -232,7 +232,7 @@ class Dates {
 
 	/**
 	 * Returns a new Dates object with the current date and time plus a duration
-	 * @param duration - The duration to add
+	 * @param duration The duration to add
 	 * @returns A new Dates object with the current date and time plus a duration
 	 */
 	plus(duration: DurationObjectUnits): Dates {
@@ -247,10 +247,11 @@ class Dates {
 	}
 
 	/**
-     * Sets the date or time for the Dates object.
-     * @param timezone - The timezone to set in the format of an IANA timezone
-     * @returns The Dates object
-     */
+	 * Sets the date and time for the Dates object.
+	 * @param dateOrTime The date or time to set, can be an object with DateObjectUnits or a string in ISO format
+	 * @param timezone The timezone to set in the format of an IANA timezone
+	 * @returns The Dates object
+	 */
 	set(dateOrTime: DateObjectUnits, timezone?: TimezoneIdentified): Dates {
 		if (!this.iso) throw new Error('ISO date is not set.');
 		const dateTime = DateTime.fromISO(this.iso).set(dateOrTime);
@@ -264,10 +265,10 @@ class Dates {
 	}
 
 	/**
-     * Sets the timezone for the Dates object
-     * @param timezone - The timezone to set in the format of an IANA timezone
-     * @returns The Dates object
-     */
+	 * Sets the timezone for the Dates object.
+	 * @param timezone The timezone to set in the format of an IANA timezone
+	 * @returns The Dates object
+	 */
 	setZone(timezone: TimezoneIdentified): Dates {
 		if (!this.iso) throw new Error('ISO date is not set.');
 		const dateTime = DateTime.fromISO(this.iso).setZone(timezone);
@@ -280,8 +281,8 @@ class Dates {
 	}
 
 	/**
-	 * Returns the date as a string in the specified format
-	 * @param format - The format string (see Luxon tokens documentation)
+	 * Returns the date as a string in the specified format.
+	 * @param format The format string (see Luxon tokens documentation)
 	 * @returns The date as a string in the specified format
 	 */
 	toLocaleString(format: DatesFormat, locale?: string): string {

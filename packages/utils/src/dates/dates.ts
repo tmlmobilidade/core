@@ -53,9 +53,9 @@ class Dates {
 	 * @param format The format string (see Luxon tokens documentation)
 	 * @returns A new Dates object parsed from the string
 	 */
-	static fromFormat(text: string, format: string, timezone: TimezoneIdentified = 'Europe/Lisbon'): Dates {
+	static fromFormat(text: string, format: string, timezone: 'local' | 'utc' | TimezoneIdentified): Dates {
 		const dateTime = DateTime
-			.fromFormat(text, format)
+			.fromFormat(text, format, { setZone: true })
 			.setZone(timezone, { keepLocalTime: true });
 		return new Dates({
 			iso: dateTime.toISO(),
@@ -71,7 +71,7 @@ class Dates {
 	 * @returns A new Dates object parsed from the string
 	 */
 	static fromISO(isoText: string): Dates {
-		const dateTime = DateTime.fromISO(isoText);
+		const dateTime = DateTime.fromISO(isoText, { setZone: true });
 		return new Dates({
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
@@ -85,10 +85,40 @@ class Dates {
 	 * @param date The JavaScript Date object to convert
 	 * @returns A new Dates object created from the Date
 	 */
-	static fromJSDate(date: Date, timezone: TimezoneIdentified = 'Europe/Lisbon'): Dates {
+	static fromJSDate(date: Date): Dates {
+		const dateTime = DateTime.fromJSDate(date);
+		return new Dates({
+			iso: dateTime.toISO(),
+			js_date: dateTime.toJSDate(),
+			operational_date: this.prototype.getOperationalDate(dateTime.toISO()),
+			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
+		});
+	}
+
+	/**
+	 * Creates a Dates object from an operational date string.
+	 * @param date The operational date in 'yyyyMMdd' format
+	 * @returns A new Dates object created from the operational date
+	 */
+	static fromOperationalDate(date: OperationalDate | string, timezone: 'local' | 'utc' | TimezoneIdentified): Dates {
 		const dateTime = DateTime
-			.fromJSDate(date)
+			.fromFormat(date, OPERATIONAL_DATE_FORMAT)
 			.setZone(timezone, { keepLocalTime: true });
+		return new Dates({
+			iso: dateTime.toISO(),
+			js_date: dateTime.toJSDate(),
+			operational_date: this.prototype.getOperationalDate(dateTime.toISO()),
+			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
+		});
+	}
+
+	/**
+	 * Creates a Dates object from Unix epoch seconds
+	 * @param seconds The number of seconds since Unix epoch
+	 * @returns A new Dates object created from the seconds timestamp
+	 */
+	static fromSeconds(seconds: number): Dates {
+		const dateTime = DateTime.fromSeconds(seconds);
 		return new Dates({
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
@@ -102,44 +132,10 @@ class Dates {
 	 * @param millis The number of milliseconds since Unix epoch
 	 * @returns A new Dates object created from the milliseconds timestamp
 	 */
-	static fromMillis(millis: number, timezone: TimezoneIdentified = 'Europe/Lisbon'): Dates {
+	static fromUnixTimestamp(millis: number | UnixTimestamp): Dates {
 		const dateTime = DateTime
 			.fromMillis(millis)
-			.setZone(timezone, { keepLocalTime: true });
-		return new Dates({
-			iso: dateTime.toISO(),
-			js_date: dateTime.toJSDate(),
-			operational_date: this.prototype.getOperationalDate(dateTime.toISO()),
-			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
-		});
-	}
-
-	/**
-	 * Creates a Dates object from an operational date string
-	 * @param date The operational date in 'yyyyMMdd' format
-	 * @returns A new Dates object created from the operational date
-	 */
-	static fromOperationalDate(date: OperationalDate | string, timezone: TimezoneIdentified = 'Europe/Lisbon'): Dates {
-		const dateTime = DateTime
-			.fromFormat(date, OPERATIONAL_DATE_FORMAT)
-			.setZone(timezone, { keepLocalTime: true });
-		return new Dates({
-			iso: dateTime.toISO(),
-			js_date: dateTime.toJSDate(),
-			operational_date: dateTime.toFormat(OPERATIONAL_DATE_FORMAT) as OperationalDate,
-			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
-		});
-	}
-
-	/**
-	 * Creates a Dates object from Unix epoch seconds
-	 * @param seconds The number of seconds since Unix epoch
-	 * @returns A new Dates object created from the seconds timestamp
-	 */
-	static fromSeconds(seconds: number, timezone: TimezoneIdentified = 'Europe/Lisbon'): Dates {
-		const dateTime = DateTime
-			.fromSeconds(seconds)
-			.setZone(timezone, { keepLocalTime: true });
+			.setZone('utc');
 		return new Dates({
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
@@ -152,12 +148,89 @@ class Dates {
 	 * Returns a new Dates object with the current date and time
 	 * @returns {Dates} A new Dates object with the current date and time
 	 */
-	static now(): Dates {
-		const dateTime = DateTime.now();
+	static now(timezone: 'local' | 'utc' | TimezoneIdentified): Dates {
+		const dateTime = DateTime
+			.now()
+			.setZone(timezone, { keepLocalTime: true });
 		return new Dates({
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
 			operational_date: this.prototype.getOperationalDate(dateTime.toISO()),
+			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
+		});
+	}
+
+	/**
+	 * Returns a new Dates object with the current date and time minus a duration.
+	 * @param duration The duration to subtract
+	 * @returns A new Dates object with the current date and time minus a duration
+	 */
+	minus(duration: DurationObjectUnits): Dates {
+		if (!this.iso) throw new Error('ISO date is not set.');
+		const dateTime = DateTime
+			.fromISO(this.iso, { setZone: true })
+			.minus(duration);
+		return new Dates({
+			iso: dateTime.toISO(),
+			js_date: dateTime.toJSDate(),
+			operational_date: this.getOperationalDate(dateTime.toISO()),
+			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
+		});
+	}
+
+	/**
+	 * Returns a new Dates object with the current date and time plus a duration
+	 * @param duration The duration to add
+	 * @returns A new Dates object with the current date and time plus a duration
+	 */
+	plus(duration: DurationObjectUnits): Dates {
+		if (!this.iso) throw new Error('ISO date is not set.');
+		const dateTime = DateTime
+			.fromISO(this.iso, { setZone: true })
+			.plus(duration);
+		return new Dates({
+			iso: dateTime.toISO(),
+			js_date: dateTime.toJSDate(),
+			operational_date: this.getOperationalDate(dateTime.toISO()),
+			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
+		});
+	}
+
+	/**
+	 * Sets the date and time for the Dates object.
+	 * @param dateOrTime The date or time to set, can be an object with DateObjectUnits or a string in ISO format.
+	 * @returns The Dates object
+	 */
+	set(dateOrTime: DateObjectUnits): Dates {
+		if (!this.iso) throw new Error('ISO date is not set.');
+		const dateTime = DateTime
+			.fromISO(this.iso, { setZone: true })
+			.set(dateOrTime);
+		return new Dates({
+			iso: dateTime.toISO(),
+			js_date: dateTime.toJSDate(),
+			operational_date: this.getOperationalDate(dateTime.toISO()),
+			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
+		});
+	}
+
+	/**
+	 * Sets the timezone for the Dates object.
+	 * @param timezone The timezone to set in the format of an IANA timezone.
+	 * @param method The method to use for updating the timezone information.
+	 *   - 'convert_time': Converts the time to the new timezone. It will adjust the time components (hour, minutes, etc.) to their equivalent in the new timezone. UTC value in milliseconds stays the same.
+	 *   - 'keep_time': Keeps the individual, absolute time components (hour, minutes, etc.) and just updates the timezone information. UTC value in milliseconds will change.
+	 * @returns The Dates object
+	 */
+	setZone(timezone: TimezoneIdentified, method: 'convert_time' | 'keep_time'): Dates {
+		if (!this.iso) throw new Error('ISO date is not set.');
+		const dateTime = DateTime
+			.fromISO(this.iso, { setZone: true })
+			.setZone(timezone, { keepLocalTime: method === 'keep_time' });
+		return new Dates({
+			iso: dateTime.toISO(),
+			js_date: dateTime.toJSDate(),
+			operational_date: this.getOperationalDate(dateTime.toISO()),
 			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
 		});
 	}
@@ -168,7 +241,7 @@ class Dates {
 	 * @param unixTimestamp The target timestamp in milliseconds
 	 * @returns { minutes: number, hours: number, days: number }
 	 */
-	static timeUntil(unixTimestamp: UnixTimestamp): { days: number, hours: number, minutes: number } {
+	timeUntil(unixTimestamp: UnixTimestamp): { days: number, hours: number, minutes: number } {
 		const now = Date.now();
 		const diffMs = unixTimestamp - now;
 
@@ -185,7 +258,7 @@ class Dates {
 	 * @param locale Optional locale string (e.g., 'en', 'pt')
 	 * @returns A localized string like "2 days, 3 hours, 15 minutes"
 	 */
-	static timeUntilLocaleString(unixTimestamp: UnixTimestamp, locale: 'en' | 'pt' = 'pt'): string {
+	timeUntilLocaleString(unixTimestamp: UnixTimestamp, locale: 'en' | 'pt' = 'pt'): string {
 		const now = Date.now();
 		const diffMs = unixTimestamp - now;
 
@@ -214,81 +287,13 @@ class Dates {
 	}
 
 	/**
-	 * Returns a new Dates object with the current date and time minus a duration.
-	 * @param duration The duration to subtract
-	 * @returns A new Dates object with the current date and time minus a duration
-	 */
-	minus(duration: DurationObjectUnits): Dates {
-		if (!this.iso) throw new Error('ISO date is not set.');
-		const dateTime = DateTime.fromISO(this.iso).minus(duration);
-		return new Dates({
-			iso: dateTime.toISO(),
-			js_date: dateTime.toJSDate(),
-			operational_date: this.getOperationalDate(dateTime.toISO()),
-			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
-		});
-	}
-
-	/**
-	 * Returns a new Dates object with the current date and time plus a duration
-	 * @param duration The duration to add
-	 * @returns A new Dates object with the current date and time plus a duration
-	 */
-	plus(duration: DurationObjectUnits): Dates {
-		if (!this.iso) throw new Error('ISO date is not set.');
-		const dateTime = DateTime.fromISO(this.iso).plus(duration);
-		return new Dates({
-			iso: dateTime.toISO(),
-			js_date: dateTime.toJSDate(),
-			operational_date: this.getOperationalDate(dateTime.toISO()),
-			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
-		});
-	}
-
-	/**
-	 * Sets the date and time for the Dates object.
-	 * @param dateOrTime The date or time to set, can be an object with DateObjectUnits or a string in ISO format
-	 * @param timezone The timezone to set in the format of an IANA timezone
-	 * @returns The Dates object
-	 */
-	set(dateOrTime: DateObjectUnits, timezone?: TimezoneIdentified): Dates {
-		if (!this.iso) throw new Error('ISO date is not set.');
-		const dateTime = DateTime.fromISO(this.iso).set(dateOrTime);
-		if (timezone) dateTime.setZone(timezone, { keepLocalTime: true });
-		return new Dates({
-			iso: dateTime.toISO(),
-			js_date: dateTime.toJSDate(),
-			operational_date: this.getOperationalDate(dateTime.toISO()),
-			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
-		});
-	}
-
-	/**
-	 * Sets the timezone for the Dates object.
-	 * @param timezone The timezone to set in the format of an IANA timezone
-	 * @returns The Dates object
-	 */
-	setZone(timezone: TimezoneIdentified): Dates {
-		if (!this.iso) throw new Error('ISO date is not set.');
-		const dateTime = DateTime
-			.fromISO(this.iso)
-			.setZone(timezone, { keepLocalTime: true });
-		return new Dates({
-			iso: dateTime.toISO(),
-			js_date: dateTime.toJSDate(),
-			operational_date: this.getOperationalDate(dateTime.toISO()),
-			unix_timestamp: dateTime.toMillis() as UnixTimestamp,
-		});
-	}
-
-	/**
 	 * Returns the date as a string in the specified format.
 	 * @param format The format string (see Luxon tokens documentation)
 	 * @returns The date as a string in the specified format
 	 */
 	toLocaleString(format: DatesFormat, locale?: string): string {
 		if (!this.iso) throw new Error('ISO date is not set.');
-		const dateTime = DateTime.fromISO(this.iso);
+		const dateTime = DateTime.fromISO(this.iso, { setZone: true });
 		if (locale) dateTime.setLocale(locale);
 		return dateTime.toLocaleString(format);
 	}
@@ -308,7 +313,7 @@ class Dates {
 		//
 		// Get the date object
 
-		const dateObject = DateTime.fromISO(isoDate);
+		const dateObject = DateTime.fromISO(isoDate, { setZone: true });
 
 		//
 		// Check if the time is between 00:00 and 03:59.

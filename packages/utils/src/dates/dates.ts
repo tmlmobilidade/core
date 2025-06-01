@@ -57,7 +57,7 @@ class Dates {
 	static fromFormat(text: string, format: string, timezone: TimezoneIdentified = 'Europe/Lisbon'): Dates {
 		const dateTime = DateTime
 			.fromFormat(text, format)
-			.setZone(timezone);
+			.setZone(timezone, { keepLocalTime: true });
 		return new Dates({
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
@@ -89,7 +89,7 @@ class Dates {
 	static fromJSDate(date: Date, timezone: TimezoneIdentified = 'Europe/Lisbon'): Dates {
 		const dateTime = DateTime
 			.fromJSDate(date)
-			.setZone(timezone);
+			.setZone(timezone, { keepLocalTime: true });
 		return new Dates({
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
@@ -106,7 +106,7 @@ class Dates {
 	static fromMillis(millis: number, timezone: TimezoneIdentified = 'Europe/Lisbon'): Dates {
 		const dateTime = DateTime
 			.fromMillis(millis)
-			.setZone(timezone);
+			.setZone(timezone, { keepLocalTime: true });
 		return new Dates({
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
@@ -123,7 +123,7 @@ class Dates {
 	static fromOperationalDate(date: OperationalDate | string, timezone: TimezoneIdentified = 'Europe/Lisbon'): Dates {
 		const dateTime = DateTime
 			.fromFormat(date, OPERATIONAL_DATE_FORMAT)
-			.setZone(timezone);
+			.setZone(timezone, { keepLocalTime: true });
 		return new Dates({
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
@@ -140,7 +140,7 @@ class Dates {
 	static fromSeconds(seconds: number, timezone: TimezoneIdentified = 'Europe/Lisbon'): Dates {
 		const dateTime = DateTime
 			.fromSeconds(seconds)
-			.setZone(timezone);
+			.setZone(timezone, { keepLocalTime: true });
 		return new Dates({
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
@@ -255,7 +255,7 @@ class Dates {
 	set(dateOrTime: DateObjectUnits, timezone?: TimezoneIdentified): Dates {
 		if (!this.iso) throw new Error('ISO date is not set.');
 		const dateTime = DateTime.fromISO(this.iso).set(dateOrTime);
-		if (timezone) dateTime.setZone(timezone);
+		if (timezone) dateTime.setZone(timezone, { keepLocalTime: true });
 		return new Dates({
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
@@ -271,7 +271,9 @@ class Dates {
 	 */
 	setZone(timezone: TimezoneIdentified): Dates {
 		if (!this.iso) throw new Error('ISO date is not set.');
-		const dateTime = DateTime.fromISO(this.iso).setZone(timezone);
+		const dateTime = DateTime
+			.fromISO(this.iso)
+			.setZone(timezone, { keepLocalTime: true });
 		return new Dates({
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),

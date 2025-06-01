@@ -32,17 +32,17 @@ class Dates {
 	public iso: null | string;
 	public js_date: Date;
 	public operational_date: OperationalDate;
-	public timezone: TimezoneIdentified;
 	public unix_timestamp: UnixTimestamp;
 
 	//
 	// Constructor
 
 	constructor({ iso, js_date, operational_date, unix_timestamp }: DatesConstructor) {
-		this.operational_date = operational_date;
-		this.unix_timestamp = unix_timestamp;
 		this.iso = iso ?? null;
 		this.js_date = js_date;
+		this.operational_date = operational_date;
+		this.unix_timestamp = unix_timestamp;
+		console.log(`Dates object created with ISO: ${this.iso}, Operational Date: ${this.operational_date}, Unix Timestamp: ${this.unix_timestamp}`);
 	}
 
 	//

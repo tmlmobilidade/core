@@ -8,7 +8,6 @@ import { type DateObjectUnits, DateTime, type DateTimeUnit, type DurationObjectU
 /* * */
 
 interface DatesConstructor {
-	datetime: DateTime
 	iso: null | string
 	js_date: Date
 	operational_date: OperationalDate
@@ -33,7 +32,6 @@ class Dates {
 	//
 	// Instance properties
 
-	public datetime: DateTime;
 	public iso: null | string;
 	public js_date: Date;
 	public operational_date: OperationalDate;
@@ -43,8 +41,7 @@ class Dates {
 	//
 	// Constructor
 
-	constructor({ datetime, iso, js_date, operational_date, std_window, unix_timestamp }: DatesConstructor) {
-		this.datetime = datetime;
+	constructor({ iso, js_date, operational_date, std_window, unix_timestamp }: DatesConstructor) {
 		this.iso = iso ?? null;
 		this.js_date = js_date;
 		this.operational_date = operational_date;
@@ -68,7 +65,6 @@ class Dates {
 			.fromFormat(text, format, { setZone: true })
 			.setZone(timezone, { keepLocalTime: true });
 		return new Dates({
-			datetime: dateTime,
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
 			operational_date: this.prototype.getOperationalDate(dateTime.toISO()),
@@ -86,7 +82,6 @@ class Dates {
 	static fromISO(isoText: string): Dates {
 		const dateTime = DateTime.fromISO(isoText, { setZone: true });
 		return new Dates({
-			datetime: dateTime,
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
 			operational_date: this.prototype.getOperationalDate(dateTime.toISO()),
@@ -105,7 +100,6 @@ class Dates {
 			.fromJSDate(date)
 			.setZone('utc', { keepLocalTime: false });
 		return new Dates({
-			datetime: dateTime,
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
 			operational_date: this.prototype.getOperationalDate(dateTime.toISO()),
@@ -126,7 +120,6 @@ class Dates {
 			.setZone(timezone, { keepLocalTime: true })
 			.set({ hour: 4, millisecond: 0, minute: 0, second: 0 }); // Start of the operational date
 		return new Dates({
-			datetime: dateTime,
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
 			operational_date: this.prototype.getOperationalDate(dateTime.toISO()),
@@ -145,7 +138,6 @@ class Dates {
 			.fromSeconds(seconds)
 			.setZone('utc', { keepLocalTime: false });
 		return new Dates({
-			datetime: dateTime,
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
 			operational_date: this.prototype.getOperationalDate(dateTime.toISO()),
@@ -164,7 +156,6 @@ class Dates {
 			.fromMillis(millis)
 			.setZone('utc', { keepLocalTime: false });
 		return new Dates({
-			datetime: dateTime,
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
 			operational_date: this.prototype.getOperationalDate(dateTime.toISO()),
@@ -183,7 +174,6 @@ class Dates {
 			.now()
 			.setZone(timezone, { keepLocalTime: false });
 		return new Dates({
-			datetime: dateTime,
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
 			operational_date: this.prototype.getOperationalDate(dateTime.toISO()),
@@ -203,7 +193,6 @@ class Dates {
 			.fromISO(this.iso, { setZone: true })
 			.endOf(unit);
 		return new Dates({
-			datetime: dateTime,
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
 			operational_date: this.getOperationalDate(dateTime.toISO()),
@@ -223,7 +212,6 @@ class Dates {
 			.fromISO(this.iso, { setZone: true })
 			.minus(duration);
 		return new Dates({
-			datetime: dateTime,
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
 			operational_date: this.getOperationalDate(dateTime.toISO()),
@@ -243,7 +231,6 @@ class Dates {
 			.fromISO(this.iso, { setZone: true })
 			.plus(duration);
 		return new Dates({
-			datetime: dateTime,
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
 			operational_date: this.getOperationalDate(dateTime.toISO()),
@@ -263,7 +250,6 @@ class Dates {
 			.fromISO(this.iso, { setZone: true })
 			.set(dateOrTime);
 		return new Dates({
-			datetime: dateTime,
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
 			operational_date: this.getOperationalDate(dateTime.toISO()),
@@ -286,7 +272,6 @@ class Dates {
 			.fromISO(this.iso, { setZone: true })
 			.setZone(timezone, { keepLocalTime: method === 'rebase_utc' });
 		return new Dates({
-			datetime: dateTime,
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
 			operational_date: this.getOperationalDate(dateTime.toISO()),
@@ -306,7 +291,6 @@ class Dates {
 			.fromISO(this.iso, { setZone: true })
 			.startOf(unit);
 		return new Dates({
-			datetime: dateTime,
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),
 			operational_date: this.getOperationalDate(dateTime.toISO()),
@@ -364,6 +348,17 @@ class Dates {
 		}
 
 		return parts.join(', ');
+	}
+
+	/**
+	 * Returns the date as a string in the specified format.
+	 * @param format The format string (see Luxon tokens documentation)
+	 * @returns The date as a string in the specified format
+	 */
+	toFormat(format: string): string {
+		if (!this.iso) throw new Error('ISO date is not set.');
+		const dateTime = DateTime.fromISO(this.iso, { setZone: true });
+		return dateTime.toFormat(format);
 	}
 
 	/**

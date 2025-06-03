@@ -4,12 +4,12 @@ import { Dates } from './../../dist/src/dates/dates.js';
 // 	.fromUnixTimestamp(1754038800000);
 
 const result1 = Dates
-	.now('Asia/Bangkok')
-	.set({ hour: 12 });
+	.now('Europe/Lisbon')
+	.minus({ seconds: 30 });
 
 const result2 = Dates
-	.fromOperationalDate('20250715', 'Asia/Bangkok')
-	.set({ hour: 12 });
+	.fromOperationalDate('20240101', 'Europe/Lisbon')
+	.set({ hour: 4, minute: 0, second: 0 });
 
 console.log('result1', result1);
 console.log('------------------------------');

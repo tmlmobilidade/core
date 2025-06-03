@@ -117,7 +117,8 @@ class Dates {
 	static fromOperationalDate(date: OperationalDate | string, timezone: 'local' | 'utc' | TimezoneIdentified): Dates {
 		const dateTime = DateTime
 			.fromFormat(date, OPERATIONAL_DATE_FORMAT)
-			.setZone(timezone, { keepLocalTime: true });
+			.setZone(timezone, { keepLocalTime: true })
+			.set({ hour: 4, millisecond: 0, minute: 0, second: 0 }); // Start of the operational date
 		return new Dates({
 			iso: dateTime.toISO(),
 			js_date: dateTime.toJSDate(),

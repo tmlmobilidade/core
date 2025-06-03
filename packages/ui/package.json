@@ -42,7 +42,7 @@
 		"@mantine/hooks": "8.0.2",
 		"@mantine/modals": "8.0.2",
 		"@mantine/notifications": "8.0.2",
-		"@tabler/icons-react": "3.33.0",
+		"@tabler/icons-react": "3.34.0",
 		"@tmlmobilidade/lib": "*",
 		"@tmlmobilidade/types": "*",
 		"@tmlmobilidade/utils": "*",

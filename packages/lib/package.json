@@ -36,7 +36,7 @@
 	},
 	"dependencies": {
 		"@tmlmobilidade/types": "*",
-		"zod": "3.25.46"
+		"zod": "3.25.49"
 	},
 	"devDependencies": {
 		"@carrismetropolitana/eslint": "20250418.42.41",

@@ -1,5 +1,6 @@
 {
 	"name": "@tmlmobilidade/ui",
+	"description": "",
 	"version": "1.0.0",
 	"author": "",
 	"license": "ISC",
@@ -8,7 +9,9 @@
 		"directory": "dist"
 	},
 	"type": "module",
-	"files": ["dist/"],
+	"files": [
+		"dist/"
+	],
 	"exports": {
 		".": {
 			"types": "./dist/index.d.ts",
@@ -27,7 +30,6 @@
 		"dev": "tsx scripts/watch.ts",
 		"lint": "eslint ./src"
 	},
-	"description": "",
 	"peerDependencies": {
 		"@turf/turf": "7.x",
 		"next": "14.x || 15.x",
@@ -48,6 +50,7 @@
 		"@tmlmobilidade/utils": "*",
 		"clsx": "2.1.1",
 		"luxon": "3.6.1",
+		"mantine-form-zod-resolver": "^1.2.1",
 		"maplibre-gl": "5.5.0",
 		"react-map-gl": "8.0.4",
 		"react-viewport-list": "7.1.2"

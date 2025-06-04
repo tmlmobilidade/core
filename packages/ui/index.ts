@@ -6,3 +6,4 @@ export * from '@/lib/map.utils';
 export * from '@mantine/form';
 export * from '@mantine/hooks';
 export * from '@mantine/modals';
+export { zod4Resolver, zodResolver } from 'mantine-form-zod-resolver';

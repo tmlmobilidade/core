@@ -44,7 +44,6 @@ export const ValidationSchema = DocumentSchema.extend({
 }).strict();
 
 export const CreateValidationSchema = ValidationSchema.omit({ _id: true, created_at: true, updated_at: true });
-
 export const UpdateValidationSchema = CreateValidationSchema.partial();
 
 export interface Validation extends Omit<z.infer<typeof ValidationSchema>, 'created_at' | 'gtfs_feed_info' | 'summary' | 'updated_at'> {
@@ -54,5 +53,9 @@ export interface Validation extends Omit<z.infer<typeof ValidationSchema>, 'crea
 	updated_at: UnixTimestamp
 }
 
-export type CreateValidationDto = Omit<Validation, 'created_at' | 'updated_at'>;
+export interface CreateValidationDto extends Omit<z.infer<typeof CreateValidationSchema>, 'gtfs_feed_info' | 'summary'> {
+	gtfs_feed_info?: GtfsFeedInfo
+	summary?: GTFSValidatorSummary
+}
+
 export type UpdateValidationDto = Partial<CreateValidationDto>;

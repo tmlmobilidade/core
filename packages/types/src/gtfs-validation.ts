@@ -4,7 +4,7 @@ import { z } from 'zod';
 
 import { DocumentSchema } from './_common/document.js';
 import { UnixTimestamp } from './_common/unix-timestamp.js';
-import { GtfsFeedInfo, GtfsFeedInfoSchema } from './gtfs.js';
+import { GtfsAgency, GtfsAgencySchema, GtfsFeedInfo, GtfsFeedInfoSchema } from './gtfs.js';
 import { FeederStatusSchema } from './plan.js';
 
 /* * */
@@ -36,25 +36,27 @@ export type GTFSValidatorMessage = z.infer<typeof GTFSValidatorMessageSchema>;
 /* VALIDATION */
 
 export const ValidationSchema = DocumentSchema.extend({
-	agency_id: z.string(),
 	feeder_status: FeederStatusSchema,
-	file_id: z.string().nullish(),
-	gtfs_feed_info: GtfsFeedInfoSchema.nullish(),
+	file_id: z.string(),
+	gtfs_agency: GtfsAgencySchema,
+	gtfs_feed_info: GtfsFeedInfoSchema,
 	summary: GTFSValidatorSummarySchema.nullish(),
 }).strict();
 
 export const CreateValidationSchema = ValidationSchema.omit({ _id: true, created_at: true, updated_at: true });
 export const UpdateValidationSchema = CreateValidationSchema.partial();
 
-export interface Validation extends Omit<z.infer<typeof ValidationSchema>, 'created_at' | 'gtfs_feed_info' | 'summary' | 'updated_at'> {
+export interface Validation extends Omit<z.infer<typeof ValidationSchema>, 'created_at' | 'gtfs_agency' | 'gtfs_feed_info' | 'summary' | 'updated_at'> {
 	created_at: UnixTimestamp
-	gtfs_feed_info?: GtfsFeedInfo
+	gtfs_agency: GtfsAgency
+	gtfs_feed_info: GtfsFeedInfo
 	summary?: GTFSValidatorSummary
 	updated_at: UnixTimestamp
 }
 
-export interface CreateValidationDto extends Omit<z.infer<typeof CreateValidationSchema>, 'gtfs_feed_info' | 'summary'> {
-	gtfs_feed_info?: GtfsFeedInfo
+export interface CreateValidationDto extends Omit<z.infer<typeof CreateValidationSchema>, 'gtfs_agency' | 'gtfs_feed_info' | 'summary'> {
+	gtfs_agency: GtfsAgency
+	gtfs_feed_info: GtfsFeedInfo
 	summary?: GTFSValidatorSummary
 }
 

@@ -3,7 +3,7 @@
 import { MongoCollectionClass } from '@/mongo-collection.js';
 import { CreateUserDto, UpdateUserDto, UpdateUserSchema, User, UserSchema } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
-import { Filter, IndexDescription, Sort, WithId } from 'mongodb';
+import { Filter, FindOptions, IndexDescription, Sort, WithId } from 'mongodb';
 import { z } from 'zod';
 
 /* * */
@@ -51,8 +51,8 @@ class UsersClass extends MongoCollectionClass<User, CreateUserDto, UpdateUserDto
 	 * @param includePasswordHash - Whether to include the password hash in the result
 	 * @returns A promise that resolves to the matching document or null if not found
 	 */
-	override async findById(id: string, includePasswordHash = false) {
-		const user = await this.mongoCollection.findOne({ _id: id } as unknown as Filter<User>);
+	override async findById(id: string, options?: FindOptions<User>, includePasswordHash = false) {
+		const user = await this.mongoCollection.findOne({ _id: id } as unknown as Filter<User>, options);
 		if (!user) {
 			return null;
 		}

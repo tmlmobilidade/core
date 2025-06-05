@@ -4,7 +4,7 @@ import { MongoConnector } from '@tmlmobilidade/connectors';
 import { HttpException, HttpStatus } from '@tmlmobilidade/lib';
 import { type UnixTimestamp } from '@tmlmobilidade/types';
 import { Dates, generateRandomString } from '@tmlmobilidade/utils';
-import { Collection, DeleteOptions, DeleteResult, Document, Filter, IndexDescription, InsertOneOptions, InsertOneResult, MongoClientOptions, OptionalUnlessRequiredId, Sort, UpdateOptions, UpdateResult, WithId } from 'mongodb';
+import { Collection, DeleteOptions, DeleteResult, Document, Filter, FindOptions, IndexDescription, InsertOneOptions, InsertOneResult, MongoClientOptions, OptionalUnlessRequiredId, Sort, UpdateOptions, UpdateResult, WithId } from 'mongodb';
 import { z } from 'zod';
 
 /* * */
@@ -118,8 +118,8 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	 * @param id - The ID of the document to find
 	 * @returns A promise that resolves to the matching document or null if not found
 	 */
-	public async findById(id: string): Promise<null | WithId<T>> {
-		return this.mongoCollection.findOne({ _id: { $eq: id } } as unknown as Filter<T>);
+	public async findById(id: string, options?: FindOptions): Promise<null | WithId<T>> {
+		return this.mongoCollection.findOne({ _id: { $eq: id } } as unknown as Filter<T>, options);
 	}
 
 	/**

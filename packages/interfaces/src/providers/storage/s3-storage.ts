@@ -1,7 +1,7 @@
 /* * */
 
 import { IStorageProvider } from '@/providers/storage/storage.interface.js';
-import { CreateBucketCommand, DeleteObjectCommand, DeleteObjectsCommand, GetObjectCommand, HeadBucketCommand, HeadObjectCommand, ListObjectsV2Command, NotFound, PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
+import { CopyObjectCommand, CreateBucketCommand, DeleteObjectCommand, DeleteObjectsCommand, GetObjectCommand, HeadBucketCommand, HeadObjectCommand, ListObjectsV2Command, NotFound, PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { Readable } from 'node:stream';
 
@@ -44,6 +44,26 @@ export class S3StorageProvider implements IStorageProvider {
 			if (error instanceof NotFound) {
 				await this.s3Client.send(new CreateBucketCommand({ Bucket: this.bucketName }));
 			}
+		}
+	}
+
+	/**
+	 * Copies a file from one path to another.
+	 * @param source - The source file path and name in S3.
+	 * @param destination - The destination file path and name in S3.
+	 */
+	async copyFile(source: string, destination: string): Promise<void> {
+		try {
+			await this.s3Client.send(new CopyObjectCommand({
+				Bucket: this.bucketName,
+				CopySource: `${this.bucketName}/${source}`,
+				Key: destination,
+			}));
+			console.log(`File copied successfully from ${this.bucketName}/${source} to ${this.bucketName}/${destination}`);
+		}
+		catch (error) {
+			console.error('Error copying file:', error);
+			throw error;
 		}
 	}
 

@@ -4,8 +4,8 @@ import { MongoCollectionClass } from '@/mongo-collection.js';
 import { IStorageProvider, StorageFactory } from '@/providers/index.js';
 import { HttpStatus } from '@tmlmobilidade/lib';
 import { HttpException } from '@tmlmobilidade/lib';
-import { CreateFileDto, File, FileSchema, UpdateFileDto, UpdateFileSchema } from '@tmlmobilidade/types';
-import { AsyncSingletonProxy, getFileExtension } from '@tmlmobilidade/utils';
+import { CreateFileDto, CreateFileSchema, File, FileSchema, UpdateFileDto, UpdateFileSchema } from '@tmlmobilidade/types';
+import { AsyncSingletonProxy, convertObject, getFileExtension } from '@tmlmobilidade/utils';
 import { generateRandomString } from '@tmlmobilidade/utils';
 import { DeleteOptions, DeleteResult, IndexDescription, InsertOneOptions, InsertOneResult, WithId } from 'mongodb';
 import { z } from 'zod';
@@ -65,6 +65,25 @@ class FilesClass extends MongoCollectionClass<File, CreateFileDto, UpdateFileDto
 			FilesClass._instance = instance;
 		}
 		return FilesClass._instance;
+	}
+
+	/**
+	 * Clones a file from one resource to another.
+	 * @param file_id - The unique identifier of the file in the database.
+	 * @param resource_id - The unique identifier of the resource to clone the file to.
+	 * @returns The file that was cloned.
+	 */
+	public async clone(file_id: string, scope: string, resource_id: string, options?: InsertOneOptions): Promise<InsertOneResult<File>> {
+		const _id = generateRandomString({ length: 5 });
+		const file = await this.findOne({ _id: file_id });
+		if (!file) {
+			throw new HttpException(HttpStatus.NOT_FOUND, 'File not found');
+		}
+
+		await this.storageService.copyFile(`${file.scope}/${file.resource_id}/${file._id}.${getFileExtension(file.name)}`, `${scope}/${resource_id}/${_id}.${getFileExtension(file.name)}`);
+
+		const newFile = convertObject(file, CreateFileSchema);
+		return await this.insertOne({ ...newFile, _id, resource_id }, { options });
 	}
 
 	/**

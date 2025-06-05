@@ -1,9 +1,10 @@
 /* * */
 
 import { DocumentSchema } from '@/_common/document.js';
-import { type OperationalDate, validateOperationalDate } from '@/_common/operational-date.js';
 import { type UnixTimestamp } from '@/_common/unix-timestamp.js';
 import { z } from 'zod';
+
+import { GtfsAgency, GtfsAgencySchema, GtfsFeedInfo, GtfsFeedInfoSchema } from './gtfs.js';
 
 /* * */
 
@@ -11,34 +12,29 @@ const FEEDER_STATUS = ['waiting', 'processing', 'success', 'error'] as const;
 export const FeederStatusSchema = z.enum(FEEDER_STATUS);
 
 export const PlanSchema = DocumentSchema.extend({
-	agency_id: z.string(),
-	feeder_status: FeederStatusSchema,
-	is_approved: z.boolean(),
-	is_locked: z.boolean(),
-	operation_file: z.string().nullish(),
-	reference_file: z.string().nullish(),
-	valid_from: z.string().transform(validateOperationalDate).brand('OperationalDate'),
-	valid_until: z.string().transform(validateOperationalDate).brand('OperationalDate'),
+	file_id: z.string(),
+	gtfs_agency: GtfsAgencySchema,
+	gtfs_feed_info: GtfsFeedInfoSchema,
+	is_approved: z.boolean().default(false),
+	is_locked: z.boolean().default(false),
+	validation_id: z.string(),
 }).strict();
 
-export const CreatePlanSchema = PlanSchema.omit({ _id: true, created_at: true, updated_at: true });
-
-export const UpdatePlanSchema = CreatePlanSchema.partial();
+export const CreatePlanSchema = z.object({
+	validation_id: z.string(),
+});
+export const UpdatePlanSchema = PlanSchema.partial();
 
 /* * */
 
 export type FeederStatus = z.infer<typeof FeederStatusSchema>;
 
-export interface Plan extends Omit<z.infer<typeof PlanSchema>, 'created_at' | 'updated_at' | 'valid_from' | 'valid_until'> {
+export interface Plan extends Omit<z.infer<typeof PlanSchema>, 'created_at' | 'gtfs_agency' | 'gtfs_feed_info' | 'updated_at'> {
 	created_at: UnixTimestamp
+	gtfs_agency: GtfsAgency
+	gtfs_feed_info: GtfsFeedInfo
 	updated_at: UnixTimestamp
-	valid_from: OperationalDate
-	valid_until: OperationalDate
 }
 
-export interface CreatePlanDto extends Omit<z.infer<typeof CreatePlanSchema>, 'valid_from' | 'valid_until'> {
-	valid_from: OperationalDate
-	valid_until: OperationalDate
-}
-
-export type UpdatePlanDto = Partial<CreatePlanDto>;
+export type CreatePlanDto = z.infer<typeof CreatePlanSchema>;
+export type UpdatePlanDto = Partial<Plan>;

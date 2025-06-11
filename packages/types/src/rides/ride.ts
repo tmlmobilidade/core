@@ -3,43 +3,26 @@
 import { DocumentSchema } from '@/_common/document.js';
 import { type OperationalDate, validateOperationalDate } from '@/_common/operational-date.js';
 import { type UnixTimestamp, validateUnixTimestamp } from '@/_common/unix-timestamp.js';
+import { AtLeasOneEventOnFirstStopSchema, atMostTwoDriverIdsSchema, atMostTwoVehicleIdsSchema, avgIntervalVehicleEventsSchema, excessiveVehicleEventDelaySchema, lessThanTenVehicleEventsSchema, matchingLocationTransactionsSchema, ontimeStartSchema, simpleOneValidationTransactionSchema, simpleOneVehicleEventOrValidationTransactionSchema, simpleThreeVehicleEventsSchema, transactionSequentialitySchema } from '@/rides/ride-analysis.js';
 import { z } from 'zod';
-
-/* * */
-
-export const RideAnalysisSchema = z.object({
-	grade: z.enum(['pass', 'fail', 'error']),
-	message: z.string().nullable(),
-	reason: z.string().nullable(),
-	unit: z.string().nullable(),
-	value: z.number().nullable(),
-}).strict();
-
-export const CreateRideAnalysisSchema = RideAnalysisSchema;
-export const UpdateRideAnalysisSchema = RideAnalysisSchema.partial();
-
-export type RideAnalysis = z.infer<typeof RideAnalysisSchema>;
-export type CreateRideAnalysisDto = z.infer<typeof CreateRideAnalysisSchema>;
-export type UpdateRideAnalysisDto = Partial<CreateRideAnalysisDto>;
 
 /* * */
 
 export const RideSchema = DocumentSchema.extend({
 	agency_id: z.string(),
 	analysis: z.object({
-		AT_LEAST_ONE_EVENT_ON_FIRST_STOP: RideAnalysisSchema,
-		AT_MOST_TWO_DRIVER_IDS: RideAnalysisSchema,
-		AT_MOST_TWO_VEHICLE_IDS: RideAnalysisSchema,
-		AVG_INTERVAL_VEHICLE_EVENTS: RideAnalysisSchema,
-		EXCESSIVE_VEHICLE_EVENT_DELAY: RideAnalysisSchema,
-		HIGHEST_VEHICLE_EVENT_DELAY: RideAnalysisSchema,
-		LESS_THAN_TEN_VEHICLE_EVENTS: RideAnalysisSchema,
-		MATCHING_LOCATION_TRANSACTIONS: RideAnalysisSchema,
-		ONTIME_START: RideAnalysisSchema,
-		SIMPLE_ONE_VALIDATION_TRANSACTION: RideAnalysisSchema,
-		SIMPLE_ONE_VEHICLE_EVENT_OR_VALIDATION_TRANSACTION: RideAnalysisSchema,
-		SIMPLE_THREE_VEHICLE_EVENTS: RideAnalysisSchema,
-		TRANSACTION_SEQUENTIALITY: RideAnalysisSchema,
+		AT_LEAST_ONE_EVENT_ON_FIRST_STOP: AtLeasOneEventOnFirstStopSchema,
+		AT_MOST_TWO_DRIVER_IDS: atMostTwoDriverIdsSchema,
+		AT_MOST_TWO_VEHICLE_IDS: atMostTwoVehicleIdsSchema,
+		AVG_INTERVAL_VEHICLE_EVENTS: avgIntervalVehicleEventsSchema,
+		EXCESSIVE_VEHICLE_EVENT_DELAY: excessiveVehicleEventDelaySchema,
+		LESS_THAN_TEN_VEHICLE_EVENTS: lessThanTenVehicleEventsSchema,
+		MATCHING_LOCATION_TRANSACTIONS: matchingLocationTransactionsSchema,
+		ONTIME_START: ontimeStartSchema,
+		SIMPLE_ONE_VALIDATION_TRANSACTION: simpleOneValidationTransactionSchema,
+		SIMPLE_ONE_VEHICLE_EVENT_OR_VALIDATION_TRANSACTION: simpleOneVehicleEventOrValidationTransactionSchema,
+		SIMPLE_THREE_VEHICLE_EVENTS: simpleThreeVehicleEventsSchema,
+		TRANSACTION_SEQUENTIALITY: transactionSequentialitySchema,
 	}).nullable(),
 	apex_locations_qty: z.number().nullable(),
 	apex_on_board_refunds_amount: z.number().nullable(),

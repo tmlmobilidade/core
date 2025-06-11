@@ -1,3 +1,5 @@
+/* * */
+
 import { mimeTypes } from '@tmlmobilidade/lib';
 
 /**
@@ -17,14 +19,4 @@ export function getFileExtension(fileName: string): string {
 	}
 
 	return extension;
-}
-
-/**
- * Utility function to get the mime type from a file name
- * @param fileName - The name of the file
- * @returns The mime type of the file
- */
-export function getMimeType(fileName: string): string {
-	const extension = getFileExtension(fileName);
-	return mimeTypes[extension];
 }

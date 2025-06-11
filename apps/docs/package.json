@@ -9,6 +9,11 @@
 		"postinstall": "fumadocs-mdx",
 		"start": "next start"
 	},
+	"browser": {
+		"fs": false,
+		"os": false,
+		"path": false
+	},
 	"dependencies": {
 		"@tabler/icons-react": "3.34.0",
 		"@tmlmobilidade/ui": "*",

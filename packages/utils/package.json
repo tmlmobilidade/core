@@ -40,6 +40,11 @@
 		"test:prod": "jest --silent --coverage",
 		"test:watch": "jest --watch"
 	},
+	"browser": {
+		"fs": false,
+		"os": false,
+		"path": false
+	},
 	"dependencies": {
 		"@tmlmobilidade/lib": "*",
 		"extract-zip": "2.0.1",

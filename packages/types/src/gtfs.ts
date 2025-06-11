@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { unixTimeStampSchema } from './_common/unix-timestamp.js';
+import { UnixTimestamp, unixTimeStampSchema } from './_common/unix-timestamp.js';
 
 export const GtfsFeedInfoSchema = z.object({
 	default_lang: z.string().nullish(),
@@ -25,5 +25,12 @@ export const GtfsAgencySchema = z.object({
 	agency_url: z.string().nullish(),
 });
 
-export type GtfsFeedInfo = z.infer<typeof GtfsFeedInfoSchema>;
-export type GtfsAgency = z.infer<typeof GtfsAgencySchema>;
+export type GtfsFeedInfo = Omit<z.infer<typeof GtfsFeedInfoSchema>, 'feed_end_date' | 'feed_start_date'> & {
+	feed_end_date?: null | UnixTimestamp
+	feed_start_date?: null | UnixTimestamp
+};
+
+export type GtfsAgency = Omit<z.infer<typeof GtfsAgencySchema>, 'feed_end_date' | 'feed_start_date'> & {
+	feed_end_date?: null | UnixTimestamp
+	feed_start_date?: null | UnixTimestamp
+};

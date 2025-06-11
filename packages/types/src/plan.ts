@@ -2,7 +2,7 @@
 
 import { DocumentSchema } from '@/_common/document.js';
 import { type UnixTimestamp } from '@/_common/unix-timestamp.js';
-import { GtfsAgencySchema, GtfsFeedInfoSchema } from '@/gtfs.js';
+import { GtfsAgency, GtfsAgencySchema, GtfsFeedInfo, GtfsFeedInfoSchema } from '@/gtfs.js';
 import { z } from 'zod';
 
 /* * */
@@ -30,8 +30,10 @@ export const UpdatePlanSchema = PlanSchema.partial();
 
 export type FeederStatus = z.infer<typeof FeederStatusSchema>;
 
-export interface Plan extends Omit<z.infer<typeof PlanSchema>, 'created_at' | 'updated_at'> {
+export interface Plan extends Omit<z.infer<typeof PlanSchema>, 'created_at' | 'gtfs_agency' | 'gtfs_feed_info' | 'updated_at'> {
 	created_at: UnixTimestamp
+	gtfs_agency: GtfsAgency
+	gtfs_feed_info: GtfsFeedInfo
 	updated_at: UnixTimestamp
 }
 

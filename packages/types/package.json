@@ -39,14 +39,14 @@
 	"dependencies": {
 		"geojson": "0.5.0",
 		"luxon": "3.6.1",
-		"mongodb": "6.16.0",
-		"zod": "3.25.49"
+		"mongodb": "6.17.0",
+		"zod": "3.25.61"
 	},
 	"devDependencies": {
 		"@carrismetropolitana/eslint": "20250418.42.41",
 		"@tmlmobilidade/tsconfig": "*",
 		"@types/luxon": "3.6.2",
-		"@types/node": "22.15.29",
+		"@types/node": "24.0.0",
 		"resolve-tspaths": "0.8.23",
 		"rimraf": "6.0.1",
 		"turbo": "2.5.4",

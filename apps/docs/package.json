@@ -12,23 +12,23 @@
 	"dependencies": {
 		"@tabler/icons-react": "3.34.0",
 		"@tmlmobilidade/ui": "*",
-		"fumadocs-core": "15.5.0",
-		"fumadocs-mdx": "11.6.6",
-		"fumadocs-openapi": "9.0.5",
+		"fumadocs-core": "15.5.1",
+		"fumadocs-mdx": "11.6.7",
+		"fumadocs-openapi": "9.0.8",
 		"fumadocs-typescript": "4.0.5",
-		"fumadocs-ui": "15.5.0",
+		"fumadocs-ui": "15.5.1",
 		"next": "15.3.3",
 		"postcss": "8.5.4",
 		"react": "19.1.0",
 		"react-dom": "19.1.0",
-		"shiki": "3.4.2"
+		"shiki": "3.6.0"
 	},
 	"devDependencies": {
 		"@tmlmobilidade/tsconfig": "*",
 		"@types/mdx": "2.0.13",
-		"@types/node": "22.15.29",
-		"@types/react": "19.1.6",
-		"@types/react-dom": "19.1.5",
+		"@types/node": "24.0.0",
+		"@types/react": "19.1.7",
+		"@types/react-dom": "19.1.6",
 		"postcss": "8.5.4",
 		"tailwindcss": "4.1.8",
 		"typescript": "5.8.3"

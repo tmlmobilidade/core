@@ -26,6 +26,10 @@
 		".": {
 			"types": "./dist/index.d.ts",
 			"default": "./dist/index.js"
+		},
+		"./fs": {
+			"types": "./dist/src/filesystem/index.d.ts",
+			"default": "./dist/src/filesystem/index.js"
 		}
 	},
 	"scripts": {

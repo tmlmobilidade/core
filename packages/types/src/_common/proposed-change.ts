@@ -25,19 +25,12 @@ export const scopeSchema = z.enum(SCOPE_VALUES);
 export const statusSchema = z.enum(STATUS_VALUES).default('pending');
 
 export const ProposedChangeSchema = DocumentSchema.extend({
-
 	field_path: z.string(),
-
 	field_value: z.any(),
-
 	scope: scopeSchema,
-
 	status: statusSchema,
-
 	target_id: z.string(),
-
 	user_id: z.string(),
-
 }).strict();
 
 export const CreateProposedChangeSchema = ProposedChangeSchema

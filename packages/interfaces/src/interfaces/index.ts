@@ -9,8 +9,6 @@ export * from '@/interfaces/auth/verification-tokens.interface.js';
 export * from '@/interfaces/files/files.interface.js';
 export * from '@/interfaces/hashed-shapes/hashed-shapes.interface.js';
 export * from '@/interfaces/hashed-trips/hashed-trips.interface.js';
-export * from '@/interfaces/localities/localities.interface.js';
-export * from '@/interfaces/municipalities/municipalities.interface.js';
 export * from '@/interfaces/organizations/organizations.interface.js';
 export * from '@/interfaces/plans/plans.interface.js';
 export * from '@/interfaces/proposedChanges/proposedChanges.interface.js';

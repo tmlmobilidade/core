@@ -30,8 +30,10 @@ export const UpdateUniqueSamSchema = CreateUniqueSamSchema.partial();
  * the transactions are real, unique and incremental. This allows the system to
  * detect if a transaction has been tampered with or if any transactions are missing.
  */
-export interface UniqueSam extends Omit<z.infer<typeof UniqueSamSchema>, 'created_at' | 'updated_at'> {
+export interface UniqueSam extends Omit<z.infer<typeof UniqueSamSchema>, 'created_at' | 'first_transaction_timestamp' | 'latest_transaction_timestamp' | 'updated_at'> {
 	created_at: UnixTimestamp
+	first_transaction_timestamp: null | UnixTimestamp
+	latest_transaction_timestamp: null | UnixTimestamp
 	updated_at: UnixTimestamp
 }
 

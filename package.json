@@ -28,7 +28,7 @@
 	"devDependencies": {
 		"@carrismetropolitana/eslint": "20250418.42.41",
 		"eslint": "9.28.0",
-		"tsx": "4.20.1",
+		"tsx": "4.20.2",
 		"turbo": "2.5.4"
 	},
 	"workspaces": [
@@ -37,7 +37,7 @@
 		"cli/*",
 		"configs/*"
 	],
-	"packageManager": "npm@11.4.1",
+	"packageManager": "npm@11.4.2",
 	"peerDependencyRules": {
 		"allowedVersions": {
 			"react": "^18.x || ^19.x",

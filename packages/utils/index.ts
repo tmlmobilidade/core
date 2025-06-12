@@ -2,8 +2,7 @@
 
 export * from '@/convert-object.js';
 export * from '@/dates/dates.js';
-
-export * from '@/files/files.js';
+export * from '@/filesystem/index.js';
 export * from '@/generate-random-string.js';
 export * from '@/generate-random-token.js';
 export * from '@/http.js';

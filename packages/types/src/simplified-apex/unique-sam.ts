@@ -14,7 +14,9 @@ export const UniqueSamSchema = DocumentSchema.extend({
 	seen_last_at: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullable(),
 	status: z.enum(['missing_transactions', 'complete', 'error', 'pending']).default('pending'),
 	status_message: z.string().nullable(),
-	transactions_count: z.number().nullable(),
+	transactions_expected: z.number().nullable(),
+	transactions_found: z.number().nullable(),
+	transactions_missing: z.number().nullable(),
 }).strict();
 
 export const CreateUniqueSamSchema = UniqueSamSchema.omit({ _id: true, created_at: true, updated_at: true });

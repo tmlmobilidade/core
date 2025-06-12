@@ -38,6 +38,16 @@ export interface UniqueSam extends Omit<z.infer<typeof UniqueSamSchema>, 'create
 	updated_at: UnixTimestamp
 }
 
-export type CreateUniqueSamDto = z.infer<typeof CreateUniqueSamSchema>;
+export interface CreateUniqueSamDto extends Omit<z.infer<typeof CreateUniqueSamSchema>, 'created_at' | 'first_transaction_timestamp' | 'latest_transaction_timestamp' | 'updated_at'> {
+	created_at: UnixTimestamp
+	first_transaction_timestamp: null | UnixTimestamp
+	latest_transaction_timestamp: null | UnixTimestamp
+	updated_at: UnixTimestamp
+}
 
-export type UpdateUniqueSamDto = z.infer<typeof UpdateUniqueSamSchema>;
+export interface UpdateUniqueSamDto extends Omit<z.infer<typeof UpdateUniqueSamSchema>, 'created_at' | 'first_transaction_timestamp' | 'latest_transaction_timestamp' | 'updated_at'> {
+	created_at: UnixTimestamp
+	first_transaction_timestamp: null | UnixTimestamp
+	latest_transaction_timestamp: null | UnixTimestamp
+	updated_at: UnixTimestamp
+}

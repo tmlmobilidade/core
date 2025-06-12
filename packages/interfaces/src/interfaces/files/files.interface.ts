@@ -2,12 +2,9 @@
 
 import { MongoCollectionClass } from '@/mongo-collection.js';
 import { IStorageProvider, StorageFactory } from '@/providers/index.js';
-import { HttpStatus } from '@tmlmobilidade/lib';
-import { HttpException } from '@tmlmobilidade/lib';
+import { HttpException, HttpStatus } from '@tmlmobilidade/lib';
 import { CreateFileDto, CreateFileSchema, File, FileSchema, UpdateFileDto, UpdateFileSchema } from '@tmlmobilidade/types';
-import { AsyncSingletonProxy, convertObject } from '@tmlmobilidade/utils';
-import { generateRandomString } from '@tmlmobilidade/utils';
-import { getFileExtension } from '@tmlmobilidade/utils/fs';
+import { AsyncSingletonProxy, convertObject, generateRandomString, getFileExtension } from '@tmlmobilidade/utils';
 import { DeleteOptions, DeleteResult, IndexDescription, InsertOneOptions, InsertOneResult, WithId } from 'mongodb';
 import { z } from 'zod';
 

@@ -1,6 +1,7 @@
 /* * */
 
 import { DateTime } from 'luxon';
+import { z } from 'zod';
 
 /* * */
 
@@ -9,6 +10,11 @@ export const OPERATIONAL_DATE_FORMAT = 'yyyyMMdd';
 export type OperationalDate = string & {
 	__brand: 'OperationalDate'
 };
+
+export const operationalDateSchema = z
+	.string()
+	.transform(validateOperationalDate)
+	.brand('OperationalDate');
 
 /**
  * This function validates if a string is a valid operational date.

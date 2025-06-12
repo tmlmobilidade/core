@@ -1,16 +1,16 @@
 import { z } from 'zod';
 
-import { UnixTimestamp, unixTimeStampSchema } from './_common/unix-timestamp.js';
+import { OperationalDate, operationalDateSchema } from './_common/operational-date.js';
 
 export const GtfsFeedInfoSchema = z.object({
 	default_lang: z.string().nullish(),
 	feed_contact_email: z.string().nullish(),
 	feed_contact_url: z.string().nullish(),
-	feed_end_date: unixTimeStampSchema.nullish(),
+	feed_end_date: operationalDateSchema.nullish(),
 	feed_lang: z.string(),
 	feed_publisher_name: z.string().nullish(),
 	feed_publisher_url: z.string().nullish(),
-	feed_start_date: unixTimeStampSchema.nullish(),
+	feed_start_date: operationalDateSchema.nullish(),
 	feed_version: z.string().nullish(),
 });
 
@@ -26,11 +26,11 @@ export const GtfsAgencySchema = z.object({
 });
 
 export type GtfsFeedInfo = Omit<z.infer<typeof GtfsFeedInfoSchema>, 'feed_end_date' | 'feed_start_date'> & {
-	feed_end_date?: null | UnixTimestamp
-	feed_start_date?: null | UnixTimestamp
+	feed_end_date?: null | OperationalDate
+	feed_start_date?: null | OperationalDate
 };
 
 export type GtfsAgency = Omit<z.infer<typeof GtfsAgencySchema>, 'feed_end_date' | 'feed_start_date'> & {
-	feed_end_date?: null | UnixTimestamp
-	feed_start_date?: null | UnixTimestamp
+	feed_end_date?: null | OperationalDate
+	feed_start_date?: null | OperationalDate
 };

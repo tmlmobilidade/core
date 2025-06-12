@@ -23,14 +23,8 @@
 	"type": "module",
 	"files": ["dist/"],
 	"exports": {
-		".": {
-			"types": "./dist/index.d.ts",
-			"default": "./dist/index.js"
-		},
-		"./fs": {
-			"types": "./dist/src/filesystem/index.d.ts",
-			"default": "./dist/src/filesystem/index.js"
-		}
+		"types": "./dist/index.d.ts",
+		"default": "./dist/index.js"
 	},
 	"scripts": {
 		"build": "rimraf ./dist && tsc && resolve-tspaths",

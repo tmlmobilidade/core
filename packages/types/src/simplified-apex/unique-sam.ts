@@ -10,14 +10,14 @@ export const UniqueSamSchema = DocumentSchema.extend({
 	agency_id: z.string(),
 	apex_version: z.string(),
 	device_id: z.string(),
-	first_transaction_id: z.string(),
-	first_transaction_timestamp: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullish(),
-	first_transaction_type: z.enum(['on-board-refund', 'on-board-sale', 'validation', 'location', 'inspection', 'inspection-decision']),
-	latest_transaction_id: z.string(),
-	latest_transaction_timestamp: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullish(),
-	latest_transaction_type: z.enum(['on-board-refund', 'on-board-sale', 'validation', 'location', 'inspection', 'inspection-decision']),
-	mac_ase_counter_value: z.number(),
-	mac_sam_serial_number: z.number(),
+	first_transaction_id: z.string().nullable(),
+	first_transaction_timestamp: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullable(),
+	first_transaction_type: z.enum(['on-board-refund', 'on-board-sale', 'validation', 'location', 'inspection', 'inspection-decision']).nullable(),
+	latest_transaction_id: z.string().nullable(),
+	latest_transaction_timestamp: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullable(),
+	latest_transaction_type: z.enum(['on-board-refund', 'on-board-sale', 'validation', 'location', 'inspection', 'inspection-decision']).nullable(),
+	mac_ase_counter_value: z.number().nullable(),
+	mac_sam_serial_number: z.number().nullable(),
 }).strict();
 
 export const CreateUniqueSamSchema = UniqueSamSchema.omit({ _id: true, created_at: true, updated_at: true });

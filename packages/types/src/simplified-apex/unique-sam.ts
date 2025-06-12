@@ -20,7 +20,8 @@ export const UniqueSamSchema = DocumentSchema.extend({
 	mac_sam_serial_number: z.number(),
 }).strict();
 
-export const UpdateUniqueSamSchema = UniqueSamSchema.partial();
+export const CreateUniqueSamSchema = UniqueSamSchema.omit({ _id: true, created_at: true, updated_at: true });
+export const UpdateUniqueSamSchema = CreateUniqueSamSchema.partial();
 
 /**
  * SAMs are the chips that contain the keys used to sign APEX transactions.
@@ -34,4 +35,6 @@ export interface UniqueSam extends Omit<z.infer<typeof UniqueSamSchema>, 'create
 	updated_at: UnixTimestamp
 }
 
-export type UpdateUniqueSamDto = Partial<UniqueSam>;
+export type CreateUniqueSamDto = z.infer<typeof CreateUniqueSamSchema>;
+
+export type UpdateUniqueSamDto = z.infer<typeof UpdateUniqueSamSchema>;

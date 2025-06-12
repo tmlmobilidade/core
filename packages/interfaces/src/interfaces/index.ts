@@ -19,6 +19,7 @@ export * from '@/interfaces/simplified-apex/simplified-apex-locations.interface.
 export * from '@/interfaces/simplified-apex/simplified-apex-on-board-refunds.interface.js';
 export * from '@/interfaces/simplified-apex/simplified-apex-on-board-sales.interface.js';
 export * from '@/interfaces/simplified-apex/simplified-apex-validations.interface.js';
+export * from '@/interfaces/simplified-apex/unique-sams.interface.js';
 export * from '@/interfaces/stops/stops.interface.js';
 export * from '@/interfaces/validations/validations.interface.js';
 export * from '@/interfaces/vehicle-events/vehicle-events.interface.js';

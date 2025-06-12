@@ -8,5 +8,6 @@
 		"rootDir": ".",
 		"types": ["node"]
 	},
+	"lib": ["dom"],
 	"exclude": ["node_modules", "dist"]
 }

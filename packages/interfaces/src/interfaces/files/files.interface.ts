@@ -4,7 +4,9 @@ import { MongoCollectionClass } from '@/mongo-collection.js';
 import { IStorageProvider, StorageFactory } from '@/providers/index.js';
 import { HttpException, HttpStatus } from '@tmlmobilidade/lib';
 import { CreateFileDto, CreateFileSchema, File, FileSchema, UpdateFileDto, UpdateFileSchema } from '@tmlmobilidade/types';
-import { AsyncSingletonProxy, convertObject, generateRandomString, getFileExtension } from '@tmlmobilidade/utils';
+import { AsyncSingletonProxy, convertObject } from '@tmlmobilidade/utils';
+import { generateRandomString } from '@tmlmobilidade/utils';
+import { Files } from '@tmlmobilidade/utils';
 import { DeleteOptions, DeleteResult, IndexDescription, InsertOneOptions, InsertOneResult, WithId } from 'mongodb';
 import { z } from 'zod';
 
@@ -78,7 +80,7 @@ class FilesClass extends MongoCollectionClass<File, CreateFileDto, UpdateFileDto
 			throw new HttpException(HttpStatus.NOT_FOUND, 'File not found');
 		}
 
-		await this.storageService.copyFile(`${file.scope}/${file.resource_id}/${file._id}.${getFileExtension(file.name)}`, `${scope}/${resource_id}/${_id}.${getFileExtension(file.name)}`);
+		await this.storageService.copyFile(`${file.scope}/${file.resource_id}/${file._id}.${Files.getFileExtension(file.name)}`, `${scope}/${resource_id}/${_id}.${Files.getFileExtension(file.name)}`);
 
 		const newFile = convertObject(file, CreateFileSchema);
 		return await this.insertOne({ ...newFile, _id, resource_id }, { options });
@@ -141,7 +143,7 @@ class FilesClass extends MongoCollectionClass<File, CreateFileDto, UpdateFileDto
 			if (!file) {
 				throw new HttpException(HttpStatus.NOT_FOUND, 'File not found');
 			}
-			key = `${file.scope}/${file.resource_id}/${file._id}.${getFileExtension(file.name)}`; // Use the file's storage key
+			key = `${file.scope}/${file.resource_id}/${file._id}.${Files.getFileExtension(file.name)}`; // Use the file's storage key
 		}
 
 		// Check if key exists
@@ -162,7 +164,7 @@ class FilesClass extends MongoCollectionClass<File, CreateFileDto, UpdateFileDto
 	 */
 	public async upload(file: Buffer, createFileDto: CreateFileDto, options?: InsertOneOptions): Promise<InsertOneResult<File>> {
 		const _id = generateRandomString({ length: 5 });
-		await this.storageService.uploadFile(`${createFileDto.scope}/${createFileDto.resource_id}/${_id}.${getFileExtension(createFileDto.name)}`, file);
+		await this.storageService.uploadFile(`${createFileDto.scope}/${createFileDto.resource_id}/${_id}.${Files.getFileExtension(createFileDto.name)}`, file);
 		return await this.insertOne({ ...createFileDto, _id }, { options });
 	}
 

@@ -21,7 +21,9 @@
 		"access": "public"
 	},
 	"type": "module",
-	"files": ["dist/"],
+	"files": [
+		"dist/"
+	],
 	"exports": {
 		"types": "./dist/index.d.ts",
 		"default": "./dist/index.js"
@@ -45,9 +47,12 @@
 	},
 	"dependencies": {
 		"@tmlmobilidade/lib": "*",
+		"@types/papaparse": "^5.3.16",
 		"extract-zip": "2.0.1",
+		"jszip": "^3.10.1",
 		"luxon": "3.6.1",
 		"mergekit": "3.0.6",
+		"papaparse": "^5.5.3",
 		"uuid": "11.1.0",
 		"zod": "3.25.63"
 	},

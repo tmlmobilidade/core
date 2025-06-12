@@ -8,16 +8,12 @@ import { z } from 'zod';
 
 export const UniqueSamSchema = DocumentSchema.extend({
 	agency_id: z.string(),
-	apex_version: z.string(),
 	device_id: z.string(),
-	first_transaction_id: z.string().nullable(),
-	first_transaction_timestamp: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullable(),
-	first_transaction_type: z.enum(['on-board-refund', 'on-board-sale', 'validation', 'location', 'inspection', 'inspection-decision']).nullable(),
-	has_all_transactions: z.boolean().nullable(),
-	latest_transaction_id: z.string().nullable(),
-	latest_transaction_timestamp: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullable(),
-	latest_transaction_type: z.enum(['on-board-refund', 'on-board-sale', 'validation', 'location', 'inspection', 'inspection-decision']).nullable(),
-	mac_sam_serial_number: z.number().nullable(),
+	latest_apex_version: z.string(),
+	seen_first_at: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullable(),
+	seen_last_at: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullable(),
+	status: z.enum(['missing_transactions', 'complete', 'error', 'pending']).default('pending'),
+	status_message: z.string().nullable(),
 	transactions_count: z.number().nullable(),
 }).strict();
 
@@ -31,19 +27,16 @@ export const UpdateUniqueSamSchema = CreateUniqueSamSchema.partial();
  * the transactions are real, unique and incremental. This allows the system to
  * detect if a transaction has been tampered with or if any transactions are missing.
  */
-export interface UniqueSam extends Omit<z.infer<typeof UniqueSamSchema>, 'created_at' | 'first_transaction_timestamp' | 'latest_transaction_timestamp' | 'updated_at'> {
+export interface UniqueSam extends Omit<z.infer<typeof UniqueSamSchema>, 'created_at' | 'seen_first_at' | 'seen_last_at' | 'updated_at'> {
 	created_at: UnixTimestamp
-	first_transaction_timestamp: null | UnixTimestamp
-	latest_transaction_timestamp: null | UnixTimestamp
+	seen_first_at: null | UnixTimestamp
+	seen_last_at: null | UnixTimestamp
 	updated_at: UnixTimestamp
 }
 
-export interface CreateUniqueSamDto extends Omit<z.infer<typeof CreateUniqueSamSchema>, 'first_transaction_timestamp' | 'latest_transaction_timestamp'> {
-	first_transaction_timestamp: null | UnixTimestamp
-	latest_transaction_timestamp: null | UnixTimestamp
+export interface CreateUniqueSamDto extends Omit<z.infer<typeof CreateUniqueSamSchema>, 'seen_first_at' | 'seen_last_at'> {
+	seen_first_at: null | UnixTimestamp
+	seen_last_at: null | UnixTimestamp
 }
 
-export interface UpdateUniqueSamDto extends Omit<z.infer<typeof UpdateUniqueSamSchema>, 'first_transaction_timestamp' | 'latest_transaction_timestamp'> {
-	first_transaction_timestamp: null | UnixTimestamp
-	latest_transaction_timestamp: null | UnixTimestamp
-}
+export type UpdateUniqueSamDto = Partial<CreateUniqueSamDto>;

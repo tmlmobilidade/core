@@ -7,9 +7,10 @@ import { z } from 'zod';
 /* * */
 
 export const UniqueSamSchema = DocumentSchema.extend({
+	_id: z.number(),
 	agency_id: z.string(),
 	device_id: z.string(),
-	latest_apex_version: z.string(),
+	latest_apex_version: z.string().nullable(),
 	seen_first_at: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullable(),
 	seen_last_at: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullable(),
 	status: z.enum(['missing_transactions', 'complete', 'error', 'pending']).default('pending'),

@@ -22,9 +22,15 @@ export async function fetchZipFromUrl(url: string): Promise<ArrayBuffer> {
  * @throws {Error} If there is an error reading the file
  */
 export async function readZipFromFile(path: string): Promise<ArrayBuffer> {
+	if (isBrowser) {
+		throw new Error('readZipFromFile is not supported in the browser');
+	}
+
+	// Only require fs/promises in Node.js
+	const { readFile } = await (Function('return import("fs/promises")')());
+
 	try {
-		const fs = await import('fs/promises');
-		const buffer = await fs.readFile(path);
+		const buffer = await readFile(path);
 		return buffer.buffer as ArrayBuffer;
 	}
 	catch (err) {

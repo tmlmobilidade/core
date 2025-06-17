@@ -9,6 +9,7 @@ export { default as DeleteActionIcon } from './DeleteActionIcon';
 export { default as Description } from './Description';
 export { default as FileButton } from './FileButton';
 export { default as Menu } from './Menu';
+export { default as MultiSelect } from './MultiSelect';
 export { default as SegmentedControl } from './SegmentedControl';
 export { default as TextArea } from './TextArea';
 export { default as TextInput } from './TextInput';

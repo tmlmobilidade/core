@@ -13,6 +13,7 @@ interface MultiSelectProps {
 	className?: string
 	data: DataItem[]
 	description?: string
+	disabled?: boolean
 	error?: string
 	fullWidth?: boolean
 	label?: string
@@ -25,6 +26,7 @@ interface MultiSelectProps {
 export default function MultiSelect({
 	data,
 	description,
+	disabled,
 	error,
 	label,
 	maxHeight,
@@ -106,6 +108,7 @@ export default function MultiSelect({
 	return (
 
 		<Combobox
+			disabled={disabled}
 			onOptionSubmit={handleOptionSubmit}
 			store={combobox}
 			withinPortal={false}
@@ -133,6 +136,7 @@ export default function MultiSelect({
 
 						<Combobox.EventsTarget>
 							<PillsInput.Field
+								disabled={disabled}
 								onBlur={() => combobox.closeDropdown()}
 								onFocus={() => combobox.openDropdown()}
 								placeholder={searchable ? 'Search values' : 'Select values'}

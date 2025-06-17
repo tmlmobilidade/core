@@ -1,4 +1,4 @@
-import { CheckIcon, Combobox, Group, Pill, PillsInput, useCombobox } from '@mantine/core';
+import { CheckIcon, Combobox, Group, Pill, PillsInput, ScrollArea, useCombobox } from '@mantine/core';
 import { useEffect, useState } from 'react';
 
 import styles from './styles.module.css';
@@ -165,7 +165,9 @@ export default function MultiSelect({
 
 			<Combobox.Dropdown className={styles.dropdownWrapper} style={{ maxHeight }}>
 				<Combobox.Options>
-					{options.length > 0 ? options : <Combobox.Empty>Nothing found...</Combobox.Empty>}
+					<ScrollArea.Autosize mah={200} type="scroll">
+						{options.length > 0 ? options : <Combobox.Empty>Nothing found...</Combobox.Empty>}
+					</ScrollArea.Autosize>
 				</Combobox.Options>
 			</Combobox.Dropdown>
 		</Combobox>

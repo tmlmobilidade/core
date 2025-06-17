@@ -12,7 +12,7 @@ export const PermissionSchema = z.object({
 
 export interface Permission<T> {
 	action: string
-	resource?: Partial<Record<keyof T, T[keyof T][]>>
+	resource?: Partial<Record<keyof T, T[keyof T]>>
 	scope: string
 }
 

@@ -494,3 +494,12 @@ export interface CreateStopDto
 }
 
 export type UpdateStopDto = Partial<Omit<CreateStopDto, 'created_by'>>;
+
+/* * */
+
+export const StopPermissionSchema = z.object({
+	agency_ids: z.array(z.string()),
+	municipality_ids: z.array(z.string()),
+});
+
+export type StopPermission = z.infer<typeof StopPermissionSchema>;

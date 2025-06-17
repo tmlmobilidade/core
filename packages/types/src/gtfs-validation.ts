@@ -61,3 +61,12 @@ export interface CreateValidationDto extends Omit<z.infer<typeof CreateValidatio
 }
 
 export type UpdateValidationDto = Partial<CreateValidationDto>;
+
+/* * */
+
+export const ValidationPermissionSchema = z.object({
+	agency_ids: z.array(z.string()),
+	municipality_ids: z.array(z.string()),
+});
+
+export type ValidationPermission = z.infer<typeof ValidationPermissionSchema>;

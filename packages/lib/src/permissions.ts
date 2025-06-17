@@ -1,3 +1,5 @@
+import { PlanPermissionSchema } from '@tmlmobilidade/types';
+
 export const Permissions = Object.freeze({
 	agencies: {
 		actions: {
@@ -7,6 +9,7 @@ export const Permissions = Object.freeze({
 			read: 'read',
 			update: 'update',
 		},
+		resources: {},
 		scope: 'agencies',
 	},
 	alerts: {
@@ -17,6 +20,7 @@ export const Permissions = Object.freeze({
 			read: 'read',
 			update: 'update',
 		},
+		resources: {},
 		scope: 'alerts',
 	},
 	files: {
@@ -27,6 +31,7 @@ export const Permissions = Object.freeze({
 			read: 'read',
 			update: 'update',
 		},
+		resources: {},
 		scope: 'files',
 	},
 	hashedShapes: {
@@ -37,6 +42,7 @@ export const Permissions = Object.freeze({
 			read: 'read',
 			update: 'update',
 		},
+		resources: {},
 		scope: 'hashedShapes',
 	},
 	hashedTrips: {
@@ -47,6 +53,7 @@ export const Permissions = Object.freeze({
 			read: 'read',
 			update: 'update',
 		},
+		resources: {},
 		scope: 'hashedTrips',
 	},
 	municipalities: {
@@ -57,6 +64,7 @@ export const Permissions = Object.freeze({
 			read: 'read',
 			update: 'update',
 		},
+		resources: {},
 		scope: 'municipalities',
 	},
 	organizations: {
@@ -67,6 +75,7 @@ export const Permissions = Object.freeze({
 			read: 'read',
 			update: 'update',
 		},
+		resources: {},
 		scope: 'organizations',
 	},
 	plans: {
@@ -77,6 +86,7 @@ export const Permissions = Object.freeze({
 			read: 'read',
 			update: 'update',
 		},
+		resources: PlanPermissionSchema.shape,
 		scope: 'plans',
 	},
 	rides: {
@@ -87,6 +97,7 @@ export const Permissions = Object.freeze({
 			read: 'read',
 			update: 'update',
 		},
+		resources: {},
 		scope: 'rides',
 	},
 	roles: {
@@ -97,6 +108,7 @@ export const Permissions = Object.freeze({
 			read: 'read',
 			update: 'update',
 		},
+		resources: {},
 		scope: 'roles',
 	},
 	sessions: {
@@ -107,6 +119,7 @@ export const Permissions = Object.freeze({
 			read: 'read',
 			update: 'update',
 		},
+		resources: {},
 		scope: 'sessions',
 	},
 	stops: {
@@ -117,6 +130,7 @@ export const Permissions = Object.freeze({
 			read: 'read',
 			update: 'update',
 		},
+		resources: {},
 		scope: 'stops',
 	},
 	users: {
@@ -127,6 +141,7 @@ export const Permissions = Object.freeze({
 			read: 'read',
 			update: 'update',
 		},
+		resources: {},
 		scope: 'users',
 	},
 	validations: {
@@ -137,6 +152,7 @@ export const Permissions = Object.freeze({
 			read: 'read',
 			update: 'update',
 		},
+		resources: {},
 		scope: 'validations',
 	},
 });

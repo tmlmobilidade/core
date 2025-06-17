@@ -8,7 +8,6 @@ import { z } from 'zod';
 /* * */
 
 export const AgencySchema = DocumentSchema.extend({
-	code: z.string(),
 	email: z.string().email(),
 	fare_url: z.string().url(),
 	is_locked: z.boolean(),
@@ -22,7 +21,7 @@ export const AgencySchema = DocumentSchema.extend({
 	url: z.string().url(),
 }).strict();
 
-export const CreateAgencySchema = AgencySchema.omit({ _id: true, created_at: true, updated_at: true });
+export const CreateAgencySchema = AgencySchema.omit({ created_at: true, updated_at: true });
 export const UpdateAgencySchema = CreateAgencySchema.partial();
 
 /* * */
@@ -36,3 +35,11 @@ export interface CreateAgencyDto extends Omit<z.infer<typeof CreateAgencySchema>
 	operation_start_date: OperationalDate
 }
 export type UpdateAgencyDto = Partial<CreateAgencyDto>;
+
+/* * */
+export const AgencyPermissionSchema = z.object({
+	agency_ids: z.array(z.string()),
+	municipality_ids: z.array(z.string()),
+});
+
+export type AgencyPermission = z.infer<typeof AgencyPermissionSchema>;

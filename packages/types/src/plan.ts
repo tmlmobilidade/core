@@ -39,3 +39,13 @@ export interface Plan extends Omit<z.infer<typeof PlanSchema>, 'created_at' | 'g
 
 export type CreatePlanDto = z.infer<typeof CreatePlanSchema>;
 export type UpdatePlanDto = Partial<Plan>;
+
+/* * */
+
+export const PlanPermissionSchema = z.object({
+	agency_ids: z.array(z.string()),
+	end_date: z.string(),
+	start_date: z.string(),
+});
+
+export type PlanPermission = z.infer<typeof PlanPermissionSchema>;

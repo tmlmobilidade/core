@@ -24,6 +24,17 @@ export function getPermission(permissions: Permission<unknown>[], scope: string,
 	});
 }
 
+/**
+ * Check if a permission exists in a list of permissions
+ * @param permissions - The list of permissions
+ * @param scope - The scope of the permission
+ * @param action - The action of the permission
+ * @returns The permission
+ */
+export function hasPermission(permissions: Permission<unknown>[], scope: string, action: string): boolean {
+	return permissions.find(permission => permission.scope === scope && permission.action === action) !== undefined;
+}
+
 export interface HasPermissionResourceArgs<T> {
 	action: string
 	resource_key: keyof T

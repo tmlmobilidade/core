@@ -5,7 +5,7 @@
 import { swrFetcher } from '@/lib/http';
 import { getAppBaseUrl } from '@tmlmobilidade/lib';
 import { Permission, type User } from '@tmlmobilidade/types';
-import { type HasPermissionResourceArgs, hasPermissionResource as hasPermissionResourceUtils } from '@tmlmobilidade/utils';
+import { type HasPermissionResourceArgs, hasPermissionResource as hasPermissionResourceUtils, hasPermission as hasPermissionUtils } from '@tmlmobilidade/utils';
 import { createContext, type PropsWithChildren, useContext, useMemo } from 'react';
 import useSWR from 'swr';
 
@@ -13,6 +13,7 @@ import useSWR from 'swr';
 
 interface MeContextState {
 	actions: {
+		hasPermission: (scope: string, action: string) => boolean
 		hasPermissionResource: <T>(args: HasPermissionResourceArgs<T>) => boolean
 	}
 	data: {
@@ -48,6 +49,14 @@ export const MeContextProvider = ({ children }: PropsWithChildren) => {
 
 	//
 	// B. Define actions
+
+	function hasPermission(scope: string, action: string) {
+		if (!data || !data.permissions)
+			return false;
+
+		return hasPermissionUtils(data.permissions as unknown as Permission<unknown>[], scope, action);
+	}
+
 	function hasPermissionResource<T>(args: HasPermissionResourceArgs<T>) {
 		if (!data || !data.permissions)
 			return false;
@@ -63,6 +72,7 @@ export const MeContextProvider = ({ children }: PropsWithChildren) => {
 
 	const contextValue: MeContextState = useMemo(() => ({
 		actions: {
+			hasPermission,
 			hasPermissionResource,
 		},
 		data: {

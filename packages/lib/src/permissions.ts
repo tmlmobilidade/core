@@ -1,5 +1,7 @@
 import { PlanPermissionSchema } from '@tmlmobilidade/types';
 
+export const ALLOW_ALL_FLAG = 'allow_all';
+
 export const Permissions = Object.freeze({
 	agencies: {
 		actions: {

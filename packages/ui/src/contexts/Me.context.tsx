@@ -4,13 +4,17 @@
 
 import { swrFetcher } from '@/lib/http';
 import { getAppBaseUrl } from '@tmlmobilidade/lib';
-import { type User } from '@tmlmobilidade/types';
+import { Permission, type User } from '@tmlmobilidade/types';
+import { type HasPermissionResourceArgs, hasPermissionResource as hasPermissionResourceUtils } from '@tmlmobilidade/utils';
 import { createContext, type PropsWithChildren, useContext, useMemo } from 'react';
 import useSWR from 'swr';
 
 /* * */
 
 interface MeContextState {
+	actions: {
+		hasPermissionResource: <T>(args: HasPermissionResourceArgs<T>) => boolean
+	}
 	data: {
 		user: undefined | User
 	}
@@ -43,9 +47,24 @@ export const MeContextProvider = ({ children }: PropsWithChildren) => {
 	const { data, error, isLoading } = useSWR<User>(`${getAppBaseUrl('auth')}/api/users/me`, swrFetcher);
 
 	//
-	// B. Define context value
+	// B. Define actions
+	function hasPermissionResource<T>(args: HasPermissionResourceArgs<T>) {
+		if (!data || !data.permissions)
+			return false;
+
+		return hasPermissionResourceUtils({
+			...args,
+			permissions: data.permissions as unknown as Permission<T>[],
+		});
+	}
+
+	//
+	// C. Define context value
 
 	const contextValue: MeContextState = useMemo(() => ({
+		actions: {
+			hasPermissionResource,
+		},
 		data: {
 			user: data,
 		},

@@ -149,6 +149,7 @@ export const Permissions = Object.freeze({
 	validations: {
 		actions: {
 			create: 'create',
+			create_plan: 'create_plan',
 			delete: 'delete',
 			list: 'list',
 			read: 'read',

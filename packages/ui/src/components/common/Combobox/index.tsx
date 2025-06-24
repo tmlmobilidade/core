@@ -48,6 +48,7 @@ interface BaseProps extends Omit<MantineComboboxProps, 'onChange' | 'value'> {
 	fullWidth?: boolean
 	label?: string
 	maxHeight?: number
+	placeholder?: string
 	searchable?: boolean
 }
 

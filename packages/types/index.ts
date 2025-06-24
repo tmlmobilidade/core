@@ -11,6 +11,7 @@ export * from '@/auth.js';
 export * from '@/file.js';
 export * from '@/gtfs-validation.js';
 export * from '@/gtfs.js';
+export * from '@/gtfs/index.js';
 export * from '@/organization.js';
 export * from '@/pcgi/index.js';
 export * from '@/plan.js';

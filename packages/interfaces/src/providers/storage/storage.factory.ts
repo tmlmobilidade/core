@@ -15,6 +15,9 @@ export type StorageConfiguration = {
 		endpoint: string
 	}
 	type: 'cloudflare'
+} | {
+	oci_config: S3StorageProviderConfiguration
+	type: 'oci'
 };
 
 /* * */
@@ -32,6 +35,8 @@ export class StorageFactory {
 				return new S3StorageProvider(config.aws_config);
 			case 'cloudflare':
 				return new S3StorageProvider(config.cloudflare_config);
+			case 'oci':
+				return new S3StorageProvider(config.oci_config);
 			default:
 				throw new Error(`Invalid storage type`);
 		}

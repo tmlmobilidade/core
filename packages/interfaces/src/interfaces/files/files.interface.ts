@@ -53,6 +53,22 @@ class FilesClass extends MongoCollectionClass<File, CreateFileDto, UpdateFileDto
 					type: 'cloudflare',
 				});
 				break;
+			case 'oci':
+				if (!process.env.OCI_ACCESS_KEY_ID || !process.env.OCI_BUCKET_NAME || !process.env.OCI_SECRET_ACCESS_KEY) {
+					throw new Error('OCI_ACCESS_KEY_ID, OCI_BUCKET_NAME, and OCI_SECRET_ACCESS_KEY must be set');
+				}
+				this.bucketName = process.env.OCI_BUCKET_NAME;
+				this.storageService = StorageFactory.create({
+					oci_config: {
+						access_key_id: process.env.OCI_ACCESS_KEY_ID,
+						bucket_name: process.env.OCI_NAMESPACE ?? '',
+						endpoint: `https://compat.objectstorage.${process.env.OCI_REGION}.oraclecloud.com/${process.env.OCI_BUCKET_NAME}`,
+						region: process.env.OCI_REGION,
+						secret_access_key: process.env.OCI_SECRET_ACCESS_KEY,
+					},
+					type: 'oci',
+				});
+				break;
 			default:
 				throw new Error(`Invalid storage type: ${process.env.TML_INTERFACE_FILES_STORAGE_TYPE}`);
 		}

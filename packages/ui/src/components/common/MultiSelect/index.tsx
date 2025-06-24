@@ -1,3 +1,5 @@
+'use client';
+
 import { CheckIcon, Combobox, Group, Pill, PillsInput, ScrollArea, useCombobox } from '@mantine/core';
 import { useEffect, useState } from 'react';
 

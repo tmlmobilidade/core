@@ -25,5 +25,5 @@ export const operationalDateSchema = z
 export function validateOperationalDate(date: string): OperationalDate {
 	const parsedDate = DateTime.fromFormat(date, OPERATIONAL_DATE_FORMAT);
 	if (!parsedDate.isValid) throw new Error(`Invalid date format '${date}', expected format: ${OPERATIONAL_DATE_FORMAT}, explanation: ${parsedDate.invalidExplanation}`);
-	return parsedDate.toFormat(OPERATIONAL_DATE_FORMAT) as OperationalDate;
+	return date as OperationalDate;
 }

@@ -11,8 +11,8 @@ export interface Trip_TMLExtended extends Trip {
 /* * */
 
 export interface Route_TMLExtended extends Route {
-	line_id: string
+	line_id: number
 	line_long_name: string
 	line_short_name: string
-	path_type: string
+	path_type: number
 }

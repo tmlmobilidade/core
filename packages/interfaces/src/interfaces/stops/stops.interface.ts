@@ -1,5 +1,7 @@
 /* * */
 
+// Init Commit: Samuel Santos
+
 import { MongoCollectionClass } from '@/mongo-collection.js';
 import { CreateStopDto, Stop, StopSchema, UpdateStopDto, UpdateStopSchema } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';

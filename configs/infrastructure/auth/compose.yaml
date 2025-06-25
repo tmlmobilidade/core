@@ -1,9 +1,5 @@
 name: auth
 
-secrets:
-  backupd_config:
-    file: ./backupd.yaml
-
 services:
   #
 
@@ -47,10 +43,15 @@ services:
     env_file:
       - .env
 
-  # # # # # # # # # # # # # # # # # # # # #
+   # # # # # # # # # # # # # # # # # # # # #
   # # # # # # # # # # # # # # # # # # # # #
 
   backupd:
     image: ghcr.io/tmlmobilidade/backupd:production
-    secrets:
-      - backupd_config
+    volumes:
+      - ./backupd-data:/data/backups
+      - ./backupd.yaml:/config.yaml
+    environment:
+      - CONFIG_PATH=/config.yaml
+    depends_on:
+      - auth-db

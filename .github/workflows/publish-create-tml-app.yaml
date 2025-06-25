@@ -32,7 +32,7 @@ jobs:
 
       - name: Bump package version
         working-directory: cli/create-tml-app
-        run: npx @helperkits/bumper bump
+        run: npx @helperkits/bumper package.json
 
       - name: Publish package to NPM
         working-directory: cli/create-tml-app

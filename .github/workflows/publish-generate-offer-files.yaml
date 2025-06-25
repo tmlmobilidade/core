@@ -32,7 +32,7 @@ jobs:
 
       - name: Bump package version
         working-directory: cli/generate-offer-files
-        run: npx @helperkits/bumper bump
+        run: npx @helperkits/bumper package.json
 
       - name: Publish package to NPM
         working-directory: cli/generate-offer-files

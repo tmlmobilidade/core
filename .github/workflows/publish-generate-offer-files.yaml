@@ -1,0 +1,41 @@
+name: 'generate-offer-files | Publish to npm'
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - production
+    paths:
+      - 'cli/generate-offer-files/**/*'
+      - '.github/workflows/publish-generate-offer-files.yml'
+
+jobs:
+
+  # # # # # # # # # # # # # # # # # # # # #
+  # # # # # # # # # # # # # # # # # # # # #
+
+  publish:
+    name: 'Publish package'
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - uses: ./.github/actions/setup-node
+        with:
+          node-version: 20
+
+      - name: Build package
+        working-directory: .
+        run: npm run build:generate-offer-files
+
+      - name: Bump package version
+        working-directory: cli/generate-offer-files
+        run: npx @helperkits/bumper bump
+
+      - name: Publish package to NPM
+        working-directory: cli/generate-offer-files
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}

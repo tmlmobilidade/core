@@ -9,6 +9,7 @@
 	"scripts": {
 		"build": "turbo build && npm run yalc:push",
 		"build:create-tml-app": "turbo build --filter=create-tml-app && npm run yalc:push",
+		"build:generate-offer-files": "turbo build --filter=@tmlmobilidade/generate-offer-files",
 		"build:connectors": "turbo build --filter=@tmlmobilidade/connectors && npm run yalc:push",
 		"build:interfaces": "turbo build --filter=@tmlmobilidade/interfaces && npm run yalc:push",
 		"build:lib": "turbo build --filter=@tmlmobilidade/lib && npm run yalc:push",

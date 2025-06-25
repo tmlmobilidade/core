@@ -5,9 +5,6 @@ on:
   push:
     branches:
       - production
-    paths:
-      - 'cli/generate-offer-files/**/*'
-      - '.github/workflows/publish-generate-offer-files.yml'
 
 jobs:
 

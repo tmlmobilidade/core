@@ -18,10 +18,10 @@
 		"build:types": "turbo build --filter=@tmlmobilidade/types && npm run yalc:push",
 		"build:ui": "turbo build --filter=@tmlmobilidade/ui && npm run yalc:push",
 		"build:utils": "turbo build --filter=@tmlmobilidade/utils && npm run yalc:push",
-		"clean": "sh scripts/cleanup.sh",
 		"dev": "turbo dev",
 		"dev:docs": "turbo dev --filter=@tmlmobilidade/docs",
 		"lint": "turbo lint",
+		"purge": "sh scripts/purge.sh",
 		"test": "turbo test",
 		"test:prod": "turbo test:prod",
 		"yalc:push": "command -v yalc >/dev/null 2>&1 && sh scripts/yalc.sh || echo 'yalc not installed, skipping yalc push...'"

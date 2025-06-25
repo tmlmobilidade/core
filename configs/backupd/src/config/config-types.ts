@@ -13,7 +13,7 @@ export interface StorageConfig {
 	r2_config?: S3StorageProviderConfiguration & {
 		endpoint: string
 	}
-	type: 'aws' | 'cloudflare'
+	type: 'aws' | 'cloudflare' | 'oci'
 }
 
 export interface MongoDBOptions {

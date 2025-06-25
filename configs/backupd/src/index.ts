@@ -17,6 +17,7 @@ async function main() {
 	const storageConfig: StorageConfiguration = {
 		aws_config: config.storage.aws_config,
 		cloudflare_config: config.storage.r2_config,
+		oci_config: config.storage.oci_config,
 		type: config.storage.type,
 	};
 

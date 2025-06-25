@@ -13,8 +13,8 @@ function validateConfig(config: AppConfig) {
 		throw new Error('Missing required field \'storage\' configuration.');
 	}
 
-	if (config.storage.type !== 'aws' && config.storage.type !== 'cloudflare' && config.storage.type !== 'r2') {
-		throw new Error('Invalid storage type. Supported types are \'aws\', (\'cloudflare\' or \'r2\').');
+	if (config.storage.type !== 'aws' && config.storage.type !== 'cloudflare' && config.storage.type !== 'r2' && config.storage.type !== 'oci') {
+		throw new Error('Invalid storage type. Supported types are \'aws\', (\'cloudflare\' or \'r2\'), \'oci\'.');
 	}
 
 	if (config.storage.type === 'aws') {
@@ -26,15 +26,6 @@ function validateConfig(config: AppConfig) {
 			throw new Error('Missing required fields in \'aws_config\'. Ensure \'access_key_id\', \'secret_access_key\', \'bucket_name\', and \'region\' are set.');
 		}
 	}
-	// else if (config.storage.type === 'oci') {
-	// 	if (!config.storage.oci_config) {
-	// 		throw new Error('Storage type is \'oci\' but \'oci_config\' is missing.');
-	// 	}
-	// 	const { fingerprint, private_key_path, tenancy, user } = config.storage.oci_config;
-	// 	if (!tenancy || !user || !fingerprint || !private_key_path) {
-	// 		throw new Error('Missing required fields in \'oci_config\'. Ensure \'tenancy\', \'user\', \'fingerprint\', and \'private_key_path\' are set.');
-	// 	}
-	// }
 	else if (config.storage.type === 'cloudflare' || config.storage.type === 'r2') {
 		if (!config.storage.r2_config) {
 			throw new Error('Storage type is (\'cloudflare\' or \'r2\') but \'r2_config\' is missing.');
@@ -42,6 +33,21 @@ function validateConfig(config: AppConfig) {
 		const { access_key_id, bucket_name, endpoint, secret_access_key } = config.storage.r2_config;
 		if (!access_key_id || !bucket_name || !endpoint || !secret_access_key) {
 			throw new Error('Missing required fields in \'r2_config\'. Ensure \'access_key_id\', \'bucket_name\', \'endpoint\', and \'secret_access_key\' are set.');
+		}
+	}
+	else if (config.storage.type === 'oci') {
+		if (!config.storage.oci_config) {
+			throw new Error('Storage type is \'oci\' but \'oci_config\' is missing.');
+		}
+
+		const keys_missing: string[] = [];
+		for (const key of ['access_key_id', 'bucket_name', 'endpoint', 'namespace', 'secret_access_key']) {
+			if (!config.storage.oci_config[key]) {
+				keys_missing.push(key);
+			}
+		}
+		if (keys_missing.length > 0) {
+			throw new Error(`Missing required fields in 'oci_config'. Ensure ${keys_missing.join(', ')} are set.`);
 		}
 	}
 
@@ -130,7 +136,7 @@ function validateConfig(config: AppConfig) {
 			if (!mail_options.subject || typeof mail_options.subject !== 'string') {
 				throw new Error('\'subject\' in \'mail_options\' configuration should be a string.');
 			}
-			if (!mail_options.to || typeof mail_options.to !== 'string' && !Array.isArray(mail_options.to)) {
+			if (!mail_options.to || (typeof mail_options.to !== 'string' && !Array.isArray(mail_options.to))) {
 				throw new Error('\'to\' in \'mail_options\' configuration should be a string or an array of strings.');
 			}
 		}

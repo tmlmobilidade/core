@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-extraneous-class */
 import { IDatabaseService } from './database.interface.js';
 import { MongoDbConfig, MongoDbService } from './mongo.service.js';
 import { PostgresConfig, PostgresService } from './postgres.service.js';

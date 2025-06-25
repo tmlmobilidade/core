@@ -13,7 +13,12 @@ export interface MongoDbConfig {
 
 export class MongoDbService implements IDatabaseService {
 	private static _instance: MongoDbService;
+	get client(): MongoClient {
+		return this._client;
+	}
+
 	private _client: MongoClient;
+
 	private _uri: string;
 
 	constructor(config: MongoDbConfig) {
@@ -153,9 +158,5 @@ export class MongoDbService implements IDatabaseService {
 				console.log(`⤷ Mongorestore completed successfully:\n${stdout}`);
 			}
 		});
-	}
-
-	get client(): MongoClient {
-		return this._client;
 	}
 }

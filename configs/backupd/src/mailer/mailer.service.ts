@@ -31,16 +31,6 @@ export class MailerService {
 		this.transporter = nodemailer.createTransport(this.config.smtp);
 	}
 
-	private async sendMail(mail_options: MailOptions): Promise<void> {
-		try {
-			const info = await this.transporter.sendMail(mail_options);
-			console.log(`Email sent: ${info.messageId}`);
-		}
-		catch (error) {
-			console.error('Error sending email:', error);
-		}
-	}
-
 	public async sendFailureMail(error: string): Promise<void> {
 		this.config.mail_options.subject = 'Backup failed';
 
@@ -63,5 +53,15 @@ export class MailerService {
 		};
 
 		await this.sendMail(mail_options);
+	}
+
+	private async sendMail(mail_options: MailOptions): Promise<void> {
+		try {
+			const info = await this.transporter.sendMail(mail_options);
+			console.log(`Email sent: ${info.messageId}`);
+		}
+		catch (error) {
+			console.error('Error sending email:', error);
+		}
 	}
 }

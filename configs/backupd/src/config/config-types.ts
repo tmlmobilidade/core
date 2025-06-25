@@ -6,9 +6,13 @@ import { S3StorageProviderConfiguration } from '@tmlmobilidade/interfaces';
 
 export interface StorageConfig {
 	aws_config?: S3StorageProviderConfiguration
-	r2_config?: {
+	oci_config?: S3StorageProviderConfiguration & {
 		endpoint: string
-	} & S3StorageProviderConfiguration
+		namespace: string
+	}
+	r2_config?: S3StorageProviderConfiguration & {
+		endpoint: string
+	}
 	type: 'aws' | 'cloudflare'
 }
 

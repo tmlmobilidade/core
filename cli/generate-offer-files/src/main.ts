@@ -1,6 +1,5 @@
 /* * */
 
-import { ascii } from '@/ascii.js';
 import { type OfferJourney, type OfferStop } from '@/types.js';
 import LOGGER from '@helperkits/logger';
 import TIMETRACKER from '@helperkits/timer';
@@ -17,8 +16,6 @@ import { type Calendar, type CalendarDates, ExceptionType, type StopTime } from 
 export async function generateOfferOutput(filePath: string, startDate: OperationalDate, endDate: OperationalDate, outputDir: string, feedId: null | string): Promise<void> {
 	try {
 		//
-
-		console.log(ascii);
 
 		LOGGER.init();
 

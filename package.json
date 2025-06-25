@@ -1,30 +1,30 @@
 {
 	"name": "tmlmobilidade",
-	"version": "1.0.0",
 	"description": "",
+	"version": "1.0.0",
 	"author": "João de Vasconcelos & Jusi Monteiro",
 	"license": "ISC",
 	"keywords": [],
 	"main": "index.js",
 	"scripts": {
 		"build": "turbo build && npm run yalc:push",
+		"build:connectors": "turbo build --filter=@tmlmobilidade/connectors && npm run yalc:push",
 		"build:create-tml-app": "turbo build --filter=create-tml-app && npm run yalc:push",
 		"build:generate-offer-files": "turbo build --filter=@tmlmobilidade/generate-offer-files",
-		"build:connectors": "turbo build --filter=@tmlmobilidade/connectors && npm run yalc:push",
 		"build:interfaces": "turbo build --filter=@tmlmobilidade/interfaces && npm run yalc:push",
 		"build:lib": "turbo build --filter=@tmlmobilidade/lib && npm run yalc:push",
+		"build:packages": "turbo build --filter=./packages/* && npm run yalc:push",
 		"build:providers": "turbo build --filter=@tmlmobilidade/providers && npm run yalc:push",
 		"build:types": "turbo build --filter=@tmlmobilidade/types && npm run yalc:push",
 		"build:ui": "turbo build --filter=@tmlmobilidade/ui && npm run yalc:push",
 		"build:utils": "turbo build --filter=@tmlmobilidade/utils && npm run yalc:push",
-		"build:packages": "turbo build --filter=./packages/* && npm run yalc:push",
+		"clean": "sh scripts/cleanup.sh",
 		"dev": "turbo dev",
 		"dev:docs": "turbo dev --filter=@tmlmobilidade/docs",
 		"lint": "turbo lint",
-		"clean": "sh scripts/cleanup.sh",
-		"yalc:push": "command -v yalc >/dev/null 2>&1 && sh scripts/yalc.sh || echo 'yalc not installed, skipping yalc push...'",
 		"test": "turbo test",
-		"test:prod": "turbo test:prod"
+		"test:prod": "turbo test:prod",
+		"yalc:push": "command -v yalc >/dev/null 2>&1 && sh scripts/yalc.sh || echo 'yalc not installed, skipping yalc push...'"
 	},
 	"devDependencies": {
 		"@carrismetropolitana/eslint": "20250622.1204.50",
@@ -34,9 +34,9 @@
 	},
 	"workspaces": [
 		"apps/*",
-		"packages/*",
 		"cli/*",
-		"configs/*"
+		"configs/*",
+		"packages/*"
 	],
 	"packageManager": "npm@11.4.2",
 	"peerDependencyRules": {

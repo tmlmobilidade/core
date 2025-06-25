@@ -4,6 +4,7 @@
 
 import { generateOfferOutput } from '@/main.js';
 import LOGGER from '@helperkits/logger';
+import { ASCII_CM_SHORT } from '@tmlmobilidade/lib';
 import { validateOperationalDate } from '@tmlmobilidade/types';
 import { Command } from 'commander';
 import fs from 'fs';
@@ -61,6 +62,15 @@ import fs from 'fs';
 	}
 
 	fs.mkdirSync(options.outputDir, { recursive: true });
+
+	//
+	// Log the ASCII art
+
+	LOGGER.spacer(3);
+
+	console.log(ASCII_CM_SHORT);
+
+	LOGGER.spacer(3);
 
 	//
 	// Start the offer generation process

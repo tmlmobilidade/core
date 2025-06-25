@@ -2,7 +2,7 @@
 
 import chalk from 'chalk';
 
-import { PACKAGES_TO_UPGRADE, REPLACE_FILE_PATHS, TEMPLATE_STRING, TITLE_TEXT } from './consts.js';
+import { ASCII_TMLMOBILIDADE, PACKAGES_TO_UPGRADE, REPLACE_FILE_PATHS, TEMPLATE_STRING } from './consts.js';
 import { copyApp, copyMonorepo, getAvailableApps, replaceInFile, upgradePackages } from './utils/copy.js';
 import { logger } from './utils/logger.js';
 import { getProjectName, getProjectScope, selectApps, selectProjectType } from './utils/prompts.js';
@@ -10,7 +10,7 @@ import { getProjectName, getProjectScope, selectApps, selectProjectType } from '
 /* * */
 
 export const renderTitle = () => {
-	let text = TITLE_TEXT;
+	let text = ASCII_TMLMOBILIDADE;
 
 	text = text.replace(/▓/g, chalk.dim(chalk.yellow('▓')));
 	text = text.replace(/ ▄▄▄ /g, chalk.yellow(' ▄▄▄ '));

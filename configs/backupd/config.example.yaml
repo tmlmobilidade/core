@@ -21,7 +21,7 @@ storage:
     access_key_id: OCI_ACCESS_KEY_ID
     secret_access_key: OCI_SECRET_ACCESS_KEY
     bucket_name: OCI_NAMESPACE # IMPORTANT: This is the namespace of the bucket, not the bucket name
-    endpoint: OCI_ENDPOINT # `https://compat.objectstorage.<OCI_REGION>.oraclecloud.com/<OCI_NAMESPACE>`
+    endpoint: OCI_ENDPOINT # https://compat.objectstorage.<OCI_REGION>.oraclecloud.com/<OCI_BUCKER_NAME>
     region: OCI_REGION
 
   # The Cloudflare R2 configuration

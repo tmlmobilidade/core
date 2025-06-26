@@ -8,7 +8,7 @@ import { type OperationalDate, validateOperationalDate } from '@/_common/operati
  * The exception type indicates whether a service
  * has been added or removed for a specific date.
  */
-export type ExceptionType = 1 | 2;
+export type GTFS_ExceptionType = 1 | 2;
 
 /**
  * Validates and transforms a value into a GTFS Exception Type.
@@ -17,7 +17,7 @@ export type ExceptionType = 1 | 2;
  * @returns A GTFS Exception Type value (1 or 2).
  * @throws Error if the value is not a valid GTFS Exception Type representation.
  */
-export function validateExceptionType(value: number | string): ExceptionType {
+export function validateGtfsExceptionType(value: number | string): GTFS_ExceptionType {
 	// Validate the exception type value
 	if (value === 1 || value === '1') return 1;
 	if (value === 2 || value === '2') return 2;
@@ -34,7 +34,7 @@ export function validateExceptionType(value: number | string): ExceptionType {
  */
 export interface GTFS_CalendarDate {
 	date: OperationalDate
-	exception_type: ExceptionType
+	exception_type: GTFS_ExceptionType
 	service_id: string
 }
 
@@ -67,7 +67,7 @@ export function validateGtfsCalendarDate(rawData: GTFS_CalendarDate_Raw): GTFS_C
 	// Transform the raw data into the output format
 	return {
 		date: validateOperationalDate(rawData.date),
-		exception_type: validateExceptionType(rawData.exception_type),
+		exception_type: validateGtfsExceptionType(rawData.exception_type),
 		service_id: rawData.service_id,
 	};
 }

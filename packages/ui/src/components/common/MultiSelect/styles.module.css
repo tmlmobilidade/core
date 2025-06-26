@@ -3,7 +3,7 @@
 	max-height: none;
 	font-size: var(--font-size-md);
 	font-weight: var(--font-weight-medium);
-	border: 2px solid var(--color-system-border-200);
+	border: 2px solid var(--color-system-border-100);
 	border-radius: var(--border-radius-sm);
 
 	& input::placeholder {
@@ -49,5 +49,15 @@
 	
 	& * {
 		user-select: none;
+	}
+}
+
+.clearButton {
+	width: 32px;
+	height: 32px;
+	transition: translate 200ms ease-in-out;
+
+	&:hover {
+		translate: 0 -1px;
 	}
 }

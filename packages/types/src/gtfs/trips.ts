@@ -1,6 +1,6 @@
 /* * */
 
-import { type GTFS_Binary, type GTFS_Ternary, validateGTFSBinary, validateGTFSTernary } from '@/gtfs/common.js';
+import { type GTFS_Binary, type GTFS_Ternary, validateGtfsBinary, validateGtfsTernary } from '@/gtfs/common.js';
 
 /**
  * Represents a trip in the GTFS (General Transit Feed Specification) format.
@@ -42,8 +42,42 @@ export interface GTFS_Trip_Raw {
 }
 
 /**
- * Extended version of the GTFS_Trip interface that includes a pattern_id.
- * This interface should be used for working with the GTFS-TML standard.
+ * Validates and transforms raw GTFS Trip data into a structured GTFS_Trip object.
+ * This function checks the types of fields, converts boolean strings to boolean values,
+ * and ensures that required fields are present.
+ * @param rawData The raw trip data to validate and transform.
+ * @returns A validated GTFS_Trip object.
+ */
+export function validateGtfsTrip(rawData: GTFS_Trip_Raw): GTFS_Trip {
+	// Ensure required fields are present
+	if (!rawData.route_id) throw new Error('Missing required field "route_id" on GTFS Trip.');
+	if (!rawData.service_id) throw new Error('Missing required field "service_id" on GTFS Trip.');
+	if (!rawData.trip_id) throw new Error('Missing required field "trip_id" on GTFS Trip.');
+	if (!rawData.direction_id) throw new Error('Missing required field "direction_id" on GTFS Trip.');
+	if (!rawData.bikes_allowed) throw new Error('Missing required field "bikes_allowed" on GTFS Trip.');
+	if (!rawData.wheelchair_accessible) throw new Error('Missing required field "wheelchair_accessible" on GTFS Trip.');
+	if (!rawData.trip_headsign) throw new Error('Missing required field "trip_headsign" on GTFS Trip.');
+	if (!rawData.shape_id) throw new Error('Missing required field "shape_id" on GTFS Trip.');
+	// Transform the raw data into the output format
+	return {
+		bikes_allowed: validateGtfsTernary(rawData.bikes_allowed),
+		block_id: rawData.block_id,
+		direction_id: validateGtfsBinary(rawData.direction_id),
+		route_id: rawData.route_id,
+		service_id: rawData.service_id,
+		shape_id: rawData.shape_id,
+		trip_headsign: rawData.trip_headsign,
+		trip_id: rawData.trip_id,
+		trip_short_name: rawData.trip_short_name,
+		wheelchair_accessible: validateGtfsTernary(rawData.wheelchair_accessible),
+	};
+}
+
+/* * */
+
+/**
+ * Extended version of the GTFS_Trip interface that
+ * should be used for working with the GTFS-TML standard.
  */
 export interface GTFS_Trip_Extended extends GTFS_Trip {
 	pattern_id: string
@@ -60,38 +94,6 @@ export interface GTFS_Trip_Extended_Raw extends GTFS_Trip_Raw {
 }
 
 /**
- * Validates and transforms raw GTFS trip data into a structured GTFS_Trip object.
- * This function checks the types of fields, converts boolean strings to boolean values,
- * and ensures that required fields are present.
- * @param rawData The raw trip data to validate and transform.
- * @returns A validated GTFS_Trip object.
- */
-export function validateGtfsTrip(rawData: GTFS_Trip_Raw): GTFS_Trip {
-	// Ensure required fields are present
-	if (!rawData.route_id) throw new Error('Missing required field "route_id" on GTFS trip.');
-	if (!rawData.service_id) throw new Error('Missing required field "service_id" on GTFS trip.');
-	if (!rawData.trip_id) throw new Error('Missing required field "trip_id" on GTFS trip.');
-	if (!rawData.direction_id) throw new Error('Missing required field "direction_id" on GTFS trip.');
-	if (!rawData.bikes_allowed) throw new Error('Missing required field "bikes_allowed" on GTFS trip.');
-	if (!rawData.wheelchair_accessible) throw new Error('Missing required field "wheelchair_accessible" on GTFS trip.');
-	if (!rawData.trip_headsign) throw new Error('Missing required field "trip_headsign" on GTFS trip.');
-	if (!rawData.shape_id) throw new Error('Missing required field "shape_id" on GTFS trip.');
-	// Transform the raw data into the output format
-	return {
-		bikes_allowed: validateGTFSTernary(rawData.bikes_allowed),
-		block_id: rawData.block_id,
-		direction_id: validateGTFSBinary(rawData.direction_id),
-		route_id: rawData.route_id,
-		service_id: rawData.service_id,
-		shape_id: rawData.shape_id,
-		trip_headsign: rawData.trip_headsign,
-		trip_id: rawData.trip_id,
-		trip_short_name: rawData.trip_short_name,
-		wheelchair_accessible: validateGTFSTernary(rawData.wheelchair_accessible),
-	};
-}
-
-/**
  * Validates and transforms raw GTFS-TML trip data into a structured GTFS_Trip_Extended object.
  * This function checks the types of fields, converts boolean strings to boolean values,
  * and ensures that required fields are present, including the pattern_id.
@@ -102,7 +104,7 @@ export function validateGtfsTripExtended(rawData: GTFS_Trip_Extended_Raw): GTFS_
 	// Validate the standard GTFS fields
 	const trip = validateGtfsTrip(rawData);
 	// Validate the Extended GTFS fields
-	if (!rawData.pattern_id) throw new Error('Missing required field "pattern_id" on GTFS trip.');
+	if (!rawData.pattern_id) throw new Error('Missing required field "pattern_id" on GTFS Trip.');
 	// Transform the raw data into the output format
 	return {
 		...trip,

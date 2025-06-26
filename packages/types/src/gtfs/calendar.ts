@@ -1,7 +1,7 @@
 /* * */
 
 import { type OperationalDate, validateOperationalDate } from '@/_common/operational-date.js';
-import { type GTFS_Binary, validateGTFSBinary } from '@/gtfs/common.js';
+import { type GTFS_Binary, validateGtfsBinary } from '@/gtfs/common.js';
 
 /**
  *  Represents a calendar in the GTFS (General Transit Feed Specification) format.
@@ -62,14 +62,14 @@ export function validateGtfsCalendar(rawData: GTFS_Calendar_Raw): GTFS_Calendar 
 	// Transform the raw data into the output format
 	return {
 		end_date: validateOperationalDate(rawData.end_date),
-		friday: validateGTFSBinary(rawData.friday),
-		monday: validateGTFSBinary(rawData.monday),
-		saturday: validateGTFSBinary(rawData.saturday),
+		friday: validateGtfsBinary(rawData.friday),
+		monday: validateGtfsBinary(rawData.monday),
+		saturday: validateGtfsBinary(rawData.saturday),
 		service_id: rawData.service_id,
 		start_date: validateOperationalDate(rawData.start_date),
-		sunday: validateGTFSBinary(rawData.sunday),
-		thursday: validateGTFSBinary(rawData.thursday),
-		tuesday: validateGTFSBinary(rawData.tuesday),
-		wednesday: validateGTFSBinary(rawData.wednesday),
+		sunday: validateGtfsBinary(rawData.sunday),
+		thursday: validateGtfsBinary(rawData.thursday),
+		tuesday: validateGtfsBinary(rawData.tuesday),
+		wednesday: validateGtfsBinary(rawData.wednesday),
 	};
 }

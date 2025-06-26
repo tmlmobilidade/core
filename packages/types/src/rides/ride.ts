@@ -3,7 +3,7 @@
 import { DocumentSchema } from '@/_common/document.js';
 import { type OperationalDate, validateOperationalDate } from '@/_common/operational-date.js';
 import { type UnixTimestamp, validateUnixTimestamp } from '@/_common/unix-timestamp.js';
-import { AtLeasOneEventOnFirstStopSchema, atMostTwoDriverIdsSchema, atMostTwoVehicleIdsSchema, avgIntervalVehicleEventsSchema, excessiveVehicleEventDelaySchema, lessThanTenVehicleEventsSchema, matchingLocationTransactionsSchema, ontimeStartSchema, simpleOneValidationTransactionSchema, simpleOneVehicleEventOrValidationTransactionSchema, simpleThreeVehicleEventsSchema, transactionSequentialitySchema } from '@/rides/ride-analysis.js';
+import { atLeasOneEventOnFirstStopSchema, atMostTwoDriverIdsSchema, atMostTwoVehicleIdsSchema, avgIntervalVehicleEventsSchema, excessiveVehicleEventDelaySchema, lessThanTenVehicleEventsSchema, matchingLocationTransactionsSchema, ontimeStartSchema, simpleOneValidationTransactionSchema, simpleOneVehicleEventOrValidationTransactionSchema, simpleThreeVehicleEventsSchema, transactionSequentialitySchema } from '@/rides/ride-analysis.js';
 import { z } from 'zod';
 
 /* * */
@@ -11,7 +11,7 @@ import { z } from 'zod';
 export const RideSchema = DocumentSchema.extend({
 	agency_id: z.string(),
 	analysis: z.object({
-		AT_LEAST_ONE_EVENT_ON_FIRST_STOP: AtLeasOneEventOnFirstStopSchema,
+		AT_LEAST_ONE_EVENT_ON_FIRST_STOP: atLeasOneEventOnFirstStopSchema,
 		AT_MOST_TWO_DRIVER_IDS: atMostTwoDriverIdsSchema,
 		AT_MOST_TWO_VEHICLE_IDS: atMostTwoVehicleIdsSchema,
 		AVG_INTERVAL_VEHICLE_EVENTS: avgIntervalVehicleEventsSchema,

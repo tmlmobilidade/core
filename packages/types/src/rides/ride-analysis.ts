@@ -15,11 +15,11 @@ export type RideAnalysis = z.infer<typeof RideAnalysisSchema>;
 
 /* * */
 
-export const AtLeasOneEventOnFirstStopSchema = RideAnalysisSchema.extend({
+export const atLeasOneEventOnFirstStopSchema = RideAnalysisSchema.extend({
 	reason: z.enum(['FOUND_ONE_OR_MORE_EVENTS_ON_FIRST_STOP', 'NO_EVENTS_FOUND_ON_FIRST_STOP']),
 }).strict();
 
-export type AtLeastOneEventOnFirstStop = z.infer<typeof AtLeasOneEventOnFirstStopSchema>;
+export type AtLeastOneEventOnFirstStop = z.infer<typeof atLeasOneEventOnFirstStopSchema>;
 
 /* * */
 

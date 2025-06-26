@@ -64,7 +64,7 @@ export interface GTFS_Trip_Extended_Raw extends GTFS_Trip_Raw {
  * This function checks the types of fields, converts boolean strings to boolean values,
  * and ensures that required fields are present.
  * @param rawData The raw trip data to validate and transform.
- * @returns A validated GTFS_Trip or GTFS_Trip_Extended object.
+ * @returns A validated GTFS_Trip object.
  */
 export function validateGtfsTrip(rawData: GTFS_Trip_Raw): GTFS_Trip {
 	// Ensure required fields are present

@@ -4,6 +4,7 @@ export * from '@/dates/index.js';
 export * from '@/files/files.js';
 export * from '@/generate-random-string.js';
 export * from '@/generate-random-token.js';
+export * from '@/geo/index.js';
 export * from '@/http.js';
 export * from '@/permissions.js';
 export * from '@/singleton-proxy.js';

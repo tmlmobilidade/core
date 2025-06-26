@@ -1,1 +1,1 @@
-export * from './perform-in-chunks.js';
+export * from '@/batching/perform-in-chunks.js';

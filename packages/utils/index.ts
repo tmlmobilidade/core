@@ -1,6 +1,6 @@
 export * from '@/batching/index.js';
 export * from '@/convert-object.js';
-export * from '@/dates/dates.js';
+export * from '@/dates/index.js';
 export * from '@/files/files.js';
 export * from '@/generate-random-string.js';
 export * from '@/generate-random-token.js';

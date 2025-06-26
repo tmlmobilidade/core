@@ -5,7 +5,7 @@ import LOGGER from '@helperkits/logger';
 import TIMETRACKER from '@helperkits/timer';
 import { JsonWriter } from '@helperkits/writer';
 import { type OperationalDate, type Route_TMLExtended, type Stop_TMLExtended, type Trip_TMLExtended, validateOperationalDate } from '@tmlmobilidade/types';
-import { Dates } from '@tmlmobilidade/utils';
+import { Dates, getOperationalDatesFromRange } from '@tmlmobilidade/utils';
 import { parse as csvParser } from 'csv-parse';
 import extract from 'extract-zip';
 import fs from 'fs';
@@ -129,7 +129,7 @@ export async function generateOfferOutput(filePath: string, startDate: Operation
 				// For the configured weekly schedule, create the individual operational dates
 				// for each day of the week that is active.
 
-				const allOperationalDatesInRange = getIndividualDatesFromRange(serviceIdStartDate, serviceIdEndDate);
+				const allOperationalDatesInRange = getOperationalDatesFromRange(serviceIdStartDate, serviceIdEndDate);
 
 				const validOperationalDates: OperationalDate[] = [];
 
@@ -767,23 +767,3 @@ const convertMetersOrKilometersToMeters = (value: number | string, ballpark: num
 
 	//
 };
-
-/* * */
-
-export function getIndividualDatesFromRange(start: OperationalDate, end: OperationalDate): OperationalDate[] {
-	if (end < start) throw new Error(`End date "${end}" must be after start date "${start}"`);
-	// Parse the start and end dates to ensure they are in the correct format
-	const startDate = Dates.fromOperationalDate(start, 'Europe/Lisbon');
-	const endDate = Dates.fromOperationalDate(end, 'Europe/Lisbon');
-
-	const dates: OperationalDate[] = [];
-
-	let current = startDate;
-
-	while (current.operational_date <= endDate.operational_date) {
-		dates.push(current.operational_date);
-		current = current.plus({ days: 1 });
-	}
-
-	return dates;
-}

@@ -2,6 +2,7 @@
 
 import { DocumentSchema } from '@/_common/document.js';
 import { type UnixTimestamp } from '@/_common/unix-timestamp.js';
+import { PickupDropoffType } from 'gtfs-types';
 import { z } from 'zod';
 
 /* * */
@@ -9,15 +10,15 @@ import { z } from 'zod';
 export const HashedTripWaypointSchema = z.object({
 	arrival_time: z.string(),
 	departure_time: z.string(),
-	drop_off_type: z.string(),
-	pickup_type: z.string(),
+	drop_off_type: z.nativeEnum(PickupDropoffType),
+	pickup_type: z.nativeEnum(PickupDropoffType),
 	shape_dist_traveled: z.number(),
 	stop_id: z.string(),
 	stop_lat: z.number(),
 	stop_lon: z.number(),
 	stop_name: z.string(),
 	stop_sequence: z.number(),
-	timepoint: z.string(),
+	timepoint: z.number(),
 }).strict();
 
 export const CreateHashedTripWaypointSchema = HashedTripWaypointSchema;

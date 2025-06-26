@@ -21,13 +21,13 @@ import fs from 'fs';
 
 	program
 		.name('Generate Offer Journeys')
-		.description('Output offer_journey.json files from GTFS files.')
-		.requiredOption('--file <path>', 'GTFS file path')
-		.requiredOption('--start-date <operational-date>', 'The start date of the plan in YYYYMMDD format')
-		.requiredOption('--end-date <operational-date>', 'The end date of the plan in YYYYMMDD format')
-		.option('--output-dir <path>', 'Output directory for the offer_journey.json files', './output')
-		.option('--override', 'Override output directory if it exists', false)
-		.option('--feed-id <value>', 'Optional feedId value to include in output files', null)
+		.description('Output offer_journey.json and offer_stop.json files from a GTFS file.')
+		.requiredOption('--file <path>', 'The input GTFS file path.')
+		.requiredOption('--start-date <operational-date>', 'The start date of the plan in YYYYMMDD format.')
+		.requiredOption('--end-date <operational-date>', 'The end date of the plan in YYYYMMDD format.')
+		.option('--output-dir <path>', 'Output directory for the offer_journey.json files.', './output')
+		.option('--override', 'Override output directory if it exists.', false)
+		.option('--feed-id <value>', 'Optional feedId value to include in output files.', null)
 		.parse();
 
 	//

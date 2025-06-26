@@ -10,7 +10,7 @@
 		"start": "npm run build && node dist/index.js"
 	},
 	"dependencies": {
-		"@aws-sdk/client-s3": "3.835.0",
+		"@aws-sdk/client-s3": "3.837.0",
 		"@helperkits/logger": "20240703.1726.24",
 		"@tmlmobilidade/interfaces": "*",
 		"@types/archiver": "6.0.3",

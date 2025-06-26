@@ -493,7 +493,7 @@ export async function generateOfferOutput(filePath: string, startDate: Operation
 		}
 
 		/* * */
-		/* FINAL OUTPUT FILES */
+		/* OUTPUT FILES */
 
 		//
 		// Actually construct the OfferJourney and OfferStop objects

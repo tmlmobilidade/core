@@ -22,6 +22,7 @@ export interface HashedTripWaypoint {
 /* * */
 
 export interface HashedTrip {
+	_id: string
 	agency_id: string
 	created_at: UnixTimestamp
 	line_id: number

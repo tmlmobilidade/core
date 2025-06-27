@@ -14,6 +14,7 @@ export interface HashedShapePoint {
 /* * */
 
 export interface HashedShape {
+	_id: string
 	agency_id: number
 	created_at: UnixTimestamp
 	points: HashedShapePoint[]

@@ -4,12 +4,12 @@ import { type OfferJourney, type OfferStop } from '@/types.js';
 import LOGGER from '@helperkits/logger';
 import TIMETRACKER from '@helperkits/timer';
 import { JsonWriter } from '@helperkits/writer';
-import { type OperationalDate, type Route_TMLExtended, type Stop_TMLExtended, type Trip_TMLExtended, validateOperationalDate } from '@tmlmobilidade/types';
+import { type GTFS_Calendar_Raw, type GTFS_CalendarDate_Raw, GTFS_Route_Extended_Raw, type GTFS_Trip_Extended, type GTFS_Trip_Extended_Raw, type OperationalDate, validateGtfsCalendar, validateGtfsCalendarDate, validateGtfsRouteExtended, validateGtfsTripExtended } from '@tmlmobilidade/types';
 import { convertMetersOrKilometersToMeters, Dates, getOperationalDatesFromRange } from '@tmlmobilidade/utils';
 import { parse as csvParser } from 'csv-parse';
 import extract from 'extract-zip';
 import fs from 'fs';
-import { type Calendar, type CalendarDates, ExceptionType, type StopTime } from 'gtfs-types';
+import { type StopTime } from 'gtfs-types';
 
 /* * */
 
@@ -37,7 +37,7 @@ export async function generateOfferOutput(filePath: string, startDate: Operation
 		const referencedRouteIds = new Set<string>();
 
 		const savedCalendarDates = new Map<string, OperationalDate[]>();
-		const savedTrips = new Map<string, Trip_TMLExtended>();
+		const savedTrips = new Map<string, GTFS_Trip_Extended>();
 		const savedStops = new Map<string, Stop_TMLExtended>();
 		const savedRoutes = new Map<string, Partial<Route_TMLExtended>>();
 		const savedStopTimes = new Map<string, StopTime[]>();
@@ -96,28 +96,20 @@ export async function generateOfferOutput(filePath: string, startDate: Operation
 
 			LOGGER.info(`Reading zip entry "calendar.txt"...`);
 
-			const parseEachRow = async (data: Calendar) => {
+			const parseEachRow = async (data: GTFS_Calendar_Raw) => {
 				//
 
 				//
-				// Validate the start and end dates to ensure
-				// they are of in the OperationalDate format
+				// Validate the current row against the proper type
 
-				let serviceIdStartDate: OperationalDate;
-				let serviceIdEndDate: OperationalDate;
-
-				try {
-					serviceIdStartDate = validateOperationalDate(data.start_date);
-					serviceIdEndDate = validateOperationalDate(data.end_date);
-				}
-				catch (error) {
-					LOGGER.error(`Error creating operational date "${data.start_date}" or "${data.end_date}" for service_id "${data.service_id}"`, error);
-					return;
-				}
+				const validatedData = validateGtfsCalendar(data);
 
 				//
 				// Check if this service_id is between the given start_date and end_date.
 				// Clip the service_id's start and end dates to the given start and end dates.
+
+				let serviceIdStartDate = validatedData.start_date;
+				let serviceIdEndDate = validatedData.end_date;
 
 				if (serviceIdEndDate < startDate || serviceIdStartDate > endDate) return;
 
@@ -135,19 +127,19 @@ export async function generateOfferOutput(filePath: string, startDate: Operation
 
 				for (const currentDate of allOperationalDatesInRange) {
 					const dayOfWeek = Dates.fromOperationalDate(currentDate, 'Europe/Lisbon').toFormat('c');
-					if (dayOfWeek === '1' && String(data.monday) === '1') validOperationalDates.push(currentDate);
-					if (dayOfWeek === '2' && String(data.tuesday) === '1') validOperationalDates.push(currentDate);
-					if (dayOfWeek === '3' && String(data.wednesday) === '1') validOperationalDates.push(currentDate);
-					if (dayOfWeek === '4' && String(data.thursday) === '1') validOperationalDates.push(currentDate);
-					if (dayOfWeek === '5' && String(data.friday) === '1') validOperationalDates.push(currentDate);
-					if (dayOfWeek === '6' && String(data.saturday) === '1') validOperationalDates.push(currentDate);
-					if (dayOfWeek === '7' && String(data.sunday) === '1') validOperationalDates.push(currentDate);
+					if (dayOfWeek === '1' && validatedData.monday === 1) validOperationalDates.push(currentDate);
+					if (dayOfWeek === '2' && validatedData.tuesday === 1) validOperationalDates.push(currentDate);
+					if (dayOfWeek === '3' && validatedData.wednesday === 1) validOperationalDates.push(currentDate);
+					if (dayOfWeek === '4' && validatedData.thursday === 1) validOperationalDates.push(currentDate);
+					if (dayOfWeek === '5' && validatedData.friday === 1) validOperationalDates.push(currentDate);
+					if (dayOfWeek === '6' && validatedData.saturday === 1) validOperationalDates.push(currentDate);
+					if (dayOfWeek === '7' && validatedData.sunday === 1) validOperationalDates.push(currentDate);
 				}
 
 				//
 				// Save the valid operational dates for this service_id
 
-				savedCalendarDates.set(data.service_id, validOperationalDates);
+				savedCalendarDates.set(validatedData.service_id, validOperationalDates);
 
 				//
 			};
@@ -185,48 +177,40 @@ export async function generateOfferOutput(filePath: string, startDate: Operation
 
 			LOGGER.info(`Reading zip entry "calendar_dates.txt"...`);
 
-			const parseEachRow = async (data: CalendarDates) => {
+			const parseEachRow = async (data: GTFS_CalendarDate_Raw) => {
 				//
 
 				//
-				// Validate the date to ensure it is of type OperationalDate
+				// Validate the current row against the proper type
 
-				let currentOperationalDate: OperationalDate;
-
-				try {
-					currentOperationalDate = validateOperationalDate(data.date);
-				}
-				catch (error) {
-					LOGGER.error(`Error creating operational date "${data.date}" for service_id "${data.service_id}"`, error);
-					return;
-				}
+				const validatedData = validateGtfsCalendarDate(data);
 
 				//
 				// Skip if this row's date is not between the given start and end dates
 
-				if (currentOperationalDate < startDate || currentOperationalDate > endDate) return;
+				if (validatedData.date < startDate || validatedData.date > endDate) return;
 
 				//
 				// If we're here, it means the service_id is valid between the given dates.
 				// Get the previously saved calendars and check if it exists for this service_id.
 
-				const savedCalendar = savedCalendarDates.get(data.service_id);
+				const savedCalendar = savedCalendarDates.get(validatedData.service_id);
 
 				if (savedCalendar) {
 					// Create a new Set to avoid duplicated dates
 					const updatedCalendar = new Set(savedCalendar);
 					// If this service_id was previously saved, either add or remove the current date
 					// to it based on the exception_type value for this row.
-					if (Number(data.exception_type) === ExceptionType.SERVICE_ADDED) updatedCalendar.add(currentOperationalDate);
-					else if (Number(data.exception_type) === ExceptionType.SERVICE_REMOVED) updatedCalendar.delete(currentOperationalDate);
+					if (validatedData.exception_type === 1) updatedCalendar.add(validatedData.date);
+					else if (validatedData.exception_type === 2) updatedCalendar.delete(validatedData.date);
 					// Update the service_id with the new dates
-					savedCalendarDates.set(data.service_id, Array.from(updatedCalendar));
+					savedCalendarDates.set(validatedData.service_id, Array.from(updatedCalendar));
 				}
 				else {
 					// If this is the first time we're seeing this service_id, then it is only necessary
 					// to initiate a new dates array if it is a service addition
-					if (Number(data.exception_type) === ExceptionType.SERVICE_ADDED) {
-						savedCalendarDates.set(data.service_id, [currentOperationalDate]);
+					if (validatedData.exception_type === 1) {
+						savedCalendarDates.set(validatedData.service_id, [validatedData.date]);
 					}
 				}
 
@@ -266,37 +250,27 @@ export async function generateOfferOutput(filePath: string, startDate: Operation
 
 			LOGGER.info(`Reading zip entry "trips.txt"...`);
 
-			const parseEachRow = async (data: Trip_TMLExtended) => {
+			const parseEachRow = async (data: GTFS_Trip_Extended_Raw) => {
 				//
+
+				//
+				// Validate the current row against the proper type
+
+				const validatedData = validateGtfsTripExtended(data);
 
 				//
 				// For each trip, check if the associated service_id was saved
 				// in the previous step or not. Include it if yes, skip otherwise.
 
-				if (!savedCalendarDates.has(data.service_id)) return;
-
-				//
-				// Format the exported row. Only include the minimum required data
-				// to prevent memory bloat later on.
-
-				const parsedRowData: Trip_TMLExtended = {
-					direction_id: data.direction_id,
-					pattern_id: data.pattern_id,
-					route_id: data.route_id,
-					service_id: data.service_id,
-					shape_id: data.shape_id,
-					trip_headsign: data.trip_headsign,
-					trip_id: data.trip_id,
-					wheelchair_accessible: data.wheelchair_accessible,
-				};
+				if (!savedCalendarDates.has(validatedData.service_id)) return;
 
 				//
 				// Save this trip for later and reference
 				// the associated route_id to filter them later.
 
-				savedTrips.set(data.trip_id, parsedRowData);
+				savedTrips.set(validatedData.trip_id, validatedData);
 
-				referencedRouteIds.add(data.route_id);
+				referencedRouteIds.add(validatedData.route_id);
 
 				//
 			};
@@ -328,32 +302,24 @@ export async function generateOfferOutput(filePath: string, startDate: Operation
 
 			LOGGER.info(`Reading zip entry "routes.txt"...`);
 
-			const parseEachRow = async (data: Route_TMLExtended) => {
+			const parseEachRow = async (data: GTFS_Route_Extended_Raw) => {
 				//
+
+				//
+				// Validate the current row against the proper type
+
+				const validatedData = validateGtfsRouteExtended(data);
 
 				//
 				// For each route, only save the ones referenced
 				// by the previously saved trips.
 
-				if (!referencedRouteIds.has(data.route_id)) return;
+				if (!referencedRouteIds.has(validatedData.route_id)) return;
 
 				//
 				// Format and save the exported row
 
-				const parsedRowData: Partial<Route_TMLExtended> = {
-					agency_id: data.agency_id,
-					line_id: data.line_id,
-					line_long_name: data.line_long_name,
-					line_short_name: data.line_short_name,
-					path_type: data.path_type,
-					route_color: data.route_color,
-					route_id: data.route_id,
-					route_long_name: data.route_long_name,
-					route_short_name: data.route_short_name,
-					route_text_color: data.route_text_color,
-				};
-
-				savedRoutes.set(data.route_id, parsedRowData);
+				savedRoutes.set(validatedData.route_id, validatedData);
 
 				//
 			};

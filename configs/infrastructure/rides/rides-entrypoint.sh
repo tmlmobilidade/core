@@ -14,24 +14,24 @@ while (!rs.isMaster().ismaster) {
 // Create the admin user
 db.createUser({
 	user: "admin",
-	pwd: "$RIDES_ADMIN_PASSWORD",
+	pwd: "$TML_INTERFACE_RIDES_ADMIN_PASSWORD",
 	roles: ["root"]
 })
 
 // Authenticate as admin to create other users
-// db.auth("admin", "$RIDES_ADMIN_PASSWORD")
+// db.auth("admin", "$TML_INTERFACE_RIDES_ADMIN_PASSWORD")
 
 // Create a read-only user
 db.createUser({
 	user: "read",
-	pwd: "$RIDES_READ_PASSWORD",
+	pwd: "$TML_INTERFACE_RIDES_READ_PASSWORD",
 	roles: [ { role: "read", db: "production" } ]
 })
 
 // Create a read-write user
 db.createUser({
 	user: "write",
-	pwd: "$RIDES_WRITE_PASSWORD",
+	pwd: "$TML_INTERFACE_RIDES_WRITE_PASSWORD",
 	roles: [ { role: "readWrite", db: "production" } ]
 })
 EOF

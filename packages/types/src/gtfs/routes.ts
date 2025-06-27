@@ -102,7 +102,6 @@ export function validateGtfsRoute(rawData: GTFS_Route_Raw): GTFS_Route {
 	if (!rawData.route_short_name) throw new Error('Missing required field "route_short_name" on GTFS Route.');
 	if (!rawData.route_text_color) throw new Error('Missing required field "route_text_color" on GTFS Route.');
 	if (!rawData.route_type) throw new Error('Missing required field "route_type" on GTFS Route.');
-	// Validate the route type
 	// Transform the raw data into the output format
 	return {
 		agency_id: rawData.agency_id,

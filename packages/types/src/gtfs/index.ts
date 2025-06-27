@@ -3,4 +3,5 @@ export * from '@/gtfs/calendar.js';
 export * from '@/gtfs/common.js';
 export * from '@/gtfs/routes.js';
 export * from '@/gtfs/shapes.js';
+export * from '@/gtfs/stops.js';
 export * from '@/gtfs/trips.js';

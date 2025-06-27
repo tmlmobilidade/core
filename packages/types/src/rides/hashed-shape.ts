@@ -1,38 +1,21 @@
 /* * */
 
-import { DocumentSchema } from '@/_common/document.js';
 import { type UnixTimestamp } from '@/_common/unix-timestamp.js';
-import { z } from 'zod';
 
 /* * */
 
-export const HashedShapePointSchema = z.object({
-	shape_dist_traveled: z.number(),
-	shape_pt_lat: z.number(),
-	shape_pt_lon: z.number(),
-	shape_pt_sequence: z.number(),
-}).strict();
-
-export const CreateHashedShapePointSchema = HashedShapePointSchema;
-export const UpdateHashedShapePointSchema = CreateHashedShapePointSchema.partial();
-
-export type HashedShapePoint = z.infer<typeof HashedShapePointSchema>;
-export type CreateHashedShapePointDto = z.infer<typeof CreateHashedShapePointSchema>;
-export type UpdateHashedShapePointDto = Partial<CreateHashedShapePointDto>;
+export interface HashedShapePoint {
+	shape_dist_traveled: number
+	shape_pt_lat: number
+	shape_pt_lon: number
+	shape_pt_sequence: number
+}
 
 /* * */
 
-export const HashedShapeSchema = DocumentSchema.extend({
-	agency_id: z.string(),
-	points: z.array(HashedShapePointSchema),
-}).strict();
-
-export const CreateHashedShapeSchema = HashedShapeSchema.partial({ _id: true }).omit({ created_at: true, updated_at: true });
-export const UpdateHashedShapeSchema = CreateHashedShapeSchema.partial();
-
-export interface HashedShape extends Omit<z.infer<typeof HashedShapeSchema>, 'created_at' | 'updated_at'> {
+export interface HashedShape {
+	agency_id: number
 	created_at: UnixTimestamp
+	points: HashedShapePoint[]
 	updated_at: UnixTimestamp
 }
-export type CreateHashedShapeDto = z.infer<typeof CreateHashedShapeSchema>;
-export type UpdateHashedShapeDto = Partial<CreateHashedShapeDto>;

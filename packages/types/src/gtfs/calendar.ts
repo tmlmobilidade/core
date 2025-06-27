@@ -4,9 +4,9 @@ import { type OperationalDate, validateOperationalDate } from '@/_common/operati
 import { type GTFS_Binary, validateGtfsBinary } from '@/gtfs/common.js';
 
 /**
- *  Represents a calendar in the GTFS (General Transit Feed Specification) format.
- *  A calendar defines the days of the week on which a particular service is available,
- *  along with the start and end dates of the service period.
+ * Represents a calendar in the GTFS (General Transit Feed Specification) format.
+ * A calendar defines the days of the week on which a particular service is available,
+ * along with the start and end dates of the service period.
  */
 export interface GTFS_Calendar {
 	end_date: OperationalDate

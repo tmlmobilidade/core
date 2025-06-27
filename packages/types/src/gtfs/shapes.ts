@@ -31,19 +31,19 @@ export interface GTFS_Shape_Raw {
 }
 
 /**
- * Validates and transforms a raw GTFS calendar into the GTFS_Shape format.
+ * Validates and transforms a raw GTFS Shape into the GTFS_Shape format.
  * This function checks the types of fields, converts boolean strings to boolean values,
  * and ensures that required fields are present.
- * @param rawData The raw calendar data to validate and transform.
+ * @param rawData The raw Shape data to validate and transform.
  * @returns A validated GTFS_Shape object.
  */
 export function validateGtfsShape(rawData: GTFS_Shape_Raw): GTFS_Shape {
 	// Ensure required fields are present
-	if (!rawData.shape_dist_traveled) throw new Error('Missing required field "shape_dist_traveled" on GTFS calendar.');
-	if (!rawData.shape_id) throw new Error('Missing required field "shape_id" on GTFS calendar.');
-	if (!rawData.shape_pt_lat) throw new Error('Missing required field "shape_pt_lat" on GTFS calendar.');
-	if (!rawData.shape_pt_lon) throw new Error('Missing required field "shape_pt_lon" on GTFS calendar.');
-	if (!rawData.shape_pt_sequence) throw new Error('Missing required field "shape_pt_sequence" on GTFS calendar.');
+	if (!rawData.shape_dist_traveled) throw new Error('Missing required field "shape_dist_traveled" on GTFS Shape.');
+	if (!rawData.shape_id) throw new Error('Missing required field "shape_id" on GTFS Shape.');
+	if (!rawData.shape_pt_lat) throw new Error('Missing required field "shape_pt_lat" on GTFS Shape.');
+	if (!rawData.shape_pt_lon) throw new Error('Missing required field "shape_pt_lon" on GTFS Shape.');
+	if (!rawData.shape_pt_sequence) throw new Error('Missing required field "shape_pt_sequence" on GTFS Shape.');
 	// Validate the individual fields
 	if (Number.isNaN(rawData.shape_dist_traveled)) throw new Error(`Invalid value for "shape_dist_traveled": "${rawData.shape_dist_traveled}". It must be a number.`);
 	if (Number.isNaN(rawData.shape_pt_lat)) throw new Error(`Invalid value for "shape_pt_lat": "${rawData.shape_pt_lat}". It must be a number.`);

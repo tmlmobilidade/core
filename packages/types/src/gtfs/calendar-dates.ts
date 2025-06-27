@@ -52,7 +52,7 @@ export interface GTFS_CalendarDate_Raw {
 }
 
 /**
- * Validates and transforms a raw GTFS calendar date exception
+ * Validates and transforms a raw GTFS Calendar Date exception
  * into the GTFS_CalendarDate format.
  * This function checks the types of fields, converts string representations
  * to appropriate types, and ensures that required fields are present.

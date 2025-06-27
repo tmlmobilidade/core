@@ -40,7 +40,7 @@ export const RideSchema = DocumentSchema.extend({
 	hashed_trip_id: z.string(),
 	headsign: z.string(),
 	is_locked: z.boolean().default(false),
-	line_id: z.string(),
+	line_id: z.number(),
 	operational_date: z.string().transform(validateOperationalDate).brand('OperationalDate'),
 	passengers_estimated: z.number().nullable(),
 	passengers_observed: z.number().nullable(),

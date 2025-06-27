@@ -1,57 +1,39 @@
 /* * */
 
-import { DocumentSchema } from '@/_common/document.js';
 import { type UnixTimestamp } from '@/_common/unix-timestamp.js';
-import { PickupDropoffType } from 'gtfs-types';
-import { z } from 'zod';
+import { type GTFS_PickupDropoffType } from '@/gtfs/common.js';
 
 /* * */
 
-export const HashedTripWaypointSchema = z.object({
-	arrival_time: z.string(),
-	departure_time: z.string(),
-	drop_off_type: z.nativeEnum(PickupDropoffType),
-	pickup_type: z.nativeEnum(PickupDropoffType),
-	shape_dist_traveled: z.number(),
-	stop_id: z.string(),
-	stop_lat: z.number(),
-	stop_lon: z.number(),
-	stop_name: z.string(),
-	stop_sequence: z.number(),
-	timepoint: z.number(),
-}).strict();
-
-export const CreateHashedTripWaypointSchema = HashedTripWaypointSchema;
-export const UpdateHashedTripWaypointSchema = HashedTripWaypointSchema.partial();
-
-export type HashedTripWaypoint = z.infer<typeof HashedTripWaypointSchema>;
-export type CreateHashedTripWaypointDto = z.infer<typeof CreateHashedTripWaypointSchema>; ;
-export type UpdateHashedTripWaypointDto = Partial<CreateHashedTripWaypointDto>;
+export interface HashedTripWaypoint {
+	arrival_time: string
+	departure_time: string
+	drop_off_type: GTFS_PickupDropoffType
+	pickup_type: GTFS_PickupDropoffType
+	shape_dist_traveled: number
+	stop_id: string
+	stop_lat: number
+	stop_lon: number
+	stop_name: string
+	stop_sequence: number
+	timepoint: number
+}
 
 /* * */
 
-export const HashedTripSchema = DocumentSchema.extend({
-	agency_id: z.string(),
-	line_id: z.string(),
-	line_long_name: z.string(),
-	line_short_name: z.string(),
-	path: z.array(HashedTripWaypointSchema),
-	pattern_id: z.string(),
-	route_color: z.string(),
-	route_id: z.string(),
-	route_long_name: z.string(),
-	route_short_name: z.string(),
-	route_text_color: z.string(),
-	trip_headsign: z.string(),
-}).strict();
-
-export const CreateHashedTripSchema = HashedTripSchema.omit({ created_at: true, updated_at: true });
-
-export const UpdateHashedTripSchema = CreateHashedTripSchema.partial();
-
-export interface HashedTrip extends Omit<z.infer<typeof HashedTripSchema>, 'created_at' | 'updated_at'> {
+export interface HashedTrip {
+	agency_id: string
 	created_at: UnixTimestamp
+	line_id: number
+	line_long_name: string
+	line_short_name: string
+	path: HashedTripWaypoint[]
+	pattern_id: string
+	route_color: string
+	route_id: string
+	route_long_name: string
+	route_short_name: string
+	route_text_color: string
+	trip_headsign: string
 	updated_at: UnixTimestamp
 }
-export type CreateHashedTripDto = z.infer<typeof CreateHashedTripSchema>;
-export type UpdateHashedTripDto = Partial<CreateHashedTripDto>;

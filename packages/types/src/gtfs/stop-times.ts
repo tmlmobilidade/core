@@ -12,11 +12,11 @@ import { type GTFS_Binary, type GTFS_PickupDropoffType, validateGtfsBinary, vali
  */
 export interface GTFS_StopTime {
 	arrival_time: string
-	continuous_drop_off: GTFS_PickupDropoffType
-	continuous_pickup: GTFS_PickupDropoffType
+	continuous_drop_off?: GTFS_PickupDropoffType
+	continuous_pickup?: GTFS_PickupDropoffType
 	departure_time: string
-	drop_off_type: GTFS_PickupDropoffType
-	pickup_type: GTFS_PickupDropoffType
+	drop_off_type?: GTFS_PickupDropoffType
+	pickup_type?: GTFS_PickupDropoffType
 	shape_dist_traveled: number
 	stop_headsign?: string
 	stop_id: string
@@ -55,15 +55,12 @@ export interface GTFS_StopTime_Raw {
  */
 export function validateGtfsStopTime(rawData: GTFS_StopTime_Raw): GTFS_StopTime {
 	// Ensure required fields are present
-	if (!rawData.stop_id) throw new Error('Missing required field "stop_id" on GTFS StopTime.');
-	if (!rawData.trip_id) throw new Error('Missing required field "trip_id" on GTFS StopTime.');
 	if (!rawData.arrival_time) throw new Error('Missing required field "arrival_time" on GTFS StopTime.');
 	if (!rawData.departure_time) throw new Error('Missing required field "departure_time" on GTFS StopTime.');
+	if (!rawData.shape_dist_traveled) throw new Error('Missing required field "shape_dist_traveled" on GTFS StopTime.');
+	if (!rawData.stop_id) throw new Error('Missing required field "stop_id" on GTFS StopTime.');
 	if (!rawData.stop_sequence) throw new Error('Missing required field "stop_sequence" on GTFS StopTime.');
-	if (!rawData.continuous_pickup) throw new Error('Missing required field "continuous_pickup" on GTFS StopTime.');
-	if (!rawData.continuous_drop_off) throw new Error('Missing required field "continuous_drop_off" on GTFS StopTime.');
-	if (!rawData.pickup_type) throw new Error('Missing required field "pickup_type" on GTFS StopTime.');
-	if (!rawData.drop_off_type) throw new Error('Missing required field "drop_off_type" on GTFS StopTime.');
+	if (!rawData.trip_id) throw new Error('Missing required field "trip_id" on GTFS StopTime.');
 	// Validate the individual fields
 	if (Number.isNaN(rawData.shape_dist_traveled)) throw new Error(`Invalid value for "shape_dist_traveled": "${rawData.shape_dist_traveled}". It must be a number.`);
 	if (Number.isNaN(rawData.stop_sequence)) throw new Error(`Invalid value for "stop_sequence": "${rawData.stop_sequence}". It must be a number.`);

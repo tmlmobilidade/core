@@ -4,7 +4,7 @@ import { type OfferJourney, type OfferStop } from '@/types.js';
 import LOGGER from '@helperkits/logger';
 import TIMETRACKER from '@helperkits/timer';
 import { JsonWriter } from '@helperkits/writer';
-import { type GTFS_Calendar_Raw, type GTFS_CalendarDate_Raw, GTFS_Route_Extended_Raw, type GTFS_Trip_Extended, type GTFS_Trip_Extended_Raw, type OperationalDate, validateGtfsCalendar, validateGtfsCalendarDate, validateGtfsRouteExtended, validateGtfsTripExtended } from '@tmlmobilidade/types';
+import { type GTFS_Calendar_Raw, type GTFS_CalendarDate_Raw, GTFS_Route_Extended, GTFS_Route_Extended_Raw, GTFS_Stop_Extended, GTFS_Stop_Extended_Raw, type GTFS_Trip_Extended, type GTFS_Trip_Extended_Raw, type OperationalDate, validateGtfsCalendar, validateGtfsCalendarDate, validateGtfsRouteExtended, validateGtfsStopExtended, validateGtfsTripExtended } from '@tmlmobilidade/types';
 import { convertMetersOrKilometersToMeters, Dates, getOperationalDatesFromRange } from '@tmlmobilidade/utils';
 import { parse as csvParser } from 'csv-parse';
 import extract from 'extract-zip';
@@ -38,8 +38,8 @@ export async function generateOfferOutput(filePath: string, startDate: Operation
 
 		const savedCalendarDates = new Map<string, OperationalDate[]>();
 		const savedTrips = new Map<string, GTFS_Trip_Extended>();
-		const savedStops = new Map<string, Stop_TMLExtended>();
-		const savedRoutes = new Map<string, Partial<Route_TMLExtended>>();
+		const savedStops = new Map<string, GTFS_Stop_Extended>();
+		const savedRoutes = new Map<string, Partial<GTFS_Route_Extended>>();
 		const savedStopTimes = new Map<string, StopTime[]>();
 
 		let totalOfferJourneysCounter = 0;
@@ -251,28 +251,15 @@ export async function generateOfferOutput(filePath: string, startDate: Operation
 			LOGGER.info(`Reading zip entry "trips.txt"...`);
 
 			const parseEachRow = async (data: GTFS_Trip_Extended_Raw) => {
-				//
-
-				//
 				// Validate the current row against the proper type
-
 				const validatedData = validateGtfsTripExtended(data);
-
-				//
 				// For each trip, check if the associated service_id was saved
 				// in the previous step or not. Include it if yes, skip otherwise.
-
 				if (!savedCalendarDates.has(validatedData.service_id)) return;
-
-				//
-				// Save this trip for later and reference
-				// the associated route_id to filter them later.
-
+				// Save the exported row
 				savedTrips.set(validatedData.trip_id, validatedData);
-
+				// Reference the associated entities to filter them later.
 				referencedRouteIds.add(validatedData.route_id);
-
-				//
 			};
 
 			//
@@ -303,25 +290,13 @@ export async function generateOfferOutput(filePath: string, startDate: Operation
 			LOGGER.info(`Reading zip entry "routes.txt"...`);
 
 			const parseEachRow = async (data: GTFS_Route_Extended_Raw) => {
-				//
-
-				//
 				// Validate the current row against the proper type
-
 				const validatedData = validateGtfsRouteExtended(data);
-
-				//
 				// For each route, only save the ones referenced
 				// by the previously saved trips.
-
 				if (!referencedRouteIds.has(validatedData.route_id)) return;
-
-				//
-				// Format and save the exported row
-
+				// Save the exported row
 				savedRoutes.set(validatedData.route_id, validatedData);
-
-				//
 			};
 
 			//
@@ -352,27 +327,11 @@ export async function generateOfferOutput(filePath: string, startDate: Operation
 
 			LOGGER.info(`Reading zip entry "stops.txt"...`);
 
-			const parseEachRow = async (data: Stop_TMLExtended) => {
-				//
-
-				//
-				// Save all stops, but only the mininum required data.
-
-				const parsedRowData: Stop_TMLExtended = {
-					location_type: data.location_type,
-					municipality_id: data.municipality_id,
-					parent_station: data.parent_station,
-					parish_id: data.parish_id,
-					region_id: data.region_id,
-					stop_id: data.stop_id,
-					stop_lat: Number(data.stop_lat),
-					stop_lon: Number(data.stop_lon),
-					stop_name: data.stop_name,
-				};
-
-				savedStops.set(data.stop_id, parsedRowData);
-
-				//
+			const parseEachRow = async (data: GTFS_Stop_Extended_Raw) => {
+				// Validate the current row against the proper type
+				const validatedData = validateGtfsStopExtended(data);
+				// Save the exported row
+				savedStops.set(validatedData.stop_id, validatedData);
 			};
 
 			//

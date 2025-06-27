@@ -4,12 +4,11 @@ import { type OfferJourney, type OfferStop } from '@/types.js';
 import LOGGER from '@helperkits/logger';
 import TIMETRACKER from '@helperkits/timer';
 import { JsonWriter } from '@helperkits/writer';
-import { type GTFS_Calendar_Raw, type GTFS_CalendarDate_Raw, GTFS_Route_Extended, GTFS_Route_Extended_Raw, GTFS_Stop_Extended, GTFS_Stop_Extended_Raw, type GTFS_Trip_Extended, type GTFS_Trip_Extended_Raw, type OperationalDate, validateGtfsCalendar, validateGtfsCalendarDate, validateGtfsRouteExtended, validateGtfsStopExtended, validateGtfsTripExtended } from '@tmlmobilidade/types';
+import { type GTFS_Calendar_Raw, type GTFS_CalendarDate_Raw, type GTFS_Route_Extended, type GTFS_Route_Extended_Raw, type GTFS_Stop_Extended, type GTFS_Stop_Extended_Raw, type GTFS_StopTime, type GTFS_StopTime_Raw, type GTFS_Trip_Extended, type GTFS_Trip_Extended_Raw, type OperationalDate, validateGtfsCalendar, validateGtfsCalendarDate, validateGtfsRouteExtended, validateGtfsStopExtended, validateGtfsStopTime, validateGtfsTripExtended } from '@tmlmobilidade/types';
 import { convertMetersOrKilometersToMeters, Dates, getOperationalDatesFromRange } from '@tmlmobilidade/utils';
 import { parse as csvParser } from 'csv-parse';
 import extract from 'extract-zip';
 import fs from 'fs';
-import { type StopTime } from 'gtfs-types';
 
 /* * */
 
@@ -40,7 +39,7 @@ export async function generateOfferOutput(filePath: string, startDate: Operation
 		const savedTrips = new Map<string, GTFS_Trip_Extended>();
 		const savedStops = new Map<string, GTFS_Stop_Extended>();
 		const savedRoutes = new Map<string, Partial<GTFS_Route_Extended>>();
-		const savedStopTimes = new Map<string, StopTime[]>();
+		const savedStopTimes = new Map<string, GTFS_StopTime[]>();
 
 		let totalOfferJourneysCounter = 0;
 		let totalOfferStopsCounter = 0;
@@ -363,41 +362,33 @@ export async function generateOfferOutput(filePath: string, startDate: Operation
 
 			LOGGER.info(`Reading zip entry "stop_times.txt"...`);
 
-			const parseEachRow = async (data: StopTime) => {
+			const parseEachRow = async (data: GTFS_StopTime_Raw) => {
 				//
+
+				//
+				// Validate the current row against the proper type
+
+				const validatedData = validateGtfsStopTime(data);
 
 				//
 				// For each stopTime of each trip, check if the associated trip_id was saved
 				// in the previous step or not. Skip if this row's trip_id was not saved before.
 				// Also, check if the stop_id is valid and was saved before.
 
-				const tripData = savedTrips.get(data.trip_id);
+				const tripData = savedTrips.get(validatedData.trip_id);
 				if (!tripData) return;
 
-				const stopData = savedStops.get(data.stop_id);
+				const stopData = savedStops.get(validatedData.stop_id);
 				if (!stopData) return;
 
 				//
 				// Format the exported row. Only include the minimum required data
 				// to prevent memory bloat later on, and include the stop data right away.
 
-				const parsedRowData: StopTime = {
-					arrival_time: data.arrival_time,
-					continuous_drop_off: data.continuous_drop_off,
-					continuous_pickup: data.continuous_pickup,
-					departure_time: data.departure_time,
-					shape_dist_traveled: data.shape_dist_traveled,
-					stop_headsign: data.stop_headsign,
-					stop_id: data.stop_id,
-					stop_sequence: data.stop_sequence,
-					timepoint: data.timepoint,
-					trip_id: data.trip_id,
-				};
+				const savedStopTime = savedStopTimes.get(validatedData.trip_id);
 
-				const savedStopTime = savedStopTimes.get(data.trip_id);
-
-				if (savedStopTime) savedStopTimes.set(data.trip_id, [...savedStopTime, parsedRowData]);
-				else savedStopTimes.set(data.trip_id, [parsedRowData]);
+				if (savedStopTime) savedStopTimes.set(validatedData.trip_id, [...savedStopTime, validatedData]);
+				else savedStopTimes.set(validatedData.trip_id, [validatedData]);
 
 				//
 			};

@@ -1,5 +1,3 @@
-/* * */
-
 export * from '@/agencies.js';
 export * from '@/app-urls.js';
 export * from '@/ascii-art.js';

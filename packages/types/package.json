@@ -32,7 +32,6 @@
 	},
 	"scripts": {
 		"build": "rimraf ./dist && tsc && resolve-tspaths",
-		"clean": "sh cleanup.sh",
 		"lint": "eslint && tsc --noEmit",
 		"lint:fix": "eslint --fix"
 	},
@@ -46,7 +45,7 @@
 		"@carrismetropolitana/eslint": "20250622.1204.50",
 		"@tmlmobilidade/tsconfig": "*",
 		"@types/luxon": "3.6.2",
-		"@types/node": "24.0.4",
+		"@types/node": "24.0.6",
 		"gtfs-types": "5.1.0",
 		"resolve-tspaths": "0.8.23",
 		"rimraf": "6.0.1",

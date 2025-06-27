@@ -9,7 +9,7 @@ import { type GTFS_Binary, type GTFS_Ternary, validateGtfsBinary, validateGtfsTe
  * The trip can have various attributes such as headsign, direction, and accessibility options.
  */
 export interface GTFS_Trip {
-	bikes_allowed: GTFS_Ternary
+	bikes_allowed?: GTFS_Ternary
 	block_id?: string
 	direction_id: GTFS_Binary
 	route_id: string
@@ -54,8 +54,6 @@ export function validateGtfsTrip(rawData: GTFS_Trip_Raw): GTFS_Trip {
 	if (!rawData.service_id) throw new Error('Missing required field "service_id" on GTFS Trip.');
 	if (!rawData.trip_id) throw new Error('Missing required field "trip_id" on GTFS Trip.');
 	if (!rawData.direction_id) throw new Error('Missing required field "direction_id" on GTFS Trip.');
-	if (!rawData.bikes_allowed) throw new Error('Missing required field "bikes_allowed" on GTFS Trip.');
-	if (!rawData.wheelchair_accessible) throw new Error('Missing required field "wheelchair_accessible" on GTFS Trip.');
 	if (!rawData.trip_headsign) throw new Error('Missing required field "trip_headsign" on GTFS Trip.');
 	if (!rawData.shape_id) throw new Error('Missing required field "shape_id" on GTFS Trip.');
 	// Transform the raw data into the output format

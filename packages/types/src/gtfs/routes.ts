@@ -50,8 +50,8 @@ export function validateGtfsRouteType(value: number | string): GTFS_RouteType {
  */
 export interface GTFS_Route {
 	agency_id: string
-	continuous_drop_off: GTFS_PickupDropoffType
-	continuous_pickup: GTFS_PickupDropoffType
+	continuous_drop_off?: GTFS_PickupDropoffType
+	continuous_pickup?: GTFS_PickupDropoffType
 	route_color: string
 	route_desc?: string
 	route_id: string
@@ -94,8 +94,6 @@ export interface GTFS_Route_Raw {
 export function validateGtfsRoute(rawData: GTFS_Route_Raw): GTFS_Route {
 	// Ensure required fields are present
 	if (!rawData.agency_id) throw new Error('Missing required field "agency_id" on GTFS Route.');
-	if (!rawData.continuous_drop_off) throw new Error('Missing required field "continuous_drop_off" on GTFS Route.');
-	if (!rawData.continuous_pickup) throw new Error('Missing required field "continuous_pickup" on GTFS Route.');
 	if (!rawData.route_color) throw new Error('Missing required field "route_color" on GTFS Route.');
 	if (!rawData.route_id) throw new Error('Missing required field "route_id" on GTFS Route.');
 	if (!rawData.route_long_name) throw new Error('Missing required field "route_long_name" on GTFS Route.');
@@ -139,7 +137,9 @@ export type GTFS_PathType =
  * @returns A GTFS Path Type value (1, 2, or 3).
  * @throws Error if the value is not a valid GTFS Path Type representation.
  */
-export function validateGTFSPathType(value: number | string): GTFS_PathType {
+export function validateGTFSPathType(value?: number | string): GTFS_PathType {
+	// If the value is not provided, default to 1 (Base path)
+	if (value === undefined || value === null) return 1;
 	// Handle numeric and string representations of GTFS Path Type values
 	if (typeof value === 'number') {
 		if (value === 1) return 1;
@@ -162,13 +162,13 @@ export function validateGTFSPathType(value: number | string): GTFS_PathType {
  * should be used for working with the GTFS-TML standard.
  */
 export interface GTFS_Route_Extended extends GTFS_Route {
-	circular: GTFS_Binary
+	circular?: GTFS_Binary
 	line_id: number
 	line_long_name: string
 	line_short_name: string
-	path_type: GTFS_PathType
+	path_type?: GTFS_PathType
 	route_remarks?: string
-	school: GTFS_Binary
+	school?: GTFS_Binary
 }
 
 /**
@@ -198,12 +198,9 @@ export function validateGtfsRouteExtended(rawData: GTFS_Route_Extended_Raw): GTF
 	// Validate the standard GTFS fields
 	const route = validateGtfsRoute(rawData);
 	// Validate the Extended GTFS fields
-	if (!rawData.circular) throw new Error('Missing required field "circular" on GTFS Route.');
 	if (!rawData.line_id) throw new Error('Missing required field "line_id" on GTFS Route.');
 	if (!rawData.line_long_name) throw new Error('Missing required field "line_long_name" on GTFS Route.');
 	if (!rawData.line_short_name) throw new Error('Missing required field "line_short_name" on GTFS Route.');
-	if (!rawData.path_type) throw new Error('Missing required field "path_type" on GTFS Route.');
-	if (!rawData.school) throw new Error('Missing required field "school" on GTFS Route.');
 	// Validate the type of fields
 	if (Number.isNaN(rawData.line_id)) throw new Error(`Invalid line_id: "${rawData.line_id}". It must be a valid number.`);
 	// Transform the raw data into the output format

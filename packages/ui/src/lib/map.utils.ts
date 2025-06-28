@@ -3,7 +3,7 @@
 /* * */
 
 import { mapDefaultValues } from '@/settings/map.settings';
-import { featureCollection, point } from '@turf/helpers';
+import { featureCollection, point } from '@turf/turf';
 import * as turf from '@turf/turf';
 
 /* * */

@@ -2,7 +2,7 @@
 
 import { EARTH_RADIUS } from '@/geo/constants.js';
 import { toFeatureFromObject, toPointFromPositions } from '@/geo/conversions.js';
-import { polygon } from '@turf/helpers';
+import { polygon } from '@turf/turf';
 import { type Feature, type Point, type Polygon } from 'geojson';
 
 /**

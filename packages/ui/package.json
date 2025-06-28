@@ -31,7 +31,6 @@
 		"lint": "eslint ./src"
 	},
 	"peerDependencies": {
-		"@turf/turf": "7.x",
 		"next": "14.x || 15.x",
 		"react": "18.x || 19.x",
 		"react-dom": "18.x || 19.x",
@@ -64,7 +63,6 @@
 		"@rollup/plugin-commonjs": "28.0.6",
 		"@rollup/plugin-node-resolve": "16.0.1",
 		"@rollup/plugin-typescript": "12.1.4",
-		"@turf/helpers": "7.2.0",
 		"@turf/turf": "7.2.0",
 		"@types/geojson": "7946.0.16",
 		"@types/luxon": "3.6.2",

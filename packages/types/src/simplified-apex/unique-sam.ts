@@ -13,7 +13,7 @@ export const UniqueSamSchema = DocumentSchema.extend({
 	device_id: z.string(),
 	is_complete: z.boolean().default(false),
 	latest_apex_version: z.string().nullable(),
-	message: z.string(),
+	remarks: z.string().nullable(),
 	seen_first_at: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullable(),
 	seen_last_at: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullable(),
 	system_status: z.nativeEnum(ProcessingStatus).default(ProcessingStatus.Waiting),

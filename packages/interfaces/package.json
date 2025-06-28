@@ -50,7 +50,7 @@
 	"devDependencies": {
 		"@carrismetropolitana/eslint": "20250622.1204.50",
 		"@types/luxon": "3.6.2",
-		"@types/node": "24.0.6",
+		"@types/node": "24.0.7",
 		"@types/nodemailer": "6.4.17",
 		"resolve-tspaths": "0.8.23",
 		"rimraf": "6.0.1",

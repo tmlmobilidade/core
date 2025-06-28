@@ -53,7 +53,7 @@
 		"@tmlmobilidade/tsconfig": "*",
 		"@tmlmobilidade/types": "*",
 		"@types/luxon": "3.6.2",
-		"@types/node": "24.0.6",
+		"@types/node": "24.0.7",
 		"@types/papaparse": "5.3.16",
 		"resolve-tspaths": "0.8.23",
 		"rimraf": "6.0.1",

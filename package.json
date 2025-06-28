@@ -21,7 +21,7 @@
 		"dev": "turbo dev",
 		"dev:docs": "turbo dev --filter=@tmlmobilidade/docs",
 		"lint": "turbo lint",
-		"purge": "sh scripts/purge.sh",
+		"rinse": "npx --yes @tmlmobilidade/repo-rinse",
 		"test": "turbo test",
 		"test:prod": "turbo test:prod",
 		"yalc:push": "command -v yalc >/dev/null 2>&1 && sh scripts/yalc.sh || echo 'yalc not installed, skipping yalc push...'"

@@ -217,14 +217,15 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	}
 
 	/**
-	 * Updates a single document matching the filter criteria.
-	 * @param filter - The filter criteria to match the document to update
-	 * @param updateFields - The fields to update in the document
-	 * @param options - The options for the update operation
-	 * @returns A promise that resolves to the result of the update operation
+	 * Updates a document by its ID.
+	 * @param _id The ID of the document to update.
+	 * @param updateFields The fields to update in the document.
+	 * @param options Optional options for the update operation.
+	 * @returns A promise that resolves to the result of the update operation.
 	 */
-	public async updateById(id: string, updateFields: TUpdate, options?: UpdateOptions): Promise<UpdateResult> {
-		return this.updateOne({ _id: { $eq: id } } as unknown as Filter<T>, updateFields, options);
+	public async updateById(_id: T['_id'], updateFields: TUpdate, options?: UpdateOptions): Promise<UpdateResult> {
+		const filter: Filter<T> = { _id: { $eq: _id } } as Filter<T>;
+		return this.updateOne(filter, updateFields, options);
 	}
 
 	// /**

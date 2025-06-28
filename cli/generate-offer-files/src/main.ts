@@ -5,7 +5,7 @@ import LOGGER from '@helperkits/logger';
 import TIMETRACKER from '@helperkits/timer';
 import { JsonWriter } from '@helperkits/writer';
 import { type GTFS_Calendar_Raw, type GTFS_CalendarDate_Raw, type GTFS_Route_Extended, type GTFS_Route_Extended_Raw, type GTFS_Stop_Extended, type GTFS_Stop_Extended_Raw, type GTFS_StopTime, type GTFS_StopTime_Raw, type GTFS_Trip_Extended, type GTFS_Trip_Extended_Raw, type OperationalDate, validateGtfsCalendar, validateGtfsCalendarDate, validateGtfsRouteExtended, validateGtfsStopExtended, validateGtfsStopTime, validateGtfsTripExtended } from '@tmlmobilidade/types';
-import { convertMetersOrKilometersToMeters, Dates, getOperationalDatesFromRange } from '@tmlmobilidade/utils';
+import { Dates, getOperationalDatesFromRange, toMetersFromKilometersOrMeters } from '@tmlmobilidade/utils';
 import { parse as csvParser } from 'csv-parse';
 import extract from 'extract-zip';
 import fs from 'fs';
@@ -449,7 +449,7 @@ export async function generateOfferOutput(filePath: string, startDate: Operation
 					const lastStopTime = stopTimesData[stopTimesData.length - 1];
 					const lastStopData = savedStops.get(lastStopTime.stop_id);
 
-					const extensionScheduledInMeters = convertMetersOrKilometersToMeters(lastStopTime.shape_dist_traveled, lastStopTime.shape_dist_traveled);
+					const extensionScheduledInMeters = toMetersFromKilometersOrMeters(lastStopTime.shape_dist_traveled, lastStopTime.shape_dist_traveled);
 
 					const currentDateFormated = Dates.fromOperationalDate(currentCalendarDate, 'Europe/Lisbon').toFormat('yyyy-MM-dd');
 
@@ -517,7 +517,7 @@ export async function generateOfferOutput(filePath: string, startDate: Operation
 
 						const currentStop = savedStops.get(currentStopTime.stop_id);
 
-						const shapeDistTraveledInMeters = convertMetersOrKilometersToMeters(currentStopTime.shape_dist_traveled, lastStopTime.shape_dist_traveled);
+						const shapeDistTraveledInMeters = toMetersFromKilometersOrMeters(currentStopTime.shape_dist_traveled, lastStopTime.shape_dist_traveled);
 
 						const offerStopData: OfferStop = {
 							arrivalTime: currentStopTime.arrival_time,

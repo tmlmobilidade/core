@@ -107,6 +107,17 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	}
 
 	/**
+	 * Checks if a document with the given ID exists in the collection.
+	 * @param id The ID of the document to check for existence.
+	 * @returns A promise that resolves to true if the document exists, false otherwise.
+	 */
+	public async exists<K extends keyof T>(key: K, value: T[K]): Promise<boolean> {
+		const filter: Filter<T> = { [key]: value } as Filter<T>;
+		const doc = await this.mongoCollection.findOne(filter, { projection: { [key]: 1 } });
+		return doc !== null;
+	}
+
+	/**
 	 * Finds a document by its ID.
 	 * @param id - The ID of the document to find
 	 * @returns A promise that resolves to the matching document or null if not found

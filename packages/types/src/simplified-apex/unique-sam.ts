@@ -22,7 +22,7 @@ export const UniqueSamSchema = DocumentSchema.extend({
 	transactions_missing: z.number().nullable(),
 }).strict();
 
-export const CreateUniqueSamSchema = UniqueSamSchema.omit({ _id: true, created_at: true, updated_at: true });
+export const CreateUniqueSamSchema = UniqueSamSchema.omit({ created_at: true, updated_at: true });
 export const UpdateUniqueSamSchema = CreateUniqueSamSchema.partial();
 
 /**

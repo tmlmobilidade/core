@@ -23,10 +23,6 @@ jobs:
         with:
           node-version: 20
 
-      - name: Build package
-        working-directory: .
-        run: npm run build:repo-rinse
-
       - name: Bump package version
         working-directory: cli/repo-rinse
         run: npx @helperkits/bumper package.json

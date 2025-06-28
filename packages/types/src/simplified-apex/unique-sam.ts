@@ -10,7 +10,7 @@ import { z } from 'zod';
 export const UniqueSamSchema = DocumentSchema.extend({
 	_id: z.number(),
 	agency_id: z.string(),
-	device_id: z.string(),
+	device_ids: z.array(z.string()).nullable(),
 	is_complete: z.boolean().default(false),
 	latest_apex_version: z.string().nullable(),
 	remarks: z.string().nullable(),

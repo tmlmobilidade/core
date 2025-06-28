@@ -6,7 +6,7 @@
 		"dist"
 	],
 	"bin": {
-		"repo-rinse": "./src/repo-rinse.sh"
+		"repo-rinse": "src/repo-rinse.sh"
 	},
 	"scripts": {
 		"start": "sh ./src/repo-rinse.sh"

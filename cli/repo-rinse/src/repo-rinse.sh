@@ -30,15 +30,25 @@ find . -type d -name ".source" -prune | xargs rm -rf
 echo "✓ Done"
 echo ""
 
+echo "→ Removing '.yalc' directories..."
+find . -type d -name ".yalc" -prune | xargs rm -rf
+echo "✓ Done"
+echo ""
+
 # # #
+
+echo "→ Removing 'package-lock.json' files..."
+find . -type f -name "package-lock.json" | xargs rm -f
+echo "✓ Done"
+echo ""
 
 echo "→ Removing 'pnpm-lock.yaml' files..."
 find . -type f -name "pnpm-lock.yaml" | xargs rm -f
 echo "✓ Done"
 echo ""
 
-echo "→ Removing 'package-lock.json' files..."
-find . -type f -name "package-lock.json" | xargs rm -f
+echo "→ Removing 'yalc.lock' files..."
+find . -type f -name "yalc.lock" | xargs rm -f
 echo "✓ Done"
 echo ""
 

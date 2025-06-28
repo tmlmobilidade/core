@@ -130,11 +130,13 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 
 	/**
 	 * Finds a document by its ID.
-	 * @param id - The ID of the document to find
+	 * @param _id The ID of the document to find.
+	 * @param options Optional find options.
 	 * @returns A promise that resolves to the matching document or null if not found
 	 */
 	public async findById(_id: T['_id'], options?: FindOptions): Promise<null | WithId<T>> {
-		return this.mongoCollection.findOne({ _id: { $eq: _id } } as unknown as Filter<T>, options);
+		const filter: Filter<T> = { _id: { $eq: _id } } as Filter<T>;
+		return this.mongoCollection.findOne(filter, options);
 	}
 
 	/**

@@ -5,6 +5,9 @@ on:
   push:
     branches:
       - production
+    paths:
+      - 'cli/repo-rinse/**'
+      - '.github/workflows/publish-repo-rinse.yml'
 
 jobs:
 

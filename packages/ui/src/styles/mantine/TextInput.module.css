@@ -2,7 +2,7 @@
 .wrapper {
 	--input-size: 40px;
 	--input-height: 40px;
-	min-width: 250px;
+	min-width: 200px;
 	overflow: visible;
 }
 

@@ -19,7 +19,7 @@
 		"build:utils": "turbo build --filter=@tmlmobilidade/utils",
 		"dev": "turbo dev",
 		"dev:docs": "turbo dev --filter=@tmlmobilidade/docs",
-		"dev:ui": "turbo dev --filter=@tmlmobilidade/ui --filter=@tmlmobilidade/docs",
+		"dev:ui": "turbo dev --filter=@tmlmobilidade/ui",
 		"lint": "turbo lint",
 		"rinse": "npx --yes @tmlmobilidade/repo-rinse",
 		"test": "turbo test",

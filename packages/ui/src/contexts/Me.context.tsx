@@ -4,7 +4,7 @@
 
 import { swrFetcher } from '@/lib/http';
 import { getAppBaseUrl } from '@tmlmobilidade/lib';
-import { Permission, type User } from '@tmlmobilidade/types';
+import { type User } from '@tmlmobilidade/types';
 import { type HasPermissionResourceArgs, hasPermissionResource as hasPermissionResourceUtils, hasPermission as hasPermissionUtils } from '@tmlmobilidade/utils';
 import { createContext, type PropsWithChildren, useContext, useMemo } from 'react';
 import useSWR from 'swr';
@@ -31,9 +31,7 @@ const MeContext = createContext<MeContextState | undefined>(undefined);
 
 export function useMeContext() {
 	const context = useContext(MeContext);
-	if (!context) {
-		throw new Error('useMeContext must be used within a MeContextProvider');
-	}
+	if (!context) throw new Error('useMeContext must be used within a MeContextProvider');
 	return context;
 }
 
@@ -51,20 +49,13 @@ export const MeContextProvider = ({ children }: PropsWithChildren) => {
 	// B. Define actions
 
 	function hasPermission(scope: string, action: string) {
-		if (!data || !data.permissions)
-			return false;
-
-		return hasPermissionUtils(data.permissions as unknown as Permission<unknown>[], scope, action);
+		if (!data || !data.permissions) return false;
+		return hasPermissionUtils(data.permissions, scope, action);
 	}
 
 	function hasPermissionResource<T>(args: HasPermissionResourceArgs<T>) {
-		if (!data || !data.permissions)
-			return false;
-
-		return hasPermissionResourceUtils({
-			...args,
-			permissions: data.permissions as unknown as Permission<T>[],
-		});
+		if (!data || !data.permissions) return false;
+		return hasPermissionResourceUtils({ ...args, permissions: data.permissions });
 	}
 
 	//

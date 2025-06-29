@@ -8,8 +8,9 @@ import styles from './styles.module.css';
 
 /* * */
 
-const GRIP_WIDTH = 20; // Pixels
 const MIN_PANE_FRACTION = 0.3; // Smallest size a pane can have in fraction units
+
+/* * */
 
 interface PanesManagerProps {
 	panes: ReactNode[]
@@ -31,10 +32,7 @@ export function PanesManager({ panes }: PanesManagerProps) {
 	// B. Transform data
 
 	const gridTemplateColumns = paneFractions
-		.flatMap((fraction, index) => [
-			`${fraction}fr`,
-			index < panes.length - 1 ? `${GRIP_WIDTH}px` : null,
-		])
+		.flatMap(fraction => [`${fraction}fr`, `auto`])
 		.filter(Boolean)
 		.join(' ');
 
@@ -77,6 +75,26 @@ export function PanesManager({ panes }: PanesManagerProps) {
 		document.addEventListener('mouseup', onMouseUp);
 	};
 
+	const handleDoubleClick = () => {
+		// Reset all panes to equal fractions
+		const newFractions = Array(panes.length).fill(1 / panes.length);
+		// Update the state with the new values
+		setPaneFractions(newFractions);
+		// Reset the cursor to default
+		document.body.style.cursor = '';
+		// Add animation to the panes manager
+		if (containerRef.current) {
+			const animationDuration = 100; // milliseconds
+			containerRef.current.style.transition = `grid-template-columns ${animationDuration}ms ease-in-out`;
+			// Remove the transition after it completes
+			setTimeout(() => {
+				if (containerRef.current) {
+					containerRef.current.style.transition = '';
+				}
+			}, animationDuration);
+		}
+	};
+
 	//
 	// D. Render components
 
@@ -90,11 +108,9 @@ export function PanesManager({ panes }: PanesManagerProps) {
 				<div key={index} className={styles.innerWrapper}>
 					{pane}
 					{(index < panes.length - 1) && (
-						<div
-							className={styles.grip}
-							onMouseDown={event => handleMouseDown(index, event)}
-							style={{ '--grip-width': GRIP_WIDTH } as React.CSSProperties}
-						/>
+						<div className={styles.handleWrapper} onDoubleClick={handleDoubleClick} onMouseDown={event => handleMouseDown(index, event)}>
+							<div className={styles.handle} />
+						</div>
 					)}
 				</div>
 			))}

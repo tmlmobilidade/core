@@ -2,6 +2,7 @@
 
 /* * */
 
+import { Loader } from '@/components/common/Loader';
 import { type SidebarItemProps } from '@/components/layout/SidebarItem';
 import { swrFetcher } from '@/lib/http';
 import { getAppBaseUrl } from '@tmlmobilidade/lib';
@@ -26,9 +27,7 @@ const SidebarContext = createContext<SidebarContextState | undefined>(undefined)
 
 export function useSidebarContext() {
 	const context = useContext(SidebarContext);
-	if (!context) {
-		throw new Error('useSidebarContext must be used within a SidebarContextProvider');
-	}
+	if (!context) throw new Error('useSidebarContext must be used within a SidebarContextProvider');
 	return context;
 }
 
@@ -53,7 +52,9 @@ export const SidebarContextProvider = ({ children }: PropsWithChildren) => {
 	// C. Handle actions
 
 	useEffect(() => {
-		if (data?.sidebar) setSidebarState(data.sidebar);
+		if (data?.sidebar) {
+			setSidebarState(data.sidebar);
+		}
 	}, [data]);
 
 	//
@@ -73,7 +74,7 @@ export const SidebarContextProvider = ({ children }: PropsWithChildren) => {
 	// E. Render components
 
 	if (contextValue.flags.loading) {
-		return <div>loading sidebar...</div>;
+		return <Loader />;
 	}
 
 	return (
@@ -81,4 +82,6 @@ export const SidebarContextProvider = ({ children }: PropsWithChildren) => {
 			{children}
 		</SidebarContext.Provider>
 	);
+
+	//
 };

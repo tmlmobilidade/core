@@ -14,13 +14,6 @@ import styles from './styles.module.css';
 
 export const sidebarApps = [
 	{
-		_id: 'alerts',
-		href: getAppBaseUrl('alerts'),
-		icon: <IconAlertTriangle size={26} />,
-		label: 'Alertas',
-		permission: { action: Permissions.alerts.actions.list, scope: Permissions.alerts.scope },
-	},
-	{
 		_id: 'auth',
 		href: getAppBaseUrl('auth'),
 		icon: <IconUser size={26} />,
@@ -28,15 +21,22 @@ export const sidebarApps = [
 		permission: { action: Permissions.users.actions.list, scope: Permissions.users.scope },
 	},
 	{
-		_id: 'controller',
-		href: getAppBaseUrl('controller'),
+		_id: 'alerts',
+		href: getAppBaseUrl('alerts'),
+		icon: <IconAlertTriangle size={26} />,
+		label: 'Alertas',
+		permission: { action: Permissions.alerts.actions.list, scope: Permissions.alerts.scope },
+	},
+	{
+		_id: 'rides',
+		href: getAppBaseUrl('rides'),
 		icon: <IconListCheck size={26} />,
 		label: 'Monitorização',
 		permission: { action: Permissions.rides.actions.list, scope: Permissions.rides.scope },
 	},
 	{
-		_id: 'equipments',
-		href: getAppBaseUrl('equipments'),
+		_id: 'facilities',
+		href: getAppBaseUrl('facilities'),
 		icon: <IconDeviceMobile size={26} />,
 		label: 'Equipamentos',
 		permission: { action: Permissions.municipalities.actions.list, scope: Permissions.municipalities.scope },

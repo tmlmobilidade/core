@@ -20,22 +20,22 @@ export const APP_BASE_URLS = Object.freeze({
 		staging: 'https://auth.sae.carrismetropolitana.pt',
 	},
 
-	controller: {
-		development: 'http://localhost:51002',
-		production: 'https://controller.sae.carrismetropolitana.pt',
-		staging: 'https://staging.controller.sae.carrismetropolitana.pt',
-	},
-
-	equipments: {
+	facilities: {
 		development: 'http://localhost:51005',
-		production: 'https://equipments.sae.carrismetropolitana.pt',
-		staging: 'https://staging.equipments.sae.carrismetropolitana.pt',
+		production: 'https://facilities.sae.carrismetropolitana.pt',
+		staging: 'https://staging.facilities.sae.carrismetropolitana.pt',
 	},
 
 	plans: {
 		development: 'http://localhost:51004',
 		production: 'https://plans.sae.carrismetropolitana.pt',
 		staging: 'https://staging.plans.sae.carrismetropolitana.pt',
+	},
+
+	rides: {
+		development: 'http://localhost:51002',
+		production: 'https://rides.sae.carrismetropolitana.pt',
+		staging: 'https://staging.rides.sae.carrismetropolitana.pt',
 	},
 
 	stops: {
@@ -48,9 +48,9 @@ export const APP_BASE_URLS = Object.freeze({
 
 /**
  * Get the URL for a given app and environment.
- * @param app The app ID
+ * @param app The app ID.
  * @param environment The environment to get the URL for. If not provided, it will use the ENVIRONMENT environment variable.
- * @returns The base URL for the given app and environment
+ * @returns The base URL for the given app and environment.
  */
 export function getAppBaseUrl(app: keyof typeof APP_BASE_URLS, environment?: Environment): string {
 	// Get the desired app object

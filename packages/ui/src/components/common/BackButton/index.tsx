@@ -4,35 +4,28 @@
 
 import { ActionIcon } from '@mantine/core';
 import { IconChevronLeft, IconX } from '@tabler/icons-react';
-import { useRouter } from 'next/navigation';
 
 /* * */
 
 interface BackButtonProps {
-	href?: string
+	onClick?: () => void
 	type?: 'back' | 'close'
 }
 
 /* * */
 
-export function BackButton({ href, type = 'back' }: BackButtonProps) {
+export function BackButton({ onClick, type = 'back' }: BackButtonProps) {
 	//
 
 	//
-	// A. Setup variables
-
-	const router = useRouter();
-
-	//
-	// B. Handle actions
+	// A. Handle actions
 
 	const handleClick = () => {
-		if (href) router.replace(href);
-		else router.back();
+		if (onClick) onClick();
 	};
 
 	//
-	// C. Render components
+	// B. Render components
 
 	return (
 		<ActionIcon onClick={handleClick} variant="muted">

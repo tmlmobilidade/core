@@ -27,7 +27,7 @@ export const SimplifiedApexOnBoardRefundSchema = DocumentSchema.extend({
 	stop_id: z.string().nullable(),
 	trip_id: z.string().nullable(),
 	validation_id: z.string().nullable(),
-	vehicle_id: z.string().nullable(),
+	vehicle_id: z.number().nullable(),
 }).strict();
 
 export const UpdateSimplifiedApexOnBoardRefundSchema = SimplifiedApexOnBoardRefundSchema.partial();

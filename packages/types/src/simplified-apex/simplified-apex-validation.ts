@@ -114,7 +114,7 @@ export const SimplifiedApexValidationSchema = DocumentSchema.extend({
 	trip_id: z.string(),
 	units_qty: z.number().nullable(),
 	validation_status: z.nativeEnum(ApexValidationStatus),
-	vehicle_id: z.string(),
+	vehicle_id: z.number(),
 }).strict();
 
 export const UpdateSimplifiedApexValidationSchema = SimplifiedApexValidationSchema.partial();

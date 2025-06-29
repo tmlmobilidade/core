@@ -1,6 +1,6 @@
 # # #
 
-name: 'Publish Packages to NPM'
+name: 'Packages | Publish to NPM'
 description: 'This workflow coordinates the publishng of packages to NPM with a common version number.'
 
 on:
@@ -8,6 +8,9 @@ on:
   push:
     branches:
       - production
+    paths:
+      - 'packages/**'
+      - '.github/workflows/packages-publish-all.yml'
 
 jobs:
 

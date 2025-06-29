@@ -1,5 +1,5 @@
 {
-	"name": "tmlmobilidade",
+	"name": "@tmlmobilidade/core",
 	"description": "Core packages for Transportes Metropolitanos de Lisboa (TML) applications.",
 	"version": "1.0.0",
 	"author": "João de Vasconcelos & Jusi Monteiro",

@@ -11,7 +11,6 @@ export const UniqueSamSchema = DocumentSchema.extend({
 	_id: z.number(),
 	agency_id: z.string(),
 	device_ids: z.array(z.string()).nullable(),
-	is_complete: z.boolean().nullable(),
 	latest_apex_version: z.string().nullable(),
 	remarks: z.string().nullable(),
 	seen_first_at: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullable(),

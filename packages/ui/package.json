@@ -1,9 +1,7 @@
 {
 	"name": "@tmlmobilidade/ui",
-	"description": "",
+	"description": "UI components for Transportes Metropolitanos de Lisboa (TML) web applications.",
 	"version": "1.0.0",
-	"author": "",
-	"license": "ISC",
 	"publishConfig": {
 		"access": "public",
 		"directory": "dist"

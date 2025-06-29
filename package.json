@@ -20,6 +20,7 @@
 		"build:utils": "turbo build --filter=@tmlmobilidade/utils && npm run yalc:push",
 		"dev": "turbo dev",
 		"dev:docs": "turbo dev --filter=@tmlmobilidade/docs",
+		"dev:ui": "turbo dev --filter=@tmlmobilidade/ui --filter=@tmlmobilidade/docs",
 		"lint": "turbo lint",
 		"rinse": "npx --yes @tmlmobilidade/repo-rinse",
 		"test": "turbo test",

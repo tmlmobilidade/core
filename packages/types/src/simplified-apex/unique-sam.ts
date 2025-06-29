@@ -20,6 +20,7 @@ export const UniqueSamSchema = DocumentSchema.extend({
 	transactions_expected: z.number().nullable(),
 	transactions_found: z.number().nullable(),
 	transactions_missing: z.number().nullable(),
+	vehicle_ids: z.array(z.string()).nullable(),
 }).strict();
 
 export const CreateUniqueSamSchema = UniqueSamSchema.omit({ created_at: true, updated_at: true });

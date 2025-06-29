@@ -2,6 +2,8 @@
 	"name": "@tmlmobilidade/ui",
 	"description": "UI components for Transportes Metropolitanos de Lisboa (TML) web applications.",
 	"version": "1.0.0",
+	"author": "João de Vasconcelos & Jusi Monteiro",
+	"license": "AGPL-3.0-or-later",
 	"publishConfig": {
 		"access": "public",
 		"directory": "dist"

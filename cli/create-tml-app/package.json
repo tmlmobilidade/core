@@ -1,9 +1,9 @@
 {
 	"name": "create-tml-app",
-	"description": "",
+	"description": "CLI tool to create new SAE applications.",
 	"version": "1.0.0",
-	"author": "Jusi Monteiro & João Vasconcelos",
-	"license": "ISC",
+	"author": "Jusi Monteiro",
+	"license": "AGPL-3.0-or-later",
 	"keywords": [
 		"tml",
 		"tmlmobilidade",

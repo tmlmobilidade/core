@@ -1,10 +1,9 @@
 {
 	"name": "tmlmobilidade",
-	"description": "",
+	"description": "Core packages for Transportes Metropolitanos de Lisboa (TML) applications.",
 	"version": "1.0.0",
 	"author": "João de Vasconcelos & Jusi Monteiro",
-	"license": "ISC",
-	"keywords": [],
+	"license": "AGPL-3.0-or-later",
 	"main": "index.js",
 	"scripts": {
 		"build": "turbo build",

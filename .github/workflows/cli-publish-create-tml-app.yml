@@ -1,4 +1,4 @@
-name: 'repo-rinse | Publish to npm'
+name: 'CLI | create-tml-app'
 
 on:
   workflow_dispatch:
@@ -6,8 +6,8 @@ on:
     branches:
       - production
     paths:
-      - 'cli/repo-rinse/**'
-      - '.github/workflows/publish-repo-rinse.yml'
+      - 'cli/create-tml-app/**'
+      - '.github/workflows/cli-publish-create-tml-app.yml'
 
 jobs:
 
@@ -26,12 +26,16 @@ jobs:
         with:
           node-version: 20
 
+      - name: Build package
+        working-directory: .
+        run: npm run build:create-tml-app
+
       - name: Bump package version
-        working-directory: cli/repo-rinse
+        working-directory: cli/create-tml-app
         run: npx @helperkits/bumper package.json
 
       - name: Publish package to NPM
-        working-directory: cli/repo-rinse
+        working-directory: cli/create-tml-app
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}

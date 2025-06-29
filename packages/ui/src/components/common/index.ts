@@ -19,6 +19,7 @@ export { default as Tooltip } from './Tooltip';
 /* * */
 
 export * from '@/components/common/AppLogos';
+export * from '@/components/common/BackButton';
 export * from '@/components/common/Button';
 export * from '@/components/common/Label';
 export * from '@/components/common/Loader';

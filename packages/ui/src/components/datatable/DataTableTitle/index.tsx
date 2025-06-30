@@ -2,7 +2,7 @@
 
 /* * */
 
-import TextInput from '@/components/common/TextInput';
+import { TextInput } from '@/components/common/TextInput';
 import { DataTableSearchProps } from '@/components/datatable/datatable.type';
 import { useDataTableContext } from '@/components/datatable/DataTableContext';
 import React from 'react';

@@ -1,8 +1,8 @@
 /* * */
 
 import { DocumentSchema } from '@/_common/document.js';
-import { ProcessingStatus } from '@/_common/system.js';
 import { type UnixTimestamp, validateUnixTimestamp } from '@/_common/unix-timestamp.js';
+import { ProcessingStatus } from '@/system/processing-status.js';
 import { z } from 'zod';
 
 /* * */

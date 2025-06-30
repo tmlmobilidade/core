@@ -3,7 +3,7 @@
 /* * */
 
 import { swrFetcher } from '@/lib/http';
-import { getAppBaseUrl } from '@tmlmobilidade/lib';
+import { getAppConfig } from '@tmlmobilidade/lib';
 import { type User } from '@tmlmobilidade/types';
 import { type HasPermissionResourceArgs, hasPermissionResource as hasPermissionResourceUtils, hasPermission as hasPermissionUtils } from '@tmlmobilidade/utils';
 import { createContext, type PropsWithChildren, useContext, useMemo } from 'react';
@@ -43,7 +43,7 @@ export const MeContextProvider = ({ children }: PropsWithChildren) => {
 	//
 	// A. Fetch data
 
-	const { data, error, isLoading } = useSWR<User>(`${getAppBaseUrl('auth')}/api/users/me`, swrFetcher);
+	const { data, error, isLoading } = useSWR<User>(`${getAppConfig('auth', 'api_url')}/users/me`, swrFetcher);
 
 	//
 	// B. Define actions

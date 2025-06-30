@@ -1,9 +1,9 @@
 /* * */
 
 import { DocumentSchema } from '@/_common/document.js';
-import { ProcessingStatus } from '@/_common/system.js';
 import { UnixTimestamp } from '@/_common/unix-timestamp.js';
 import { GtfsAgency, GtfsAgencySchema, GtfsFeedInfo, GtfsFeedInfoSchema } from '@/gtfs.js';
+import { ProcessingStatus } from '@/system/processing-status.js';
 import { z } from 'zod';
 
 /* * */

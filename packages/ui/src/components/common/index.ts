@@ -26,6 +26,6 @@ export * from '@/components/common/Slider';
 export * from '@/components/common/Switch';
 export * from '@/components/common/Tag';
 export * from '@/components/common/Text';
-export * from '@/components/common/Textarea';
+export * from '@/components/common/Textarea2';
 export * from '@/components/common/TextInput';
 export * from '@/components/common/Tree';

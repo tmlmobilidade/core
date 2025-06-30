@@ -4,8 +4,6 @@ import cookie from '@fastify/cookie';
 import cors from '@fastify/cors';
 import fastify, { type FastifyInstance, type FastifyServerOptions } from 'fastify';
 
-/* * */
-
 /**
  * FastifyServiceOptions interface defines the options for the Fastify server.
  * It extends FastifyServerOptions and adds optional properties for origin and port.
@@ -29,8 +27,12 @@ export interface FastifyServiceOptions extends FastifyServerOptions {
 
 }
 
-/* * */
-
+/**
+ * FastifyService is a singleton class that provides a Fastify server instance.
+ * It allows for setting up routes, plugins, and starting/stopping the server.
+ * This class is designed to be used as a service in a Node.js application.
+ * It uses the Fastify framework for building web applications and APIs.
+ */
 export class FastifyService {
 	//
 

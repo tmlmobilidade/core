@@ -12,7 +12,7 @@ interface ExtendedFastifyServiceOptions extends FastifyServerOptions {
 
 /* * */
 
-class FastifyService {
+export class FastifyService {
 	private static _instance: FastifyService;
 	public readonly server: FastifyInstance;
 	private readonly origin: string;
@@ -74,5 +74,3 @@ class FastifyService {
 		await this.server.register(cookie);
 	}
 }
-
-export default FastifyService;

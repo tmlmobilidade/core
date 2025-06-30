@@ -11,17 +11,9 @@ interface AppConfigGroup {
 	frontend_url: string
 }
 
-interface AppConfigs {
-	alerts: Record<Environment, AppConfigGroup>
-	auth: Record<Environment, AppConfigGroup>
-	plans: Record<Environment, AppConfigGroup>
-	rides: Record<Environment, AppConfigGroup>
-	stops: Record<Environment, AppConfigGroup>
-}
-
 /* * */
 
-const APP_CONFIGS: AppConfigs = Object.freeze({
+const APP_CONFIGS: Record<string, Record<Environment, AppConfigGroup>> = {
 
 	alerts: {
 		development: {
@@ -128,7 +120,7 @@ const APP_CONFIGS: AppConfigs = Object.freeze({
 		},
 	},
 
-});
+} as const;
 
 /* * */
 
@@ -139,7 +131,7 @@ const APP_CONFIGS: AppConfigs = Object.freeze({
  * @param environment The environment to get the property for. If not provided, it will use the ENVIRONMENT environment variable.
  * @returns The value of the specified property for the given app and environment.
  */
-export function getAppConfig<AppType extends keyof AppConfigs, PropType extends keyof AppConfigGroup>(app: AppType, property: PropType, environment?: Environment): AppConfigGroup[PropType] {
+export function getAppConfig<App extends keyof typeof APP_CONFIGS, Prop extends keyof AppConfigGroup>(app: App, property: Prop, environment?: Environment): AppConfigGroup[Prop] {
 	// Get the desired app object
 	const appObject = APP_CONFIGS[app];
 	if (!appObject) throw new Error(`[@core/lib] App Config Object for "${app}" app not found. Available apps: ${Object.keys(APP_CONFIGS).join(', ')}`);

@@ -9,8 +9,6 @@ export { default as FileButton } from './FileButton';
 export { default as Menu } from './Menu';
 export { default as MultiSelect } from './MultiSelect';
 export { default as SegmentedControl } from './SegmentedControl';
-export { default as TextArea } from './TextArea';
-export { default as TextInput } from './TextInput';
 export { default as Tooltip } from './Tooltip';
 
 /* * */
@@ -28,4 +26,6 @@ export * from '@/components/common/Slider';
 export * from '@/components/common/Switch';
 export * from '@/components/common/Tag';
 export * from '@/components/common/Text';
+export * from '@/components/common/Textarea';
+export * from '@/components/common/TextInput';
 export * from '@/components/common/Tree';

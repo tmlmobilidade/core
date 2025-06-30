@@ -2,17 +2,21 @@
 
 /* * */
 
-import { TextareaProps as MantineTextareaProps, Textarea } from '@mantine/core';
+import { Textarea as MantineTeaxtarea, TextareaProps as MantineTextareaProps } from '@mantine/core';
 
 /* * */
 
-export type TextAreaProps = MantineTextareaProps;
+export type TextareaProps = MantineTextareaProps;
 
-export default function Component({ classNames, ...props }: TextAreaProps) {
+/* * */
+
+export function Teaxtarea({ classNames, ...props }: TextareaProps) {
 	//
 
 	//
 	// A. Render components
 
-	return <Textarea classNames={classNames} {...props} />;
+	return <MantineTeaxtarea classNames={classNames} {...props} />;
+
+	//
 }

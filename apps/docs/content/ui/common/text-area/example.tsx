@@ -1,11 +1,11 @@
 'use client';
 
-import { ComponentWrapper, TextArea } from '@tmlmobilidade/ui';
+import { ComponentWrapper, Textarea } from '@tmlmobilidade/ui';
 
-export default function TextAreaExample() {
+export default function TextareaExample() {
 	return (
 		<ComponentWrapper>
-			<TextArea resize="vertical" w="100%" autosize />
+			<Textarea resize="vertical" w="100%" autosize />
 		</ComponentWrapper>
 	);
 }

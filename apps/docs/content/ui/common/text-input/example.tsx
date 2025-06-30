@@ -6,7 +6,7 @@ import { ComponentWrapper, TextInput } from '@tmlmobilidade/ui';
 export default function TextInputExample() {
 	return (
 		<ComponentWrapper>
-			<TextInput leftSection={<IconSearch />} placeholder="Pesquisar..." />
+			<TextInput leftSection={<IconSearch />} placeholder="Pesquisar..." tooltip="teste" />
 		</ComponentWrapper>
 	);
 }

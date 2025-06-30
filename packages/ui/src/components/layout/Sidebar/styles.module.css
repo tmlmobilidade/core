@@ -41,5 +41,6 @@
 	gap: var(--size-spacing-sm);
 	align-items: center;
 	width: 100%;
+	min-width: 68px;
 	padding: var(--size-spacing-sm);
 }

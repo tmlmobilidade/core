@@ -17,7 +17,7 @@ interface UpdateCsvFieldParams {
 
 /* * */
 
-class Files {
+export class Files {
 	//
 
 	//
@@ -192,7 +192,3 @@ class Files {
 		}
 	}
 }
-
-/* * */
-
-export { Files };

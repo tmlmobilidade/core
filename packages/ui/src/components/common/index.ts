@@ -1,6 +1,4 @@
 export { default as ActionIcon } from './ActionIcon';
-export { default as Badge } from './Badge';
-export { default as Checkbox } from './Checkbox';
 export { default as Combobox, DataItem } from './Combobox';
 export { default as ComponentWrapper } from './ComponentWrapper';
 export { default as DatePicker } from './DatePicker';
@@ -20,6 +18,7 @@ export { default as Tooltip } from './Tooltip';
 export * from '@/components/common/AppLogos';
 export * from '@/components/common/BackButton';
 export * from '@/components/common/Button';
+export * from '@/components/common/Checkbox';
 export * from '@/components/common/HasPermission';
 export * from '@/components/common/Label';
 export * from '@/components/common/Loader';

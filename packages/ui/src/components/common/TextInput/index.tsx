@@ -18,10 +18,12 @@ export default function Component({ classNames, error, validation, value, ...pro
 
 	//
 	// A. Setup variables
+
 	const [isValid, setIsValid] = useState(true);
 
 	//
 	// B.Transform data
+
 	useEffect(() => {
 		if (!value || !error || !validation || value.toString().length === 0) {
 			setIsValid(true);
@@ -34,6 +36,7 @@ export default function Component({ classNames, error, validation, value, ...pro
 
 	//
 	// C. Render components
+
 	const renderTooltip = (tooltip?: string) => (
 		<Tooltip
 			label={tooltip}
@@ -58,4 +61,6 @@ export default function Component({ classNames, error, validation, value, ...pro
 			{...props}
 		/>
 	);
+
+	//
 }

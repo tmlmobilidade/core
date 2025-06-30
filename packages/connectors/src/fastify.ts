@@ -6,7 +6,7 @@ import fastify, { FastifyInstance, FastifyListenOptions, FastifyServerOptions } 
 
 /* * */
 
-interface ExtendedFastifyServiceOptions extends FastifyServerOptions {
+export interface ExtendedFastifyServiceOptions extends FastifyServerOptions {
 	origin?: string
 }
 

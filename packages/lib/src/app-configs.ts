@@ -13,7 +13,7 @@ interface AppConfigGroup {
 
 /* * */
 
-const APP_CONFIGS: Record<string, Record<Environment, AppConfigGroup>> = {
+const APP_CONFIGS = {
 
 	alerts: {
 		development: {
@@ -131,7 +131,7 @@ const APP_CONFIGS: Record<string, Record<Environment, AppConfigGroup>> = {
  * @param environment The environment to get the property for. If not provided, it will use the ENVIRONMENT environment variable.
  * @returns The value of the specified property for the given app and environment.
  */
-export function getAppConfig<App extends keyof typeof APP_CONFIGS, Prop extends keyof AppConfigGroup>(app: App, property: Prop, environment?: Environment): AppConfigGroup[Prop] {
+export function getAppConfig<Prop extends keyof AppConfigGroup>(app: keyof typeof APP_CONFIGS, property: Prop, environment?: Environment): AppConfigGroup[Prop] {
 	// Get the desired app object
 	const appObject = APP_CONFIGS[app];
 	if (!appObject) throw new Error(`[@core/lib] App Config Object for "${app}" app not found. Available apps: ${Object.keys(APP_CONFIGS).join(', ')}`);

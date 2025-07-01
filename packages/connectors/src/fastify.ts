@@ -4,6 +4,8 @@ import cookie from '@fastify/cookie';
 import cors from '@fastify/cors';
 import fastify, { type FastifyInstance, type FastifyServerOptions } from 'fastify';
 
+/* * */
+
 export { type FastifyReply, type FastifyRequest } from 'fastify';
 
 /**
@@ -14,8 +16,8 @@ export interface FastifyServiceOptions extends FastifyServerOptions {
 
 	/**
 	 * The origin for CORS requests.
-	 * Defaults to '*' if not provided.
-	 * @default '*'
+	 * Defaults to `true` if not provided.
+	 * @default true
 	 * @example 'https://example.com'
 	 */
 	origin?: string | true
@@ -52,8 +54,8 @@ export class FastifyService {
 	 */
 	private constructor(options: FastifyServiceOptions) {
 		this.server = fastify(options);
-		this.origin = options.origin || '';
-		this.port = options.port || 5050;
+		this.origin = options.origin ?? true;
+		this.port = options.port ?? 5050;
 		this._setupDefaultRoutes();
 		this._setupPlugins();
 	}

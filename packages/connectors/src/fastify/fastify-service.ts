@@ -20,6 +20,13 @@ export { type FastifyReply, type FastifyRequest } from 'fastify';
 export interface FastifyServiceOptions extends FastifyServerOptions {
 
 	/**
+	 * The host on which the Fastify server will listen.
+	 * If not provided, it defaults to '0.0.0.0'.
+	 * @default '0.0.0.0'
+	 */
+	host?: string
+
+	/**
 	 * The origin for CORS requests.
 	 * Defaults to `true` if not provided.
 	 * @default true
@@ -49,6 +56,8 @@ export class FastifyService {
 
 	public readonly server: FastifyInstance;
 
+	private readonly host: FastifyServiceOptions['host'];
+
 	private readonly origin: FastifyServiceOptions['origin'];
 
 	private readonly port: FastifyServiceOptions['port'];
@@ -61,6 +70,7 @@ export class FastifyService {
 		this.server = fastify(options);
 		this.origin = options.origin ?? true;
 		this.port = options.port ?? 5050;
+		this.host = options.host ?? '0.0.0.0';
 		this._setupDefaultRoutes();
 		this._setupPlugins();
 	}
@@ -85,7 +95,7 @@ export class FastifyService {
 	 */
 	async start() {
 		try {
-			await this.server.listen({ port: this.port });
+			await this.server.listen({ host: this.host, port: this.port });
 		}
 		catch (error) {
 			this.server.log.error({ error, message: 'Error starting server.' });

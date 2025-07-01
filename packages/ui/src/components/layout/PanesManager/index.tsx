@@ -8,7 +8,7 @@ import styles from './styles.module.css';
 
 /* * */
 
-const MIN_PANE_FRACTION = 0.3; // Smallest size a pane can have in fraction units
+const MIN_PANE_FRACTION = 0.1; // Smallest size a pane can have in fraction units
 
 /* * */
 

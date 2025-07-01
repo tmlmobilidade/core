@@ -32,7 +32,7 @@ export interface FastifyServiceOptions extends FastifyServerOptions {
 	 * @default true
 	 * @example 'https://example.com'
 	 */
-	origin?: string | true
+	origin?: RegExp | string | true
 
 	/**
 	 * The port on which the Fastify server will listen.
@@ -132,7 +132,10 @@ export class FastifyService {
 	 * @return A promise that resolves when the plugins are set up.
 	 */
 	private async _setupPlugins() {
-		await this.server.register(cors, { credentials: true, origin: this.origin });
+		await this.server.register(cors, {
+			credentials: true,
+			origin: this.origin,
+		});
 		await this.server.register(cookie);
 	}
 

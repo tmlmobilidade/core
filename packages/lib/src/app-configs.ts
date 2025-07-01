@@ -8,7 +8,7 @@ interface AppConfigGroup {
 	api_port: number
 	api_url: string
 	cookie_domain: string
-	cors_origin: string | true
+	cors_origin: RegExp | string | true
 	frontend_port: number
 	frontend_url: string
 }
@@ -18,7 +18,7 @@ interface AppConfigGroup {
 const DEFAULT_NON_DEV_CONFIG: Omit<AppConfigGroup, 'api_url' | 'frontend_url'> = {
 	api_port: 5050,
 	cookie_domain: '.carrismetropolitana.pt',
-	cors_origin: '*.sae.carrismetropolitana.pt',
+	cors_origin: /^https:\/\/[^.]+\.sae\.carrismetropolitana\.pt$/,
 	frontend_port: 3000,
 };
 

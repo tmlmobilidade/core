@@ -40,6 +40,7 @@
 		"@clickhouse/client": "1.11.2",
 		"@fastify/cookie": "11.0.2",
 		"@fastify/cors": "11.0.1",
+		"@tmlmobilidade/lib": "*",
 		"@tmlmobilidade/utils": "*",
 		"@types/amqplib": "0.10.7",
 		"amqplib": "0.10.8",
@@ -52,6 +53,7 @@
 	"devDependencies": {
 		"@carrismetropolitana/eslint": "20250622.1204.50",
 		"@tmlmobilidade/tsconfig": "*",
+		"@tmlmobilidade/types": "*",
 		"@types/node": "24.0.7",
 		"@types/pg": "8.15.4",
 		"resolve-tspaths": "0.8.23",

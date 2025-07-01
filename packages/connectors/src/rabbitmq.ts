@@ -21,8 +21,8 @@ export class RabbitMQConnector {
 	}
 
 	/**
-   * Connects to RabbitMQ and creates a channel.
-   */
+	 * Connects to RabbitMQ and creates a channel.
+	 */
 	async connect(): Promise<void> {
 		this.connection = await amqpConnect(this.config.uri, this.config.socketOptions);
 		this.channel = await this.connection.createChannel();
@@ -45,8 +45,8 @@ export class RabbitMQConnector {
 	}
 
 	/**
-   * Publishes a message to a queue.
-   */
+	 * Publishes a message to a queue.
+	 */
 	async publish(queue: string, message: Buffer | string, options?: Options.Publish): Promise<Replies.Empty> {
 		if (!this.channel) {
 			throw new Error('Channel is not initialized. Call connect() first.');
@@ -60,8 +60,8 @@ export class RabbitMQConnector {
 	}
 
 	/**
-   * Subscribes to a queue and processes messages.
-   */
+	 * Subscribes to a queue and processes messages.
+	 */
 	async subscribe(queue: string, callback: (message: Buffer | string) => void): Promise<void> {
 		if (!this.channel) {
 			throw new Error('Channel is not initialized. Call connect() first.');

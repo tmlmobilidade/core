@@ -11,9 +11,10 @@
 
 .headerItem {
 	display: flex;
+	flex-wrap: wrap;
 	gap: var(--size-spacing-md);
 	align-items: center;
-	justify-content: flex-start;
+	justify-content: space-between;
 	width: 100%;
 	padding: var(--size-spacing-md);
 	border-bottom: 1px solid var(--color-system-border-100);

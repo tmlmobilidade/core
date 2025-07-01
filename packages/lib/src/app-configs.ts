@@ -7,6 +7,7 @@ import { type Environment, getCurrentEnvironment } from '@tmlmobilidade/types';
 interface AppConfigGroup {
 	api_port: number
 	api_url: string
+	cookie_domain: string
 	frontend_port: number
 	frontend_url: string
 }
@@ -19,18 +20,21 @@ const APP_CONFIGS = {
 		development: {
 			api_port: 52001,
 			api_url: 'http://localhost:52001',
+			cookie_domain: 'localhost',
 			frontend_port: 51001,
 			frontend_url: 'http://localhost:51001',
 		},
 		production: {
 			api_port: 5050,
 			api_url: 'https://alerts.sae.carrismetropolitana.pt/api',
+			cookie_domain: '.carrismetropolitana.pt',
 			frontend_port: 3000,
 			frontend_url: 'https://alerts.sae.carrismetropolitana.pt',
 		},
 		staging: {
 			api_port: 5050,
 			api_url: 'https://staging.alerts.sae.carrismetropolitana.pt/api',
+			cookie_domain: '.carrismetropolitana.pt',
 			frontend_port: 3000,
 			frontend_url: 'https://staging.alerts.sae.carrismetropolitana.pt',
 		},
@@ -40,18 +44,21 @@ const APP_CONFIGS = {
 		development: {
 			api_port: 52000,
 			api_url: 'http://localhost:52000',
+			cookie_domain: 'localhost',
 			frontend_port: 51000,
 			frontend_url: 'http://localhost:51000',
 		},
 		production: {
 			api_port: 5050,
 			api_url: 'https://auth.sae.carrismetropolitana.pt/api',
+			cookie_domain: '.carrismetropolitana.pt',
 			frontend_port: 3000,
 			frontend_url: 'https://auth.sae.carrismetropolitana.pt',
 		},
 		staging: {
 			api_port: 5050,
 			api_url: 'https://staging.auth.sae.carrismetropolitana.pt/api',
+			cookie_domain: '.carrismetropolitana.pt',
 			frontend_port: 3000,
 			frontend_url: 'https://staging.auth.sae.carrismetropolitana.pt',
 		},
@@ -61,18 +68,21 @@ const APP_CONFIGS = {
 		development: {
 			api_port: 52004,
 			api_url: 'http://localhost:52004',
+			cookie_domain: 'localhost',
 			frontend_port: 51004,
 			frontend_url: 'http://localhost:51004',
 		},
 		production: {
 			api_port: 5050,
 			api_url: 'https://plans.sae.carrismetropolitana.pt/api',
+			cookie_domain: '.carrismetropolitana.pt',
 			frontend_port: 3000,
 			frontend_url: 'https://plans.sae.carrismetropolitana.pt',
 		},
 		staging: {
 			api_port: 5050,
 			api_url: 'https://staging.plans.sae.carrismetropolitana.pt/api',
+			cookie_domain: '.carrismetropolitana.pt',
 			frontend_port: 3000,
 			frontend_url: 'https://staging.plans.sae.carrismetropolitana.pt',
 		},
@@ -82,18 +92,21 @@ const APP_CONFIGS = {
 		development: {
 			api_port: 52002,
 			api_url: 'http://localhost:52002',
+			cookie_domain: 'localhost',
 			frontend_port: 51002,
 			frontend_url: 'http://localhost:51002',
 		},
 		production: {
 			api_port: 5050,
 			api_url: 'https://rides.sae.carrismetropolitana.pt/api',
+			cookie_domain: '.carrismetropolitana.pt',
 			frontend_port: 3000,
 			frontend_url: 'https://rides.sae.carrismetropolitana.pt',
 		},
 		staging: {
 			api_port: 5050,
 			api_url: 'https://staging.rides.sae.carrismetropolitana.pt/api',
+			cookie_domain: '.carrismetropolitana.pt',
 			frontend_port: 3000,
 			frontend_url: 'https://staging.rides.sae.carrismetropolitana.pt',
 		},
@@ -103,18 +116,21 @@ const APP_CONFIGS = {
 		development: {
 			api_port: 52003,
 			api_url: 'http://localhost:52003',
+			cookie_domain: 'localhost',
 			frontend_port: 51003,
 			frontend_url: 'http://localhost:51003',
 		},
 		production: {
 			api_port: 5050,
 			api_url: 'https://stops.sae.carrismetropolitana.pt/api',
+			cookie_domain: '.carrismetropolitana.pt',
 			frontend_port: 3000,
 			frontend_url: 'https://stops.sae.carrismetropolitana.pt',
 		},
 		staging: {
 			api_port: 5050,
 			api_url: 'https://staging.stops.sae.carrismetropolitana.pt/api',
+			cookie_domain: '.carrismetropolitana.pt',
 			frontend_port: 3000,
 			frontend_url: 'https://staging.stops.sae.carrismetropolitana.pt',
 		},

@@ -134,33 +134,9 @@ export class FastifyService {
 	private async _setupPlugins() {
 		//
 
-		/**
-		 * Helper function to handle CORS origin validation using regex pattern matching.
-		 * @param origin The origin of the request
-		 * @param cb Callback function that determines if the origin is allowed
-		 */
-		const handleRegex = (origin: string, cb: (err: Error | null, allowed: boolean) => void) => {
-			if (!origin) {
-				// Allow requests without origin (e.g. internal calls or curl)
-				cb(null, true);
-				return;
-			}
-
-			const allowedRegex = this.origin;
-
-			if (allowedRegex instanceof RegExp && allowedRegex.test(origin)) {
-				cb(null, true);
-			}
-			else {
-				cb(new Error('Not allowed by CORS'), false);
-			}
-		};
-
 		await this.server.register(cors, {
 			credentials: true,
-			origin: typeof this.origin === 'string' && this.origin.startsWith('/') && this.origin.endsWith('/')
-				? handleRegex
-				: this.origin,
+			origin: this.origin,
 		});
 		await this.server.register(cookie);
 	}

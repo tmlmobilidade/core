@@ -1,7 +1,7 @@
 /* * */
 
 import { type FastifyReply, type FastifyRequest } from '@/fastify/fastify-service.js';
-import { HttpException, HttpStatus } from '@tmlmobilidade/lib';
+import { getAppConfig, HttpException, HttpStatus } from '@tmlmobilidade/lib';
 import { type Permission } from '@tmlmobilidade/types';
 import { fetchData } from '@tmlmobilidade/utils';
 
@@ -25,14 +25,8 @@ export function authorizationMiddleware<T = unknown>(scope: string, action: stri
 		}
 
 		try {
-			const res = await fetchData<Permission<T>>(
-				`${process.env.NEXT_PUBLIC_AUTH_URL}/api/permissions?resource=${scope}&action=${action}`,
-				'GET',
-				undefined,
-				{
-					Cookie: `session_token=${token}`,
-				},
-			);
+			const apiUrl = `${getAppConfig('auth', 'api_url')}/permissions?resource=${scope}&action=${action}`;
+			const res = await fetchData<Permission<T>>(apiUrl, 'GET', undefined, { Cookie: `session_token=${token}` });
 
 			if (res.status !== HttpStatus.OK) {
 				throw new HttpException(res.status, res.error ?? 'Unknown error');

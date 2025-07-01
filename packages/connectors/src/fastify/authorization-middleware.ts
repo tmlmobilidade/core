@@ -39,7 +39,7 @@ export function authorizationMiddleware<T = unknown>(scope: string, action: stri
 			}
 
 			// Set the permissions
-			request.permissions = res.data;
+			request.permissions = res.data as Permission<T>;
 		}
 		catch (error) {
 			reply

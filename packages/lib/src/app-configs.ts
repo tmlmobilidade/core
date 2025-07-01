@@ -7,7 +7,7 @@ import { type Environment, getCurrentEnvironment } from '@tmlmobilidade/types';
 interface AppConfigGroup {
 	api_port: number
 	api_url: string
-	cookie_domain: string
+	cookie_domain: string | true
 	frontend_port: number
 	frontend_url: string
 }
@@ -20,7 +20,7 @@ const APP_CONFIGS = {
 		development: {
 			api_port: 52001,
 			api_url: 'http://localhost:52001',
-			cookie_domain: 'localhost',
+			cookie_domain: true,
 			frontend_port: 51001,
 			frontend_url: 'http://localhost:51001',
 		},
@@ -44,7 +44,7 @@ const APP_CONFIGS = {
 		development: {
 			api_port: 52000,
 			api_url: 'http://localhost:52000',
-			cookie_domain: 'localhost',
+			cookie_domain: true,
 			frontend_port: 51000,
 			frontend_url: 'http://localhost:51000',
 		},
@@ -68,7 +68,7 @@ const APP_CONFIGS = {
 		development: {
 			api_port: 52004,
 			api_url: 'http://localhost:52004',
-			cookie_domain: 'localhost',
+			cookie_domain: true,
 			frontend_port: 51004,
 			frontend_url: 'http://localhost:51004',
 		},
@@ -92,7 +92,7 @@ const APP_CONFIGS = {
 		development: {
 			api_port: 52002,
 			api_url: 'http://localhost:52002',
-			cookie_domain: 'localhost',
+			cookie_domain: true,
 			frontend_port: 51002,
 			frontend_url: 'http://localhost:51002',
 		},
@@ -116,7 +116,7 @@ const APP_CONFIGS = {
 		development: {
 			api_port: 52003,
 			api_url: 'http://localhost:52003',
-			cookie_domain: 'localhost',
+			cookie_domain: true,
 			frontend_port: 51003,
 			frontend_url: 'http://localhost:51003',
 		},

@@ -15,8 +15,8 @@ export const geometrySchema = z.object({
 
 export const propertiesSchema = z.object({
 	area_ha: z.number(),
-	district_id: z.string(),
-	id: z.string(),
+	district_id: z.string().length(2),
+	id: z.string().length(4),
 	name: z.string(),
 });
 

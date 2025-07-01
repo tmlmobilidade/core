@@ -8,35 +8,35 @@ import { z } from 'zod';
 
 /* * */
 
-class StopsClass extends MongoCollectionClass<Stop, CreateStopDto, UpdateStopDto> {
-	private static _instance: StopsClass;
-	protected override createSchema: z.ZodSchema = StopSchema;
-	protected override updateSchema: z.ZodSchema = UpdateStopSchema;
+class LocalitiesClass extends MongoCollectionClass<Locality, CreateLocalityDto, UpdateLocalityDto> {
+	private static _instance: LocalitiesClass;
+	protected override createSchema: z.ZodSchema = LocalitySchema;
+	protected override updateSchema: z.ZodSchema = UpdateLocalitySchema;
 
 	private constructor() {
 		super();
 	}
 
 	public static async getInstance() {
-		if (!StopsClass._instance) {
-			const instance = new StopsClass();
+		if (!LocalitiesClass._instance) {
+			const instance = new LocalitiesClass();
 			await instance.connect();
-			StopsClass._instance = instance;
+			LocalitiesClass._instance = instance;
 		}
-		return StopsClass._instance;
+		return LocalitiesClass._instance;
 	}
 
 	/**
-     * Finds stop documents by municipality ID with optional pagination and sorting.
+     * Finds locality documents by municipality ID with optional pagination and sorting.
      *
      * @param id - The municipality ID to search for
      * @param perPage - Optional number of documents per page for pagination
      * @param page - Optional page number for pagination
      * @param sort - Optional sort specification
-     * @returns A promise that resolves to an array of matching stop documents
+     * @returns A promise that resolves to an array of matching locality documents
      */
-	async findByMunicipalityId(id: string, perPage?: number, page?: number, sort?: Sort) {
-		const query = this.mongoCollection.find({ municipality_id: id } as Filter<Stop>);
+	async findByLocalityId(id: string, perPage?: number, page?: number, sort?: Sort) {
+		const query = this.mongoCollection.find({ locality_id: id } as Filter<Locality>);
 		if (perPage) query.limit(perPage);
 		if (page && perPage) query.skip(perPage * (page - 1));
 		if (sort) query.sort(sort);
@@ -44,13 +44,13 @@ class StopsClass extends MongoCollectionClass<Stop, CreateStopDto, UpdateStopDto
 	}
 
 	/**
-     * Finds multiple stop documents by their IDs.
+     * Finds multiple locality documents by their IDs.
      *
-     * @param ids - Array of stop IDs to search for
-     * @returns A promise that resolves to an array of matching stop documents
+     * @param ids - Array of locality IDs to search for
+     * @returns A promise that resolves to an array of matching locality documents
      */
 	async findManyByIds(ids: string[]) {
-		return this.mongoCollection.find({ _id: { $in: ids } } as Filter<Stop>).toArray();
+		return this.mongoCollection.find({ _id: { $in: ids } } as Filter<Locality>).toArray();
 	}
 
 	protected getCollectionIndexes(): IndexDescription[] {
@@ -60,14 +60,14 @@ class StopsClass extends MongoCollectionClass<Stop, CreateStopDto, UpdateStopDto
 	}
 
 	protected getCollectionName(): string {
-		return 'stops';
+		return 'localities';
 	}
 
 	protected getEnvName(): string {
-		return 'TML_INTERFACE_STOPS';
+		return 'TML_INTERFACE_LOCALITIES';
 	}
 }
 
 /* * */
 
-export const stops = AsyncSingletonProxy(StopsClass);
+export const localities = AsyncSingletonProxy(LocalitiesClass);

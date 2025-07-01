@@ -57,10 +57,10 @@ const APP_CONFIGS = {
 		},
 		staging: {
 			api_port: 5050,
-			api_url: 'https://staging.auth.sae.carrismetropolitana.pt/api',
+			api_url: 'https://auth.sae.carrismetropolitana.pt/api',
 			cookie_domain: '.carrismetropolitana.pt',
 			frontend_port: 3000,
-			frontend_url: 'https://staging.auth.sae.carrismetropolitana.pt',
+			frontend_url: 'https://auth.sae.carrismetropolitana.pt',
 		},
 	},
 

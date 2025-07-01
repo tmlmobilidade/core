@@ -1,4 +1,5 @@
 export { default as ActionIcon } from './ActionIcon';
+export { default as Badge } from './Badge';
 export { default as Combobox, DataItem } from './Combobox';
 export { default as ComponentWrapper } from './ComponentWrapper';
 export { default as DatePicker } from './DatePicker';

@@ -1,33 +1,33 @@
 /* * */
 
 import { MongoCollectionClass } from '@/mongo-collection.js';
-import { CreateStopDto, Stop, StopSchema, UpdateStopDto, UpdateStopSchema } from '@tmlmobilidade/types';
+import { CreateMunicipalityDto, MunicipalitiesClassClass, Municipality, MunicipalitySchema, UpdateMunicipalityDto, UpdateMunicipalitySchema } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
 import { Filter, IndexDescription, Sort } from 'mongodb';
 import { z } from 'zod';
 
 /* * */
 
-class StopsClass extends MongoCollectionClass<Stop, CreateStopDto, UpdateStopDto> {
-	private static _instance: StopsClass;
-	protected override createSchema: z.ZodSchema = StopSchema;
-	protected override updateSchema: z.ZodSchema = UpdateStopSchema;
+class MunicipalitiesClass extends MongoCollectionClass<Municipality, CreateMunicipalityDto, UpdateMunicipalityDto> {
+	private static _instance: MunicipalitiesClassClass;
+	protected override createSchema: z.ZodSchema = MunicipalitySchema;
+	protected override updateSchema: z.ZodSchema = UpdateMunicipalitySchema;
 
 	private constructor() {
 		super();
 	}
 
 	public static async getInstance() {
-		if (!StopsClass._instance) {
-			const instance = new StopsClass();
+		if (!MunicipalitiesClassClass._instance) {
+			const instance = new MunicipalitiesClassClass();
 			await instance.connect();
-			StopsClass._instance = instance;
+			MunicipalitiesClassClass._instance = instance;
 		}
-		return StopsClass._instance;
+		return MunicipalitiesClassClass._instance;
 	}
 
 	/**
-	 * Finds stop documents by municipality ID with optional pagination and sorting.
+	 * Finds municipality documents by municipality ID with optional pagination and sorting.
 	 *
 	 * @param id - The municipality ID to search for
 	 * @param perPage - Optional number of documents per page for pagination
@@ -36,7 +36,7 @@ class StopsClass extends MongoCollectionClass<Stop, CreateStopDto, UpdateStopDto
 	 * @returns A promise that resolves to an array of matching stop documents
 	 */
 	async findByMunicipalityId(id: string, perPage?: number, page?: number, sort?: Sort) {
-		const query = this.mongoCollection.find({ municipality_id: id } as Filter<Stop>);
+		const query = this.mongoCollection.find({ municipality_id: id } as Filter<Municipality>);
 		if (perPage) query.limit(perPage);
 		if (page && perPage) query.skip(perPage * (page - 1));
 		if (sort) query.sort(sort);
@@ -44,13 +44,13 @@ class StopsClass extends MongoCollectionClass<Stop, CreateStopDto, UpdateStopDto
 	}
 
 	/**
-	 * Finds multiple stop documents by their IDs.
+	 * Finds multiple municipality documents by their IDs.
 	 *
-	 * @param ids - Array of stop IDs to search for
-	 * @returns A promise that resolves to an array of matching stop documents
+	 * @param ids - Array of municipality IDs to search for
+	 * @returns A promise that resolves to an array of matching municipality documents
 	 */
 	async findManyByIds(ids: string[]) {
-		return this.mongoCollection.find({ _id: { $in: ids } } as Filter<Stop>).toArray();
+		return this.mongoCollection.find({ _id: { $in: ids } } as Filter<Municipality>).toArray();
 	}
 
 	protected getCollectionIndexes(): IndexDescription[] {
@@ -60,14 +60,14 @@ class StopsClass extends MongoCollectionClass<Stop, CreateStopDto, UpdateStopDto
 	}
 
 	protected getCollectionName(): string {
-		return 'stops';
+		return 'municipalitiies';
 	}
 
 	protected getEnvName(): string {
-		return 'TML_INTERFACE_STOPS';
+		return 'TML_INTERFACE_MUNICIPALITIES';
 	}
 }
 
 /* * */
 
-export const stops = AsyncSingletonProxy(StopsClass);
+export const municipalities = AsyncSingletonProxy(MunicipalitiesClass);

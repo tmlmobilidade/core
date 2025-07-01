@@ -1,12 +1,13 @@
 /* * */
 
-import cookie from '@fastify/cookie';
-import cors from '@fastify/cors';
-import fastify, { type FastifyInstance, type FastifyServerOptions } from 'fastify';
+import '@fastify/cookie';
+import '@fastify/cors';
 
 /* * */
 
-export { type FastifyReply, type FastifyRequest } from 'fastify';
+import cookie from '@fastify/cookie';
+import cors from '@fastify/cors';
+import fastify, { type FastifyInstance, type FastifyServerOptions } from 'fastify';
 
 /**
  * FastifyServiceOptions interface defines the options for the Fastify server.

@@ -9,6 +9,10 @@ import cookie from '@fastify/cookie';
 import cors from '@fastify/cors';
 import fastify, { type FastifyInstance, type FastifyServerOptions } from 'fastify';
 
+/* * */
+
+export { type FastifyReply, type FastifyRequest } from 'fastify';
+
 /**
  * FastifyServiceOptions interface defines the options for the Fastify server.
  * It extends FastifyServerOptions and adds optional properties for origin and port.

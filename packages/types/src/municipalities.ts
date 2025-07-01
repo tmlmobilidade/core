@@ -6,26 +6,19 @@ import { z } from 'zod';
 
 /* * */
 
-//
-// Define constants for enum values for better maintainability
-
-const GEOMETRY_VALYES = [
-	'coordinates', // Array of Array of longitude and latitude pairs
-	'type',
-] as const;
-
-const PROPERTIES_VALUES = [
-	'area_ha', // Number
-	'district_id', // String
-	'id', // String
-	'name', // String
-] as const;
-
-//
 // Define schemas using constants
 
-export const geometrySchema = z.enum(GEOMETRY_VALYES);
-export const propertiesSchema = z.enum(PROPERTIES_VALUES);
+export const geometrySchema = z.object({
+	coordinates: z.array(z.array(z.number())),
+	type: z.string(),
+});
+
+export const propertiesSchema = z.object({
+	area_ha: z.number(),
+	district_id: z.string(),
+	id: z.string(),
+	name: z.string(),
+});
 
 export const MunicipalitySchema = DocumentSchema.extend({
 
@@ -89,9 +82,5 @@ export type UpdateMunicipalityDto = Partial<Omit<CreateMunicipalityDto, 'created
 
 /* * */
 
-export const StopPermissionSchema = z.object({
-	agency_ids: z.array(z.string()),
-	municipality_ids: z.array(z.string()),
-});
-
-export type StopPermission = z.infer<typeof StopPermissionSchema>;
+export type GeometrySchema = z.infer<typeof geometrySchema>;
+export type PropertiesSchema = z.infer<typeof propertiesSchema>;

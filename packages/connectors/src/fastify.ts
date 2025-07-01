@@ -18,7 +18,7 @@ export interface FastifyServiceOptions extends FastifyServerOptions {
 	 * @default '*'
 	 * @example 'https://example.com'
 	 */
-	origin?: string
+	origin?: string | true
 
 	/**
 	 * The port on which the Fastify server will listen.
@@ -42,9 +42,9 @@ export class FastifyService {
 
 	public readonly server: FastifyInstance;
 
-	private readonly origin: string;
+	private readonly origin: FastifyServiceOptions['origin'];
 
-	private readonly port: number;
+	private readonly port: FastifyServiceOptions['port'];
 
 	/**
 	 * Creates an instance of FastifyService.

@@ -50,7 +50,7 @@ export class FastifyService {
 	 */
 	private constructor(options: FastifyServiceOptions) {
 		this.server = fastify(options);
-		this.origin = options.origin || '*';
+		this.origin = options.origin || '';
 		this.port = options.port || 5050;
 		this._setupDefaultRoutes();
 		this._setupPlugins();

@@ -44,7 +44,7 @@ export const SidebarContextProvider = ({ children }: PropsWithChildren) => {
 	//
 	// B. Fetch data
 
-	const { data, error, isLoading } = useSWR<{ sidebar: SidebarItemProps[] }>(`${getAppConfig('auth', 'api_url')}/me`, swrFetcher);
+	const { data, error, isLoading } = useSWR<{ sidebar: SidebarItemProps[] }>(`${getAppConfig('auth', 'api_url')}/users/me`, swrFetcher);
 
 	//
 	// C. Handle actions

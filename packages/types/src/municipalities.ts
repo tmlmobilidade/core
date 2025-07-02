@@ -1,24 +1,14 @@
 /* * */
 
 import { DocumentSchema } from '@/_common/document.js';
+import { Geometry, geometrySchema } from '@/_common/geometry.js';
+import { Properties, propertiesSchema } from '@/_common/properties.js';
 import { type UnixTimestamp, unixTimeStampSchema } from '@/_common/unix-timestamp.js';
 import { z } from 'zod';
 
 /* * */
 
 // Define schemas using constants
-
-export const geometrySchema = z.object({
-	coordinates: z.array(z.array(z.number())),
-	type: z.string(),
-});
-
-export const propertiesSchema = z.object({
-	area_ha: z.number(),
-	district_id: z.string().length(2),
-	id: z.string().length(4),
-	name: z.string(),
-});
 
 export const MunicipalitySchema = DocumentSchema.extend({
 
@@ -39,9 +29,6 @@ export const MunicipalitySchema = DocumentSchema.extend({
 
 //
 // Define types based on schemas
-
-export type Geometry = z.infer<typeof geometrySchema>;
-export type Properties = z.infer<typeof propertiesSchema>;
 
 export const CreateMunicipalitySchema = MunicipalitySchema
 	.omit({ created_at: true, updated_at: true });
@@ -79,8 +66,3 @@ export interface CreateMunicipalityDto
 }
 
 export type UpdateMunicipalityDto = Partial<Omit<CreateMunicipalityDto, 'created_by'>>;
-
-/* * */
-
-export type GeometrySchema = z.infer<typeof geometrySchema>;
-export type PropertiesSchema = z.infer<typeof propertiesSchema>;

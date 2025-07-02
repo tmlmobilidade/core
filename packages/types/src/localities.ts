@@ -1,25 +1,14 @@
 /* * */
 
 import { DocumentSchema } from '@/_common/document.js';
+import { Geometry, geometrySchema } from '@/_common/geometry.js';
+import { Properties, propertiesSchema } from '@/_common/properties.js';
 import { type UnixTimestamp, unixTimeStampSchema } from '@/_common/unix-timestamp.js';
 import { z } from 'zod';
 
 /* * */
 
 // Define schemas using constants
-
-export const geometrySchema = z.object({
-	coordinates: z.array(z.array(z.number())),
-	type: z.string(),
-});
-
-export const propertiesSchema = z.object({
-	district_id: z.string().length(2),
-	id: z.string().length(6),
-	municipality_id: z.string().length(4),
-	name: z.string(),
-	parish_id: z.string().length(6),
-});
 
 export const LocalitySchema = DocumentSchema.extend({
 
@@ -41,22 +30,19 @@ export const LocalitySchema = DocumentSchema.extend({
 //
 // Define types based on schemas
 
-export type Geometry = z.infer<typeof geometrySchema>;
-export type Properties = z.infer<typeof propertiesSchema>;
-
-export const CreateMunicipalitySchema = MunicipalitySchema
+export const CreateLocalitySchema = LocalitySchema
 	.omit({ created_at: true, updated_at: true });
 
-export const UpdateMunicipalitySchema = MunicipalitySchema
+export const UpdateLocalitySchema = LocalitySchema
 	.omit({ _id: true, created_at: true, updated_at: true })
 	.partial();
 
 //
-// Define the Municipality interface
+// Define the Locality interface
 
-export interface Municipality
+export interface Locality
 	extends Omit<
-		z.infer<typeof MunicipalitySchema>,
+		z.infer<typeof LocalitySchema>,
 		'created_at'
 		| 'geometry'
 		| 'properties'
@@ -69,9 +55,9 @@ export interface Municipality
 
 }
 
-export interface CreateMunicipalityDto
+export interface CreateLocalityDto
 	extends Omit<
-		z.infer<typeof CreateMunicipalitySchema>,
+		z.infer<typeof CreateLocalitySchema>,
 		'geometry'
 		| 'properties'
 	> {
@@ -79,9 +65,4 @@ export interface CreateMunicipalityDto
 	properties: Properties
 }
 
-export type UpdateMunicipalityDto = Partial<Omit<CreateMunicipalityDto, 'created_by'>>;
-
-/* * */
-
-export type GeometrySchema = z.infer<typeof geometrySchema>;
-export type PropertiesSchema = z.infer<typeof propertiesSchema>;
+export type UpdateLocalityDto = Partial<Omit<CreateLocalityDto, 'created_by'>>;

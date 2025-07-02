@@ -21,7 +21,7 @@ export const propertiesSchema = z.object({
 	parish_id: z.string().length(6),
 });
 
-export const MunicipalitySchema = DocumentSchema.extend({
+export const LocalitySchema = DocumentSchema.extend({
 
 	//
 	// General

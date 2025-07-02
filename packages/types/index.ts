@@ -21,5 +21,6 @@ export * from '@/plan.js';
 export * from '@/rides/index.js';
 export * from '@/simplified-apex/index.js';
 export * from '@/stop.js';
+export * from '@/system/index.js';
 export * from '@/vehicle-event.js';
 export * from '@/zone.js';

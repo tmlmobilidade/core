@@ -2,7 +2,7 @@
 
 /* * */
 
-import { Label } from '@/components/common';
+import { Label } from '@/components/common/Label';
 import { Skeleton } from '@mantine/core';
 import { useState } from 'react';
 
@@ -41,7 +41,7 @@ export function AppWrapperHeader({ userName }: AppWrapperHeaderProps) {
 
 	return (
 		<div className={styles.container}>
-			<Label size="sm" caps singleLine>{drawnGreeting} {userName}</Label>
+			<Label size="md" caps singleLine>{drawnGreeting} {userName}</Label>
 		</div>
 	);
 

@@ -1,17 +1,17 @@
 /* * */
 
 import { MongoCollectionClass } from '@/mongo-collection.js';
-import { CreateHashedTripDto, HashedTrip, HashedTripSchema, UpdateHashedTripDto, UpdateHashedTripSchema } from '@tmlmobilidade/types';
+import { DocumentSchema, HashedTrip } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
 import { IndexDescription } from 'mongodb';
 import { z } from 'zod';
 
 /* * */
 
-class HashedTripsClass extends MongoCollectionClass<HashedTrip, CreateHashedTripDto, UpdateHashedTripDto> {
+class HashedTripsClass extends MongoCollectionClass<HashedTrip, HashedTrip, HashedTrip> {
 	private static _instance: HashedTripsClass;
-	protected override createSchema: z.ZodSchema = HashedTripSchema;
-	protected override updateSchema: z.ZodSchema = UpdateHashedTripSchema;
+	protected override createSchema: z.ZodSchema = DocumentSchema;
+	protected override updateSchema: z.ZodSchema = DocumentSchema;
 
 	private constructor() {
 		super();

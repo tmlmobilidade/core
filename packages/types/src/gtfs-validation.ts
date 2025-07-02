@@ -1,11 +1,10 @@
 /* * */
 
+import { DocumentSchema } from '@/_common/document.js';
+import { UnixTimestamp } from '@/_common/unix-timestamp.js';
+import { GtfsAgency, GtfsAgencySchema, GtfsFeedInfo, GtfsFeedInfoSchema } from '@/gtfs.js';
+import { ProcessingStatus } from '@/system/processing-status.js';
 import { z } from 'zod';
-
-import { DocumentSchema } from './_common/document.js';
-import { UnixTimestamp } from './_common/unix-timestamp.js';
-import { GtfsAgency, GtfsAgencySchema, GtfsFeedInfo, GtfsFeedInfoSchema } from './gtfs.js';
-import { FeederStatusSchema } from './plan.js';
 
 /* * */
 
@@ -36,7 +35,7 @@ export type GTFSValidatorMessage = z.infer<typeof GTFSValidatorMessageSchema>;
 /* VALIDATION */
 
 export const ValidationSchema = DocumentSchema.extend({
-	feeder_status: FeederStatusSchema,
+	feeder_status: z.nativeEnum(ProcessingStatus),
 	file_id: z.string(),
 	gtfs_agency: GtfsAgencySchema,
 	gtfs_feed_info: GtfsFeedInfoSchema,

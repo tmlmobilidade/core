@@ -32,25 +32,29 @@
 	},
 	"scripts": {
 		"build": "rimraf ./dist && tsc && resolve-tspaths",
-		"clean": "sh cleanup.sh",
 		"lint": "eslint && tsc --noEmit",
 		"lint:fix": "eslint --fix"
 	},
 	"module": "dist/index.js",
 	"dependencies": {
 		"@clickhouse/client": "1.11.2",
+		"@fastify/cookie": "11.0.2",
+		"@fastify/cors": "11.0.1",
+		"@tmlmobilidade/lib": "*",
 		"@tmlmobilidade/utils": "*",
 		"@types/amqplib": "0.10.7",
 		"amqplib": "0.10.8",
+		"fastify": "5.4.0",
 		"mongodb": "6.17.0",
-		"pg": "8.16.2",
+		"pg": "8.16.3",
 		"trino-client": "0.2.7",
 		"tunnel-ssh": "5.2.0"
 	},
 	"devDependencies": {
 		"@carrismetropolitana/eslint": "20250622.1204.50",
 		"@tmlmobilidade/tsconfig": "*",
-		"@types/node": "24.0.4",
+		"@tmlmobilidade/types": "*",
+		"@types/node": "24.0.7",
 		"@types/pg": "8.15.4",
 		"resolve-tspaths": "0.8.23",
 		"rimraf": "6.0.1",

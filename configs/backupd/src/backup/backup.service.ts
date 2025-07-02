@@ -78,7 +78,7 @@ export class BackupService {
 		backups.sort(); // Sort by timestamp since they're ISO format strings
 		if (backups.length > this.config.max_remote_backups) {
 			const backupsToDelete = backups.slice(0, backups.length - this.config.max_remote_backups);
-			await this.storageService.deleteFiles(backupsToDelete);
+			await Promise.all(backupsToDelete.map(backup => this.storageService.deleteFile(backup)));
 		}
 	}
 }

@@ -17,7 +17,7 @@ export const SimplifiedApexLocationSchema = DocumentSchema.extend({
 	received_at: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp'),
 	stop_id: z.string(),
 	trip_id: z.string(),
-	vehicle_id: z.string(),
+	vehicle_id: z.number(),
 }).strict();
 
 export const UpdateSimplifiedApexLocationSchema = SimplifiedApexLocationSchema.partial();

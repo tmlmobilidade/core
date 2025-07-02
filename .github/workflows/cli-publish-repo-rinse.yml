@@ -1,0 +1,37 @@
+name: 'CLI | repo-rinse'
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - production
+    paths:
+      - 'cli/repo-rinse/**'
+      - '.github/workflows/cli-publish-repo-rinse.yml'
+
+jobs:
+
+  # # # # # # # # # # # # # # # # # # # # #
+  # # # # # # # # # # # # # # # # # # # # #
+
+  publish:
+    name: 'Publish package'
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - uses: ./.github/actions/setup-node
+        with:
+          node-version: 20
+
+      - name: Bump package version
+        working-directory: cli/repo-rinse
+        run: npx @helperkits/bumper package.json
+
+      - name: Publish package to NPM
+        working-directory: cli/repo-rinse
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}

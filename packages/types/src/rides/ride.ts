@@ -3,7 +3,8 @@
 import { DocumentSchema } from '@/_common/document.js';
 import { type OperationalDate, validateOperationalDate } from '@/_common/operational-date.js';
 import { type UnixTimestamp, validateUnixTimestamp } from '@/_common/unix-timestamp.js';
-import { AtLeasOneEventOnFirstStopSchema, atMostTwoDriverIdsSchema, atMostTwoVehicleIdsSchema, avgIntervalVehicleEventsSchema, excessiveVehicleEventDelaySchema, lessThanTenVehicleEventsSchema, matchingLocationTransactionsSchema, ontimeStartSchema, simpleOneValidationTransactionSchema, simpleOneVehicleEventOrValidationTransactionSchema, simpleThreeVehicleEventsSchema, transactionSequentialitySchema } from '@/rides/ride-analysis.js';
+import { atLeasOneEventOnFirstStopSchema, atMostTwoDriverIdsSchema, atMostTwoVehicleIdsSchema, avgIntervalVehicleEventsSchema, excessiveVehicleEventDelaySchema, lessThanTenVehicleEventsSchema, matchingLocationTransactionsSchema, ontimeStartSchema, simpleOneValidationTransactionSchema, simpleOneVehicleEventOrValidationTransactionSchema, simpleThreeVehicleEventsSchema, transactionSequentialitySchema } from '@/rides/ride-analysis.js';
+import { ProcessingStatus } from '@/system/processing-status.js';
 import { z } from 'zod';
 
 /* * */
@@ -11,7 +12,7 @@ import { z } from 'zod';
 export const RideSchema = DocumentSchema.extend({
 	agency_id: z.string(),
 	analysis: z.object({
-		AT_LEAST_ONE_EVENT_ON_FIRST_STOP: AtLeasOneEventOnFirstStopSchema,
+		AT_LEAST_ONE_EVENT_ON_FIRST_STOP: atLeasOneEventOnFirstStopSchema,
 		AT_MOST_TWO_DRIVER_IDS: atMostTwoDriverIdsSchema,
 		AT_MOST_TWO_VEHICLE_IDS: atMostTwoVehicleIdsSchema,
 		AVG_INTERVAL_VEHICLE_EVENTS: avgIntervalVehicleEventsSchema,
@@ -40,7 +41,7 @@ export const RideSchema = DocumentSchema.extend({
 	hashed_trip_id: z.string(),
 	headsign: z.string(),
 	is_locked: z.boolean().default(false),
-	line_id: z.string(),
+	line_id: z.number(),
 	operational_date: z.string().transform(validateOperationalDate).brand('OperationalDate'),
 	passengers_estimated: z.number().nullable(),
 	passengers_observed: z.number().nullable(),
@@ -51,9 +52,9 @@ export const RideSchema = DocumentSchema.extend({
 	seen_last_at: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullable(),
 	start_time_observed: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullable(),
 	start_time_scheduled: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp'),
-	system_status: z.enum(['pending', 'processing', 'complete', 'error']),
+	system_status: z.nativeEnum(ProcessingStatus),
 	trip_id: z.string(),
-	vehicle_ids: z.array(z.string()),
+	vehicle_ids: z.array(z.number()),
 }).strict();
 
 export const CreateRideSchema = RideSchema.partial({ _id: true }).omit({ created_at: true, updated_at: true });

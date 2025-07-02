@@ -42,6 +42,10 @@ export function SidebarItem({ href, icon, label, permission }: SidebarItemProps)
 	//
 	// C. Render components
 
+	if (isDisabled) {
+		return null;
+	}
+
 	return (
 		<div className={styles.container}>
 			<a

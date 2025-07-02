@@ -17,7 +17,7 @@ interface DatesConstructor {
 
 /* * */
 
-class Dates {
+export class Dates {
 	//
 
 	//
@@ -431,7 +431,3 @@ class Dates {
 
 	//
 }
-
-/* * */
-
-export { Dates, DatesFormat, TimezoneIdentified };

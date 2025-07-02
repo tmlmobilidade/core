@@ -2,9 +2,10 @@
 
 /* * */
 
+import { Loader } from '@/components/common/Loader';
 import { type SidebarItemProps } from '@/components/layout/SidebarItem';
 import { swrFetcher } from '@/lib/http';
-import { getAppBaseUrl } from '@tmlmobilidade/lib';
+import { getAppConfig } from '@tmlmobilidade/lib';
 import { createContext, type PropsWithChildren, useContext, useEffect, useMemo, useState } from 'react';
 import useSWR from 'swr';
 
@@ -26,9 +27,7 @@ const SidebarContext = createContext<SidebarContextState | undefined>(undefined)
 
 export function useSidebarContext() {
 	const context = useContext(SidebarContext);
-	if (!context) {
-		throw new Error('useSidebarContext must be used within a SidebarContextProvider');
-	}
+	if (!context) throw new Error('useSidebarContext must be used within a SidebarContextProvider');
 	return context;
 }
 
@@ -40,20 +39,20 @@ export const SidebarContextProvider = ({ children }: PropsWithChildren) => {
 	//
 	// A. Setup variables
 
-	const meApiUrl = getAppBaseUrl('auth') + '/api/me';
-
 	const [sidebarState, setSidebarState] = useState<SidebarContextState['data']['sidebar']>([]);
 
 	//
 	// B. Fetch data
 
-	const { data, error, isLoading } = useSWR<{ sidebar: SidebarItemProps[] }>(meApiUrl, swrFetcher);
+	const { data, error, isLoading } = useSWR<{ sidebar: SidebarItemProps[] }>(`${getAppConfig('auth', 'api_url')}/users/me`, swrFetcher);
 
 	//
 	// C. Handle actions
 
 	useEffect(() => {
-		if (data?.sidebar) setSidebarState(data.sidebar);
+		if (data?.sidebar) {
+			setSidebarState(data.sidebar);
+		}
 	}, [data]);
 
 	//
@@ -73,7 +72,7 @@ export const SidebarContextProvider = ({ children }: PropsWithChildren) => {
 	// E. Render components
 
 	if (contextValue.flags.loading) {
-		return <div>loading sidebar...</div>;
+		return <Loader />;
 	}
 
 	return (
@@ -81,4 +80,6 @@ export const SidebarContextProvider = ({ children }: PropsWithChildren) => {
 			{children}
 		</SidebarContext.Provider>
 	);
+
+	//
 };

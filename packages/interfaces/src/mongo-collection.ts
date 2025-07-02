@@ -17,7 +17,6 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 
 	/**
 	 * Gets all documents in the collection.
-	 *
 	 * @returns A promise that resolves to an array of all documents
 	 */
 	public async all() {
@@ -57,7 +56,6 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 
 	/**
 	 * Counts documents matching the filter criteria.
-	 *
 	 * @param filter - The filter criteria to match documents
 	 * @returns A promise that resolves to the count of matching documents
 	 */
@@ -67,7 +65,6 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 
 	/**
 	 * Deletes a single document by its ID.
-	 *
 	 * @param id - The ID of the document to delete
 	 * @returns A promise that resolves to the result of the delete operation
 	 */
@@ -77,7 +74,6 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 
 	/**
 	 * Deletes multiple documents matching the filter criteria.
-	 *
 	 * @param filter - The filter criteria to match documents to delete
 	 * @returns A promise that resolves to the result of the delete operation
 	 */
@@ -87,7 +83,6 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 
 	/**
 	 * Deletes a single document matching the filter criteria.
-	 *
 	 * @param filter - The filter criteria to match the document to delete
 	 * @returns A promise that resolves to the result of the delete operation
 	 */
@@ -104,7 +99,6 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 
 	/**
 	 * Finds all distinct values for a key in the collection.
-	 *
 	 * @param key - The key to find distinct values for
 	 * @returns A promise that resolves to an array of distinct values for the given key
 	 */
@@ -113,18 +107,40 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	}
 
 	/**
+	 * Checks if a document with the given key and value exists in the collection.
+	 * @param key The key to check for existence.
+	 * @param value The value of the key to check for existence.
+	 * @returns A promise that resolves to true if the document exists, false otherwise.
+	 */
+	public async exists<K extends keyof T>(key: K, value: T[K]): Promise<boolean> {
+		const filter: Filter<T> = { [key]: value } as Filter<T>;
+		const doc = await this.mongoCollection.findOne(filter, { projection: { [key]: 1 } });
+		return doc !== null;
+	}
+
+	/**
+	 * Checks if a document with the given ID exists in the collection.
+	 * @param _id The ID of the document to check for existence.
+	 * @returns A promise that resolves to true if the document exists, false otherwise.
+	 */
+	public async existsById(_id: T['_id']): Promise<boolean> {
+		const doc = await this.mongoCollection.findOne({ _id: _id }, { projection: { _id: 1 } });
+		return doc !== null;
+	}
+
+	/**
 	 * Finds a document by its ID.
-	 *
-	 * @param id - The ID of the document to find
+	 * @param _id The ID of the document to find.
+	 * @param options Optional find options.
 	 * @returns A promise that resolves to the matching document or null if not found
 	 */
-	public async findById(id: string, options?: FindOptions): Promise<null | WithId<T>> {
-		return this.mongoCollection.findOne({ _id: { $eq: id } } as unknown as Filter<T>, options);
+	public async findById(_id: T['_id'], options?: FindOptions): Promise<null | WithId<T>> {
+		const filter: Filter<T> = { _id: { $eq: _id } } as Filter<T>;
+		return this.mongoCollection.findOne(filter, options);
 	}
 
 	/**
 	 * Finds multiple documents matching the filter criteria with optional pagination and sorting.
-	 *
 	 * @param filter - (Optional) filter criteria to match documents
 	 * @param perPage - (Optional) number of documents per page for pagination
 	 * @param page - (Optional) page number for pagination
@@ -141,7 +157,6 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 
 	/**
 	 * Finds a single document matching the filter criteria.
-	 *
 	 * @param filter - The filter criteria to match the document
 	 * @returns A promise that resolves to the matching document or null if not found
 	 */
@@ -151,20 +166,22 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 
 	/**
 	 * Gets the MongoDB collection instance.
-	 *
 	 * @returns The MongoDB collection instance
 	 */
 	public async getCollection(): Promise<Collection<T>> {
 		return this.mongoCollection;
 	}
 
+	/**
+	 * Gets the MongoDB connector instance.
+	 * @returns The MongoDB connector instance
+	 */
 	public getMongoConnector() {
 		return this.mongoConnector;
 	}
 
 	/**
 	 * Inserts a single document into the collection.
-	 *
 	 * @param doc - The document to insert
 	 * @param options - The options for the insert operation
 	 * @returns A promise that resolves to the result of the insert operation
@@ -200,15 +217,15 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	}
 
 	/**
-	 * Updates a single document matching the filter criteria.
-	 *
-	 * @param filter - The filter criteria to match the document to update
-	 * @param updateFields - The fields to update in the document
-	 * @param options - The options for the update operation
-	 * @returns A promise that resolves to the result of the update operation
+	 * Updates a document by its ID.
+	 * @param _id The ID of the document to update.
+	 * @param updateFields The fields to update in the document.
+	 * @param options Optional options for the update operation.
+	 * @returns A promise that resolves to the result of the update operation.
 	 */
-	public async updateById(id: string, updateFields: TUpdate, options?: UpdateOptions): Promise<UpdateResult> {
-		return this.updateOne({ _id: { $eq: id } } as unknown as Filter<T>, updateFields, options);
+	public async updateById(_id: T['_id'], updateFields: TUpdate, options?: UpdateOptions): Promise<UpdateResult> {
+		const filter: Filter<T> = { _id: { $eq: _id } } as Filter<T>;
+		return this.updateOne(filter, updateFields, options);
 	}
 
 	// /**
@@ -234,7 +251,6 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 
 	/**
 	 * Updates multiple documents matching the filter criteria.
-	 *
 	 * @param filter - The filter criteria to match documents to update
 	 * @param updateFields - The fields to update in the documents
 	 * @param options - The options for the update operation
@@ -256,7 +272,6 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 
 	/**
 	 * Updates a single document matching the filter criteria.
-	 *
 	 * @param filter - The filter criteria to match the document to update
 	 * @param updateFields - The fields to update in the document
 	 * @param options - The options for the update operation

@@ -2,6 +2,7 @@
 
 import { DocumentSchema } from '@/_common/document.js';
 import { type UnixTimestamp, validateUnixTimestamp } from '@/_common/unix-timestamp.js';
+import { ProcessingStatus } from '@/system/processing-status.js';
 import { z } from 'zod';
 
 /* * */
@@ -9,18 +10,19 @@ import { z } from 'zod';
 export const UniqueSamSchema = DocumentSchema.extend({
 	_id: z.number(),
 	agency_id: z.string(),
-	device_id: z.string(),
+	device_ids: z.array(z.string()).nullable(),
 	latest_apex_version: z.string().nullable(),
+	remarks: z.string().nullable(),
 	seen_first_at: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullable(),
 	seen_last_at: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullable(),
-	status: z.enum(['missing_transactions', 'complete', 'error', 'pending']).default('pending'),
-	status_message: z.string().nullable(),
+	system_status: z.nativeEnum(ProcessingStatus).default(ProcessingStatus.Waiting),
 	transactions_expected: z.number().nullable(),
 	transactions_found: z.number().nullable(),
 	transactions_missing: z.number().nullable(),
+	vehicle_ids: z.array(z.number()).nullable(),
 }).strict();
 
-export const CreateUniqueSamSchema = UniqueSamSchema.omit({ _id: true, created_at: true, updated_at: true });
+export const CreateUniqueSamSchema = UniqueSamSchema.omit({ created_at: true, updated_at: true });
 export const UpdateUniqueSamSchema = CreateUniqueSamSchema.partial();
 
 /**

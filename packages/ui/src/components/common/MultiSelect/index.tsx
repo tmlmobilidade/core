@@ -13,11 +13,11 @@ interface DataItem {
 
 interface MultiSelectProps {
 	className?: string
+	clearable?: boolean
 	data: DataItem[]
 	description?: string
 	disabled?: boolean
 	error?: string
-	fullWidth?: boolean
 	label?: string
 	maxHeight?: number
 	onChange?: (selected: string[]) => void
@@ -26,6 +26,7 @@ interface MultiSelectProps {
 }
 
 export default function MultiSelect({
+	clearable = true,
 	data,
 	description,
 	disabled,
@@ -126,6 +127,7 @@ export default function MultiSelect({
 					error={error}
 					label={label}
 					onClick={() => combobox.openDropdown()}
+					style={{ width: '100%' }}
 					classNames={{
 						description: styles.description,
 						error: styles.error,
@@ -161,6 +163,16 @@ export default function MultiSelect({
 								}}
 							/>
 						</Combobox.EventsTarget>
+
+						{clearable && (
+							<Combobox.ClearButton
+								className={styles.clearButton}
+								onClear={() => {
+									setValue([]);
+									onChange?.([]);
+								}}
+							/>
+						)}
 					</Pill.Group>
 				</PillsInput>
 			</Combobox.DropdownTarget>

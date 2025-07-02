@@ -2,7 +2,7 @@
 
 /* * */
 
-import React from 'react';
+import { type ReactNode } from 'react';
 
 import styles from './styles.module.css';
 
@@ -10,7 +10,7 @@ import styles from './styles.module.css';
 
 export interface LabelProps {
 	caps?: boolean
-	children?: React.ReactNode
+	children?: ReactNode
 	overflow?: boolean
 	singleLine?: boolean
 	size?: 'lg' | 'md' | 'sm'

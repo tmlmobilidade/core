@@ -42,7 +42,7 @@ class RidesClass extends MongoCollectionClass<Ride, CreateRideDto, UpdateRideDto
 	 * @param lineId - The Line ID to search for
 	 * @returns A promise that resolves to an array of matching ride documents
 	 */
-	async findByLineId(lineId: string) {
+	async findByLineId(lineId: number) {
 		return this.mongoCollection.find({ line_id: lineId } as Filter<Ride>).toArray();
 	}
 

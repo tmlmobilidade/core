@@ -30,13 +30,12 @@
 	},
 	"scripts": {
 		"build": "rimraf ./dist && tsc && resolve-tspaths",
-		"clean": "sh cleanup.sh",
 		"lint": "eslint && tsc --noEmit",
 		"lint:fix": "eslint --fix"
 	},
 	"dependencies": {
-		"@aws-sdk/client-s3": "3.835.0",
-		"@aws-sdk/s3-request-presigner": "3.835.0",
+		"@aws-sdk/client-s3": "3.839.0",
+		"@aws-sdk/s3-request-presigner": "3.839.0",
 		"@tmlmobilidade/connectors": "*",
 		"@tmlmobilidade/lib": "*",
 		"@tmlmobilidade/tsconfig": "*",
@@ -45,13 +44,13 @@
 		"bcryptjs": "3.0.2",
 		"luxon": "3.6.1",
 		"mongodb": "6.17.0",
-		"nodemailer": "7.0.3",
+		"nodemailer": "7.0.4",
 		"zod": "3.25.67"
 	},
 	"devDependencies": {
 		"@carrismetropolitana/eslint": "20250622.1204.50",
 		"@types/luxon": "3.6.2",
-		"@types/node": "24.0.4",
+		"@types/node": "24.0.7",
 		"@types/nodemailer": "6.4.17",
 		"resolve-tspaths": "0.8.23",
 		"rimraf": "6.0.1",

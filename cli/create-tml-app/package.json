@@ -1,9 +1,9 @@
 {
 	"name": "create-tml-app",
-	"description": "",
+	"description": "CLI tool to create new SAE applications.",
 	"version": "1.0.0",
-	"author": "Jusi Monteiro & João Vasconcelos",
-	"license": "ISC",
+	"author": "Jusi Monteiro",
+	"license": "AGPL-3.0-or-later",
 	"keywords": [
 		"tml",
 		"tmlmobilidade",
@@ -35,12 +35,13 @@
 	"dependencies": {
 		"@clack/core": "0.5.0",
 		"@clack/prompts": "0.11.0",
+		"@tmlmobilidade/lib": "*",
 		"chalk": "5.4.1",
 		"npm-check-updates": "18.0.1"
 	},
 	"devDependencies": {
 		"@tmlmobilidade/tsconfig": "*",
-		"@types/node": "24.0.4",
+		"@types/node": "24.0.7",
 		"resolve-tspaths": "0.8.23",
 		"rimraf": "6.0.1",
 		"tsx": "4.20.3"

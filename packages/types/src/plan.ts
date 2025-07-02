@@ -3,15 +3,13 @@
 import { DocumentSchema } from '@/_common/document.js';
 import { type UnixTimestamp } from '@/_common/unix-timestamp.js';
 import { GtfsAgency, GtfsAgencySchema, GtfsFeedInfo, GtfsFeedInfoSchema } from '@/gtfs.js';
+import { ProcessingStatus } from '@/system/processing-status.js';
 import { z } from 'zod';
 
 /* * */
 
-const FEEDER_STATUS = ['waiting', 'processing', 'success', 'error'] as const;
-export const FeederStatusSchema = z.enum(FEEDER_STATUS);
-
 export const PlanSchema = DocumentSchema.extend({
-	feeder_status: FeederStatusSchema,
+	feeder_status: z.nativeEnum(ProcessingStatus).default(ProcessingStatus.Waiting),
 	gtfs_agency: GtfsAgencySchema,
 	gtfs_feed_info: GtfsFeedInfoSchema,
 	is_approved: z.boolean().default(false),
@@ -27,8 +25,6 @@ export const CreatePlanSchema = z.object({
 export const UpdatePlanSchema = PlanSchema.partial();
 
 /* * */
-
-export type FeederStatus = z.infer<typeof FeederStatusSchema>;
 
 export interface Plan extends Omit<z.infer<typeof PlanSchema>, 'created_at' | 'gtfs_agency' | 'gtfs_feed_info' | 'updated_at'> {
 	created_at: UnixTimestamp

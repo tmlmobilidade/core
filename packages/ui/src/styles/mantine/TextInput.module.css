@@ -2,7 +2,7 @@
 .wrapper {
 	--input-size: 40px;
 	--input-height: 40px;
-	min-width: 250px;
+	min-width: 200px;
 	overflow: visible;
 }
 
@@ -12,13 +12,12 @@
 .input {
 	padding: 0 15px;
 	font-size: 16px;
-	font-weight: var(--font-weight-semibold);
+	font-weight: var(--font-weight-regular);
 	line-height: 1;
 	color: var(--color-system-text-100);
-	background-color: var(--color-system-background-300);
-	border: 2px solid var(--color-system-text-300);
+	background-color: var(--color-system-background-100);
+	border: 2px solid var(--color-system-border-100);
 	border-radius: 5px;
-	box-shadow: 0 1px 3px 0 rgb(0 0 0 / 10%);
 	transition: all 200ms ease-in-out;
 }
 
@@ -28,6 +27,8 @@
 
 .input:focus {
 	background-color: var(--color-system-background-100);
+	border-color: var(--color-primary);
+	box-shadow: 0 1px 3px 0 rgb(0 0 0 / 10%);
 }
 
 .wrapper[data-with-left-section="true"] .input {
@@ -40,6 +41,14 @@
 
 
 /* * */
+/* SECTION */
+
+.section {
+	color: var(--color-system-text-300);
+}
+
+
+/* * */
 /* LABEL */
 
 .label {
@@ -47,7 +56,7 @@
 	margin: 0;
 	font-size: var(--font-size-md);
 	font-weight: var(--font-weight-medium);
-	line-height: var(font-line-height);
+	line-height: var(--font-line-height);
 	color: var(--color-system-text-100);
 }
 
@@ -59,6 +68,6 @@
 	margin: 0;
 	font-size: var(--font-size-sm);
 	font-weight: var(--font-weight-medium);
-	line-height: var(font-line-height);
+	line-height: var(--font-line-height);
 	color: var(--color-system-text-200);
 }

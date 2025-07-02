@@ -24,9 +24,24 @@ export class RabbitMQConnector {
 	 * Connects to RabbitMQ and creates a channel.
 	 */
 	async connect(): Promise<void> {
-		this.connection = await amqpConnect(this.config.uri, this.config.socketOptions);
-		this.channel = await this.connection.createChannel();
-		console.log('Connected to RabbitMQ.');
+		try {
+			this.connection = await amqpConnect(this.config.uri, this.config.socketOptions);
+			this.channel = await this.connection.createChannel();
+			console.log('Connected to RabbitMQ.');
+
+			this.channel.on('close', () => {
+				console.warn('Channel closed, reconnecting...');
+				setTimeout(this.connect.bind(this), 5000);
+			});
+
+			this.channel.on('error', (err) => {
+				console.error('Channel error:', err);
+			});
+		}
+		catch (error) {
+			console.error('Failed to connect to RabbitMQ:', error);
+			throw error;
+		}
 	}
 
 	/**

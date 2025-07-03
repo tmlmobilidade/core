@@ -34,8 +34,8 @@ export const UserSchema = DocumentSchema.extend({
 	verification_token_ids: z.array(z.string()).default([]),
 }).strict();
 
-export const CreateUserSchema = UserSchema.omit({ _id: true, created_at: true, password_hash: true, updated_at: true });
-export const UpdateUserSchema = CreateUserSchema.extend({ password_hash: z.string() }).partial();
+export const CreateUserSchema = UserSchema.omit({ _id: true, created_at: true, updated_at: true });
+export const UpdateUserSchema = CreateUserSchema.partial();
 
 export interface User extends Omit<z.infer<typeof UserSchema>, 'created_at' | 'email_verified' | 'permissions' | 'updated_at'> {
 	created_at: UnixTimestamp

@@ -1,0 +1,137 @@
+/* eslint-disable perfectionist/sort-imports */
+import { IStorageProvider } from '@/providers/storage/storage.interface.js';
+import { Readable } from 'node:stream';
+import { ObjectStorageClient } from 'oci-objectstorage';
+import { Region, SimpleAuthenticationDetailsProvider } from 'oci-common';
+import { readFileSync } from 'node:fs';
+import { HttpException, HttpStatus } from '@tmlmobilidade/lib';
+import { CreatePreauthenticatedRequestDetails } from 'oci-objectstorage/lib/model/create-preauthenticated-request-details.js';
+
+/* * */
+
+export interface OCIStorageProviderConfiguration {
+	bucket_name: string
+	fingerprint: string
+	namespace: string
+	private_key: string
+	region: string
+	tenancy: string
+	user: string
+}
+
+/* * */
+
+export class OCIStorageProvider implements IStorageProvider {
+	private readonly bucketName: string;
+	private readonly namespace: string;
+	private readonly ociClient: ObjectStorageClient;
+	private readonly region: Region;
+
+	constructor(config: OCIStorageProviderConfiguration) {
+		this.ociClient = new ObjectStorageClient({
+			/**
+             * Construct an instance of [[SimpleAuthenticationDetailsProvider]].
+             * @param tenancy   tenancy id.
+             * @param user  user id.
+             * @param fingerprint   user's fingerprint.
+             * @param privateKey    private key to sign the request.
+             * @param passphrase    the passphrase of private key.
+             */
+			authenticationDetailsProvider: new SimpleAuthenticationDetailsProvider(
+				config.tenancy,
+				config.user,
+				config.fingerprint,
+				readFileSync(config.private_key, 'utf8'),
+				null,
+				Region.fromRegionId(config.region),
+			),
+		});
+
+		this.region = Region.fromRegionId(config.region);
+		this.namespace = config.namespace;
+		this.bucketName = config.bucket_name;
+	}
+
+	/**
+	 * Copies a file from one location to another in the same bucket.
+	 * @param source - The source object name.
+	 * @param destination - The destination object name.
+	 */
+	async copyFile(source: string, destination: string): Promise<void> {
+		await this.ociClient.copyObject({
+			bucketName: this.bucketName,
+			copyObjectDetails: {
+				destinationBucket: this.bucketName,
+				destinationNamespace: this.namespace,
+				destinationObjectName: destination,
+				destinationRegion: this.region.regionId,
+				sourceObjectName: source,
+			},
+			namespaceName: this.namespace,
+		});
+	}
+
+	async deleteFile(key: string): Promise<void> {
+		await this.ociClient.deleteObject({
+			bucketName: this.bucketName,
+			namespaceName: this.namespace,
+			objectName: key,
+		});
+	}
+
+	async deleteFiles(keys: string[]): Promise<void> {
+		await Promise.all(keys.map(key => this.deleteFile(key)));
+	}
+
+	async fileExists(key: string): Promise<boolean> {
+		try {
+			await this.ociClient.headObject({
+				bucketName: this.bucketName,
+				namespaceName: this.namespace,
+				objectName: key,
+			});
+			return true;
+		}
+		catch (error: unknown) {
+			if (error instanceof Error && error.message.includes('404')) return false;
+			throw error;
+		}
+	}
+
+	async getFileUrl(key: string): Promise<string> {
+		if (!await this.fileExists(key)) {
+			throw new HttpException(HttpStatus.NOT_FOUND, `File ${key} does not exist in bucket ${this.bucketName}`);
+		}
+
+		const response = await this.ociClient.createPreauthenticatedRequest({
+			bucketName: this.bucketName,
+			createPreauthenticatedRequestDetails: {
+				accessType: CreatePreauthenticatedRequestDetails.AccessType.ObjectRead,
+				name: 'public-download-link',
+				objectName: key,
+				timeExpires: new Date(Date.now() + 1000 * 60 * 60), // 1 hour
+			},
+			namespaceName: this.namespace,
+		});
+
+		return `https://objectstorage.${this.region.regionId}.oraclecloud.com${response.preauthenticatedRequest.accessUri}`;
+	}
+
+	async listFiles(prefix?: string): Promise<string[]> {
+		const result = await this.ociClient.listObjects({
+			bucketName: this.bucketName,
+			namespaceName: this.namespace,
+			prefix,
+		});
+		return result.listObjects?.objects?.map(obj => obj.name) ?? [];
+	}
+
+	async uploadFile(key: string, body: Buffer | Readable | string): Promise<void> {
+		await this.ociClient.putObject({
+			bucketName: this.bucketName,
+			namespaceName: this.namespace,
+			objectName: key,
+			putObjectBody: typeof body === 'string' ? Buffer.from(body) : body,
+		});
+	}
+}

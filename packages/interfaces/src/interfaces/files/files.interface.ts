@@ -54,17 +54,19 @@ class FilesClass extends MongoCollectionClass<File, CreateFileDto, UpdateFileDto
 				});
 				break;
 			case 'oci':
-				if (!process.env.OCI_ACCESS_KEY_ID || !process.env.OCI_BUCKET_NAME || !process.env.OCI_SECRET_ACCESS_KEY) {
-					throw new Error('OCI_ACCESS_KEY_ID, OCI_BUCKET_NAME, and OCI_SECRET_ACCESS_KEY must be set');
+				if (!process.env.OCI_BUCKET_NAME || !process.env.OCI_FINGERPRINT || !process.env.OCI_NAMESPACE || !process.env.OCI_PRIVATE_KEY || !process.env.OCI_REGION || !process.env.OCI_TENANCY || !process.env.OCI_USER) {
+					throw new Error('OCI_BUCKET_NAME, OCI_FINGERPRINT, OCI_NAMESPACE, OCI_PRIVATE_KEY, OCI_REGION, OCI_TENANCY, and OCI_USER must be set');
 				}
 				this.bucketName = process.env.OCI_BUCKET_NAME;
 				this.storageService = StorageFactory.create({
 					oci_config: {
-						access_key_id: process.env.OCI_ACCESS_KEY_ID,
-						bucket_name: process.env.OCI_NAMESPACE ?? '',
-						endpoint: `https://compat.objectstorage.${process.env.OCI_REGION}.oraclecloud.com/${process.env.OCI_BUCKET_NAME}`,
+						bucket_name: process.env.OCI_BUCKET_NAME,
+						fingerprint: process.env.OCI_FINGERPRINT,
+						namespace: process.env.OCI_NAMESPACE,
+						private_key: process.env.OCI_PRIVATE_KEY,
 						region: process.env.OCI_REGION,
-						secret_access_key: process.env.OCI_SECRET_ACCESS_KEY,
+						tenancy: process.env.OCI_TENANCY,
+						user: process.env.OCI_USER,
 					},
 					type: 'oci',
 				});

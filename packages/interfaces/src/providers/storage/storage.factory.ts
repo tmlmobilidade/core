@@ -2,6 +2,7 @@
 
 /* * */
 
+import { OCIStorageProvider, OCIStorageProviderConfiguration } from '@/providers/storage/oci-storage.js';
 import { S3StorageProvider, S3StorageProviderConfiguration } from '@/providers/storage/s3-storage.js';
 import { IStorageProvider } from '@/providers/storage/storage.interface.js';
 
@@ -16,7 +17,7 @@ export type StorageConfiguration = {
 	}
 	type: 'cloudflare'
 } | {
-	oci_config: S3StorageProviderConfiguration
+	oci_config: OCIStorageProviderConfiguration
 	type: 'oci'
 };
 
@@ -36,7 +37,7 @@ export class StorageFactory {
 			case 'cloudflare':
 				return new S3StorageProvider(config.cloudflare_config);
 			case 'oci':
-				return new S3StorageProvider(config.oci_config);
+				return new OCIStorageProvider(config.oci_config);
 			default:
 				throw new Error(`Invalid storage type`);
 		}

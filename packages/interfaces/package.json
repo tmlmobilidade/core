@@ -21,7 +21,9 @@
 		"access": "public"
 	},
 	"type": "module",
-	"files": ["dist/"],
+	"files": [
+		"dist/"
+	],
 	"exports": {
 		".": {
 			"types": "./dist/index.d.ts",
@@ -45,6 +47,8 @@
 		"luxon": "3.6.1",
 		"mongodb": "6.17.0",
 		"nodemailer": "7.0.4",
+		"oci-common": "^2.112.0",
+		"oci-objectstorage": "^2.112.0",
 		"zod": "3.25.67"
 	},
 	"devDependencies": {

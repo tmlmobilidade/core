@@ -9,9 +9,10 @@ import { type LineString, type Position } from 'geojson';
  * If the line is shorter than the specified length, it returns the entire line.
  * @param line The LineString to cut.
  * @param length The length at which to cut the line, in meters, from the start of the line.
+ * @param direction The direction in which to cut the line. If 'forward', it cuts from the start of the line.
  * @returns A new LineString that is cut at the specified length.
  */
-export function cutLineStringAtLength(line: LineString, length: number): LineString {
+export function cutLineStringAtLength(line: LineString, length: number, direction: 'forward' | 'reversed' = 'forward'): LineString {
 	//
 
 	//
@@ -24,7 +25,7 @@ export function cutLineStringAtLength(line: LineString, length: number): LineStr
 	//
 	// Return an empty line if the length is equal to 0
 
-	if (length === 0) {
+	if (length <= 0) {
 		return toLineStringFromPositions([]);
 	}
 
@@ -32,9 +33,8 @@ export function cutLineStringAtLength(line: LineString, length: number): LineStr
 	// Reverse the line if the length is negative
 	// and set the length to its absolute value
 
-	if (length < 0) {
+	if (direction === 'reversed') {
 		line.coordinates = line.coordinates.slice().reverse();
-		length = -length;
 	}
 
 	//

@@ -2,8 +2,8 @@
 
 /**
  * Use to show children only when light theme is active. Hidden otherwise.
- * @param {React.ReactElement} children The content to display in light theme.
- * @returns {React.ReactElement} The rendered ThemeLight component.
+ * @param children The content to display in light theme.
+ * @returns The rendered ThemeLight component.
  */
 export function ThemeLight({ children }: { children: React.ReactNode }): React.ReactElement {
 	return (
@@ -15,8 +15,8 @@ export function ThemeLight({ children }: { children: React.ReactNode }): React.R
 
 /**
  * Use to show children only when dark theme is active. Hidden otherwise.
- * @param {React.ReactNode} children The content to display in dark theme.
- * @returns {React.ReactElement} The rendered ThemeDark component.
+ * @param children The content to display in dark theme.
+ * @returns The rendered ThemeDark component.
  */
 export function ThemeDark({ children }: { children: React.ReactNode }): React.ReactElement {
 	return (
@@ -28,9 +28,9 @@ export function ThemeDark({ children }: { children: React.ReactNode }): React.Re
 
 /**
  * ThemeSwitch component to automatically toggle children components between dark and light themes.
- * @param {React.ReactNode} dark The content to display in dark theme.
- * @param {React.ReactNode} light The content to display in light theme.
- * @returns {React.ReactElement} The rendered ThemeSwitch component.
+ * @param dark The content to display in dark theme.
+ * @param light The content to display in light theme.
+ * @returns The rendered ThemeSwitch component.
  */
 export function Themer({ dark, light }: { dark: React.ReactNode, light: React.ReactNode }): React.ReactElement {
 	return (

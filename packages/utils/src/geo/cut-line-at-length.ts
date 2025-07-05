@@ -30,8 +30,7 @@ export function cutLineStringAtLength(line: LineString, length: number, directio
 	}
 
 	//
-	// Reverse the line if the length is negative
-	// and set the length to its absolute value
+	// Reverse the line if the direction is 'reversed'
 
 	if (direction === 'reversed') {
 		line.coordinates = line.coordinates.slice().reverse();

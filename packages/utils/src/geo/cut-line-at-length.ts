@@ -12,15 +12,41 @@ import { type LineString, type Position } from 'geojson';
  * @returns A new LineString that is cut at the specified length.
  */
 export function cutLineStringAtLength(line: LineString, length: number): LineString {
+	//
+
+	//
 	// Return the line if it is empty
-	if (line.coordinates.length < 2) return line;
-	// Return an empty line if the length is less than or equal to 0
-	if (length <= 0) return toLineStringFromPositions();
+
+	if (line.coordinates.length < 2) {
+		return line;
+	}
+
+	//
+	// Return an empty line if the length is equal to 0
+
+	if (length === 0) {
+		return toLineStringFromPositions([]);
+	}
+
+	//
+	// Reverse the line if the length is negative
+	// and set the length to its absolute value
+
+	if (length < 0) {
+		line.coordinates = line.coordinates.slice().reverse();
+		length = -length;
+	}
+
+	//
 	// Hold the cumulative distance between points
 	// and the coordinates of the new line
+
 	let cumulativeLength = 0;
 	const newLinePositions: Position[] = [];
+
+	//
 	// Loop through the coordinates of the line
+
 	for (let i = 0; i < line.coordinates.length - 1; i++) {
 		// Get the coordinates of the current and the next point
 		const coordA = line.coordinates[i];
@@ -47,7 +73,13 @@ export function cutLineStringAtLength(line: LineString, length: number): LineStr
 		// then the current point should be added to the new line
 		newLinePositions.push(coordA);
 	}
+
+	//
 	// If the entire line is shorter than the target length
+
 	newLinePositions.push(line.coordinates[line.coordinates.length - 1]);
+
 	return toLineStringFromPositions(newLinePositions);
+
+	//
 }

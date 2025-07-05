@@ -13,13 +13,26 @@ import { type LineString, type Position } from 'geojson';
  * @returns A GeoJSON LineString with the split chunks.
  */
 export function chunkLineByDistance(line: LineString, segmentLength: number): LineString {
+	//
+
+	//
 	// Exit early if the line is empty
+
 	if (line.coordinates.length < 2) return line;
+
+	//
 	// Setup variables to hold the coordinates of the chunked line
+
 	const chunkedLineCoordinates: Position[] = [];
+
+	//
 	// Add the first point to the chunked line
+
 	chunkedLineCoordinates.push(line.coordinates[0]);
+
+	//
 	// Loop through the coordinates of the line
+
 	for (let i = 0; i < line.coordinates.length - 1; i++) {
 		// Extract the coordinates of the current and the next point
 		const [lngA, latA] = line.coordinates[i];
@@ -59,11 +72,20 @@ export function chunkLineByDistance(line: LineString, segmentLength: number): Li
 			}
 		}
 	}
+
+	//
 	// Add the last point of the line to the chunked line
+
 	const lastPoint = line.coordinates[line.coordinates.length - 1];
+
 	if (chunkedLineCoordinates[chunkedLineCoordinates.length - 1][0] !== lastPoint[0] || chunkedLineCoordinates[chunkedLineCoordinates.length - 1][1] !== lastPoint[1]) {
 		chunkedLineCoordinates.push(lastPoint);
 	}
+
+	//
 	// Return the chunked line as a GeoJSON LineString
+
 	return toLineStringFromPositions(chunkedLineCoordinates);
+
+	//
 }

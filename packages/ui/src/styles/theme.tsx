@@ -98,7 +98,7 @@ export const themeData: MantineThemeOverride = createTheme({
 
 		TextInput: TextInput.extend({
 			classNames: (_, props) => {
-				const defaultClasses = {
+				return {
 					...TextInputOverride,
 					...(props.size === 'sm' && TextInputOverrideSm),
 					...(props.variant === 'white' && {
@@ -106,7 +106,6 @@ export const themeData: MantineThemeOverride = createTheme({
 						section: TextInputOverrideSm.variantWhite,
 					}),
 				};
-				return defaultClasses;
 			},
 		}),
 

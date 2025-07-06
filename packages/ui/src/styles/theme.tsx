@@ -41,84 +41,58 @@ export const themeData: MantineThemeOverride = createTheme({
 	components: {
 
 		Button: Button.extend({
-			classNames: () => {
-				const defaultClasses = {
-					...ButtonOverride,
-				};
-				return defaultClasses;
+			classNames: {
+				...ButtonOverride,
 			},
 		}),
 
 		PasswordInput: PasswordInput.extend({
-			classNames: () => {
-				const defaultClasses = {
-					// PasswordInput is very similar to TextInput. The only difference is that
-					// the 'input' field is wrapped by an outer div, with the class '.input'.
-					// The actual 'input' field is named '.innerInput'. It is necessary to
-					// map the 'input' field styles to the '.innerInput' class and apply reset styles
-					// to the '.input' class, otherwise the input will appear to be rendered twice.
-					innerInput: TextInputOverride.input,
-					input: PasswordInputOverride.input,
-					root: TextInputOverride.root,
-					wrapper: TextInputOverride.wrapper,
-				};
-				return defaultClasses;
+			classNames: {
+				// PasswordInput is very similar to TextInput. The only difference is that
+				// the 'input' field is wrapped by an outer div, with the class '.input'.
+				// The actual 'input' field is named '.innerInput'. It is necessary to
+				// map the 'input' field styles to the '.innerInput' class and apply reset styles
+				// to the '.input' class, otherwise the input will appear to be rendered twice.
+				innerInput: TextInputOverride.input,
+				input: PasswordInputOverride.input,
+				root: TextInputOverride.root,
+				wrapper: TextInputOverride.wrapper,
 			},
 		}),
 
 		SegmentedControl: SegmentedControl.extend({
-			classNames: () => {
-				const defaultClasses = {
-					indicator: SegmentedControlOverride.indicator,
-					label: SegmentedControlOverride.label,
-					root: SegmentedControlOverride.root,
-				};
-				return defaultClasses;
+			classNames: {
+				...SegmentedControlOverride,
 			},
 		}),
 
 		Skeleton: Skeleton.extend({
-			classNames: () => {
-				const defaultClasses = {
-					...SkeletonOverride,
-				};
-				return defaultClasses;
+			classNames: {
+				...SkeletonOverride,
 			},
 		}),
 
 		Slider: Slider.extend({
-			classNames: () => {
-				const defaultClasses = {
-					...SliderOverride,
-				};
-				return defaultClasses;
+			classNames: {
+				...SliderOverride,
 			},
 		}),
 
 		Switch: Switch.extend({
-			classNames: () => {
-				const defaultClasses = {
-					...SwitchOverride,
-				};
-				return defaultClasses;
+			classNames: {
+				...SwitchOverride,
 			},
 		}),
 
 		Text: Text.extend({
-			classNames: () => {
-				const defaultClasses = {
-					...TextOverride,
-				};
-				return defaultClasses;
+			classNames: {
+				...TextOverride,
 			},
 		}),
 
 		Textarea: Textarea.extend({
-			classNames: () => {
-				const defaultClasses = {
-					...TextareaOverride,
-				};
-				return defaultClasses;
+			classNames: {
+				...TextareaOverride,
 			},
 		}),
 

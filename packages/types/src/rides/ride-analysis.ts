@@ -47,6 +47,14 @@ export type AvgIntervalVehicleEvents = z.infer<typeof avgIntervalVehicleEventsSc
 
 /* * */
 
+export const endedAtLastStopSchema = RideAnalysisSchema.extend({
+	reason: z.enum(['ENDED_AT_LAST_STOP', 'ENDED_OUTSIDE_OF_LAST_STOP', 'NO_VEHICLE_EVENTS_FOUND', 'NO_PATH_DATA']),
+}).strict();
+
+export type EndedAtLastStop = z.infer<typeof endedAtLastStopSchema>;
+
+/* * */
+
 export const excessiveVehicleEventDelaySchema = RideAnalysisSchema.extend({
 	reason: z.enum(['ALL_VEHICLE_EVENTS_ARE_WITHIN_DELAY_LIMITS', 'THERE_ARE_VEHICLE_EVENTS_WITH_EXCESSIVE_DELAY']),
 }).strict();

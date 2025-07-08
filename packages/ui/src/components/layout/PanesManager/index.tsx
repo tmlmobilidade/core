@@ -32,7 +32,7 @@ export function PanesManager({ panes }: PanesManagerProps) {
 	// B. Transform data
 
 	const gridTemplateColumns = paneFractions
-		.map((index, fraction) => index > 0 ? `auto ${fraction}fr` : `${fraction}fr`)
+		.map((fraction, index) => index > 0 ? `auto ${fraction}fr` : `${fraction}fr`)
 		.join(' ');
 
 	//

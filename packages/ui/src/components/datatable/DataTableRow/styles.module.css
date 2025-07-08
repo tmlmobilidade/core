@@ -6,11 +6,18 @@
 	width: min-content;
 	min-width: 100%;
 	background-color: var(--color-system-background-100);
-    border-bottom: 1px solid var(--color-system-border-100);
+	border-bottom: 1px solid var(--color-system-border-100);
 }
 
 .row:hover {
 	background-color: var(--color-system-background-200);
+}
+
+/* * */
+/* ROW / IS CLICKABLE */
+
+.row[data-is-clickable='true'] {
+	cursor: pointer;
 }
 
 /* * */

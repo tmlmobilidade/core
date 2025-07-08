@@ -3,7 +3,6 @@
 /* * */
 
 import { DataTableColumn } from '@/components/datatable/datatable.type';
-import { useDataTableContext } from '@/components/datatable/DataTableContext';
 import { cn } from '@/lib/utils';
 import { getValueAtPath } from '@/lib/utils';
 
@@ -28,19 +27,10 @@ interface DataTableRowProps<T = Record<string, unknown>> {
 /* * */
 
 export function DataTableRow<T = Record<string, unknown>>({ columns, onRowClick, onRowContextMenu, onRowDoubleClick, record }: DataTableRowProps<T> & { onRowClick?: (record: T) => void, onRowContextMenu?: (record: T) => void, onRowDoubleClick?: (record: T) => void }) {
-	//
-
-	//
-	// A. Setup variables
-
-	const dataTableContext = useDataTableContext<T>();
-
-	//
-	// B. Render components
-
 	return (
 		<div
 			className={styles.row}
+			data-is-clickable={!!onRowClick}
 			onClick={() => onRowClick && onRowClick(record)}
 			onContextMenu={() => onRowContextMenu && onRowContextMenu(record)}
 			onDoubleClick={() => onRowDoubleClick && onRowDoubleClick(record)}
@@ -52,7 +42,7 @@ export function DataTableRow<T = Record<string, unknown>>({ columns, onRowClick,
 					style={{
 						maxWidth: column.width,
 						minWidth: column.width,
-						width: dataTableContext.data.column_widths?.[column.accessor as string] ?? column.width,
+						width: column.width,
 					}}
 				>
 					{column.render
@@ -64,6 +54,4 @@ export function DataTableRow<T = Record<string, unknown>>({ columns, onRowClick,
 			))}
 		</div>
 	);
-
-	//
 }

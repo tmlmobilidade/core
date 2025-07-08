@@ -41,7 +41,7 @@ services:
       - ./stops-keyfile.key:/data/replica.key
       - ./stops-db-data:/data/db
     env_file:
-      - .env
+      - ./secrets/.env
     entrypoint:
       - bash
       - -c
@@ -58,9 +58,9 @@ services:
     image: ghcr.io/tmlmobilidade/backupd:production
     volumes:
       - ./backupd-data:/data/backups
-      - ./backupd.yaml:/config.yaml
+      - ./secrets:/secrets
     environment:
-      - CONFIG_PATH=/config.yaml
+      - CONFIG_PATH=/secrets/backupd.yaml
     depends_on:
       - stops-db
 

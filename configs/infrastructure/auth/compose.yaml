@@ -41,7 +41,7 @@ services:
       - ./init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh
       - ./auth-db-data:/data/db
     env_file:
-      - .env
+      - ./secrets/.env
 
    # # # # # # # # # # # # # # # # # # # # #
   # # # # # # # # # # # # # # # # # # # # #
@@ -50,8 +50,8 @@ services:
     image: ghcr.io/tmlmobilidade/backupd:production
     volumes:
       - ./backupd-data:/data/backups
-      - ./backupd.yaml:/config.yaml
+      - ./secrets:/secrets
     environment:
-      - CONFIG_PATH=/config.yaml
+      - CONFIG_PATH=/secrets/config.yaml
     depends_on:
       - auth-db

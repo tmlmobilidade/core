@@ -5,10 +5,10 @@ import React from 'react';
 
 /* * */
 
-import { ResetPasswordEmail } from './emails/reset-email';
+import { ResetPasswordEmail, ResetPasswordEmailProps } from './emails/reset-email';
 
 /* * */
 
-export const RenderResetPasswordEmail = (props: Parameters<typeof ResetPasswordEmail>[0]) => {
+export const RenderResetPasswordEmail = (props: ResetPasswordEmailProps) => {
 	return render(<ResetPasswordEmail {...props} />);
 };

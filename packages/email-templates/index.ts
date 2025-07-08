@@ -2,18 +2,23 @@
 
 import { emailProvider } from '@tmlmobilidade/interfaces';
 
+import { ResetPasswordEmailProps } from './src/emails/reset-email';
 import { RenderResetPasswordEmail } from './src/renderer';
 
 /* * */
 
-interface SendEmailProps<T> {
+export type { ResetPasswordEmailProps };
+
+/* * */
+
+export interface SendEmailProps<T> {
 	props: T
 	to: string
 }
 
-export function sendResetPasswordEmail(props: SendEmailProps<Parameters<typeof RenderResetPasswordEmail>[0]>) {
+export async function sendResetPasswordEmail(props: SendEmailProps<ResetPasswordEmailProps>) {
 	const emailHtml = RenderResetPasswordEmail(props.props);
-	emailProvider.send({
+	await emailProvider.send({
 		html: emailHtml,
 		subject: 'Redefinição da sua palavra-passe',
 		to: props.to,

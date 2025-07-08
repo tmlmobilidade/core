@@ -1,19 +1,21 @@
 /* * */
 
-import EmailWrapper from '@/components/email-wrapper';
-import styles from '@/components/styles';
-import { Button, Link, Section, Text } from '@react-email/components';
+import { EmailWrapper, styles } from '@/components';
+import { Button, Hr, Link, Section, Text } from '@react-email/components';
 import { getAppConfig } from '@tmlmobilidade/lib';
 
 /* * */
 
-export interface WelcomeEmailProps { first_name: string, setup_password_link: string }
+export interface WelcomeEmailProps {
+	first_name: string
+	setup_password_link: string
+}
 
 export function WelcomeEmail({ first_name, setup_password_link }: WelcomeEmailProps) {
 	const go_link = getAppConfig('auth', 'frontend_url', 'production');
 
 	return (
-		<EmailWrapper preview="Redefinição da sua palavra-passe">
+		<EmailWrapper preview="Bem-vindo ao GO - Gestor de Oferta">
 			<Section>
 				<Text style={styles.text}>
 					👋 Olá
@@ -21,32 +23,50 @@ export function WelcomeEmail({ first_name, setup_password_link }: WelcomeEmailPr
 					{first_name}
 					,
 				</Text>
+
 				<Text style={styles.text}>
-					Bem-vindo ao
+					É um prazer dar-lhe as boas-vindas à plataforma
 					{' '}
-					<b>GO</b>
+					<strong>GO (Gestor de Oferta)</strong>
 					{' '}
-					(Gestor de Oferta) da Transportes Metropolitanos de Lisboa!
+					da Transportes Metropolitanos de Lisboa!
 				</Text>
+
 				<Text style={styles.text}>
-					Para começar a usar o
-					{' '}
-					<b>GO</b>
-					, por favor, defina uma palavra-passe para a sua conta.
+					Para começar a usar o GO, por favor defina uma palavra-passe para a sua conta:
 				</Text>
+
 				<Button href={setup_password_link} style={styles.button}>
-					Definir palavra-passe
+					Definir Palavra-passe
 				</Button>
-				<Text style={styles.text}>
-					Se já tem uma conta, pode aceder ao GO em:
+
+				<Hr style={{ margin: '24px 0' }} />
+
+				<Text style={styles.textStyles.small}>
+					<strong>Já tem uma conta configurada?</strong>
+				</Text>
+
+				<Text style={styles.textStyles.small}>
+					Pode aceder diretamente ao GO através do seguinte
 					{' '}
-					<Link href={go_link}>GO (Gestor de Oferta)</Link>
+					<Link href={go_link} style={{ color: '#0369A1', textDecoration: 'underline' }}>
+						link.
+					</Link>
+				</Text>
+
+				<Hr style={{ margin: '24px 0' }} />
+
+				<Text style={styles.textStyles.muted}>
+					Se tiver alguma dúvida sobre como utilizar a plataforma ou encontrar qualquer dificuldade durante o processo de configuração, não hesite em contactar a nossa equipa de suporte. Estamos aqui para ajudar!
 				</Text>
 			</Section>
 		</EmailWrapper>
 	);
 };
 
-WelcomeEmail.PreviewProps = { first_name: 'Josué', setup_password_link: 'https://www.tmlmobilidade.pt' } as WelcomeEmailProps;
+WelcomeEmail.PreviewProps = {
+	first_name: 'Josué',
+	setup_password_link: 'https://www.tmlmobilidade.pt/setup-password',
+} as WelcomeEmailProps;
 
 export default WelcomeEmail;

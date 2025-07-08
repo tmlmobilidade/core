@@ -15,7 +15,7 @@ const text: React.CSSProperties = {
 	color: '#000',
 	fontFamily: '\'Open Sans\', \'Helvetica Neue\', Arial',
 	fontSize: '16px',
-	fontWeight: '300',
+	fontWeight: '400',
 	lineHeight: '26px',
 };
 
@@ -42,10 +42,76 @@ const button: React.CSSProperties = {
 	width: '210px',
 };
 
+// Enhanced color schemes for different contexts
+const colors = {
+	error: {
+		background: '#FEF2F2',
+		border: '#FECACA',
+		text: '#DC2626',
+	},
+	info: {
+		background: '#EFF6FF',
+		border: '#BFDBFE',
+		text: '#0369A1',
+	},
+	muted: {
+		text: '#6B7280',
+	},
+	success: {
+		background: '#F0FDF4',
+		border: '#BBF7D0',
+		text: '#16A34A',
+	},
+	warning: {
+		background: '#FEF3C7',
+		border: '#FCD34D',
+		text: '#D97706',
+	},
+};
+
+// Common text styles for different emphasis levels
+const textStyles = {
+	error: {
+		...text,
+		color: colors.error.text,
+		fontWeight: '600',
+	},
+	highlight: {
+		...text,
+		fontWeight: '600',
+	},
+	info: {
+		...text,
+		color: colors.info.text,
+		fontWeight: '600',
+	},
+	muted: {
+		...text,
+		color: colors.muted.text,
+		fontSize: '14px',
+	},
+	small: {
+		...text,
+		fontSize: '14px',
+	},
+	success: {
+		...text,
+		color: colors.success.text,
+		fontWeight: '600',
+	},
+	warning: {
+		...text,
+		color: colors.warning.text,
+		fontWeight: '600',
+	},
+};
+
 export default {
 	button,
+	colors,
 	container,
 	footer_text,
 	main,
 	text,
+	textStyles,
 };

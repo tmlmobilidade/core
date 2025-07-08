@@ -3,7 +3,6 @@
 /* * */
 
 import { useMeContext } from '@/contexts';
-import { useIsActiveDomain } from '@/hooks/use-is-active-domain';
 import { type Permission } from '@tmlmobilidade/types';
 import { getPermission } from '@tmlmobilidade/utils';
 import { useMemo } from 'react';
@@ -37,7 +36,16 @@ export function SidebarItem({ href, icon, label, permission }: SidebarItemProps)
 		return !userPermission || (userPermission.action !== permission.action || userPermission.scope !== permission.scope);
 	}, [meContext.data.user?.permissions, permission]);
 
-	const isActive = useIsActiveDomain(href) && !isDisabled;
+	const isActive = useMemo(() => {
+		// Skip if window is not defined
+		if (typeof window === 'undefined') return false;
+		// Skip if is disabled
+		if (isDisabled) return false;
+		// The current item is active if the current URL starts with the item href
+		const currentUrl = window.location.href;
+		if (currentUrl.startsWith(href)) return true;
+		return false;
+	}, [href]);
 
 	//
 	// C. Render components

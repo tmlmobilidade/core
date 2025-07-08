@@ -1,6 +1,6 @@
 /* * */
 
-import { emailProvider } from '@tmlmobilidade/interfaces';
+import { emailProvider } from '@/email.provider';
 
 import { ResetPasswordEmailProps } from './src/emails/reset-email';
 import { WelcomeEmailProps } from './src/emails/welcome';

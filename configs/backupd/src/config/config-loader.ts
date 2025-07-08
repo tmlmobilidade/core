@@ -41,7 +41,7 @@ function validateConfig(config: AppConfig) {
 		}
 
 		const keys_missing: string[] = [];
-		for (const key of ['access_key_id', 'bucket_name', 'endpoint', 'secret_access_key']) {
+		for (const key of ['user', 'fingerprint', 'tenancy', 'region', 'private_key', 'namespace', 'bucket_name']) {
 			if (!config.storage.oci_config[key]) {
 				keys_missing.push(key);
 			}

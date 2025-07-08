@@ -18,11 +18,13 @@ storage:
 
   # The Oracle Cloud Infrastructure Object Storage configuration
   oci_config:
-    access_key_id: OCI_ACCESS_KEY_ID
-    secret_access_key: OCI_SECRET_ACCESS_KEY
-    bucket_name: OCI_NAMESPACE # IMPORTANT: This is the namespace of the bucket, not the bucket name
-    endpoint: OCI_ENDPOINT # https://compat.objectstorage.<OCI_REGION>.oraclecloud.com/<OCI_BUCKER_NAME>
+    user: OCI_USER
+    fingerprint: OCI_FINGERPRINT
+    tenancy: OCI_TENANCY
     region: OCI_REGION
+    private_key: OCI_PRIVATE_KEY # The private key of the user in PEM format
+    namespace: OCI_NAMESPACE
+    bucket_name: OCI_BUCKET_NAME
 
   # The Cloudflare R2 configuration
   r2_config:

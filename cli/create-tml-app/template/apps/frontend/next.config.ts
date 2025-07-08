@@ -1,19 +1,31 @@
-import type { NextConfig } from 'next';
+/* * */
+
+import { type NextConfig } from 'next';
+
+/* * */
 
 const nextConfig: NextConfig = {
-	/* config options here */
 	experimental: {
 		optimizePackageImports: ['@tmlmobilidade/ui'],
 	},
 	output: 'standalone',
 	reactStrictMode: true,
+	async redirects() {
+		return [
+			//
+			// { destination: Routes.ALERT_LIST, permanent: true, source: '/' },
+		];
+	},
 	async rewrites() {
 		return [
 			{
-				destination: `http://localhost:${process.env.API_PORT}/:path*`,
+				destination: `http://localhost:52004/:path*`,
 				source: '/api/:path*',
 			},
 		];
 	},
 };
+
+/* * */
+
 export default nextConfig;

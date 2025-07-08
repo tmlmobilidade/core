@@ -32,13 +32,8 @@ export function PanesManager({ panes }: PanesManagerProps) {
 	// B. Transform data
 
 	const gridTemplateColumns = paneFractions
-		.flatMap(fraction => [`${fraction}fr`, `auto`])
-		.filter(Boolean)
+		.map((index, fraction) => index > 0 ? `auto ${fraction}fr` : `${fraction}fr`)
 		.join(' ');
-
-	console.log('gridTemplateColumns:', gridTemplateColumns);
-	console.log('panes.length:', panes.length);
-	console.log('panes.filter(item => !!item).length:', panes.filter(item => !!item).length);
 
 	//
 	// C. Handle actions

@@ -4,12 +4,14 @@ import { emailProvider } from '@/email.provider';
 import { SucessfulGtfsValidationEmailProps } from '@/emails/sucessful-gtfs-validation';
 import { UnsuccessfulGtfsValidationEmailProps } from '@/emails/unsucessful-gtfs-validation';
 
+import { FailedBackupEmailProps } from './src/emails/failed-backup';
 import { ResetPasswordEmailProps } from './src/emails/reset-password';
 import { WelcomeEmailProps } from './src/emails/welcome';
-import { RenderResetPasswordEmail, RenderSucessfulGtfsValidationEmail, RenderUnsuccessfulGtfsValidationEmail, RenderWelcomeEmail } from './src/renderer';
+import { RenderFailedBackupEmail, RenderResetPasswordEmail, RenderSucessfulGtfsValidationEmail, RenderUnsuccessfulGtfsValidationEmail, RenderWelcomeEmail } from './src/renderer';
 
 /* * */
 
+export type { FailedBackupEmailProps };
 export type { ResetPasswordEmailProps };
 
 /* * */
@@ -18,6 +20,15 @@ export interface SendEmailProps<T> {
 	props: T
 	to: string
 }
+
+export async function sendFailedBackupEmail(props: SendEmailProps<FailedBackupEmailProps>) {
+	const emailHtml = RenderFailedBackupEmail(props.props);
+	await emailProvider.send({
+		html: emailHtml,
+		subject: 'Falha na execução do backup',
+		to: props.to,
+	});
+};
 
 export async function sendResetPasswordEmail(props: SendEmailProps<ResetPasswordEmailProps>) {
 	const emailHtml = RenderResetPasswordEmail(props.props);

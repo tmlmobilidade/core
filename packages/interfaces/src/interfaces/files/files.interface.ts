@@ -98,10 +98,13 @@ class FilesClass extends MongoCollectionClass<File, CreateFileDto, UpdateFileDto
 			throw new HttpException(HttpStatus.NOT_FOUND, 'File not found');
 		}
 
-		await this.storageService.copyFile(`${file.scope}/${file.resource_id}/${file._id}.${Files.getFileExtension(file.name)}`, `${scope}/${resource_id}/${_id}.${Files.getFileExtension(file.name)}`);
+		await this.storageService.copyFile(
+			`${file.scope}/${file.resource_id}/${file._id}.${Files.getFileExtension(file.name)}`,
+			`${scope}/${resource_id}/${_id}.${Files.getFileExtension(file.name)}`,
+		);
 
 		const newFile = convertObject(file, CreateFileSchema);
-		return await this.insertOne({ ...newFile, _id, resource_id }, { options });
+		return await this.insertOne({ ...newFile, _id, resource_id, scope }, { options });
 	}
 
 	/**

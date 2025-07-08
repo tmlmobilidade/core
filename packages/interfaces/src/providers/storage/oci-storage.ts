@@ -2,7 +2,7 @@
 import { IStorageProvider } from '@/providers/storage/storage.interface.js';
 import { Readable } from 'node:stream';
 import { ObjectStorageClient } from 'oci-objectstorage';
-import { Region, SimpleAuthenticationDetailsProvider } from 'oci-common';
+import { OciError, Region, SimpleAuthenticationDetailsProvider } from 'oci-common';
 import { readFileSync } from 'node:fs';
 import { HttpException, HttpStatus } from '@tmlmobilidade/lib';
 import { CreatePreauthenticatedRequestDetails } from 'oci-objectstorage/lib/model/create-preauthenticated-request-details.js';
@@ -93,7 +93,7 @@ export class OCIStorageProvider implements IStorageProvider {
 			return true;
 		}
 		catch (error: unknown) {
-			if (error instanceof Error && error.message.includes('404')) return false;
+			if (error instanceof OciError && error.statusCode === 404) return false;
 			throw error;
 		}
 	}

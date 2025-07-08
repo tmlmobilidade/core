@@ -104,7 +104,7 @@ class FilesClass extends MongoCollectionClass<File, CreateFileDto, UpdateFileDto
 		);
 
 		const newFile = convertObject(file, CreateFileSchema);
-		return await this.insertOne({ ...newFile, _id, resource_id }, { options });
+		return await this.insertOne({ ...newFile, _id, resource_id, scope }, { options });
 	}
 
 	/**

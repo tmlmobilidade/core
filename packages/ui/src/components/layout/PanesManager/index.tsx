@@ -36,6 +36,10 @@ export function PanesManager({ panes }: PanesManagerProps) {
 		.filter(Boolean)
 		.join(' ');
 
+	console.log('gridTemplateColumns:', gridTemplateColumns);
+	console.log('panes.length:', panes.length);
+	console.log('panes.filter(item => !!item).length:', panes.filter(item => !!item).length);
+
 	//
 	// C. Handle actions
 
@@ -104,7 +108,7 @@ export function PanesManager({ panes }: PanesManagerProps) {
 
 	return (
 		<div ref={containerRef} className={styles.container} style={{ gridTemplateColumns }}>
-			{panes.map((pane, index) => (
+			{panes.filter(item => !!item).map((pane, index) => (
 				<div key={index} className={styles.innerWrapper}>
 					{pane}
 					{(index < panes.length - 1) && (

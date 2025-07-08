@@ -5,7 +5,7 @@ import chalk from 'chalk';
 import { ASCII_TMLMOBILIDADE, PACKAGES_TO_UPGRADE, REPLACE_FILE_PATHS, TEMPLATE_STRING } from './consts.js';
 import { copyApp, copyMonorepo, getAvailableApps, replaceInFile, upgradePackages } from './utils/copy.js';
 import { logger } from './utils/logger.js';
-import { getProjectName, getProjectScope, selectApps, selectProjectType } from './utils/prompts.js';
+import { getProjectName, getProjectScope, selectApps, selectProjectType, selectSingleApp } from './utils/prompts.js';
 
 /* * */
 
@@ -75,11 +75,12 @@ async function main() {
 	}
 
 	if (projectType === 'application') {
+		const selectedApp = await selectSingleApp(await getAvailableApps());
 		const projectName = await getProjectName();
 		const projectScope = await getProjectScope(projectName);
 
 		logger.info('Copying application...');
-		await copyApp(projectName, projectName);
+		await copyApp(selectedApp, projectName);
 
 		// Replace template file paths
 		logger.clearPreviousLine();

@@ -74,3 +74,20 @@ export async function selectApps(availableApps: string[]) {
 
 	return selectedApps as string[];
 }
+
+export async function selectSingleApp(availableApps: string[]) {
+	const selectedApp = await select({
+		message: 'Select an application to include in your project',
+		options: availableApps.map(app => ({
+			label: app,
+			value: app,
+		})),
+	});
+
+	if (isCancel(selectedApp)) {
+		cancel('Operation cancelled');
+		process.exit(0);
+	}
+
+	return selectedApp as string;
+}

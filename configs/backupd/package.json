@@ -12,7 +12,11 @@
 	"dependencies": {
 		"@aws-sdk/client-s3": "3.839.0",
 		"@helperkits/logger": "20250628.901.58",
+		"@tmlmobilidade/emails": "^1.0.0",
 		"@tmlmobilidade/interfaces": "*",
+		"@tmlmobilidade/lib": "^1.0.0",
+		"@tmlmobilidade/types": "^1.0.0",
+		"@tmlmobilidade/utils": "^1.0.0",
 		"@types/archiver": "6.0.3",
 		"archiver": "7.0.1",
 		"mongodb": "6.17.0",

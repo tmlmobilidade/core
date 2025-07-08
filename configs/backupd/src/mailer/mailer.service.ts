@@ -1,3 +1,5 @@
+import { RenderFailedBackupEmail } from '@tmlmobilidade/emails';
+import { Dates } from '@tmlmobilidade/utils';
 import nodemailer, { Transporter } from 'nodemailer';
 
 export interface MailOptions {
@@ -32,20 +34,22 @@ export class MailerService {
 	}
 
 	public async sendFailureMail(error: string): Promise<void> {
-		this.config.mail_options.subject = 'Backup failed';
+		const emailHtml = RenderFailedBackupEmail({
+			backup_service: this.config.mail_options.subject,
+			error_message: error,
+			failure_time: Dates.now('Europe/Lisbon').toLocaleString(Dates.FORMATS.DATETIME_FULL_WITH_SECONDS),
+		});
 
 		const mail_options = {
 			...this.config.mail_options,
-			html: `<p>Backup failed</p><p>${error}</p>`,
-			subject: `${this.config.mail_options.subject}: Backup failed`,
+			html: emailHtml,
+			subject: `${this.config.mail_options.subject}: Falha na execução do backup`,
 		};
 
 		await this.sendMail(mail_options);
 	}
 
 	public async sendSuccessMail(): Promise<void> {
-		this.config.mail_options.subject = 'Backup successful';
-
 		const mail_options = {
 			...this.config.mail_options,
 			subject: `${this.config.mail_options.subject}: Backup successful`,

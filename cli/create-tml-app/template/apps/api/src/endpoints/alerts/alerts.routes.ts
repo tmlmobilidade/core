@@ -1,7 +1,6 @@
 /* * */
 
-import authorizationMiddleware from '@/middleware/authorization.middleware.js';
-import FastifyService from '@/services/fastify.service.js';
+import { authorizationMiddleware, FastifyService } from '@tmlmobilidade/connectors';
 import { Permissions } from '@tmlmobilidade/lib';
 import { Alert } from '@tmlmobilidade/types';
 import { FastifyInstance } from 'fastify';

@@ -29,11 +29,21 @@ export class EmailProvider {
 	async connect(): Promise<nodemailer.Transporter> {
 		try {
 			// Check for required environment variables
-			if (!process.env.TML_PROVIDER_EMAIL_SERVER_PASSWORD) throw new Error('Missing TML_PROVIDER_EMAIL_SERVER_PASSWORD environment variable!');
-			if (!process.env.TML_PROVIDER_EMAIL_SERVER_USER) throw new Error('Missing TML_PROVIDER_EMAIL_SERVER_USER environment variable!');
-			if (!process.env.TML_PROVIDER_EMAIL_FROM) throw new Error('Missing TML_PROVIDER_EMAIL_FROM environment variable!');
-			if (!process.env.TML_PROVIDER_EMAIL_SERVER_HOST) throw new Error('Missing TML_PROVIDER_EMAIL_SERVER_HOST environment variable!');
-			if (!process.env.TML_PROVIDER_EMAIL_SERVER_PORT) throw new Error('Missing TML_PROVIDER_EMAIL_SERVER_PORT environment variable!');
+			const requiredEnvVars = [
+				'TML_PROVIDER_EMAIL_SERVER_PASSWORD',
+				'TML_PROVIDER_EMAIL_SERVER_USER',
+				'TML_PROVIDER_EMAIL_FROM',
+				'TML_PROVIDER_EMAIL_SERVER_HOST',
+				'TML_PROVIDER_EMAIL_SERVER_PORT',
+			];
+
+			const missingVars = requiredEnvVars.filter(key => !process.env[key]);
+			if (missingVars.length > 0) {
+				throw new Error(
+					`Missing required environment variable(s): ${missingVars.join(', ')}`,
+				);
+			}
+
 			// Create the SMTP transporter
 			const smtpTransportOptions = {
 				auth: {

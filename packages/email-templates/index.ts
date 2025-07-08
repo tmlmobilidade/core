@@ -1,18 +1,24 @@
 /* * */
 
-import { emailProvider } from '@/email.provider';
-import { SucessfulGtfsValidationEmailProps } from '@/emails/sucessful-gtfs-validation';
-import { UnsuccessfulGtfsValidationEmailProps } from '@/emails/unsucessful-gtfs-validation';
-
-import { FailedBackupEmailProps } from './src/emails/failed-backup';
-import { ResetPasswordEmailProps } from './src/emails/reset-password';
-import { WelcomeEmailProps } from './src/emails/welcome';
-import { RenderFailedBackupEmail, RenderResetPasswordEmail, RenderSucessfulGtfsValidationEmail, RenderUnsuccessfulGtfsValidationEmail, RenderWelcomeEmail } from './src/renderer';
+import { emailProvider } from '@/email.provider.js';
+import { FailedBackupEmailProps } from '@/emails/failed-backup.js';
+import { ResetPasswordEmailProps } from '@/emails/reset-password.js';
+import { SucessfulGtfsValidationEmailProps } from '@/emails/sucessful-gtfs-validation.js';
+import { UnsuccessfulGtfsValidationEmailProps } from '@/emails/unsucessful-gtfs-validation.js';
+import { WelcomeEmailProps } from '@/emails/welcome.js';
+import { RenderFailedBackupEmail, RenderResetPasswordEmail, RenderSucessfulGtfsValidationEmail, RenderUnsuccessfulGtfsValidationEmail, RenderWelcomeEmail } from '@/renderer.js';
 
 /* * */
 
-export type { FailedBackupEmailProps };
-export type { ResetPasswordEmailProps };
+export type {
+	FailedBackupEmailProps,
+	ResetPasswordEmailProps,
+	SucessfulGtfsValidationEmailProps,
+	UnsuccessfulGtfsValidationEmailProps,
+	WelcomeEmailProps,
+};
+
+export * from '@/renderer.js';
 
 /* * */
 

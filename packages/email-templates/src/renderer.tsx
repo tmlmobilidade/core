@@ -5,11 +5,11 @@ import React from 'react';
 
 /* * */
 
-import { FailedBackupEmail, FailedBackupEmailProps } from './emails/failed-backup';
-import { ResetPasswordEmail, ResetPasswordEmailProps } from './emails/reset-password';
-import { SucessfulGtfsValidationEmail, SucessfulGtfsValidationEmailProps } from './emails/sucessful-gtfs-validation';
-import { UnsuccessfulGtfsValidationEmail, UnsuccessfulGtfsValidationEmailProps } from './emails/unsucessful-gtfs-validation';
-import { WelcomeEmail, WelcomeEmailProps } from './emails/welcome';
+import { FailedBackupEmail, FailedBackupEmailProps } from './emails/failed-backup.js';
+import { ResetPasswordEmail, ResetPasswordEmailProps } from './emails/reset-password.js';
+import { SucessfulGtfsValidationEmail, SucessfulGtfsValidationEmailProps } from './emails/sucessful-gtfs-validation.js';
+import { UnsuccessfulGtfsValidationEmail, UnsuccessfulGtfsValidationEmailProps } from './emails/unsucessful-gtfs-validation.js';
+import { WelcomeEmail, WelcomeEmailProps } from './emails/welcome.js';
 
 /* * */
 

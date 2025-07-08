@@ -3,7 +3,8 @@
 import { emailProvider } from '@tmlmobilidade/interfaces';
 
 import { ResetPasswordEmailProps } from './src/emails/reset-email';
-import { RenderResetPasswordEmail } from './src/renderer';
+import { WelcomeEmailProps } from './src/emails/welcome';
+import { RenderResetPasswordEmail, RenderWelcomeEmail } from './src/renderer';
 
 /* * */
 
@@ -21,6 +22,15 @@ export async function sendResetPasswordEmail(props: SendEmailProps<ResetPassword
 	await emailProvider.send({
 		html: emailHtml,
 		subject: 'Redefinição da sua palavra-passe',
+		to: props.to,
+	});
+};
+
+export async function sendWelcomeEmail(props: SendEmailProps<WelcomeEmailProps>) {
+	const emailHtml = RenderWelcomeEmail(props.props);
+	await emailProvider.send({
+		html: emailHtml,
+		subject: 'Bem-vindo ao GO!',
 		to: props.to,
 	});
 };

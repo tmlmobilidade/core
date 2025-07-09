@@ -3,7 +3,7 @@
 /* * */
 
 import { DataTableColumn, DataTableSearchProps } from '@/components/datatable/datatable.type';
-import { useSearchQuery } from '@/hooks/use-search-query';
+import { useSearchQuery } from '@/hooks/search/use-search';
 import { tryParseDateToTimestamp } from '@/lib/utils';
 import { getValueAtPath } from '@/lib/utils';
 import { createContext, ReactNode, useCallback, useContext, useEffect, useMemo, useState } from 'react';

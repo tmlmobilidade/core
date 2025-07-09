@@ -1,9 +1,6 @@
 /* * */
 
-import { normalizeString } from '@/hooks/search/normalize-string';
-import { getValueAtPath } from '@/lib/utils';
-
-// export function accessorSearch<T>(record: T, accessor: keyof T | (string & {}), query: string) {
+import { getValueAtPath, normalizeString } from '@tmlmobilidade/utils';
 
 /**
  * Checks if a given query is present in the value at the specified accessor path

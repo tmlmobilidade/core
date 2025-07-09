@@ -69,15 +69,3 @@ export function formatDate(input: number | string): string {
 export function tryParseDateToTimestamp(input: string): number | undefined {
 	return DateTime.fromISO(input).toMillis();
 }
-
-/**
- * Utility function that returns the value at a given path in an object.
- * @param {T} obj - The object to retrieve the value from.
- * @param {keyof T | string} path - The path to the value in the object.
- * @returns {unknown} - The value at the given path or undefined if the path is invalid.
- */
-export function getValueAtPath<T>(obj: T, path: keyof T | (NonNullable<unknown> & string)): unknown {
-	if (!path) return undefined;
-	const pathArray = (path as string).match(/([^[.\]])+/g) as string[];
-	return pathArray.reduce((prevObj: unknown, key) => prevObj && (prevObj as Record<string, unknown>)[key], obj);
-}

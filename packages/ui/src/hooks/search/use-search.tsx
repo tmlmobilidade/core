@@ -3,9 +3,9 @@
 /* * */
 
 import { accessorSearch } from '@/hooks/search/acessor-search';
-import { normalizeString } from '@/hooks/search/normalize-string';
 import { plainSearch } from '@/hooks/search/plain-search';
 import { useDebouncedValue } from '@mantine/hooks';
+import { normalizeString } from '@tmlmobilidade/utils';
 import { useMemo } from 'react';
 
 /* * */
@@ -40,7 +40,7 @@ export function useSearch<T>({ accessors, customSearch, data, debounce = 200, qu
 
 	const filteredData = useMemo(() => {
 		// Skip if there is no data or normalized query
-		if (!data || !normalizedQuery?.length) return [];
+		if (!data || !normalizedQuery?.length) return data;
 		// Create a new array from the data and filter it
 		return [...data].filter((record) => {
 			// Perform a plain search if there are no accessors

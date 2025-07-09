@@ -1,6 +1,6 @@
 /* * */
 
-import { normalizeString } from './normalize-string';
+import { normalizeString } from '@tmlmobilidade/utils';
 
 /**
  * Plain search function that checks if a given query is present

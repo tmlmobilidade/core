@@ -60,7 +60,8 @@ export interface DataTableSearchProps<T> {
 	/**
 	 * The list of accessors to be used for searching.
 	 */
-	accessors: (keyof T | (string & {}))[]
+	accessors: (keyof T)[]
+	// accessors: (keyof T | (string & {}))[]
 
 	/**
 	 * Whether the search functionality is enabled.

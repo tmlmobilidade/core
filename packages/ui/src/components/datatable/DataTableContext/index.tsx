@@ -3,7 +3,7 @@
 /* * */
 
 import { DataTableColumn, DataTableSearchProps } from '@/components/datatable/datatable.type';
-import { useSearchQuery } from '@/hooks/search/use-search';
+import { useSearch } from '@/hooks/search/use-search';
 import { tryParseDateToTimestamp } from '@/lib/utils';
 import { getValueAtPath } from '@/lib/utils';
 import { createContext, ReactNode, useCallback, useContext, useEffect, useMemo, useState } from 'react';
@@ -64,17 +64,16 @@ export function DataTableContextProvider<T>({ children, columns, initialRecords,
 	//
 	// A. Setup variables
 
+	const [searchQuery, setSearchQuery] = useState<string>('');
 	const [sortState, setSortState] = useState<DataTableContextState<T>['filters']['sort_state']>(null);
 	const [columnWidths, setColumnWidths] = useState<DataTableContextState<T>['data']['column_widths']>({});
 
-	const { filteredData: searchQueryData, searchQuery, setSearchQuery } = useSearchQuery<T>(initialRecords, { accessors: searchAccessors, debounce: 200 });
+	const filteredData = useSearch<T>({ accessors: searchAccessors, data: initialRecords, debounce: 200, query: searchQuery });
 
 	//
 	// B. Transform data
 
 	const filteredAndSortedData = useMemo(() => {
-		let filteredData: T[] = searchQueryData;
-
 		// Sort Data
 		if (sortState) {
 			const { accessor, order } = sortState;
@@ -85,7 +84,7 @@ export function DataTableContextProvider<T>({ children, columns, initialRecords,
 				return 0;
 			};
 
-			filteredData = filteredData.sort((a, b) => {
+			return filteredData.sort((a, b) => {
 				const aValue = getValueAtPath(a, accessor) ?? '';
 				const bValue = getValueAtPath(b, accessor) ?? '';
 
@@ -105,9 +104,8 @@ export function DataTableContextProvider<T>({ children, columns, initialRecords,
 				return sortFn(aValue as number | string, bValue as number | string);
 			});
 		}
-
-		return filteredData;
-	}, [initialRecords, sortState, searchQueryData]);
+		return [];
+	}, [initialRecords, sortState, searchQuery]);
 
 	useEffect(() => {
 		// Set initial column widths
@@ -138,7 +136,7 @@ export function DataTableContextProvider<T>({ children, columns, initialRecords,
 	}, []);
 
 	const clearSearchQuery = useCallback(() => {
-		setSearchQuery(undefined);
+		setSearchQuery('');
 	}, []);
 
 	const handleUpdateColumnWidth = useCallback((column: string, width: number) => {
@@ -161,7 +159,7 @@ export function DataTableContextProvider<T>({ children, columns, initialRecords,
 		data: {
 			column_widths: columnWidths,
 			initial_records: initialRecords,
-			records: filteredAndSortedData,
+			records: filteredAndSortedData ?? [],
 		},
 		filters: {
 			search_query: searchQuery,

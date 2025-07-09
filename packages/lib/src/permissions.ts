@@ -64,6 +64,17 @@ export const Permissions = Object.freeze({
 		resources: {},
 		scope: 'hashedTrips',
 	},
+	localities: {
+		actions: {
+			create: 'create',
+			delete: 'delete',
+			list: 'list',
+			read: 'read',
+			update: 'update',
+		},
+		resources: {},
+		scope: 'localities',
+	},
 	municipalities: {
 		actions: {
 			create: 'create',
@@ -85,6 +96,17 @@ export const Permissions = Object.freeze({
 		},
 		resources: {},
 		scope: 'organizations',
+	},
+	parishes: {
+		actions: {
+			create: 'create',
+			delete: 'delete',
+			list: 'list',
+			read: 'read',
+			update: 'update',
+		},
+		resources: {},
+		scope: 'parishes',
 	},
 	plans: {
 		actions: {

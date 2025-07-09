@@ -1,7 +1,7 @@
 /* * */
 
 import { MongoCollectionClass } from '@/mongo-collection.js';
-import { CreateMunicipalityDto, MunicipalitiesClassClass, Municipality, MunicipalitySchema, UpdateMunicipalityDto, UpdateMunicipalitySchema } from '@tmlmobilidade/types';
+import { CreateMunicipalityDto, Municipality, MunicipalitySchema, UpdateMunicipalityDto, UpdateMunicipalitySchema } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
 import { Filter, IndexDescription, Sort } from 'mongodb';
 import { z } from 'zod';
@@ -9,7 +9,7 @@ import { z } from 'zod';
 /* * */
 
 class MunicipalitiesClass extends MongoCollectionClass<Municipality, CreateMunicipalityDto, UpdateMunicipalityDto> {
-	private static _instance: MunicipalitiesClassClass;
+	private static _instance: MunicipalitiesClass;
 	protected override createSchema: z.ZodSchema = MunicipalitySchema;
 	protected override updateSchema: z.ZodSchema = UpdateMunicipalitySchema;
 
@@ -18,12 +18,12 @@ class MunicipalitiesClass extends MongoCollectionClass<Municipality, CreateMunic
 	}
 
 	public static async getInstance() {
-		if (!MunicipalitiesClassClass._instance) {
-			const instance = new MunicipalitiesClassClass();
+		if (!MunicipalitiesClass._instance) {
+			const instance = new MunicipalitiesClass();
 			await instance.connect();
-			MunicipalitiesClassClass._instance = instance;
+			MunicipalitiesClass._instance = instance;
 		}
-		return MunicipalitiesClassClass._instance;
+		return MunicipalitiesClass._instance;
 	}
 
 	/**

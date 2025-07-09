@@ -1,6 +1,6 @@
 /* * */
 
-import { Loader } from '@/components/common';
+import { Loader } from '@/components/loaders/Loader';
 
 import styles from './styles.module.css';
 

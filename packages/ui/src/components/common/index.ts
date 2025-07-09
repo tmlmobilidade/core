@@ -23,6 +23,7 @@ export * from '@/components/common/Label';
 export * from '@/components/common/Loader';
 export * from '@/components/common/NoDataLabel';
 export * from '@/components/common/PasswordInput';
+export * from '@/components/common/Popover';
 export * from '@/components/common/Slider';
 export * from '@/components/common/Switch';
 export * from '@/components/common/Tag';

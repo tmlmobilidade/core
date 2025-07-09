@@ -20,11 +20,25 @@ import '@/styles/themes/street.css';
 
 /* * */
 
-import { Button, createTheme, MantineThemeOverride, PasswordInput, SegmentedControl, Skeleton, Slider, Switch, Text, Textarea, TextInput } from '@mantine/core';
+import {
+	Button,
+	createTheme,
+	MantineThemeOverride,
+	Menu,
+	PasswordInput,
+	SegmentedControl,
+	Skeleton,
+	Slider,
+	Switch,
+	Text,
+	Textarea,
+	TextInput,
+} from '@mantine/core';
 
 /* * */
 
 import ButtonOverride from '@/styles/mantine/Button.module.css';
+import MenuOverride from '@/styles/mantine/Menu.module.css';
 import PasswordInputOverride from '@/styles/mantine/PasswordInput.module.css';
 import SegmentedControlOverride from '@/styles/mantine/SegmentedControl.module.css';
 import SkeletonOverride from '@/styles/mantine/Skeleton.module.css';
@@ -43,6 +57,12 @@ export const themeData: MantineThemeOverride = createTheme({
 		Button: Button.extend({
 			classNames: {
 				...ButtonOverride,
+			},
+		}),
+
+		Menu: Menu.extend({
+			classNames: {
+				...MenuOverride,
 			},
 		}),
 

@@ -80,7 +80,7 @@ export function FilterMenu({ active, disabled, label, onChange, options, withTog
 				/>
 			</Popover.Target>
 			<Popover.Dropdown>
-				<ScrollArea.Autosize mah={400} offsetScrollbars="y" scrollbars="y" type="always">
+				<ScrollArea.Autosize mah={400} offsetScrollbars="y" scrollbars="y" type="auto">
 					{withToggleAll && (
 						<Checkbox
 							key="toggle-all"

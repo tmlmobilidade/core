@@ -32,7 +32,7 @@ export function TagGroup({ limit = 2, tags = [] }: TagGroupProps) {
 				<Tag key={index} {...props} />
 			))}
 			{remainingTagCount > 0 && (
-				<Label>+ {remainingTagCount}</Label>
+				<Label>+{remainingTagCount}</Label>
 			)}
 		</div>
 	);

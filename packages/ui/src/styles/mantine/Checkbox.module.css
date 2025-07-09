@@ -1,4 +1,19 @@
 /* * */
+/* ROOT */
+
+.root {
+	width: 100%;
+	padding: 6px;
+	padding-right: 10px;
+	cursor: pointer;
+	border-radius: 3px;
+}
+
+.root:hover {
+	background-color: var(--color-system-background-200);
+}
+
+/* * */
 /* INNER */
 
 .inner {
@@ -34,10 +49,12 @@
 }
 
 .label {
+	padding-top: 4px;
+	padding-left: 8px;
 	margin: 0;
 	font-size: var(--font-size-md);
 	font-weight: var(--font-weight-semibold);
-	line-height: var(font-line-height);
+	line-height: 1;
 	color: var(--color-system-text-100);
 	cursor: pointer;
 }
@@ -49,7 +66,7 @@
 	margin: 0;
 	font-size: var(--font-size-sm);
 	font-weight: var(--font-weight-medium);
-	line-height: var(font-line-height);
+	line-height: var(--font-line-height);
 	color: var(--color-system-text-200);
 }
 
@@ -60,6 +77,6 @@
 	margin: 0;
 	font-size: var(--font-size-sm);
 	font-weight: var(--font-weight-medium);
-	line-height: var(font-line-height);
+	line-height: var(--font-line-height);
 	color: var(--color-status-danger-primary);
 }

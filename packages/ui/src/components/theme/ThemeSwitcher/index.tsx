@@ -2,7 +2,7 @@
 
 /* * */
 
-import { Label } from '@/components/common/Label';
+import { Label } from '@/components/display/Label';
 import { Section } from '@/components/layout/Section';
 import { AVAILABLE_THEMES, type ThemeType, useThemeContext } from '@/contexts/Theme.context';
 import { ColorSwatch, Menu } from '@mantine/core';

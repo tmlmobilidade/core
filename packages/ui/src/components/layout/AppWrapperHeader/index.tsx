@@ -2,7 +2,7 @@
 
 /* * */
 
-import { Label } from '@/components/common/Label';
+import { Label } from '@/components/display/Label';
 import { Skeleton } from '@mantine/core';
 import { useState } from 'react';
 

@@ -1,5 +1,3 @@
-'use client';
-
 /* * */
 
 import { Text as MantineText, type TextProps as MantineTextProps } from '@mantine/core';

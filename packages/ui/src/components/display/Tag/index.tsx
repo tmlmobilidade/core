@@ -1,5 +1,3 @@
-'use client';
-
 /* * */
 
 import { type IconProps } from '@tabler/icons-react';

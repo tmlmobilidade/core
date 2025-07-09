@@ -1,6 +1,6 @@
 /* * */
 
-import { Label } from '@/components/common';
+import { Label } from '@/components/display/Label';
 import { PropsWithChildren } from 'react';
 
 import styles from './styles.module.css';

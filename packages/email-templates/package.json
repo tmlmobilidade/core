@@ -36,10 +36,10 @@
 		"export": "email export --dir ./src/emails"
 	},
 	"dependencies": {
-		"@react-email/components": "0.0.14",
-		"browserslist": "^4.22.2",
-		"react": "^18.2.0",
-		"react-email": "2.0.0"
+		"@react-email/components": "0.2.0",
+		"browserslist": "4.25.1",
+		"react": "19.1.0",
+		"react-email": "4.1.0"
 	},
 	"devDependencies": {
 		"@carrismetropolitana/eslint": "20250622.1204.50",
@@ -47,7 +47,7 @@
 		"@tmlmobilidade/tsconfig": "*",
 		"@tmlmobilidade/types": "*",
 		"@tmlmobilidade/utils": "*",
-		"@types/node": "24.0.7",
+		"@types/node": "24.0.12",
 		"resolve-tspaths": "0.8.23",
 		"rimraf": "6.0.1",
 		"typescript": "5.8.3"

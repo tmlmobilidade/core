@@ -39,13 +39,13 @@
 		"geojson": "0.5.0",
 		"luxon": "3.6.1",
 		"mongodb": "6.17.0",
-		"zod": "3.25.67"
+		"zod": "3.25.76"
 	},
 	"devDependencies": {
 		"@carrismetropolitana/eslint": "20250622.1204.50",
 		"@tmlmobilidade/tsconfig": "*",
 		"@types/luxon": "3.6.2",
-		"@types/node": "24.0.7",
+		"@types/node": "24.0.12",
 		"gtfs-types": "5.1.0",
 		"resolve-tspaths": "0.8.23",
 		"rimraf": "6.0.1",

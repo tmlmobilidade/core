@@ -15,7 +15,7 @@ interface FiltersBarProps {
 
 export function FiltersBar({ children, label = 'Filtrar por' }: PropsWithChildren<FiltersBarProps>) {
 	return (
-		<div className={styles.root}>
+		<div className={styles.container}>
 			<Label size="sm" caps singleLine>{label}</Label>
 			{children}
 		</div>

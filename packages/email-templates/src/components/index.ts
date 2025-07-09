@@ -1,13 +1,13 @@
-export { EmailWrapper } from './email-wrapper';
-export { Footer } from './footer';
+export { EmailWrapper } from './email-wrapper.js';
+export { Footer } from './footer.js';
 
-export { HighlightText } from './highlight-text';
-export type { HighlightTextProps } from './highlight-text';
+export { HighlightText } from './highlight-text.js';
+export type { HighlightTextProps } from './highlight-text.js';
 
-export { InfoBox } from './info-box';
-export type { InfoBoxProps } from './info-box';
+export { InfoBox } from './info-box.js';
+export type { InfoBoxProps } from './info-box.js';
 
-export { default as styles } from './styles';
-export { ValidationSummary } from './validation-summary';
+export { default as styles } from './styles.js';
+export type { ValidationSummaryProps } from './validation-summary.js';
 
-export type { ValidationSummaryProps } from './validation-summary';
+export { ValidationSummary } from './validation-summary.js';

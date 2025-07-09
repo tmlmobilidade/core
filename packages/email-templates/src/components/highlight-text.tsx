@@ -1,6 +1,6 @@
 import { Text } from '@react-email/components';
 
-import styles from './styles';
+import styles from './styles.js';
 
 export interface HighlightTextProps {
 	as?: 'div' | 'span'

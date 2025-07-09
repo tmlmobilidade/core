@@ -4,8 +4,8 @@ import { Body, Container, Head, Html, Img, Preview } from '@react-email/componen
 import { getAppConfig } from '@tmlmobilidade/lib';
 import React from 'react';
 
-import { Footer } from './footer';
-import styles from './styles';
+import { Footer } from './footer.js';
+import styles from './styles.js';
 
 /* * */
 

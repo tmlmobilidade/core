@@ -2,7 +2,7 @@
 
 import { Hr, Section, Text } from '@react-email/components';
 
-import styles from './styles';
+import styles from './styles.js';
 
 export function Footer() {
 	return (

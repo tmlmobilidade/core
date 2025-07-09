@@ -1,6 +1,6 @@
 /* * */
 
-import { EmailWrapper, HighlightText, InfoBox, styles } from '@/components';
+import { EmailWrapper, HighlightText, InfoBox, styles } from '@/components/index.js';
 import { Hr, Section, Text } from '@react-email/components';
 
 /* * */

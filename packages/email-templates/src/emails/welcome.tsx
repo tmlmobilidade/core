@@ -1,6 +1,6 @@
 /* * */
 
-import { EmailWrapper, styles } from '@/components';
+import { EmailWrapper, styles } from '@/components/index.js';
 import { Button, Hr, Link, Section, Text } from '@react-email/components';
 import { getAppConfig } from '@tmlmobilidade/lib';
 

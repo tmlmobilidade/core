@@ -1,8 +1,8 @@
 import { Text } from '@react-email/components';
 
-import { HighlightText } from './highlight-text';
-import { InfoBox } from './info-box';
-import styles from './styles';
+import { HighlightText } from './highlight-text.js';
+import { InfoBox } from './info-box.js';
+import styles from './styles.js';
 
 export interface ValidationSummaryProps {
 	hasData?: boolean

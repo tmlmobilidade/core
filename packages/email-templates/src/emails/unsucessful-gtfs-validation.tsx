@@ -1,9 +1,9 @@
 /* * */
 
-import { EmailWrapper, styles, ValidationSummary } from '@/components';
+import { EmailWrapper, styles, ValidationSummary } from '@/components/index.js';
 import { Button, Hr, Section, Text } from '@react-email/components';
 import { getAppConfig } from '@tmlmobilidade/lib';
-import { Validation } from '@tmlmobilidade/types';
+import { ProcessingStatus, UnixTimestamp, Validation } from '@tmlmobilidade/types';
 
 /* * */
 
@@ -76,16 +76,30 @@ export function UnsuccessfulGtfsValidationEmail({ first_name, validation }: Unsu
 	);
 };
 
+const validation: Validation = {
+	_id: '123',
+	created_at: 1715328000 as UnixTimestamp,
+	feeder_status: 'success' as ProcessingStatus,
+	file_id: '123',
+	gtfs_agency: {
+		agency_id: '123',
+		agency_name: 'Test Agency',
+		agency_timezone: 'Europe/Lisbon',
+	},
+	gtfs_feed_info: {
+		feed_lang: 'en',
+	},
+	summary: {
+		messages: [],
+		total_errors: 4,
+		total_warnings: 3,
+	},
+	updated_at: 1715328000 as UnixTimestamp,
+};
+
 UnsuccessfulGtfsValidationEmail.PreviewProps = {
 	first_name: 'Josué',
-	validation: {
-		_id: '123',
-		summary: {
-			messages: [],
-			total_errors: 3,
-			total_warnings: 4,
-		},
-	},
+	validation,
 } as UnsuccessfulGtfsValidationEmailProps;
 
 export default UnsuccessfulGtfsValidationEmail;

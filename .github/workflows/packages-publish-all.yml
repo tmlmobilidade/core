@@ -1,7 +1,6 @@
 # # #
 
 name: 'Packages | Publish to NPM'
-description: 'This workflow coordinates the publishng of packages to NPM with a common version number.'
 
 on:
   workflow_dispatch:

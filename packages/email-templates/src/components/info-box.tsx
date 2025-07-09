@@ -1,6 +1,6 @@
 import { Section } from '@react-email/components';
 
-import styles from './styles';
+import styles from './styles.js';
 
 export interface InfoBoxProps {
 	children: React.ReactNode

@@ -13,22 +13,22 @@ import { WelcomeEmail, WelcomeEmailProps } from './emails/welcome.js';
 
 /* * */
 
-export const RenderFailedBackupEmail = (props: FailedBackupEmailProps) => {
-	return render(<FailedBackupEmail {...props} />);
+export const RenderFailedBackupEmail = async (props: FailedBackupEmailProps) => {
+	return await render(<FailedBackupEmail {...props} />);
 };
 
-export const RenderResetPasswordEmail = (props: ResetPasswordEmailProps) => {
-	return render(<ResetPasswordEmail {...props} />);
+export const RenderResetPasswordEmail = async (props: ResetPasswordEmailProps) => {
+	return await render(<ResetPasswordEmail {...props} />);
 };
 
-export const RenderWelcomeEmail = (props: WelcomeEmailProps) => {
-	return render(<WelcomeEmail {...props} />);
+export const RenderWelcomeEmail = async (props: WelcomeEmailProps) => {
+	return await render(<WelcomeEmail {...props} />);
 };
 
-export const RenderSucessfulGtfsValidationEmail = (props: SucessfulGtfsValidationEmailProps) => {
-	return render(<SucessfulGtfsValidationEmail {...props} />);
+export const RenderSucessfulGtfsValidationEmail = async (props: SucessfulGtfsValidationEmailProps) => {
+	return await render(<SucessfulGtfsValidationEmail {...props} />);
 };
 
-export const RenderUnsuccessfulGtfsValidationEmail = (props: UnsuccessfulGtfsValidationEmailProps) => {
-	return render(<UnsuccessfulGtfsValidationEmail {...props} />);
+export const RenderUnsuccessfulGtfsValidationEmail = async (props: UnsuccessfulGtfsValidationEmailProps) => {
+	return await render(<UnsuccessfulGtfsValidationEmail {...props} />);
 };

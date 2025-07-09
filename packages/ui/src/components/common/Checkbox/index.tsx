@@ -2,7 +2,7 @@
 
 /* * */
 
-import { Checkbox as MantineCheckbox, CheckboxProps as MantineCheckboxProps } from '@mantine/core';
+import { Checkbox as MantineCheckbox, CheckboxGroupProps as MantineCheckboxGroupProps, CheckboxProps as MantineCheckboxProps } from '@mantine/core';
 
 import styles from './styles.module.css';
 
@@ -15,3 +15,7 @@ export type CheckboxProps = MantineCheckboxProps;
 export function Checkbox(props: CheckboxProps) {
 	return <MantineCheckbox classNames={{ ...styles, ...props.classNames }} {...props} />;
 }
+
+Checkbox.Group = function CheckboxGroup(props: MantineCheckboxGroupProps) {
+	return <MantineCheckbox.Group {...props} />;
+};

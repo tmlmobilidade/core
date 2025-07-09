@@ -24,7 +24,7 @@ export * from '@/renderer.js';
 
 export interface SendEmailProps<T> {
 	props: T
-	to: string
+	to: string | string[]
 }
 
 export async function sendFailedBackupEmail(props: SendEmailProps<FailedBackupEmailProps>) {

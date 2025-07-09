@@ -1,9 +1,8 @@
 /* * */
 
-import { Checkbox, Popover } from '@tmlmobilidade/ui';
+import { FilterMenuTarget } from '@/components/filters/FilterMenuTarget';
+import { Checkbox, Popover } from '@mantine/core';
 import { useMemo } from 'react';
-
-import { FilterMenuTarget } from '../FilterMenuTarget';
 
 /* * */
 
@@ -59,13 +58,13 @@ export function FilterMenu({ active, disabled, label, onChange, options, withTog
 
 	const handleToggleAll = () => {
 		// Skip if no onChange callback is provided.
-		if (!onChange) return;
+		if (!onChange || !options) return;
 		// If the toggle is enabled, then toggle OFF
 		// all options by setting a new empty array.
 		if (toggleAllActive) onChange([]);
 		// If the toggle is disabled, then toggle ON
 		// all options by setting the values of all options.
-		else onChange(options?.map(option => option.value));
+		else onChange(options.map(option => option.value));
 	};
 
 	//

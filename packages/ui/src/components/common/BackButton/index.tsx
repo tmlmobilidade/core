@@ -5,6 +5,8 @@
 import { ActionIcon } from '@mantine/core';
 import { IconChevronLeft, IconX } from '@tabler/icons-react';
 
+import styles from './styles.module.css';
+
 /* * */
 
 interface BackButtonProps {
@@ -28,7 +30,7 @@ export function BackButton({ onClick, type = 'back' }: BackButtonProps) {
 	// B. Render components
 
 	return (
-		<ActionIcon onClick={handleClick} variant="muted">
+		<ActionIcon classNames={{ root: styles.root }} onClick={handleClick}>
 			{type === 'back' && <IconChevronLeft />}
 			{type === 'close' && <IconX />}
 		</ActionIcon>

@@ -22,10 +22,11 @@ import '@/styles/themes/street.css';
 
 import {
 	Button,
+	Checkbox,
 	createTheme,
 	MantineThemeOverride,
-	Menu,
 	PasswordInput,
+	Popover,
 	SegmentedControl,
 	Skeleton,
 	Slider,
@@ -38,8 +39,10 @@ import {
 /* * */
 
 import ButtonOverride from '@/styles/mantine/Button.module.css';
-import MenuOverride from '@/styles/mantine/Menu.module.css';
+import CheckboxOverride from '@/styles/mantine/Checkbox.module.css';
+import CheckboxGroupOverride from '@/styles/mantine/CheckboxGroup.module.css';
 import PasswordInputOverride from '@/styles/mantine/PasswordInput.module.css';
+import PopoverOverride from '@/styles/mantine/Popover.module.css';
 import SegmentedControlOverride from '@/styles/mantine/SegmentedControl.module.css';
 import SkeletonOverride from '@/styles/mantine/Skeleton.module.css';
 import SliderOverride from '@/styles/mantine/Slider.module.css';
@@ -60,9 +63,15 @@ export const themeData: MantineThemeOverride = createTheme({
 			},
 		}),
 
-		Menu: Menu.extend({
+		Checkbox: Checkbox.extend({
 			classNames: {
-				...MenuOverride,
+				...CheckboxOverride,
+			},
+		}),
+
+		CheckboxGroup: Checkbox.Group.extend({
+			classNames: {
+				...CheckboxGroupOverride,
 			},
 		}),
 
@@ -77,6 +86,12 @@ export const themeData: MantineThemeOverride = createTheme({
 				input: PasswordInputOverride.input,
 				root: TextInputOverride.root,
 				wrapper: TextInputOverride.wrapper,
+			},
+		}),
+
+		Popover: Popover.extend({
+			classNames: {
+				...PopoverOverride,
 			},
 		}),
 

@@ -5,7 +5,7 @@
 import { DataTableColumn, DataTableSearchProps } from '@/components/datatable/datatable.type';
 import { useSearch } from '@/hooks/search/use-search';
 import { tryParseDateToTimestamp } from '@/lib/utils';
-import { getValueAtPath } from '@/lib/utils';
+import { getValueAtPath } from '@tmlmobilidade/utils';
 import { createContext, ReactNode, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 /* * */

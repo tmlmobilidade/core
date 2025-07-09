@@ -4,7 +4,7 @@
 
 import { DataTableColumn } from '@/components/datatable/datatable.type';
 import { cn } from '@/lib/utils';
-import { getValueAtPath } from '@/lib/utils';
+import { getValueAtPath } from '@tmlmobilidade/utils';
 
 import styles from './styles.module.css';
 

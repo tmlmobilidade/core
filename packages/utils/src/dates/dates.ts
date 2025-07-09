@@ -370,7 +370,7 @@ export class Dates {
 		if (!this.iso) throw new Error('ISO date is not set.');
 		const dateTime = DateTime.fromISO(this.iso, { setZone: true });
 		if (locale) dateTime.setLocale(locale);
-		return dateTime.toLocaleString(format);
+		return dateTime.toLocaleString(format, { locale: locale });
 	}
 
 	//

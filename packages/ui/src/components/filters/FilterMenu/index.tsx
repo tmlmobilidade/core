@@ -84,7 +84,7 @@ export function FilterMenu({ active, disabled, label, onChange, options, withTog
 					<Checkbox
 						key="toggle-all"
 						checked={toggleAllActive}
-						label="Todos"
+						label="Selecionar Tudo"
 						onChange={handleToggleAll}
 						value="all"
 					/>

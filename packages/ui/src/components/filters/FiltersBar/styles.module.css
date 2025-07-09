@@ -1,0 +1,12 @@
+/* * */
+/* CONTAINER */
+
+.container {
+	display: flex;
+	flex-direction: row;
+	gap: 15px;
+	align-items: center;
+	justify-self: flex-start;
+	width: 100%;
+	overflow-x: auto;
+}

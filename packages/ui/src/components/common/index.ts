@@ -20,7 +20,6 @@ export * from '@/components/common/Button';
 export * from '@/components/common/Checkbox';
 export * from '@/components/common/HasPermission';
 export * from '@/components/common/Label';
-export * from '@/components/common/Loader';
 export * from '@/components/common/NoDataLabel';
 export * from '@/components/common/PasswordInput';
 export * from '@/components/common/Popover';

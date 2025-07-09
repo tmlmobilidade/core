@@ -2,7 +2,7 @@
 
 /* * */
 
-import { SidebarItem } from '@/components/layout/SidebarItem';
+import { SidebarItem } from '@/components/sidebar/SidebarItem';
 import { Spacer } from '@/components/layout/Spacer';
 import { ThemeSwitcher } from '@/components/theme/ThemeSwitcher';
 import { IconAlertTriangle, IconBusStop, IconFileCertificate, IconFileCheck, IconListCheck, IconUser } from '@tabler/icons-react';

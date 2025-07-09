@@ -3,7 +3,7 @@
 /* * */
 
 import { AppWrapperHeader } from '@/components/layout/AppWrapperHeader';
-import { Sidebar } from '@/components/layout/Sidebar';
+import { Sidebar } from '@/components/sidebar/Sidebar';
 import { useMeContext } from '@/contexts/Me.context';
 import { type PropsWithChildren } from 'react';
 

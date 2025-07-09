@@ -1,7 +1,7 @@
 /* * */
 
 import { FilterMenuTarget } from '@/components/filters/FilterMenuTarget';
-import { Checkbox, Popover } from '@mantine/core';
+import { Checkbox, Popover, ScrollArea } from '@mantine/core';
 import { useMemo } from 'react';
 
 /* * */
@@ -80,25 +80,27 @@ export function FilterMenu({ active, disabled, label, onChange, options, withTog
 				/>
 			</Popover.Target>
 			<Popover.Dropdown>
-				{withToggleAll && (
-					<Checkbox
-						key="toggle-all"
-						checked={toggleAllActive}
-						label="Selecionar Tudo"
-						onChange={handleToggleAll}
-						value="all"
-					/>
-				)}
-				<Checkbox.Group onChange={onChange} value={checkedOptionValues}>
-					{options?.map(option => (
+				<ScrollArea h={400} type="auto" offsetScrollbars>
+					{withToggleAll && (
 						<Checkbox
-							key={option.value}
-							disabled={option.disabled}
-							label={option.label}
-							value={option.value}
+							key="toggle-all"
+							checked={toggleAllActive}
+							label="Selecionar Tudo"
+							onChange={handleToggleAll}
+							value="all"
 						/>
-					))}
-				</Checkbox.Group>
+					)}
+					<Checkbox.Group onChange={onChange} value={checkedOptionValues}>
+						{options?.map(option => (
+							<Checkbox
+								key={option.value}
+								disabled={option.disabled}
+								label={option.label}
+								value={option.value}
+							/>
+						))}
+					</Checkbox.Group>
+				</ScrollArea>
 			</Popover.Dropdown>
 		</Popover>
 	);

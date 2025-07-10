@@ -4,8 +4,8 @@
 
 import { Loader } from '@/components/loaders/Loader';
 import { type SidebarItemProps } from '@/components/sidebar/SidebarItem';
-import { swrFetcher } from '@/lib/http';
 import { getAppConfig } from '@tmlmobilidade/lib';
+import { swrFetcher } from '@tmlmobilidade/utils';
 import { createContext, type PropsWithChildren, useContext, useEffect, useMemo, useState } from 'react';
 import useSWR from 'swr';
 

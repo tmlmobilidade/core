@@ -2,10 +2,9 @@
 
 /* * */
 
-import { swrFetcher } from '@/lib/http';
 import { getAppConfig } from '@tmlmobilidade/lib';
 import { type User } from '@tmlmobilidade/types';
-import { type HasPermissionResourceArgs, hasPermissionResource as hasPermissionResourceUtils, hasPermission as hasPermissionUtils } from '@tmlmobilidade/utils';
+import { type HasPermissionResourceArgs, hasPermissionResource as hasPermissionResourceUtils, hasPermission as hasPermissionUtils, swrFetcher } from '@tmlmobilidade/utils';
 import { createContext, type PropsWithChildren, useContext, useMemo } from 'react';
 import useSWR from 'swr';
 

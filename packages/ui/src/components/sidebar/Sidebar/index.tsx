@@ -24,7 +24,7 @@ export const sidebarApps = [
 		_id: 'roles',
 		href: `${getAppConfig('auth', 'frontend_url')}/roles`,
 		icon: <IconKey size={26} />,
-		label: 'Funções',
+		label: 'Grupos de Permissões',
 		permission: { action: Permissions.roles.actions.list, scope: Permissions.roles.scope },
 	},
 	{

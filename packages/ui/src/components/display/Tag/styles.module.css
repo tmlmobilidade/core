@@ -32,7 +32,7 @@
 }
 
 /* * */
-/* VARIANTS */
+/* PROPS / VARIANT */
 
 .tag[data-variant='primary'] {
 	color: var(--color-primary);

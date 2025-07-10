@@ -17,21 +17,21 @@ export const sidebarApps = [
 		_id: 'users',
 		href: `${getAppConfig('auth', 'frontend_url')}/users`,
 		icon: <IconUser size={26} />,
-		label: 'Users',
+		label: 'Utilizadores',
 		permission: { action: Permissions.users.actions.list, scope: Permissions.users.scope },
 	},
 	{
 		_id: 'roles',
 		href: `${getAppConfig('auth', 'frontend_url')}/roles`,
 		icon: <IconKey size={26} />,
-		label: 'Roles',
+		label: 'Funções',
 		permission: { action: Permissions.roles.actions.list, scope: Permissions.roles.scope },
 	},
 	{
 		_id: 'agencies',
 		href: `${getAppConfig('auth', 'frontend_url')}/agencies`,
 		icon: <IconBuildings size={26} />,
-		label: 'Agencies',
+		label: 'Operadores',
 		permission: { action: Permissions.agencies.actions.list, scope: Permissions.agencies.scope },
 	},
 	{
@@ -45,7 +45,7 @@ export const sidebarApps = [
 		_id: 'rides',
 		href: getAppConfig('rides', 'frontend_url'),
 		icon: <IconListCheck size={26} />,
-		label: 'Monitorização',
+		label: 'SLAs',
 		permission: { action: Permissions.rides.actions.list, scope: Permissions.rides.scope },
 	},
 	{
@@ -66,7 +66,7 @@ export const sidebarApps = [
 		_id: 'validations',
 		href: `${getAppConfig('plans', 'frontend_url')}/validations`,
 		icon: <IconFileCheck size={26} />,
-		label: 'Validações',
+		label: 'Validações GTFS',
 		permission: { action: Permissions.validations.actions.list, scope: Permissions.validations.scope },
 	},
 ];

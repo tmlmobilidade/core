@@ -1,18 +1,12 @@
 /* * */
 
-import { Surface, type SurfaceProps } from '@/components/layout/Surface';
+import { Surface } from '@/components/layout/Surface';
 
 import styles from './styles.module.css';
 
 /* * */
 
 interface PaneProps {
-
-	/**
-	 * The alignment of the pane content.
-	 * @default 'start'
-	 */
-	align?: SurfaceProps['align']
 
 	/**
 	 * A set of or a single React component to be rendered inside
@@ -28,25 +22,13 @@ interface PaneProps {
 	 */
 	header?: React.ReactNode[]
 
-	/**
-	 * The justification of the pane content.
-	 * @default 'start'
-	 */
-	justify?: SurfaceProps['justify']
-
-	/**
-	 * The variant of the Surface component.
-	 * @default 'default'
-	 */
-	variant?: SurfaceProps['variant']
-
 }
 
 /* * */
 
-export function Pane({ align = 'start', children, header, justify = 'start', variant = 'default' }: PaneProps) {
+export function Pane({ children, header }: PaneProps) {
 	return (
-		<Surface align={align} height="full" justify={justify} variant={variant}>
+		<Surface height="full">
 			{header && (
 				<div className={styles.headerWrapper}>
 					{header.map((headerItem, index) => (

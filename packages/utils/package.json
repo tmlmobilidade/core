@@ -44,18 +44,18 @@
 		"extract-zip": "2.0.1",
 		"geojson": "0.5.0",
 		"jszip": "3.10.1",
-		"luxon": "3.6.1",
+		"luxon": "3.7.1",
 		"mergekit": "3.0.6",
 		"papaparse": "5.5.3",
 		"uuid": "11.1.0",
-		"zod": "3.25.76"
+		"zod": "4.0.3"
 	},
 	"devDependencies": {
 		"@carrismetropolitana/eslint": "20250622.1204.50",
 		"@tmlmobilidade/tsconfig": "*",
 		"@tmlmobilidade/types": "*",
 		"@types/luxon": "3.6.2",
-		"@types/node": "24.0.12",
+		"@types/node": "24.0.13",
 		"@types/papaparse": "5.3.16",
 		"resolve-tspaths": "0.8.23",
 		"rimraf": "6.0.1",

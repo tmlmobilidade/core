@@ -41,7 +41,7 @@
 	},
 	"devDependencies": {
 		"@tmlmobilidade/tsconfig": "*",
-		"@types/node": "24.0.12",
+		"@types/node": "24.0.13",
 		"resolve-tspaths": "0.8.23",
 		"rimraf": "6.0.1",
 		"tsx": "4.20.3"

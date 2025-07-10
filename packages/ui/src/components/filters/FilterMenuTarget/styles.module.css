@@ -11,6 +11,7 @@
 	line-height: 1;
 	color: var(--color-system-text-300);
 	text-transform: uppercase;
+	white-space: nowrap;
 	cursor: pointer;
 	user-select: none;
 	background: var(--color-system-background-100);

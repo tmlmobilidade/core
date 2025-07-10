@@ -44,7 +44,7 @@ interface PaneProps {
 
 /* * */
 
-export function Pane({ align, children, header, justify, variant = 'default' }: PaneProps) {
+export function Pane({ align = 'start', children, header, justify = 'start', variant = 'default' }: PaneProps) {
 	return (
 		<Surface align={align} height="full" justify={justify} variant={variant}>
 			{header && (

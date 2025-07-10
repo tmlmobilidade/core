@@ -64,6 +64,7 @@
 	line-height: 1;
 	color: var(--color-system-background-100);
 	text-transform: uppercase;
+	white-space: nowrap;
 	background-color: var(--color-system-text-100);
 	border-radius: var(--border-radius-sm);
 }

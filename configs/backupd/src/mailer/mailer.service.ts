@@ -34,7 +34,7 @@ export class MailerService {
 	}
 
 	public async sendFailureMail(error: string): Promise<void> {
-		const emailHtml = RenderFailedBackupEmail({
+		const emailHtml = await RenderFailedBackupEmail({
 			backup_service: this.config.mail_options.subject,
 			error_message: error,
 			failure_time: Dates.now('Europe/Lisbon').toLocaleString(Dates.FORMATS.DATETIME_FULL_WITH_SECONDS),

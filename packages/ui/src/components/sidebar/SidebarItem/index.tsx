@@ -45,7 +45,7 @@ export function SidebarItem({ href, icon, label, permission }: SidebarItemProps)
 		const currentUrl = window.location.href;
 		if (currentUrl.startsWith(href)) return true;
 		return false;
-	}, [href]);
+	}, [href, isDisabled]);
 
 	//
 	// C. Render components

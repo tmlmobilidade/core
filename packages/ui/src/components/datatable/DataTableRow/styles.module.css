@@ -31,12 +31,12 @@
 	padding: var(--size-spacing-md);
 	overflow: hidden;
 	text-overflow: ellipsis;
-    font-size: var(--font-size-md);
-    font-weight: var(--font-weight-semibold);
-    line-height: var(font-line-height);
-    color: var(--color-system-text-100);
+	font-size: var(--font-size-md);
+	font-weight: var(--font-weight-semibold);
+	line-height: var(font-line-height);
+	color: var(--color-system-text-100);
 }
 
 .center {
-    justify-content: center;
+	justify-content: center;
 }

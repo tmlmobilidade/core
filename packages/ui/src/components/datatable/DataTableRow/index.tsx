@@ -2,8 +2,7 @@
 
 /* * */
 
-import { DataTableColumn } from '@/components/datatable/datatable.type';
-import { cn } from '@/lib/utils';
+import { type DataTableColumn } from '@/components/datatable/DataTable';
 import { getValueAtPath } from '@tmlmobilidade/utils';
 
 import styles from './styles.module.css';
@@ -38,12 +37,8 @@ export function DataTableRow<T = Record<string, unknown>>({ columns, onRowClick,
 			{columns.map((column, colIndex) => (
 				<div
 					key={colIndex}
-					className={cn(styles.cell, column.width ? styles.maxWidth : styles.fullWidth, column.center && styles.center)}
-					style={{
-						maxWidth: column.width,
-						minWidth: column.width,
-						width: column.width,
-					}}
+					className={styles.cell}
+					style={{ maxWidth: column.width, minWidth: column.width, width: column.width }}
 				>
 					{column.render
 						? column.render(record)

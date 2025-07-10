@@ -2,7 +2,7 @@
 
 /* * */
 
-import { DataTableColumn } from '@/components/datatable/datatable.type';
+import { type DataTableColumn } from '@/components/datatable/DataTable';
 import { tryParseDateToTimestamp } from '@/lib/utils';
 import { getValueAtPath } from '@tmlmobilidade/utils';
 import { createContext, type PropsWithChildren, useCallback, useContext, useEffect, useMemo, useState } from 'react';

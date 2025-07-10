@@ -2,10 +2,10 @@
 
 /* * */
 
-import { DataTableColumn } from '@/components/datatable/datatable.type';
+import ActionIcon from '@/components/common/ActionIcon';
+import { type DataTableColumn } from '@/components/datatable/DataTable';
 import { useDataTableContext } from '@/components/datatable/DataTableContext';
 import { IconArrowDownRhombus, IconArrowsUpDown, IconArrowUpRhombus } from '@tabler/icons-react';
-import { ActionIcon } from '@tmlmobilidade/ui';
 
 import styles from './styles.module.css';
 

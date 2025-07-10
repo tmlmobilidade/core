@@ -2,10 +2,10 @@
 
 /* * */
 
-import { SidebarItem } from '@/components/sidebar/SidebarItem';
 import { Spacer } from '@/components/layout/Spacer';
+import { SidebarItem } from '@/components/sidebar/SidebarItem';
 import { ThemeSwitcher } from '@/components/theme/ThemeSwitcher';
-import { IconAlertTriangle, IconBusStop, IconFileCertificate, IconFileCheck, IconListCheck, IconUser } from '@tabler/icons-react';
+import { IconAlertTriangle, IconBuildings, IconBusStop, IconFileCertificate, IconFileCheck, IconKey, IconListCheck, IconUser } from '@tabler/icons-react';
 import { getAppConfig, Permissions } from '@tmlmobilidade/lib';
 
 import styles from './styles.module.css';
@@ -14,15 +14,29 @@ import styles from './styles.module.css';
 
 export const sidebarApps = [
 	{
-		_id: 'auth',
-		href: getAppConfig('auth', 'frontend_url'),
+		_id: 'users',
+		href: `${getAppConfig('auth', 'frontend_url')}/users`,
 		icon: <IconUser size={26} />,
-		label: 'Auth',
+		label: 'Users',
 		permission: { action: Permissions.users.actions.list, scope: Permissions.users.scope },
 	},
 	{
+		_id: 'roles',
+		href: `${getAppConfig('auth', 'frontend_url')}/roles`,
+		icon: <IconKey size={26} />,
+		label: 'Roles',
+		permission: { action: Permissions.roles.actions.list, scope: Permissions.roles.scope },
+	},
+	{
+		_id: 'agencies',
+		href: `${getAppConfig('auth', 'frontend_url')}/agencies`,
+		icon: <IconBuildings size={26} />,
+		label: 'Agencies',
+		permission: { action: Permissions.agencies.actions.list, scope: Permissions.agencies.scope },
+	},
+	{
 		_id: 'alerts',
-		href: getAppConfig('alerts', 'frontend_url'),
+		href: `${getAppConfig('alerts', 'frontend_url')}/alerts`,
 		icon: <IconAlertTriangle size={26} />,
 		label: 'Alertas',
 		permission: { action: Permissions.alerts.actions.list, scope: Permissions.alerts.scope },

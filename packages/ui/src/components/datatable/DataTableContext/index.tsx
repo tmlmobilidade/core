@@ -2,38 +2,31 @@
 
 /* * */
 
-import { DataTableColumn, DataTableSearchProps } from '@/components/datatable/datatable.type';
-import { useSearch } from '@/hooks/search/use-search';
+import { DataTableColumn } from '@/components/datatable/datatable.type';
 import { tryParseDateToTimestamp } from '@/lib/utils';
 import { getValueAtPath } from '@tmlmobilidade/utils';
-import { createContext, ReactNode, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, type PropsWithChildren, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 /* * */
 
 interface DataTableContextState<T> {
 	actions: {
-		clearSearchQuery: () => void
 		handleSort: (accessor: string) => void
 		handleUpdateColumnWidth: (column: string, width: number) => void
-		updateFilterBySearchQuery: (query: string) => void
 	}
 	data: {
 		column_widths?: Record<string, number>
-		initial_records: T[]
 		records: T[]
 	}
 	filters: {
-		search_query?: string
 		sort_state: null | SortState
 	}
 }
 
 // Define the props for the provider component
 interface DataTableProviderProps<T> {
-	children: ReactNode
 	columns: DataTableColumn<T>[]
-	initialRecords: T[]
-	searchAccessors: DataTableSearchProps<T>['accessors']
+	records: T[]
 }
 
 // Define the types for sorting and filtering
@@ -58,54 +51,49 @@ export function useDataTableContext<T>(): DataTableContextState<T> {
 
 /* * */
 
-export function DataTableContextProvider<T>({ children, columns, initialRecords, searchAccessors }: DataTableProviderProps<T>) {
+export function DataTableContextProvider<T>({ children, columns, records }: PropsWithChildren<DataTableProviderProps<T>>) {
 	//
 
 	//
 	// A. Setup variables
 
-	const [searchQuery, setSearchQuery] = useState<string>('');
 	const [sortState, setSortState] = useState<DataTableContextState<T>['filters']['sort_state']>(null);
 	const [columnWidths, setColumnWidths] = useState<DataTableContextState<T>['data']['column_widths']>({});
-
-	const filteredData = useSearch<T>({ accessors: searchAccessors, data: initialRecords, debounce: 200, query: searchQuery });
 
 	//
 	// B. Transform data
 
-	const filteredAndSortedData = useMemo(() => {
+	const sortedRecords = useMemo(() => {
+		if (!sortState) return records;
 		// Sort Data
-		if (sortState) {
-			const { accessor, order } = sortState;
+		const { accessor, order } = sortState;
 
-			const sortFn = (a: number | string, b: number | string) => {
-				if (a < b) return order === 'asc' ? -1 : 1;
-				if (a > b) return order === 'asc' ? 1 : -1;
+		const sortFn = (a: number | string, b: number | string) => {
+			if (a < b) return order === 'asc' ? -1 : 1;
+			if (a > b) return order === 'asc' ? 1 : -1;
+			return 0;
+		};
+
+		return records.sort((a, b) => {
+			const aValue = getValueAtPath(a, accessor) ?? '';
+			const bValue = getValueAtPath(b, accessor) ?? '';
+
+			// Validate if type is sortable
+			if (![typeof aValue, typeof bValue].every(type => type === 'string' || type === 'number')) {
+				console.warn(`Sorting key: "${accessor}" is not sortable`);
 				return 0;
-			};
+			}
 
-			return filteredData.sort((a, b) => {
-				const aValue = getValueAtPath(a, accessor) ?? '';
-				const bValue = getValueAtPath(b, accessor) ?? '';
+			const aTimestamp = typeof aValue === 'string' ? tryParseDateToTimestamp(aValue) : null;
+			const bTimestamp = typeof bValue === 'string' ? tryParseDateToTimestamp(bValue) : null;
 
-				// Validate if type is sortable
-				if (![typeof aValue, typeof bValue].every(type => type === 'string' || type === 'number')) {
-					console.warn(`Sorting key: "${accessor}" is not sortable`);
-					return 0;
-				}
+			if (aTimestamp && bTimestamp) {
+				return sortFn(aTimestamp, bTimestamp);
+			}
 
-				const aTimestamp = typeof aValue === 'string' ? tryParseDateToTimestamp(aValue) : null;
-				const bTimestamp = typeof bValue === 'string' ? tryParseDateToTimestamp(bValue) : null;
-
-				if (aTimestamp && bTimestamp) {
-					return sortFn(aTimestamp, bTimestamp);
-				}
-
-				return sortFn(aValue as number | string, bValue as number | string);
-			});
-		}
-		return [];
-	}, [initialRecords, sortState, searchQuery]);
+			return sortFn(aValue as number | string, bValue as number | string);
+		});
+	}, [records, sortState]);
 
 	useEffect(() => {
 		// Set initial column widths
@@ -131,14 +119,6 @@ export function DataTableContextProvider<T>({ children, columns, initialRecords,
 		}
 	}, [sortState]);
 
-	const updateFilterBySearchQuery = useCallback((query: string) => {
-		setSearchQuery(query);
-	}, []);
-
-	const clearSearchQuery = useCallback(() => {
-		setSearchQuery('');
-	}, []);
-
 	const handleUpdateColumnWidth = useCallback((column: string, width: number) => {
 		setColumnWidths(prev => ({
 			...prev,
@@ -151,18 +131,14 @@ export function DataTableContextProvider<T>({ children, columns, initialRecords,
 
 	const contextValue: DataTableContextState<T> = {
 		actions: {
-			clearSearchQuery,
 			handleSort,
 			handleUpdateColumnWidth,
-			updateFilterBySearchQuery,
 		},
 		data: {
 			column_widths: columnWidths,
-			initial_records: initialRecords,
-			records: filteredAndSortedData ?? [],
+			records: sortedRecords ?? [],
 		},
 		filters: {
-			search_query: searchQuery,
 			sort_state: sortState,
 		},
 

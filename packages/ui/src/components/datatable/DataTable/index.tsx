@@ -2,7 +2,7 @@
 
 /* * */
 
-import { DataTableColumn, DataTableSearchProps } from '@/components/datatable/datatable.type';
+import { type DataTableColumn } from '@/components/datatable/datatable.type';
 import { DataTableContent } from '@/components/datatable/DataTableContent';
 import { DataTableContextProvider } from '@/components/datatable/DataTableContext';
 
@@ -56,28 +56,13 @@ export interface DataTableProps<T> {
 	 */
 	rowIdAccessor?: keyof T | (string & {})
 
-	/**
-	 * Whether the table should have a search input.
-	 * @default false
-	 */
-	search?: DataTableSearchProps<T>
-
-	/**
-	 * The title of the table.
-	 */
-	title?: string
-
 }
 
 /* * */
 
 export function DataTable<T>({ records, ...props }: DataTableProps<T>) {
 	return (
-		<DataTableContextProvider
-			columns={props.columns}
-			initialRecords={records}
-			searchAccessors={props.search?.accessors ?? []}
-		>
+		<DataTableContextProvider columns={props.columns} records={records}>
 			<DataTableContent {...props} />
 		</DataTableContextProvider>
 	);

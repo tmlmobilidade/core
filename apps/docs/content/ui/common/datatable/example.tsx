@@ -53,7 +53,6 @@ export default function DatatableExample() {
 					columns={columns}
 					records={sampleData}
 					rowIdAccessor="_id"
-					title="Título"
 				/>
 			</Pane>
 			{/* </AppWrapper> */}

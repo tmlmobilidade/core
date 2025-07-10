@@ -48,7 +48,7 @@
 		"mergekit": "3.0.6",
 		"papaparse": "5.5.3",
 		"uuid": "11.1.0",
-		"zod": "4.0.3"
+		"zod": "3.25.76"
 	},
 	"devDependencies": {
 		"@carrismetropolitana/eslint": "20250622.1204.50",

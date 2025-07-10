@@ -49,7 +49,7 @@
 		"nodemailer": "7.0.5",
 		"oci-common": "2.112.0",
 		"oci-objectstorage": "2.112.0",
-		"zod": "4.0.3"
+		"zod": "3.25.76"
 	},
 	"devDependencies": {
 		"@carrismetropolitana/eslint": "20250622.1204.50",

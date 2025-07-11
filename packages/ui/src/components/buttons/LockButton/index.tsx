@@ -19,14 +19,14 @@ export function LockButton({ isLocked, onClick }: LockButtonProps) {
 
 	if (isLocked) {
 		return (
-			<ActionIcon color="green" onClick={onClick} variant="light">
+			<ActionIcon color="var(--color-status-success-primary)" onClick={onClick} variant="subtle">
 				<IconLockFilled />
 			</ActionIcon>
 		);
 	}
 
 	return (
-		<ActionIcon color="red" onClick={onClick} variant="filled">
+		<ActionIcon color="var(--color-primary)" onClick={onClick} variant="subtle">
 			<IconLockOpen2 />
 		</ActionIcon>
 	);

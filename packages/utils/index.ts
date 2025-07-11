@@ -7,6 +7,7 @@ export * from '@/generate-random-token.js';
 export * from '@/generic/index.js';
 export * from '@/geo/index.js';
 export * from '@/http.js';
+export * from '@/navigation/index.js';
 export * from '@/permissions.js';
 export * from '@/singleton-proxy.js';
 export * from '@/strings/index.js';

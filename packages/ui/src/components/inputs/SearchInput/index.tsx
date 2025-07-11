@@ -39,11 +39,13 @@ export function SearchInput({ onChange, value }: SearchInputProps) {
 			onChange={handleChange}
 			placeholder="Pesquisar..."
 			value={value ?? ''}
-			rightSection={(
-				<MantineActionIcon color="var(--color-system-text-200)" onClick={handleClear} variant="transparent">
-					<IconX size={20} />
-				</MantineActionIcon>
-			)}
+			rightSection={
+				(typeof value === 'string' && value.length > 0) && (
+					<MantineActionIcon color="var(--color-system-text-300)" onClick={handleClear} variant="transparent">
+						<IconX size={20} />
+					</MantineActionIcon>
+				)
+			}
 		/>
 	);
 

@@ -10,7 +10,7 @@ import { z } from 'zod';
 
 /* SUMMARY */
 
-export const SEVERITY_LEVELS = ['error', 'warning', 'info'] as const;
+export const SEVERITY_LEVELS = ['error', 'warning', 'ignore'] as const;
 export const SeverityLevelSchema = z.enum(SEVERITY_LEVELS);
 export type SeverityLevel = z.infer<typeof SeverityLevelSchema>;
 

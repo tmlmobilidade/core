@@ -2,12 +2,7 @@
 /* ROOT */
 
 .root {
-	width: 40px;
-	min-width: 40px;
-	height: 40px;
-	min-height: 40px;
 	color: var(--color-system-text-200);
-	background-color: transparent;
 }
 
 .root:hover {

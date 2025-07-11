@@ -21,6 +21,7 @@ import '@/styles/themes/street.css';
 /* * */
 
 import {
+	ActionIcon,
 	Button,
 	Checkbox,
 	createTheme,
@@ -38,6 +39,7 @@ import {
 
 /* * */
 
+import ActionIconOverride from '@/styles/mantine/ActionIcon.module.css';
 import ButtonOverride from '@/styles/mantine/Button.module.css';
 import CheckboxOverride from '@/styles/mantine/Checkbox.module.css';
 import CheckboxGroupOverride from '@/styles/mantine/CheckboxGroup.module.css';
@@ -56,6 +58,12 @@ import TextInputOverride from '@/styles/mantine/TextInput.module.css';
 
 export const themeData: MantineThemeOverride = createTheme({
 	components: {
+
+		ActionIcon: ActionIcon.extend({
+			classNames: {
+				...ActionIconOverride,
+			},
+		}),
 
 		Button: Button.extend({
 			classNames: {

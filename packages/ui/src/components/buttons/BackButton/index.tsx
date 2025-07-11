@@ -30,7 +30,7 @@ export function BackButton({ onClick, type = 'back' }: BackButtonProps) {
 	// B. Render components
 
 	return (
-		<ActionIcon classNames={{ root: styles.root }} onClick={handleClick}>
+		<ActionIcon classNames={{ root: styles.root }} onClick={handleClick} variant="subtle">
 			{type === 'back' && <IconChevronLeft />}
 			{type === 'close' && <IconX />}
 		</ActionIcon>

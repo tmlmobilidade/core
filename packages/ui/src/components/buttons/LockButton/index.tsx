@@ -5,8 +5,6 @@
 import { ActionIcon } from '@mantine/core';
 import { IconLockFilled, IconLockOpen2 } from '@tabler/icons-react';
 
-import styles from './styles.module.css';
-
 /* * */
 
 interface LockButtonProps {
@@ -21,14 +19,14 @@ export function LockButton({ isLocked, onClick }: LockButtonProps) {
 
 	if (isLocked) {
 		return (
-			<ActionIcon classNames={{ root: styles.root }} onClick={onClick}>
+			<ActionIcon color="green" onClick={onClick} variant="light">
 				<IconLockFilled />
 			</ActionIcon>
 		);
 	}
 
 	return (
-		<ActionIcon classNames={{ root: styles.root }} onClick={onClick}>
+		<ActionIcon color="red" onClick={onClick} variant="filled">
 			<IconLockOpen2 />
 		</ActionIcon>
 	);

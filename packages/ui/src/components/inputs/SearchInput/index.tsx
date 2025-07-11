@@ -40,7 +40,7 @@ export function SearchInput({ onChange, value }: SearchInputProps) {
 			placeholder="Pesquisar..."
 			value={value ?? ''}
 			rightSection={(
-				<MantineActionIcon onClick={handleClear} variant="subtle">
+				<MantineActionIcon color="var(--color-system-text-200)" onClick={handleClear} variant="transparent">
 					<IconX size={20} />
 				</MantineActionIcon>
 			)}

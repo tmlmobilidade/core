@@ -1,4 +1,5 @@
 export * from '@/components/AppProvider';
+export * from '@/components/buttons';
 export * from '@/components/common';
 export * from '@/components/datatable';
 export * from '@/components/display';

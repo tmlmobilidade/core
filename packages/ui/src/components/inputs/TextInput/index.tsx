@@ -15,7 +15,7 @@ export interface TextInputProps extends MantineTextInputProps {
 
 /* * */
 
-export function TextInput({ classNames, error, validation, value, ...props }: TextInputProps) {
+export function TextInput({ error, validation, value, ...props }: TextInputProps) {
 	//
 
 	//
@@ -54,7 +54,6 @@ export function TextInput({ classNames, error, validation, value, ...props }: Te
 
 	return (
 		<MantineTextInput
-			classNames={classNames}
 			error={error ? error : isValid ? '' : error}
 			rightSection={props.tooltip && renderTooltip(props.tooltip)}
 			value={value}

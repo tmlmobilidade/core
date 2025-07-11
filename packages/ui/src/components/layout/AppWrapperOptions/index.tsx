@@ -2,9 +2,10 @@
 
 /* * */
 
+import { ActionIcon } from '@mantine/core';
 import { IconLogin, IconSettings } from '@tabler/icons-react';
 
-import { ActionIcon, Menu } from '../../common';
+import { Menu } from '../../common';
 
 /* * */
 

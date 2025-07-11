@@ -1,9 +1,12 @@
 'use client';
 
+/* * */
+
+import { Button, type ButtonProps } from '@/components/buttons/Button';
 import { IconUpload } from '@tabler/icons-react';
 import React, { useState } from 'react';
 
-import { Button, type ButtonProps } from '../Button';
+/* * */
 
 interface FileButtonProps extends ButtonProps {
 	accept?: string
@@ -15,24 +18,19 @@ interface FileButtonProps extends ButtonProps {
 	onFileChange?: (file: File) => void
 }
 
-export default function FileButton({
-	accept,
-	disabled,
-	icon,
-	label,
-	loading,
-	onCancel,
-	onFileChange,
-	...props
-}: FileButtonProps) {
+/* * */
+
+export function FileButton({ accept, disabled, icon, label, loading, onCancel, onFileChange, ...props }: FileButtonProps) {
 	//
 
 	//
-	// A. Define Variables
+	// A. Setup variables
+
 	const [isLoading, setIsLoading] = useState(loading ?? false);
 
 	//
-	// B. Handle Actions
+	// B. Handle actions
+
 	const handleFileSelect = async () => {
 		setIsLoading(true);
 		const input = document.createElement('input');
@@ -59,7 +57,8 @@ export default function FileButton({
 	};
 
 	//
-	// C. Render Components
+	// C. Render components
+
 	return (
 		<Button
 			disabled={disabled || isLoading}
@@ -70,4 +69,6 @@ export default function FileButton({
 			{...props}
 		/>
 	);
+
+	//
 }

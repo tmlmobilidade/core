@@ -2,9 +2,9 @@
 
 /* * */
 
-import ActionIcon from '@/components/common/ActionIcon';
 import { type DataTableColumn } from '@/components/datatable/DataTable';
 import { useDataTableContext } from '@/components/datatable/DataTableContext';
+import { ActionIcon } from '@mantine/core';
 import { IconArrowDownRhombus, IconArrowsUpDown, IconArrowUpRhombus } from '@tabler/icons-react';
 
 import styles from './styles.module.css';

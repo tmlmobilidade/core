@@ -5,7 +5,7 @@
 import { Spacer } from '@/components/layout/Spacer';
 import { SidebarItem } from '@/components/sidebar/SidebarItem';
 import { ThemeSwitcher } from '@/components/theme/ThemeSwitcher';
-import { IconAlertTriangle, IconBuildings, IconBusStop, IconFileCertificate, IconFileCheck, IconKey, IconListCheck, IconUser } from '@tabler/icons-react';
+import { IconAlertTriangle, IconBuildings, IconBusStop, IconFileCertificate, IconFileCheck, IconHome, IconKey, IconListCheck, IconUser } from '@tabler/icons-react';
 import { getAppConfig, Permissions } from '@tmlmobilidade/lib';
 
 import styles from './styles.module.css';
@@ -13,6 +13,13 @@ import styles from './styles.module.css';
 /* * */
 
 export const sidebarApps = [
+	{
+		_id: 'home',
+		href: getAppConfig('auth', 'frontend_url'),
+		icon: <IconHome size={26} />,
+		label: 'Home',
+		permission: { action: Permissions.agencies.actions.list, scope: Permissions.agencies.scope },
+	},
 	{
 		_id: 'users',
 		href: `${getAppConfig('auth', 'frontend_url')}/users`,

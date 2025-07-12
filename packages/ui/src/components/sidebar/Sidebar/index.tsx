@@ -15,7 +15,7 @@ import styles from './styles.module.css';
 export const sidebarApps = [
 	{
 		_id: 'home',
-		href: getAppConfig('auth', 'frontend_url'),
+		href: `${getAppConfig('auth', 'frontend_url')}/home`,
 		icon: <IconHome size={26} />,
 		label: 'Home',
 		permission: { action: Permissions.agencies.actions.list, scope: Permissions.agencies.scope },

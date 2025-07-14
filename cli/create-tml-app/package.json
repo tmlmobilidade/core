@@ -28,7 +28,7 @@
 	},
 	"scripts": {
 		"build": "rimraf ./dist && tsc && resolve-tspaths",
-		"dev2": "tsx src/index.ts",
+		"dev": "tsx src/index.ts",
 		"lint": "eslint . && tsc --noEmit",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
@@ -41,6 +41,7 @@
 	},
 	"devDependencies": {
 		"@tmlmobilidade/tsconfig": "*",
+		"@tmlmobilidade/types": "*",
 		"@types/node": "24.0.13",
 		"resolve-tspaths": "0.8.23",
 		"rimraf": "6.0.1",

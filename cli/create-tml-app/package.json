@@ -36,12 +36,12 @@
 		"@clack/core": "0.5.0",
 		"@clack/prompts": "0.11.0",
 		"@tmlmobilidade/lib": "*",
+		"@tmlmobilidade/types": "*",
 		"chalk": "5.4.1",
 		"npm-check-updates": "18.0.1"
 	},
 	"devDependencies": {
 		"@tmlmobilidade/tsconfig": "*",
-		"@tmlmobilidade/types": "*",
 		"@types/node": "24.0.13",
 		"resolve-tspaths": "0.8.23",
 		"rimraf": "6.0.1",

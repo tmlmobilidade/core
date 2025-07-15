@@ -8,6 +8,9 @@ import { useState } from 'react';
 
 import styles from './styles.module.css';
 
+import { AppWrapperOptions } from '../AppWrapperOptions';
+import { Spacer } from '../Spacer';
+
 /* * */
 
 const AVAILABLE_GREETINGS = ['Olá', 'Hi', 'Hey', 'Oi', 'Hallo', 'Hola', 'Ciao', 'Hej'];
@@ -42,6 +45,8 @@ export function AppWrapperHeader({ userName }: AppWrapperHeaderProps) {
 	return (
 		<div className={styles.container}>
 			<Label size="md" caps singleLine>{drawnGreeting} {userName}</Label>
+			<Spacer />
+			<AppWrapperOptions />
 		</div>
 	);
 

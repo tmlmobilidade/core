@@ -29,7 +29,7 @@ export function SucessfulGtfsValidationEmail({ first_name, validation }: Sucessf
 				</Text>
 
 				<Text style={styles.text}>
-					Excelentes notícias! A validação GTFS do seu arquivo foi concluída com sucesso.
+					Excelentes notícias! A validação do GTFS foi concluída com sucesso.
 				</Text>
 
 				<Hr style={{ margin: '24px 0' }} />
@@ -43,11 +43,9 @@ export function SucessfulGtfsValidationEmail({ first_name, validation }: Sucessf
 				</Text>
 
 				<Text style={styles.text}>
-					• O seu arquivo GTFS está estruturalmente correto
+					• O GTFS está estruturalmente correto.
 					<br />
-					• Os dados podem ser utilizados pelos sistemas de informação ao passageiro
-					<br />
-					• O arquivo está pronto para publicação
+					• A validação está pronta para ser convertida para plano.
 					{totalWarnings > 0 ? ' (considere resolver os avisos)' : ''}
 				</Text>
 
@@ -66,12 +64,6 @@ export function SucessfulGtfsValidationEmail({ first_name, validation }: Sucessf
 				<Button href={go_link} style={styles.button}>
 					Ver Relatório Completo
 				</Button>
-
-				<Hr style={{ margin: '24px 0' }} />
-
-				<Text style={styles.textStyles.muted}>
-					Parabéns pelo trabalho! Se tiver dúvidas sobre algum aspecto da validação, a nossa equipa de suporte está disponível para ajudar.
-				</Text>
 			</Section>
 		</EmailWrapper>
 	);

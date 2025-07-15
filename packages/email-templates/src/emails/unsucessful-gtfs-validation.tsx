@@ -31,7 +31,7 @@ export function UnsuccessfulGtfsValidationEmail({ first_name, validation }: Unsu
 				</Text>
 
 				<Text style={styles.text}>
-					A validação GTFS do seu arquivo foi concluída, mas foram encontrados problemas que precisam da sua atenção.
+					A validação GTFS do seu arquivo foi concluída, mas foram encontrados problemas.
 				</Text>
 
 				<Hr style={{ margin: '24px 0' }} />
@@ -45,16 +45,17 @@ export function UnsuccessfulGtfsValidationEmail({ first_name, validation }: Unsu
 				</Text>
 
 				<Text style={styles.text}>
-					• Reveja os erros e avisos na plataforma
+					• Reveja e corrija os problemas identificados
 					<br />
-					• Corrija os problemas identificados no seu arquivo GTFS
-					<br />
-					• Faça upload do arquivo corrigido para uma nova validação
+					• Faça o upload do arquivo corrigido para nova validação
 				</Text>
 
 				{totalErrors > 0 && (
-					<Text style={styles.textStyles.error}>
-						⚠️ Importante: Erros críticos impedem o correto funcionamento do sistema de transportes e devem ser corrigidos antes da publicação.
+					<Text style={styles.text}>
+						⚠️Importante
+						{' '}
+						<strong>Importante</strong>
+						: Erros formais impedem o carregamento do ficheiro GTFS e devem ser corrigidos antes da publicação.
 					</Text>
 				)}
 
@@ -65,12 +66,6 @@ export function UnsuccessfulGtfsValidationEmail({ first_name, validation }: Unsu
 				<Button href={go_link} style={styles.button}>
 					Ver Detalhes da Validação
 				</Button>
-
-				<Hr style={{ margin: '24px 0' }} />
-
-				<Text style={styles.textStyles.muted}>
-					Se precisar de ajuda para interpretar os resultados da validação ou corrigir os problemas, não hesite em contactar a nossa equipa de suporte.
-				</Text>
 			</Section>
 		</EmailWrapper>
 	);

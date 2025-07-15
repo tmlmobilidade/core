@@ -60,6 +60,7 @@ export default function MultiSelect({
 			? value.filter(item => item.value !== selectedItem.value)
 			: [...value, selectedItem];
 
+		setSearch('');
 		setValue(newValue);
 		onChange?.(newValue.map(item => item.value));
 	};

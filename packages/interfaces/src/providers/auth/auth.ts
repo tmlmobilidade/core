@@ -1,7 +1,7 @@
 /* * */
 
 import { roles, sessions, users, verificationTokens } from '@/interfaces/index.js';
-import { emailProvider } from '@/providers/email/email.js';
+import { sendWelcomeEmail } from '@tmlmobilidade/emails';
 import { getAppConfig, HttpException, HttpStatus } from '@tmlmobilidade/lib';
 import { type CreateUserDto, type LoginDto, type Permission, type Session } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy, Dates, generateRandomString, generateRandomToken, getPermission } from '@tmlmobilidade/utils';
@@ -159,9 +159,11 @@ class AuthProvider {
 			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Error creating verification token');
 		}
 
-		emailProvider.send({
-			html: `<p>Click the link below to verify your email: <a target="_blank" href="${getAppConfig('auth', 'frontend_url')}/verification?token=${verification_token}">Verify Email</a></p>`,
-			subject: 'Verify your email',
+		sendWelcomeEmail({
+			props: {
+				first_name: createUserDto.first_name,
+				setup_password_link: `${getAppConfig('auth', 'frontend_url')}/verification?token=${verification_token}`,
+			},
 			to: createUserDto.email,
 		});
 	}

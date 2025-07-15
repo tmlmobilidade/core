@@ -184,22 +184,6 @@ export class S3StorageProvider implements IStorageProvider {
 	}
 
 	/**
-	 * Updates a file in S3.
-	 * @param key - The file path and name in S3.
-	 * @param body - The content to update, either as a string, buffer, or readable stream.
-	 */
-	async putObject(key: string, body: Buffer | Readable | string): Promise<void> {
-		await this.checkBucket();
-		const command = new PutObjectCommand({
-			Body: body,
-			Bucket: this.bucketName,
-			Key: key,
-		});
-		await this.s3Client.send(command);
-		console.log(`File updated successfully in ${this.bucketName}/${key}`);
-	}
-
-	/**
 	 * Uploads a file to S3.
 	 * @param key - The file path and name in S3.
 	 * @param body - The content to upload, either as a string, buffer, or readable stream.

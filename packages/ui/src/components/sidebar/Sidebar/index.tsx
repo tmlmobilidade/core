@@ -2,9 +2,7 @@
 
 /* * */
 
-import { Spacer } from '@/components/layout/Spacer';
 import { SidebarItem } from '@/components/sidebar/SidebarItem';
-import { ThemeSwitcher } from '@/components/theme/ThemeSwitcher';
 import { IconAlertTriangle, IconBuildings, IconBusStop, IconFileCertificate, IconFileCheck, IconHome, IconKey, IconListCheck, IconUser } from '@tabler/icons-react';
 import { getAppConfig, Permissions } from '@tmlmobilidade/lib';
 
@@ -94,10 +92,6 @@ export function Sidebar() {
 							permission={item.permission}
 						/>
 					))}
-				</div>
-				<Spacer orientation="vertical" />
-				<div className={styles.navWrapper}>
-					<ThemeSwitcher />
 				</div>
 			</div>
 		</div>

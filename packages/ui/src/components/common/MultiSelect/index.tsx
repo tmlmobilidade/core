@@ -21,6 +21,7 @@ interface MultiSelectProps {
 	label?: string
 	maxHeight?: number
 	onChange?: (selected: string[]) => void
+	onPaste?: (pastedValues: string[]) => void
 	searchable?: boolean
 	selected: string[]
 }
@@ -34,6 +35,7 @@ export default function MultiSelect({
 	label,
 	maxHeight,
 	onChange,
+	onPaste,
 	searchable = true,
 	selected,
 }: MultiSelectProps) {
@@ -109,6 +111,54 @@ export default function MultiSelect({
 		);
 	});
 
+	const handlePaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
+		event.preventDefault();
+
+		const pastedText = event.clipboardData.getData('text');
+		if (!pastedText.trim()) return;
+
+		// Split by common delimiters: comma, semicolon, newline, tab
+		const pastedValues = pastedText
+			.split(/[,;\n\t]+/)
+			.map(val => val.trim())
+			.filter(val => val.length > 0);
+
+		// Call custom onPaste handler if provided
+		onPaste?.(pastedValues);
+
+		// Find matching items from data
+		const matchingItems: DataItem[] = [];
+
+		pastedValues.forEach((pastedValue) => {
+			// Try to match by value first
+			let matchedItem = data.find(item =>
+				item.value.toLowerCase() === pastedValue.toLowerCase(),
+			);
+
+			// If no match by value, try to match by label
+			if (!matchedItem) {
+				matchedItem = data.find(item =>
+					item.label.toLowerCase() === pastedValue.toLowerCase(),
+				);
+			}
+
+			// If found and not already selected, add to matching items
+			if (matchedItem && !value.some(v => v.value === matchedItem.value)) {
+				matchingItems.push(matchedItem);
+			}
+		});
+
+		// Add matching items to selection
+		if (matchingItems.length > 0) {
+			const newValue = [...value, ...matchingItems];
+			setValue(newValue);
+			onChange?.(newValue.map(item => item.value));
+		}
+
+		// Clear search after paste
+		setSearch('');
+	};
+
 	return (
 
 		<Combobox
@@ -128,6 +178,7 @@ export default function MultiSelect({
 					error={error}
 					label={label}
 					onClick={() => combobox.openDropdown()}
+					onPaste={handlePaste}
 					style={{ width: '100%' }}
 					classNames={{
 						description: styles.description,

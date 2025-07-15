@@ -4,7 +4,7 @@ import { Readable } from 'node:stream';
 import { ObjectStorageClient } from 'oci-objectstorage';
 import { OciError, Region, SimpleAuthenticationDetailsProvider } from 'oci-common';
 import { readFileSync } from 'node:fs';
-import { HttpException, HttpStatus } from '@tmlmobilidade/lib';
+import { HttpException, HttpStatus, mimeTypes } from '@tmlmobilidade/lib';
 import { CreatePreauthenticatedRequestDetails } from 'oci-objectstorage/lib/model/create-preauthenticated-request-details.js';
 
 /* * */
@@ -126,9 +126,13 @@ export class OCIStorageProvider implements IStorageProvider {
 		return result.listObjects?.objects?.map(obj => obj.name) ?? [];
 	}
 
-	async uploadFile(key: string, body: Buffer | Readable | string): Promise<void> {
+	async uploadFile(key: string, body: Buffer | Readable | string, mimeType?: string): Promise<void> {
+		const isImage = mimeType === mimeTypes.png || mimeType === mimeTypes.jpg || mimeType === mimeTypes.jpeg || mimeType === mimeTypes.gif || mimeType === mimeTypes.svg;
+
 		await this.ociClient.putObject({
 			bucketName: this.bucketName,
+			contentDisposition: isImage ? 'inline' : 'attachment',
+			contentType: mimeType,
 			namespaceName: this.namespace,
 			objectName: key,
 			putObjectBody: typeof body === 'string' ? Buffer.from(body) : body,

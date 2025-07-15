@@ -126,6 +126,20 @@ export class OCIStorageProvider implements IStorageProvider {
 		return result.listObjects?.objects?.map(obj => obj.name) ?? [];
 	}
 
+	/**
+	 * Creates or updates a file in OCI.
+	 * @param key - The file path and name in OCI.
+	 * @param body - The content to update, either as a string, buffer, or readable stream.
+	 */
+	async putObject(key: string, body: Buffer | Readable | string): Promise<void> {
+		await this.ociClient.putObject({
+			bucketName: this.bucketName,
+			namespaceName: this.namespace,
+			objectName: key,
+			putObjectBody: typeof body === 'string' ? Buffer.from(body) : body,
+		});
+	}
+
 	async uploadFile(key: string, body: Buffer | Readable | string): Promise<void> {
 		await this.ociClient.putObject({
 			bucketName: this.bucketName,

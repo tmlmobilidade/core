@@ -23,6 +23,9 @@ export interface IStorageProvider {
 	// List files in the storage.
 	listFiles(prefix?: string): Promise<string[]>
 
+	// Create or update a file in the storage.
+	putObject(key: string, body: Buffer | Readable | string): Promise<void>
+
 	// Upload a file to the storage.
 	uploadFile(key: string, body: Buffer | Readable | string): Promise<void>
 }

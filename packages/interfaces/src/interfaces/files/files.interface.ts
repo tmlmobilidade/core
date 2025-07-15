@@ -183,9 +183,22 @@ class FilesClass extends MongoCollectionClass<File, CreateFileDto, UpdateFileDto
 	 * @param createFileDto - The file type to create.
 	 * @returns The file that was uploaded.
 	 */
-	public async upload(file: Buffer, createFileDto: CreateFileDto, options?: InsertOneOptions): Promise<InsertOneResult<File>> {
+	public async upload(file: Buffer, createFileDto: CreateFileDto, options?: InsertOneOptions & { replace?: boolean }): Promise<InsertOneResult<File>> {
 		const _id = generateRandomString({ length: 5 });
-		await this.storageService.uploadFile(`${createFileDto.scope}/${createFileDto.resource_id}/${_id}.${Files.getFileExtension(createFileDto.name)}`, file);
+
+		const file_name = `${createFileDto.scope}/${createFileDto.resource_id}/${createFileDto.name}`;
+		const file_exists = await this.storageService.fileExists(file_name);
+
+		if (options?.replace) {
+			await this.storageService.putObject(file_name, file);
+		}
+		else if (file_exists && !options?.replace) {
+			await this.storageService.uploadFile(`${file_name.split('.')[0]}_${_id}.${file_name.split('.')[1]}`, file);
+		}
+		else {
+			await this.storageService.uploadFile(file_name, file);
+		}
+
 		return await this.insertOne({ ...createFileDto, _id }, { options });
 	}
 

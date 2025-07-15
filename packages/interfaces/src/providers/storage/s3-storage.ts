@@ -3,6 +3,7 @@
 import { IStorageProvider } from '@/providers/storage/storage.interface.js';
 import { CopyObjectCommand, CreateBucketCommand, DeleteObjectCommand, DeleteObjectsCommand, GetObjectCommand, HeadBucketCommand, HeadObjectCommand, ListObjectsV2Command, NotFound, PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+import { mimeTypes } from '@tmlmobilidade/lib';
 import { Readable } from 'node:stream';
 
 /* * */
@@ -188,12 +189,15 @@ export class S3StorageProvider implements IStorageProvider {
 	 * @param key - The file path and name in S3.
 	 * @param body - The content to upload, either as a string, buffer, or readable stream.
 	 */
-	async uploadFile(key: string, body: Buffer | Readable | string): Promise<void> {
+	async uploadFile(key: string, body: Buffer | Readable | string, mimeType?: string): Promise<void> {
+		const isImage = mimeType === mimeTypes.png || mimeType === mimeTypes.jpg || mimeType === mimeTypes.jpeg || mimeType === mimeTypes.gif || mimeType === mimeTypes.svg;
 		try {
 			await this.checkBucket();
 			const command = new PutObjectCommand({
 				Body: body,
 				Bucket: this.bucketName,
+				ContentDisposition: isImage ? 'inline' : 'attachment',
+				ContentType: mimeType,
 				Key: key,
 			});
 			await this.s3Client.send(command);

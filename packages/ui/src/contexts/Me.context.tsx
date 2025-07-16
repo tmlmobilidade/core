@@ -72,7 +72,7 @@ export const MeContextProvider = ({ children }: PropsWithChildren) => {
 			title: 'Erro ao carregar dados do utilizador',
 		});
 
-		if (error.statusCode === HttpStatus.NOT_FOUND) {
+		if (error.statusCode === HttpStatus.UNAUTHORIZED || error.statusCode === HttpStatus.NOT_FOUND) {
 			logout();
 		}
 	}, [error]);

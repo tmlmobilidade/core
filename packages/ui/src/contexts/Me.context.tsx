@@ -63,8 +63,7 @@ export const MeContextProvider = ({ children }: PropsWithChildren) => {
 
 		async function logout() {
 			const { redirect, RedirectType } = await import('next/navigation');
-			document.cookie = 'session_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-			redirect(getAppConfig('auth', 'frontend_url'), RedirectType.replace);
+			redirect(getAppConfig('auth', 'frontend_url') + '/login', RedirectType.replace);
 		}
 
 		useToast.error({

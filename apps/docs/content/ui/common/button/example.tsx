@@ -27,6 +27,10 @@ export default function ButtonExample() {
 					<Label>Button Danger</Label>
 					<Button label="Hello!" variant="danger" />
 				</div>
+				<div>
+					<Label>Disabled Button</Label>
+					<Button label="Hello!" variant="disabled" />
+				</div>
 			</Grid>
 
 		</ComponentWrapper>

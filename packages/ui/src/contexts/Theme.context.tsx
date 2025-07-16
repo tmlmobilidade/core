@@ -1,5 +1,6 @@
 'use client';
 
+import { Loader } from '@/components';
 /* * */
 
 import { themeData } from '@/styles/theme';
@@ -7,7 +8,7 @@ import { MantineProvider } from '@mantine/core';
 import { DatesProvider, DatesProviderSettings } from '@mantine/dates';
 import { ModalsProvider } from '@mantine/modals';
 import { Notifications } from '@mantine/notifications';
-import { createContext, type PropsWithChildren, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, type PropsWithChildren, Suspense, useContext, useEffect, useMemo, useState } from 'react';
 
 /* * */
 
@@ -89,16 +90,18 @@ export const ThemeContextProvider = ({ children }: PropsWithChildren) => {
 	// D. Render components
 
 	return (
-		<ThemeContext.Provider value={contextValue}>
-			<MantineProvider defaultColorScheme="auto" theme={themeData}>
-				<DatesProvider settings={mantineDatesSettings}>
-					<ModalsProvider>
-						<Notifications styles={{ root: { marginTop: '60px' } }} />
-						{children}
-					</ModalsProvider>
-				</DatesProvider>
-			</MantineProvider>
-		</ThemeContext.Provider>
+		<Suspense fallback={<Loader size="xl" />}>
+			<ThemeContext.Provider value={contextValue}>
+				<MantineProvider defaultColorScheme="auto" theme={themeData}>
+					<DatesProvider settings={mantineDatesSettings}>
+						<ModalsProvider>
+							<Notifications styles={{ root: { marginTop: '60px' } }} />
+							{children}
+						</ModalsProvider>
+					</DatesProvider>
+				</MantineProvider>
+			</ThemeContext.Provider>
+		</Suspense>
 	);
 
 	//

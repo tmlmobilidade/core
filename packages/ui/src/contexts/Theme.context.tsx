@@ -90,18 +90,16 @@ export const ThemeContextProvider = ({ children }: PropsWithChildren) => {
 	// D. Render components
 
 	return (
-		<Suspense fallback={<Loader size="xl" />}>
-			<ThemeContext.Provider value={contextValue}>
-				<MantineProvider defaultColorScheme="auto" theme={themeData}>
-					<DatesProvider settings={mantineDatesSettings}>
-						<ModalsProvider>
-							<Notifications styles={{ root: { marginTop: '60px' } }} />
-							{children}
-						</ModalsProvider>
-					</DatesProvider>
-				</MantineProvider>
-			</ThemeContext.Provider>
-		</Suspense>
+		<ThemeContext.Provider value={contextValue}>
+			<MantineProvider defaultColorScheme="auto" theme={themeData}>
+				<DatesProvider settings={mantineDatesSettings}>
+					<ModalsProvider>
+						<Notifications styles={{ root: { marginTop: '60px' } }} />
+						{children}
+					</ModalsProvider>
+				</DatesProvider>
+			</MantineProvider>
+		</ThemeContext.Provider>
 	);
 
 	//

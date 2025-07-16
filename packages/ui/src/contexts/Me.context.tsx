@@ -7,7 +7,6 @@ import { useToast } from '@/hooks';
 import { getAppConfig, HttpException, HttpStatus } from '@tmlmobilidade/lib';
 import { type User } from '@tmlmobilidade/types';
 import { type HasPermissionResourceArgs, hasPermissionResource as hasPermissionResourceUtils, hasPermission as hasPermissionUtils, swrFetcher } from '@tmlmobilidade/utils';
-import { useRouter } from 'next/navigation';
 import { createContext, type PropsWithChildren, useContext, useEffect, useMemo } from 'react';
 import useSWR from 'swr';
 /* * */
@@ -44,7 +43,6 @@ export const MeContextProvider = ({ children }: PropsWithChildren) => {
 	//
 	// A. Fetch data
 
-	const router = useRouter();
 	const { data, error, isLoading } = useSWR<User, HttpException>(`${getAppConfig('auth', 'api_url')}/users/me`, swrFetcher);
 
 	//
@@ -63,17 +61,19 @@ export const MeContextProvider = ({ children }: PropsWithChildren) => {
 	useEffect(() => {
 		if (!error) return;
 
+		async function logout() {
+			const { redirect, RedirectType } = await import('next/navigation');
+			document.cookie = 'session_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+			redirect(getAppConfig('auth', 'frontend_url'), RedirectType.replace);
+		}
+
 		useToast.error({
 			message: error.message,
 			title: 'Erro ao carregar dados do utilizador',
 		});
 
 		if (error.statusCode === HttpStatus.NOT_FOUND) {
-			// Redirect to login page
-			router.replace(getAppConfig('auth', 'frontend_url'));
-
-			// Clear session_token from cookies
-			document.cookie = 'session_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+			logout();
 		}
 	}, [error]);
 

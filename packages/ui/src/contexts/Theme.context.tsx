@@ -1,6 +1,5 @@
 'use client';
 
-import { Loader } from '@/components';
 /* * */
 
 import { themeData } from '@/styles/theme';
@@ -8,7 +7,7 @@ import { MantineProvider } from '@mantine/core';
 import { DatesProvider, DatesProviderSettings } from '@mantine/dates';
 import { ModalsProvider } from '@mantine/modals';
 import { Notifications } from '@mantine/notifications';
-import { createContext, type PropsWithChildren, Suspense, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, type PropsWithChildren, useContext, useEffect, useMemo, useState } from 'react';
 
 /* * */
 

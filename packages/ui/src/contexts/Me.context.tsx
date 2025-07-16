@@ -1,13 +1,15 @@
 'use client';
 
+import { useToast } from '@/hooks';
+
 /* * */
 
-import { getAppConfig } from '@tmlmobilidade/lib';
+import { getAppConfig, HttpException, HttpStatus } from '@tmlmobilidade/lib';
 import { type User } from '@tmlmobilidade/types';
 import { type HasPermissionResourceArgs, hasPermissionResource as hasPermissionResourceUtils, hasPermission as hasPermissionUtils, swrFetcher } from '@tmlmobilidade/utils';
-import { createContext, type PropsWithChildren, useContext, useMemo } from 'react';
+import { useRouter } from 'next/navigation';
+import { createContext, type PropsWithChildren, useContext, useEffect, useMemo } from 'react';
 import useSWR from 'swr';
-
 /* * */
 
 interface MeContextState {
@@ -19,7 +21,7 @@ interface MeContextState {
 		user: undefined | User
 	}
 	flags: {
-		error: null | string
+		error?: HttpException
 		loading: boolean
 	}
 }
@@ -42,7 +44,8 @@ export const MeContextProvider = ({ children }: PropsWithChildren) => {
 	//
 	// A. Fetch data
 
-	const { data, error, isLoading } = useSWR<User>(`${getAppConfig('auth', 'api_url')}/users/me`, swrFetcher);
+	const router = useRouter();
+	const { data, error, isLoading } = useSWR<User, HttpException>(`${getAppConfig('auth', 'api_url')}/users/me`, swrFetcher);
 
 	//
 	// B. Define actions
@@ -56,6 +59,23 @@ export const MeContextProvider = ({ children }: PropsWithChildren) => {
 		if (!data || !data.permissions) return false;
 		return hasPermissionResourceUtils({ ...args, permissions: data.permissions });
 	}
+
+	useEffect(() => {
+		if (!error) return;
+
+		useToast.error({
+			message: error.message,
+			title: 'Erro ao carregar dados do utilizador',
+		});
+
+		if (error.statusCode === HttpStatus.NOT_FOUND) {
+			// Redirect to login page
+			router.replace(getAppConfig('auth', 'frontend_url'));
+
+			// Clear session_token from cookies
+			document.cookie = 'session_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+		}
+	}, [error]);
 
 	//
 	// C. Define context value

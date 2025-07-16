@@ -1,3 +1,5 @@
+import { HttpException } from '@tmlmobilidade/lib';
+
 // Define the HttpResponse type
 export interface HttpResponse<T> {
 	data: null | T
@@ -151,7 +153,7 @@ export const swrFetcher = async <T>(url: string): Promise<T> => {
 	const data = await res.json();
 
 	if (!res.ok) {
-		throw new Error((data as ErrorResponse).message);
+		throw new HttpException(res.status, (data as ErrorResponse).message);
 	}
 
 	return data as T;

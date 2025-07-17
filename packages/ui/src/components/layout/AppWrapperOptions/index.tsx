@@ -1,11 +1,12 @@
 'use client';
 
+import { Label } from '@/components/display/Label';
+import { AVAILABLE_THEMES, ThemeType, useThemeContext } from '@/contexts/Theme.context';
 /* * */
 
 import { ActionIcon, ColorSwatch, Menu } from '@mantine/core';
 import { IconChevronRight, IconColorSwatch, IconLogout, IconSettings } from '@tabler/icons-react';
 import { getAppConfig } from '@tmlmobilidade/lib';
-import { AVAILABLE_THEMES, Label, ThemeType, useThemeContext } from 'index';
 
 /* * */
 

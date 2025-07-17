@@ -137,21 +137,21 @@ const FACILITIES_VALUES = [
 //
 // Define schemas using constants
 
-export const jurisdictionSchema = z.enum(JURISDICTION_VALUES).default('unknown');
-export const operationalStatusSchema = z.enum(OPERATIONAL_STATUS_VALUES).default('inactive');
-export const benchStatusSchema = z.enum(BENCH_STATUS_VALUES).default('unknown');
-export const dockingBayTypeSchema = z.enum(DOCKING_BAY_TYPE_VALUES).default('unknown');
-export const electricityStatusSchema = z.enum(ELECTRICITY_STATUS_VALUES).default('unknown');
-export const flagStatusSchema = z.enum(FLAG_STATUS_VALUES).default('unknown');
-export const lightningStatusSchema = z.enum(LIGHTNING_STATUS_VALUES).default('unknown');
-export const pavementTypeSchema = z.enum(PAVEMENT_TYPE_VALUES).default('unknown');
-export const poleStatusSchema = z.enum(POLE_STATUS_VALUES).default('unknown');
-export const roadTypeSchema = z.enum(ROAD_TYPE_VALUES).default('unknown');
-export const shelterStatusSchema = z.enum(SHELTER_STATUS_VALUES).default('unknown');
-export const sidewalkTypeSchema = z.enum(SIDEWALK_TYPE_VALUES).default('unknown');
-export const connectionsSchema = z.array(z.enum(CONNECTIONS_VALUES)).default([]);
-export const facilitiesSchema = z.array(z.enum(FACILITIES_VALUES)).default([]);
-export const commentSchema = z.array(CommentSchema).default([]);
+export const jurisdictionSchema = z.enum(JURISDICTION_VALUES);
+export const operationalStatusSchema = z.enum(OPERATIONAL_STATUS_VALUES);
+export const benchStatusSchema = z.enum(BENCH_STATUS_VALUES);
+export const dockingBayTypeSchema = z.enum(DOCKING_BAY_TYPE_VALUES);
+export const electricityStatusSchema = z.enum(ELECTRICITY_STATUS_VALUES);
+export const flagStatusSchema = z.enum(FLAG_STATUS_VALUES);
+export const lightningStatusSchema = z.enum(LIGHTNING_STATUS_VALUES);
+export const pavementTypeSchema = z.enum(PAVEMENT_TYPE_VALUES);
+export const poleStatusSchema = z.enum(POLE_STATUS_VALUES);
+export const roadTypeSchema = z.enum(ROAD_TYPE_VALUES);
+export const shelterStatusSchema = z.enum(SHELTER_STATUS_VALUES);
+export const sidewalkTypeSchema = z.enum(SIDEWALK_TYPE_VALUES);
+export const connectionsSchema = z.array(z.enum(CONNECTIONS_VALUES));
+export const facilitiesSchema = z.array(z.enum(FACILITIES_VALUES));
+export const commentSchema = z.array(CommentSchema);
 
 export const StopSchema = DocumentSchema.extend({
 

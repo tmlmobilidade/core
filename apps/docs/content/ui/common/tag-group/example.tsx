@@ -6,12 +6,15 @@ export default function TagGroupExample() {
 		{ label: 'Bus' },
 		{ label: 'Metro' },
 		{ label: 'Ship' },
+		{ label: 'Tram' },
 		{ label: 'Train' },
+		{ label: 'Car' },
+
 	];
 
 	return (
 		<ComponentWrapper>
-			<TagGroup tags={tags} />
+			<TagGroup limit={4} tags={tags} />
 		</ComponentWrapper>
 	);
 }

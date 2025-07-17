@@ -1,0 +1,49 @@
+/* * */
+
+import { useMeContext } from './Me.context';
+
+/* * */
+
+interface HasPermissionProps {
+	action: string
+	children: React.ReactNode
+	scope: string
+}
+
+interface ResourceKeyAndValue<T> {
+	resource_key: keyof T
+	value: string
+}
+
+interface NoResourceKeyOrValue {
+	resource_key?: never
+	value?: never
+}
+
+type HasPermissionFinalProps<T> = HasPermissionProps & (NoResourceKeyOrValue | ResourceKeyAndValue<T>);
+
+/* * */
+
+export function HasPermissionExample<T extends Record<string, unknown>>({ action, children, resource_key, scope, value }: HasPermissionFinalProps<T>) {
+	//
+
+	//
+	// A. Setup variables
+	const { actions } = useMeContext();
+
+	//
+	// B. Render components
+
+	if (!resource_key && !value) {
+		console.log('hasPermission', scope, action);
+		return actions.hasPermission(scope, action) ? <>{children}</> : null;
+	}
+
+	if (actions.hasPermissionResource({ action, resource_key: resource_key ?? '', scope, value: value ?? '' })) {
+		return <>{children}</>;
+	}
+
+	return null;
+
+	//
+}

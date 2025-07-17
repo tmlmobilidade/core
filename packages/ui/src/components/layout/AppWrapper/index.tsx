@@ -2,8 +2,8 @@
 
 /* * */
 
-import { Loader } from '@/components';
 import { AppWrapperHeader } from '@/components/layout/AppWrapperHeader';
+import { Loader } from '@/components/loaders/Loader';
 import { Sidebar } from '@/components/sidebar/Sidebar';
 import { useMeContext } from '@/contexts/Me.context';
 import { type PropsWithChildren, Suspense } from 'react';

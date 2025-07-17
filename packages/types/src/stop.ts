@@ -11,127 +11,127 @@ import { z } from 'zod';
 // Define constants for enum values for better maintainability
 
 const JURISDICTION_VALUES = [
-	'ip',
-	'municipality',
-	'other',
-	'unknown',
+	'IP',
+	'MUNICIPALITY',
+	'OTHER',
+	'UNKNOWN',
 ] as const;
 
 const OPERATIONAL_STATUS_VALUES = [
-	'active',
-	'inactive',
-	'provisional',
-	'seasonal',
-	'voided',
+	'ACTIVE',
+	'INACTIVE',
+	'PROVISIONAL',
+	'SEASONAL',
+	'VOIDED',
 ] as const;
 
 const BENCH_STATUS_VALUES = [
-	'not_applicable',
-	'unknown',
-	'is_missing',
-	'is_damaged',
-	'is_ok',
+	'NOT_APPLICABLE',
+	'UNKNOWN',
+	'IS_MISSING',
+	'IS_DAMAGED',
+	'IS_OK',
 ] as const;
 
 const DOCKING_BAY_TYPE_VALUES = [
-	'unknown',
-	'simple_interaction',
-	'cut_in_road_without_marks',
-	'cut_in_road_with_marks',
-	'island',
-	'peninsula',
+	'UNKNOWN',
+	'SIMPLE_INTERACTION',
+	'CUT_IN_ROAD_WITHOUT_MARKS',
+	'CUT_IN_ROAD_WITH_MARKS',
+	'ISLAND',
+	'PENINSULA',
 ] as const;
 
 const ELECTRICITY_STATUS_VALUES = [
-	'available',
-	'unavailable',
-	'unknown',
+	'AVAILABLE',
+	'UNAVAILABLE',
+	'UNKNOWN',
 ] as const;
 
 const FLAG_STATUS_VALUES = [
-	'not_applicable',
-	'unknown',
-	'is_missing',
-	'is_damaged',
-	'is_ok',
+	'NOT_APPLICABLE',
+	'UNKNOWN',
+	'IS_MISSING',
+	'IS_DAMAGED',
+	'IS_OK',
 ] as const;
 
 const LIGHTNING_STATUS_VALUES = [
-	'confortable',
-	'damaged',
-	'insuficient',
-	'moderate',
-	'unavailable',
-	'unknown',
+	'CONFORTABLE',
+	'DAMAGED',
+	'INSUFICIENT',
+	'MODERATE',
+	'UNAVAILABLE',
+	'UNKNOWN',
 ] as const;
 
 const PAVEMENT_TYPE_VALUES = [
-	'asphalt',
-	'concrete',
-	'dirt',
-	'grass',
-	'gravel',
-	'portuguese_stones',
-	'unknown',
+	'ASPHALT',
+	'CONCRETE',
+	'DIRT',
+	'GRASS',
+	'GRAVEL',
+	'PORTUGUESE_STONES',
+	'UNKNOWN',
 ] as const;
 
 const POLE_STATUS_VALUES = [
-	'not_applicable',
-	'unknown',
-	'is_missing',
-	'is_damaged',
-	'is_ok',
+	'NOT_APPLICABLE',
+	'UNKNOWN',
+	'IS_MISSING',
+	'IS_DAMAGED',
+	'IS_OK',
 ] as const;
 
 const ROAD_TYPE_VALUES = [
-	'complementary_itinerary',
-	'highway',
-	'main_itinerary',
-	'national_road',
-	'regional_road',
-	'secondary_road',
-	'unknown',
+	'COMPLEMENTARY_ITINERARY',
+	'HIGHWAY',
+	'MAIN_ITINERARY',
+	'NATIONAL_ROAD',
+	'REGIONAL_ROAD',
+	'SECONDARY_ROAD',
+	'UNKNOWN',
 ] as const;
 
 const SHELTER_STATUS_VALUES = [
-	'not_applicable',
-	'unknown',
-	'is_missing',
-	'is_damaged',
-	'is_ok',
+	'NOT_APPLICABLE',
+	'UNKNOWN',
+	'IS_MISSING',
+	'IS_DAMAGED',
+	'IS_OK',
 ] as const;
 
 const SIDEWALK_TYPE_VALUES = [
-	'unknown',
-	'none',
-	'gutter',
-	'inaccessible',
-	'is_ok',
+	'UNKNOWN',
+	'NONE',
+	'GUTTER',
+	'INACCESSIBLE',
+	'IS_OK',
 ] as const;
 
 const CONNECTIONS_VALUES = [
-	'ferry',
-	'light_rail',
-	'subway',
-	'train',
-	'boat',
-	'airport',
-	'bike_sharing',
-	'bike_parking',
-	'car_parking',
+	'FERRY',
+	'LIGHT_RAIL',
+	'SUBWAY',
+	'TRAIN',
+	'BOAT',
+	'AIRPORT',
+	'BIKE_SHARING',
+	'BIKE_PARKING',
+	'CAR_PARKING',
 ] as const;
 
 const FACILITIES_VALUES = [
-	'fire_station',
-	'health_clinic',
-	'historic_building',
-	'hospital',
-	'police_station',
-	'school',
-	'shopping',
-	'transit_office',
-	'university',
-	'pip',
+	'FIRE_STATION',
+	'HEALTH_CLINIC',
+	'HISTORIC_BUILDING',
+	'HOSPITAL',
+	'POLICE_STATION',
+	'SCHOOL',
+	'SHOPPING',
+	'TRANSIT_OFFICE',
+	'UNIVERSITY',
+	'PIP',
 ] as const;
 
 //

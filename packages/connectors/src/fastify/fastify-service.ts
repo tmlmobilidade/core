@@ -91,11 +91,16 @@ export class FastifyService {
 
 	/**
 	 * Starts the Fastify server.
-	 * @return A promise that resolves when the server is started.
+	 * @return A promise that resolves to the URL of the Fastify server.
+	 * @throws Will throw an error if the server fails to start.
 	 */
-	async start() {
+	async start(): Promise<string> {
 		try {
-			await this.server.listen({ host: this.host, port: this.port });
+			const serverUrl = await this.server.listen({ host: this.host, port: this.port });
+			this.server.log.info(`Server is running at ${serverUrl}`);
+			this.server.log.info(`CORS enabled for origin: ${this.origin}`);
+			this.server.log.info(`Listening on ${this.host}:${this.port}`);
+			return serverUrl;
 		}
 		catch (error) {
 			this.server.log.error({ error, message: 'Error starting server.' });
@@ -110,6 +115,7 @@ export class FastifyService {
 	async stop() {
 		try {
 			await this.server.close();
+			console.log('Fastify server stopped.');
 		}
 		catch (error) {
 			this.server.log.error(error);

@@ -36,6 +36,7 @@
 		"lint:fix": "eslint --fix"
 	},
 	"dependencies": {
+		"@types/geojson": "^7946.0.16",
 		"geojson": "0.5.0",
 		"luxon": "3.7.1",
 		"mongodb": "6.17.0",

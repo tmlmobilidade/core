@@ -22,7 +22,7 @@ const DEFAULT_NON_DEV_CONFIG: Omit<AppConfigGroup, 'api_url' | 'frontend_url'> =
 	frontend_port: 3000,
 };
 
-const APP_CONFIGS = {
+const APP_CONFIGS: Record<string, Record<Environment, AppConfigGroup>> = {
 
 	alerts: {
 		development: {
@@ -62,6 +62,27 @@ const APP_CONFIGS = {
 		staging: {
 			api_url: 'https://auth.sae.carrismetropolitana.pt/api',
 			frontend_url: 'https://auth.sae.carrismetropolitana.pt',
+			...DEFAULT_NON_DEV_CONFIG,
+		},
+	},
+
+	locations: {
+		development: {
+			api_port: 52005,
+			api_url: 'http://localhost:52005',
+			cookie_domain: 'localhost',
+			cors_origin: true,
+			frontend_port: 51005,
+			frontend_url: 'http://localhost:51005',
+		},
+		production: {
+			api_url: 'https://locations.sae.carrismetropolitana.pt',
+			frontend_url: 'https://locations.sae.carrismetropolitana.pt',
+			...DEFAULT_NON_DEV_CONFIG,
+		},
+		staging: {
+			api_url: 'https://staging.locations.sae.carrismetropolitana.pt',
+			frontend_url: '',
 			...DEFAULT_NON_DEV_CONFIG,
 		},
 	},

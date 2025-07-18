@@ -31,3 +31,4 @@ Each interface has a given fixed port number to connect to the corresponding dat
 | hashed_trips   | 37009 | mongodb://root:root@localhost:37009 |
 | apex_t11       | 37010 | mongodb://root:root@localhost:37010 |
 | apex_t19       | 37011 | mongodb://root:root@localhost:37011 |
+| locations      | 37012 | mongodb://root:root@localhost:37012 |

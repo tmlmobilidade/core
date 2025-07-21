@@ -165,137 +165,79 @@ export const StopSchema = DocumentSchema.extend({
 	//
 	// General
 
-	_id: z
-		.string()
-		.length(6),
-
-	is_archived: z
-		.boolean()
-		.default(false),
-
-	is_locked: z
-		.boolean()
-		.default(false),
-
+	_id: z.string().length(6),
+	is_archived: z.boolean().default(false),
+	is_locked: z.boolean().default(false),
 	jurisdiction: jurisdictionSchema,
-
-	name: z
-		.string(),
-
-	new_name: z
-		.string(),
-
+	name: z.string(),
+	new_name: z.string(),
 	operational_status: operationalStatusSchema,
-
-	short_name: z
-		.string()
-		.nullish(),
-
-	tts_name: z
-		.string()
-		.nullish(),
+	short_name: z.string().nullish(),
+	tts_name: z.string().nullish(),
 
 	//
 	// Location
 
-	district_id: z
-		.string(),
-
-	latitude: z
-		.number(),
-
-	locality_id: z
-		.string()
-		.nullish(),
-
-	longitude: z
-		.number(),
-
-	municipality_id: z
-		.string(),
-
-	parish_id: z
-		.string()
-		.nullish(),
+	district_id: z.string(),
+	latitude: z.number(),
+	locality_id: z.string().nullish(),
+	longitude: z.number(),
+	municipality_id: z.string(),
+	parish_id: z.string().nullish(),
 
 	//
 	// Infrastructure
 
 	bench_status: benchStatusSchema,
-
 	docking_bay_type: dockingBayTypeSchema,
-
 	electricity_status: electricityStatusSchema,
-
 	flag_status: flagStatusSchema,
-
 	lighting_status: lightningStatusSchema,
-
 	pavement_type: pavementTypeSchema,
-
 	pole_status: poleStatusSchema,
-
 	road_type: roadTypeSchema,
-
-	shelter_code: z
-		.string()
-		.nullish(),
-
-	shelter_maintainer: z
-		.string()
-		.nullish(),
-
-	shelter_make: z
-		.string()
-		.nullish(),
-
-	shelter_model: z
-		.string()
-		.nullish(),
-
+	shelter_code: z.string().nullish(),
+	shelter_maintainer: z.string().nullish(),
+	shelter_make: z.string().nullish(),
+	shelter_model: z.string().nullish(),
 	shelter_status: shelterStatusSchema,
-
 	sidewalk_type: sidewalkTypeSchema,
 
 	//
 	// Checks
 
 	last_infrastructure_check: unixTimeStampSchema.nullish(),
-
 	last_infrastructure_maintenance: unixTimeStampSchema.nullish(),
-
 	last_schedules_check: unixTimeStampSchema.nullish(),
-
 	last_schedules_maintenance: unixTimeStampSchema.nullish(),
-
 	last_shelter_installation: unixTimeStampSchema.nullish(),
 
 	//
 	// Facilities
 
 	connections: connectionsSchema,
-
 	facilities: facilitiesSchema,
+
+	// Has ...
+	has_bench: hasAnySchema,
+	has_network_map: hasAnySchema,
+	has_pip_real_time: hasAnySchema,
+	has_schedules: hasAnySchema,
+	has_shelter: hasAnySchema,
+	has_stop_sign: hasAnySchema,
+	has_tariffs_information: hasAnySchema,
 
 	//
 	// Images & Files
 
-	file_ids: z
-		.array(z.string())
-		.default([]),
-
-	image_ids: z
-		.array(z.string())
-		.default([]),
+	file_ids: z.array(z.string()).default([]),
+	image_ids: z.array(z.string()).default([]),
 
 	//
 	// Notes & Comments
 
 	comments: commentSchema,
-
-	observations: z
-		.string()
-		.nullish(),
+	observations: z.string().nullish(),
 
 }).strict();
 

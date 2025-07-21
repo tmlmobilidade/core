@@ -21,6 +21,11 @@
 	align-items: flex-start;
 	padding: var(--size-spacing-xl) var(--size-spacing-md);
 	background-color: var(--color-system-background-100);
+	border-bottom: 1px dashed transparent;
+}
+
+.control[data-active='true'] {
+	border-bottom-color: var(--color-system-border-100);
 }
 
 /* * */
@@ -58,12 +63,7 @@
 }
 
 .control:hover .title {
-	color: var(--color-secondary);
 	text-decoration: underline;
-}
-
-.item[data-active="true"] .title {
-	color: var(--color-secondary);
 }
 
 /* * */

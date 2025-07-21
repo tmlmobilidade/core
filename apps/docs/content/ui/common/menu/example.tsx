@@ -7,7 +7,9 @@ export default function MenuExample() {
 		<ComponentWrapper>
 			<Menu>
 				<Menu.Target>
-					<Button>Menu</Button>
+					<Button
+						label="Menu"
+					/>
 				</Menu.Target>
 				<Menu.Dropdown>
 					<Menu.Label>Options : </Menu.Label>

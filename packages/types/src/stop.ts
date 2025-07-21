@@ -134,6 +134,12 @@ const FACILITIES_VALUES = [
 	'PIP',
 ] as const;
 
+const HAS_UNKNOWN = [
+	'YES',
+	'NO',
+	'UNKNOWN',
+] as const;
+
 //
 // Define schemas using constants
 
@@ -152,6 +158,7 @@ export const sidewalkTypeSchema = z.enum(SIDEWALK_TYPE_VALUES);
 export const connectionsSchema = z.array(z.enum(CONNECTIONS_VALUES));
 export const facilitiesSchema = z.array(z.enum(FACILITIES_VALUES));
 export const commentSchema = z.array(CommentSchema);
+export const hasAnySchema = z.enum(HAS_UNKNOWN);
 
 export const StopSchema = DocumentSchema.extend({
 

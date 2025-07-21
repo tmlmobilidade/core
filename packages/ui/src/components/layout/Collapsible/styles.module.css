@@ -18,6 +18,8 @@
 
 .control {
 	display: flex;
+	flex-direction: row-reverse;
+	gap: var(--size-spacing-md);
 	align-items: flex-start;
 	padding: var(--size-spacing-xl) var(--size-spacing-md);
 	background-color: var(--color-system-background-100);
@@ -32,6 +34,9 @@
 /* LABEL */
 
 .label {
+	display: flex;
+	flex-direction: column;
+	gap: var(--size-spacing-xs);
 	padding: 0;
 }
 
@@ -71,7 +76,7 @@
 
 .description {
 	margin: 0;
-	font-size: var(--font-size-md);
+	font-size: var(--font-size-sm);
 	font-weight: var(--font-weight-regular);
 	line-height: var(--font-line-height);
 	color: var(--color-system-text-200);

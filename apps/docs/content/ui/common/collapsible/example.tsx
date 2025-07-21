@@ -7,12 +7,10 @@ export function CollapsibleExample() {
 		<ComponentWrapper>
 			<Collapsible title="More Info">
 				<p>
-					This is the collapsible content. It can be any element or React
-					component you like.
+					This is the collapsible content.
 				</p>
 				<p>
-					It can even be another Collapsible component. Check out the next
-					section!
+					It can even be another Collapsible component.
 				</p>
 			</Collapsible>
 		</ComponentWrapper>

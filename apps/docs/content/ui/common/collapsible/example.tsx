@@ -5,7 +5,7 @@ import { Collapsible, ComponentWrapper } from '@tmlmobilidade/ui';
 export function CollapsibleExample() {
 	return (
 		<ComponentWrapper>
-			<Collapsible title="More Info">
+			<Collapsible description="Click to expand or collapse" title="More Info">
 				<p>
 					This is the collapsible content.
 				</p>

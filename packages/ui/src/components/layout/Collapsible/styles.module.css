@@ -1,58 +1,78 @@
 /* * */
-/* TITLE WRAPPER */
-
-.titleWrapper {
-    margin-right: var(--size-spacing-md);
-}
+/* IMPORTANT NOTE */
+/* This file contains styles for the Collapsible component, which is based on the Mantine Accordion component. */
+/* Even though Accordion styles are being overriden in the theme.tsx file, they are double-overriden here      */
+/* because the Collapsible component is a particular implementation of the Accordion component,                */
+/* that needs additional styles because it is supposed to be used as a top-level section.                      */
+/* * */
 
 /* * */
-/* TITLE */
+/* ROOT */
 
-.title {
-    margin: 0;
-    font-size: var(--font-size-xl);
-    font-weight: var(--font-weight-bold);
-    line-height: var(font-line-height);
-    color: var(--color-system-text-100);
-    text-transform: uppercase;
-}
-
-/* * */
-/* DESCRIPTION */
-
-.description {
-    font-size: var(--font-size-md);
-    font-weight: var(--font-weight-semibold);
-    line-height: var(font-line-height);
-    color: var(--color-system-text-200);
+.root {
+	width: 100%;
 }
 
 /* * */
 /* CONTROL */
 
 .control {
-    padding: 0 var(--size-spacing-md);
-    background-color: var(--color-system-background-100);
+	display: flex;
+	align-items: flex-start;
+	padding: var(--size-spacing-xl) var(--size-spacing-md);
+	background-color: var(--color-system-background-100);
 }
 
 /* * */
-/* PANEL */
+/* LABEL */
+
+.label {
+	padding: 0;
+}
+
+/* * */
+/* CONTENT */
 
 .content {
-    padding: 0;
+	padding: 0;
 }
 
 /* * */
-/* CHEVRON */
-
-.chevron {
-    &[data-rotate] {
-      transform: rotate(-90deg);
-    }
-    width: var(--font-size-xl);
-    height: var(--font-size-xl);
-}
+/* ICON */
 
 .icon {
-    color: var(--color-system-border-100);
+	color: var(--color-system-border-100);
+}
+
+/* * */
+/* TITLE */
+
+.title {
+	margin: 0;
+	font-size: var(--font-size-xl);
+	font-weight: var(--font-weight-bold);
+	line-height: var(--font-line-height);
+	color: var(--color-system-text-100);
+	text-transform: uppercase;
+	transition: color 200ms ease-in-out;
+}
+
+.control:hover .title {
+	color: var(--color-secondary);
+	text-decoration: underline;
+}
+
+.item[data-active="true"] .title {
+	color: var(--color-secondary);
+}
+
+/* * */
+/* DESCRIPTION */
+
+.description {
+	margin: 0;
+	font-size: var(--font-size-md);
+	font-weight: var(--font-weight-regular);
+	line-height: var(--font-line-height);
+	color: var(--color-system-text-200);
 }

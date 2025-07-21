@@ -3,26 +3,12 @@
 /* * */
 
 import { type MapStyle, useMapOptionsContext } from '@/contexts/MapOptions.context';
-import { IconsMap } from '@/settings/assets.settings';
 import { mapDefaultConfig } from '@/settings/map.settings';
+import Map, { FullscreenControl, GeolocateControl, MapLayerMouseEvent, MapRef, NavigationControl, ScaleControl, useMap, ViewStateChangeEvent } from '@vis.gl/react-maplibre';
 import { useCallback, useEffect, useState } from 'react';
-import Map, { FullscreenControl, GeolocateControl, MapLayerMouseEvent, MapRef, NavigationControl, ScaleControl, useMap, ViewStateChangeEvent } from 'react-map-gl/maplibre';
 
 import styles from './styles.module.css';
-
-/* * */
-
-const MAP_LOAD_ASSETS = [
-	{ name: 'cmet-bus-delay', sdf: false, url: IconsMap.bus_delay },
-	{ name: 'cmet-bus-regular', sdf: false, url: IconsMap.bus_regular },
-	{ name: 'cmet-bus-error', sdf: false, url: IconsMap.bus_error },
-	{ name: 'cmet-pin', sdf: false, url: IconsMap.pin },
-	{ name: 'cmet-shape-direction', sdf: true, url: IconsMap.shape_direction },
-	{ name: 'cmet-stop-selected', sdf: false, url: IconsMap.stop_selected },
-	{ name: 'cmet-store-busy', sdf: false, url: IconsMap.store_busy },
-	{ name: 'cmet-store-closed', sdf: false, url: IconsMap.store_closed },
-	{ name: 'cmet-store-open', sdf: false, url: IconsMap.store_open },
-];
+import 'maplibre-gl/dist/maplibre-gl.css';
 
 /* * */
 
@@ -86,11 +72,6 @@ export function MapView({
 		if (!id || !allMaps || !allMaps[id]) return;
 		const mapObject = allMaps[id];
 		mapOptionsContext.actions.setMap(mapObject);
-		for (const mapLoadAsset of MAP_LOAD_ASSETS) {
-			mapObject.loadImage(mapLoadAsset.url).then((image) => {
-				mapObject.addImage(mapLoadAsset.name, image.data, { sdf: mapLoadAsset.sdf });
-			});
-		}
 	}, [allMaps, id]);
 
 	const mapStyleValue = mapStyle ?? mapOptionsContext.data.style;

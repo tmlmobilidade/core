@@ -16,6 +16,7 @@ export interface BadgeProps extends MantineBadgeProps {
 	filled?: boolean
 	fullWidth?: boolean
 	icon?: React.ReactNode
+	onClick?: () => void
 	size?: 'lg' | 'md' | 'sm' | 'xl' | 'xs'
 	type?: 'pill' | 'tag'
 	variant?: 'active' | 'danger' | 'disabled' | 'info' | 'muted' | 'primary' | 'secondary' | 'success' | 'warning'
@@ -30,6 +31,7 @@ export default function Badge({
 	filled = false,
 	fullWidth = false,
 	icon,
+	onClick,
 	size = 'md',
 	type = 'tag',
 	variant = 'primary',
@@ -37,8 +39,8 @@ export default function Badge({
 }: BadgeProps) {
 	//
 
-	const btnClass = cn(
-		styles.button,
+	const badgeClass = cn(
+		styles.badge,
 		!disabled && {
 			[styles.active]: variant === 'active',
 			[styles.danger]: variant === 'danger',
@@ -56,8 +58,19 @@ export default function Badge({
 		styles[`font${size}`],
 		className,
 	);
+
+	if (onClick) {
+		return (
+			<button className={styles.button} onClick={!disabled ? onClick : undefined} type="button">
+				<MantineBadge className={badgeClass} data-active={filled} leftSection={icon} {...props} style={{ cursor: disabled ? 'not-allowed' : 'pointer' }}>
+					{children}
+				</MantineBadge>
+			</button>
+		);
+	}
+
 	return (
-		<MantineBadge className={btnClass} data-active={filled} leftSection={icon} {...props}>
+		<MantineBadge className={badgeClass} data-active={filled} leftSection={icon} {...props}>
 			{children}
 		</MantineBadge>
 	);

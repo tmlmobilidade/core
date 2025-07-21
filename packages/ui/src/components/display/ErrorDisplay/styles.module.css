@@ -9,7 +9,7 @@
 	justify-content: center;
 	width: 100%;
 	padding: 30px;
-	color: var(--color-system-text-400);
+	color: var(--color-system-text-300);
 }
 
 /* * */
@@ -32,6 +32,6 @@
 	font-family: monospace;
 	font-size: 14px;
 	text-align: center;
-	border: 1px solid var(--color-system-text-400);
+	border: 1px solid var(--color-system-text-300);
 	border-radius: 5px;
 }

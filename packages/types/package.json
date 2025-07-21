@@ -45,11 +45,11 @@
 		"@carrismetropolitana/eslint": "20250622.1204.50",
 		"@tmlmobilidade/tsconfig": "*",
 		"@types/luxon": "3.6.2",
-		"@types/node": "24.0.13",
+		"@types/node": "24.0.15",
 		"gtfs-types": "5.1.0",
 		"resolve-tspaths": "0.8.23",
 		"rimraf": "6.0.1",
-		"turbo": "2.5.4",
+		"turbo": "2.5.5",
 		"typescript": "5.8.3"
 	}
 }

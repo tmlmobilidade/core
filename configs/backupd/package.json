@@ -10,7 +10,7 @@
 		"start": "npm run build && node dist/index.js"
 	},
 	"dependencies": {
-		"@aws-sdk/client-s3": "3.844.0",
+		"@aws-sdk/client-s3": "3.850.0",
 		"@helperkits/logger": "20250628.901.58",
 		"@tmlmobilidade/emails": "*",
 		"@tmlmobilidade/interfaces": "*",
@@ -29,7 +29,7 @@
 	"devDependencies": {
 		"@carrismetropolitana/eslint": "20250622.1204.50",
 		"@tmlmobilidade/tsconfig": "*",
-		"@types/node": "24.0.13",
+		"@types/node": "24.0.15",
 		"@types/nodemailer": "6.4.17",
 		"typescript": "5.8.3"
 	}

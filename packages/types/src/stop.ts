@@ -110,7 +110,7 @@ const SIDEWALK_TYPE_VALUES = [
 ] as const;
 
 const CONNECTIONS_VALUES = [
-	'FERRY',
+	// 'FERRY',
 	'LIGHT_RAIL',
 	'SUBWAY',
 	'TRAIN',
@@ -131,13 +131,20 @@ const FACILITIES_VALUES = [
 	'SHOPPING',
 	'TRANSIT_OFFICE',
 	'UNIVERSITY',
-	'PIP',
+	// 'PIP',
 ] as const;
 
 const HAS_ANY = [
 	'YES',
 	'NO',
 	'UNKNOWN',
+] as const;
+
+const AREAS = [
+	'41',
+	'42',
+	'43',
+	'44',
 ] as const;
 
 //
@@ -159,6 +166,7 @@ export const connectionsSchema = z.array(z.enum(CONNECTIONS_VALUES));
 export const facilitiesSchema = z.array(z.enum(FACILITIES_VALUES));
 export const commentSchema = z.array(CommentSchema);
 export const hasAnySchema = z.enum(HAS_ANY);
+export const areaSchema = z.enum(AREAS);
 
 export const StopSchema = DocumentSchema.extend({
 
@@ -206,11 +214,19 @@ export const StopSchema = DocumentSchema.extend({
 	//
 	// Checks
 
+	last_acessibility_check: unixTimeStampSchema.nullish(),
+	last_acessibility_maintenance: unixTimeStampSchema.nullish(),
+	//
+	last_flag_check: unixTimeStampSchema.nullish(),
+	last_flag_maintenance: unixTimeStampSchema.nullish(),
+	//
 	last_infrastructure_check: unixTimeStampSchema.nullish(),
 	last_infrastructure_maintenance: unixTimeStampSchema.nullish(),
+	//
 	last_schedules_check: unixTimeStampSchema.nullish(),
 	last_schedules_maintenance: unixTimeStampSchema.nullish(),
-	last_shelter_installation: unixTimeStampSchema.nullish(),
+	//
+	last_shelter_installation: unixTimeStampSchema.nullish(), // nao aparece no csv
 
 	//
 	// Facilities
@@ -218,14 +234,32 @@ export const StopSchema = DocumentSchema.extend({
 	connections: connectionsSchema,
 	facilities: facilitiesSchema,
 
+	//
 	// Has ...
+
+	has_abusive_parking: hasAnySchema,
 	has_bench: hasAnySchema,
+	has_cover: hasAnySchema,
+	has_crossing: hasAnySchema,
+	has_electricity: hasAnySchema,
+	has_flag: hasAnySchema,
+	has_flat_acess: hasAnySchema,
+	has_lighting: hasAnySchema,
+	has_mupi: hasAnySchema,
 	has_network_map: hasAnySchema,
-	has_pip_real_time: hasAnySchema,
+	has_pip_audio: hasAnySchema,
+	has_pip_realtime: hasAnySchema,
+	has_pip_static: hasAnySchema,
+	has_pole: hasAnySchema,
 	has_schedules: hasAnySchema,
 	has_shelter: hasAnySchema,
+	has_sidewalk: hasAnySchema,
 	has_stop_sign: hasAnySchema,
+	has_tactile_acess: hasAnySchema,
+	has_tactile_schedules: hasAnySchema,
 	has_tariffs_information: hasAnySchema,
+	has_trash_bin: hasAnySchema,
+	has_wide_acess: hasAnySchema,
 
 	//
 	// Images & Files

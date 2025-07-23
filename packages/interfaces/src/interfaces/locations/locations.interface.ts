@@ -15,7 +15,7 @@ import {
 	ParishDocument,
 } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
-import { Collection, Filter, FindOptions, Sort, WithId } from 'mongodb';
+import { Collection, Filter, FindOptions, WithId } from 'mongodb';
 
 /* * */
 
@@ -41,49 +41,49 @@ class LocationsClass {
 	/*  Public Methods */
 
 	/*  Find All */
-	public findCensus = async (filter: Filter<Census>, perPage?: number, page?: number, sort?: Sort): Promise<WithId<Census>[]> =>
-		await this.findMany(this.collections.census, filter, perPage, page, sort);
+	public findCensus = async (filter?: Filter<Census>, options?: FindOptions<Census>): Promise<WithId<Census>[]> =>
+		await this.findMany(this.collections.census, filter, options);
 
-	public findDistricts = async (filter: Filter<DistrictDocument>, perPage?: number, page?: number, sort?: Sort): Promise<District[]> => {
-		const documents = await this.findMany(this.collections.districts, filter, perPage, page, sort);
+	public findDistricts = async (filter?: Filter<DistrictDocument>, options?: FindOptions<DistrictDocument>): Promise<District[]> => {
+		const documents = await this.findMany(this.collections.districts, filter, options);
 		return documents.map(doc => this.transformDocument<DistrictDocument, District>(doc));
 	};
 
-	public findLocalities = async (filter: Filter<LocalityDocument>, perPage?: number, page?: number, sort?: Sort): Promise<Locality[]> => {
-		const documents = await this.findMany(this.collections.localities, filter, perPage, page, sort);
+	public findLocalities = async (filter?: Filter<LocalityDocument>, options?: FindOptions<LocalityDocument>): Promise<Locality[]> => {
+		const documents = await this.findMany(this.collections.localities, filter, options);
 		return documents.map(doc => this.transformDocument<LocalityDocument, Locality>(doc));
 	};
 
-	public findMunicipalities = async (filter: Filter<MunicipalityDocument>, perPage?: number, page?: number, sort?: Sort): Promise<Municipality[]> => {
-		const documents = await this.findMany(this.collections.municipalities, filter, perPage, page, sort);
+	public findMunicipalities = async (filter?: Filter<MunicipalityDocument>, options?: FindOptions<MunicipalityDocument>): Promise<Municipality[]> => {
+		const documents = await this.findMany(this.collections.municipalities, filter, options);
 		return documents.map(doc => this.transformDocument<MunicipalityDocument, Municipality>(doc));
 	};
 
-	public findParishes = async (filter: Filter<ParishDocument>, perPage?: number, page?: number, sort?: Sort): Promise<Parish[]> => {
-		const documents = await this.findMany(this.collections.parishes, filter, perPage, page, sort);
+	public findParishes = async (filter?: Filter<ParishDocument>, options?: FindOptions<ParishDocument>): Promise<Parish[]> => {
+		const documents = await this.findMany(this.collections.parishes, filter, options);
 		return documents.map(doc => this.transformDocument<ParishDocument, Parish>(doc));
 	};
 
 	/*  Find By Id */
-	public findCensusById = async (id: string, options?: FindOptions): Promise<null | WithId<Census>> =>
+	public findCensusById = async (id: string, options?: FindOptions<Census>): Promise<null | WithId<Census>> =>
 		await this.findById(this.collections.census, id, options);
 
-	public findDistrictById = async (id: string, options?: FindOptions): Promise<District | null> => {
+	public findDistrictById = async (id: string, options?: FindOptions<DistrictDocument>): Promise<District | null> => {
 		const document = await this.findById(this.collections.districts, id, options);
 		return document ? this.transformDocument<DistrictDocument, District>(document) : null;
 	};
 
-	public findLocalityById = async (id: string, options?: FindOptions): Promise<Locality | null> => {
+	public findLocalityById = async (id: string, options?: FindOptions<LocalityDocument>): Promise<Locality | null> => {
 		const document = await this.findById(this.collections.localities, id, options);
 		return document ? this.transformDocument<LocalityDocument, Locality>(document) : null;
 	};
 
-	public findMunicipalityById = async (id: string, options?: FindOptions): Promise<Municipality | null> => {
+	public findMunicipalityById = async (id: string, options?: FindOptions<MunicipalityDocument>): Promise<Municipality | null> => {
 		const document = await this.findById(this.collections.municipalities, id, options);
 		return document ? this.transformDocument<MunicipalityDocument, Municipality>(document) : null;
 	};
 
-	public findParishById = async (id: string, options?: FindOptions): Promise<null | Parish> => {
+	public findParishById = async (id: string, options?: FindOptions<ParishDocument>): Promise<null | Parish> => {
 		const document = await this.findById(this.collections.parishes, id, options);
 		return document ? this.transformDocument<ParishDocument, Parish>(document) : null;
 	};
@@ -158,15 +158,12 @@ class LocationsClass {
 
 	/*  Private Methods - Database Operations */
 
-	private async findById<T extends Document>(collection: Collection<T>, id: string, options?: FindOptions): Promise<null | WithId<T>> {
+	private async findById<T extends Document>(collection: Collection<T>, id: string, options?: FindOptions<T>): Promise<null | WithId<T>> {
 		return collection.findOne({ _id: { $eq: id } } as Filter<T>, options);
 	}
 
-	private async findMany<T extends Document>(collection: Collection<T>, filter: Filter<T> = {}, perPage?: number, page?: number, sort?: Sort): Promise<WithId<T>[]> {
-		const query = collection.find(filter);
-		if (perPage) query.limit(perPage);
-		if (page && perPage) query.skip(perPage * (page - 1));
-		if (sort) query.sort(sort);
+	private async findMany<T extends Document>(collection: Collection<T>, filter: Filter<T> = {}, options?: FindOptions<T>): Promise<WithId<T>[]> {
+		const query = collection.find(filter, options);
 		return query.toArray();
 	}
 
@@ -177,14 +174,16 @@ class LocationsClass {
 	private geoFilter = (lat: number, lon: number) => ({ geometry: { $geoIntersects: { $geometry: { coordinates: [lon, lat], type: 'Point' } } } });
 
 	private transformDocument<T extends Omit<LocationCollections[keyof LocationCollections], 'census'>, U = District | Locality | Municipality | Parish>(doc: WithId<T>): U {
+		const geojson = doc.geometry ? {
+			geometry: doc.geometry,
+			properties: {},
+			type: doc.type,
+		} : undefined;
+
 		return {
 			_id: doc._id,
 			...doc.properties,
-			geojson: {
-				geometry: doc.geometry,
-				properties: {},
-				type: doc.type,
-			},
+			geojson,
 		} as U;
 	}
 }

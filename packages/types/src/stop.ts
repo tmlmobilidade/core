@@ -11,133 +11,79 @@ import { z } from 'zod';
 // Define constants for enum values for better maintainability
 
 const JURISDICTION_VALUES = [
-	'IP',
-	'MUNICIPALITY',
-	'OTHER',
-	'UNKNOWN',
+	'ip',
+	'municipality',
+	'other',
+	'unknown',
 ] as const;
 
 const OPERATIONAL_STATUS_VALUES = [
-	'ACTIVE',
-	'INACTIVE',
-	'PROVISIONAL',
-	'SEASONAL',
-	'VOIDED',
-] as const;
-
-const BENCH_STATUS_VALUES = [
-	'NOT_APPLICABLE',
-	'UNKNOWN',
-	'IS_MISSING',
-	'IS_DAMAGED',
-	'IS_OK',
-] as const;
-
-const DOCKING_BAY_TYPE_VALUES = [
-	'UNKNOWN',
-	'SIMPLE_INTERACTION',
-	'CUT_IN_ROAD_WITHOUT_MARKS',
-	'CUT_IN_ROAD_WITH_MARKS',
-	'ISLAND',
-	'PENINSULA',
+	'active',
+	'inactive',
+	'provisional',
+	'seasonal',
+	'voided',
 ] as const;
 
 const ELECTRICITY_STATUS_VALUES = [
-	'AVAILABLE',
-	'UNAVAILABLE',
-	'UNKNOWN',
-] as const;
-
-const FLAG_STATUS_VALUES = [
-	'NOT_APPLICABLE',
-	'UNKNOWN',
-	'IS_MISSING',
-	'IS_DAMAGED',
-	'IS_OK',
-] as const;
-
-const LIGHTNING_STATUS_VALUES = [
-	'CONFORTABLE',
-	'DAMAGED',
-	'INSUFICIENT',
-	'MODERATE',
-	'UNAVAILABLE',
-	'UNKNOWN',
-] as const;
-
-const PAVEMENT_TYPE_VALUES = [
-	'ASPHALT',
-	'CONCRETE',
-	'DIRT',
-	'GRASS',
-	'GRAVEL',
-	'PORTUGUESE_STONES',
-	'UNKNOWN',
-] as const;
-
-const POLE_STATUS_VALUES = [
-	'NOT_APPLICABLE',
-	'UNKNOWN',
-	'IS_MISSING',
-	'IS_DAMAGED',
-	'IS_OK',
+	'available',
+	'unavailable',
+	'unknown',
 ] as const;
 
 const ROAD_TYPE_VALUES = [
-	'COMPLEMENTARY_ITINERARY',
-	'HIGHWAY',
-	'MAIN_ITINERARY',
-	'NATIONAL_ROAD',
-	'REGIONAL_ROAD',
-	'SECONDARY_ROAD',
-	'UNKNOWN',
+	'complementary_itinerary',
+	'highway',
+	'main_itinerary',
+	'national_road',
+	'regional_road',
+	'secondary_road',
+	'unknown',
 ] as const;
 
-const SHELTER_STATUS_VALUES = [
-	'NOT_APPLICABLE',
-	'UNKNOWN',
-	'IS_MISSING',
-	'IS_DAMAGED',
-	'IS_OK',
-] as const;
-
-const SIDEWALK_TYPE_VALUES = [
-	'UNKNOWN',
-	'NONE',
-	'GUTTER',
-	'INACCESSIBLE',
-	'IS_OK',
+const INFRASTRUCTURE_STATUS_VALUES = [
+	'not_applicable',
+	'unknown',
+	'missing',
+	'damaged',
+	'ok',
 ] as const;
 
 const CONNECTIONS_VALUES = [
-	'FERRY',
-	'LIGHT_RAIL',
-	'SUBWAY',
-	'TRAIN',
-	'BOAT',
-	'AIRPORT',
-	'BIKE_SHARING',
-	'BIKE_PARKING',
-	'CAR_PARKING',
+	'ferry',
+	'light_rail',
+	'subway',
+	'train',
+	'boat',
+	'airport',
+	'bike_sharing',
+	'bike_parking',
+	'car_parking',
 ] as const;
 
 const FACILITIES_VALUES = [
-	'FIRE_STATION',
-	'HEALTH_CLINIC',
-	'HISTORIC_BUILDING',
-	'HOSPITAL',
-	'POLICE_STATION',
-	'SCHOOL',
-	'SHOPPING',
-	'TRANSIT_OFFICE',
-	'UNIVERSITY',
-	'PIP',
+	'fire_station',
+	'health_clinic',
+	'historic_building',
+	'hospital',
+	'police_station',
+	'school',
+	'shopping',
+	'transit_office',
+	'university',
+	'pip',
 ] as const;
 
 const HAS_ANY = [
-	'YES',
-	'NO',
-	'UNKNOWN',
+	'yes',
+	'no',
+	'unknown',
+] as const;
+
+const EQUIPMENT_VALUES = [
+	'pip',
+	'mupi',
+	'mini_pip',
 ] as const;
 
 //
@@ -145,32 +91,27 @@ const HAS_ANY = [
 
 export const jurisdictionSchema = z.enum(JURISDICTION_VALUES);
 export const operationalStatusSchema = z.enum(OPERATIONAL_STATUS_VALUES);
-export const benchStatusSchema = z.enum(BENCH_STATUS_VALUES);
-export const dockingBayTypeSchema = z.enum(DOCKING_BAY_TYPE_VALUES);
 export const electricityStatusSchema = z.enum(ELECTRICITY_STATUS_VALUES);
-export const flagStatusSchema = z.enum(FLAG_STATUS_VALUES);
-export const lightningStatusSchema = z.enum(LIGHTNING_STATUS_VALUES);
-export const pavementTypeSchema = z.enum(PAVEMENT_TYPE_VALUES);
-export const poleStatusSchema = z.enum(POLE_STATUS_VALUES);
 export const roadTypeSchema = z.enum(ROAD_TYPE_VALUES);
-export const shelterStatusSchema = z.enum(SHELTER_STATUS_VALUES);
-export const sidewalkTypeSchema = z.enum(SIDEWALK_TYPE_VALUES);
+export const infrastructureStatusSchema = z.enum(INFRASTRUCTURE_STATUS_VALUES);
 export const connectionsSchema = z.array(z.enum(CONNECTIONS_VALUES));
 export const facilitiesSchema = z.array(z.enum(FACILITIES_VALUES));
 export const commentSchema = z.array(CommentSchema);
 export const hasAnySchema = z.enum(HAS_ANY);
+export const equipmentSchema = z.array(z.enum(EQUIPMENT_VALUES));
 
 export const StopSchema = DocumentSchema.extend({
 
 	//
 	// General
 
-	_id: z.string().length(6),
+	_id: z.string().length(6), // Por definir
 	is_archived: z.boolean().default(false),
 	is_locked: z.boolean().default(false),
 	jurisdiction: jurisdictionSchema,
+	legacy_id: z.string().nullish(),
 	name: z.string(),
-	new_name: z.string(),
+	new_name: z.string().nullish(),
 	operational_status: operationalStatusSchema,
 	short_name: z.string().nullish(),
 	tts_name: z.string().nullish(),
@@ -188,20 +129,21 @@ export const StopSchema = DocumentSchema.extend({
 	//
 	// Infrastructure
 
-	bench_status: benchStatusSchema,
-	docking_bay_type: dockingBayTypeSchema,
+	bench_status: infrastructureStatusSchema,
 	electricity_status: electricityStatusSchema,
-	flag_status: flagStatusSchema,
-	lighting_status: lightningStatusSchema,
-	pavement_type: pavementTypeSchema,
-	pole_status: poleStatusSchema,
+	pole_status: infrastructureStatusSchema,
 	road_type: roadTypeSchema,
+
+	//
+	// Shelter
+
 	shelter_code: z.string().nullish(),
+	shelter_frame_size: z.tuple([z.number(), z.number()]).nullish(),
+	shelter_installation_date: unixTimeStampSchema.nullish(),
 	shelter_maintainer: z.string().nullish(),
 	shelter_make: z.string().nullish(),
 	shelter_model: z.string().nullish(),
-	shelter_status: shelterStatusSchema,
-	sidewalk_type: sidewalkTypeSchema,
+	shelter_status: infrastructureStatusSchema,
 
 	//
 	// Checks
@@ -210,7 +152,6 @@ export const StopSchema = DocumentSchema.extend({
 	last_infrastructure_maintenance: unixTimeStampSchema.nullish(),
 	last_schedules_check: unixTimeStampSchema.nullish(),
 	last_schedules_maintenance: unixTimeStampSchema.nullish(),
-	last_shelter_installation: unixTimeStampSchema.nullish(),
 
 	//
 	// Facilities
@@ -218,14 +159,18 @@ export const StopSchema = DocumentSchema.extend({
 	connections: connectionsSchema,
 	facilities: facilitiesSchema,
 
+	//
+	// Equipments
+
+	equipment: equipmentSchema,
+
 	// Has ...
 	has_bench: hasAnySchema,
+	has_mupi: hasAnySchema,
 	has_network_map: hasAnySchema,
-	has_pip_real_time: hasAnySchema,
 	has_schedules: hasAnySchema,
 	has_shelter: hasAnySchema,
 	has_stop_sign: hasAnySchema,
-	has_tariffs_information: hasAnySchema,
 
 	//
 	// Images & Files
@@ -241,24 +186,29 @@ export const StopSchema = DocumentSchema.extend({
 
 }).strict();
 
+export const parentStationSchema = DocumentSchema.extend({
+	_id: z.string(),
+	agency_id: z.string(),
+	stop_ids: z.array(z.string()),
+}).strict();
+
+export const stopAreaSchema = DocumentSchema.extend({
+	_id: z.string(),
+	parent_station_ids: z.array(z.string()),
+}).strict();
+
 //
 // Define types based on schemas
 
 export type Jurisdiction = z.infer<typeof jurisdictionSchema>;
 export type OperationalStatus = z.infer<typeof operationalStatusSchema>;
-export type BenchStatus = z.infer<typeof benchStatusSchema>;
-export type DockingBayType = z.infer<typeof dockingBayTypeSchema>;
 export type ElectricityStatus = z.infer<typeof electricityStatusSchema>;
-export type FlagStatus = z.infer<typeof flagStatusSchema>;
-export type LightningStatus = z.infer<typeof lightningStatusSchema>;
-export type PavementType = z.infer<typeof pavementTypeSchema>;
-export type PoleStatus = z.infer<typeof poleStatusSchema>;
 export type RoadType = z.infer<typeof roadTypeSchema>;
-export type ShelterStatus = z.infer<typeof shelterStatusSchema>;
-export type SidewalkType = z.infer<typeof sidewalkTypeSchema>;
+export type InfrastructureStatus = z.infer<typeof infrastructureStatusSchema>;
 export type Connections = z.infer<typeof connectionsSchema>;
 export type Facilities = z.infer<typeof facilitiesSchema>;
 export type Comment = z.infer<typeof commentSchema>;
+export type Equipment = z.infer<typeof equipmentSchema>;
 
 export const CreateStopSchema = StopSchema
 	.omit({ created_at: true, updated_at: true });
@@ -273,173 +223,37 @@ export const UpdateStopSchema = StopSchema
 export interface Stop
 	extends Omit<
 		z.infer<typeof StopSchema>,
-		'affectation'
-		| 'bench_status'
-		| 'comments'
-		| 'created_at'
-		| 'district_id'
-		| 'docking_bay_type'
-		| 'electricity_status'
-		| 'facilities'
-		| 'file_ids'
-		| 'flag_status'
-		| 'image_ids'
-		| 'is_archived'
-		| 'is_locked'
-		| 'jurisdiction'
 		| 'last_infrastructure_check'
 		| 'last_infrastructure_maintenance'
 		| 'last_schedules_check'
 		| 'last_schedules_maintenance'
 		| 'last_shelter_installation'
-		| 'latitude'
-		| 'lighting_status'
-		| 'locality_id'
-		| 'longitude'
-		| 'municipality_id'
-		| 'name'
-		| 'new_name'
-		| 'observations'
 		| 'operational_status'
-		| 'parish_id'
-		| 'pavement_type'
-		| 'pole_status'
-		| 'road_type'
-		| 'shelter_code'
-		| 'shelter_maintainer'
-		| 'shelter_make'
-		| 'shelter_model'
-		| 'shelter_status'
-		| 'short_name'
-		| 'sidewalk_type'
-		| 'tts_name'
-		| 'updated_at'
 	> {
-	affectation: string[]
-	bench_status: BenchStatus
-	comments: Comment[]
-	created_at: UnixTimestamp
-	district_id: string
-	docking_bay_type: DockingBayType
-	electricity_status: ElectricityStatus
-	facilities: Facilities
-	file_ids: string[]
-	flag_status: FlagStatus
-	image_ids: string[]
-	is_archived: boolean
-	is_locked: boolean
-	jurisdiction: Jurisdiction
 	last_infrastructure_check: UnixTimestamp
 	last_infrastructure_maintenance: UnixTimestamp
 	last_schedules_check: UnixTimestamp
-	last_schedules_maintenance:	UnixTimestamp
-	last_shelter_installation:	UnixTimestamp
-	latitude: number
-	lighting_status: LightningStatus
-	locality_id: string
-	longitude: number
-	municipality_id: string
-	name: string
-	new_name: string
-	observations: string
+	last_schedules_maintenance: UnixTimestamp
+	last_shelter_installation: UnixTimestamp
 	operational_status: OperationalStatus
-	parish_id: string
-	pavement_type: PavementType
-	pole_status: PoleStatus
-	road_type: RoadType
-	shelter_code: string
-	shelter_maintainer: string
-	shelter_make: string
-	shelter_model: string
-	shelter_status: ShelterStatus
-	short_name: string
-	sidewalk_type: SidewalkType
-	tts_name: string
-	updated_at: UnixTimestamp
 }
 
 export interface CreateStopDto
 	extends Omit<
 		z.infer<typeof CreateStopSchema>,
-		'affectation'
-		| 'bench_status'
-		| 'comments'
-		| 'district_id'
-		| 'docking_bay_type'
-		| 'electricity_status'
-		| 'facilities'
-		| 'file_ids'
-		| 'flag_status'
-		| 'image_ids'
-		| 'is_archived'
-		| 'is_locked'
-		| 'jurisdiction'
 		| 'last_infrastructure_check'
 		| 'last_infrastructure_maintenance'
 		| 'last_schedules_check'
 		| 'last_schedules_maintenance'
 		| 'last_shelter_installation'
-		| 'latitude'
-		| 'lighting_status'
-		| 'locality_id'
-		| 'longitude'
-		| 'municipality_id'
-		| 'name'
-		| 'new_name'
-		| 'observations'
 		| 'operational_status'
-		| 'parish_id'
-		| 'pavement_type'
-		| 'pole_status'
-		| 'road_type'
-		| 'shelter_code'
-		| 'shelter_maintainer'
-		| 'shelter_make'
-		| 'shelter_model'
-		| 'shelter_status'
-		| 'short_name'
-		| 'sidewalk_type'
-		| 'tts_name'
 	> {
-	affectation: string[]
-	bench_status: BenchStatus
-	comments: Comment[]
-	district_id: string
-	docking_bay_type: DockingBayType
-	electricity_status: ElectricityStatus
-	facilities: Facilities
-	file_ids: string[]
-	flag_status: FlagStatus
-	image_ids: string[]
-	is_archived: boolean
-	is_locked: boolean
-	jurisdiction: Jurisdiction
 	last_infrastructure_check: UnixTimestamp
 	last_infrastructure_maintenance: UnixTimestamp
 	last_schedules_check: UnixTimestamp
-	last_schedules_maintenance:	UnixTimestamp
-	last_shelter_installation:	UnixTimestamp
-	latitude: number
-	lighting_status: LightningStatus
-	locality_id: string
-	longitude: number
-	municipality_id: string
-	name: string
-	new_name: string
-	observations: string
+	last_schedules_maintenance: UnixTimestamp
+	last_shelter_installation: UnixTimestamp
 	operational_status: OperationalStatus
-	parish_id: string
-	pavement_type: PavementType
-	pole_status: PoleStatus
-	road_type: RoadType
-	shelter_code: string
-	shelter_maintainer: string
-	shelter_make: string
-	shelter_model: string
-	shelter_status: ShelterStatus
-	short_name: string
-	sidewalk_type: SidewalkType
-	tts_name: string
 }
 
 export type UpdateStopDto = Partial<Omit<CreateStopDto, 'created_by'>>;

@@ -8,7 +8,7 @@ import { type ReactNode, useState } from 'react';
 
 /* * */
 
-interface FileButtonProps {
+export interface FileButtonProps {
 	accept?: string
 	disabled?: boolean
 	icon?: ReactNode

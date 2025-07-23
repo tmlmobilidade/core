@@ -2,16 +2,16 @@
 
 /* * */
 
-import { Button, type ButtonProps } from '@/components/buttons/Button';
-import { IconUpload } from '@tabler/icons-react';
-import React, { useState } from 'react';
+import { Button } from '@/components/buttons/Button';
+import { IconArrowBigUpLinesFilled } from '@tabler/icons-react';
+import { type ReactNode, useState } from 'react';
 
 /* * */
 
-interface FileButtonProps extends ButtonProps {
+interface FileButtonProps {
 	accept?: string
 	disabled?: boolean
-	icon?: React.ReactNode
+	icon?: ReactNode
 	label: string
 	loading?: boolean
 	onCancel?: () => void
@@ -20,7 +20,7 @@ interface FileButtonProps extends ButtonProps {
 
 /* * */
 
-export function FileButton({ accept, disabled, icon, label, loading, onCancel, onFileChange, ...props }: FileButtonProps) {
+export function FileButton({ accept, disabled, icon, label, loading, onCancel, onFileChange }: FileButtonProps) {
 	//
 
 	//
@@ -38,22 +38,14 @@ export function FileButton({ accept, disabled, icon, label, loading, onCancel, o
 		input.accept = accept ?? '';
 		input.onchange = (event) => {
 			const file = (event.target as HTMLInputElement).files?.[0];
-			if (file) {
-				onFileChange?.(file);
-			}
+			if (file && onFileChange) onFileChange(file);
 			setIsLoading(false);
 		};
-
 		input.oncancel = () => {
 			setIsLoading(false);
 			onCancel?.();
 		};
-
 		input.click();
-	};
-
-	const handleButtonClick = () => {
-		handleFileSelect();
 	};
 
 	//
@@ -61,12 +53,11 @@ export function FileButton({ accept, disabled, icon, label, loading, onCancel, o
 
 	return (
 		<Button
-			disabled={disabled || isLoading}
-			icon={icon ?? <IconUpload />}
+			disabled={disabled}
+			icon={icon ?? <IconArrowBigUpLinesFilled />}
 			label={label}
 			loading={isLoading}
-			onClick={handleButtonClick}
-			{...props}
+			onClick={handleFileSelect}
 		/>
 	);
 

@@ -11,3 +11,4 @@ export * from '@/components/map';
 export * from '@/components/panes';
 export * from '@/components/sidebar';
 export * from '@/components/theme';
+export * from '@/components/upload';

@@ -228,14 +228,12 @@ export interface Stop
 		| 'last_schedules_check'
 		| 'last_schedules_maintenance'
 		| 'last_shelter_installation'
-		| 'operational_status'
 	> {
-	last_infrastructure_check: UnixTimestamp
-	last_infrastructure_maintenance: UnixTimestamp
-	last_schedules_check: UnixTimestamp
-	last_schedules_maintenance: UnixTimestamp
-	last_shelter_installation: UnixTimestamp
-	operational_status: OperationalStatus
+	last_infrastructure_check?: UnixTimestamp
+	last_infrastructure_maintenance?: UnixTimestamp
+	last_schedules_check?: UnixTimestamp
+	last_schedules_maintenance?: UnixTimestamp
+	last_shelter_installation?: UnixTimestamp
 }
 
 export interface CreateStopDto
@@ -246,14 +244,12 @@ export interface CreateStopDto
 		| 'last_schedules_check'
 		| 'last_schedules_maintenance'
 		| 'last_shelter_installation'
-		| 'operational_status'
 	> {
-	last_infrastructure_check: UnixTimestamp
-	last_infrastructure_maintenance: UnixTimestamp
-	last_schedules_check: UnixTimestamp
-	last_schedules_maintenance: UnixTimestamp
-	last_shelter_installation: UnixTimestamp
-	operational_status: OperationalStatus
+	last_infrastructure_check?: UnixTimestamp
+	last_infrastructure_maintenance?: UnixTimestamp
+	last_schedules_check?: UnixTimestamp
+	last_schedules_maintenance?: UnixTimestamp
+	last_shelter_installation?: UnixTimestamp
 }
 
 export type UpdateStopDto = Partial<Omit<CreateStopDto, 'created_by'>>;

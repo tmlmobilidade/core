@@ -252,9 +252,7 @@ export default function ComboboxComponent(props: Props) {
 							}
 						>
 							<Group gap="sm">
-								{multiple
-								&& Array.isArray(value)
-								&& value.some(
+								{multiple && Array.isArray(value) && value.some(
 									v => getValue(v) === itemData.value,
 								) && <CheckIcon size={12} />}
 								<div className={styles.labelWrapper}>

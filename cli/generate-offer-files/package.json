@@ -29,7 +29,7 @@
 		"@tmlmobilidade/lib": "*",
 		"@tmlmobilidade/utils": "*",
 		"commander": "14.0.0",
-		"csv-parse": "6.0.0",
+		"csv-parse": "6.1.0",
 		"extract-zip": "2.0.1",
 		"gtfs-types": "5.1.0"
 	},
@@ -37,7 +37,7 @@
 		"@carrismetropolitana/eslint": "20250622.1204.50",
 		"@tmlmobilidade/tsconfig": "*",
 		"@tmlmobilidade/types": "*",
-		"@types/node": "24.0.13",
+		"@types/node": "24.1.0",
 		"resolve-tspaths": "0.8.23",
 		"tsx": "4.20.3",
 		"typescript": "5.8.3"

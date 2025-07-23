@@ -37,18 +37,18 @@
 		"lint": "eslint ./src/ && tsc --noEmit"
 	},
 	"dependencies": {
-		"@react-email/components": "0.2.0",
+		"@react-email/components": "0.3.2",
 		"@tmlmobilidade/utils": "*",
 		"browserslist": "4.25.1",
 		"react": "19.1.0",
-		"react-email": "4.1.1"
+		"react-email": "4.2.4"
 	},
 	"devDependencies": {
 		"@carrismetropolitana/eslint": "20250622.1204.50",
 		"@tmlmobilidade/lib": "*",
 		"@tmlmobilidade/tsconfig": "*",
 		"@tmlmobilidade/types": "*",
-		"@types/node": "24.0.13",
+		"@types/node": "24.1.0",
 		"resolve-tspaths": "0.8.23",
 		"rimraf": "6.0.1",
 		"typescript": "5.8.3"

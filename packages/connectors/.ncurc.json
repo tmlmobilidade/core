@@ -1,0 +1,5 @@
+{
+	"reject": [
+		"fastify-type-provider-zod"
+	]
+}

@@ -31,7 +31,7 @@
 	"devDependencies": {
 		"@carrismetropolitana/eslint": "20250622.1204.50",
 		"tsx": "4.20.3",
-		"turbo": "2.5.4"
+		"turbo": "2.5.5"
 	},
 	"workspaces": [
 		"apps/*",

@@ -105,7 +105,7 @@ export const StopSchema = DocumentSchema.extend({
 	//
 	// General
 
-	_id: z.string().length(6), // Por definir
+	_id: z.string(),
 	is_archived: z.boolean().default(false),
 	is_locked: z.boolean().default(false),
 	jurisdiction: jurisdictionSchema,

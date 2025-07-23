@@ -1,3 +1,4 @@
+export * from '@/components/display/AlertCard';
 export * from '@/components/display/AlertMessage';
 export * from '@/components/display/ErrorDisplay';
 export * from '@/components/display/Indicator';

@@ -1,21 +1,24 @@
 /* * */
 
-import { Alert as MantineAlert } from '@mantine/core';
+import { IconAlertCircle } from '@tabler/icons-react';
+
+import styles from './styles.module.css';
 
 /* * */
 
 interface AlertMessageProps {
 	icon?: React.ReactNode
-	message?: string
-	title?: string
+	title: string
+	variant?: 'danger' | 'disabled' | 'muted' | 'primary' | 'secondary'
 }
 
 /* * */
 
-export function AlertMessage({ icon, message, title }: AlertMessageProps) {
+export function AlertMessage({ icon, title, variant = 'primary' }: AlertMessageProps) {
 	return (
-		<MantineAlert icon={icon} title={title}>
-			{message}
-		</MantineAlert>
+		<div className={styles.root} data-variant={variant}>
+			{icon ?? <IconAlertCircle />}
+			<p className={styles.title}>{title}</p>
+		</div>
 	);
 }

@@ -94,11 +94,10 @@ export const operationalStatusSchema = z.enum(OPERATIONAL_STATUS_VALUES);
 export const electricityStatusSchema = z.enum(ELECTRICITY_STATUS_VALUES);
 export const roadTypeSchema = z.enum(ROAD_TYPE_VALUES);
 export const infrastructureStatusSchema = z.enum(INFRASTRUCTURE_STATUS_VALUES);
-export const connectionsSchema = z.array(z.enum(CONNECTIONS_VALUES));
-export const facilitiesSchema = z.array(z.enum(FACILITIES_VALUES));
-export const commentSchema = z.array(CommentSchema);
+export const connectionsSchema = z.enum(CONNECTIONS_VALUES);
+export const facilitiesSchema = z.enum(FACILITIES_VALUES);
 export const hasAnySchema = z.enum(HAS_ANY);
-export const equipmentSchema = z.array(z.enum(EQUIPMENT_VALUES));
+export const equipmentSchema = z.enum(EQUIPMENT_VALUES);
 
 export const StopSchema = DocumentSchema.extend({
 
@@ -156,13 +155,13 @@ export const StopSchema = DocumentSchema.extend({
 	//
 	// Facilities
 
-	connections: connectionsSchema,
-	facilities: facilitiesSchema,
+	connections: z.array(connectionsSchema),
+	facilities: z.array(facilitiesSchema),
 
 	//
 	// Equipments
 
-	equipment: equipmentSchema,
+	equipment: z.array(equipmentSchema),
 
 	// Has ...
 	has_bench: hasAnySchema,
@@ -181,7 +180,7 @@ export const StopSchema = DocumentSchema.extend({
 	//
 	// Notes & Comments
 
-	comments: commentSchema,
+	comments: z.array(CommentSchema),
 	observations: z.string().nullish(),
 
 }).strict();
@@ -207,7 +206,6 @@ export type RoadType = z.infer<typeof roadTypeSchema>;
 export type InfrastructureStatus = z.infer<typeof infrastructureStatusSchema>;
 export type Connections = z.infer<typeof connectionsSchema>;
 export type Facilities = z.infer<typeof facilitiesSchema>;
-export type Comment = z.infer<typeof commentSchema>;
 export type Equipment = z.infer<typeof equipmentSchema>;
 
 export const CreateStopSchema = StopSchema

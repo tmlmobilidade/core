@@ -8,15 +8,16 @@ import styles from './styles.module.css';
 
 interface AlertMessageProps {
 	icon?: React.ReactNode
+	raised?: boolean
 	title: string
-	variant?: 'danger' | 'disabled' | 'muted' | 'primary' | 'secondary'
+	variant?: 'danger' | 'muted' | 'primary' | 'secondary'
 }
 
 /* * */
 
-export function AlertMessage({ icon, title, variant = 'primary' }: AlertMessageProps) {
+export function AlertMessage({ icon, raised, title, variant = 'primary' }: AlertMessageProps) {
 	return (
-		<div className={styles.root} data-variant={variant}>
+		<div className={styles.root} data-raised={raised} data-variant={variant}>
 			{icon ?? <IconAlertCircle />}
 			<p className={styles.title}>{title}</p>
 		</div>

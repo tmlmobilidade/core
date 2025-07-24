@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable perfectionist/sort-classes */
 import { MongoConnector } from '@tmlmobilidade/connectors';
 import { HttpException, HttpStatus } from '@tmlmobilidade/lib';
@@ -44,23 +45,31 @@ class LocationsClass {
 	public findCensus = async (filter?: Filter<Census>, options?: FindOptions<Census>): Promise<WithId<Census>[]> =>
 		await this.findMany(this.collections.census, filter, options);
 
-	public findDistricts = async (filter?: Filter<DistrictDocument>, options?: FindOptions<DistrictDocument>): Promise<District[]> => {
-		const documents = await this.findMany(this.collections.districts, filter, options);
+	public findDistricts = async (filter?: Filter<District>, options?: FindOptions<DistrictDocument>): Promise<District[]> => {
+		const _filter = this.convertFilter<District, DistrictDocument>(filter);
+
+		const documents = await this.findMany(this.collections.districts, _filter, options);
 		return documents.map(doc => this.transformDocument<DistrictDocument, District>(doc));
 	};
 
-	public findLocalities = async (filter?: Filter<LocalityDocument>, options?: FindOptions<LocalityDocument>): Promise<Locality[]> => {
-		const documents = await this.findMany(this.collections.localities, filter, options);
+	public findLocalities = async (filter?: Filter<Locality>, options?: FindOptions<LocalityDocument>): Promise<Locality[]> => {
+		const _filter = this.convertFilter<Locality, LocalityDocument>(filter);
+
+		const documents = await this.findMany(this.collections.localities, _filter, options);
 		return documents.map(doc => this.transformDocument<LocalityDocument, Locality>(doc));
 	};
 
-	public findMunicipalities = async (filter?: Filter<MunicipalityDocument>, options?: FindOptions<MunicipalityDocument>): Promise<Municipality[]> => {
-		const documents = await this.findMany(this.collections.municipalities, filter, options);
+	public findMunicipalities = async (filter?: Filter<Municipality>, options?: FindOptions<MunicipalityDocument>): Promise<Municipality[]> => {
+		const _filter = this.convertFilter<Municipality, MunicipalityDocument>(filter);
+
+		const documents = await this.findMany(this.collections.municipalities, _filter, options);
 		return documents.map(doc => this.transformDocument<MunicipalityDocument, Municipality>(doc));
 	};
 
-	public findParishes = async (filter?: Filter<ParishDocument>, options?: FindOptions<ParishDocument>): Promise<Parish[]> => {
-		const documents = await this.findMany(this.collections.parishes, filter, options);
+	public findParishes = async (filter?: Filter<Parish>, options?: FindOptions<ParishDocument>): Promise<Parish[]> => {
+		const _filter = this.convertFilter<Parish, ParishDocument>(filter);
+
+		const documents = await this.findMany(this.collections.parishes, _filter, options);
 		return documents.map(doc => this.transformDocument<ParishDocument, Parish>(doc));
 	};
 
@@ -186,6 +195,51 @@ class LocationsClass {
 			geojson,
 		} as U;
 	}
+
+	private convertFilterField = (key: string): string => {
+		if (key.startsWith('geojson.geometry')) return key.replace('geojson.geometry', 'geometry');
+		if (key.startsWith('geojson.type')) return key.replace('geojson.type', 'type');
+		if (key.startsWith('geojson')) return key.replace('geojson', ''); // fallback
+		if (!key.startsWith('_id')) return `properties.${key}`;
+		return key;
+	};
+
+	private convertFilter = <T, U>(filter?: Filter<T>): Filter<U> | undefined => {
+		if (!filter || typeof filter !== 'object') return filter;
+
+		if (Array.isArray(filter)) {
+			return filter.map(this.convertFilter) as Filter<Record<string, any>>;
+		}
+
+		const output: Filter<Record<string, any>> = {};
+
+		for (const [key, value] of Object.entries(filter)) {
+			if (key.startsWith('$')) {
+			// Recursive operator like $and, $or, $nor
+				if (Array.isArray(value)) {
+					output[key] = value.map(this.convertFilter);
+				}
+				else if (typeof value === 'object') {
+					output[key] = this.convertFilter(value);
+				}
+				else {
+					output[key] = value;
+				}
+			}
+			else {
+				const newKey = this.convertFilterField(key);
+
+				if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+					output[newKey] = this.convertFilter(value); // nested operator (e.g., $gt)
+				}
+				else {
+					output[newKey] = value;
+				}
+			}
+		}
+
+		return output;
+	};
 }
 
 /* * */

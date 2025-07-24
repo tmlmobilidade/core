@@ -4,7 +4,7 @@ import { MongoConnector } from '@tmlmobilidade/connectors';
 import { HttpException, HttpStatus } from '@tmlmobilidade/lib';
 import { type UnixTimestamp } from '@tmlmobilidade/types';
 import { Dates, generateRandomString } from '@tmlmobilidade/utils';
-import { Collection, DeleteOptions, DeleteResult, Document, Filter, FindOptions, IndexDescription, InsertOneOptions, InsertOneResult, MongoClientOptions, OptionalUnlessRequiredId, Sort, UpdateOptions, UpdateResult, WithId } from 'mongodb';
+import { Collection, DeleteOptions, DeleteResult, Document, Filter, FindOptions, IndexDescription, InsertOneOptions, InsertOneResult, MongoClientOptions, OptionalUnlessRequiredId, UpdateOptions, UpdateResult, WithId } from 'mongodb';
 import { z } from 'zod';
 
 /* * */
@@ -60,7 +60,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	 * @returns A promise that resolves to the count of matching documents
 	 */
 	public async count(filter?: Filter<T>): Promise<number> {
-		return this.mongoCollection.countDocuments(filter);
+		return await this.mongoCollection.countDocuments(filter);
 	}
 
 	/**
@@ -142,26 +142,21 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	/**
 	 * Finds multiple documents matching the filter criteria with optional pagination and sorting.
 	 * @param filter - (Optional) filter criteria to match documents
-	 * @param perPage - (Optional) number of documents per page for pagination
-	 * @param page - (Optional) page number for pagination
-	 * @param sort - (Optional) sort specification
+	 * @param options - (Optional) find options
 	 * @returns A promise that resolves to an array of matching documents
 	 */
-	public async findMany(filter?: Filter<T>, perPage?: number, page?: number, sort?: Sort): Promise<WithId<T>[]> {
-		const query = this.mongoCollection.find(filter ?? {});
-		if (perPage) query.limit(perPage);
-		if (page && perPage) query.skip(perPage * (page - 1));
-		if (sort) query.sort(sort);
-		return query.toArray();
+	public async findMany(filter?: Filter<T>, options?: FindOptions<T>): Promise<WithId<T>[]> {
+		return await this.mongoCollection.find(filter ?? {}, options).toArray();
 	}
 
 	/**
 	 * Finds a single document matching the filter criteria.
 	 * @param filter - The filter criteria to match the document
+	 * @param options - (Optional) find options
 	 * @returns A promise that resolves to the matching document or null if not found
 	 */
-	public async findOne(filter: Filter<T>): Promise<null | WithId<T>> {
-		return this.mongoCollection.findOne(filter);
+	public async findOne(filter: Filter<T>, options?: FindOptions<T>): Promise<null | WithId<T>> {
+		return await this.mongoCollection.findOne(filter, options);
 	}
 
 	/**

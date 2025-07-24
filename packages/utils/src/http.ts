@@ -7,6 +7,14 @@ export interface HttpResponse<T> {
 	status: number
 }
 
+export type WithPagination<T> = T & {
+	pagination: {
+		limit: number
+		page: number
+		total: number
+	}
+};
+
 interface ErrorResponse {
 	message: string
 }

@@ -41,6 +41,30 @@ class LocationsClass {
 
 	/*  Public Methods */
 
+	/* Count */
+	public countCensus = async (filter?: Filter<Census>): Promise<number> =>
+		await this.count(this.collections.census, filter);
+
+	public countDistricts = async (filter?: Filter<District>): Promise<number> => {
+		const _filter = this.convertFilter<District, DistrictDocument>(filter);
+		return await this.count(this.collections.districts, _filter);
+	};
+
+	public countLocalities = async (filter?: Filter<Locality>): Promise<number> => {
+		const _filter = this.convertFilter<Locality, LocalityDocument>(filter);
+		return await this.count(this.collections.localities, _filter);
+	};
+
+	public countMunicipalities = async (filter?: Filter<Municipality>): Promise<number> => {
+		const _filter = this.convertFilter<Municipality, MunicipalityDocument>(filter);
+		return await this.count(this.collections.municipalities, _filter);
+	};
+
+	public countParishes = async (filter?: Filter<Parish>): Promise<number> => {
+		const _filter = this.convertFilter<Parish, ParishDocument>(filter);
+		return await this.count(this.collections.parishes, _filter);
+	};
+
 	/*  Find All */
 	public findCensus = async (filter?: Filter<Census>, options?: FindOptions<Census>): Promise<WithId<Census>[]> =>
 		await this.findMany(this.collections.census, filter, options);
@@ -178,6 +202,10 @@ class LocationsClass {
 
 	private async findOne<T extends Document>(collection: Collection<T>, filter: Filter<T>): Promise<null | WithId<T>> {
 		return collection.findOne(filter);
+	}
+
+	private async count<T extends Document>(collection: Collection<T>, filter: Filter<T> = {}): Promise<number> {
+		return collection.countDocuments(filter);
 	}
 
 	private geoFilter = (lat: number, lon: number) => ({ geometry: { $geoIntersects: { $geometry: { coordinates: [lon, lat], type: 'Point' } } } });

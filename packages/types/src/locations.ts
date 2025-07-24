@@ -15,6 +15,9 @@
 */
 
 import { MultiPolygon } from 'geojson';
+import { z } from 'zod';
+
+import { PaginationSchema } from './_common/index.js';
 
 /* Database Types */
 
@@ -247,3 +250,21 @@ export interface Location {
 	municipality: Municipality | null
 	parish: null | Parish
 }
+
+/* * */
+
+export const GetAllDistrictsQuerySchema = z.object({
+	geojson: z.preprocess(
+		(val: string) => val === 'true' || val === '1',
+		z.boolean(),
+	),
+});
+
+export const GetAllMunicipalitiesQuerySchema = GetAllDistrictsQuerySchema.extend({ district_id: z.string().nullish() });
+export const GetAllParishesQuerySchema = GetAllMunicipalitiesQuerySchema.extend({ municipality_id: z.string().nullish() }).extend(PaginationSchema.shape);
+export const GetAllLocalitiesQuerySchema = GetAllParishesQuerySchema.extend({ parish_id: z.string().nullish() }).extend(PaginationSchema.shape);
+
+export type GetAllDistrictsQuery = z.infer<typeof GetAllDistrictsQuerySchema>;
+export type GetAllMunicipalitiesQuery = z.infer<typeof GetAllMunicipalitiesQuerySchema>;
+export type GetAllParishesQuery = z.infer<typeof GetAllParishesQuerySchema>;
+export type GetAllLocalitiesQuery = z.infer<typeof GetAllLocalitiesQuerySchema>;

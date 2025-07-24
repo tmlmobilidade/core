@@ -71,7 +71,7 @@ const FACILITIES_VALUES = [
 	'shopping',
 	'transit_office',
 	'university',
-	'pip',
+	'beach',
 ] as const;
 
 const HAS_ANY = [

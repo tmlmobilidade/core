@@ -7,11 +7,25 @@ import '@fastify/cors';
 
 import cookie from '@fastify/cookie';
 import cors from '@fastify/cors';
-import fastify, { type FastifyInstance, type FastifyServerOptions } from 'fastify';
+import { HttpResponse, WithPagination } from '@tmlmobilidade/utils';
+import fastify, { ContextConfigDefault, type FastifyInstance, type FastifyReply as FastifyReplyType, FastifySchema, type FastifyServerOptions, RawServerBase, RouteGenericInterface } from 'fastify';
+import { type RawReplyDefaultExpression, type RawRequestDefaultExpression } from 'fastify';
+import { FastifyTypeProviderDefault } from 'fastify/types/type-provider.js';
 
 /* * */
 
-export { type FastifyReply, type FastifyRequest } from 'fastify';
+export type FastifyReply<T> = FastifyReplyType<
+	RouteGenericInterface & { Reply: HttpResponse<T> | WithPagination<HttpResponse<T>> },
+	RawServerBase,
+	RawRequestDefaultExpression<RawServerBase>,
+	RawReplyDefaultExpression<RawServerBase>,
+	ContextConfigDefault,
+	FastifySchema,
+	FastifyTypeProviderDefault,
+	HttpResponse<T> | WithPagination<HttpResponse<T>>
+>;
+
+export { type FastifyRequest } from 'fastify';
 
 /**
  * FastifyServiceOptions interface defines the options for the Fastify server.

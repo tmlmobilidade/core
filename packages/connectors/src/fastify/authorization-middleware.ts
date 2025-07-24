@@ -15,7 +15,7 @@ declare module 'fastify' {
 }
 
 export function authorizationMiddleware<T = unknown>(scope: string, action: string) {
-	return async (request: FastifyRequest, reply: FastifyReply): Promise<void> => {
+	return async (request: FastifyRequest, reply: FastifyReply<Permission<T>>): Promise<void> => {
 		const token = request.cookies.session_token;
 
 		if (!token) {
@@ -50,10 +50,12 @@ export function authorizationMiddleware<T = unknown>(scope: string, action: stri
 		}
 		catch (error) {
 			reply
-				.status(error.statusCode ?? HttpStatus.INTERNAL_SERVER_ERROR)
 				.send({
-					message: error.message || 'An unexpected error occurred',
-				});
+					data: null,
+					error: null,
+					status: 0,
+				})
+				.status(error.statusCode ?? HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	};
 }

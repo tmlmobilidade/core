@@ -22,11 +22,7 @@
 		"fumadocs-openapi": "9.1.4",
 		"fumadocs-typescript": "4.0.6",
 		"fumadocs-ui": "15.6.5",
-<<<<<<< HEAD
-		"next": "15.4.3",
-=======
 		"next": "15.4.2",
->>>>>>> production
 		"react": "19.1.0",
 		"react-dom": "19.1.0",
 		"shiki": "3.8.1"
@@ -34,11 +30,7 @@
 	"devDependencies": {
 		"@tmlmobilidade/tsconfig": "*",
 		"@types/mdx": "2.0.13",
-<<<<<<< HEAD
-		"@types/node": "24.1.0",
-=======
 		"@types/node": "24.0.15",
->>>>>>> production
 		"@types/react": "19.1.8",
 		"@types/react-dom": "19.1.6",
 		"postcss": "8.5.6",

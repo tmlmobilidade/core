@@ -67,11 +67,7 @@
 		"@turf/turf": "7.2.0",
 		"@types/geojson": "7946.0.16",
 		"@types/luxon": "3.6.2",
-<<<<<<< HEAD
-		"@types/node": "24.1.0",
-=======
 		"@types/node": "24.0.15",
->>>>>>> production
 		"@types/react": "19.1.8",
 		"@types/react-dom": "19.1.6",
 		"nodemon": "3.1.10",

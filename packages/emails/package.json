@@ -41,11 +41,7 @@
 		"@tmlmobilidade/utils": "*",
 		"browserslist": "4.25.1",
 		"react": "19.1.0",
-<<<<<<< HEAD
-		"react-email": "4.2.4"
-=======
 		"react-email": "4.2.3"
->>>>>>> production
 	},
 	"devDependencies": {
 		"@carrismetropolitana/eslint": "20250622.1204.50",
@@ -53,11 +49,7 @@
 		"@tmlmobilidade/lib": "*",
 		"@tmlmobilidade/tsconfig": "*",
 		"@tmlmobilidade/types": "*",
-<<<<<<< HEAD
-		"@types/node": "24.1.0",
-=======
 		"@types/node": "24.0.15",
->>>>>>> production
 		"resolve-tspaths": "0.8.23",
 		"rimraf": "6.0.1",
 		"typescript": "5.8.3"

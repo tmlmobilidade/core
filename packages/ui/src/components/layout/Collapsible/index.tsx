@@ -2,58 +2,45 @@
 
 /* * */
 
-import { Accordion as MantineAccordion, type AccordionStylesNames as MantineAccordionStylesNames } from '@mantine/core';
-import { IconCaretLeftFilled } from '@tabler/icons-react';
-import React from 'react';
+import { Accordion as MantineAccordion } from '@mantine/core';
+import { type PropsWithChildren, type ReactNode } from 'react';
 
 import styles from './styles.module.css';
 
 /* * */
 
 interface CollapsibleProps {
-	children: React.ReactNode
-	classNames?: Partial<Record<MantineAccordionStylesNames, string>>
 	defaultOpen?: boolean
 	description?: string
-	icon?: React.ReactNode
+	icon?: ReactNode
 	title: string
-	titleAs?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
 }
 
-/* * */
-
-export function Collapsible({ children, classNames, defaultOpen = false, description, icon, title, titleAs = 'h2' }: CollapsibleProps) {
-	//
-
-	//
-	// A. Render components
-
-	const renderControl = () => {
-		return (
-			<div className={styles.titleWrapper}>
-				{icon && icon}
-				{React.createElement(
-					titleAs,
-					{ className: styles.title },
-					title,
-				)}
-				{description && <p className={styles.description}>{description}</p>}
-			</div>
-		);
-	};
-
+/**
+ * A Collapsible is a primary layout component that should be used to handle different sections of a pane.
+ * For example, it can be used to show or hide the different sections of a form while keeping the interface
+ * clean and organized. It is based on the Accordion component from Mantine. Since this is the most frequent
+ * interaction pattern, it is recommended to avoid using nested Accordions and instead use multiple top-level
+ * Collapsibles for each section of the page.
+ * @param defaultOpen Whether the Collapsible should be open by default.
+ * @param description An optional description to be displayed below the title.
+ * @param icon An optional icon to be displayed next to the title.
+ * @param title The title of the Collapsible. Try to keep it short, one or two words is recommended.
+ * @param children The content of the Collapsible.
+ */
+export function Collapsible({ children, defaultOpen = false, description, icon, title }: PropsWithChildren<CollapsibleProps>) {
 	return (
-		<MantineAccordion
-			chevron={<IconCaretLeftFilled className={styles.icon} />}
-			classNames={{ ...styles, ...classNames }}
-			defaultValue={defaultOpen ? 'section' : undefined}
-		>
+		<MantineAccordion classNames={styles} defaultValue={defaultOpen ? 'section' : undefined}>
 			<MantineAccordion.Item value="section">
-				<MantineAccordion.Control>{renderControl()}</MantineAccordion.Control>
-				<MantineAccordion.Panel>{children}</MantineAccordion.Panel>
+				<MantineAccordion.Control>
+					{icon && <span className={styles.icon}>{icon}</span>}
+					{title && <p className={styles.title}>{title}</p>}
+					{description && <p className={styles.description}>{description}</p>}
+				</MantineAccordion.Control>
+				<MantineAccordion.Panel>
+					{children}
+				</MantineAccordion.Panel>
 			</MantineAccordion.Item>
 		</MantineAccordion>
 	);
-
-	//
 }

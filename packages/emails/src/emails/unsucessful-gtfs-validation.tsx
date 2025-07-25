@@ -52,9 +52,7 @@ export function UnsuccessfulGtfsValidationEmail({ first_name, validation }: Unsu
 
 				{totalErrors > 0 && (
 					<Text style={styles.text}>
-						⚠️Importante
-						{' '}
-						<strong>Importante</strong>
+						<strong>⚠️ Importante</strong>
 						: Erros formais impedem o carregamento do ficheiro GTFS e devem ser corrigidos antes da publicação.
 					</Text>
 				)}

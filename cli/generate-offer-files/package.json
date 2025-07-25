@@ -37,7 +37,11 @@
 		"@carrismetropolitana/eslint": "20250622.1204.50",
 		"@tmlmobilidade/tsconfig": "*",
 		"@tmlmobilidade/types": "*",
+<<<<<<< HEAD
 		"@types/node": "24.1.0",
+=======
+		"@types/node": "24.0.15",
+>>>>>>> production
 		"resolve-tspaths": "0.8.23",
 		"tsx": "4.20.3",
 		"typescript": "5.8.3"

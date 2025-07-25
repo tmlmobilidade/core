@@ -20,25 +20,12 @@ import '@/styles/themes/street.css';
 
 /* * */
 
-import {
-	ActionIcon,
-	Button,
-	Checkbox,
-	createTheme,
-	MantineThemeOverride,
-	PasswordInput,
-	Popover,
-	SegmentedControl,
-	Skeleton,
-	Slider,
-	Switch,
-	Text,
-	Textarea,
-	TextInput,
-} from '@mantine/core';
+import { Accordion, ActionIcon, Button, Checkbox, createTheme, MantineThemeOverride, PasswordInput, Popover, SegmentedControl, Skeleton, Slider, Switch, Text, Textarea, TextInput } from '@mantine/core';
+import { IconCaretLeftFilled } from '@tabler/icons-react';
 
 /* * */
 
+import AccordionOverride from '@/styles/mantine/Accordion.module.css';
 import ActionIconOverride from '@/styles/mantine/ActionIcon.module.css';
 import ButtonOverride from '@/styles/mantine/Button.module.css';
 import CheckboxOverride from '@/styles/mantine/Checkbox.module.css';
@@ -58,6 +45,15 @@ import TextInputOverride from '@/styles/mantine/TextInput.module.css';
 
 export const themeData: MantineThemeOverride = createTheme({
 	components: {
+
+		Accordion: Accordion.extend({
+			classNames: {
+				...AccordionOverride,
+			},
+			defaultProps: {
+				chevron: <IconCaretLeftFilled />,
+			},
+		}),
 
 		ActionIcon: ActionIcon.extend({
 			classNames: {

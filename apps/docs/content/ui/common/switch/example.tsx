@@ -6,8 +6,8 @@ export default function SwitchExample() {
 	return (
 		<ComponentWrapper>
 			<Section gap="md">
-				<Switch />
 				<Switch label="Hello" />
+				<Switch label="Bye" />
 			</Section>
 		</ComponentWrapper>
 	);

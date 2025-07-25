@@ -63,26 +63,51 @@ body {
 	/* * */
 
 
+    /* COLOR / STATUS / INFO */
 
 	--color-status-info-primary: #054b8c;
 	--color-status-info-contrast: #e6f0fa;
+
+
+	/* COLOR / STATUS / ACTIVE */
+
 	--color-status-active-primary: #006eff;
 	--color-status-active-contrast: #e6f5ff;
 
 	/* * */
-	/* COLOR / BRAND */
+	/* COLOR / BRAND / GO */
 
 	--color-brand-go-100: #00ffbe;
 	--color-brand-go-200: #00a082;
+
+
+   /* COLOR / BRAND / NAVEGANTE */
+
 	--color-brand-navegante-100: #fd0;
 	--color-brand-navegante-200: #f9b428;
 	--color-brand-navegante-300: #f18b2d;
+
+
+	 /* COLOR / BRAND / CMET */
+
 	--color-brand-cmet-100: #fd0;
 	--color-brand-cmet-200: #000;
+
+
+	 /* COLOR / BRAND / METRO */
+
 	--color-brand-metro-100: #e43c2f;
 	--color-brand-metro-200: #fff;
+
+
+	 /* COLOR / BRAND / CCFL*/
+
 	--color-brand-ccfl-100: #ffd400;
 	--color-brand-ccfl-200: #19478e;
+
+
+	 /* COLOR / BRAND / CB */
+
 	--color-brand-cb-100: #2a9057;
 	--color-brand-cb-200: #fff;
 
@@ -153,44 +178,79 @@ body {
 	:root {
 
 		/* * */
-		/* COLOR / SYSTEM */
+		/* COLOR / SYSTEM / BACKGROUND */
 
 		--color-system-background-100: #19191e;
 		--color-system-background-200: #27272d;
 		--color-system-background-300: #0f0f19;
+
+
+	   /* COLOR / SYSTEM / TEXT */
+
 		--color-system-text-100: #dcdce6;
 		--color-system-text-200: #82828c;
 		--color-system-text-300: #464650;
+
+
+	  /* COLOR / SYSTEM / BORDER */
+
 		--color-system-border-100: #37373c;
 
 		/* * */
-		/* COLOR / STATUS */
+		/* COLOR / STATUS / INFO */
 
 		--color-status-info-primary: #054b8c;
 		--color-status-info-contrast: #051e3c;
+
+		/* COLOR / STATUS / SUCCESS*/
+
 		--color-status-success-primary: #329150;
 		--color-status-success-contrast: #052314;
+
+        /* COLOR / STATUS / WARNING */
+
 		--color-status-warning-primary: #be781e;
 		--color-status-warning-contrast: #2d1e05;
+
+		/* COLOR / STATUS / DANGER */
+
 		--color-status-danger-primary: #c83c3c;
 		--color-status-danger-contrast: #2d0505;
+
+       /* COLOR / STATUS / ACTIVE */
+
 		--color-status-active-primary: #2d64c8;
 		--color-status-active-contrast: #051e41;
 
 		/* * */
-		/* COLOR / BRAND */
+		/* COLOR / BRAND / GO */
 
 		--color-brand-go-100: #00ffbe;
 		--color-brand-go-200: #00a082;
+
+		/* COLOR / BRAND / NAVEGANTE */
+
 		--color-brand-navegante-100: #fd0;
 		--color-brand-navegante-200: #f9b428;
 		--color-brand-navegante-300: #f18b2d;
+
+		/* COLOR / BRAND / CMET */
+
 		--color-brand-cmet-100: #fd0;
 		--color-brand-cmet-200: #000;
+
+		/* COLOR / BRAND / METRO */
+
 		--color-brand-metro-100: #e43c2f;
 		--color-brand-metro-200: #fff;
+
+		/* COLOR / BRAND / CCFL*/
+
 		--color-brand-ccfl-100: #ffd400;
 		--color-brand-ccfl-200: #19478e;
+
+		/* COLOR / BRAND / CB */
+
 		--color-brand-cb-100: #2a9057;
 		--color-brand-cb-200: #fff;
 	}
@@ -202,33 +262,50 @@ body {
 	:root {
 
 		/* * */
-		/* COLOR / SYSTEM */
+		/* COLOR / SYSTEM / BACKGROUND */
 
 		--color-system-background-100: rgb(40 40 50);
 		--color-system-background-200: rgb(30 30 40);
 		--color-system-background-300: rgb(10 10 20);
+
+		/* COLOR / SYSTEM / BORDER */
+
 		--color-system-border-100: rgb(60 60 65);
 		--color-system-border-200: rgb(80 80 85);
+
+		/* COLOR / SYSTEM / TEXT */
+
 		--color-system-text-100: rgb(255 255 255);
 		--color-system-text-200: rgb(200 200 210);
 		--color-system-text-300: rgb(150 150 165);
-		--color-system-text-400: rgb(100 100 110);
 
 		/* * */
-		/* COLOR / STATUS */
+		/* COLOR / STATUS / INFO */
 
 		--color-status-info-background: #3c495d;
 		--color-status-info-border: #525868;
 		--color-status-info-text: #84c1fb;
 		--color-status-info-shadow: #6bb5fa80;
+
+
+		/* COLOR / STATUS / OK */
+
 		--color-status-ok-background: #ebf5eb;
 		--color-status-ok-border: #d7ebd7;
 		--color-status-ok-text: #2d8c3c;
 		--color-status-ok-shadow: #2d8c3c80;
+
+
+		/* COLOR / STATUS / WARNING */
+
 		--color-status-warning-background: #fffaf5;
 		--color-status-warning-border: #fff0d7;
 		--color-status-warning-text: #f09600;
 		--color-status-warning-shadow: #f0960080;
+
+
+		/* COLOR / STATUS / DANGER */
+
 		--color-status-danger-background: #fff5f5;
 		--color-status-danger-border: #fae6dc;
 		--color-status-danger-text: #e64b23;

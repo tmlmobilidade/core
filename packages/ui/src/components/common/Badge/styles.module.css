@@ -1,4 +1,4 @@
-.button {
+.badge {
     width: fit-content;
     min-width: fit-content;
     font-size: var(--font-size-md);
@@ -136,4 +136,22 @@
     color: var(--color-status-active-contrast);
 	background-color: var(--color-status-active-primary);
     border-color: var(--color-status-active-contrast);
+}
+
+/* *
+ * Button
+ * * */
+
+.button {
+    width: fit-content;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+    background: none;
+    border: none;
+}
+
+.button[aria-disabled="true"] {
+    cursor: not-allowed;
 }

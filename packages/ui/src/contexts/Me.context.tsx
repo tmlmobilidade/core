@@ -68,9 +68,12 @@ export const MeContextProvider = ({ children }: PropsWithChildren) => {
 	}
 
 	async function logout() {
-		const url = `${getAppConfig('auth', 'api_url')}/logout`;
-		await fetch(url, { credentials: 'include' });
-		meMutate();
+		// Call the logout endpoint
+		await fetch(`${getAppConfig('auth', 'api_url')}/logout`, { credentials: 'include' });
+		// Mutate the SWR cache to remove user data
+		meMutate(undefined, { revalidate: true });
+		// Redirect to login page
+		window.location.href = `${getAppConfig('auth', 'frontend_url')}/login`;
 	}
 
 	//

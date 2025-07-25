@@ -4,6 +4,11 @@ name: 'Packages | Test'
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - production
+    paths:
+      - '.github/workflows/packages-test-all.yml'
   pull_request:
     branches:
       - production

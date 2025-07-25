@@ -1,14 +1,14 @@
 'use client';
 
-import { useToast } from '@/hooks';
-
 /* * */
 
+import { useToast } from '@/hooks';
 import { getAppConfig, HttpException, HttpStatus } from '@tmlmobilidade/lib';
 import { type User } from '@tmlmobilidade/types';
 import { type HasPermissionResourceArgs, hasPermissionResource as hasPermissionResourceUtils, hasPermission as hasPermissionUtils, swrFetcher } from '@tmlmobilidade/utils';
 import { createContext, type PropsWithChildren, useContext, useEffect, useMemo } from 'react';
 import useSWR from 'swr';
+
 /* * */
 
 interface MeContextState {
@@ -46,7 +46,7 @@ export const MeContextProvider = ({ children }: PropsWithChildren) => {
 	const { data, error, isLoading } = useSWR<User, HttpException>(`${getAppConfig('auth', 'api_url')}/users/me`, swrFetcher);
 
 	//
-	// B. Define actions
+	// B. Handle actions
 
 	function hasPermission(scope: string, action: string) {
 		if (!data || !data.permissions) return false;
@@ -94,7 +94,7 @@ export const MeContextProvider = ({ children }: PropsWithChildren) => {
 	}), [data, isLoading, error]);
 
 	//
-	// C. Render components
+	// D. Render components
 
 	return (
 		<MeContext.Provider value={contextValue}>

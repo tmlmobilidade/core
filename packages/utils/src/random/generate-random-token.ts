@@ -1,9 +1,14 @@
 /* * */
 
-import { v4 as uuid } from 'uuid';
+import crypto from 'crypto';
 
-/* * */
-
-export function generateRandomToken() {
-	return Buffer.from(uuid()).toString('base64');
+/**
+ * Generates a secure random token.
+ * This function uses the Node.js crypto module to generate
+ * a random token suitable for cryptographic purposes.
+ * @returns A random token as a hexadecimal string.
+ * @see https://nodejs.org/api/crypto.html#crypto_crypto_randombytes_size_callback
+ */
+export function generateRandomToken(): string {
+	return crypto.randomBytes(32).toString('hex');
 }

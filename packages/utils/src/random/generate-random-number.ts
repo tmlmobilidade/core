@@ -1,6 +1,6 @@
 /* * */
 
-import webcrypto from 'crypto';
+import crypto from 'crypto';
 
 /**
  * Generates a secure random number between 0 and 1.
@@ -11,6 +11,6 @@ import webcrypto from 'crypto';
  */
 export function generateRandomNumber(): number {
 	const array = new Uint32Array(1);
-	webcrypto.getRandomValues(array);
+	crypto.getRandomValues(array);
 	return array[0] / 2 ** 32;
 }

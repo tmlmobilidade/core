@@ -6,7 +6,7 @@ import { ErrorDisplay } from '@/components/display/ErrorDisplay';
 import { LoadingOverlay } from '@/components/loaders/LoadingOverlay';
 import { getAppConfig, HttpException } from '@tmlmobilidade/lib';
 import { type User } from '@tmlmobilidade/types';
-import { type HasPermissionResourceArgs, hasPermissionResource as hasPermissionResourceUtils, hasPermission as hasPermissionUtils, swrFetcher } from '@tmlmobilidade/utils';
+import { fetchData, type HasPermissionResourceArgs, hasPermissionResource as hasPermissionResourceUtils, hasPermission as hasPermissionUtils, swrFetcher } from '@tmlmobilidade/utils';
 import { createContext, type PropsWithChildren, useContext, useEffect, useMemo } from 'react';
 import useSWR from 'swr';
 
@@ -17,6 +17,7 @@ interface MeContextState {
 		hasPermission: (scope: string, action: string) => boolean
 		hasPermissionResource: <T>(args: HasPermissionResourceArgs<T>) => boolean
 		logout: () => Promise<void>
+		updatetheme: (themeId: string) => Promise<void>
 	}
 	data: {
 		user: undefined | User
@@ -76,6 +77,15 @@ export const MeContextProvider = ({ children }: PropsWithChildren) => {
 		window.location.href = `${getAppConfig('auth', 'frontend_url')}/login`;
 	}
 
+	async function updatetheme(themeId: string) {
+		console.log('HERE', themeId);
+		console.log(`${getAppConfig('auth', 'api_url')}/users/me`);
+		// Call the theme endpoint
+		await fetchData(`${getAppConfig('auth', 'frontend_url')}/api/users/me`, 'PUT', { themeId });
+		// Mutate the SWR cache to remove user data
+		meMutate(undefined, { revalidate: true });
+	}
+
 	//
 	// C. Define context value
 
@@ -84,6 +94,7 @@ export const MeContextProvider = ({ children }: PropsWithChildren) => {
 			hasPermission,
 			hasPermissionResource,
 			logout,
+			updatetheme,
 		},
 		data: {
 			user: meData,

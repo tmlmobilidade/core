@@ -2,6 +2,7 @@
 
 /* * */
 
+import { LoadingOverlay } from '@/components/loaders';
 import { useMeContext } from '@/contexts/Me.context';
 import { type PropsWithChildren } from 'react';
 
@@ -17,6 +18,10 @@ export function IsAuthenticated({ children }: PropsWithChildren) {
 
 	//
 	// B. Render components
+
+	if (meContext.flags.loading) {
+		return <LoadingOverlay />;
+	}
 
 	if (!meContext.data.user) {
 		return null;

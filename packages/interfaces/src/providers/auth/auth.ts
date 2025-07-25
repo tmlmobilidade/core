@@ -92,8 +92,6 @@ class AuthProvider {
 	 *   - INTERNAL_SERVER_ERROR if login fails
 	 */
 	public async login(dto: LoginDto): Promise<Session> {
-		// TODO: Implement caching with redis
-
 		const user = await users.findByEmail(dto.email, true);
 
 		if (!user) {

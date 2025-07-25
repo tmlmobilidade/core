@@ -1,17 +1,21 @@
 /* * */
 
-interface GenerateRandomStringOptions {
+import { generateRandomNumber } from './generate-random-number.js';
+
+/* * */
+
+interface GenerateRandomStringProps {
 	length?: number
 	type?: 'alphanumeric' | 'numeric'
 }
 
 /**
  * Creates a random string of a given length and type.
- * @param length - The length of the string to generate.
- * @param type - The type of characters to include in the string.
+ * @param length The length of the string to generate.
+ * @param type The type of characters to include in the string.
  * @returns A random string of the specified length.
  */
-export function generateRandomString({ length = 6, type = 'alphanumeric' }: GenerateRandomStringOptions = {}): string {
+export function generateRandomString({ length = 6, type = 'alphanumeric' }: GenerateRandomStringProps): string {
 	//
 
 	const numericSet = '0123456789';
@@ -31,7 +35,7 @@ export function generateRandomString({ length = 6, type = 'alphanumeric' }: Gene
 	let result = '';
 
 	for (let i = 0; i < length; i++) {
-		result += allowedCharacters.charAt(Math.floor(Math.random() * allowedCharacters.length));
+		result += allowedCharacters.charAt(Math.floor(generateRandomNumber() * allowedCharacters.length));
 	}
 
 	return result;

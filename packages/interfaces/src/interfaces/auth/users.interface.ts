@@ -3,7 +3,7 @@
 import { MongoCollectionClass } from '@/mongo-collection.js';
 import { CreateUserDto, UpdateUserDto, UpdateUserSchema, User, UserSchema } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
-import { Filter, FindOptions, IndexDescription, Sort, WithId } from 'mongodb';
+import { Filter, FindOptions, IndexDescription, WithId } from 'mongodb';
 import { z } from 'zod';
 
 /* * */
@@ -92,12 +92,8 @@ class UsersClass extends MongoCollectionClass<User, CreateUserDto, UpdateUserDto
 	 * @param sort - (Optional) sort specification
 	 * @returns A promise that resolves to an array of matching documents
 	 */
-	override async findMany(filter?: Filter<User>, perPage?: number, page?: number, sort?: Sort) {
-		const query = this.mongoCollection.find(filter ?? {});
-		if (perPage) query.limit(perPage);
-		if (page && perPage) query.skip(perPage * (page - 1));
-		if (sort) query.sort(sort);
-		const users = await query.toArray();
+	override async findMany(filter?: Filter<User>, options?: FindOptions<User>) {
+		const users = await this.mongoCollection.find(filter ?? {}, options).toArray();
 		return users.map(user => this.deletePasswordHash(user) as WithId<User>);
 	}
 

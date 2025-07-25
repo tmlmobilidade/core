@@ -15,7 +15,7 @@ interface GenerateRandomStringProps {
  * @param type The type of characters to include in the string. Defaults to `alphanumeric`.
  * @returns A random string of the specified length.
  */
-export function generateRandomString({ length = 6, type = 'alphanumeric' }: GenerateRandomStringProps): string {
+export function generateRandomString({ length = 6, type = 'alphanumeric' }: GenerateRandomStringProps = {}): string {
 	//
 
 	const numericSet = '0123456789';

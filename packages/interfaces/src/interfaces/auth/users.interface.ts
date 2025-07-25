@@ -36,7 +36,7 @@ class UsersClass extends MongoCollectionClass<User, CreateUserDto, UpdateUserDto
 	 * @returns A promise that resolves to the matching user document or null if not found
 	 */
 	async findByEmail(email: string, includePasswordHash = false): Promise<null | WithId<User>> {
-		const user = await this.mongoCollection.findOne({ email } as Filter<User>);
+		const user = await this.mongoCollection.findOne({ email: { $eq: email } } as Filter<User>);
 		if (!user) {
 			return null;
 		}

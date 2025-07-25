@@ -23,6 +23,7 @@
 		"dev:email": "turbo dev --filter=@tmlmobilidade/emails",
 		"dev:ui": "turbo dev --filter=@tmlmobilidade/ui",
 		"lint": "turbo lint",
+		"lint:packages": "turbo lint --filter=./packages/*",
 		"rinse": "npx --yes @tmlmobilidade/repo-rinse",
 		"test": "turbo test",
 		"test:prod": "turbo test:prod",

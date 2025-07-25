@@ -2,6 +2,8 @@
 
 /* * */
 
+import { ErrorDisplay } from '@/components/display/ErrorDisplay';
+import { LoadingOverlay } from '@/components/loaders/LoadingOverlay';
 import { useToast } from '@/hooks';
 import { getAppConfig, HttpException, HttpStatus } from '@tmlmobilidade/lib';
 import { type User } from '@tmlmobilidade/types';
@@ -43,38 +45,31 @@ export const MeContextProvider = ({ children }: PropsWithChildren) => {
 	//
 	// A. Fetch data
 
-	const { data, error, isLoading } = useSWR<User, HttpException>(`${getAppConfig('auth', 'api_url')}/users/me`, swrFetcher);
+	const { data: meData, error: meError, isLoading: meLoading } = useSWR<User, HttpException>(`${getAppConfig('auth', 'api_url')}/users/me`, swrFetcher);
 
 	//
 	// B. Handle actions
 
+	useEffect(() => {
+		// Skip if no error
+		if (!meError) return;
+		// Show error toast
+		useToast.error({ message: meError.message, title: 'Erro ao carregar dados do utilizador' });
+		// Redirect to login if unauthorized or not found
+		if (meError.statusCode === HttpStatus.UNAUTHORIZED || meError.statusCode === HttpStatus.NOT_FOUND) {
+			window.location.href = `${getAppConfig('auth', 'frontend_url')}/login`;
+		}
+	}, [meError]);
+
 	function hasPermission(scope: string, action: string) {
-		if (!data || !data.permissions) return false;
-		return hasPermissionUtils(data.permissions, scope, action);
+		if (!meData || !meData.permissions) return false;
+		return hasPermissionUtils(meData.permissions, scope, action);
 	}
 
 	function hasPermissionResource<T>(args: HasPermissionResourceArgs<T>) {
-		if (!data || !data.permissions) return false;
-		return hasPermissionResourceUtils({ ...args, permissions: data.permissions });
+		if (!meData || !meData.permissions) return false;
+		return hasPermissionResourceUtils({ ...args, permissions: meData.permissions });
 	}
-
-	useEffect(() => {
-		if (!error) return;
-
-		async function logout() {
-			const { redirect, RedirectType } = await import('next/navigation');
-			redirect(getAppConfig('auth', 'frontend_url') + '/login', RedirectType.replace);
-		}
-
-		useToast.error({
-			message: error.message,
-			title: 'Erro ao carregar dados do utilizador',
-		});
-
-		if (error.statusCode === HttpStatus.UNAUTHORIZED || error.statusCode === HttpStatus.NOT_FOUND) {
-			logout();
-		}
-	}, [error]);
 
 	//
 	// C. Define context value
@@ -85,16 +80,24 @@ export const MeContextProvider = ({ children }: PropsWithChildren) => {
 			hasPermissionResource,
 		},
 		data: {
-			user: data,
+			user: meData,
 		},
 		flags: {
-			error: error,
-			loading: isLoading,
+			error: meError,
+			loading: meLoading,
 		},
-	}), [data, isLoading, error]);
+	}), [meData, meLoading, meError]);
 
 	//
 	// D. Render components
+
+	if (meLoading) {
+		return <LoadingOverlay fullscreen />;
+	}
+
+	if (meError) {
+		return <ErrorDisplay message={meError.message} />;
+	}
 
 	return (
 		<MeContext.Provider value={contextValue}>

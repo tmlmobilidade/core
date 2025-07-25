@@ -15,7 +15,7 @@ interface AlertCardProps {
 
 /* * */
 
-export function AlertCard({ icon, message, title, variant }: AlertCardProps) {
+export function AlertCard({ icon, message, title }: AlertCardProps) {
 	return (
 		<div className={styles.container}>
 			<div className={styles.outterWrapper}>

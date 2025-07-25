@@ -3,7 +3,7 @@
 /* * */
 
 import { getBaseGeoJsonFeatureCollection } from '@/lib/map.utils';
-import { Layer, Source } from 'react-map-gl/maplibre';
+import { Layer, Source } from '@vis.gl/react-maplibre';
 
 /* * */
 

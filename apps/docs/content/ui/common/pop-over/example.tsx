@@ -1,7 +1,6 @@
 'use client';
 
 import {
-	Popover as MantinePopover,
 	PopoverDropdownProps as MantinePopoverDropdownProps,
 	PopoverProps as MantinePopoverProps,
 	PopoverTargetProps as MantinePopoverTargetProps,

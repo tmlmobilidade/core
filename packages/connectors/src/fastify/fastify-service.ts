@@ -63,11 +63,8 @@ export class FastifyService {
 	private static _instance: FastifyService;
 
 	public readonly server: FastifyInstance;
-
 	private readonly host: FastifyServiceOptions['host'];
-
 	private readonly origin: FastifyServiceOptions['origin'];
-
 	private readonly port: FastifyServiceOptions['port'];
 
 	/**

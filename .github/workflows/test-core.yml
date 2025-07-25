@@ -1,11 +1,11 @@
-name: 'Test Core'
+name: 'Test Core Packages'
 
 on:
   pull_request:
     branches:
       - production
     paths:
-      - 'packages/core/src/**/*'
+      - 'packages/**/*'
 
 
   workflow_call:
@@ -28,16 +28,3 @@ jobs:
 
     - name: Linting
       run: npm run lint --workspace=packages/core
-
-  # test:
-  #   runs-on: ubuntu-latest
-
-  #   steps:
-  #   - uses: actions/checkout@v4
-
-  #   - uses: ./.github/actions/setup-node
-  #     with:
-  #       node-version: ${{ inputs.node-version }}
-
-  #   - name: Test
-  #     run: pnpm test:prod --filter=@tmlmobilidade/core

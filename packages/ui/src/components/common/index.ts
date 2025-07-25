@@ -13,7 +13,6 @@ export { default as Tooltip } from './Tooltip';
 
 export * from '@/components/common/AppLogos';
 export * from '@/components/common/Checkbox';
-export * from '@/components/common/HasPermission';
 export * from '@/components/common/Popover';
 export * from '@/components/common/Slider';
 export * from '@/components/common/Switch';

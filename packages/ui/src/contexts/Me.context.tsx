@@ -1,20 +1,22 @@
 'use client';
 
-import { useToast } from '@/hooks';
-
 /* * */
 
-import { getAppConfig, HttpException, HttpStatus } from '@tmlmobilidade/lib';
+import { ErrorDisplay } from '@/components/display/ErrorDisplay';
+import { LoadingOverlay } from '@/components/loaders/LoadingOverlay';
+import { getAppConfig, HttpException } from '@tmlmobilidade/lib';
 import { type User } from '@tmlmobilidade/types';
 import { type HasPermissionResourceArgs, hasPermissionResource as hasPermissionResourceUtils, hasPermission as hasPermissionUtils, swrFetcher } from '@tmlmobilidade/utils';
 import { createContext, type PropsWithChildren, useContext, useEffect, useMemo } from 'react';
 import useSWR from 'swr';
+
 /* * */
 
 interface MeContextState {
 	actions: {
 		hasPermission: (scope: string, action: string) => boolean
 		hasPermissionResource: <T>(args: HasPermissionResourceArgs<T>) => boolean
+		logout: () => Promise<void>
 	}
 	data: {
 		user: undefined | User
@@ -43,38 +45,36 @@ export const MeContextProvider = ({ children }: PropsWithChildren) => {
 	//
 	// A. Fetch data
 
-	const { data, error, isLoading } = useSWR<User, HttpException>(`${getAppConfig('auth', 'api_url')}/users/me`, swrFetcher);
+	const { data: meData, error: meError, isLoading: meLoading, mutate: meMutate } = useSWR<User, HttpException>(`${getAppConfig('auth', 'api_url')}/users/me`, swrFetcher);
 
 	//
-	// B. Define actions
+	// B. Handle actions
+
+	useEffect(() => {
+		// Skip if data is still loading
+		if (meLoading) return;
+		// If a user is not available redirect to login page
+		if (!meData) window.location.href = `${getAppConfig('auth', 'frontend_url')}/login`;
+	}, [meLoading, meData]);
 
 	function hasPermission(scope: string, action: string) {
-		if (!data || !data.permissions) return false;
-		return hasPermissionUtils(data.permissions, scope, action);
+		if (!meData || !meData.permissions) return false;
+		return hasPermissionUtils(meData.permissions, scope, action);
 	}
 
 	function hasPermissionResource<T>(args: HasPermissionResourceArgs<T>) {
-		if (!data || !data.permissions) return false;
-		return hasPermissionResourceUtils({ ...args, permissions: data.permissions });
+		if (!meData || !meData.permissions) return false;
+		return hasPermissionResourceUtils({ ...args, permissions: meData.permissions });
 	}
 
-	useEffect(() => {
-		if (!error) return;
-
-		async function logout() {
-			const { redirect, RedirectType } = await import('next/navigation');
-			redirect(getAppConfig('auth', 'frontend_url') + '/login', RedirectType.replace);
-		}
-
-		useToast.error({
-			message: error.message,
-			title: 'Erro ao carregar dados do utilizador',
-		});
-
-		if (error.statusCode === HttpStatus.UNAUTHORIZED || error.statusCode === HttpStatus.NOT_FOUND) {
-			logout();
-		}
-	}, [error]);
+	async function logout() {
+		// Call the logout endpoint
+		await fetch(`${getAppConfig('auth', 'api_url')}/logout`, { credentials: 'include' });
+		// Mutate the SWR cache to remove user data
+		meMutate(undefined, { revalidate: true });
+		// Redirect to login page
+		window.location.href = `${getAppConfig('auth', 'frontend_url')}/login`;
+	}
 
 	//
 	// C. Define context value
@@ -83,18 +83,27 @@ export const MeContextProvider = ({ children }: PropsWithChildren) => {
 		actions: {
 			hasPermission,
 			hasPermissionResource,
+			logout,
 		},
 		data: {
-			user: data,
+			user: meData,
 		},
 		flags: {
-			error: error,
-			loading: isLoading,
+			error: meError,
+			loading: meLoading,
 		},
-	}), [data, isLoading, error]);
+	}), [meData, meLoading, meError]);
 
 	//
-	// C. Render components
+	// D. Render components
+
+	if (meLoading) {
+		return <LoadingOverlay fullscreen />;
+	}
+
+	if (meError) {
+		return <ErrorDisplay message={meError.message} />;
+	}
 
 	return (
 		<MeContext.Provider value={contextValue}>

@@ -1,12 +1,12 @@
 'use client';
 
-import { Label } from '@/components/display/Label';
-import { AVAILABLE_THEMES, ThemeType, useThemeContext } from '@/contexts/Theme.context';
 /* * */
 
+import { Label } from '@/components/display/Label';
+import { useMeContext } from '@/contexts';
+import { AVAILABLE_THEMES, useThemeContext } from '@/contexts/Theme.context';
 import { ActionIcon, ColorSwatch, Menu } from '@mantine/core';
 import { IconChevronRight, IconColorSwatch, IconLogout, IconSettings } from '@tabler/icons-react';
-import { getAppConfig } from '@tmlmobilidade/lib';
 
 /* * */
 
@@ -18,27 +18,19 @@ interface MenuItem {
 	submenu?: MenuItem[]
 }
 
+/* * */
+
 export function AppWrapperOptions() {
 	//
 
 	//
 	// A. Setup variables
 
+	const meContext = useMeContext();
 	const themeContext = useThemeContext();
 
 	//
-	// B. Handle actions
-
-	const handleThemeChange = (theme: ThemeType) => {
-		themeContext.actions.activateTheme(theme);
-	};
-
-	const handleLogout = () => {
-		window.location.href = `${getAppConfig('auth', 'frontend_url')}/logout`;
-	};
-
-	//
-	// C. Define menu structure
+	// B. Define menu structure
 
 	const MENU_ITEMS: MenuItem[] = [
 		{
@@ -47,13 +39,13 @@ export function AppWrapperOptions() {
 			submenu: AVAILABLE_THEMES.map(item => ({
 				icon: <ColorSwatch color={item.primary_color} size={16} />,
 				label: item.name,
-				onClick: () => handleThemeChange(item._id),
+				onClick: () => themeContext.actions.activateTheme(item._id),
 			})),
 		},
 		{
 			icon: <IconLogout size={18} />,
 			label: 'Logout',
-			onClick: handleLogout,
+			onClick: meContext.actions.logout,
 		},
 	];
 

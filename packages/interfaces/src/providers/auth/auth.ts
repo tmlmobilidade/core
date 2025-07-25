@@ -23,150 +23,194 @@ class AuthProvider {
 	}
 
 	/**
-	 * Get Permissions
-	 *
-	 * @param session_token - The session token
+	 * Get Permissions for a user based on their session token.
+	 * @param sessionToken - The session token
 	 * @param scope - The scope to check
 	 * @param action - The action to check
 	 * @returns The permissions that the user has
 	 */
-	public async getPermission<T>(session_token: string, scope: string, action: string): Promise<Permission<T>> {
-		const user = await this.getUser(session_token);
-		const role_list = await roles.findMany({ _id: { $in: user.role_ids } });
+	public async getPermission<T>(sessionToken: string, scope: string, action: string): Promise<Permission<T>> {
+		//
+
+		//
+		// Get the user and their roles
+
+		const userData = await this.getUser(sessionToken);
+		const rolesData = await roles.findMany({ _id: { $in: userData.role_ids } });
+
+		//
+		// Build the permissions list
 
 		let permission: Permission<T> | undefined;
 
 		try {
-			permission = getPermission(
-				[...role_list.flatMap(role => role.permissions), ...user.permissions] as Permission<unknown>[],
-				scope,
-				action,
-			);
+			// Combine permissions from associated roles
+			// and user-specific permissions
+			const combinedPermissions = [
+				...rolesData.flatMap(role => role.permissions),
+				...userData.permissions,
+			] as Permission<unknown>[];
+			// Get the permission for the requested scope and action
+			permission = getPermission(combinedPermissions, scope, action);
 		}
 		catch (e) {
 			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Error getting permissions', { cause: e });
 		}
 
+		//
+		// If no permission found, throw an error
+
 		if (!permission || Object.keys(permission).length === 0) {
 			throw new HttpException(HttpStatus.FORBIDDEN, 'User does not have permission');
 		}
+
+		//
+		// Else, return the permission
 
 		return permission;
 	}
 
 	/**
-	 * Gets a user by their session token
-	 *
-	 * @param session_token - The session token to look up
-	 * @returns The user associated with the session token
-	 * @throws {HttpException}
-	 *   - UNAUTHORIZED if session not found
-	 *   - UNAUTHORIZED if user not found
+	 * Gets a user by their session token.
+	 * @param sessionToken The session token to look up.
+	 * @returns The user associated with the session token.
+	 * @throws An HTTP UNAUTHORIZED error code if user or session not found
 	 */
-	public async getUser(session_token: string) {
-		// TODO: Implement caching with redis
+	public async getUser(sessionToken: string) {
+		//
 
-		const session = await sessions.findOne({ token: session_token });
+		//
+		// Find the current session in the database
 
-		if (!session) {
+		const sessionData = await sessions.findOne({ token: { $eq: sessionToken } });
+
+		if (!sessionData) {
 			throw new HttpException(HttpStatus.UNAUTHORIZED, 'Session not found');
 		}
 
-		const user = await users.findOne({ _id: session.user_id });
+		//
+		// Find the user associated with the session
 
-		if (!user) {
+		const userData = await users.findOne({ _id: { $eq: sessionData.user_id } });
+
+		if (!userData) {
 			throw new HttpException(HttpStatus.UNAUTHORIZED, 'User not found');
 		}
 
-		return user;
+		//
+		// Return the user data to the caller
+
+		return userData;
 	}
 
 	/**
-	 * Login a user
-	 *
-	 * @param username - The username of the user
-	 * @param password_hash - The password hash of the user, already hashed with bcrypt in client
+	 * Login a user.
+	 * @param username The username of the user
+	 * @param password_hash The password hash of the user, already hashed with bcrypt in client
 	 * @returns The newly created session for the logged in user
-	 * @throws {HttpException}
+	 * @throws An HTTP error code:
 	 *   - UNAUTHORIZED if user not found or password is incorrect
 	 *   - INTERNAL_SERVER_ERROR if login fails
 	 */
-	public async login(dto: LoginDto): Promise<Session> {
-		// TODO: Implement caching with redis
+	public async login(loginDto: LoginDto): Promise<Session> {
+		//
 
-		const user = await users.findByEmail(dto.email, true);
+		//
+		// Find the user by email
 
-		if (!user) {
+		const userData = await users.findByEmail(loginDto.email, true);
+
+		if (!userData) {
 			throw new HttpException(HttpStatus.UNAUTHORIZED, 'User not found');
 		}
 
-		const password_hash = await bcrypt.compare(dto.password, user.password_hash ?? '');
+		//
+		// Check if the password matches the stored hash
 
-		if (!password_hash) {
+		const passwordHashMatch = await bcrypt.compare(loginDto.password, userData.password_hash ?? '');
+
+		if (!passwordHashMatch) {
 			throw new HttpException(HttpStatus.UNAUTHORIZED, 'Invalid password');
 		}
+
+		//
+		// Create a new session object if the password matches
 
 		const session: Session = {
 			_id: generateRandomString(),
 			created_at: Dates.now('utc').unix_timestamp,
 			token: generateRandomToken(),
 			updated_at: Dates.now('utc').unix_timestamp,
-			user_id: user._id.toString(),
+			user_id: userData._id.toString(),
 		};
 
-		const result = await sessions.insertOne(session);
+		const insertResult = await sessions.insertOne(session);
 
-		if (!result.acknowledged) {
+		if (!insertResult.acknowledged) {
 			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Error logging in user');
 		}
+
+		//
+		// Return the session to the caller
 
 		return session;
 	}
 
 	/**
-	 * Logout a user
-	 *
-	 * @param session_token - The session token to logout
+	 * Logout a user by removing their session.
+	 * @param sessionToken The session token to logout.
 	 */
-	public async logout(session_token: string) {
-		// TODO: Invalidate cache
-
-		await sessions.deleteOne({ token: session_token });
+	public async logout(sessionToken: string) {
+		await sessions.deleteOne({ token: { $eq: sessionToken } });
 	}
 
+	/**
+	 * Register a new user.
+	 * @param createUserDto The data to create the user
+	 * @throws An HTTP error code:
+	 *   - INTERNAL_SERVER_ERROR if user creation fails
+	 */
 	public async register(createUserDto: CreateUserDto) {
-		// Generate a verification token
-		const verification_token = generateRandomToken();
+		//
 
-		// Create user without password
-		const userToCreate = {
-			...createUserDto,
-		};
+		//
+		// Insert the new user into the database
+		// with the provided data
 
-		const result = await users.insertOne(userToCreate);
+		const insertNewUserResult = await users.insertOne({ ...createUserDto });
 
-		const verification_token_result = await verificationTokens.insertOne({
-			expires_at: Dates.now('utc').plus({ days: 7 }).unix_timestamp,
-			token: verification_token,
-			user_id: result.insertedId.toString(),
-		});
-
-		if (!result.acknowledged) {
+		if (!insertNewUserResult.acknowledged) {
 			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Error creating user');
 		}
 
-		if (!verification_token_result.acknowledged) {
+		//
+		// Generate a random token that will be used to verify the user
+
+		const verificationToken = generateRandomToken();
+
+		const insertVerificationTokenResult = await verificationTokens.insertOne({
+			expires_at: Dates.now('utc').plus({ days: 7 }).unix_timestamp,
+			token: verificationToken,
+			user_id: insertNewUserResult.insertedId.toString(),
+		});
+
+		if (!insertVerificationTokenResult.acknowledged) {
 			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Error creating verification token');
 		}
+
+		//
+		// Send a welcome email to the user with the verification token
 
 		sendWelcomeEmail({
 			props: {
 				first_name: createUserDto.first_name,
-				setup_password_link: `${getAppConfig('auth', 'frontend_url')}/verification?token=${verification_token}`,
+				setup_password_link: `${getAppConfig('auth', 'frontend_url')}/verification?token=${verificationToken}`,
 			},
 			to: createUserDto.email,
 		});
 	}
 }
+
+/* * */
 
 export const authProvider = AsyncSingletonProxy(AuthProvider);

@@ -1,3 +1,5 @@
+'use client';
+
 /* * */
 
 import { useMeContext } from '@/contexts/Me.context';
@@ -30,17 +32,17 @@ export function HasPermission<T extends Record<string, unknown>>({ action, child
 	//
 	// A. Setup variables
 
-	const { actions } = useMeContext();
+	const meContext = useMeContext();
 
 	//
 	// B. Render components
 
 	if (!resource_key && !value) {
 		console.log('hasPermission', scope, action);
-		return actions.hasPermission(scope, action) ? <>{children}</> : null;
+		return meContext.actions.hasPermission(scope, action) ? <>{children}</> : null;
 	}
 
-	if (actions.hasPermissionResource({ action, resource_key: resource_key ?? '', scope, value: value ?? '' })) {
+	if (meContext.actions.hasPermissionResource({ action, resource_key: resource_key ?? '', scope, value: value ?? '' })) {
 		return <>{children}</>;
 	}
 

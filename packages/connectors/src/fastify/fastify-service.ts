@@ -8,24 +8,18 @@ import '@fastify/cors';
 import cookie from '@fastify/cookie';
 import cors from '@fastify/cors';
 import { HttpResponse, WithPagination } from '@tmlmobilidade/utils';
-import fastify, { ContextConfigDefault, type FastifyInstance, type FastifyReply as FastifyReplyType, FastifySchema, type FastifyServerOptions, RawServerBase, RouteGenericInterface } from 'fastify';
-import { type RawReplyDefaultExpression, type RawRequestDefaultExpression } from 'fastify';
-import { FastifyTypeProviderDefault } from 'fastify/types/type-provider.js';
 
 /* * */
 
-export type FastifyReply<T> = FastifyReplyType<
-	RouteGenericInterface & { Reply: HttpResponse<T> | WithPagination<HttpResponse<T>> },
-	RawServerBase,
-	RawRequestDefaultExpression<RawServerBase>,
-	RawReplyDefaultExpression<RawServerBase>,
-	ContextConfigDefault,
-	FastifySchema,
-	FastifyTypeProviderDefault,
-	HttpResponse<T> | WithPagination<HttpResponse<T>>
->;
+import fastify from 'fastify';
+import { type FastifyInstance as FastifyInstanceType, type FastifyReply as FastifyReplyType, type FastifyRequest as FastifyRequestType } from 'fastify';
+import { type ContextConfigDefault, type FastifyBaseLogger, type FastifySchema, type FastifyServerOptions, type FastifyTypeProviderDefault, type RawReplyDefaultExpression, type RawRequestDefaultExpression, type RawServerBase, type RawServerDefault, type RouteGenericInterface } from 'fastify';
 
-export { type FastifyRequest } from 'fastify';
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type FastifyRequest = FastifyRequestType<any>;
+export type FastifyReply<T> = FastifyReplyType<RouteGenericInterface & { Reply: HttpResponse<T> | WithPagination<HttpResponse<T>> }, RawServerBase, RawRequestDefaultExpression<RawServerBase>, RawReplyDefaultExpression<RawServerBase>, ContextConfigDefault, FastifySchema, FastifyTypeProviderDefault, HttpResponse<T> | WithPagination<HttpResponse<T>>>;
+export type FastifyResponse<T> = FastifyReplyType<RouteGenericInterface & { Reply: HttpResponse<T> | WithPagination<HttpResponse<T>> }, RawServerBase, RawRequestDefaultExpression<RawServerBase>, RawReplyDefaultExpression<RawServerBase>, ContextConfigDefault, FastifySchema, FastifyTypeProviderDefault, HttpResponse<T> | WithPagination<HttpResponse<T>>>;
+export type FastifyInstance = FastifyInstanceType<RawServerDefault, RawRequestDefaultExpression, RawReplyDefaultExpression, FastifyBaseLogger, FastifyTypeProviderDefault>;
 
 /**
  * FastifyServiceOptions interface defines the options for the Fastify server.

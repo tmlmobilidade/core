@@ -1,3 +1,5 @@
+'use client';
+
 /* * */
 
 import { useMeContext } from '@/contexts/Me.context';

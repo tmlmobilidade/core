@@ -4,8 +4,7 @@
 
 import { ErrorDisplay } from '@/components/display/ErrorDisplay';
 import { LoadingOverlay } from '@/components/loaders/LoadingOverlay';
-import { useToast } from '@/hooks';
-import { getAppConfig, HttpException, HttpStatus } from '@tmlmobilidade/lib';
+import { getAppConfig, HttpException } from '@tmlmobilidade/lib';
 import { type User } from '@tmlmobilidade/types';
 import { type HasPermissionResourceArgs, hasPermissionResource as hasPermissionResourceUtils, hasPermission as hasPermissionUtils, swrFetcher } from '@tmlmobilidade/utils';
 import { createContext, type PropsWithChildren, useContext, useEffect, useMemo } from 'react';
@@ -17,6 +16,7 @@ interface MeContextState {
 	actions: {
 		hasPermission: (scope: string, action: string) => boolean
 		hasPermissionResource: <T>(args: HasPermissionResourceArgs<T>) => boolean
+		logout: () => Promise<void>
 	}
 	data: {
 		user: undefined | User
@@ -45,21 +45,17 @@ export const MeContextProvider = ({ children }: PropsWithChildren) => {
 	//
 	// A. Fetch data
 
-	const { data: meData, error: meError, isLoading: meLoading } = useSWR<User, HttpException>(`${getAppConfig('auth', 'api_url')}/users/me`, swrFetcher);
+	const { data: meData, error: meError, isLoading: meLoading, mutate: meMutate } = useSWR<User, HttpException>(`${getAppConfig('auth', 'api_url')}/users/me`, swrFetcher);
 
 	//
 	// B. Handle actions
 
 	useEffect(() => {
-		// Skip if no error
-		if (!meError) return;
-		// Show error toast
-		useToast.error({ message: meError.message, title: 'Erro ao carregar dados do utilizador' });
-		// Redirect to login if unauthorized or not found
-		if (meError.statusCode === HttpStatus.UNAUTHORIZED || meError.statusCode === HttpStatus.NOT_FOUND) {
-			window.location.href = `${getAppConfig('auth', 'frontend_url')}/login`;
-		}
-	}, [meError]);
+		// Skip if data is still loading
+		if (meLoading) return;
+		// If a user is not available redirect to login page
+		if (!meData) window.location.href = `${getAppConfig('auth', 'frontend_url')}/login`;
+	}, [meLoading, meData]);
 
 	function hasPermission(scope: string, action: string) {
 		if (!meData || !meData.permissions) return false;
@@ -71,6 +67,12 @@ export const MeContextProvider = ({ children }: PropsWithChildren) => {
 		return hasPermissionResourceUtils({ ...args, permissions: meData.permissions });
 	}
 
+	async function logout() {
+		const url = `${getAppConfig('auth', 'api_url')}/logout`;
+		await fetch(url, { credentials: 'include' });
+		meMutate();
+	}
+
 	//
 	// C. Define context value
 
@@ -78,6 +80,7 @@ export const MeContextProvider = ({ children }: PropsWithChildren) => {
 		actions: {
 			hasPermission,
 			hasPermissionResource,
+			logout,
 		},
 		data: {
 			user: meData,

@@ -32,7 +32,7 @@ export function AppProvider({ children }: PropsWithChildren) {
 			}
 			return res.json();
 		},
-		refreshInterval: 900_000, // 15 minutes
+		refreshInterval: 300_000, // 5 minutes
 		revalidateOnFocus: true,
 		revalidateOnMount: true,
 	};

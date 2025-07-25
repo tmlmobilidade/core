@@ -8,130 +8,143 @@
 }
 
 /* * */
-/* CONTAINER / hAlign */
+/* PROPS / H-ALIGN */
 
-.hAlignstart {
+.container[data-h-align='start'] {
 	justify-content: flex-start;
 }
 
-.hAligncenter {
+.container[data-h-align='center'] {
 	justify-content: center;
 }
 
-.hAlignend {
+.container[data-h-align='end'] {
 	justify-content: flex-end;
 }
 
 /* * */
-/* CONTAINER / vAlign */
+/* PROPS / V-ALIGN */
 
-.vAlignstart {
+.container[data-v-align='start'] {
 	align-items: flex-start;
 }
 
-.vAligncenter {
+.container[data-v-align='center'] {
 	align-items: center;
 }
 
-.vAlignend {
+.container[data-v-align='end'] {
 	align-items: flex-end;
 }
 
 /* * */
-/* CONTAINER / WITH GAP */
+/* PROPS / WITH GAP */
 
-.container.gapnone {
+.container[data-gap='none'] {
 	gap: 0;
 }
 
-.container.gapxs {
+.container[data-gap='xs'] {
 	gap: var(--size-spacing-xs);
 }
 
-.container.gapsm  {
+.container[data-gap='sm'] {
 	gap: var(--size-spacing-sm);
 }
 
-.container.gapmd  {
+.container[data-gap='md'] {
 	gap: var(--size-spacing-md);
 }
 
-.container.gaplg  {
+.container[data-gap='lg'] {
 	gap: var(--size-spacing-lg);
 }
 
-.container.gapxl  {
+.container[data-gap='xl'] {
 	gap: var(--size-spacing-xl);
 }
 
 /* * */
-/* CONTAINER / COLUMNS */
+/* PROPS / COLUMNS */
 
-.container.a {
+.container[data-columns='a'] {
 	grid-template-columns: 1fr;
 }
 
-.container.aab {
+.container[data-columns='aab'] {
 	grid-template-columns: 2fr 1fr;
 }
 
-.container.ab {
+.container[data-columns='ab'] {
 	grid-template-columns: 1fr 1fr;
 }
 
-.container.abb {
+.container[data-columns='abb'] {
 	grid-template-columns: 1fr 2fr;
 }
 
-.container.abc {
+.container[data-columns='abc'] {
 	grid-template-columns: 1fr 1fr 1fr;
 }
 
-.container.abcd {
+.container[data-columns='abcd'] {
 	grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
+.container[data-columns='abcde'] {
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
 @media screen and (width < 1000px) {
-	.container.aab {
+	.container[data-columns='aab'] {
 		grid-template-columns: 1fr 1fr;
 	}
-	.container.ab {
+	.container[data-columns='ab'] {
 		grid-template-columns: 1fr 1fr;
 	}
-	.container.abb {
+	.container[data-columns='abb'] {
 		grid-template-columns: 1fr 1fr;
 	}
-	.container.abc {
+	.container[data-columns='abc'] {
 		grid-template-columns: 1fr 1fr;
 	}
-	.container.abcd {
+	.container[data-columns='abcd'] {
+		grid-template-columns: 1fr 1fr;
+	}
+	.container[data-columns='abcde'] {
 		grid-template-columns: 1fr 1fr;
 	}
 }
 
 @media screen and (width <= 900px) {
-	.container.aab {
+	.container[data-columns='aab'] {
 		grid-template-columns: 1fr;
 	}
-	.container.ab {
+	.container[data-columns='ab'] {
 		grid-template-columns: 1fr;
 	}
-	.container.abb {
+	.container[data-columns='abb'] {
 		grid-template-columns: 1fr;
 	}
-	.container.abc {
+	.container[data-columns='abc'] {
 		grid-template-columns: 1fr 1fr;
 	}
-	.container.abcd {
+	.container[data-columns='abcd'] {
+		grid-template-columns: 1fr 1fr;
+	}
+	.container[data-columns='abcde'] {
 		grid-template-columns: 1fr 1fr;
 	}
 }
 
 @media screen and (width <= 650px) {
-	.container.abc {
+	.container[data-columns='abc'] {
 		grid-template-columns: 1fr;
 	}
-	.container.abcd {
+	.container[data-columns='abcd'] {
+		grid-template-columns: 1fr;
+	}
+	.container[data-columns='abcde'] {
 		grid-template-columns: 1fr;
 	}
 }

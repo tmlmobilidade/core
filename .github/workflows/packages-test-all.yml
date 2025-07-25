@@ -1,0 +1,161 @@
+# # #
+
+name: 'Packages | Test'
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - production
+    paths:
+      - 'packages/**'
+      - '.github/workflows/packages-test-all.yml'
+
+jobs:
+
+  # # # # # # # # # # # # # # # # # # # # #
+  # # # # # # # # # # # # # # # # # # # # #
+
+  test-connectors:
+    runs-on: ubuntu-latest
+    steps:
+        # # #
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        # # #
+      - name: Setup NodeJS
+        uses: ./.github/actions/setup-node
+        # # #
+      - name: Lint package
+        working-directory: packages/connectors
+        run: npm run lint
+        # # #
+      - name: Build package
+        working-directory: packages/connectors
+        run: npm run build
+
+  # # # # # # # # # # # # # # # # # # # # #
+  # # # # # # # # # # # # # # # # # # # # #
+
+  test-interfaces:
+    runs-on: ubuntu-latest
+    steps:
+        # # #
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        # # #
+      - name: Setup NodeJS
+        uses: ./.github/actions/setup-node
+        # # #
+      - name: Lint package
+        working-directory: packages/interfaces
+        run: npm run lint
+        # # #
+      - name: Build package
+        working-directory: packages/interfaces
+        run: npm run build
+
+  # # # # # # # # # # # # # # # # # # # # #
+  # # # # # # # # # # # # # # # # # # # # #
+
+  test-lib:
+    runs-on: ubuntu-latest
+    steps:
+        # # #
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        # # #
+      - name: Setup NodeJS
+        uses: ./.github/actions/setup-node
+        # # #
+      - name: Lint package
+        working-directory: packages/lib
+        run: npm run lint
+        # # #
+      - name: Build package
+        working-directory: packages/lib
+        run: npm run build
+
+  # # # # # # # # # # # # # # # # # # # # #
+  # # # # # # # # # # # # # # # # # # # # #
+
+  test-types:
+    runs-on: ubuntu-latest
+    steps:
+        # # #
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        # # #
+      - name: Setup NodeJS
+        uses: ./.github/actions/setup-node
+        # # #
+      - name: Lint package
+        working-directory: packages/types
+        run: npm run lint
+        # # #
+      - name: Build package
+        working-directory: packages/types
+        run: npm run build
+
+  # # # # # # # # # # # # # # # # # # # # #
+  # # # # # # # # # # # # # # # # # # # # #
+
+  test-ui:
+    runs-on: ubuntu-latest
+    steps:
+        # # #
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        # # #
+      - name: Setup NodeJS
+        uses: ./.github/actions/setup-node
+        # # #
+      - name: Lint package
+        working-directory: packages/ui
+        run: npm run lint
+        # # #
+      - name: Build package
+        working-directory: packages/ui
+        run: npm run build
+
+  # # # # # # # # # # # # # # # # # # # # #
+  # # # # # # # # # # # # # # # # # # # # #
+
+  test-utils:
+    runs-on: ubuntu-latest
+    steps:
+        # # #
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        # # #
+      - name: Setup NodeJS
+        uses: ./.github/actions/setup-node
+        # # #
+      - name: Lint package
+        working-directory: packages/utils
+        run: npm run lint
+        # # #
+      - name: Build package
+        working-directory: packages/utils
+        run: npm run build
+
+  # # # # # # # # # # # # # # # # # # # # #
+  # # # # # # # # # # # # # # # # # # # # #
+
+  test-emails:
+    runs-on: ubuntu-latest
+    steps:
+        # # #
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        # # #
+      - name: Setup NodeJS
+        uses: ./.github/actions/setup-node
+        # # #
+      - name: Lint package
+        working-directory: packages/emails
+        run: npm run lint
+        # # #
+      - name: Build package
+        working-directory: packages/emails
+        run: npm run build

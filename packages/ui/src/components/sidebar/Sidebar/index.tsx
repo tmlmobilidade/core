@@ -50,7 +50,7 @@ export const sidebarApps = [
 		_id: 'rides',
 		href: getAppConfig('rides', 'frontend_url'),
 		icon: <IconListCheck size={26} />,
-		label: 'SLAs',
+		label: 'Circulações',
 		permission: { action: Permissions.rides.actions.list, scope: Permissions.rides.scope },
 	},
 	{

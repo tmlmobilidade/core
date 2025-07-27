@@ -1,5 +1,7 @@
 /* * */
 
+import { type ReactNode } from 'react';
+
 import styles from './styles.module.css';
 
 /* * */
@@ -7,7 +9,7 @@ import styles from './styles.module.css';
 interface ValueDisplayProps {
 	label: string
 	raised?: boolean
-	value: string
+	value: ReactNode | string
 }
 
 /* * */

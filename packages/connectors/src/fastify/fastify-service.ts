@@ -96,7 +96,7 @@ export class FastifyService {
 					reply.status(error.statusCode).send({
 						data: undefined,
 						error: error.message,
-						status: error.statusCode,
+						statusCode: error.statusCode,
 					});
 				}
 			});

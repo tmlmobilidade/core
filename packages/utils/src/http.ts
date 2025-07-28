@@ -4,24 +4,16 @@ export class HttpResponse<T> {
 	public readonly data: null | T;
 	public readonly error: null | string;
 	public readonly isOk?: () => boolean;
-	public readonly status: number;
+	public readonly statusCode: number;
 
 	constructor(
-		{
-			data,
-			error,
-			status,
-		}: {
-			data: null | T
-			error: null | string
-			status: number
-		},
+		{ data, error, statusCode }: { data: null | T, error: null | string, statusCode: number },
 	) {
 		this.data = data;
 		this.error = error;
-		this.status = status;
+		this.statusCode = statusCode;
 
-		this.isOk = () => status >= 200 && status < 300;
+		this.isOk = () => statusCode >= 200 && statusCode < 300;
 	}
 }
 
@@ -32,10 +24,6 @@ export type WithPagination<T> = T & {
 		total: number
 	}
 };
-
-interface ErrorResponse {
-	message: string
-}
 
 /**
  * Fetches data from a URL with configurable HTTP method, body, headers, and options.
@@ -77,28 +65,27 @@ export async function fetchData<T>(
 			...options,
 		});
 
-		const data = await response.json();
+		const data = await response.json() as HttpResponse<T>;
 
-		if (!response.ok) {
-			const errorData = data as ErrorResponse;
+		if (!response.ok || data.error) {
 			return new HttpResponse<T>({
 				data: null,
-				error: errorData.message || 'An error occurred',
-				status: response.status,
+				error: data.error,
+				statusCode: response.status,
 			});
 		}
 
 		return new HttpResponse<T>({
-			data: data as T,
+			data: data.data,
 			error: null,
-			status: response.status,
+			statusCode: response.status,
 		});
 	}
 	catch (error) {
 		return new HttpResponse<T>({
 			data: null,
 			error: error instanceof Error ? error.message : 'Network error',
-			status: 500,
+			statusCode: 500,
 		});
 	}
 }
@@ -124,27 +111,27 @@ export async function multipartFetch<T>(url: string, formData: FormData): Promis
 			method: 'POST',
 		});
 
-		const data = await response.json();
+		const data = await response.json() as HttpResponse<T>;
 
-		if (!response.ok) {
+		if (!response.ok || data.error) {
 			return new HttpResponse<T>({
 				data: null,
-				error: (data as ErrorResponse).message || 'An error occurred',
-				status: response.status,
+				error: data.error,
+				statusCode: response.status,
 			});
 		}
 
 		return new HttpResponse<T>({
-			data: data as T,
+			data: data.data,
 			error: null,
-			status: response.status,
+			statusCode: response.status,
 		});
 	}
 	catch (error) {
 		return new HttpResponse<T>({
 			data: null,
 			error: error instanceof Error ? error.message : 'Network error',
-			status: 500,
+			statusCode: 500,
 		});
 	}
 }
@@ -176,10 +163,10 @@ export async function uploadFile<T>(url: string, file: File): Promise<HttpRespon
  */
 export const swrFetcher = async <T>(url: string): Promise<T> => {
 	const res = await fetch(url, { credentials: 'include' });
-	const data = await res.json();
+	const data = await res.json() as HttpResponse<T>;
 
 	if (!res.ok) {
-		throw new HttpException(res.status, (data as ErrorResponse).message);
+		throw new HttpException(res.status, data.error ?? 'An error occurred');
 	}
 
 	return data as T;

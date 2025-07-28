@@ -1,6 +1,11 @@
+/* * */
+
+import { type Alert as ServiceAlert } from 'gtfs-types';
 import { z } from 'zod';
 
 import { OperationalDate, operationalDateSchema } from './_common/operational-date.js';
+
+/* * */
 
 export const GtfsFeedInfoSchema = z.object({
 	default_lang: z.string().nullish(),
@@ -34,3 +39,30 @@ export type GtfsAgency = Omit<z.infer<typeof GtfsAgencySchema>, 'feed_end_date' 
 	feed_end_date?: null | OperationalDate
 	feed_start_date?: null | OperationalDate
 };
+
+export interface ServiceAlertExtended extends Omit<ServiceAlert, 'cause' | 'effect'> {
+	cause: string
+	effect: string
+	file_id?: string
+	image?: {
+		localizedImage: {
+			language: string
+			media_type: string
+			url: string
+		}[]
+	}
+}
+
+export interface ServiceAlertResponseItem {
+	alert: ServiceAlertExtended
+	id: string
+}
+
+export interface ServiceAlertResponse {
+	entity: ServiceAlertResponseItem[]
+	header: {
+		gtfs_realtime_version: string
+		incrementality: string
+		timestamp: number
+	}
+}

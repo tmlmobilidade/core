@@ -4,7 +4,7 @@ import { MongoCollectionClass } from '@/mongo-collection.js';
 import { HttpException, HttpStatus } from '@tmlmobilidade/lib';
 import { CreateOrganizationDto, Organization, OrganizationSchema, UpdateOrganizationDto, UpdateOrganizationSchema } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
-import { Filter, IndexDescription, UpdateResult } from 'mongodb';
+import { Filter, IndexDescription } from 'mongodb';
 import { z } from 'zod';
 
 /* * */
@@ -51,7 +51,7 @@ class OrganizationsClass extends MongoCollectionClass<Organization, CreateOrgani
 	/**
 	 * Disable Update Many
 	 */
-	override async updateMany(): Promise<UpdateResult<Organization>> {
+	override async updateMany(): Promise<Organization[]> {
 		throw new HttpException(HttpStatus.METHOD_NOT_ALLOWED, 'Method not allowed for organizations');
 	}
 

@@ -4,7 +4,7 @@ import { MongoCollectionClass } from '@/mongo-collection.js';
 import { HttpException, HttpStatus } from '@tmlmobilidade/lib';
 import { CreateRoleDto, Role, RoleSchema, UpdateRoleDto, UpdateRoleSchema } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
-import { Filter, IndexDescription, UpdateResult } from 'mongodb';
+import { Filter, IndexDescription } from 'mongodb';
 import { z } from 'zod';
 
 /* * */
@@ -40,7 +40,7 @@ class RolesClass extends MongoCollectionClass<Role, CreateRoleDto, UpdateRoleDto
 	/**
 	 * Disable Update Many
 	 */
-	override async updateMany(): Promise<UpdateResult<Role>> {
+	override async updateMany(): Promise<Role[]> {
 		throw new HttpException(HttpStatus.METHOD_NOT_ALLOWED, 'Method not allowed for roles');
 	}
 

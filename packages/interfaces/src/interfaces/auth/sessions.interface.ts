@@ -4,7 +4,7 @@ import { MongoCollectionClass } from '@/mongo-collection.js';
 import { HttpException, HttpStatus } from '@tmlmobilidade/lib';
 import { CreateSessionDto, Session, SessionSchema, UpdateSessionDto } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
-import { IndexDescription, UpdateResult } from 'mongodb';
+import { IndexDescription } from 'mongodb';
 import { z } from 'zod';
 
 /* * */
@@ -30,7 +30,7 @@ class SessionsClass extends MongoCollectionClass<Session, CreateSessionDto, Upda
 	/**
 	 * Disable Update Many
 	 */
-	override async updateMany(): Promise<UpdateResult<Session>> {
+	override async updateMany(): Promise<Session[]> {
 		throw new HttpException(HttpStatus.METHOD_NOT_ALLOWED, 'Method not allowed for sessions');
 	}
 

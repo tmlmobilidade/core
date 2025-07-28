@@ -4,7 +4,7 @@ import { MongoConnector } from '@tmlmobilidade/connectors';
 import { HttpException, HttpStatus } from '@tmlmobilidade/lib';
 import { type UnixTimestamp } from '@tmlmobilidade/types';
 import { Dates, generateRandomString } from '@tmlmobilidade/utils';
-import { Collection, DeleteOptions, DeleteResult, Document, Filter, FindOptions, IndexDescription, InsertOneOptions, InsertOneResult, MongoClientOptions, OptionalUnlessRequiredId, UpdateOptions, UpdateResult, WithId } from 'mongodb';
+import { Collection, DeleteOptions, Document, Filter, FindOptions, IndexDescription, InsertOneOptions, MongoClientOptions, OptionalUnlessRequiredId, UpdateOptions, WithId } from 'mongodb';
 import { z } from 'zod';
 
 /* * */
@@ -68,8 +68,8 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	 * @param id - The ID of the document to delete
 	 * @returns A promise that resolves to the result of the delete operation
 	 */
-	public async deleteById(id: string, options?: DeleteOptions): Promise<DeleteResult> {
-		return this.mongoCollection.deleteOne({ _id: { $eq: id } } as unknown as Filter<T>, options);
+	public async deleteById(id: string, options?: DeleteOptions): Promise<void> {
+		await this.deleteOne({ _id: { $eq: id } } as unknown as Filter<T>, options);
 	}
 
 	/**
@@ -77,8 +77,12 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	 * @param filter - The filter criteria to match documents to delete
 	 * @returns A promise that resolves to the result of the delete operation
 	 */
-	public async deleteMany(filter: Filter<T>): Promise<DeleteResult> {
-		return this.mongoCollection.deleteMany(filter);
+	public async deleteMany(filter: Filter<T>): Promise<void> {
+		const result = await this.mongoCollection.deleteMany(filter);
+
+		if (!result.acknowledged) {
+			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Failed to delete documents', result);
+		}
 	}
 
 	/**
@@ -86,8 +90,12 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	 * @param filter - The filter criteria to match the document to delete
 	 * @returns A promise that resolves to the result of the delete operation
 	 */
-	public async deleteOne(filter: Filter<T>): Promise<DeleteResult> {
-		return this.mongoCollection.deleteOne(filter);
+	public async deleteOne(filter: Filter<T>, options?: DeleteOptions): Promise<void> {
+		const result = await this.mongoCollection.deleteOne(filter, options);
+
+		if (!result.acknowledged) {
+			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Failed to delete document', result);
+		}
 	}
 
 	/**
@@ -181,7 +189,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	 * @param options - The options for the insert operation
 	 * @returns A promise that resolves to the result of the insert operation
 	 */
-	public async insertOne(doc: TCreate & { _id?: string, created_at?: UnixTimestamp, updated_at?: UnixTimestamp }, { options, unsafe = false }: { options?: InsertOneOptions, unsafe?: boolean } = {}): Promise<InsertOneResult<T>> {
+	public async insertOne(doc: TCreate & { _id?: string, created_at?: UnixTimestamp, updated_at?: UnixTimestamp }, { options, unsafe = false }: { options?: InsertOneOptions, unsafe?: boolean } = {}): Promise<WithId<T>> {
 		const newDocument = {
 			...doc,
 			_id: doc._id || generateRandomString({ length: 5 }),
@@ -208,7 +216,19 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 			}
 		}
 
-		return this.mongoCollection.insertOne(parsedDocument, options);
+		const result = await this.mongoCollection.insertOne(parsedDocument, options);
+
+		if (!result.acknowledged) {
+			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Failed to insert document', result);
+		}
+
+		const inserted_doc = await this.findById(result.insertedId as T['_id']);
+
+		if (!inserted_doc) {
+			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Failed to insert document', result);
+		}
+
+		return inserted_doc;
 	}
 
 	/**
@@ -218,31 +238,10 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	 * @param options Optional options for the update operation.
 	 * @returns A promise that resolves to the result of the update operation.
 	 */
-	public async updateById(_id: T['_id'], updateFields: TUpdate, options?: UpdateOptions): Promise<UpdateResult> {
+	public async updateById(_id: T['_id'], updateFields: TUpdate, options?: UpdateOptions): Promise<WithId<T>> {
 		const filter: Filter<T> = { _id: { $eq: _id } } as Filter<T>;
 		return this.updateOne(filter, updateFields, options);
 	}
-
-	// /**
-	//  * Inserts multiple documents into the collection.
-	//  *
-	//  * @param docs - Array of documents to insert
-	//  * @returns A promise that resolves to the result of the insert operation
-	//  */
-	// async insertMany(docs: OptionalUnlessRequiredId<T>[]) {
-	// 	if (this.createSchema) {
-	// 		for (const doc of docs) {
-	// 			try {
-	// 				this.createSchema.parse(doc);
-	// 			}
-	// 			catch (error) {
-	// 				throw new HttpException(HttpStatus.BAD_REQUEST, error.message, { cause: error });
-	// 			}
-	// 		}
-	// 	}
-
-	// 	return this.mongoCollection.insertMany(docs.map(doc => ({ ...doc, created_at: new Date(), updated_at: new Date() })));
-	// }
 
 	/**
 	 * Updates multiple documents matching the filter criteria.
@@ -251,7 +250,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	 * @param options - The options for the update operation
 	 * @returns A promise that resolves to the result of the update operation
 	 */
-	public async updateMany(filter: Filter<T>, updateFields: TUpdate, options?: UpdateOptions) {
+	public async updateMany(filter: Filter<T>, updateFields: TUpdate, options?: UpdateOptions): Promise<WithId<T>[]> {
 		let parsedUpdateFields = updateFields;
 		if (this.updateSchema) {
 			try {
@@ -262,7 +261,19 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 			}
 		}
 
-		return this.mongoCollection.updateMany(filter, { $set: { ...parsedUpdateFields, updated_at: Dates.now('utc').unix_timestamp } } as unknown as Partial<T>, options);
+		const result = await this.mongoCollection.updateMany(filter, { $set: { ...parsedUpdateFields, updated_at: Dates.now('utc').unix_timestamp } } as unknown as Partial<T>, options);
+
+		if (!result.acknowledged) {
+			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Failed to update documents', result);
+		}
+
+		const updated_docs = await this.findMany(filter);
+
+		if (!updated_docs) {
+			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Failed to update documents', result);
+		}
+
+		return updated_docs;
 	}
 
 	/**
@@ -272,7 +283,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	 * @param options - The options for the update operation
 	 * @returns A promise that resolves to the result of the update operation
 	 */
-	public async updateOne(filter: Filter<T>, updateFields: TUpdate, options?: UpdateOptions): Promise<UpdateResult> {
+	public async updateOne(filter: Filter<T>, updateFields: TUpdate, options?: UpdateOptions): Promise<WithId<T>> {
 		let parsedUpdateFields = updateFields;
 		if (this.updateSchema) {
 			try {
@@ -283,7 +294,19 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 			}
 		}
 
-		return this.mongoCollection.updateOne(filter, { $set: { ...parsedUpdateFields, updated_at: Dates.now('utc').unix_timestamp } } as unknown as Partial<T>, options);
+		const result = await this.mongoCollection.updateOne(filter, { $set: { ...parsedUpdateFields, updated_at: Dates.now('utc').unix_timestamp } } as unknown as Partial<T>, options);
+
+		if (!result.acknowledged) {
+			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Failed to update document', result);
+		}
+
+		const updated_doc = await this.findById(result.upsertedId as T['_id']);
+
+		if (!updated_doc) {
+			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Failed to update document', result);
+		}
+
+		return updated_doc;
 	}
 
 	// Abstract method for subclasses to provide the MongoDB collection indexes

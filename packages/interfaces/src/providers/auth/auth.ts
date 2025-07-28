@@ -3,7 +3,7 @@
 import { roles, sessions, users, verificationTokens } from '@/interfaces/index.js';
 import { sendWelcomeEmail } from '@tmlmobilidade/emails';
 import { getAppConfig, HttpException, HttpStatus } from '@tmlmobilidade/lib';
-import { type CreateUserDto, type LoginDto, type Permission, type Session } from '@tmlmobilidade/types';
+import { CreateUserDto, LoginDto, Permission, Session, User } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy, Dates, generateRandomString, generateRandomToken, getPermission } from '@tmlmobilidade/utils';
 import bcrypt from 'bcryptjs';
 
@@ -76,7 +76,7 @@ class AuthProvider {
 	 * @returns The user associated with the session token.
 	 * @throws An HTTP UNAUTHORIZED error code if user or session not found
 	 */
-	public async getUser(sessionToken: string) {
+	public async getUser(sessionToken: string): Promise<User> {
 		//
 
 		//
@@ -144,11 +144,7 @@ class AuthProvider {
 			user_id: userData._id.toString(),
 		};
 
-		const insertResult = await sessions.insertOne(session);
-
-		if (!insertResult.acknowledged) {
-			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Error logging in user');
-		}
+		await sessions.insertOne(session);
 
 		//
 		// Return the session to the caller
@@ -160,7 +156,7 @@ class AuthProvider {
 	 * Logout a user by removing their session.
 	 * @param sessionToken The session token to logout.
 	 */
-	public async logout(sessionToken: string) {
+	public async logout(sessionToken: string): Promise<void> {
 		await sessions.deleteOne({ token: { $eq: sessionToken } });
 	}
 
@@ -170,7 +166,7 @@ class AuthProvider {
 	 * @throws An HTTP error code:
 	 *   - INTERNAL_SERVER_ERROR if user creation fails
 	 */
-	public async register(createUserDto: CreateUserDto) {
+	public async register(createUserDto: CreateUserDto): Promise<void> {
 		//
 
 		//
@@ -179,24 +175,16 @@ class AuthProvider {
 
 		const insertNewUserResult = await users.insertOne({ ...createUserDto });
 
-		if (!insertNewUserResult.acknowledged) {
-			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Error creating user');
-		}
-
 		//
 		// Generate a random token that will be used to verify the user
 
 		const verificationToken = generateRandomToken();
 
-		const insertVerificationTokenResult = await verificationTokens.insertOne({
+		await verificationTokens.insertOne({
 			expires_at: Dates.now('utc').plus({ days: 7 }).unix_timestamp,
 			token: verificationToken,
-			user_id: insertNewUserResult.insertedId.toString(),
+			user_id: insertNewUserResult._id,
 		});
-
-		if (!insertVerificationTokenResult.acknowledged) {
-			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Error creating verification token');
-		}
 
 		//
 		// Send a welcome email to the user with the verification token

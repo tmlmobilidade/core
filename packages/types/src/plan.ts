@@ -9,13 +9,13 @@ import { z } from 'zod';
 /* * */
 
 export const PlanSchema = DocumentSchema.extend({
-	feeder_status: z.nativeEnum(ProcessingStatus).default(ProcessingStatus.Waiting),
 	gtfs_agency: GtfsAgencySchema,
 	gtfs_feed_info: GtfsFeedInfoSchema,
-	is_approved: z.boolean().default(false),
+	hash: z.string(),
 	is_locked: z.boolean().default(false),
 	operation_file_id: z.string(),
-	validation_id: z.string(),
+	status_controller: z.nativeEnum(ProcessingStatus).default(ProcessingStatus.Waiting),
+	status_merger: z.nativeEnum(ProcessingStatus).default(ProcessingStatus.Waiting),
 }).strict();
 
 export const CreatePlanSchema = z.object({

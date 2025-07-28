@@ -40,7 +40,6 @@
 		"geojson": "0.5.0",
 		"gtfs-types": "5.1.0",
 		"luxon": "3.7.1",
-		"mongodb": "6.18.0",
 		"zod": "3.25.76"
 	},
 	"devDependencies": {

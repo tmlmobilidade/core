@@ -169,5 +169,5 @@ export const swrFetcher = async <T>(url: string): Promise<T> => {
 		throw new HttpException(res.status, data.error ?? 'An error occurred');
 	}
 
-	return data as T;
+	return data.data as T;
 };

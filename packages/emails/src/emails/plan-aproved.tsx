@@ -93,7 +93,6 @@ export function PlanApprovedEmail({ first_name, plan }: PlanApprovedEmailProps) 
 const mockPlan: Plan = {
 	_id: '64f8b2a3c1d2e3f4a5b6c7d8',
 	created_at: 1715328000 as UnixTimestamp,
-	feeder_status: ProcessingStatus.Complete,
 	gtfs_agency: {
 		agency_id: 'TML001',
 		agency_name: 'Transportes Metropolitanos de Lisboa',
@@ -104,11 +103,12 @@ const mockPlan: Plan = {
 		feed_lang: 'pt',
 		feed_start_date: '20240101' as OperationalDate,
 	},
-	is_approved: true,
+	hash: '1234567890',
 	is_locked: false,
 	operation_file_id: '64f8b2a3c1d2e3f4a5b6c7d9',
+	status_controller: ProcessingStatus.Complete,
+	status_merger: ProcessingStatus.Complete,
 	updated_at: 1715328000 as UnixTimestamp,
-	validation_id: '64f8b2a3c1d2e3f4a5b6c7da',
 };
 
 PlanApprovedEmail.PreviewProps = {

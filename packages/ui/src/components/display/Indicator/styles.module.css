@@ -33,7 +33,7 @@
 }
 
 .root[data-variant='muted'] .indicator {
-	border-color: var(--color-system-text-300);
+	border-color: var(--color-system-border-100);
 }
 
 .root[data-variant='success'] .indicator {
@@ -62,8 +62,8 @@
 }
 
 .root[data-variant='muted'][data-filled='true'] .indicator {
-	background-color: var(--color-system-text-200);
-	border-color: var(--color-system-text-200);
+	background-color: var(--color-system-border-100);
+	border-color: var(--color-system-border-100);
 }
 
 .root[data-variant='success'][data-filled='true'] .indicator {

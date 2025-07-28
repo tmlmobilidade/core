@@ -11,7 +11,8 @@ import { HttpResponse, WithPagination } from '@tmlmobilidade/utils';
 
 /* * */
 
-import fastify from 'fastify';
+import { HttpException, HttpStatus } from '@tmlmobilidade/lib';
+import fastify, { type FastifyRequest } from 'fastify';
 import { type FastifyReply as _FastifyReply, type FastifyInstance as FastifyInstanceType } from 'fastify';
 import { type ContextConfigDefault, type FastifyBaseLogger, type FastifySchema, type FastifyServerOptions, type FastifyTypeProviderDefault, type RawReplyDefaultExpression, type RawRequestDefaultExpression, type RawServerBase, type RawServerDefault, type RouteGenericInterface } from 'fastify';
 
@@ -89,6 +90,16 @@ export class FastifyService {
 		if (!FastifyService._instance) {
 			// Create a new instance if it doesn't exist yet
 			FastifyService._instance = new FastifyService(options || {});
+
+			FastifyService._instance.server.setErrorHandler((error, _, reply) => {
+				if (error instanceof HttpException) {
+					reply.status(error.statusCode).send({
+						data: undefined,
+						error: error.message,
+						status: error.statusCode,
+					});
+				}
+			});
 		}
 		// Return the existing instance
 		return FastifyService._instance;
@@ -153,4 +164,27 @@ export class FastifyService {
 	}
 
 	//
+}
+
+export type FastifyHandler<T> = (request: FastifyRequest, reply: FastifyReply<T>) => Promise<T>;
+
+export function withControllerErrorHandling<T>(handler: FastifyHandler<T>): FastifyHandler<T> {
+	return async (request, reply) => {
+		try {
+			return await handler(request, reply);
+		}
+		catch (error) {
+			const status = error instanceof HttpException
+				? error.statusCode
+				: HttpStatus.INTERNAL_SERVER_ERROR;
+
+			return reply
+				.status(status)
+				.send({
+					data: undefined,
+					error: error.message,
+					status,
+				});
+		}
+	};
 }

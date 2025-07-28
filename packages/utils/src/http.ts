@@ -1,10 +1,28 @@
 import { HttpException } from '@tmlmobilidade/lib';
 
-// Define the HttpResponse type
-export interface HttpResponse<T> {
-	data: null | T
-	error: null | string
-	status: number
+export class HttpResponse<T> {
+	public readonly data: null | T;
+	public readonly error: null | string;
+	public readonly isOk?: () => boolean;
+	public readonly status: number;
+
+	constructor(
+		{
+			data,
+			error,
+			status,
+		}: {
+			data: null | T
+			error: null | string
+			status: number
+		},
+	) {
+		this.data = data;
+		this.error = error;
+		this.status = status;
+
+		this.isOk = () => status >= 200 && status < 300;
+	}
 }
 
 export type WithPagination<T> = T & {
@@ -63,25 +81,25 @@ export async function fetchData<T>(
 
 		if (!response.ok) {
 			const errorData = data as ErrorResponse;
-			return {
+			return new HttpResponse<T>({
 				data: null,
 				error: errorData.message || 'An error occurred',
 				status: response.status,
-			};
+			});
 		}
 
-		return {
+		return new HttpResponse<T>({
 			data: data as T,
 			error: null,
 			status: response.status,
-		};
+		});
 	}
 	catch (error) {
-		return {
+		return new HttpResponse<T>({
 			data: null,
 			error: error instanceof Error ? error.message : 'Network error',
 			status: 500,
-		};
+		});
 	}
 }
 
@@ -109,25 +127,25 @@ export async function multipartFetch<T>(url: string, formData: FormData): Promis
 		const data = await response.json();
 
 		if (!response.ok) {
-			return {
+			return new HttpResponse<T>({
 				data: null,
 				error: (data as ErrorResponse).message || 'An error occurred',
 				status: response.status,
-			};
+			});
 		}
 
-		return {
+		return new HttpResponse<T>({
 			data: data as T,
 			error: null,
 			status: response.status,
-		};
+		});
 	}
 	catch (error) {
-		return {
+		return new HttpResponse<T>({
 			data: null,
 			error: error instanceof Error ? error.message : 'Network error',
 			status: 500,
-		};
+		});
 	}
 }
 

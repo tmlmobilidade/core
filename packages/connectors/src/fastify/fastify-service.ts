@@ -12,12 +12,13 @@ import { HttpResponse, WithPagination } from '@tmlmobilidade/utils';
 /* * */
 
 import fastify from 'fastify';
-import { type FastifyInstance as FastifyInstanceType, type FastifyReply as FastifyReplyType, type FastifyRequest as FastifyRequestType } from 'fastify';
+import { type FastifyReply as _FastifyReply, type FastifyInstance as FastifyInstanceType } from 'fastify';
 import { type ContextConfigDefault, type FastifyBaseLogger, type FastifySchema, type FastifyServerOptions, type FastifyTypeProviderDefault, type RawReplyDefaultExpression, type RawRequestDefaultExpression, type RawServerBase, type RawServerDefault, type RouteGenericInterface } from 'fastify';
 
-export type FastifyRequest<T extends RouteGenericInterface = RouteGenericInterface> = FastifyRequestType<T>;
-export type FastifyReply<T> = FastifyReplyType<RouteGenericInterface & { Reply: HttpResponse<T> | WithPagination<HttpResponse<T>> }, RawServerBase, RawRequestDefaultExpression<RawServerBase>, RawReplyDefaultExpression<RawServerBase>, ContextConfigDefault, FastifySchema, FastifyTypeProviderDefault, HttpResponse<T> | WithPagination<HttpResponse<T>>>;
-export type FastifyResponse<T> = FastifyReplyType<RouteGenericInterface & { Reply: HttpResponse<T> | WithPagination<HttpResponse<T>> }, RawServerBase, RawRequestDefaultExpression<RawServerBase>, RawReplyDefaultExpression<RawServerBase>, ContextConfigDefault, FastifySchema, FastifyTypeProviderDefault, HttpResponse<T> | WithPagination<HttpResponse<T>>>;
+export { type FastifyRequest } from 'fastify';
+
+export type FastifyReply<T> = _FastifyReply<RouteGenericInterface, RawServerBase, RawRequestDefaultExpression<RawServerBase>, RawReplyDefaultExpression<RawServerBase>, ContextConfigDefault, FastifySchema, FastifyTypeProviderDefault, HttpResponse<T> | WithPagination<HttpResponse<T>>>;
+export type FastifyResponse<T> = _FastifyReply<RouteGenericInterface & { Reply: HttpResponse<T> | WithPagination<HttpResponse<T>> }, RawServerBase, RawRequestDefaultExpression<RawServerBase>, RawReplyDefaultExpression<RawServerBase>, ContextConfigDefault, FastifySchema, FastifyTypeProviderDefault, HttpResponse<T> | WithPagination<HttpResponse<T>>>;
 export type FastifyInstance = FastifyInstanceType<RawServerDefault, RawRequestDefaultExpression, RawReplyDefaultExpression, FastifyBaseLogger, FastifyTypeProviderDefault>;
 
 /**

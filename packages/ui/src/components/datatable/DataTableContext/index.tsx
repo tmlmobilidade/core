@@ -5,7 +5,8 @@
 import { type DataTableColumn } from '@/components/datatable/DataTable';
 import { tryParseDateToTimestamp } from '@/lib/utils';
 import { getValueAtPath } from '@tmlmobilidade/utils';
-import { createContext, type PropsWithChildren, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, type PropsWithChildren, type RefObject, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { type ViewportListRef } from 'react-viewport-list';
 
 /* * */
 
@@ -20,6 +21,10 @@ interface DataTableContextState<T> {
 	}
 	filters: {
 		sort_state: null | SortState
+	}
+	refs: {
+		list: RefObject<null | ViewportListRef>
+		viewport: RefObject<HTMLDivElement | null>
 	}
 }
 
@@ -56,6 +61,9 @@ export function DataTableContextProvider<T>({ children, columns, records }: Prop
 
 	//
 	// A. Setup variables
+
+	const listRef = useRef<null | ViewportListRef>(null);
+	const viewportRef = useRef<HTMLDivElement | null>(null);
 
 	const [sortState, setSortState] = useState<DataTableContextState<T>['filters']['sort_state']>(null);
 	const [columnWidths, setColumnWidths] = useState<DataTableContextState<T>['data']['column_widths']>({});
@@ -141,7 +149,10 @@ export function DataTableContextProvider<T>({ children, columns, records }: Prop
 		filters: {
 			sort_state: sortState,
 		},
-
+		refs: {
+			list: listRef,
+			viewport: viewportRef,
+		},
 	};
 
 	//

@@ -29,7 +29,12 @@ export function DataTableContent<T>({ columns, onRowClick, onRowContextMenu, onR
 	return (
 		<>
 			<DataTableHeader columns={columns} />
-			<ViewportList itemMargin={0} items={dataTableContext.data.records}>
+			<ViewportList
+				ref={dataTableContext.refs.list}
+				itemMargin={0}
+				items={dataTableContext.data.records}
+				viewportRef={dataTableContext.refs.viewport}
+			>
 				{(record, rowIndex) => (
 					<DataTableRow
 						key={rowIdAccessor ? (getValueAtPath(record, rowIdAccessor) as string) : rowIndex}

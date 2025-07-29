@@ -1,14 +1,14 @@
 /* * */
 
 import { MongoCollectionClass } from '@/mongo-collection.js';
-import { CreatePlanDto, Plan, PlanSchema, UpdatePlanDto, UpdatePlanSchema } from '@tmlmobilidade/types';
+import { Plan, PlanSchema, UpdatePlanDto, UpdatePlanSchema } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
 import { Filter, IndexDescription } from 'mongodb';
 import { z } from 'zod';
 
 /* * */
 
-class PlansClass extends MongoCollectionClass<Plan, CreatePlanDto, UpdatePlanDto> {
+class PlansClass extends MongoCollectionClass<Plan, Omit<Plan, '_id' | 'created_at' | 'updated_at'>, UpdatePlanDto> {
 	private static _instance: PlansClass;
 	protected override createSchema: z.ZodSchema = PlanSchema;
 	protected override updateSchema: z.ZodSchema = UpdatePlanSchema;

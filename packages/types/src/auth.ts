@@ -31,7 +31,7 @@ export const UserSchema = DocumentSchema.extend({
 	phone: z.string().nullish(),
 	role_ids: z.array(z.string()).default([]),
 	session_ids: z.array(z.string()).default([]),
-	themes: z.string().nullish(),
+	themeId: z.string().nullish(),
 	verification_token_ids: z.array(z.string()).default([]),
 }).strict();
 

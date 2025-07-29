@@ -2,6 +2,7 @@
 
 /* * */
 
+import { useMeContext } from '@/contexts/Me.context';
 import { themeData } from '@/styles/theme';
 import { MantineProvider } from '@mantine/core';
 import { DatesProvider, DatesProviderSettings } from '@mantine/dates';
@@ -53,6 +54,8 @@ export const ThemeContextProvider = ({ children }: PropsWithChildren) => {
 	//
 	// A. Setup variables
 
+	const mecontext = useMeContext();
+
 	const [activeTheme, setActiveTheme] = useState<ThemeType>(AVAILABLE_THEMES[0]._id);
 
 	const mantineDatesSettings: Partial<DatesProviderSettings> = {
@@ -65,6 +68,13 @@ export const ThemeContextProvider = ({ children }: PropsWithChildren) => {
 	// B. Handle actions
 
 	useEffect(() => {
+		// Set the user's selected theme, if available
+		if (!mecontext.data.user?.theme_id) return;
+		setActiveTheme(mecontext.data.user.theme_id as ThemeType);
+	}, [mecontext.data.user?.theme_id]);
+
+	useEffect(() => {
+		// Apply the active theme to the document
 		if (typeof document === 'undefined') return;
 		document.documentElement.setAttribute('data-theme', activeTheme);
 	}, [activeTheme]);

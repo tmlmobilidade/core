@@ -39,7 +39,10 @@ export function AppWrapperOptions() {
 			submenu: AVAILABLE_THEMES.map(item => ({
 				icon: <ColorSwatch color={item.primary_color} size={16} />,
 				label: item.name,
-				onClick: () => themeContext.actions.activateTheme(item._id),
+				onClick: () => {
+					themeContext.actions.activateTheme(item._id);
+					meContext.actions.updatetheme(item._id);
+				},
 			})),
 		},
 		{

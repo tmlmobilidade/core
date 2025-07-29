@@ -24,7 +24,6 @@ interface DataTableContextState<T> {
 	}
 	refs: {
 		list: RefObject<null | ViewportListRef>
-		viewport: RefObject<HTMLDivElement | null>
 	}
 }
 
@@ -63,7 +62,6 @@ export function DataTableContextProvider<T>({ children, columns, records }: Prop
 	// A. Setup variables
 
 	const listRef = useRef<null | ViewportListRef>(null);
-	const viewportRef = useRef<HTMLDivElement | null>(null);
 
 	const [sortState, setSortState] = useState<DataTableContextState<T>['filters']['sort_state']>(null);
 	const [columnWidths, setColumnWidths] = useState<DataTableContextState<T>['data']['column_widths']>({});
@@ -151,7 +149,6 @@ export function DataTableContextProvider<T>({ children, columns, records }: Prop
 		},
 		refs: {
 			list: listRef,
-			viewport: viewportRef,
 		},
 	};
 

@@ -33,7 +33,6 @@ export function DataTableContent<T>({ columns, onRowClick, onRowContextMenu, onR
 				ref={dataTableContext.refs.list}
 				itemMargin={0}
 				items={dataTableContext.data.records}
-				viewportRef={dataTableContext.refs.viewport}
 			>
 				{(record, rowIndex) => (
 					<DataTableRow

@@ -158,6 +158,13 @@ export class FastifyService {
 					statusCode: error.statusCode,
 				});
 			}
+			else {
+				reply.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
+					data: undefined,
+					error: 'Internal server error',
+					statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+				});
+			}
 		});
 
 		/**

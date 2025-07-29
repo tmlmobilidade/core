@@ -222,7 +222,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Failed to insert document', result);
 		}
 
-		const inserted_doc = await this.findById(result.insertedId as T['_id']);
+		const inserted_doc = await this.findById(result.insertedId as T['_id'], options);
 
 		if (!inserted_doc) {
 			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Failed to insert document', result);

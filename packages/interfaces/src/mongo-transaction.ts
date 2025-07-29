@@ -37,14 +37,17 @@ export class Transaction {
 	}
 }
 
-export class TransactionManager {
+export class TransactionManager<T extends readonly MongoCollectionClass<any, any, any>[]> {
 	private transactions = new Map<MongoCollectionClass<any, any, any>, Transaction>();
 
-	constructor(private collections: MongoCollectionClass<any, any, any>[]) {}
+	constructor(private collections: T) {}
 
-	async withTransaction<T>(
-		callback: (collections: MongoCollectionClass<any, any, any>[], transactions: Map<MongoCollectionClass<any, any, any>, Transaction>) => Promise<T>,
-	): Promise<T> {
+	async withTransaction<R>(
+		callback: (
+			collections: T,
+			transactions: Map<MongoCollectionClass<any, any, any>, Transaction>
+		) => Promise<R>,
+	): Promise<R> {
 		try {
 			// Start transactions for each collection
 			for (const collection of this.collections) {

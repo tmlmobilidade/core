@@ -7,12 +7,12 @@ import '@fastify/cors';
 
 import cookie from '@fastify/cookie';
 import cors from '@fastify/cors';
+import { HttpException, HttpStatus } from '@tmlmobilidade/lib';
 import { HttpResponse, WithPagination } from '@tmlmobilidade/utils';
 
 /* * */
 
-import { HttpException, HttpStatus } from '@tmlmobilidade/lib';
-import fastify, { type FastifyRequest } from 'fastify';
+import fastify from 'fastify';
 import { type FastifyReply as _FastifyReply, type FastifyInstance as FastifyInstanceType } from 'fastify';
 import { type ContextConfigDefault, type FastifyBaseLogger, type FastifySchema, type FastifyServerOptions, type FastifyTypeProviderDefault, type RawReplyDefaultExpression, type RawRequestDefaultExpression, type RawServerBase, type RawServerDefault, type RouteGenericInterface } from 'fastify';
 
@@ -90,16 +90,7 @@ export class FastifyService {
 		if (!FastifyService._instance) {
 			// Create a new instance if it doesn't exist yet
 			FastifyService._instance = new FastifyService(options || {});
-
-			FastifyService._instance.server.setErrorHandler((error, _, reply) => {
-				if (error instanceof HttpException) {
-					reply.status(error.statusCode).send({
-						data: undefined,
-						error: error.message,
-						statusCode: error.statusCode,
-					});
-				}
-			});
+			FastifyService._instance._setupHooks();
 		}
 		// Return the existing instance
 		return FastifyService._instance;
@@ -150,6 +141,42 @@ export class FastifyService {
 	}
 
 	/**
+	 * Sets up hooks for the Fastify server including error handling and response processing.
+	 */
+	private _setupHooks() {
+		/**
+		 * Sets a global error handler for the Fastify server instance.
+		 * This handler checks if the error is an instance of HttpException.
+		 * If so, it sends a response with the appropriate status code and error message.
+		 * This ensures consistent error responses for HTTP exceptions throughout the application.
+		 */
+		this.server.setErrorHandler((error, _, reply) => {
+			if (error instanceof HttpException) {
+				reply.status(error.statusCode).send({
+					data: undefined,
+					error: error.message,
+					statusCode: error.statusCode,
+				});
+			}
+		});
+
+		/**
+		 * Adds an 'onSend' hook to the Fastify server instance.
+		 * This hook intercepts every outgoing response before it is sent.
+		 * It parses the payload as a JSON object (assuming it matches the HttpResponse<T> structure),
+		 * and sets the HTTP status code of the reply to the value of 'statusCode' in the payload,
+		 * defaulting to HttpStatus.OK if not present.
+		 * This ensures that the HTTP status code in the response matches the statusCode property
+		 * in the application's response payload, providing consistent status handling.
+		 */
+		this.server.addHook('onSend', (_, reply, payload, done) => {
+			const payloadJson = JSON.parse(payload as string) as HttpResponse<unknown>;
+			reply.code(payloadJson.statusCode ?? HttpStatus.OK);
+			done();
+		});
+	}
+
+	/**
 	 * Sets up the plugins for the Fastify server.
 	 * @return A promise that resolves when the plugins are set up.
 	 */
@@ -164,27 +191,4 @@ export class FastifyService {
 	}
 
 	//
-}
-
-export type FastifyHandler<T> = (request: FastifyRequest, reply: FastifyReply<T>) => Promise<T>;
-
-export function withControllerErrorHandling<T>(handler: FastifyHandler<T>): FastifyHandler<T> {
-	return async (request, reply) => {
-		try {
-			return await handler(request, reply);
-		}
-		catch (error) {
-			const status = error instanceof HttpException
-				? error.statusCode
-				: HttpStatus.INTERNAL_SERVER_ERROR;
-
-			return reply
-				.status(status)
-				.send({
-					data: undefined,
-					error: error.message,
-					status,
-				});
-		}
-	};
 }

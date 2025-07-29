@@ -300,8 +300,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Failed to update document', result);
 		}
 
-		const updated_doc = await this.findById(result.upsertedId as T['_id']);
-
+		const updated_doc = await this.findOne(filter);
 		if (!updated_doc) {
 			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Failed to update document', result);
 		}

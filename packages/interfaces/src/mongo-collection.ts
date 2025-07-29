@@ -222,7 +222,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Failed to insert document', result);
 		}
 
-		const inserted_doc = await this.findById(result.insertedId as T['_id'], options);
+		const inserted_doc = await this.findOne({ _id: { $eq: result.insertedId as T['_id'] } }, options);
 
 		if (!inserted_doc) {
 			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Failed to insert document', result);
@@ -267,7 +267,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Failed to update documents', result);
 		}
 
-		const updated_docs = await this.findMany(filter);
+		const updated_docs = await this.findMany(filter, options);
 
 		if (!updated_docs) {
 			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Failed to update documents', result);
@@ -300,7 +300,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Failed to update document', result);
 		}
 
-		const updated_doc = await this.findOne(filter);
+		const updated_doc = await this.findOne(filter, options);
 		if (!updated_doc) {
 			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Failed to update document', result);
 		}

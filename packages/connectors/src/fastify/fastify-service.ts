@@ -170,9 +170,16 @@ export class FastifyService {
 		 * in the application's response payload, providing consistent status handling.
 		 */
 		this.server.addHook('onSend', (_, reply, payload, done) => {
-			const payloadJson = JSON.parse(payload as string) as HttpResponse<unknown>;
-			reply.code(payloadJson.statusCode ?? HttpStatus.OK);
-			done();
+			try {
+				const payloadJson = JSON.parse(payload as string) as HttpResponse<unknown>;
+				reply.code(payloadJson.statusCode ?? HttpStatus.OK);
+			}
+			catch (_) {
+				// Do nothing
+			}
+			finally {
+				done();
+			}
 		});
 	}
 

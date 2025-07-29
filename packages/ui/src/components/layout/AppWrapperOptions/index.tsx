@@ -7,7 +7,6 @@ import { useMeContext } from '@/contexts';
 import { AVAILABLE_THEMES, useThemeContext } from '@/contexts/Theme.context';
 import { ActionIcon, ColorSwatch, Menu } from '@mantine/core';
 import { IconChevronRight, IconColorSwatch, IconLogout, IconSettings } from '@tabler/icons-react';
-import { useEffect } from 'react';
 
 /* * */
 
@@ -52,12 +51,6 @@ export function AppWrapperOptions() {
 			onClick: meContext.actions.logout,
 		},
 	];
-
-	useEffect(() => {
-		if (!meContext.flags.loading && meContext.data.user?.themeId) {
-			themeContext.actions.activateTheme(meContext.data.user.themeId as typeof AVAILABLE_THEMES[number]['_id']);
-		}
-	}, [meContext.flags.loading, meContext.data.user?.themeId]);
 
 	//
 	// D. Render helpers

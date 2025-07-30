@@ -39,7 +39,7 @@ export const ValidationSchema = DocumentSchema.extend({
 	file_id: z.string(),
 	gtfs_agency: GtfsAgencySchema,
 	gtfs_feed_info: GtfsFeedInfoSchema,
-	request_approval: z.boolean().default(false),
+	notification_sent: z.boolean().default(false),
 	summary: GTFSValidatorSummarySchema.nullish(),
 }).strict();
 
@@ -54,12 +54,7 @@ export interface Validation extends Omit<z.infer<typeof ValidationSchema>, 'crea
 	updated_at: UnixTimestamp
 }
 
-export interface CreateValidationDto extends Omit<z.infer<typeof CreateValidationSchema>, 'gtfs_agency' | 'gtfs_feed_info' | 'summary'> {
-	gtfs_agency: GtfsAgency
-	gtfs_feed_info: GtfsFeedInfo
-	summary?: GTFSValidatorSummary
-}
-
+export type CreateValidationDto = z.infer<typeof CreateValidationSchema>;
 export type UpdateValidationDto = Partial<CreateValidationDto>;
 
 /* * */

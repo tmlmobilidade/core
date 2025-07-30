@@ -84,6 +84,7 @@ const mockValidation: Validation = {
 	gtfs_feed_info: {
 		feed_lang: 'pt',
 	},
+	notification_sent: false,
 	summary: {
 		messages: [],
 		total_errors: 0,

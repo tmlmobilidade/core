@@ -82,6 +82,7 @@ const validation: Validation = {
 	gtfs_feed_info: {
 		feed_lang: 'en',
 	},
+	notification_sent: false,
 	summary: {
 		messages: [],
 		total_errors: 4,

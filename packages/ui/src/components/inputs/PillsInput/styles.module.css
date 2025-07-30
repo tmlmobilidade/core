@@ -4,7 +4,6 @@
 .pillsInput {
 	display: flex;
 	flex-direction: column;
-	gap: var(--size-spacing-xs);
 	width: 100%;
 	padding: 0;
 	border: none;

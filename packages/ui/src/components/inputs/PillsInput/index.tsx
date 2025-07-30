@@ -4,13 +4,14 @@
 
 import { Center, PillsInput as MantinePillsInput, PillsInputProps as MantinePillsInputProps, Pill, Tooltip } from '@mantine/core';
 import { IconInfoCircle } from '@tabler/icons-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import styles from './styles.module.css';
 
 /* * */
 
-export interface PillsInputProps extends MantinePillsInputProps {
+export interface PillsInputProps extends Omit<MantinePillsInputProps, 'onChange'> {
+	onChange?: (values: string[]) => void
 	tooltip?: string
 	validate?: {
 		message: string
@@ -21,7 +22,7 @@ export interface PillsInputProps extends MantinePillsInputProps {
 
 /* * */
 
-export function PillsInput({ validate, values, ...props }: PillsInputProps) {
+export function PillsInput({ onChange, validate, values, ...props }: PillsInputProps) {
 	//
 
 	//
@@ -33,6 +34,10 @@ export function PillsInput({ validate, values, ...props }: PillsInputProps) {
 
 	//
 	// B. Handle Actions
+
+	useEffect(() => {
+		onChange?.(_values);
+	}, [_values]);
 
 	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		// if (e.key === 'Backspace' && inputValue.length === 0) {

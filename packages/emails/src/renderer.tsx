@@ -6,6 +6,7 @@ import React from 'react';
 /* * */
 
 import { FailedBackupEmail, FailedBackupEmailProps } from './emails/failed-backup.js';
+import { PlanApprovalRequestEmail, PlanApprovalRequestEmailProps } from './emails/plan-approval-request.js';
 import { ResetPasswordEmail, ResetPasswordEmailProps } from './emails/reset-password.js';
 import { SucessfulGtfsValidationEmail, SucessfulGtfsValidationEmailProps } from './emails/sucessful-gtfs-validation.js';
 import { UnsuccessfulGtfsValidationEmail, UnsuccessfulGtfsValidationEmailProps } from './emails/unsucessful-gtfs-validation.js';
@@ -31,4 +32,8 @@ export const RenderSucessfulGtfsValidationEmail = async (props: SucessfulGtfsVal
 
 export const RenderUnsuccessfulGtfsValidationEmail = async (props: UnsuccessfulGtfsValidationEmailProps) => {
 	return await render(<UnsuccessfulGtfsValidationEmail {...props} />);
+};
+
+export const RenderPlanApprovalRequestEmail = async (props: PlanApprovalRequestEmailProps) => {
+	return await render(<PlanApprovalRequestEmail {...props} />);
 };

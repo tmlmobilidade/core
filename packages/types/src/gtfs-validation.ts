@@ -39,6 +39,7 @@ export const ValidationSchema = DocumentSchema.extend({
 	file_id: z.string(),
 	gtfs_agency: GtfsAgencySchema,
 	gtfs_feed_info: GtfsFeedInfoSchema,
+	request_approval: z.boolean().default(false),
 	summary: GTFSValidatorSummarySchema.nullish(),
 }).strict();
 

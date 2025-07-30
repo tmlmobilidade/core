@@ -260,9 +260,26 @@ export const GetAllDistrictsQuerySchema = z.object({
 	),
 });
 
-export const GetAllMunicipalitiesQuerySchema = GetAllDistrictsQuerySchema.extend({ district_id: z.string().nullish() });
-export const GetAllParishesQuerySchema = GetAllMunicipalitiesQuerySchema.extend({ municipality_id: z.string().nullish() }).extend(PaginationSchema.shape);
-export const GetAllLocalitiesQuerySchema = GetAllParishesQuerySchema.extend({ parish_id: z.string().nullish() }).extend(PaginationSchema.shape);
+export const GetAllMunicipalitiesQuerySchema = GetAllDistrictsQuerySchema.extend({
+	district_ids: z
+		.preprocess(
+			val => typeof val === 'string' ? val.split(',').map(s => s.trim()).filter(Boolean) : val,
+			z.array(z.string()).nullish(),
+		),
+});
+export const GetAllParishesQuerySchema = GetAllMunicipalitiesQuerySchema.extend({
+	municipality_ids: z
+		.preprocess(
+			val => typeof val === 'string' ? val.split(',').map(s => s.trim()).filter(Boolean) : val,
+			z.array(z.string()).nullish(),
+		),
+}).extend(PaginationSchema.shape);
+
+export const GetAllLocalitiesQuerySchema = GetAllParishesQuerySchema.extend({ parish_ids: z.preprocess(
+	val => typeof val === 'string' ? val.split(',').map(s => s.trim()).filter(Boolean) : val,
+	z.array(z.string()).nullish(),
+),
+}).extend(PaginationSchema.shape);
 
 export type GetAllDistrictsQuery = z.infer<typeof GetAllDistrictsQuerySchema>;
 export type GetAllMunicipalitiesQuery = z.infer<typeof GetAllMunicipalitiesQuerySchema>;

@@ -8,6 +8,7 @@ import { z } from 'zod';
 /* * */
 
 export const AgencySchema = DocumentSchema.extend({
+	contact_emails: z.array(z.string().email()).default([]),
 	email: z.string().email(),
 	fare_url: z.string().url(),
 	is_locked: z.boolean(),
@@ -17,6 +18,7 @@ export const AgencySchema = DocumentSchema.extend({
 	phone: z.string(),
 	price_per_km: z.number(),
 	timezone: z.string(),
+	tml_contact_emails: z.array(z.string().email()).default([]),
 	total_vkm_per_year: z.number(),
 	url: z.string().url(),
 }).strict();

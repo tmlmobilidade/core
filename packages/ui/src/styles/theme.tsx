@@ -20,7 +20,7 @@ import '@/styles/themes/street.css';
 
 /* * */
 
-import { Accordion, ActionIcon, Button, Checkbox, createTheme, MantineThemeOverride, PasswordInput, Popover, SegmentedControl, Skeleton, Slider, Switch, Text, Textarea, TextInput } from '@mantine/core';
+import { Accordion, ActionIcon, Button, Checkbox, createTheme, MantineThemeOverride, NumberInput, PasswordInput, PillsInput, PillsInputField, Popover, SegmentedControl, Skeleton, Slider, Switch, Text, Textarea, TextInput } from '@mantine/core';
 import { IconCaretLeftFilled } from '@tabler/icons-react';
 
 /* * */
@@ -79,6 +79,19 @@ export const themeData: MantineThemeOverride = createTheme({
 			},
 		}),
 
+		NumberInput: NumberInput.extend({
+			classNames: {
+				control: TextInputOverride.control,
+				controls: TextInputOverride.controls,
+				description: TextInputOverride.description,
+				error: TextInputOverride.error,
+				input: TextInputOverride.input,
+				label: TextInputOverride.label,
+				root: TextInputOverride.root,
+				wrapper: TextInputOverride.wrapper,
+			},
+		}),
+
 		PasswordInput: PasswordInput.extend({
 			classNames: {
 				// PasswordInput is very similar to TextInput. The only difference is that
@@ -86,10 +99,28 @@ export const themeData: MantineThemeOverride = createTheme({
 				// The actual 'input' field is named '.innerInput'. It is necessary to
 				// map the 'input' field styles to the '.innerInput' class and apply reset styles
 				// to the '.input' class, otherwise the input will appear to be rendered twice.
+				description: TextInputOverride.description,
+				error: TextInputOverride.error,
 				innerInput: TextInputOverride.input,
 				input: PasswordInputOverride.input,
+				label: TextInputOverride.label,
 				root: TextInputOverride.root,
 				wrapper: TextInputOverride.wrapper,
+			},
+		}),
+
+		PillsInput: PillsInput.extend({
+			classNames: {
+				description: TextInputOverride.description,
+				error: TextInputOverride.error,
+				label: TextInputOverride.label,
+				root: TextInputOverride.root,
+			},
+		}),
+
+		PillsInputField: PillsInputField.extend({
+			classNames: {
+				field: TextInputOverride.input,
 			},
 		}),
 

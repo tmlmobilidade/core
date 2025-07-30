@@ -36,8 +36,8 @@
 		"lint:fix": "eslint --fix"
 	},
 	"dependencies": {
-		"@aws-sdk/client-s3": "3.850.0",
-		"@aws-sdk/s3-request-presigner": "3.850.0",
+		"@aws-sdk/client-s3": "3.857.0",
+		"@aws-sdk/s3-request-presigner": "3.857.0",
 		"@tmlmobilidade/connectors": "*",
 		"@tmlmobilidade/emails": "*",
 		"@tmlmobilidade/lib": "*",
@@ -48,13 +48,13 @@
 		"luxon": "3.7.1",
 		"mongodb": "6.18.0",
 		"nodemailer": "7.0.5",
-		"oci-common": "2.113.0",
-		"oci-objectstorage": "2.113.0",
+		"oci-common": "2.114.0",
+		"oci-objectstorage": "2.114.0",
 		"zod": "3.25.76"
 	},
 	"devDependencies": {
 		"@carrismetropolitana/eslint": "20250622.1204.50",
-		"@types/luxon": "3.6.2",
+		"@types/luxon": "3.7.1",
 		"@types/node": "24.1.0",
 		"@types/nodemailer": "6.4.17",
 		"resolve-tspaths": "0.8.23",

@@ -2,7 +2,6 @@
 
 /* * */
 
-import { useMeContext } from '@/contexts/Me.context';
 import { themeData } from '@/styles/theme';
 import { MantineProvider } from '@mantine/core';
 import { DatesProvider, DatesProviderSettings } from '@mantine/dates';
@@ -27,7 +26,7 @@ export type ThemeType = (typeof AVAILABLE_THEMES)[number]['_id'];
 
 interface ThemeContextState {
 	actions: {
-		activateTheme: (theme: ThemeType) => void
+		activateTheme: (theme: string | ThemeType) => void
 	}
 	data: {
 		active_theme: ThemeType
@@ -54,8 +53,6 @@ export const ThemeContextProvider = ({ children }: PropsWithChildren) => {
 	//
 	// A. Setup variables
 
-	const mecontext = useMeContext();
-
 	const [activeTheme, setActiveTheme] = useState<ThemeType>(AVAILABLE_THEMES[0]._id);
 
 	const mantineDatesSettings: Partial<DatesProviderSettings> = {
@@ -68,19 +65,14 @@ export const ThemeContextProvider = ({ children }: PropsWithChildren) => {
 	// B. Handle actions
 
 	useEffect(() => {
-		// Set the user's selected theme, if available
-		if (!mecontext.data.user?.theme_id) return;
-		setActiveTheme(mecontext.data.user.theme_id as ThemeType);
-	}, [mecontext.data.user?.theme_id]);
-
-	useEffect(() => {
 		// Apply the active theme to the document
 		if (typeof document === 'undefined') return;
 		document.documentElement.setAttribute('data-theme', activeTheme);
 	}, [activeTheme]);
 
-	const handleActivateTheme = (theme: ThemeType) => {
-		setActiveTheme(theme);
+	const handleActivateTheme = (theme: string | ThemeType) => {
+		if (!AVAILABLE_THEMES.some(t => t._id === theme)) return;
+		setActiveTheme(theme as ThemeType);
 	};
 
 	//

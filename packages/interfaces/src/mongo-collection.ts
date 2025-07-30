@@ -4,7 +4,7 @@ import { MongoConnector } from '@tmlmobilidade/connectors';
 import { HttpException, HttpStatus } from '@tmlmobilidade/lib';
 import { type UnixTimestamp } from '@tmlmobilidade/types';
 import { Dates, generateRandomString } from '@tmlmobilidade/utils';
-import { Collection, DeleteOptions, Document, Filter, FindOptions, IndexDescription, InsertOneOptions, InsertOneResult, MongoClientOptions, OptionalUnlessRequiredId, UpdateOptions, UpdateResult, WithId } from 'mongodb';
+import { Collection, DeleteOptions, DeleteResult, Document, Filter, FindOptions, IndexDescription, InsertOneOptions, InsertOneResult, MongoClientOptions, OptionalUnlessRequiredId, UpdateOptions, UpdateResult, WithId } from 'mongodb';
 import { z } from 'zod';
 
 /* * */
@@ -68,8 +68,14 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	 * @param id - The ID of the document to delete
 	 * @returns A promise that resolves to the result of the delete operation
 	 */
-	public async deleteById(id: string, options?: DeleteOptions): Promise<void> {
-		await this.deleteOne({ _id: { $eq: id } } as unknown as Filter<T>, options);
+	public async deleteById(id: string, options?: DeleteOptions): Promise<DeleteResult> {
+		const result = await this.deleteOne({ _id: { $eq: id } } as unknown as Filter<T>, options);
+
+		if (!result.acknowledged) {
+			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Failed to delete documents', result);
+		}
+
+		return result;
 	}
 
 	/**
@@ -77,12 +83,14 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	 * @param filter - The filter criteria to match documents to delete
 	 * @returns A promise that resolves to the result of the delete operation
 	 */
-	public async deleteMany(filter: Filter<T>): Promise<void> {
+	public async deleteMany(filter: Filter<T>): Promise<DeleteResult> {
 		const result = await this.mongoCollection.deleteMany(filter);
 
 		if (!result.acknowledged) {
 			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Failed to delete documents', result);
 		}
+
+		return result;
 	}
 
 	/**
@@ -90,12 +98,14 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	 * @param filter - The filter criteria to match the document to delete
 	 * @returns A promise that resolves to the result of the delete operation
 	 */
-	public async deleteOne(filter: Filter<T>, options?: DeleteOptions): Promise<void> {
+	public async deleteOne(filter: Filter<T>, options?: DeleteOptions): Promise<DeleteResult> {
 		const result = await this.mongoCollection.deleteOne(filter, options);
 
 		if (!result.acknowledged) {
 			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Failed to delete document', result);
 		}
+
+		return result;
 	}
 
 	/**

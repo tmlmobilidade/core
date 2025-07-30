@@ -7,7 +7,7 @@ import { CreateFileDto, CreateFileSchema, File, FileSchema, UpdateFileDto, Updat
 import { AsyncSingletonProxy, convertObject } from '@tmlmobilidade/utils';
 import { generateRandomString } from '@tmlmobilidade/utils';
 import { Files } from '@tmlmobilidade/utils';
-import { DeleteOptions, IndexDescription, InsertOneOptions, WithId } from 'mongodb';
+import { DeleteOptions, DeleteResult, IndexDescription, InsertOneOptions, WithId } from 'mongodb';
 import { z } from 'zod';
 
 /* * */
@@ -112,7 +112,7 @@ class FilesClass extends MongoCollectionClass<File, CreateFileDto, UpdateFileDto
 	 * @param file_id - The unique identifier of the file in the database.
 	 * @returns The file that was deleted.
 	 */
-	public override async deleteById(file_id: string, options?: DeleteOptions): Promise<void> {
+	public override async deleteById(file_id: string, options?: DeleteOptions): Promise<DeleteResult> {
 		const file = await this.findOne({ _id: file_id });
 
 		if (!file) {

@@ -119,7 +119,7 @@ class FilesClass extends MongoCollectionClass<File, CreateFileDto, UpdateFileDto
 			throw new HttpException(HttpStatus.NOT_FOUND, 'File not found');
 		}
 
-		await this.storageService.deleteFile(`${file.scope}/${file.resource_id}/${file._id}`);
+		await this.storageService.deleteFile(`${file.scope}/${file.resource_id}/${file._id}.${Files.getFileExtension(file.name)}`);
 		return await super.deleteById(file_id, options);
 	}
 

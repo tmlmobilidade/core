@@ -1,7 +1,6 @@
 /* * */
 
 import { MongoCollectionClass } from '@/mongo-collection.js';
-import { HttpException, HttpStatus } from '@tmlmobilidade/lib';
 import { CreateVerificationTokenDto, UpdateVerificationTokenDto, VerificationToken, VerificationTokenSchema } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
 import { IndexDescription } from 'mongodb';
@@ -35,13 +34,6 @@ class VerificationTokensClass extends MongoCollectionClass<VerificationToken, Cr
 	 */
 	async findByToken(token: string) {
 		return this.findOne({ token });
-	}
-
-	/**
-	 * Disable Update Many
-	 */
-	override async updateMany(): Promise<VerificationToken[]> {
-		throw new HttpException(HttpStatus.METHOD_NOT_ALLOWED, 'Method not allowed for verification tokens');
 	}
 
 	protected getCollectionIndexes(): IndexDescription[] {

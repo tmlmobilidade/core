@@ -1,7 +1,6 @@
 /* * */
 
 import { MongoCollectionClass } from '@/mongo-collection.js';
-import { HttpException, HttpStatus } from '@tmlmobilidade/lib';
 import { CreateOrganizationDto, Organization, OrganizationSchema, UpdateOrganizationDto, UpdateOrganizationSchema } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
 import { Filter, IndexDescription } from 'mongodb';
@@ -46,13 +45,6 @@ class OrganizationsClass extends MongoCollectionClass<Organization, CreateOrgani
 	 */
 	async updateByCode(code: string, fields: Partial<Organization>) {
 		return this.mongoCollection.updateOne({ code } as Filter<Organization>, { $set: fields });
-	}
-
-	/**
-	 * Disable Update Many
-	 */
-	override async updateMany(): Promise<Organization[]> {
-		throw new HttpException(HttpStatus.METHOD_NOT_ALLOWED, 'Method not allowed for organizations');
 	}
 
 	protected getCollectionIndexes(): IndexDescription[] {

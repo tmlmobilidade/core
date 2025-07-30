@@ -1,7 +1,6 @@
 /* * */
 
 import { MongoCollectionClass } from '@/mongo-collection.js';
-import { HttpException, HttpStatus } from '@tmlmobilidade/lib';
 import { CreateRoleDto, Role, RoleSchema, UpdateRoleDto, UpdateRoleSchema } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
 import { Filter, IndexDescription } from 'mongodb';
@@ -35,13 +34,6 @@ class RolesClass extends MongoCollectionClass<Role, CreateRoleDto, UpdateRoleDto
 	 */
 	async findByName(name: string) {
 		return this.mongoCollection.findOne({ name } as Filter<Role>);
-	}
-
-	/**
-	 * Disable Update Many
-	 */
-	override async updateMany(): Promise<Role[]> {
-		throw new HttpException(HttpStatus.METHOD_NOT_ALLOWED, 'Method not allowed for roles');
 	}
 
 	protected getCollectionIndexes(): IndexDescription[] {

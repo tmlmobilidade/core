@@ -4,7 +4,7 @@ import { MongoConnector } from '@tmlmobilidade/connectors';
 import { HttpException, HttpStatus } from '@tmlmobilidade/lib';
 import { type UnixTimestamp } from '@tmlmobilidade/types';
 import { Dates, generateRandomString } from '@tmlmobilidade/utils';
-import { Collection, DeleteOptions, Document, Filter, FindOptions, IndexDescription, InsertOneOptions, MongoClientOptions, OptionalUnlessRequiredId, UpdateOptions, WithId } from 'mongodb';
+import { Collection, DeleteOptions, Document, Filter, FindOptions, IndexDescription, InsertOneOptions, InsertOneResult, MongoClientOptions, OptionalUnlessRequiredId, UpdateOptions, UpdateResult, WithId } from 'mongodb';
 import { z } from 'zod';
 
 /* * */
@@ -189,7 +189,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	 * @param options - The options for the insert operation
 	 * @returns A promise that resolves to the result of the insert operation
 	 */
-	public async insertOne(doc: TCreate & { _id?: string, created_at?: UnixTimestamp, updated_at?: UnixTimestamp }, { options, unsafe = false }: { options?: InsertOneOptions, unsafe?: boolean } = {}): Promise<WithId<T>> {
+	public async insertOne<TReturnDocument extends boolean = true>(doc: TCreate & { _id?: string, created_at?: UnixTimestamp, updated_at?: UnixTimestamp }, { options, unsafe = false }: { options?: InsertOneOptions & { returnDocument?: TReturnDocument }, unsafe?: boolean } = {}): Promise<TReturnDocument extends true ? WithId<T> : InsertOneResult<T>> {
 		const newDocument = {
 			...doc,
 			_id: doc._id || generateRandomString({ length: 5 }),
@@ -228,7 +228,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Failed to insert document', result);
 		}
 
-		return inserted_doc;
+		return inserted_doc as TReturnDocument extends true ? WithId<T> : InsertOneResult<T>;
 	}
 
 	/**
@@ -238,7 +238,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	 * @param options Optional options for the update operation.
 	 * @returns A promise that resolves to the result of the update operation.
 	 */
-	public async updateById(_id: T['_id'], updateFields: TUpdate, options?: UpdateOptions): Promise<WithId<T>> {
+	public async updateById<TReturnDocument extends boolean = true>(_id: T['_id'], updateFields: TUpdate, options?: UpdateOptions & { returnDocument?: TReturnDocument }): Promise<TReturnDocument extends true ? WithId<T> : UpdateResult<T>> {
 		const filter: Filter<T> = { _id: { $eq: _id } } as Filter<T>;
 		return this.updateOne(filter, updateFields, options);
 	}
@@ -250,7 +250,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	 * @param options - The options for the update operation
 	 * @returns A promise that resolves to the result of the update operation
 	 */
-	public async updateMany(filter: Filter<T>, updateFields: TUpdate, options?: UpdateOptions): Promise<WithId<T>[]> {
+	public async updateMany<TReturnDocument extends boolean = true>(filter: Filter<T>, updateFields: TUpdate, options?: UpdateOptions & { returnDocument?: TReturnDocument }): Promise<TReturnDocument extends true ? WithId<T>[] : UpdateResult<T>> {
 		let parsedUpdateFields = updateFields;
 		if (this.updateSchema) {
 			try {
@@ -263,6 +263,8 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 
 		const result = await this.mongoCollection.updateMany(filter, { $set: { ...parsedUpdateFields, updated_at: Dates.now('utc').unix_timestamp } } as unknown as Partial<T>, options);
 
+		if (options && !options.returnDocument) return result as TReturnDocument extends true ? WithId<T>[] : UpdateResult<T>;
+
 		if (!result.acknowledged) {
 			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Failed to update documents', result);
 		}
@@ -273,7 +275,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Failed to update documents', result);
 		}
 
-		return updated_docs;
+		return updated_docs as TReturnDocument extends true ? WithId<T>[] : UpdateResult<T>;
 	}
 
 	/**
@@ -283,7 +285,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	 * @param options - The options for the update operation
 	 * @returns A promise that resolves to the result of the update operation
 	 */
-	public async updateOne(filter: Filter<T>, updateFields: TUpdate, options?: UpdateOptions): Promise<WithId<T>> {
+	public async updateOne<TReturnDocument extends boolean = true>(filter: Filter<T>, updateFields: TUpdate, options?: UpdateOptions & { returnDocument?: TReturnDocument }): Promise<TReturnDocument extends true ? WithId<T> : UpdateResult<T>> {
 		let parsedUpdateFields = updateFields;
 		if (this.updateSchema) {
 			try {
@@ -296,6 +298,8 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 
 		const result = await this.mongoCollection.updateOne(filter, { $set: { ...parsedUpdateFields, updated_at: Dates.now('utc').unix_timestamp } } as unknown as Partial<T>, options);
 
+		if (options && !options.returnDocument) return result as TReturnDocument extends true ? WithId<T> : UpdateResult<T>;
+
 		if (!result.acknowledged) {
 			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Failed to update document', result);
 		}
@@ -305,7 +309,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Failed to update document', result);
 		}
 
-		return updated_doc;
+		return updated_doc as TReturnDocument extends true ? WithId<T> : UpdateResult<T>;
 	}
 
 	// Abstract method for subclasses to provide the MongoDB collection indexes

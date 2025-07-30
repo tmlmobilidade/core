@@ -189,7 +189,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	 * @param options - The options for the insert operation
 	 * @returns A promise that resolves to the result of the insert operation
 	 */
-	public async insertOne<TReturnDocument extends boolean = true>(doc: TCreate & { _id?: string, created_at?: UnixTimestamp, updated_at?: UnixTimestamp }, { options, unsafe = false }: { options?: InsertOneOptions & { returnDocument?: TReturnDocument }, unsafe?: boolean } = {}): Promise<TReturnDocument extends true ? WithId<T> : InsertOneResult<T>> {
+	public async insertOne<TReturnDocument extends boolean = true>(doc: TCreate & { _id?: string, created_at?: UnixTimestamp, updated_at?: UnixTimestamp }, { options, unsafe = false }: { options?: InsertOneOptions & { returnResult?: TReturnDocument }, unsafe?: boolean } = {}): Promise<TReturnDocument extends true ? WithId<T> : InsertOneResult<T>> {
 		const newDocument = {
 			...doc,
 			_id: doc._id || generateRandomString({ length: 5 }),
@@ -238,7 +238,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	 * @param options Optional options for the update operation.
 	 * @returns A promise that resolves to the result of the update operation.
 	 */
-	public async updateById<TReturnDocument extends boolean = true>(_id: T['_id'], updateFields: TUpdate, options?: UpdateOptions & { returnDocument?: TReturnDocument }): Promise<TReturnDocument extends true ? WithId<T> : UpdateResult<T>> {
+	public async updateById<TReturnDocument extends boolean = true>(_id: T['_id'], updateFields: TUpdate, options?: UpdateOptions & { returnResult?: TReturnDocument }): Promise<TReturnDocument extends true ? WithId<T> : UpdateResult<T>> {
 		const filter: Filter<T> = { _id: { $eq: _id } } as Filter<T>;
 		return this.updateOne(filter, updateFields, options);
 	}
@@ -250,7 +250,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	 * @param options - The options for the update operation
 	 * @returns A promise that resolves to the result of the update operation
 	 */
-	public async updateMany<TReturnDocument extends boolean = true>(filter: Filter<T>, updateFields: TUpdate, options?: UpdateOptions & { returnDocument?: TReturnDocument }): Promise<TReturnDocument extends true ? WithId<T>[] : UpdateResult<T>> {
+	public async updateMany<TReturnDocument extends boolean = true>(filter: Filter<T>, updateFields: TUpdate, options?: UpdateOptions & { returnResults?: TReturnDocument }): Promise<TReturnDocument extends true ? WithId<T>[] : UpdateResult<T>> {
 		let parsedUpdateFields = updateFields;
 		if (this.updateSchema) {
 			try {
@@ -263,7 +263,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 
 		const result = await this.mongoCollection.updateMany(filter, { $set: { ...parsedUpdateFields, updated_at: Dates.now('utc').unix_timestamp } } as unknown as Partial<T>, options);
 
-		if (options && !options.returnDocument) return result as TReturnDocument extends true ? WithId<T>[] : UpdateResult<T>;
+		if (options && !options.returnResults) return result as TReturnDocument extends true ? WithId<T>[] : UpdateResult<T>;
 
 		if (!result.acknowledged) {
 			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Failed to update documents', result);
@@ -285,7 +285,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	 * @param options - The options for the update operation
 	 * @returns A promise that resolves to the result of the update operation
 	 */
-	public async updateOne<TReturnDocument extends boolean = true>(filter: Filter<T>, updateFields: TUpdate, options?: UpdateOptions & { returnDocument?: TReturnDocument }): Promise<TReturnDocument extends true ? WithId<T> : UpdateResult<T>> {
+	public async updateOne<TReturnDocument extends boolean = true>(filter: Filter<T>, updateFields: TUpdate, options?: UpdateOptions & { returnResult?: TReturnDocument }): Promise<TReturnDocument extends true ? WithId<T> : UpdateResult<T>> {
 		let parsedUpdateFields = updateFields;
 		if (this.updateSchema) {
 			try {
@@ -298,7 +298,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 
 		const result = await this.mongoCollection.updateOne(filter, { $set: { ...parsedUpdateFields, updated_at: Dates.now('utc').unix_timestamp } } as unknown as Partial<T>, options);
 
-		if (options && !options.returnDocument) return result as TReturnDocument extends true ? WithId<T> : UpdateResult<T>;
+		if (options && !options.returnResult) return result as TReturnDocument extends true ? WithId<T> : UpdateResult<T>;
 
 		if (!result.acknowledged) {
 			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Failed to update document', result);

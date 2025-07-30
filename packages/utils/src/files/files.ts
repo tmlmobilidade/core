@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/no-extraneous-class */
 /* * */
+
 import { mimeTypes } from '@tmlmobilidade/lib';
 import JSZip from 'jszip';
 import papaparse, { ParseConfig } from 'papaparse';
@@ -19,12 +19,6 @@ interface UpdateCsvFieldParams {
 
 export class Files {
 	//
-
-	//
-	// Static properties
-
-	//
-	// Static methods
 
 	/**
      * Blob to JS File
@@ -47,7 +41,19 @@ export class Files {
 		return extension;
 	}
 
-	static getMimeType(fileName: string): string {
+	/**
+	 * Gets the file extension from a MIME type.
+	 * @param mimeType The MIME type to get the file extension for.
+	 * @returns The file extension, or an empty string if not found.
+	 */
+	static getFileExtensionFromMimeType(mimeType: string): string {
+		if (!mimeType) return '';
+		const extension = Object.keys(mimeTypes).find(key => mimeTypes[key] === mimeType);
+		if (!extension) return '';
+		return extension;
+	}
+
+	static getMimeTypeFromFileExtension(fileName: string): string {
 		const extension = Files.getFileExtension(fileName);
 		return mimeTypes[extension];
 	}

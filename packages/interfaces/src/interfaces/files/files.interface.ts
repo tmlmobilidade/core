@@ -94,14 +94,12 @@ class FilesClass extends MongoCollectionClass<File, CreateFileDto, UpdateFileDto
 	public async clone(file_id: string, scope: string, resource_id: string, options?: InsertOneOptions): Promise<File> {
 		const _id = generateRandomString({ length: 5 });
 		const file = await this.findOne({ _id: file_id });
-		if (!file) {
-			throw new HttpException(HttpStatus.NOT_FOUND, 'File not found');
-		}
+		if (!file) throw new HttpException(HttpStatus.NOT_FOUND, 'File not found');
 
-		await this.storageService.copyFile(
-			`${file.scope}/${file.resource_id}/${file._id}.${Files.getFileExtension(file.name)}`,
-			`${scope}/${resource_id}/${_id}.${Files.getFileExtension(file.name)}`,
-		);
+		const originalFilePath = `${file.scope}/${file.resource_id}/${file._id}.${Files.getFileExtension(file.name)}`;
+		const newFilePath = `${scope}/${resource_id}/${_id}.${Files.getFileExtension(file.name)}`;
+
+		await this.storageService.copyFile(originalFilePath, newFilePath);
 
 		const newFile = convertObject(file, CreateFileSchema);
 		return await this.insertOne({ ...newFile, _id, resource_id, scope }, { options });
@@ -186,7 +184,7 @@ class FilesClass extends MongoCollectionClass<File, CreateFileDto, UpdateFileDto
 	 */
 	public async upload(file: Buffer, createFileDto: CreateFileDto, options?: InsertOneOptions): Promise<File> {
 		const _id = generateRandomString({ length: 5 });
-		await this.storageService.uploadFile(`${createFileDto.scope}/${createFileDto.resource_id}/${_id}.${Files.getFileExtension(createFileDto.name)}`, file, Files.getMimeType(createFileDto.name));
+		await this.storageService.uploadFile(`${createFileDto.scope}/${createFileDto.resource_id}/${_id}.${Files.getFileExtension(createFileDto.name)}`, file, Files.getMimeTypeFromFileExtension(createFileDto.name));
 
 		return await this.insertOne({ ...createFileDto, _id }, { options });
 	}

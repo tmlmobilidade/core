@@ -44,6 +44,15 @@ export type UpdatePlanDto = Partial<CreatePlanDto>;
 
 /* * */
 
+export interface HashablePlanMetadata {
+	_id: Plan['_id']
+	gtfs_agency: Plan['gtfs_agency']
+	gtfs_feed_info: Plan['gtfs_feed_info']
+	operation_file_id: Plan['operation_file_id']
+}
+
+/* * */
+
 export const PlanPermissionSchema = z.object({
 	agency_ids: z.array(z.string()),
 	end_date: z.string(),

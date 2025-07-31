@@ -18,9 +18,8 @@ export const PlanSchema = DocumentSchema.extend({
 	status_merger: z.nativeEnum(ProcessingStatus).default(ProcessingStatus.Waiting),
 }).strict();
 
-export const CreatePlanSchema = z.object({
-	validation_id: z.string(),
-});
+export const CreatePlanSchema = PlanSchema
+	.omit({ _id: true, created_at: true, updated_at: true });
 
 export const UpdatePlanSchema = PlanSchema.partial();
 

@@ -92,6 +92,11 @@ export function PlanApprovedEmail({ first_name, plan }: PlanApprovedEmailProps) 
 
 const mockPlan: Plan = {
 	_id: '64f8b2a3c1d2e3f4a5b6c7d8',
+	controller: {
+		last_hash: 'abcdef1234567890',
+		status: 'complete',
+		timestamp: 1715328000 as UnixTimestamp,
+	},
 	created_at: 1715328000 as UnixTimestamp,
 	gtfs_agency: {
 		agency_id: 'TML001',
@@ -106,7 +111,6 @@ const mockPlan: Plan = {
 	hash: '1234567890',
 	is_locked: false,
 	operation_file_id: '64f8b2a3c1d2e3f4a5b6c7d9',
-	status_controller: 'complete',
 	status_merger: 'complete',
 	updated_at: 1715328000 as UnixTimestamp,
 };

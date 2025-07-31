@@ -32,8 +32,12 @@ export interface Plan extends Omit<z.infer<typeof PlanSchema>, 'created_at' | 'g
 	updated_at: UnixTimestamp
 }
 
-export type CreatePlanDto = z.infer<typeof CreatePlanSchema>;
-export type UpdatePlanDto = Partial<Plan>;
+export interface CreatePlanDto extends Omit<z.infer<typeof CreatePlanSchema>, 'gtfs_agency' | 'gtfs_feed_info'> {
+	gtfs_agency: GtfsAgency
+	gtfs_feed_info: GtfsFeedInfo
+}
+
+export type UpdatePlanDto = Partial<CreatePlanDto>;
 
 /* * */
 

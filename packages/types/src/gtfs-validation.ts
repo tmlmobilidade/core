@@ -1,8 +1,8 @@
 /* * */
 
 import { DocumentSchema } from '@/_common/document.js';
-import { UnixTimestamp } from '@/_common/unix-timestamp.js';
-import { GtfsAgency, GtfsAgencySchema, GtfsFeedInfo, GtfsFeedInfoSchema } from '@/gtfs.js';
+import { type UnixTimestamp } from '@/_common/unix-timestamp.js';
+import { type GtfsAgency, GtfsAgencySchema, type GtfsFeedInfo, GtfsFeedInfoSchema } from '@/gtfs.js';
 import { ProcessingStatus } from '@/system/processing-status.js';
 import { z } from 'zod';
 
@@ -43,7 +43,12 @@ export const ValidationSchema = DocumentSchema.extend({
 	summary: GTFSValidatorSummarySchema.nullish(),
 }).strict();
 
-export const CreateValidationSchema = ValidationSchema.omit({ _id: true, created_at: true, updated_at: true });
+export const CreateValidationSchema = ValidationSchema.omit({
+	_id: true,
+	created_at: true,
+	updated_at: true,
+});
+
 export const UpdateValidationSchema = CreateValidationSchema.partial();
 
 export interface Validation extends Omit<z.infer<typeof ValidationSchema>, 'created_at' | 'gtfs_agency' | 'gtfs_feed_info' | 'summary' | 'updated_at'> {
@@ -54,7 +59,11 @@ export interface Validation extends Omit<z.infer<typeof ValidationSchema>, 'crea
 	updated_at: UnixTimestamp
 }
 
-export type CreateValidationDto = z.infer<typeof CreateValidationSchema>;
+export interface CreateValidationDto extends Omit<z.infer<typeof CreateValidationSchema>, 'gtfs_agency' | 'gtfs_feed_info'> {
+	gtfs_agency: GtfsAgency
+	gtfs_feed_info: GtfsFeedInfo
+}
+
 export type UpdateValidationDto = Partial<CreateValidationDto>;
 
 /* * */

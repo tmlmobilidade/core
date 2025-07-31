@@ -4,7 +4,7 @@ import { DocumentSchema } from '@/_common/document.js';
 import { type OperationalDate, validateOperationalDate } from '@/_common/operational-date.js';
 import { type UnixTimestamp, validateUnixTimestamp } from '@/_common/unix-timestamp.js';
 import { atLeasOneEventOnFirstStopSchema, atMostTwoDriverIdsSchema, atMostTwoVehicleIdsSchema, avgIntervalVehicleEventsSchema, endedAtLastStopSchema, excessiveVehicleEventDelaySchema, lessThanTenVehicleEventsSchema, matchingLocationTransactionsSchema, ontimeStartSchema, simpleOneValidationTransactionSchema, simpleOneVehicleEventOrValidationTransactionSchema, simpleThreeVehicleEventsSchema, transactionSequentialitySchema } from '@/rides/ride-analysis.js';
-import { ProcessingStatus } from '@/system/processing-status.js';
+import { ProcessingStatusSchema } from '@/system/processing-status.js';
 import { z } from 'zod';
 
 /* * */
@@ -53,7 +53,7 @@ export const RideSchema = DocumentSchema.extend({
 	seen_last_at: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullable(),
 	start_time_observed: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullable(),
 	start_time_scheduled: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp'),
-	system_status: z.nativeEnum(ProcessingStatus),
+	system_status: ProcessingStatusSchema.default('waiting'),
 	trip_id: z.string(),
 	vehicle_ids: z.array(z.number()),
 }).strict();

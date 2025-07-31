@@ -3,7 +3,7 @@
 import { DocumentSchema } from '@/_common/document.js';
 import { type UnixTimestamp } from '@/_common/unix-timestamp.js';
 import { GtfsAgency, GtfsAgencySchema, GtfsFeedInfo, GtfsFeedInfoSchema } from '@/gtfs.js';
-import { ProcessingStatus } from '@/system/processing-status.js';
+import { ProcessingStatusSchema } from '@/system/processing-status.js';
 import { z } from 'zod';
 
 /* * */
@@ -14,8 +14,8 @@ export const PlanSchema = DocumentSchema.extend({
 	hash: z.string(),
 	is_locked: z.boolean().default(false),
 	operation_file_id: z.string(),
-	status_controller: z.nativeEnum(ProcessingStatus).default(ProcessingStatus.Waiting),
-	status_merger: z.nativeEnum(ProcessingStatus).default(ProcessingStatus.Waiting),
+	status_controller: ProcessingStatusSchema.default('waiting'),
+	status_merger: ProcessingStatusSchema.default('waiting'),
 }).strict();
 
 export const CreatePlanSchema = PlanSchema.omit({

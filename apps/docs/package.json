@@ -18,14 +18,14 @@
 		"@tabler/icons-react": "3.34.1",
 		"@tmlmobilidade/ui": "*",
 		"fumadocs-core": "15.6.7",
-		"fumadocs-mdx": "11.7.1",
+		"fumadocs-mdx": "11.7.3",
 		"fumadocs-openapi": "9.1.6",
 		"fumadocs-typescript": "4.0.6",
 		"fumadocs-ui": "15.6.7",
 		"next": "15.4.5",
 		"react": "19.1.1",
 		"react-dom": "19.1.1",
-		"shiki": "3.8.1"
+		"shiki": "3.9.0"
 	},
 	"devDependencies": {
 		"@tmlmobilidade/tsconfig": "*",
@@ -35,6 +35,6 @@
 		"@types/react-dom": "19.1.7",
 		"postcss": "8.5.6",
 		"tailwindcss": "4.1.11",
-		"typescript": "5.8.3"
+		"typescript": "5.9.2"
 	}
 }

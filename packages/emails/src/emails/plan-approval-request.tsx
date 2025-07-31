@@ -3,7 +3,7 @@
 import { EmailWrapper, InfoBox, styles } from '@/components/index.js';
 import { Button, Hr, Section, Text } from '@react-email/components';
 import { getAppConfig } from '@tmlmobilidade/lib';
-import { ProcessingStatus, UnixTimestamp, Validation } from '@tmlmobilidade/types';
+import { type UnixTimestamp, type Validation } from '@tmlmobilidade/types';
 import { Dates } from '@tmlmobilidade/utils';
 
 /* * */
@@ -74,7 +74,7 @@ export function PlanApprovalRequestEmail({
 const mockValidation: Validation = {
 	_id: 'ABC123',
 	created_at: 1753885477000 as UnixTimestamp,
-	feeder_status: ProcessingStatus.Complete,
+	feeder_status: 'complete',
 	file_id: '64f8b2a3c1d2e3f4a5b6c7d9',
 	gtfs_agency: {
 		agency_id: 'TML001',

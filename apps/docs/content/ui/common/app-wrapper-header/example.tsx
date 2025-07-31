@@ -2,7 +2,6 @@
 
 /* * */
 
-import { } from '@mantine/core';
 import { ComponentWrapper, Label } from '@tmlmobilidade/ui';
 import { useState } from 'react';
 

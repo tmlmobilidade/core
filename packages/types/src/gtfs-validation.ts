@@ -3,7 +3,7 @@
 import { DocumentSchema } from '@/_common/document.js';
 import { type UnixTimestamp } from '@/_common/unix-timestamp.js';
 import { type GtfsAgency, GtfsAgencySchema, type GtfsFeedInfo, GtfsFeedInfoSchema } from '@/gtfs.js';
-import { ProcessingStatus } from '@/system/processing-status.js';
+import { ProcessingStatusSchema } from '@/system/processing-status.js';
 import { z } from 'zod';
 
 /* * */
@@ -35,7 +35,7 @@ export type GTFSValidatorMessage = z.infer<typeof GTFSValidatorMessageSchema>;
 /* VALIDATION */
 
 export const ValidationSchema = DocumentSchema.extend({
-	feeder_status: z.nativeEnum(ProcessingStatus),
+	feeder_status: ProcessingStatusSchema,
 	file_id: z.string(),
 	gtfs_agency: GtfsAgencySchema,
 	gtfs_feed_info: GtfsFeedInfoSchema,

@@ -1,7 +1,7 @@
 import { EmailWrapper, InfoBox, styles } from '@/components/index.js';
 import { Button, Hr, Section, Text } from '@react-email/components';
 import { getAppConfig } from '@tmlmobilidade/lib';
-import { OperationalDate, Plan, ProcessingStatus, UnixTimestamp } from '@tmlmobilidade/types';
+import { type OperationalDate, type Plan, type UnixTimestamp } from '@tmlmobilidade/types';
 import { Dates } from '@tmlmobilidade/utils';
 
 export interface PlanApprovedEmailProps {
@@ -106,8 +106,8 @@ const mockPlan: Plan = {
 	hash: '1234567890',
 	is_locked: false,
 	operation_file_id: '64f8b2a3c1d2e3f4a5b6c7d9',
-	status_controller: ProcessingStatus.Complete,
-	status_merger: ProcessingStatus.Complete,
+	status_controller: 'complete',
+	status_merger: 'complete',
 	updated_at: 1715328000 as UnixTimestamp,
 };
 

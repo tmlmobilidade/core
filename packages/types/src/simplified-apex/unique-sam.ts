@@ -2,7 +2,7 @@
 
 import { DocumentSchema } from '@/_common/document.js';
 import { type UnixTimestamp, validateUnixTimestamp } from '@/_common/unix-timestamp.js';
-import { ProcessingStatus } from '@/system/processing-status.js';
+import { ProcessingStatusSchema } from '@/system/processing-status.js';
 import { z } from 'zod';
 
 /* * */
@@ -15,7 +15,7 @@ export const UniqueSamSchema = DocumentSchema.extend({
 	remarks: z.string().nullable(),
 	seen_first_at: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullable(),
 	seen_last_at: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullable(),
-	system_status: z.nativeEnum(ProcessingStatus).default(ProcessingStatus.Waiting),
+	system_status: ProcessingStatusSchema.default('waiting'),
 	transactions_expected: z.number().nullable(),
 	transactions_found: z.number().nullable(),
 	transactions_missing: z.number().nullable(),

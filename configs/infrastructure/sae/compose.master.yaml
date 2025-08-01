@@ -1,0 +1,63 @@
+name: sae-db-local
+
+services:
+  #
+
+  # # # # # # # # # # # # # # # # # # # # #
+  # # # # # # # # # # # # # # # # # # # # #
+
+  watchtower:
+    image: containrrr/watchtower
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 30s
+      resources:
+        limits:
+          memory: 100mb
+    logging:
+      options:
+        max-size: '1m'
+        max-file: '1'
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - WATCHTOWER_POLL_INTERVAL=60
+      - WATCHTOWER_CLEANUP=TRUE
+      - WATCHTOWER_INCLUDE_STOPPED=TRUE
+      - WATCHTOWER_REVIVE_STOPPED=TRUE
+      - WATCHTOWER_ROLLING_RESTART=TRUE
+
+  # # # # # # # # # # # # # # # # # # # # #
+  # # # # # # # # # # # # # # # # # # # # #
+  
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    restart: unless-stopped
+    hostname: mongo
+    volumes:
+      - ./replica.key:/data/replica.key:ro
+      - ./init.sh:/docker-entrypoint-initdb.d/init.sh:ro
+      - ./mongo-init:/data/mongo-init
+      - ./db-data:/data/db
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    command: >
+      mongod --replSet rs0 --auth --keyFile /data/replica.key --bind_ip_all
+
+  # # # # # # # # # # # # # # # # # # # # #
+  # # # # # # # # # # # # # # # # # # # # #
+
+  backupd:
+    image: ghcr.io/tmlmobilidade/backupd:production
+    volumes:
+      - ./backupd-data:/data/backups
+      - ./secrets:/secrets
+    environment:
+      - CONFIG_PATH=/secrets/backupd.yaml
+    depends_on:
+      - mongo

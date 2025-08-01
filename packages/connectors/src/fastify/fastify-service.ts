@@ -151,6 +151,8 @@ export class FastifyService {
 		 * This ensures consistent error responses for HTTP exceptions throughout the application.
 		 */
 		this.server.setErrorHandler((error, _, reply) => {
+			this.server.log.error(error);
+
 			if (error instanceof HttpException) {
 				reply.status(error.statusCode).send({
 					data: undefined,

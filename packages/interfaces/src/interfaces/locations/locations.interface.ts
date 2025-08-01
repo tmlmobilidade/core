@@ -122,43 +122,43 @@ class LocationsClass {
 	};
 
 	/*  Find By Geo */
-	public findMunicipalitiesByGeo = async (lat: number, lon: number): Promise<Municipality | null> => {
-		const document = await this.findOne(this.collections.municipalities, this.geoFilter(lat, lon));
+	public findMunicipalitiesByGeo = async (lat: number, lon: number, options?: FindOptions<MunicipalityDocument>): Promise<Municipality | null> => {
+		const document = await this.findOne(this.collections.municipalities, this.geoFilter(lat, lon), options);
 		return document ? this.transformDocument<MunicipalityDocument, Municipality>(document) : null;
 	};
 
-	public findParishesByGeo = async (lat: number, lon: number): Promise<null | Parish> => {
-		const document = await this.findOne(this.collections.parishes, this.geoFilter(lat, lon));
+	public findParishesByGeo = async (lat: number, lon: number, options?: FindOptions<ParishDocument>): Promise<null | Parish> => {
+		const document = await this.findOne(this.collections.parishes, this.geoFilter(lat, lon), options);
 		return document ? this.transformDocument<ParishDocument, Parish>(document) : null;
 	};
 
-	public findDistrictsByGeo = async (lat: number, lon: number): Promise<District | null> => {
-		const document = await this.findOne(this.collections.districts, this.geoFilter(lat, lon));
+	public findDistrictsByGeo = async (lat: number, lon: number, options?: FindOptions<DistrictDocument>): Promise<District | null> => {
+		const document = await this.findOne(this.collections.districts, this.geoFilter(lat, lon), options);
 		return document ? this.transformDocument<DistrictDocument, District>(document) : null;
 	};
 
-	public findLocalitiesByGeo = async (lat: number, lon: number): Promise<Locality | null> => {
-		const document = await this.findOne(this.collections.localities, this.geoFilter(lat, lon));
+	public findLocalitiesByGeo = async (lat: number, lon: number, options?: FindOptions<LocalityDocument>): Promise<Locality | null> => {
+		const document = await this.findOne(this.collections.localities, this.geoFilter(lat, lon), options);
 		return document ? this.transformDocument<LocalityDocument, Locality>(document) : null;
 	};
 
-	public findCensusByGeo = async (lat: number, lon: number): Promise<null | WithId<Census>> =>
-		await this.findOne(this.collections.census, this.geoFilter(lat, lon));
+	public findCensusByGeo = async (lat: number, lon: number, options?: FindOptions<Census>): Promise<null | WithId<Census>> =>
+		await this.findOne(this.collections.census, this.geoFilter(lat, lon), options);
 
 	public async findLocationByGeo(lat: number, lon: number, { census = false }: { census?: boolean } = {}): Promise<Location> {
 		if (!lat || !lon) throw new HttpException(HttpStatus.BAD_REQUEST, 'Missing latitude or longitude');
 
-		const municipality = await this.findMunicipalitiesByGeo(lat, lon);
-		const parish = await this.findParishesByGeo(lat, lon);
-		const district = await this.findDistrictsByGeo(lat, lon);
-		const locality = await this.findLocalitiesByGeo(lat, lon);
-		const _census = census ? await this.findCensusByGeo(lat, lon) : undefined;
+		const municipality = await this.findMunicipalitiesByGeo(lat, lon, { projection: { _id: 1, name: 1 } });
+		const parish = await this.findParishesByGeo(lat, lon, { projection: { _id: 1, name: 1 } });
+		const district = await this.findDistrictsByGeo(lat, lon, { projection: { _id: 1, name: 1 } });
+		// const locality = await this.findLocalitiesByGeo(lat, lon, { projection: { _id: 1, name: 1 } });
+		const _census = census ? await this.findCensusByGeo(lat, lon, { projection: { _id: 1, name: 1 } }) : undefined;
 
 		return {
 			census: _census,
 			district: district,
 			latitude: lat,
-			locality: locality,
+			locality: null,
 			longitude: lon,
 			municipality: municipality,
 			parish: parish,
@@ -200,8 +200,8 @@ class LocationsClass {
 		return query.toArray();
 	}
 
-	private async findOne<T extends Document>(collection: Collection<T>, filter: Filter<T>): Promise<null | WithId<T>> {
-		return collection.findOne(filter);
+	private async findOne<T extends Document>(collection: Collection<T>, filter: Filter<T>, options?: FindOptions<T>): Promise<null | WithId<T>> {
+		return collection.findOne(filter, options);
 	}
 
 	private async count<T extends Document>(collection: Collection<T>, filter: Filter<T> = {}): Promise<number> {

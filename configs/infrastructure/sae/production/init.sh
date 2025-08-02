@@ -4,9 +4,9 @@ echo "================================================"
 echo "Initializing replica set"
 echo "================================================"
 
-PRIMARY_HOST=""
-SECONDARY_HOST1=""
-SECONDARY_HOST2=""
+PRIMARY_HOST="sae-db-rs0-1-production.carrismetropolitana.pt"
+SECONDARY_HOST1="sae-db-rs0-2-production.carrismetropolitana.pt"
+SECONDARY_HOST2="sae-db-rs0-3-production.carrismetropolitana.pt"
 
 mongosh mongodb://$MONGO_INITDB_ROOT_USERNAME:$MONGO_INITDB_ROOT_PASSWORD@database:27017 <<EOF
 use admin

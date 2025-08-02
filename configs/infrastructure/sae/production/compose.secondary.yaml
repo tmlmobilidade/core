@@ -1,4 +1,4 @@
-name: sae-db-local
+name: sae-db-secondary-production
 
 networks:
   mongonet:
@@ -44,9 +44,9 @@ services:
       - mongonet
     ports:
       - "27017:27017"
-    command: mongod --replSet rs0 --auth --keyFile /data/replica.key --bind_ip_all
     env_file:
       - ./secrets/.env
+    command: mongod --replSet rs0 --auth --keyFile /data/replica.key --bind_ip_all
     healthcheck:
       test: echo 'db.runCommand("ping").ok' | mongosh mongodb://localhost:27017/ --quiet
       interval: 5s

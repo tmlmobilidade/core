@@ -1,4 +1,4 @@
-name: sae-db-local
+name: sae-db-primary-production
 
 networks:
   mongonet:
@@ -44,9 +44,16 @@ services:
       - mongonet
     ports:
       - "27017:27017"
-    command: mongod --replSet rs0 --auth --keyFile /data/replica.key --bind_ip_all
     env_file:
       - ./secrets/.env
+    entrypoint:
+      - bash
+      - -c
+      - |
+          chmod 400 /data/replica.key
+          chown 999:999 /data/replica.key
+          exec docker-entrypoint.sh $$@
+    command: mongod --replSet rs0 --auth --keyFile /data/replica.key --bind_ip_all
     healthcheck:
       test: echo 'db.runCommand("ping").ok' | mongosh mongodb://localhost:27017/ --quiet
       interval: 5s

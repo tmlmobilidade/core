@@ -15,7 +15,7 @@ services:
       - ./init.sh:/docker-entrypoint-initdb.d/init.sh:ro
       - ./replica.key:/data/replica.key
     env_file:
-      - .env
+      - ./secrets/.env
     entrypoint:
       - bash
       - -c

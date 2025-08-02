@@ -3,7 +3,7 @@
 /* * */
 
 import { SidebarItem } from '@/components/sidebar/SidebarItem';
-import { IconAlertTriangle, IconBuildings, IconBusStop, IconFileCertificate, IconFileCheck, IconHome, IconKey, IconListCheck, IconUser } from '@tabler/icons-react';
+import { IconAlertTriangle, IconBuildings, IconBusStop, IconDeviceSim, IconFileCertificate, IconFileCheck, IconHome, IconKey, IconListCheck, IconUser } from '@tabler/icons-react';
 import { getAppConfig, Permissions } from '@tmlmobilidade/lib';
 
 import styles from './styles.module.css';
@@ -48,9 +48,16 @@ export const sidebarApps = [
 	},
 	{
 		_id: 'rides',
-		href: getAppConfig('rides', 'frontend_url'),
+		href: `${getAppConfig('controller', 'frontend_url')}/rides`,
 		icon: <IconListCheck size={26} />,
 		label: 'Circulações',
+		permission: { action: Permissions.rides.actions.list, scope: Permissions.rides.scope },
+	},
+	{
+		_id: 'sams',
+		href: `${getAppConfig('controller', 'frontend_url')}/sams`,
+		icon: <IconDeviceSim size={26} />,
+		label: 'SAMS',
 		permission: { action: Permissions.rides.actions.list, scope: Permissions.rides.scope },
 	},
 	{

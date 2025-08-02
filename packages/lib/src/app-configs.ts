@@ -66,6 +66,27 @@ const APP_CONFIGS: Record<string, Record<Environment, AppConfigGroup>> = {
 		},
 	},
 
+	controller: {
+		development: {
+			api_port: 52002,
+			api_url: 'http://localhost:52002',
+			cookie_domain: 'localhost',
+			cors_origin: true,
+			frontend_port: 51002,
+			frontend_url: 'http://localhost:51002',
+		},
+		production: {
+			api_url: 'https://controller.sae.carrismetropolitana.pt/api',
+			frontend_url: 'https://controller.sae.carrismetropolitana.pt',
+			...DEFAULT_NON_DEV_CONFIG,
+		},
+		staging: {
+			api_url: 'https://staging.controller.sae.carrismetropolitana.pt/api',
+			frontend_url: 'https://staging.controller.sae.carrismetropolitana.pt',
+			...DEFAULT_NON_DEV_CONFIG,
+		},
+	},
+
 	locations: {
 		development: {
 			api_port: 52005,
@@ -104,27 +125,6 @@ const APP_CONFIGS: Record<string, Record<Environment, AppConfigGroup>> = {
 		staging: {
 			api_url: 'https://staging.plans.sae.carrismetropolitana.pt/api',
 			frontend_url: 'https://staging.plans.sae.carrismetropolitana.pt',
-			...DEFAULT_NON_DEV_CONFIG,
-		},
-	},
-
-	rides: {
-		development: {
-			api_port: 52002,
-			api_url: 'http://localhost:52002',
-			cookie_domain: 'localhost',
-			cors_origin: true,
-			frontend_port: 51002,
-			frontend_url: 'http://localhost:51002',
-		},
-		production: {
-			api_url: 'https://rides.sae.carrismetropolitana.pt/api',
-			frontend_url: 'https://rides.sae.carrismetropolitana.pt',
-			...DEFAULT_NON_DEV_CONFIG,
-		},
-		staging: {
-			api_url: 'https://staging.rides.sae.carrismetropolitana.pt/api',
-			frontend_url: 'https://staging.rides.sae.carrismetropolitana.pt',
 			...DEFAULT_NON_DEV_CONFIG,
 		},
 	},

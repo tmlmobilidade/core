@@ -111,6 +111,9 @@ const mockPlan: Plan = {
 	hash: '1234567890',
 	is_locked: false,
 	operation_file_id: '64f8b2a3c1d2e3f4a5b6c7d9',
+	pcgi_legacy: {
+		operation_plan_id: '123',
+	},
 	status_merger: 'complete',
 	updated_at: 1715328000 as UnixTimestamp,
 };

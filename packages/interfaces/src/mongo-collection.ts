@@ -232,10 +232,12 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Failed to insert document', result);
 		}
 
+		if (options && options.returnResult === false) return result as TReturnDocument extends true ? WithId<T> : InsertOneResult<T>;
+
 		const inserted_doc = await this.findOne({ _id: { $eq: result.insertedId as T['_id'] } }, options);
 
 		if (!inserted_doc) {
-			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Failed to insert document', result);
+			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Failed to find inserted document', result);
 		}
 
 		return inserted_doc as TReturnDocument extends true ? WithId<T> : InsertOneResult<T>;
@@ -273,7 +275,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 
 		const result = await this.mongoCollection.updateMany(filter, { $set: { ...parsedUpdateFields, updated_at: Dates.now('utc').unix_timestamp } } as unknown as Partial<T>, options);
 
-		if (options && !options.returnResults) return result as TReturnDocument extends true ? WithId<T>[] : UpdateResult<T>;
+		if (options && options.returnResults === false) return result as TReturnDocument extends true ? WithId<T>[] : UpdateResult<T>;
 
 		if (!result.acknowledged) {
 			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Failed to update documents', result);
@@ -282,7 +284,7 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 		const updated_docs = await this.findMany(filter, options);
 
 		if (!updated_docs) {
-			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Failed to update documents', result);
+			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Failed to find updated documents', result);
 		}
 
 		return updated_docs as TReturnDocument extends true ? WithId<T>[] : UpdateResult<T>;
@@ -308,15 +310,15 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 
 		const result = await this.mongoCollection.updateOne(filter, { $set: { ...parsedUpdateFields, updated_at: Dates.now('utc').unix_timestamp } } as unknown as Partial<T>, options);
 
-		if (options && !options.returnResult) return result as TReturnDocument extends true ? WithId<T> : UpdateResult<T>;
+		if (options && options.returnResult === false) return result as TReturnDocument extends true ? WithId<T> : UpdateResult<T>;
 
 		if (!result.acknowledged) {
-			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Failed to update document', result);
+			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Failed to update documents', result);
 		}
 
 		const updated_doc = await this.findOne(filter, options);
 		if (!updated_doc) {
-			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Failed to update document', result);
+			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Failed to find updated document', result);
 		}
 
 		return updated_doc as TReturnDocument extends true ? WithId<T> : UpdateResult<T>;

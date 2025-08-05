@@ -45,7 +45,7 @@ class PlansClass extends MongoCollectionClass<Plan, CreatePlanDto, UpdatePlanDto
 	}
 
 	protected getEnvName(): string {
-		return 'TML_INTERFACE_PLANS';
+		return 'DATABASE_URI';
 	}
 }
 

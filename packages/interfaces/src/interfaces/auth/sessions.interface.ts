@@ -39,7 +39,7 @@ class SessionsClass extends MongoCollectionClass<Session, CreateSessionDto, Upda
 	}
 
 	protected getEnvName(): string {
-		return 'TML_INTERFACE_AUTH';
+		return 'DATABASE_URI';
 	}
 }
 

@@ -168,8 +168,8 @@ class LocationsClass {
 	/*  Private Methods - Database Connection */
 
 	private async connect() {
-		const dbUri = process.env.TML_INTERFACE_LOCATIONS;
-		if (!dbUri) throw new Error(`Missing TML_INTERFACE_LOCATIONS environment variable`);
+		const dbUri = process.env.DATABASE_URI;
+		if (!dbUri) throw new Error(`Missing DATABASE_URI environment variable`);
 
 		try {
 			this.mongoConnector = new MongoConnector(dbUri);

@@ -68,7 +68,7 @@ class ZonesClass extends MongoCollectionClass<Zone, CreateZoneDto, UpdateZoneDto
 	}
 
 	protected getEnvName(): string {
-		return 'TML_INTERFACE_ZONES';
+		return 'DATABASE_URI';
 	}
 }
 

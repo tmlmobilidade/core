@@ -205,7 +205,7 @@ class FilesClass extends MongoCollectionClass<File, CreateFileDto, UpdateFileDto
 	}
 
 	protected getEnvName(): string {
-		return 'TML_INTERFACE_FILES';
+		return 'DATABASE_URI';
 	}
 }
 

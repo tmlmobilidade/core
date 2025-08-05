@@ -120,7 +120,7 @@ class UsersClass extends MongoCollectionClass<User, CreateUserDto, UpdateUserDto
 	}
 
 	protected getEnvName(): string {
-		return 'TML_INTERFACE_AUTH';
+		return 'DATABASE_URI';
 	}
 
 	private deletePasswordHash(user: WithId<User>) {

@@ -64,7 +64,7 @@ class StopsClass extends MongoCollectionClass<Stop, CreateStopDto, UpdateStopDto
 	}
 
 	protected getEnvName(): string {
-		return 'TML_INTERFACE_STOPS';
+		return 'DATABASE_URI';
 	}
 }
 

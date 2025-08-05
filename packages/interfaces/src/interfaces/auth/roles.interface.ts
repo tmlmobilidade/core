@@ -47,7 +47,7 @@ class RolesClass extends MongoCollectionClass<Role, CreateRoleDto, UpdateRoleDto
 	}
 
 	protected getEnvName(): string {
-		return 'TML_INTERFACE_AUTH';
+		return 'DATABASE_URI';
 	}
 }
 

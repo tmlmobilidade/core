@@ -51,7 +51,7 @@ class AlertsClass extends MongoCollectionClass<Alert, CreateAlertDto, UpdateAler
 	}
 
 	protected getEnvName(): string {
-		return 'TML_INTERFACE_ALERTS';
+		return 'DATABASE_URI';
 	}
 }
 

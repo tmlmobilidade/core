@@ -34,7 +34,7 @@ export type GTFSValidatorMessage = z.infer<typeof GTFSValidatorMessageSchema>;
 
 /* VALIDATION */
 
-export const ValidationSchema = DocumentSchema.extend({
+export const GtfsValidationSchema = DocumentSchema.extend({
 	feeder_status: ProcessingStatusSchema,
 	file_id: z.string(),
 	gtfs_agency: GtfsAgencySchema,
@@ -43,15 +43,15 @@ export const ValidationSchema = DocumentSchema.extend({
 	summary: GTFSValidatorSummarySchema.nullish(),
 }).strict();
 
-export const CreateValidationSchema = ValidationSchema.omit({
+export const CreateGtfsValidationSchema = GtfsValidationSchema.omit({
 	_id: true,
 	created_at: true,
 	updated_at: true,
 });
 
-export const UpdateValidationSchema = CreateValidationSchema.partial();
+export const UpdateGtfsValidationSchema = CreateGtfsValidationSchema.partial();
 
-export interface Validation extends Omit<z.infer<typeof ValidationSchema>, 'created_at' | 'gtfs_agency' | 'gtfs_feed_info' | 'summary' | 'updated_at'> {
+export interface GtfsValidation extends Omit<z.infer<typeof GtfsValidationSchema>, 'created_at' | 'gtfs_agency' | 'gtfs_feed_info' | 'summary' | 'updated_at'> {
 	created_at: UnixTimestamp
 	gtfs_agency: GtfsAgency
 	gtfs_feed_info: GtfsFeedInfo
@@ -59,18 +59,18 @@ export interface Validation extends Omit<z.infer<typeof ValidationSchema>, 'crea
 	updated_at: UnixTimestamp
 }
 
-export interface CreateValidationDto extends Omit<z.infer<typeof CreateValidationSchema>, 'gtfs_agency' | 'gtfs_feed_info'> {
+export interface CreateGtfsValidationDto extends Omit<z.infer<typeof CreateGtfsValidationSchema>, 'gtfs_agency' | 'gtfs_feed_info'> {
 	gtfs_agency: GtfsAgency
 	gtfs_feed_info: GtfsFeedInfo
 }
 
-export type UpdateValidationDto = Partial<CreateValidationDto>;
+export type UpdateGtfsValidationDto = Partial<CreateGtfsValidationDto>;
 
 /* * */
 
-export const ValidationPermissionSchema = z.object({
+export const GtfsValidationPermissionSchema = z.object({
 	agency_ids: z.array(z.string()),
 	municipality_ids: z.array(z.string()),
 });
 
-export type ValidationPermission = z.infer<typeof ValidationPermissionSchema>;
+export type GtfsValidationPermission = z.infer<typeof GtfsValidationPermissionSchema>;

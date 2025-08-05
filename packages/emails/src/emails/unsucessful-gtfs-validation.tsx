@@ -3,13 +3,13 @@
 import { EmailWrapper, styles, ValidationSummary } from '@/components/index.js';
 import { Button, Hr, Section, Text } from '@react-email/components';
 import { getAppConfig } from '@tmlmobilidade/lib';
-import { ProcessingStatus, UnixTimestamp, Validation } from '@tmlmobilidade/types';
+import { GtfsValidation, ProcessingStatus, UnixTimestamp } from '@tmlmobilidade/types';
 
 /* * */
 
 export interface UnsuccessfulGtfsValidationEmailProps {
 	first_name: string
-	validation: Validation
+	validation: GtfsValidation
 }
 
 export function UnsuccessfulGtfsValidationEmail({ first_name, validation }: UnsuccessfulGtfsValidationEmailProps) {
@@ -69,7 +69,7 @@ export function UnsuccessfulGtfsValidationEmail({ first_name, validation }: Unsu
 	);
 };
 
-const validation: Validation = {
+const validation: GtfsValidation = {
 	_id: '123',
 	created_at: 1715328000 as UnixTimestamp,
 	feeder_status: 'success' as ProcessingStatus,

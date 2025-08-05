@@ -3,14 +3,14 @@
 import { EmailWrapper, InfoBox, styles } from '@/components/index.js';
 import { Button, Hr, Section, Text } from '@react-email/components';
 import { getAppConfig } from '@tmlmobilidade/lib';
-import { type UnixTimestamp, type Validation } from '@tmlmobilidade/types';
+import { type GtfsValidation, type UnixTimestamp } from '@tmlmobilidade/types';
 import { Dates } from '@tmlmobilidade/utils';
 
 /* * */
 
 export interface PlanApprovalRequestEmailProps {
 	solicited_by: string
-	validation: Validation
+	validation: GtfsValidation
 }
 
 export function PlanApprovalRequestEmail({
@@ -71,7 +71,7 @@ export function PlanApprovalRequestEmail({
 	);
 };
 
-const mockValidation: Validation = {
+const mockValidation: GtfsValidation = {
 	_id: 'ABC123',
 	created_at: 1753885477000 as UnixTimestamp,
 	feeder_status: 'complete',

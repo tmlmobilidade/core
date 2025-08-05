@@ -15,9 +15,11 @@ export type {
 	FindOptions,
 	IndexDescription,
 	InsertOneOptions,
+	InsertOneResult,
 	MongoClientOptions,
 	OptionalUnlessRequiredId,
 	Sort,
 	UpdateOptions,
+	UpdateResult,
 	WithId,
 } from 'mongodb';

@@ -1,6 +1,6 @@
 /* * */
 
-import { GtfsValidationPermissionSchema, PlanPermissionSchema } from '@tmlmobilidade/types';
+import { PlanPermissionSchema, ValidationPermissionSchema } from '@tmlmobilidade/types';
 
 /* * */
 
@@ -99,7 +99,7 @@ export const Permissions = Object.freeze({
 			read: 'read',
 			request_approval: 'request_approval',
 		},
-		resources: GtfsValidationPermissionSchema.shape,
+		resources: ValidationPermissionSchema.shape,
 		scope: 'validations',
 	},
 });

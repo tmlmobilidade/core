@@ -183,7 +183,8 @@ export class FastifyService {
 				const payloadJson = JSON.parse(payload as string) as HttpResponse<unknown>;
 				reply.code(payloadJson.statusCode ?? HttpStatus.OK);
 			}
-			catch (_) {
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			catch (error) {
 				// Do nothing
 			}
 			finally {
@@ -201,6 +202,7 @@ export class FastifyService {
 
 		await this.server.register(cors, {
 			credentials: true,
+			methods: ['GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'OPTIONS'],
 			origin: this.origin,
 		});
 		await this.server.register(cookie);

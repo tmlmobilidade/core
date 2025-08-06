@@ -4,7 +4,7 @@ import { roles, sessions, users, verificationTokens } from '@/interfaces/index.j
 import { sendWelcomeEmail } from '@tmlmobilidade/emails';
 import { getAppConfig, HttpException, HttpStatus } from '@tmlmobilidade/lib';
 import { CreateUserDto, LoginDto, Permission, Session, User } from '@tmlmobilidade/types';
-import { AsyncSingletonProxy, Dates, generateRandomString, generateRandomToken, getPermission } from '@tmlmobilidade/utils';
+import { AsyncSingletonProxy, Dates, generateRandomString, generateRandomToken } from '@tmlmobilidade/utils';
 import bcrypt from 'bcryptjs';
 
 /* * */
@@ -29,7 +29,7 @@ class AuthProvider {
 	 * @param action - The action to check
 	 * @returns The permissions that the user has
 	 */
-	public async getPermission<T>(sessionToken: string, scope: string, action: string): Promise<Permission<T>> {
+	public async getPermissions<T>(sessionToken: string): Promise<Permission<T>[]> {
 		//
 
 		//
@@ -41,17 +41,15 @@ class AuthProvider {
 		//
 		// Build the permissions list
 
-		let permission: Permission<T> | undefined;
+		let combinedPermissions: Permission<T>[] = [];
 
 		try {
 			// Combine permissions from associated roles
 			// and user-specific permissions
-			const combinedPermissions = [
+			combinedPermissions = [
 				...rolesData.flatMap(role => role.permissions),
 				...userData.permissions,
 			] as Permission<unknown>[];
-			// Get the permission for the requested scope and action
-			permission = getPermission(combinedPermissions, scope, action);
 		}
 		catch (e) {
 			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Error getting permissions', { cause: e });
@@ -60,14 +58,14 @@ class AuthProvider {
 		//
 		// If no permission found, throw an error
 
-		if (!permission || Object.keys(permission).length === 0) {
-			throw new HttpException(HttpStatus.FORBIDDEN, 'User does not have permission');
+		if (!combinedPermissions?.length) {
+			throw new HttpException(HttpStatus.FORBIDDEN, 'User does not have permissions');
 		}
 
 		//
 		// Else, return the permission
 
-		return permission;
+		return combinedPermissions;
 	}
 
 	/**

@@ -87,7 +87,7 @@ export function hasPermissionResource<T>({ action, permissions, resource_key, sc
 export function hasAPIResourcePermission<T>(request: any, params: HasPermissionResourceArgs<T>): boolean {
 	const allowed = hasPermissionResource<T>({
 		action: params.action,
-		permissions: [request.permissions as Permission<T>, ...params.permissions ?? []],
+		permissions: request.permissions as Permission<T>[],
 		resource_key: params.resource_key,
 		scope: params.scope,
 		value: params.value,

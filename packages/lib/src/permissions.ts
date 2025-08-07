@@ -44,6 +44,8 @@ export const Permissions = Object.freeze({
 			create: 'create',
 			delete: 'delete',
 			read: 'read',
+			read_controller: 'read_controller',
+			read_pcgi_legacy: 'pcgi_legacy_read',
 			toggle_lock: 'toggle_lock',
 			update: 'update',
 			update_controller: 'update_controller',

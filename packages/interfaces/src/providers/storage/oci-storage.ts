@@ -132,25 +132,5 @@ export class OCIStorageProvider implements IStorageProvider {
 				objectName: key,
 			},
 		});
-		// const multipartUpload = await this.ociClient.createMultipartUpload({
-		// 	bucketName: this.bucketName,
-		// 	createMultipartUploadDetails: {
-		// 		contentDisposition: isImage ? 'inline' : 'attachment',
-		// 		contentType: mimeType,
-		// 		object: key,
-
-		// 		// objectName: key,
-		// 	},
-		// 	namespaceName: this.namespace,
-		// 	// putObjectBody: body,
-		// });
-		// await this.ociClient.uploadPart({
-		// 	bucketName: this.bucketName,
-		// 	namespaceName: this.namespace,
-		// 	objectName: key,
-		// 	uploadId: multipartUpload.multipartUpload.uploadId,
-		// 	uploadPartBody: body,
-		// 	uploadPartNum: 1,
-		// });
 	}
 }

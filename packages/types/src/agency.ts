@@ -8,19 +8,20 @@ import { z } from 'zod';
 /* * */
 
 export const AgencySchema = DocumentSchema.extend({
-	contact_emails: z.array(z.string().email()).default([]),
-	email: z.string().email(),
+	contact_emails_pta: z.array(z.string().email()).default([]),
+	contact_emails_pto: z.array(z.string().email()).default([]),
 	fare_url: z.string().url(),
-	is_locked: z.boolean(),
-	lang: z.string(),
+	financials: z.object({
+		price_per_km: z.number(),
+		total_vkm_per_year: z.number(),
+	}),
 	name: z.string(),
 	operation_start_date: z.string().transform(validateOperationalDate).brand('OperationalDate'),
 	phone: z.string(),
-	price_per_km: z.number(),
-	timezone: z.string(),
-	tml_contact_emails: z.array(z.string().email()).default([]),
-	total_vkm_per_year: z.number(),
-	url: z.string().url(),
+	public_email: z.string().email(),
+	short_name: z.string(),
+	timezone: z.string().default('Europe/Lisbon'),
+	website_url: z.string().url(),
 }).strict();
 
 export const CreateAgencySchema = AgencySchema.omit({ created_at: true, updated_at: true });
@@ -33,12 +34,15 @@ export interface Agency extends Omit<z.infer<typeof AgencySchema>, 'created_at' 
 	operation_start_date: OperationalDate
 	updated_at: UnixTimestamp
 }
+
 export interface CreateAgencyDto extends Omit<z.infer<typeof CreateAgencySchema>, 'operation_start_date'> {
 	operation_start_date: OperationalDate
 }
+
 export type UpdateAgencyDto = Partial<CreateAgencyDto>;
 
 /* * */
+
 export const AgencyPermissionSchema = z.object({
 	agency_ids: z.array(z.string()),
 	municipality_ids: z.array(z.string()),

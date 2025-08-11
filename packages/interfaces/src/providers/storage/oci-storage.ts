@@ -120,7 +120,7 @@ export class OCIStorageProvider implements IStorageProvider {
 	async uploadFile(key: string, body: Buffer, mimeType?: string): Promise<void> {
 		const isImage = mimeType === mimeTypes.png || mimeType === mimeTypes.jpg || mimeType === mimeTypes.jpeg || mimeType === mimeTypes.gif || mimeType === mimeTypes.svg;
 		const uploadManager = new UploadManager(this.ociClient, { enforceMD5: true });
-		uploadManager.upload({
+		await uploadManager.upload({
 			content: {
 				blob: new Blob([body], { type: mimeType }),
 			},

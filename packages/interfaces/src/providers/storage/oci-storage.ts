@@ -4,7 +4,7 @@ import { IStorageProvider } from '@/providers/storage/storage.interface.js';
 import { HttpException, HttpStatus, mimeTypes } from '@tmlmobilidade/lib';
 import { readFileSync } from 'node:fs';
 import { OciError, Region, SimpleAuthenticationDetailsProvider } from 'oci-common';
-import { ObjectStorageClient } from 'oci-objectstorage';
+import { ObjectStorageClient, UploadManager } from 'oci-objectstorage';
 import { CreatePreauthenticatedRequestDetails } from 'oci-objectstorage/lib/model/create-preauthenticated-request-details.js';
 
 /* * */
@@ -119,13 +119,38 @@ export class OCIStorageProvider implements IStorageProvider {
 
 	async uploadFile(key: string, body: Buffer, mimeType?: string): Promise<void> {
 		const isImage = mimeType === mimeTypes.png || mimeType === mimeTypes.jpg || mimeType === mimeTypes.jpeg || mimeType === mimeTypes.gif || mimeType === mimeTypes.svg;
-		await this.ociClient.putObject({
-			bucketName: this.bucketName,
-			contentDisposition: isImage ? 'inline' : 'attachment',
-			contentType: mimeType,
-			namespaceName: this.namespace,
-			objectName: key,
-			putObjectBody: body,
+		const uploadManager = new UploadManager(this.ociClient, { enforceMD5: true });
+		uploadManager.upload({
+			content: {
+				blob: new Blob([body], { type: mimeType }),
+			},
+			requestDetails: {
+				bucketName: this.bucketName,
+				contentDisposition: isImage ? 'inline' : 'attachment',
+				contentType: mimeType,
+				namespaceName: this.namespace,
+				objectName: key,
+			},
 		});
+		// const multipartUpload = await this.ociClient.createMultipartUpload({
+		// 	bucketName: this.bucketName,
+		// 	createMultipartUploadDetails: {
+		// 		contentDisposition: isImage ? 'inline' : 'attachment',
+		// 		contentType: mimeType,
+		// 		object: key,
+
+		// 		// objectName: key,
+		// 	},
+		// 	namespaceName: this.namespace,
+		// 	// putObjectBody: body,
+		// });
+		// await this.ociClient.uploadPart({
+		// 	bucketName: this.bucketName,
+		// 	namespaceName: this.namespace,
+		// 	objectName: key,
+		// 	uploadId: multipartUpload.multipartUpload.uploadId,
+		// 	uploadPartBody: body,
+		// 	uploadPartNum: 1,
+		// });
 	}
 }

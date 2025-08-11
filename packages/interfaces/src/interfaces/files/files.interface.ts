@@ -145,13 +145,7 @@ class FilesClass extends MongoCollectionClass<File, CreateFileDto, UpdateFileDto
 	 * @throws {Error} If neither `file_id` nor `key` is provided.
 	 * @throws {HttpException} If `file_id` is provided but the file is not found.
 	*/
-	public async getFileUrl({
-		file_id,
-		key,
-	}: {
-		file_id?: string
-		key?: string
-	}): Promise<string> {
+	public async getFileUrl({ file_id, key }: { file_id?: string, key?: string }): Promise<string> {
 		if (!file_id && !key) {
 			throw new Error('Either "file_id" or "key" must be provided');
 		}
@@ -185,7 +179,6 @@ class FilesClass extends MongoCollectionClass<File, CreateFileDto, UpdateFileDto
 	public async upload(file: Buffer, createFileDto: CreateFileDto, options?: InsertOneOptions): Promise<File> {
 		const _id = generateRandomString({ length: 5 });
 		await this.storageService.uploadFile(`${createFileDto.scope}/${createFileDto.resource_id}/${_id}.${Files.getFileExtension(createFileDto.name)}`, file, Files.getMimeTypeFromFileExtension(createFileDto.name));
-
 		return await this.insertOne({ ...createFileDto, _id }, { options });
 	}
 

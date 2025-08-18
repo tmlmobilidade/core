@@ -2,7 +2,8 @@
 
 /* * */
 
-import { type ReactNode, useRef, useState } from 'react';
+import { useLocalStorage } from '@mantine/hooks';
+import { type ReactNode, useRef } from 'react';
 
 import styles from './styles.module.css';
 
@@ -13,12 +14,13 @@ const MIN_PANE_FRACTION = 0.1; // Smallest size a pane can have in fraction unit
 /* * */
 
 interface PanesManagerProps {
+	id: string
 	panes: ReactNode[]
 }
 
 /* * */
 
-export function PanesManager({ panes }: PanesManagerProps) {
+export function PanesManager({ id, panes }: PanesManagerProps) {
 	//
 
 	//
@@ -26,7 +28,7 @@ export function PanesManager({ panes }: PanesManagerProps) {
 
 	const containerRef = useRef<HTMLDivElement | null>(null);
 
-	const [paneFractions, setPaneFractions] = useState<number[]>(Array(panes.length).fill(1 / panes.length));
+	const [paneFractions, setPaneFractions] = useLocalStorage<number[]>({ defaultValue: Array(panes.length).fill(1 / panes.length), key: `panes:${id}:fractions` });
 
 	//
 	// B. Transform data

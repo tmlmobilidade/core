@@ -2,6 +2,10 @@
 
 /* * */
 
+import 'maplibre-gl/dist/maplibre-gl.css';
+
+/* * */
+
 import { type MapStyle } from '@/components/map/configs/styles';
 import { useLocalStorage } from '@mantine/hooks';
 import { MapProvider } from '@vis.gl/react-maplibre';

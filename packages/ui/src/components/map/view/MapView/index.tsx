@@ -2,11 +2,9 @@
 
 /* * */
 
-import 'maplibre-gl/dist/maplibre-gl.css';
-
-/* * */
-
 import { MAP_STYLES } from '@/components/map/configs/styles';
+import { MapViewAttribution } from '@/components/map/view/MapViewAttribution';
+import { MapViewToolbar } from '@/components/map/view/MapViewToolbar';
 import { useMapContext } from '@/contexts/Map.context';
 import { mapDefaultConfig } from '@/settings/map.settings';
 import { FullscreenControl, GeolocateControl, Map, type MapLayerMouseEvent, type MapRef, NavigationControl, ScaleControl, type ViewStateChangeEvent } from '@vis.gl/react-maplibre';
@@ -79,40 +77,39 @@ export function MapView({ children, id, interactiveLayerIds = [], onClick, onDra
 	// C. Render components
 
 	return (
-		<div className={styles.container}>
-			<Map
-				attributionControl={false}
-				cursor={mouseCursor}
-				id={id}
-				initialViewState={mapDefaultConfig.initialViewState}
-				interactive={!!interactiveLayerIds}
-				interactiveLayerIds={interactiveLayerIds}
-				mapStyle={currentMapStyleConfig.value}
-				maxZoom={currentMapStyleConfig.max_zoom}
-				minZoom={currentMapStyleConfig.min_zoom}
-				onClick={onClick}
-				onDragEnd={handleOnDragEnd}
-				onDragStart={handleOnDragStart}
-				onMouseEnter={handleOnMouseEnter}
-				onMouseLeave={handleOnMouseLeave}
-				onMouseOut={onMouseOut}
-				onMouseOver={onMouseOver}
-				scrollZoom={mapContext.flags.scroll_zoom}
-				style={{ height: '100%', width: '100%' }}
-			>
-				<NavigationControl />
-				<FullscreenControl />
-				<GeolocateControl />
-				<ScaleControl />
-				<div className={styles.childrenWrapper}>
-					{children}
-				</div>
-			</Map>
-			<div className={styles.attributionWrapper}>
-				<a href="https://maplibre.org/" target="_blank">MapLibre</a>
-				<a href="https://www.openmaptiles.org/" target="_blank">© OpenMapTiles</a>
-				<a href="https://www.openstreetmap.org/copyright" target="_blank">© OpenStreetMap contributors</a>
+		<>
+			<div className={styles.container}>
+				<Map
+					attributionControl={false}
+					cursor={mouseCursor}
+					id={id}
+					initialViewState={mapDefaultConfig.initialViewState}
+					interactive={!!interactiveLayerIds}
+					interactiveLayerIds={interactiveLayerIds}
+					mapStyle={currentMapStyleConfig.value}
+					maxZoom={currentMapStyleConfig.max_zoom}
+					minZoom={currentMapStyleConfig.min_zoom}
+					onClick={onClick}
+					onDragEnd={handleOnDragEnd}
+					onDragStart={handleOnDragStart}
+					onMouseEnter={handleOnMouseEnter}
+					onMouseLeave={handleOnMouseLeave}
+					onMouseOut={onMouseOut}
+					onMouseOver={onMouseOver}
+					scrollZoom={mapContext.flags.scroll_zoom}
+					style={{ height: '100%', width: '100%' }}
+				>
+					<NavigationControl />
+					<FullscreenControl />
+					<GeolocateControl />
+					<ScaleControl />
+					<div className={styles.childrenWrapper}>
+						{children}
+					</div>
+				</Map>
+				<MapViewAttribution />
 			</div>
-		</div>
+			<MapViewToolbar />
+		</>
 	);
 }

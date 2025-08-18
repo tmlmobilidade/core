@@ -1,0 +1,15 @@
+/* * */
+/* TOOLBAR */
+
+.toolbar {
+	display: flex;
+	gap: var(--size-spacing-sm);
+	align-items: center;
+	justify-content: flex-start;
+	width: 100%;
+	padding: var(--size-spacing-sm);
+	padding-left: var(--size-spacing-md);
+	overflow-x: auto;
+	background-color: var(--color-system-background-100);
+	border-top: 1px solid var(--color-system-border-100);
+}

@@ -1,29 +1,29 @@
 db.createUser({
 	pwd: USER_AUTH_PASSWORD,
-	roles: [{ db: 'production', role: 'auth' }],
+	roles: [{ db: 'admin', role: 'auth' }],
 	user: 'auth',
 });
 
 db.createUser({
 	pwd: USER_PLANS_PASSWORD,
-	roles: [{ db: 'production', role: 'plans' }],
+	roles: [{ db: 'admin', role: 'plans' }],
 	user: 'plans',
 });
 
 db.createUser({
 	pwd: USER_ALERTS_PASSWORD,
-	roles: [{ db: 'production', role: 'alerts' }],
+	roles: [{ db: 'admin', role: 'alerts' }],
 	user: 'alerts',
 });
 
 db.createUser({
 	pwd: USER_STOPS_PASSWORD,
-	roles: [{ db: 'production', role: 'stops' }],
+	roles: [{ db: 'admin', role: 'stops' }],
 	user: 'stops',
 });
 
 db.createUser({
 	pwd: USER_LOCATIONS_PASSWORD,
-	roles: [{ db: 'production', role: 'locations' }],
+	roles: [{ db: 'admin', role: 'locations' }],
 	user: 'locations',
 });

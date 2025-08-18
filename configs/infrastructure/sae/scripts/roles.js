@@ -1,6 +1,6 @@
 db.createRole({
 	privileges: [
-		{ actions: ['find'], admin: { collection: 'agencies', db: 'production' } },
+		{ actions: ['find'], resource: { collection: 'agencies', db: 'production' } },
 		{ actions: ['find'], resource: { collection: 'users', db: 'production' } },
 		{ actions: ['find'], resource: { collection: 'sessions', db: 'production' } },
 		{ actions: ['find'], resource: { collection: 'roles', db: 'production' } },

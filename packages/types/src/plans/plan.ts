@@ -4,6 +4,7 @@ import { DocumentSchema } from '@/_common/document.js';
 import { type UnixTimestamp } from '@/_common/unix-timestamp.js';
 import { GtfsAgency, GtfsAgencySchema, GtfsFeedInfo, GtfsFeedInfoSchema } from '@/gtfs.js';
 import { PlanController, PlanControllerSchema } from '@/plans/plan-controller.js';
+import { PlanPcgiLegacySchema } from '@/plans/plan-pcgi-legacy.js';
 import { ProcessingStatusSchema } from '@/system/processing-status.js';
 import { z } from 'zod';
 
@@ -16,6 +17,7 @@ export const PlanSchema = DocumentSchema.extend({
 	hash: z.string(),
 	is_locked: z.boolean().default(false),
 	operation_file_id: z.string(),
+	pcgi_legacy: PlanPcgiLegacySchema,
 	status_merger: ProcessingStatusSchema.default('waiting'),
 }).strict();
 
@@ -58,8 +60,6 @@ export interface HashablePlanMetadata {
 
 export const PlanPermissionSchema = z.object({
 	agency_ids: z.array(z.string()),
-	end_date: z.string(),
-	start_date: z.string(),
 });
 
 export type PlanPermission = z.infer<typeof PlanPermissionSchema>;

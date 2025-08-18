@@ -37,6 +37,7 @@ export function hasPermission(permissions: Permission<unknown>[], scope: string,
 
 export interface HasPermissionResourceArgs<T> {
 	action: string
+	permissions?: Permission<T>[]
 	resource_key: keyof T
 	scope: string
 	value: unknown
@@ -86,7 +87,7 @@ export function hasPermissionResource<T>({ action, permissions, resource_key, sc
 export function hasAPIResourcePermission<T>(request: any, params: HasPermissionResourceArgs<T>): boolean {
 	const allowed = hasPermissionResource<T>({
 		action: params.action,
-		permissions: [request.permissions as Permission<T>],
+		permissions: request.permissions as Permission<T>[],
 		resource_key: params.resource_key,
 		scope: params.scope,
 		value: params.value,

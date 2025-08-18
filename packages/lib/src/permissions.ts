@@ -1,6 +1,6 @@
 /* * */
 
-import { PlanPermissionSchema } from '@tmlmobilidade/types';
+import { PlanPermissionSchema, ValidationPermissionSchema } from '@tmlmobilidade/types';
 
 /* * */
 
@@ -13,8 +13,8 @@ export const Permissions = Object.freeze({
 		actions: {
 			create: 'create',
 			delete: 'delete',
-			list: 'list',
 			read: 'read',
+			toggle_lock: 'toggle_lock',
 			update: 'update',
 		},
 		resources: {},
@@ -24,85 +24,41 @@ export const Permissions = Object.freeze({
 		actions: {
 			create: 'create',
 			delete: 'delete',
-			list: 'list',
 			read: 'read',
+			toggle_lock: 'toggle_lock',
 			update: 'update',
 		},
 		resources: {},
 		scope: 'alerts',
 	},
-	files: {
+	home: {
 		actions: {
-			create: 'create',
-			delete: 'delete',
-			list: 'list',
-			read: 'read',
-			update: 'update',
+			read_links: 'read_links',
+			read_wiki: 'read_wiki',
 		},
 		resources: {},
-		scope: 'files',
-	},
-	hashedShapes: {
-		actions: {
-			create: 'create',
-			delete: 'delete',
-			list: 'list',
-			read: 'read',
-			update: 'update',
-		},
-		resources: {},
-		scope: 'hashedShapes',
-	},
-	hashedTrips: {
-		actions: {
-			create: 'create',
-			delete: 'delete',
-			list: 'list',
-			read: 'read',
-			update: 'update',
-		},
-		resources: {},
-		scope: 'hashedTrips',
-	},
-	municipalities: {
-		actions: {
-			create: 'create',
-			delete: 'delete',
-			list: 'list',
-			read: 'read',
-			update: 'update',
-		},
-		resources: {},
-		scope: 'municipalities',
-	},
-	organizations: {
-		actions: {
-			create: 'create',
-			delete: 'delete',
-			list: 'list',
-			read: 'read',
-			update: 'update',
-		},
-		resources: {},
-		scope: 'organizations',
+		scope: 'home',
 	},
 	plans: {
 		actions: {
 			create: 'create',
 			delete: 'delete',
-			list: 'list',
 			read: 'read',
+			read_controller: 'read_controller',
+			read_pcgi_legacy: 'pcgi_legacy_read',
+			toggle_lock: 'toggle_lock',
 			update: 'update',
+			update_controller: 'update_controller',
+			update_feed_info_dates: 'update_feed_info_dates',
+			update_pcgi_legacy: 'update_pcgi_legacy',
 		},
 		resources: PlanPermissionSchema.shape,
 		scope: 'plans',
 	},
 	rides: {
 		actions: {
-			create: 'create',
-			delete: 'delete',
-			list: 'list',
 			read: 'read',
+			toggle_lock: 'toggle_lock',
 			update: 'update',
 		},
 		resources: {},
@@ -112,30 +68,18 @@ export const Permissions = Object.freeze({
 		actions: {
 			create: 'create',
 			delete: 'delete',
-			list: 'list',
 			read: 'read',
 			update: 'update',
 		},
 		resources: {},
 		scope: 'roles',
 	},
-	sessions: {
-		actions: {
-			create: 'create',
-			delete: 'delete',
-			list: 'list',
-			read: 'read',
-			update: 'update',
-		},
-		resources: {},
-		scope: 'sessions',
-	},
 	stops: {
 		actions: {
 			create: 'create',
 			delete: 'delete',
-			list: 'list',
 			read: 'read',
+			toggle_lock: 'toggle_lock',
 			update: 'update',
 		},
 		resources: {},
@@ -145,7 +89,6 @@ export const Permissions = Object.freeze({
 		actions: {
 			create: 'create',
 			delete: 'delete',
-			list: 'list',
 			read: 'read',
 			update: 'update',
 		},
@@ -155,11 +98,10 @@ export const Permissions = Object.freeze({
 	validations: {
 		actions: {
 			create: 'create',
-			list: 'list',
 			read: 'read',
 			request_approval: 'request_approval',
 		},
-		resources: {},
+		resources: ValidationPermissionSchema.shape,
 		scope: 'validations',
 	},
 });

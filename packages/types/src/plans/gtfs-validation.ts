@@ -70,7 +70,6 @@ export type UpdateGtfsValidationDto = Partial<CreateGtfsValidationDto>;
 
 export const GtfsValidationPermissionSchema = z.object({
 	agency_ids: z.array(z.string()),
-	municipality_ids: z.array(z.string()),
 });
 
 export type GtfsValidationPermission = z.infer<typeof GtfsValidationPermissionSchema>;

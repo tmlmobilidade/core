@@ -1,10 +1,10 @@
-/* eslint-disable perfectionist/sort-imports */
+/* * */
+
 import { IStorageProvider } from '@/providers/storage/storage.interface.js';
-import { Readable } from 'node:stream';
-import { ObjectStorageClient } from 'oci-objectstorage';
-import { OciError, Region, SimpleAuthenticationDetailsProvider } from 'oci-common';
-import { readFileSync } from 'node:fs';
 import { HttpException, HttpStatus, mimeTypes } from '@tmlmobilidade/lib';
+import { readFileSync } from 'node:fs';
+import { OciError, Region, SimpleAuthenticationDetailsProvider } from 'oci-common';
+import { ObjectStorageClient, UploadManager } from 'oci-objectstorage';
 import { CreatePreauthenticatedRequestDetails } from 'oci-objectstorage/lib/model/create-preauthenticated-request-details.js';
 
 /* * */
@@ -29,14 +29,6 @@ export class OCIStorageProvider implements IStorageProvider {
 
 	constructor(config: OCIStorageProviderConfiguration) {
 		this.ociClient = new ObjectStorageClient({
-			/**
-             * Construct an instance of [[SimpleAuthenticationDetailsProvider]].
-             * @param tenancy   tenancy id.
-             * @param user  user id.
-             * @param fingerprint   user's fingerprint.
-             * @param privateKey    private key to sign the request.
-             * @param passphrase    the passphrase of private key.
-             */
 			authenticationDetailsProvider: new SimpleAuthenticationDetailsProvider(
 				config.tenancy,
 				config.user,
@@ -46,7 +38,6 @@ export class OCIStorageProvider implements IStorageProvider {
 				Region.fromRegionId(config.region),
 			),
 		});
-
 		this.region = Region.fromRegionId(config.region);
 		this.namespace = config.namespace;
 		this.bucketName = config.bucket_name;
@@ -126,16 +117,20 @@ export class OCIStorageProvider implements IStorageProvider {
 		return result.listObjects?.objects?.map(obj => obj.name) ?? [];
 	}
 
-	async uploadFile(key: string, body: Buffer | Readable | string, mimeType?: string): Promise<void> {
+	async uploadFile(key: string, body: Buffer, mimeType?: string): Promise<void> {
 		const isImage = mimeType === mimeTypes.png || mimeType === mimeTypes.jpg || mimeType === mimeTypes.jpeg || mimeType === mimeTypes.gif || mimeType === mimeTypes.svg;
-
-		await this.ociClient.putObject({
-			bucketName: this.bucketName,
-			contentDisposition: isImage ? 'inline' : 'attachment',
-			contentType: mimeType,
-			namespaceName: this.namespace,
-			objectName: key,
-			putObjectBody: typeof body === 'string' ? Buffer.from(body) : body,
+		const uploadManager = new UploadManager(this.ociClient, { enforceMD5: true });
+		await uploadManager.upload({
+			content: {
+				blob: new Blob([body], { type: mimeType }),
+			},
+			requestDetails: {
+				bucketName: this.bucketName,
+				contentDisposition: isImage ? 'inline' : 'attachment',
+				contentType: mimeType,
+				namespaceName: this.namespace,
+				objectName: key,
+			},
 		});
 	}
 }

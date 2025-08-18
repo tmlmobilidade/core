@@ -22,7 +22,7 @@ server.register(
 			{
 				preHandler: authorizationMiddleware<Alert>(
 					Permissions.alerts.scope,
-					Permissions.alerts.actions.list,
+					Permissions.alerts.actions.read,
 				),
 			},
 			AlertsController.getAll,

@@ -77,39 +77,37 @@ export function MapView({ children, id, interactiveLayerIds = [], onClick, onDra
 	// C. Render components
 
 	return (
-		<>
-			<div className={styles.container}>
-				<Map
-					attributionControl={false}
-					cursor={mouseCursor}
-					id={id}
-					initialViewState={mapDefaultConfig.initialViewState}
-					interactive={!!interactiveLayerIds}
-					interactiveLayerIds={interactiveLayerIds}
-					mapStyle={currentMapStyleConfig.value}
-					maxZoom={currentMapStyleConfig.max_zoom}
-					minZoom={currentMapStyleConfig.min_zoom}
-					onClick={onClick}
-					onDragEnd={handleOnDragEnd}
-					onDragStart={handleOnDragStart}
-					onMouseEnter={handleOnMouseEnter}
-					onMouseLeave={handleOnMouseLeave}
-					onMouseOut={onMouseOut}
-					onMouseOver={onMouseOver}
-					scrollZoom={mapContext.flags.scroll_zoom}
-					style={{ height: '100%', width: '100%' }}
-				>
-					<NavigationControl />
-					<FullscreenControl />
-					<GeolocateControl />
-					<ScaleControl />
-					<div className={styles.childrenWrapper}>
-						{children}
-					</div>
-				</Map>
-				<MapViewAttribution />
-			</div>
+		<div className={styles.container}>
+			<Map
+				attributionControl={false}
+				cursor={mouseCursor}
+				id={id}
+				initialViewState={mapDefaultConfig.initialViewState}
+				interactive={!!interactiveLayerIds}
+				interactiveLayerIds={interactiveLayerIds}
+				mapStyle={currentMapStyleConfig.value}
+				maxZoom={currentMapStyleConfig.max_zoom}
+				minZoom={currentMapStyleConfig.min_zoom}
+				onClick={onClick}
+				onDragEnd={handleOnDragEnd}
+				onDragStart={handleOnDragStart}
+				onMouseEnter={handleOnMouseEnter}
+				onMouseLeave={handleOnMouseLeave}
+				onMouseOut={onMouseOut}
+				onMouseOver={onMouseOver}
+				scrollZoom={mapContext.flags.scroll_zoom}
+				style={{ height: '100%', width: '100%' }}
+			>
+				<NavigationControl />
+				<FullscreenControl />
+				<GeolocateControl />
+				<ScaleControl />
+				<div className={styles.childrenWrapper}>
+					{children}
+				</div>
+			</Map>
+			<MapViewAttribution />
 			<MapViewToolbar />
-		</>
+		</div>
 	);
 }

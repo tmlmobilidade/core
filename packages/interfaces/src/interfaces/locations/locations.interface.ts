@@ -16,7 +16,7 @@ import {
 	ParishDocument,
 } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
-import { Collection, Filter, FindOptions, WithId } from 'mongodb';
+import { Collection, Document, Filter, FindOptions, WithId } from 'mongodb';
 
 /* * */
 

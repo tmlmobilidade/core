@@ -63,6 +63,23 @@ services:
 
   # # # # # # # # # # # # # # # # # # # # #
   # # # # # # # # # # # # # # # # # # # # #
+  
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - 5672:5672 # amqp
+      - 15672:15672 # management
+    env_file:
+      - ./secrets/.env
+    restart: always
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # # # # # # # # # # # # # # # # # # # # #
+  # # # # # # # # # # # # # # # # # # # # #
 
   init:
     image: mongo:latest
@@ -77,3 +94,18 @@ services:
       database:
         condition: service_healthy
 
+  # # # # # # # # # # # # # # # # # # # # #
+  # # # # # # # # # # # # # # # # # # # # #
+
+  backupd:
+    image: ghcr.io/tmlmobilidade/backupd:production
+    networks:
+      - mongonet
+    volumes:
+      - ./backupd-data:/data/backups
+      - ./secrets:/secrets
+    environment:
+      - CONFIG_PATH=/secrets/backupd.yaml
+    depends_on:
+      database:
+        condition: service_healthy

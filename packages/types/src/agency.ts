@@ -22,7 +22,7 @@ export const AgencySchema = DocumentSchema.extend({
 	short_name: z.string(),
 	timezone: z.string().default('Europe/Lisbon'),
 	website_url: z.string().url(),
-}).strict();
+}).strip();
 
 export const CreateAgencySchema = AgencySchema.omit({ created_at: true, updated_at: true });
 export const UpdateAgencySchema = CreateAgencySchema.partial();

@@ -2,10 +2,9 @@
 
 /* * */
 
-import { MapOptionsContextProvider } from '@/contexts/MapOptions.context';
+import { MapContextProvider } from '@/contexts/Map.context';
 import { MeContextProvider } from '@/contexts/Me.context';
 import { ThemeContextProvider } from '@/contexts/Theme.context';
-import { MapProvider } from '@vis.gl/react-maplibre';
 import { type PropsWithChildren } from 'react';
 import { SWRConfig, type SWRConfiguration } from 'swr';
 
@@ -44,11 +43,9 @@ export function AppProvider({ children }: PropsWithChildren) {
 		<SWRConfig value={swrSettings}>
 			<ThemeContextProvider>
 				<MeContextProvider>
-					<MapOptionsContextProvider>
-						<MapProvider>
-							{children}
-						</MapProvider>
-					</MapOptionsContextProvider>
+					<MapContextProvider>
+						{children}
+					</MapContextProvider>
 				</MeContextProvider>
 			</ThemeContextProvider>
 		</SWRConfig>

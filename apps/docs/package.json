@@ -17,24 +17,24 @@
 	"dependencies": {
 		"@tabler/icons-react": "3.34.1",
 		"@tmlmobilidade/ui": "*",
-		"fumadocs-core": "15.6.7",
-		"fumadocs-mdx": "11.7.3",
-		"fumadocs-openapi": "9.1.6",
+		"fumadocs-core": "15.6.12",
+		"fumadocs-mdx": "11.7.5",
+		"fumadocs-openapi": "9.2.0",
 		"fumadocs-typescript": "4.0.6",
-		"fumadocs-ui": "15.6.7",
-		"next": "15.4.5",
+		"fumadocs-ui": "15.6.12",
+		"next": "15.4.7",
 		"react": "19.1.1",
 		"react-dom": "19.1.1",
-		"shiki": "3.9.0"
+		"shiki": "3.9.2"
 	},
 	"devDependencies": {
 		"@tmlmobilidade/tsconfig": "*",
 		"@types/mdx": "2.0.13",
-		"@types/node": "24.1.0",
-		"@types/react": "19.1.9",
+		"@types/node": "24.3.0",
+		"@types/react": "19.1.10",
 		"@types/react-dom": "19.1.7",
 		"postcss": "8.5.6",
-		"tailwindcss": "4.1.11",
+		"tailwindcss": "4.1.12",
 		"typescript": "5.9.2"
 	}
 }

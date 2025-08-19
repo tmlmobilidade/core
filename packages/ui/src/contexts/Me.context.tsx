@@ -93,8 +93,8 @@ export const MeContextProvider = ({ children }: PropsWithChildren) => {
 		if (!meData || !meData.permissions) return;
 		// Call the theme endpoint
 		await fetchData(`${getAppConfig('auth', 'frontend_url')}/api/users/me`, 'PUT', { theme_id: themeId });
-		// Mutate the SWR cache to remove user data
-		meMutate(undefined, { revalidate: true });
+		// Mutate the SWR cache to update user data
+		meMutate();
 	}
 
 	//

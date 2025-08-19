@@ -21,7 +21,7 @@ export type MenuItemProps = MantineMenuItemProps & { href?: string };
 export type MenuDividerProps = MantineMenuDividerProps;
 export type MenuLabelProps = MantineMenuLabelProps;
 
-export default function Menu(props: MenuProps) {
+export function Menu(props: MenuProps) {
 	return <MantineMenu {...props} classNames={{ arrow: styles.arrow }} />;
 }
 

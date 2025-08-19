@@ -26,7 +26,7 @@ interface MultiSelectProps {
 	selected: string[]
 }
 
-export default function MultiSelect({
+export function MultiSelect({
 	clearable = true,
 	data,
 	description,

@@ -24,7 +24,7 @@ export interface BadgeProps extends MantineBadgeProps {
 
 /* * */
 
-export default function Badge({
+export function Badge({
 	children,
 	className,
 	disabled = false,

@@ -106,7 +106,7 @@ export function MapOverlayMultipleStops({ data, onClick, presentBeforeId }: MapO
 					closeButton={false}
 					latitude={hoveredFeature.geometry.coordinates[1] ?? 0}
 					longitude={hoveredFeature.geometry.coordinates[0] ?? 0}
-					maxWidth="500px"
+					maxWidth="300px"
 					offset={12}
 				>
 					<div className={styles.popup}>

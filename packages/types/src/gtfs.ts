@@ -42,6 +42,7 @@ export type GtfsAgency = Omit<z.infer<typeof GtfsAgencySchema>, 'feed_end_date' 
 
 export interface ServiceAlertExtended extends Omit<ServiceAlert, 'cause' | 'effect'> {
 	cause: string
+	coordinates?: [number, number]
 	effect: string
 	file_id?: string
 	image?: {

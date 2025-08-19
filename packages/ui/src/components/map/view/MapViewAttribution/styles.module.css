@@ -6,18 +6,25 @@
 	right: 0;
 	bottom: 0;
 	display: flex;
-	gap: var(--size-spacing-sm);
-	padding: var(--size-spacing-sm) var(--size-spacing-md);
+	gap: var(--size-spacing-md);
+    padding: 5px 5px 2px;
 	font-size: 8px;
 	font-weight: var(--font-weight-semibold);
 	line-height: 1;
 	color: var(--color-system-text-300);
 	background-color: var(--color-system-background-200);
-	opacity: 0.5;
+	border-top-left-radius: 5px;
+	opacity: 0.25;
 }
 
-.attribution a:hover {
+.attribution:hover {
+	opacity: 1;
+}
+
+/* * */
+/* LINKS */
+
+.link:hover {
 	color: var(--color-system-text-100);
 	text-decoration: underline;
-	opacity: 1;
 }

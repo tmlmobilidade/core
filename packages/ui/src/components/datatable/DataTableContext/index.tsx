@@ -135,7 +135,7 @@ export function DataTableContextProvider<T>({ children, columns, records }: Prop
 	//
 	// D. Define context value
 
-	const contextValue: DataTableContextState<T> = {
+	const contextValue: DataTableContextState<T> = useMemo(() => ({
 		actions: {
 			handleSort,
 			handleUpdateColumnWidth,
@@ -150,7 +150,12 @@ export function DataTableContextProvider<T>({ children, columns, records }: Prop
 		refs: {
 			list: listRef,
 		},
-	};
+	}), [
+		listRef,
+		columnWidths,
+		sortedRecords,
+		sortState,
+	]);
 
 	//
 	// E. Render components

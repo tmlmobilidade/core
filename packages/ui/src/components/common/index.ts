@@ -17,4 +17,3 @@ export * from '@/components/common/Popover';
 export * from '@/components/common/Slider';
 export * from '@/components/common/Switch';
 export * from '@/components/common/Tree';
-export * from '@/components/inputs/TextInput';

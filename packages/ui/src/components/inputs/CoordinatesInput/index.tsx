@@ -2,10 +2,10 @@
 
 /* * */
 
-import { Description } from '@/components/common/Description';
-import { Label } from '@/components/display/Label';
-import { NumberInput } from '@/components/inputs/NumberInput';
-import { Section } from '@/components/layout/Section';
+import { Description } from '@/components/common';
+import { Label } from '@/components/display';
+import { NumberInput } from '@/components/inputs';
+import { Section } from '@/components/layout';
 import React, { useCallback, useEffect, useState } from 'react';
 
 /* * */
@@ -23,17 +23,15 @@ interface CoordinatesInputProps {
 	value?: [number, number]
 }
 
-export function CoordinatesInput({
-	description,
-	disabled = false,
-	label = 'Coordenadas',
-	onChange,
-	onPaste,
-	value,
-}: CoordinatesInputProps) {
+export function CoordinatesInput({ description, disabled = false, label = 'Coordenadas', onChange, onPaste, value }: CoordinatesInputProps) {
+	//
+
+	// A. Setup variables
+
 	const [coordinates, setCoordinates] = useState<[number, number]>(value ?? [0, 0]);
 
-	// Sync state with external value
+	//
+	// B. Setup functions
 	useEffect(() => {
 		if (
 			value
@@ -50,6 +48,9 @@ export function CoordinatesInput({
 		},
 		[onChange],
 	);
+
+	//
+	// C. Setup handlers
 
 	const handlePaste = useCallback(
 		(event: React.ClipboardEvent<HTMLInputElement>) => {
@@ -89,6 +90,9 @@ export function CoordinatesInput({
 		},
 		[coordinates, updateCoordinates],
 	);
+
+	//
+	// D. Render components
 
 	return (
 		<Section flexDirection="column" gap="xs" padding="none">

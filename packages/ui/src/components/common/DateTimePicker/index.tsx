@@ -22,7 +22,7 @@ export interface DateTimePickerProps extends MantineDateTimePickerProps {
 	leftSection?: React.ReactNode
 }
 
-export function DateTimePicker({
+export default function DateTimePicker({
 	leftSection = <IconCalendar size={20} />,
 	...props
 }: DateTimePickerProps) {

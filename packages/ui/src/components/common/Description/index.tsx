@@ -15,7 +15,7 @@ export interface DescriptionProps {
 
 /* * */
 
-export function Description({ children, singleLine = false }: DescriptionProps) {
+export default function Description({ children, singleLine = false }: DescriptionProps) {
 	return (
 		<p className={styles.description} data-single-line={singleLine}>
 			{children}

@@ -8,6 +8,6 @@ import styles from './styles.module.css';
 
 export type TooltipProps = MantineTooltipProps;
 
-export function Tooltip({ children, ...props }: TooltipProps) {
+export default function Tooltip({ children, ...props }: TooltipProps) {
 	return <MantineTooltip classNames={{ ...styles, ...props.classNames }} {...props}>{children}</MantineTooltip>;
 };

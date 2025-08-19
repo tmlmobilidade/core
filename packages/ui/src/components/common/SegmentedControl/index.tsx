@@ -12,7 +12,7 @@ export interface SegmentedControlProps extends MantineSegmentedControlProps {
 
 /* * */
 
-export function SegmentedControl({ fullWidth, ...props }: SegmentedControlProps) {
+export default function SegmentedControl({ fullWidth, ...props }: SegmentedControlProps) {
 	return (
 		<MantineSegmentedControl
 			style={{ width: fullWidth ? '100%' : undefined }}

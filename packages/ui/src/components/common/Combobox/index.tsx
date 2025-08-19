@@ -69,7 +69,7 @@ interface MultipleProps extends BaseProps {
 // Combine Props using Discriminated Unions
 export type Props = MultipleProps | SingleProps;
 
-export function ComboboxComponent(props: Props) {
+export default function ComboboxComponent(props: Props) {
 	const {
 		className,
 		clearable = false,

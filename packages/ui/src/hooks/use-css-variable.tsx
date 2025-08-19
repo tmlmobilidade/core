@@ -10,15 +10,15 @@ import { useEffect, useState } from 'react';
  * @param variableName The name of the CSS variable to read.
  * @param defaultValue The default value to use if the variable is not set.
  * @param refreshRate The rate at which to refresh the variable's value. Defaults to `100` ms.
- * @returns The current value of the CSS variable, or null if not set.
+ * @returns The current value of the CSS variable, or the default value or undefined if not set.
  */
-export function useCssVariable(variableName: string, defaultValue?: string, refreshRate?: number): null | string {
+export function useCssVariable(variableName: string, defaultValue?: string, refreshRate?: number): string | undefined {
 	//
 
 	//
 	// A. Setup variables
 
-	const [variableValue, setVariableValue] = useState<null | string>(defaultValue ?? null);
+	const [variableValue, setVariableValue] = useState<string | undefined>(defaultValue);
 
 	//
 	// B. Handle actions

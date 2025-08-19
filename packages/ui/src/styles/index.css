@@ -100,16 +100,16 @@ body {
 	--color-brand-metro-200: #fff;
 
 
-	 /* COLOR / BRAND / CCFL*/
+	 /* COLOR / BRAND / CCFL */
 
 	--color-brand-ccfl-100: #ffd400;
 	--color-brand-ccfl-200: #19478e;
 
 
-	 /* COLOR / BRAND / CB */
+	 /* COLOR / BRAND / CP */
 
-	--color-brand-cb-100: #2a9057;
-	--color-brand-cb-200: #fff;
+	--color-brand-cp-100: #2a9057;
+	--color-brand-cp-200: #fff;
 
 	/* * */
 	/* SIZE / WIDTH */
@@ -202,7 +202,7 @@ body {
 		--color-status-info-primary: #054b8c;
 		--color-status-info-contrast: #051e3c;
 
-		/* COLOR / STATUS / SUCCESS*/
+		/* COLOR / STATUS / SUCCESS */
 
 		--color-status-success-primary: #329150;
 		--color-status-success-contrast: #052314;
@@ -244,7 +244,7 @@ body {
 		--color-brand-metro-100: #e43c2f;
 		--color-brand-metro-200: #fff;
 
-		/* COLOR / BRAND / CCFL*/
+		/* COLOR / BRAND / CCFL */
 
 		--color-brand-ccfl-100: #ffd400;
 		--color-brand-ccfl-200: #19478e;

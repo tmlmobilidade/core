@@ -2,10 +2,13 @@
 
 /* * */
 
+import { useCssVariable } from '@/hooks/use-css-variable';
 import { type Stop } from '@tmlmobilidade/types';
-import { getBaseGeoJsonFeatureCollectionPoint, getCssVariableValue } from '@tmlmobilidade/utils';
+import { getBaseGeoJsonFeatureCollectionPoint } from '@tmlmobilidade/utils';
 import { Layer, type MapMouseEvent, Popup, Source, useMap } from '@vis.gl/react-maplibre';
 import { useEffect, useMemo, useState } from 'react';
+
+import styles from './styles.module.css';
 
 /* * */
 
@@ -32,8 +35,8 @@ export function MapOverlayMultipleStops({ data, onClick, presentBeforeId }: MapO
 
 	const [hoveredFeature, setHoveredFeature] = useState<GeoJSON.Feature<GeoJSON.Point, Stop> | null>(null);
 
-	const [circleColorHexValue, setCircleColorHexValue] = useState<string>('#000000');
-	const [borderColorHexValue, setBorderColorHexValue] = useState<string>('#000000');
+	const circleColorHexValue = useCssVariable('--color-primary', '#000000');
+	const borderColorHexValue = useCssVariable('--color-secondary', '#000000');
 
 	//
 	// B. Transform data
@@ -55,22 +58,6 @@ export function MapOverlayMultipleStops({ data, onClick, presentBeforeId }: MapO
 		// Return the collection
 		return baseGeoJson;
 	}, [data]);
-
-	useEffect(() => {
-		// Refetch the value every 300 ms
-		const interval = setInterval(() => {
-			setCircleColorHexValue(getCssVariableValue('--color-background'));
-		}, 300);
-		return () => clearInterval(interval);
-	}, []);
-
-	useEffect(() => {
-		// Refetch the value every 300 ms
-		const interval = setInterval(() => {
-			setBorderColorHexValue(getCssVariableValue('--color-primary'));
-		}, 300);
-		return () => clearInterval(interval);
-	}, []);
 
 	//
 	// C. Handle actions
@@ -119,9 +106,13 @@ export function MapOverlayMultipleStops({ data, onClick, presentBeforeId }: MapO
 					closeButton={false}
 					latitude={hoveredFeature.geometry.coordinates[1] ?? 0}
 					longitude={hoveredFeature.geometry.coordinates[0] ?? 0}
+					maxWidth="500px"
 					offset={12}
 				>
-					{hoveredFeature.properties.name}
+					<div className={styles.popup}>
+						<span className={styles.id}>#{hoveredFeature.properties._id}</span>
+						<span className={styles.name}>{hoveredFeature.properties.name}</span>
+					</div>
 				</Popup>
 			)}
 
@@ -137,20 +128,20 @@ export function MapOverlayMultipleStops({ data, onClick, presentBeforeId }: MapO
 						'interpolate',
 						['linear'],
 						['zoom'],
-						9,
-						['case', ['boolean', ['feature-state', 'active'], false], 5, 1],
-						26,
-						['case', ['boolean', ['feature-state', 'active'], false], 25, 20],
+						9, // min zoom level
+						1, // min radius
+						26, // max zoom level
+						22, // max radius
 					],
 					'circle-stroke-color': borderColorHexValue,
 					'circle-stroke-width': [
 						'interpolate',
 						['linear'],
 						['zoom'],
-						9,
-						1,
-						26,
-						['case', ['boolean', ['feature-state', 'active'], false], 8, 7],
+						9, // min zoom level
+						1, // min stroke width
+						26, // max zoom level
+						10, // max stroke width
 					],
 				}}
 			/>

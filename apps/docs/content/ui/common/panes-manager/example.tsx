@@ -6,6 +6,7 @@ export default function PaneExample() {
 	return (
 		<ComponentWrapper>
 			<PanesManager
+				id="test"
 				panes={[
 					<Pane header={[
 						<>

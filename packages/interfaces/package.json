@@ -48,8 +48,8 @@
 		"luxon": "3.7.1",
 		"mongodb": "6.18.0",
 		"nodemailer": "7.0.5",
-		"oci-common": "2.115.0",
-		"oci-objectstorage": "2.115.0",
+		"oci-common": "2.116.0",
+		"oci-objectstorage": "2.116.0",
 		"zod": "3.25.76"
 	},
 	"devDependencies": {

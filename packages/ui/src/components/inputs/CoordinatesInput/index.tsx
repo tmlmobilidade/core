@@ -4,7 +4,7 @@
 
 import { Description } from '@/components/common';
 import { Label } from '@/components/display';
-import { NumberInput } from '@/components/inputs';
+import { NumberInput } from '@/components/inputs/NumberInput';
 import { Section } from '@/components/layout';
 import React, { useCallback, useEffect, useState } from 'react';
 

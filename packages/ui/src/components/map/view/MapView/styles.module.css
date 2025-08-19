@@ -2,9 +2,17 @@
 /* CONTAINER */
 
 .container {
-	position: relative;
 	display: grid;
 	grid-template-rows: 1fr auto;
 	width: 100%;
 	height: 100%;
+}
+
+/* * */
+/* CHILDREN */
+
+.children {
+	position: relative;
+	display: flex;
+	flex-direction: column;
 }

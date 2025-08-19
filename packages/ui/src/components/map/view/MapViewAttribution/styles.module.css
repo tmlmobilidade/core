@@ -6,15 +6,18 @@
 	right: 0;
 	bottom: 0;
 	display: flex;
-	gap: var(--size-spacing-5);
-	padding: var(--size-spacing-5) var(--size-spacing-10);
+	gap: var(--size-spacing-sm);
+	padding: var(--size-spacing-sm) var(--size-spacing-md);
 	font-size: 8px;
 	font-weight: var(--font-weight-semibold);
 	line-height: 1;
 	color: var(--color-system-text-300);
+	background-color: var(--color-system-background-200);
+	opacity: 0.5;
 }
 
 .attribution a:hover {
-	color: var(--color-primary-black);
+	color: var(--color-system-text-100);
 	text-decoration: underline;
+	opacity: 1;
 }

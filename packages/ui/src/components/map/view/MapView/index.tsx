@@ -102,11 +102,11 @@ export function MapView({ children, id, interactiveLayerIds = [], onClick, onDra
 				<FullscreenControl />
 				<GeolocateControl />
 				<ScaleControl />
-				<div className={styles.childrenWrapper}>
+				<div className={styles.children}>
+					<MapViewAttribution />
 					{children}
 				</div>
 			</Map>
-			<MapViewAttribution />
 			<MapViewToolbar />
 		</div>
 	);

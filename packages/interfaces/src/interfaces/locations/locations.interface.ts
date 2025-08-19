@@ -151,7 +151,7 @@ class LocationsClass {
 		const municipality = await this.findMunicipalitiesByGeo(lat, lon, { projection: { _id: 1, properties: 1 } });
 		const parish = await this.findParishesByGeo(lat, lon, { projection: { _id: 1, properties: 1 } });
 		const district = await this.findDistrictsByGeo(lat, lon, { projection: { _id: 1, properties: 1 } });
-		const locality = await this.findLocalitiesByGeo(lat, lon, { projection: { _id: 1, name: 1 } });
+		const locality = await this.findLocalitiesByGeo(lat, lon, { projection: { _id: 1, properties: 1 } });
 		const _census = census ? await this.findCensusByGeo(lat, lon, { projection: { _id: 1, properties: 1 } }) : undefined;
 
 		return {

@@ -65,9 +65,9 @@ export function MapOverlayMultipleStops({ data, onClick, presentBeforeId }: MapO
 	// C. Handle actions
 
 	useEffect(() => {
-		// Register Source IDs for this overlay component
-		mapViewContext.actions.registerSourceIds(MapOverlayMultipleStopsSourceIds);
-	}, []);
+		// Register features for sources in this overlay component
+		mapViewContext.actions.registerSource('overlay:multiple-stops:source:points', stopsAsGeojsonFC);
+	}, [stopsAsGeojsonFC]);
 
 	const handleClickEvent = (event: MapMouseEvent) => {
 		const relevantFeature = event.target

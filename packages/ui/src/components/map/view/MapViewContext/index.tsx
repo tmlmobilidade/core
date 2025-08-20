@@ -4,7 +4,7 @@
 
 import { centerMapView } from '@/components/map/utils/center-map-view';
 import { type MapRef } from '@vis.gl/react-maplibre';
-import { Feature } from 'geojson';
+import { type Feature, type FeatureCollection, type GeoJsonProperties, type Geometry } from 'geojson';
 import { createContext, type PropsWithChildren, type RefObject, useContext, useRef } from 'react';
 
 /* * */
@@ -12,7 +12,7 @@ import { createContext, type PropsWithChildren, type RefObject, useContext, useR
 interface MapViewContextState {
 	actions: {
 		centerMapOnFeatures: () => void
-		registerSourceIds: (sourceIds: string[]) => void
+		registerSource: (id: string, data: Feature<Geometry, GeoJsonProperties>[] | FeatureCollection<Geometry, GeoJsonProperties>) => void
 	}
 	ref: {
 		map: RefObject<MapRef | null>
@@ -41,24 +41,23 @@ export const MapViewContextProvider = ({ children }: PropsWithChildren) => {
 
 	const mapRef = useRef<MapRef | null>(null);
 
-	const registeredSourceIds = useRef<Set<string>>(new Set());
+	const registeredSources = useRef<Map<string, Feature<Geometry, GeoJsonProperties>[]>>(new Map());
 
 	//
 	// B. Handle actions
 
-	const registerSourceIds = (sourceIds: string[]) => {
-		sourceIds.forEach(id => registeredSourceIds.current.add(id));
+	const registerSource = (sourceId: string, data: Feature<Geometry, GeoJsonProperties>[] | FeatureCollection<Geometry, GeoJsonProperties>) => {
+		// If the source is a FeatureCollection then register the features
+		if ('features' in data) registeredSources.current.set(sourceId, data.features);
+		// If the source is an array of features then register them
+		else registeredSources.current.set(sourceId, data);
 	};
 
 	const centerMapOnFeatures = () => {
 		// Skip if the map is not available
 		if (!mapRef.current) return;
 		// Get the features to center the map on
-		let features: Feature[] = [];
-		registeredSourceIds.current.forEach((sourceId) => {
-			const sourceFeatures = mapRef.current?.querySourceFeatures(sourceId);
-			if (sourceFeatures) features = features.concat(sourceFeatures);
-		});
+		const features = Array.from(registeredSources.current.values()).flat();
 		// Center the map
 		centerMapView(mapRef.current, features);
 	};
@@ -69,7 +68,7 @@ export const MapViewContextProvider = ({ children }: PropsWithChildren) => {
 	const contextValue: MapViewContextState = {
 		actions: {
 			centerMapOnFeatures,
-			registerSourceIds,
+			registerSource,
 		},
 		ref: {
 			map: mapRef,

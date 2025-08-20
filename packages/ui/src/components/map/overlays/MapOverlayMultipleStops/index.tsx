@@ -82,8 +82,8 @@ export function MapOverlayMultipleStops({ data, onClick, presentBeforeId }: MapO
 	useEffect(() => {
 		// Skip if no map collection is available
 		if (!mapViewContext.ref.map.current) return;
-		// Attach a click event listener to each map
-		// so that when a feature is clicked, we can handle it.
+		// Attach a click event listener to the map
+		// so that when a feature is clicked, we can handle it here.
 		mapViewContext.ref.map.current.on('click', handleClickEvent);
 		mapViewContext.ref.map.current.on('mousemove', handleMouseOverEvent);
 	}, [mapViewContext.ref.map.current]);

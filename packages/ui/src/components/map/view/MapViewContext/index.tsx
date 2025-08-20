@@ -12,7 +12,7 @@ import { createContext, type PropsWithChildren, type RefObject, useContext, useR
 interface MapViewContextState {
 	actions: {
 		centerMapOnFeatures: () => void
-		registerSourceId: (id: string) => void
+		registerSourceIds: (sourceIds: string[]) => void
 	}
 	ref: {
 		map: RefObject<MapRef | null>
@@ -46,8 +46,8 @@ export const MapViewContextProvider = ({ children }: PropsWithChildren) => {
 	//
 	// B. Handle actions
 
-	const registerSourceId = (id: string) => {
-		registeredSourceIds.current.add(id);
+	const registerSourceIds = (sourceIds: string[]) => {
+		sourceIds.forEach(id => registeredSourceIds.current.add(id));
 	};
 
 	const centerMapOnFeatures = () => {
@@ -69,7 +69,7 @@ export const MapViewContextProvider = ({ children }: PropsWithChildren) => {
 	const contextValue: MapViewContextState = {
 		actions: {
 			centerMapOnFeatures,
-			registerSourceId,
+			registerSourceIds,
 		},
 		ref: {
 			map: mapRef,

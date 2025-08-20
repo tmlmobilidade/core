@@ -13,6 +13,7 @@ import styles from './styles.module.css';
 
 /* * */
 
+export const MapOverlayMultipleStopsSourceIds = ['overlay:multiple-stops:source:points'];
 export const MapOverlayMultipleStopsPrimaryLayerId = 'overlay:multiple-stops:layer:points';
 export const MapOverlayMultipleStopsInteractiveLayerIds = ['overlay:multiple-stops:layer:points'];
 
@@ -63,6 +64,11 @@ export function MapOverlayMultipleStops({ data, onClick, presentBeforeId }: MapO
 	//
 	// C. Handle actions
 
+	useEffect(() => {
+		// Register Source IDs for this overlay component
+		mapViewContext.actions.registerSourceIds(MapOverlayMultipleStopsSourceIds);
+	}, []);
+
 	const handleClickEvent = (event: MapMouseEvent) => {
 		const relevantFeature = event.target
 			.queryRenderedFeatures(event.point)
@@ -112,7 +118,7 @@ export function MapOverlayMultipleStops({ data, onClick, presentBeforeId }: MapO
 
 			<Layer
 				beforeId={presentBeforeId}
-				id={MapOverlayMultipleStopsPrimaryLayerId}
+				id="overlay:multiple-stops:layer:points"
 				source="overlay:multiple-stops:source:points"
 				type="circle"
 				paint={{

@@ -2,10 +2,11 @@
 
 /* * */
 
+import { useMapViewContext } from '@/components/map/view/MapViewContext';
 import { useCssVariable } from '@/hooks/use-css-variable';
 import { type Stop } from '@tmlmobilidade/types';
 import { getBaseGeoJsonFeatureCollectionPoint } from '@tmlmobilidade/utils';
-import { Layer, type MapMouseEvent, Popup, Source, useMap } from '@vis.gl/react-maplibre';
+import { Layer, type MapMouseEvent, Popup, Source } from '@vis.gl/react-maplibre';
 import { useEffect, useMemo, useState } from 'react';
 
 import styles from './styles.module.css';
@@ -31,7 +32,7 @@ export function MapOverlayMultipleStops({ data, onClick, presentBeforeId }: MapO
 	//
 	// A. Setup variables
 
-	const mapCollection = useMap();
+	const mapViewContext = useMapViewContext();
 
 	const [hoveredFeature, setHoveredFeature] = useState<GeoJSON.Feature<GeoJSON.Point, Stop> | null>(null);
 
@@ -80,19 +81,12 @@ export function MapOverlayMultipleStops({ data, onClick, presentBeforeId }: MapO
 
 	useEffect(() => {
 		// Skip if no map collection is available
-		if (!mapCollection) return;
+		if (!mapViewContext.ref.map.current) return;
 		// Attach a click event listener to each map
 		// so that when a feature is clicked, we can handle it.
-		Object
-			.entries(mapCollection)
-			.filter(entry => entry[0] !== 'current')
-			.forEach((entry) => {
-				const mapObject = entry[1];
-				if (!mapObject) return;
-				mapObject.on('click', handleClickEvent);
-				mapObject.on('mousemove', handleMouseOverEvent);
-			});
-	}, [mapCollection]);
+		mapViewContext.ref.map.current.on('click', handleClickEvent);
+		mapViewContext.ref.map.current.on('mousemove', handleMouseOverEvent);
+	}, [mapViewContext.ref.map.current]);
 
 	//
 	// C. Render components

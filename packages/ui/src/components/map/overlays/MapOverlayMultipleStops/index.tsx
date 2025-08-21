@@ -5,8 +5,9 @@
 import { useMapViewContext } from '@/components/map/view/MapViewContext';
 import { useCssVariable } from '@/hooks/use-css-variable';
 import { type Stop } from '@tmlmobilidade/types';
-import { getBaseGeoJsonFeatureCollectionPoint } from '@tmlmobilidade/utils';
+import { getBaseGeoJsonFeatureCollection } from '@tmlmobilidade/utils';
 import { Layer, type MapMouseEvent, Popup, Source } from '@vis.gl/react-maplibre';
+import { type Point } from 'geojson';
 import { useEffect, useMemo, useState } from 'react';
 
 import styles from './styles.module.css';
@@ -45,7 +46,7 @@ export function MapOverlayMultipleStops({ data, onClick, presentBeforeId }: MapO
 
 	const stopsAsGeojsonFC = useMemo(() => {
 		// Prepare an empty feature collection
-		const baseGeoJson = getBaseGeoJsonFeatureCollectionPoint<Stop>();
+		const baseGeoJson = getBaseGeoJsonFeatureCollection<Point, Stop>();
 		// Skip if no data is provided
 		if (!data) return baseGeoJson;
 		// Add the features to the base GeoJSON

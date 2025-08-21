@@ -7,28 +7,28 @@ import { useCssVariable } from '@/hooks/use-css-variable';
 import { type Stop } from '@tmlmobilidade/types';
 import { getBaseGeoJsonFeatureCollection } from '@tmlmobilidade/utils';
 import { Layer, type MapMouseEvent, Popup, Source } from '@vis.gl/react-maplibre';
-import { type Point } from 'geojson';
+import { type Feature, type Point } from 'geojson';
 import { useEffect, useMemo, useState } from 'react';
 
 import styles from './styles.module.css';
 
 /* * */
 
-export const MapOverlayMultipleStopsSourceIds = ['overlay:multiple-stops:source:points'];
-export const MapOverlayMultipleStopsPrimaryLayerId = 'overlay:multiple-stops:layer:points';
-export const MapOverlayMultipleStopsInteractiveLayerIds = ['overlay:multiple-stops:layer:points'];
+export const MapOverlayMultipleStopsPrimaryLayerId = 'multiple-stops:layer:points';
+export const MapOverlayMultipleStopsInteractiveLayerIds = ['multiple-stops:layer:points'];
 
 /* * */
 
 interface MapOverlayMultipleStopsProps {
 	data?: null | Stop[]
+	id: string
 	onClick?: (value: Stop) => void
 	presentBeforeId?: string
 }
 
 /* * */
 
-export function MapOverlayMultipleStops({ data, onClick, presentBeforeId }: MapOverlayMultipleStopsProps) {
+export function MapOverlayMultipleStops({ data, id, onClick, presentBeforeId }: MapOverlayMultipleStopsProps) {
 	//
 
 	//
@@ -36,7 +36,7 @@ export function MapOverlayMultipleStops({ data, onClick, presentBeforeId }: MapO
 
 	const mapViewContext = useMapViewContext();
 
-	const [hoveredFeature, setHoveredFeature] = useState<GeoJSON.Feature<GeoJSON.Point, Stop> | null>(null);
+	const [hoveredFeature, setHoveredFeature] = useState<Feature<Point, Stop> | null>(null);
 
 	const circleColorHexValue = useCssVariable('--color-primary', '#000000');
 	const borderColorHexValue = useCssVariable('--color-secondary', '#000000');
@@ -67,7 +67,8 @@ export function MapOverlayMultipleStops({ data, onClick, presentBeforeId }: MapO
 
 	useEffect(() => {
 		// Register features for sources in this overlay component
-		mapViewContext.actions.registerSource('overlay:multiple-stops:source:points', stopsAsGeojsonFC);
+		mapViewContext.actions.registerOverlaySource(id, 'multiple-stops:source:points', stopsAsGeojsonFC);
+		return () => mapViewContext.actions.unregisterOverlaySource(id, 'multiple-stops:source:points');
 	}, [stopsAsGeojsonFC]);
 
 	const handleClickEvent = (event: MapMouseEvent) => {
@@ -96,10 +97,10 @@ export function MapOverlayMultipleStops({ data, onClick, presentBeforeId }: MapO
 	}, [mapViewContext.ref.map.current]);
 
 	//
-	// C. Render components
+	// D. Render components
 
 	return (
-		<Source data={stopsAsGeojsonFC} id="overlay:multiple-stops:source:points" type="geojson" generateId>
+		<Source data={stopsAsGeojsonFC} id="multiple-stops:source:points" type="geojson" generateId>
 
 			{hoveredFeature && (
 				<Popup
@@ -119,8 +120,8 @@ export function MapOverlayMultipleStops({ data, onClick, presentBeforeId }: MapO
 
 			<Layer
 				beforeId={presentBeforeId}
-				id="overlay:multiple-stops:layer:points"
-				source="overlay:multiple-stops:source:points"
+				id="multiple-stops:layer:points"
+				source="multiple-stops:source:points"
 				type="circle"
 				paint={{
 					'circle-color': circleColorHexValue,

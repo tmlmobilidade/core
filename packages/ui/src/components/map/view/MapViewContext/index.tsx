@@ -12,7 +12,8 @@ import { createContext, type PropsWithChildren, type RefObject, useContext, useR
 interface MapViewContextState {
 	actions: {
 		centerMapOnFeatures: () => void
-		registerSource: (id: string, data: Feature<Geometry, GeoJsonProperties>[] | FeatureCollection<Geometry, GeoJsonProperties>) => void
+		registerOverlaySource: (overlayId: string, sourceId: string, data: Feature<Geometry, GeoJsonProperties>[] | FeatureCollection<Geometry, GeoJsonProperties>) => void
+		unregisterOverlaySource: (overlayId: string, sourceId: string) => void
 	}
 	ref: {
 		map: RefObject<MapRef | null>
@@ -46,11 +47,15 @@ export const MapViewContextProvider = ({ children }: PropsWithChildren) => {
 	//
 	// B. Handle actions
 
-	const registerSource = (sourceId: string, data: Feature<Geometry, GeoJsonProperties>[] | FeatureCollection<Geometry, GeoJsonProperties>) => {
+	const registerOverlaySource = (overlayId: string, sourceId: string, data: Feature<Geometry, GeoJsonProperties>[] | FeatureCollection<Geometry, GeoJsonProperties>) => {
 		// If the source is a FeatureCollection then register the features
-		if ('features' in data) registeredSources.current.set(sourceId, data.features);
+		if ('features' in data) registeredSources.current.set(`${overlayId}:${sourceId}`, data.features);
 		// If the source is an array of features then register them
-		else registeredSources.current.set(sourceId, data);
+		else registeredSources.current.set(`${overlayId}:${sourceId}`, data);
+	};
+
+	const unregisterOverlaySource = (overlayId: string, sourceId: string) => {
+		registeredSources.current.delete(`${overlayId}:${sourceId}`);
 	};
 
 	const centerMapOnFeatures = () => {
@@ -68,7 +73,8 @@ export const MapViewContextProvider = ({ children }: PropsWithChildren) => {
 	const contextValue: MapViewContextState = {
 		actions: {
 			centerMapOnFeatures,
-			registerSource,
+			registerOverlaySource,
+			unregisterOverlaySource,
 		},
 		ref: {
 			map: mapRef,

@@ -12,26 +12,23 @@ import styles from './styles.module.css';
 
 /* * */
 
-export const MapOverlayMultipleStopsPrimaryLayerId = 'multiple-stops:layer:points';
-export const MapOverlayMultipleStopsInteractiveLayerIds = ['multiple-stops:layer:points'];
-
-/* * */
-
 export interface MapOverlayMultipleStopsFCProps {
 	id: string
 	name: string
 }
 
+/* * */
+
 interface MapOverlayMultipleStopsProps {
 	data?: FeatureCollection<Point, MapOverlayMultipleStopsFCProps> | null
 	id: string
 	onClick?: (value: MapOverlayMultipleStopsFCProps) => void
-	presentBeforeId?: string
+	visible: boolean
 }
 
 /* * */
 
-export function MapOverlayMultipleStops({ data, id, onClick, presentBeforeId }: MapOverlayMultipleStopsProps) {
+export function MapOverlayMultipleStops({ data, id, onClick, visible = true }: MapOverlayMultipleStopsProps) {
 	//
 
 	//
@@ -39,14 +36,14 @@ export function MapOverlayMultipleStops({ data, id, onClick, presentBeforeId }: 
 
 	const mapViewContext = useMapViewContext();
 
-	const [hoveredFeature, setHoveredFeature] = useState<Feature<Point, MapOverlayMultipleStopsFCProps> | null>(null);
+	const interactiveLayerIds = [`${id}:multiple-stops:layer:points`];
 
 	const circleColorHexValue = useCssVariable('--color-primary', '#000000');
 	const borderColorHexValue = useCssVariable('--color-secondary', '#000000');
 
-	//
-	// B. Transform data
+	const [hoveredFeature, setHoveredFeature] = useState<Feature<Point, MapOverlayMultipleStopsFCProps> | null>(null);
 
+	// MIGRATE TO SAE/STOPS
 	// const stopsAsGeojsonFC = useMemo(() => {
 	// 	// Prepare an empty feature collection
 	// 	const baseGeoJson = getBaseGeoJsonFeatureCollection<Point, Stop>();
@@ -66,19 +63,20 @@ export function MapOverlayMultipleStops({ data, id, onClick, presentBeforeId }: 
 	// }, [data]);
 
 	//
-	// C. Handle actions
+	// B. Handle actions
 
 	useEffect(() => {
-		if (!data) return;
 		// Register features for sources in this overlay component
-		mapViewContext.actions.registerOverlaySource(`${id}:multiple-stops:source:points`, data);
-		return () => mapViewContext.actions.unregisterOverlaySource(`${id}:multiple-stops:source:points`);
+		if (data) mapViewContext.actions.registerOverlaySource(`${id}:multiple-stops:source:points`, data);
+		return () => {
+			mapViewContext.actions.unregisterOverlaySource(`${id}:multiple-stops:source:points`);
+		};
 	}, [data]);
 
 	const handleClickEvent = (event: MapMouseEvent) => {
 		const relevantFeature = event.target
 			.queryRenderedFeatures(event.point)
-			.find(feature => MapOverlayMultipleStopsInteractiveLayerIds.includes(feature.layer.id));
+			.find(feature => interactiveLayerIds.includes(feature.layer.id));
 		if (!relevantFeature) return;
 		if (onClick) onClick(relevantFeature.properties as MapOverlayMultipleStopsFCProps);
 	};
@@ -86,7 +84,7 @@ export function MapOverlayMultipleStops({ data, id, onClick, presentBeforeId }: 
 	const handleMouseOverEvent = (event: MapMouseEvent) => {
 		const relevantFeature = event.target
 			.queryRenderedFeatures(event.point)
-			.find(feature => MapOverlayMultipleStopsInteractiveLayerIds.includes(feature.layer.id));
+			.find(feature => interactiveLayerIds.includes(feature.layer.id));
 		if (!relevantFeature) return setHoveredFeature(null);
 		setHoveredFeature(relevantFeature as unknown as Feature<Point, MapOverlayMultipleStopsFCProps>);
 	};
@@ -95,13 +93,13 @@ export function MapOverlayMultipleStops({ data, id, onClick, presentBeforeId }: 
 		// Skip if no map collection is available
 		if (!mapViewContext.ref.map.current) return;
 		// Attach a click event listener to the map
-		// so that when a feature is clicked, we can handle it here.
+		// so that when a feature is interacted with, we can handle it here.
 		mapViewContext.ref.map.current.on('click', handleClickEvent);
 		mapViewContext.ref.map.current.on('mousemove', handleMouseOverEvent);
 	}, [mapViewContext.ref.map.current]);
 
 	//
-	// D. Render components
+	// C. Render components
 
 	if (!data) {
 		return null;
@@ -127,10 +125,12 @@ export function MapOverlayMultipleStops({ data, id, onClick, presentBeforeId }: 
 			)}
 
 			<Layer
-				beforeId={presentBeforeId}
 				id={`${id}:multiple-stops:layer:points`}
 				source={`${id}:multiple-stops:source:points`}
 				type="circle"
+				layout={{
+					visibility: visible ? 'visible' : 'none',
+				}}
 				paint={{
 					'circle-color': circleColorHexValue,
 					'circle-pitch-alignment': 'map',

@@ -7,7 +7,7 @@ import { MapViewAttribution } from '@/components/map/view/MapViewAttribution';
 import { useMapViewContext } from '@/components/map/view/MapViewContext';
 import { useMapContext } from '@/contexts/Map.context';
 import { mapDefaultConfig } from '@/settings/map.settings';
-import { FullscreenControl, GeolocateControl, Map, type MapLayerMouseEvent, type MapRef, NavigationControl, ScaleControl, type ViewStateChangeEvent } from '@vis.gl/react-maplibre';
+import { FullscreenControl, GeolocateControl, Map, type MapLayerMouseEvent, NavigationControl, ScaleControl, type ViewStateChangeEvent } from '@vis.gl/react-maplibre';
 import { type CSSProperties, type PropsWithChildren, useCallback, useMemo, useState } from 'react';
 
 import styles from './styles.module.css';
@@ -17,7 +17,6 @@ import styles from './styles.module.css';
 export interface MapViewBasemapProps {
 	id: string
 	interactiveLayerIds?: string[]
-	mapObject?: MapRef
 	onClick?: (e: MapLayerMouseEvent) => void
 	onDrag?: (e: ViewStateChangeEvent) => void
 	onDragEnd?: (e: ViewStateChangeEvent) => void
@@ -66,6 +65,7 @@ export function MapViewBasemap({ children, id, interactiveLayerIds = [], onClick
 
 	const handleOnDragStart = useCallback((event: ViewStateChangeEvent) => {
 		setMouseCursor('grab');
+		mapViewContext.actions.toggleAutoZoom(false);
 		if (onDragStart) onDragStart(event);
 	}, []);
 

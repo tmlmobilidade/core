@@ -41,7 +41,7 @@ export function MapViewToolbar() {
 			<Switch checked={mapContext.flags.scroll_zoom} label="Permitir Zoom" onChange={() => mapContext.actions.toggleScrollZoom()} />
 			<Switch checked={mapViewContext.flags.auto_zoom} label="Auto Zoom" onChange={() => mapViewContext.actions.toggleAutoZoom()} />
 			<Spacer />
-			<Button icon={<IconCrosshair />} label="Centrar" loading={mapViewContext.flags.loading} onClick={mapViewContext.actions.centerMapOnFeatures} />
+			<Button icon={<IconCrosshair />} label="Centrar" loading={mapViewContext.flags.loading} onClick={() => mapViewContext.actions.centerMapOnFeatures()} />
 			<SegmentedControl data={mapStyleOptions} onChange={() => mapContext.actions.toggleStyle()} value={mapContext.flags.style} />
 		</div>
 	);

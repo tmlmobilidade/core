@@ -6,7 +6,7 @@ import { centerMapView } from '@/components/map/utils/center-map-view';
 import { loadMapAssets } from '@/components/map/utils/load-map-assets';
 import { type MapRef } from '@vis.gl/react-maplibre';
 import { type Feature, type FeatureCollection, type GeoJsonProperties, type Geometry } from 'geojson';
-import { createContext, type PropsWithChildren, type RefObject, useContext, useEffect, useRef, useState } from 'react';
+import { createContext, type PropsWithChildren, type RefObject, useContext, useEffect, useMemo, useRef, useState } from 'react';
 
 /* * */
 
@@ -47,6 +47,7 @@ export const MapViewContextProvider = ({ children }: PropsWithChildren) => {
 	// A. Setup variables
 
 	const mapRef = useRef<MapRef | null>(null);
+
 	const registeredSources = useRef<Map<string, Feature<Geometry, GeoJsonProperties>[]>>(new Map());
 
 	const [flagLoading, setFlagLoading] = useState<boolean>(true);
@@ -61,9 +62,8 @@ export const MapViewContextProvider = ({ children }: PropsWithChildren) => {
 		// Load common map assets
 		loadMapAssets(mapRef.current);
 		// Set loading flag to false when map is loaded
-		// mapRef.current.on('idle', () => setFlagLoading(false));
-		setFlagLoading(false);
-	}, [mapRef.current]);
+		mapRef.current.on('load', () => setFlagLoading(false));
+	}, []);
 
 	useEffect(() => {
 		// Skip if no map available or is loading
@@ -72,7 +72,7 @@ export const MapViewContextProvider = ({ children }: PropsWithChildren) => {
 		if (!flagAutoZoom) return;
 		// Center the map on the registered sources
 		centerMapOnFeatures();
-	}, [mapRef.current, flagLoading, flagAutoZoom]);
+	}, [flagLoading, flagAutoZoom]);
 
 	const registerOverlaySource = (sourceId: string, data: Feature<Geometry, GeoJsonProperties>[] | FeatureCollection<Geometry, GeoJsonProperties>) => {
 		// If the source is a FeatureCollection then register the features
@@ -104,7 +104,7 @@ export const MapViewContextProvider = ({ children }: PropsWithChildren) => {
 	//
 	// C. Define context value
 
-	const contextValue: MapViewContextState = {
+	const contextValue: MapViewContextState = useMemo(() => ({
 		actions: {
 			centerMapOnFeatures,
 			registerOverlaySource,
@@ -118,7 +118,11 @@ export const MapViewContextProvider = ({ children }: PropsWithChildren) => {
 		ref: {
 			map: mapRef,
 		},
-	};
+	}), [
+		flagAutoZoom,
+		flagLoading,
+		mapRef.current,
+	]);
 
 	//
 	// D. Render components

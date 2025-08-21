@@ -64,6 +64,15 @@ export const MapViewContextProvider = ({ children }: PropsWithChildren) => {
 		mapRef.current.on('load', () => setFlagLoading(false));
 	}, [mapRef.current]);
 
+	useEffect(() => {
+		// Skip if no map available or is loading
+		if (!mapRef.current || flagLoading) return;
+		// Skip if auto zoom is disabled
+		if (!flagAutoZoom) return;
+		// Center the map on the registered sources
+		centerMapOnFeatures();
+	}, [mapRef.current, flagLoading, flagAutoZoom]);
+
 	const registerOverlaySource = (sourceId: string, data: Feature<Geometry, GeoJsonProperties>[] | FeatureCollection<Geometry, GeoJsonProperties>) => {
 		// If the source is a FeatureCollection then register the features
 		if ('features' in data) registeredSources.current.set(sourceId, data.features);

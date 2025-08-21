@@ -4,11 +4,9 @@
 
 import { useMapViewContext } from '@/components/map/view/MapViewContext';
 import { useCssVariable } from '@/hooks/use-css-variable';
-import { type Stop } from '@tmlmobilidade/types';
-import { getBaseGeoJsonFeatureCollection } from '@tmlmobilidade/utils';
 import { Layer, type MapMouseEvent, Popup, Source } from '@vis.gl/react-maplibre';
-import { type Feature, type Point } from 'geojson';
-import { useEffect, useMemo, useState } from 'react';
+import { type Feature, type FeatureCollection, type Point } from 'geojson';
+import { useEffect, useState } from 'react';
 
 import styles from './styles.module.css';
 
@@ -19,10 +17,15 @@ export const MapOverlayMultipleStopsInteractiveLayerIds = ['multiple-stops:layer
 
 /* * */
 
-interface MapOverlayMultipleStopsProps {
-	data?: null | Stop[]
+export interface MapOverlayMultipleStopsFCProps {
 	id: string
-	onClick?: (value: Stop) => void
+	name: string
+}
+
+interface MapOverlayMultipleStopsProps {
+	data?: FeatureCollection<Point, MapOverlayMultipleStopsFCProps> | null
+	id: string
+	onClick?: (value: MapOverlayMultipleStopsFCProps) => void
 	presentBeforeId?: string
 }
 
@@ -36,7 +39,7 @@ export function MapOverlayMultipleStops({ data, id, onClick, presentBeforeId }: 
 
 	const mapViewContext = useMapViewContext();
 
-	const [hoveredFeature, setHoveredFeature] = useState<Feature<Point, Stop> | null>(null);
+	const [hoveredFeature, setHoveredFeature] = useState<Feature<Point, MapOverlayMultipleStopsFCProps> | null>(null);
 
 	const circleColorHexValue = useCssVariable('--color-primary', '#000000');
 	const borderColorHexValue = useCssVariable('--color-secondary', '#000000');
@@ -44,39 +47,40 @@ export function MapOverlayMultipleStops({ data, id, onClick, presentBeforeId }: 
 	//
 	// B. Transform data
 
-	const stopsAsGeojsonFC = useMemo(() => {
-		// Prepare an empty feature collection
-		const baseGeoJson = getBaseGeoJsonFeatureCollection<Point, Stop>();
-		// Skip if no data is provided
-		if (!data) return baseGeoJson;
-		// Add the features to the base GeoJSON
-		baseGeoJson.features = data.map(item => ({
-			geometry: {
-				coordinates: [item.longitude, item.latitude],
-				type: 'Point',
-			},
-			properties: item,
-			type: 'Feature',
-		}));
-		// Return the collection
-		return baseGeoJson;
-	}, [data]);
+	// const stopsAsGeojsonFC = useMemo(() => {
+	// 	// Prepare an empty feature collection
+	// 	const baseGeoJson = getBaseGeoJsonFeatureCollection<Point, Stop>();
+	// 	// Skip if no data is provided
+	// 	if (!data) return baseGeoJson;
+	// 	// Add the features to the base GeoJSON
+	// 	baseGeoJson.features = data.map(item => ({
+	// 		geometry: {
+	// 			coordinates: [item.longitude, item.latitude],
+	// 			type: 'Point',
+	// 		},
+	// 		properties: item,
+	// 		type: 'Feature',
+	// 	}));
+	// 	// Return the collection
+	// 	return baseGeoJson;
+	// }, [data]);
 
 	//
 	// C. Handle actions
 
 	useEffect(() => {
+		if (!data) return;
 		// Register features for sources in this overlay component
-		mapViewContext.actions.registerOverlaySource(id, 'multiple-stops:source:points', stopsAsGeojsonFC);
-		return () => mapViewContext.actions.unregisterOverlaySource(id, 'multiple-stops:source:points');
-	}, [stopsAsGeojsonFC]);
+		mapViewContext.actions.registerOverlaySource(`${id}:multiple-stops:source:points`, data);
+		return () => mapViewContext.actions.unregisterOverlaySource(`${id}:multiple-stops:source:points`);
+	}, [data]);
 
 	const handleClickEvent = (event: MapMouseEvent) => {
 		const relevantFeature = event.target
 			.queryRenderedFeatures(event.point)
 			.find(feature => MapOverlayMultipleStopsInteractiveLayerIds.includes(feature.layer.id));
 		if (!relevantFeature) return;
-		if (onClick) onClick(relevantFeature.properties as Stop);
+		if (onClick) onClick(relevantFeature.properties as MapOverlayMultipleStopsFCProps);
 	};
 
 	const handleMouseOverEvent = (event: MapMouseEvent) => {
@@ -84,7 +88,7 @@ export function MapOverlayMultipleStops({ data, id, onClick, presentBeforeId }: 
 			.queryRenderedFeatures(event.point)
 			.find(feature => MapOverlayMultipleStopsInteractiveLayerIds.includes(feature.layer.id));
 		if (!relevantFeature) return setHoveredFeature(null);
-		setHoveredFeature(relevantFeature as unknown as GeoJSON.Feature<GeoJSON.Point, Stop>);
+		setHoveredFeature(relevantFeature as unknown as Feature<Point, MapOverlayMultipleStopsFCProps>);
 	};
 
 	useEffect(() => {
@@ -99,8 +103,12 @@ export function MapOverlayMultipleStops({ data, id, onClick, presentBeforeId }: 
 	//
 	// D. Render components
 
+	if (!data) {
+		return null;
+	}
+
 	return (
-		<Source data={stopsAsGeojsonFC} id="multiple-stops:source:points" type="geojson" generateId>
+		<Source data={data} id={`${id}:multiple-stops:source:points`} type="geojson" generateId>
 
 			{hoveredFeature && (
 				<Popup
@@ -112,7 +120,7 @@ export function MapOverlayMultipleStops({ data, id, onClick, presentBeforeId }: 
 					offset={12}
 				>
 					<div className={styles.popup}>
-						<span className={styles.id}>#{hoveredFeature.properties._id}</span>
+						<span className={styles.id}>#{hoveredFeature.properties.id}</span>
 						<span className={styles.name}>{hoveredFeature.properties.name}</span>
 					</div>
 				</Popup>
@@ -120,8 +128,8 @@ export function MapOverlayMultipleStops({ data, id, onClick, presentBeforeId }: 
 
 			<Layer
 				beforeId={presentBeforeId}
-				id="multiple-stops:layer:points"
-				source="multiple-stops:source:points"
+				id={`${id}:multiple-stops:layer:points`}
+				source={`${id}:multiple-stops:source:points`}
 				type="circle"
 				paint={{
 					'circle-color': circleColorHexValue,

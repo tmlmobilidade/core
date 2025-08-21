@@ -61,7 +61,8 @@ export const MapViewContextProvider = ({ children }: PropsWithChildren) => {
 		// Load common map assets
 		loadMapAssets(mapRef.current);
 		// Set loading flag to false when map is loaded
-		mapRef.current.on('load', () => setFlagLoading(false));
+		// mapRef.current.on('idle', () => setFlagLoading(false));
+		setFlagLoading(false);
 	}, [mapRef.current]);
 
 	useEffect(() => {

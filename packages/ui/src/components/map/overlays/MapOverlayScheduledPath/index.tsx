@@ -182,7 +182,7 @@ export function MapOverlayScheduledPath({ id, lineData, pointsData, visible = tr
 						'icon-allow-overlap': true,
 						'icon-anchor': 'center',
 						'icon-ignore-placement': true,
-						'icon-image': 'cmet-shape-direction',
+						'icon-image': 'map-line-direction',
 						'icon-offset': [0, 0],
 						'icon-rotate': 0,
 						'icon-size': [

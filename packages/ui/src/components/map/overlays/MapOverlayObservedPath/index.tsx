@@ -180,44 +180,6 @@ export function MapOverlayObservedPath({ id, lineData, pointsData, visible = tru
 					}}
 				/>
 				<Layer
-					id={`${id}:observed-path:layer:line-direction-shadow`}
-					source={`${id}:observed-path:source:line`}
-					type="symbol"
-					layout={{
-						'icon-allow-overlap': true,
-						'icon-anchor': 'center',
-						'icon-ignore-placement': true,
-						'icon-image': 'cmet-shape-direction-alt-bg',
-						'icon-offset': [0, 80],
-						'icon-rotate': 0,
-						'icon-size': [
-							'interpolate',
-							['linear'],
-							['zoom'],
-							10, // min zoom level
-							0.1, // min radius
-							25, // max zoom level
-							1, // max radius
-						],
-						'symbol-placement': 'line',
-						'symbol-spacing': [
-							'interpolate',
-							['linear'],
-							['zoom'],
-							10, // min zoom level
-							20, // min radius
-							25, // max zoom level
-							300, // max radius
-						],
-						'visibility': visible ? 'visible' : 'none',
-					}}
-					paint={{
-						'icon-color': '#ffffff',
-						'icon-halo-blur': 10,
-						'icon-opacity': 1,
-					}}
-				/>
-				<Layer
 					id={`${id}:observed-path:layer:line-direction-padding`}
 					source={`${id}:observed-path:source:line`}
 					type="symbol"
@@ -225,7 +187,7 @@ export function MapOverlayObservedPath({ id, lineData, pointsData, visible = tru
 						'icon-allow-overlap': true,
 						'icon-anchor': 'center',
 						'icon-ignore-placement': true,
-						'icon-image': 'cmet-shape-direction-alt-bg',
+						'icon-image': 'map-line-direction-offset-padding',
 						'icon-offset': [0, 80],
 						'icon-rotate': 0,
 						'icon-size': [
@@ -262,7 +224,7 @@ export function MapOverlayObservedPath({ id, lineData, pointsData, visible = tru
 						'icon-allow-overlap': true,
 						'icon-anchor': 'center',
 						'icon-ignore-placement': true,
-						'icon-image': 'cmet-shape-direction-alt',
+						'icon-image': 'map-line-direction-offset',
 						'icon-offset': [0, 80],
 						'icon-rotate': 0,
 						'icon-size': [

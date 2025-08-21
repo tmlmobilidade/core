@@ -92,6 +92,7 @@ export function MapViewBasemap({ children, id, interactiveLayerIds = [], onClick
 			onClick={onClick}
 			onDragEnd={handleOnDragEnd}
 			onDragStart={handleOnDragStart}
+			onLoad={mapViewContext.actions.initMap}
 			onMouseEnter={handleOnMouseEnter}
 			onMouseLeave={handleOnMouseLeave}
 			onMouseOut={onMouseOut}

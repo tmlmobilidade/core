@@ -1,7 +1,7 @@
 /* * */
 
 import { getAppConfig } from '@tmlmobilidade/lib';
-import { type MapRef } from '@vis.gl/react-maplibre';
+import { type Map as MapLibreMap } from 'maplibre-gl';
 
 /* * */
 
@@ -15,7 +15,7 @@ const MAP_LOAD_ASSETS = [
  * Loads map assets into the specified map object.
  * @param mapObject The map object to load assets into.
  */
-export function loadMapAssets(mapObject: MapRef | null | undefined) {
+export function loadMapAssets(mapObject: MapLibreMap | null | undefined) {
 	if (!mapObject) return;
 	for (const mapLoadAsset of MAP_LOAD_ASSETS) {
 		mapObject.loadImage(mapLoadAsset.url).then((image) => {

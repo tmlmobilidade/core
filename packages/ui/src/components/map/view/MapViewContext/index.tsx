@@ -6,6 +6,7 @@ import { centerMapView } from '@/components/map/utils/center-map-view';
 import { loadMapAssets } from '@/components/map/utils/load-map-assets';
 import { type MapRef } from '@vis.gl/react-maplibre';
 import { type Feature, type FeatureCollection, type GeoJsonProperties, type Geometry } from 'geojson';
+import { type MapLibreEvent } from 'maplibre-gl';
 import { createContext, type PropsWithChildren, type RefObject, useContext, useEffect, useMemo, useRef, useState } from 'react';
 
 /* * */
@@ -13,6 +14,7 @@ import { createContext, type PropsWithChildren, type RefObject, useContext, useE
 interface MapViewContextState {
 	actions: {
 		centerMapOnFeatures: () => void
+		initMap: (event: MapLibreEvent) => void
 		registerOverlaySource: (sourceId: string, data: Feature<Geometry, GeoJsonProperties>[] | FeatureCollection<Geometry, GeoJsonProperties>) => void
 		toggleAutoZoom: (value?: boolean) => void
 		unregisterOverlaySource: (sourceId: string) => void
@@ -56,14 +58,14 @@ export const MapViewContextProvider = ({ children }: PropsWithChildren) => {
 	//
 	// B. Handle actions
 
-	useEffect(() => {
-		// Skip if no map available
-		if (!mapRef.current) return;
-		// Load common map assets
-		loadMapAssets(mapRef.current);
-		// Set loading flag to false when map is loaded
-		mapRef.current.on('load', () => setFlagLoading(false));
-	}, []);
+	// useEffect(() => {
+	// 	// Skip if no map available
+	// 	if (!mapRef.current) return;
+	// 	// Load common map assets
+	// 	// loadMapAssets(mapRef.current);
+	// 	// Set loading flag to false when map is loaded
+	// 	mapRef.current.on('load', () => setFlagLoading(false));
+	// }, []);
 
 	useEffect(() => {
 		// Skip if no map available or is loading
@@ -73,6 +75,13 @@ export const MapViewContextProvider = ({ children }: PropsWithChildren) => {
 		// Center the map on the registered sources
 		centerMapOnFeatures();
 	}, [flagLoading, flagAutoZoom]);
+
+	const initMap = (event: MapLibreEvent) => {
+		event.target.on('load', () => {
+			loadMapAssets(event.target);
+			setFlagLoading(false);
+		});
+	};
 
 	const registerOverlaySource = (sourceId: string, data: Feature<Geometry, GeoJsonProperties>[] | FeatureCollection<Geometry, GeoJsonProperties>) => {
 		// If the source is a FeatureCollection then register the features
@@ -107,6 +116,7 @@ export const MapViewContextProvider = ({ children }: PropsWithChildren) => {
 	const contextValue: MapViewContextState = useMemo(() => ({
 		actions: {
 			centerMapOnFeatures,
+			initMap,
 			registerOverlaySource,
 			toggleAutoZoom,
 			unregisterOverlaySource,

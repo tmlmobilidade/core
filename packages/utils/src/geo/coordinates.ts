@@ -36,7 +36,7 @@ export function isValidCoordinatePair(lat: number, lng: number) {
  * @returns The parsed coordinates as an object, or null if the input is invalid.
  */
 export const parseCoordinateString = (input: string): null | { lat: number, lng: number } => {
-	const regex = /^\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*$/;
+	const regex = /^\s*([+-]?\d+(?:\.\d+)?)\s*(?:,|\s)\s*([+-]?\d+(?:\.\d+)?)\s*$/;
 	const match = input.match(regex);
 	if (!match) return null;
 	const lat = parseFloat(match[1]);

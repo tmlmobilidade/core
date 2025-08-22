@@ -3,6 +3,7 @@
 /* * */
 
 import { SidebarItem } from '@/components/sidebar/SidebarItem';
+import { ScrollAreaAutosize } from '@mantine/core';
 import { IconAlertTriangle, IconBuildings, IconBusStop, IconDeviceSim, IconFileCertificate, IconFileCheck, IconHome, IconKey, IconListCheck, IconUser } from '@tabler/icons-react';
 import { getAppConfig, Permissions } from '@tmlmobilidade/lib';
 
@@ -87,7 +88,7 @@ export const sidebarApps = [
 
 export function Sidebar() {
 	return (
-		<div className={styles.sidebar}>
+		<ScrollAreaAutosize classNames={{ content: styles.sidebar }} scrollbars="y" scrollHideDelay={0}>
 			<div className={styles.navWrapper}>
 				{sidebarApps.map(item => (
 					<SidebarItem
@@ -99,6 +100,6 @@ export function Sidebar() {
 					/>
 				))}
 			</div>
-		</div>
+		</ScrollAreaAutosize>
 	);
 }

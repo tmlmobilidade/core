@@ -2,10 +2,11 @@
 
 /* * */
 
-import { useMeContext } from '@/contexts';
+import { SidebarItemTooltip } from '@/components/sidebar/SidebarItemTooltip';
+import { useMeContext } from '@/contexts/Me.context';
 import { type Permission } from '@tmlmobilidade/types';
 import { getPermission } from '@tmlmobilidade/utils';
-import { useMemo } from 'react';
+import { useMemo, useRef, useState } from 'react';
 
 import styles from './styles.module.css';
 
@@ -27,6 +28,9 @@ export function SidebarItem({ href, icon, label, permission }: SidebarItemProps)
 	// A. Setup Variables
 
 	const meContext = useMeContext();
+
+	const ref = useRef<HTMLAnchorElement>(null);
+	const [hover, setHover] = useState(false);
 
 	//
 	// B. Transform data
@@ -55,19 +59,23 @@ export function SidebarItem({ href, icon, label, permission }: SidebarItemProps)
 	}
 
 	return (
-		<div className={styles.container}>
+		<>
 			<a
+				ref={ref}
 				className={styles.icon}
 				data-active={isActive}
 				data-disabled={isDisabled}
 				href={href}
+				onMouseEnter={() => setHover(true)}
+				onMouseLeave={() => setHover(false)}
 			>
 				{icon}
 			</a>
-			<span className={styles.tooltip}>
+			{hover && <SidebarItemTooltip target={ref.current}>{label}</SidebarItemTooltip>}
+			{/* <span className={styles.tooltip}>
 				{label}
-			</span>
-		</div>
+			</span> */}
+		</>
 	);
 
 	//

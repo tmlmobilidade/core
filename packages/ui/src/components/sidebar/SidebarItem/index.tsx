@@ -4,6 +4,7 @@
 
 import { SidebarItemTooltip } from '@/components/sidebar/SidebarItemTooltip';
 import { useMeContext } from '@/contexts/Me.context';
+import { useCurrentUrl } from '@/hooks';
 import { type Permission } from '@tmlmobilidade/types';
 import { getPermission } from '@tmlmobilidade/utils';
 import { useMemo, useRef, useState } from 'react';
@@ -29,6 +30,8 @@ export function SidebarItem({ href, icon, label, permission }: SidebarItemProps)
 
 	const meContext = useMeContext();
 
+	const currentUrl = useCurrentUrl();
+
 	const ref = useRef<HTMLAnchorElement>(null);
 	const [hover, setHover] = useState(false);
 
@@ -45,11 +48,11 @@ export function SidebarItem({ href, icon, label, permission }: SidebarItemProps)
 		if (typeof window === 'undefined') return false;
 		// Skip if is disabled
 		if (isDisabled) return false;
-		// The current item is active if the current URL starts with the item href
-		const currentUrl = window.location.href;
-		if (currentUrl.startsWith(href)) return true;
+		// The current item is active if the
+		// current URL starts with the item href
+		if (currentUrl?.startsWith(href)) return true;
 		return false;
-	}, [href, isDisabled]);
+	}, [href, isDisabled, currentUrl]);
 
 	//
 	// C. Render components
@@ -65,7 +68,7 @@ export function SidebarItem({ href, icon, label, permission }: SidebarItemProps)
 				className={styles.icon}
 				data-active={isActive}
 				data-disabled={isDisabled}
-				href={href}
+				href={(isActive && isDisabled) ? href : undefined}
 				onMouseEnter={() => setHover(true)}
 				onMouseLeave={() => setHover(false)}
 			>

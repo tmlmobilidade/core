@@ -36,7 +36,7 @@
 .icon[data-active='true'],
 .icon[data-active='true']:hover {
 	color: var(--color-contrast);
-	pointer-events: none;
+	cursor: default;
 	background-color: var(--color-primary);
 	border-color: var(--color-secondary);
 	box-shadow: 0 1px 3px 0 var(--color-shadow);
@@ -45,31 +45,7 @@
 .icon[data-disabled='true'],
 .icon[data-disabled='true']:hover {
 	color: var(--color-system-text-100);
-	pointer-events: none;
 	cursor: not-allowed;
 	background-color: transparent;
 	opacity: 0.25;
-}
-
-/* * */
-/* TOOLTIP */
-
-.tooltip {
-	position: absolute;
-	left: calc(100% + 5px);
-	z-index: 26;
-	display: none;
-	padding: 10px;
-	font-size: 16px;
-	font-weight: var(--font-weight-semibold);
-	line-height: 1;
-	color: var(--color-system-background-100);
-	text-transform: uppercase;
-	white-space: nowrap;
-	background-color: var(--color-system-text-100);
-	border-radius: var(--border-radius-sm);
-}
-
-.container:hover .tooltip {
-	display: flex;
 }

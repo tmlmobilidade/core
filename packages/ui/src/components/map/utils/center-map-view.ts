@@ -45,7 +45,12 @@ export function centerMapView(mapObject: MapRef, features: Feature<Geometry, Geo
 			featureCollectionEnvelope.bbox[2],
 			featureCollectionEnvelope.bbox[3],
 		],
-		{ padding: 25 },
+		{
+			animate: true,
+			bearing: 0,
+			padding: 25,
+			pitch: 0,
+		},
 	);
 
 	//

@@ -24,8 +24,6 @@ export function moveMapView(mapObject: MapRef, coordinates: Position) {
 	//
 	// Validate the input parameters
 
-	console.log('moveMapView > start', { coordinates, mapObject });
-
 	if (!mapObject) return;
 
 	if (coordinates?.length !== 2) return;
@@ -38,19 +36,13 @@ export function moveMapView(mapObject: MapRef, coordinates: Position) {
 	const currentZoomWithMargin = currentZoom + MOVE_SETTINGS.zoom_margin;
 	const thresholdZoomWithMargin = MOVE_SETTINGS.zoom + MOVE_SETTINGS.zoom_margin;
 
-	console.log('moveMapView', { coordinates, currentZoom, thresholdZoomWithMargin });
-
 	//
 	// Get and validate the map bounds
 
 	const mapBounds = mapObject.getBounds().toArray();
 
-	console.log('moveMapView > mapBounds', mapBounds);
-
 	if (!mapBounds || mapBounds.length < 2) return;
 	if (mapBounds[0]?.length !== 2 || mapBounds[1]?.length !== 2) return;
-
-	console.log('moveMapView > mapBounds', mapBounds);
 
 	//
 	// Check if the given coordinates are
@@ -60,8 +52,6 @@ export function moveMapView(mapObject: MapRef, coordinates: Position) {
 	const bbox = turf.bboxPolygon([...mapBounds[0], ...mapBounds[1]]);
 
 	const isVisible = turf.booleanIntersects(point, bbox);
-
-	console.log('moveMapView > isVisible', isVisible);
 
 	//
 	// If the given coordinates are visible and the zoom

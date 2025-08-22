@@ -44,7 +44,7 @@ export const useStickyObserver = (rootMargin?: RootMarginProps, threshold: numbe
 	if (preparedRootMargin.bottom) preparedRootMargin.bottom = `${parseInt(preparedRootMargin.bottom) * (negativeValues ? -1 : 1) + (preparedOffsetValue.bottom ?? 0)}px`;
 
 	//
-	// C. Setup hook
+	// C. Handle actions
 
 	useEffect(() => {
 		// Exit early if the ref is not set
@@ -60,6 +60,9 @@ export const useStickyObserver = (rootMargin?: RootMarginProps, threshold: numbe
 			observer.disconnect();
 		};
 	}, [ref, preparedRootMargin, offsetValue, threshold]);
+
+	//
+	// D. Render components
 
 	return { isSticky, ref };
 

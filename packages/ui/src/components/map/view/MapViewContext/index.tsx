@@ -131,6 +131,7 @@ export const MapViewContextProvider = ({ children }: PropsWithChildren) => {
 		},
 	}), [
 		flagAutoZoom,
+		flagCursor,
 		flagLoading,
 	]);
 

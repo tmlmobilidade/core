@@ -7,7 +7,7 @@ import { MapViewAttribution } from '@/components/map/view/MapViewAttribution';
 import { useMapViewContext } from '@/components/map/view/MapViewContext';
 import { useMapContext } from '@/contexts/Map.context';
 import { mapDefaultConfig } from '@/settings/map.settings';
-import { FullscreenControl, GeolocateControl, Map, type MapLayerMouseEvent, NavigationControl, ScaleControl, type ViewStateChangeEvent } from '@vis.gl/react-maplibre';
+import { FullscreenControl, GeolocateControl, Map, type MapLayerMouseEvent, type MapWheelEvent, NavigationControl, ScaleControl, type ViewStateChangeEvent } from '@vis.gl/react-maplibre';
 import { type PropsWithChildren, useCallback, useMemo } from 'react';
 
 import styles from './styles.module.css';
@@ -27,12 +27,12 @@ export interface MapViewBasemapProps {
 	onMouseLeave?: (e: MapLayerMouseEvent) => void
 	onMouseOut?: (e: MapLayerMouseEvent) => void
 	onMouseOver?: (e: MapLayerMouseEvent) => void
-	onZoom?: (e: ViewStateChangeEvent) => void
+	onWheel?: (e: MapWheelEvent) => void
 }
 
 /* * */
 
-export function MapViewBasemap({ children, id, interactiveLayerIds = [], onClick, onContextMenu, onDragEnd, onDragStart, onMouseEnter, onMouseLeave, onMouseOut, onMouseOver, onZoom }: PropsWithChildren<MapViewBasemapProps>) {
+export function MapViewBasemap({ children, id, interactiveLayerIds = [], onClick, onContextMenu, onDragEnd, onDragStart, onMouseEnter, onMouseLeave, onMouseOut, onMouseOver, onWheel }: PropsWithChildren<MapViewBasemapProps>) {
 	//
 
 	//
@@ -79,9 +79,9 @@ export function MapViewBasemap({ children, id, interactiveLayerIds = [], onClick
 		if (onDragEnd) onDragEnd(event);
 	}, []);
 
-	const handleOnZoom = useCallback((event: ViewStateChangeEvent) => {
+	const handleOnWheel = useCallback((event: MapWheelEvent) => {
 		mapViewContext.actions.toggleAutoZoom(false);
-		if (onZoom) onZoom(event);
+		if (onWheel) onWheel(event);
 	}, []);
 
 	//
@@ -108,7 +108,7 @@ export function MapViewBasemap({ children, id, interactiveLayerIds = [], onClick
 			onMouseLeave={handleOnMouseLeave}
 			onMouseOut={onMouseOut}
 			onMouseOver={onMouseOver}
-			onZoom={handleOnZoom}
+			onWheel={handleOnWheel}
 			scrollZoom={mapContext.flags.scroll_zoom}
 			style={{ height: '100%', width: '100%' }}
 		>

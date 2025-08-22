@@ -117,6 +117,8 @@ export const MapContextProvider = ({ children }: PropsWithChildren) => {
 			style: flagStyle,
 		},
 	}), [
+		dataSearch,
+		searchPinFC,
 		flagScrollZoom,
 		flagStyle,
 	]);

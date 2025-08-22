@@ -3,7 +3,7 @@
 
 .tooltip {
 	position: fixed;
-	z-index: 26;
+	z-index: 9999;
 	padding: 10px;
 	font-size: 16px;
 	font-weight: var(--font-weight-semibold);

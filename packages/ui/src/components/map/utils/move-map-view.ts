@@ -47,8 +47,8 @@ export function moveMapView(mapObject: MapRef, coordinates: Position) {
 
 	console.log('moveMapView > mapBounds', mapBounds);
 
-	if (!mapBounds || mapBounds.length !== 2) return;
-	if (typeof mapBounds[0] !== 'number' || typeof mapBounds[1] !== 'number') return;
+	if (!mapBounds || mapBounds.length < 2) return;
+	if (mapBounds[0]?.length !== 2 || mapBounds[1]?.length !== 2) return;
 
 	console.log('moveMapView > mapBounds', mapBounds);
 

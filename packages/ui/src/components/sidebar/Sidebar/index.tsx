@@ -87,19 +87,17 @@ export const sidebarApps = [
 
 export function Sidebar() {
 	return (
-		<div className={styles.sidebarWrapper}>
-			<div className={styles.container}>
-				<div className={styles.navWrapper}>
-					{sidebarApps.map(item => (
-						<SidebarItem
-							key={item.href}
-							href={item.href}
-							icon={item.icon}
-							label={item.label}
-							permission={item.permission}
-						/>
-					))}
-				</div>
+		<div className={styles.sidebar}>
+			<div className={styles.navWrapper}>
+				{sidebarApps.map(item => (
+					<SidebarItem
+						key={item.href}
+						href={item.href}
+						icon={item.icon}
+						label={item.label}
+						permission={item.permission}
+					/>
+				))}
 			</div>
 		</div>
 	);

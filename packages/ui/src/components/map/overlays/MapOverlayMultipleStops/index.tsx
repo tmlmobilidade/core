@@ -71,7 +71,7 @@ export function MapOverlayMultipleStops({ data, id, onClick, visible = true }: M
 			mapViewContext.actions.toggleCursor('auto');
 			return;
 		}
-		mapViewContext.actions.toggleCursor('pointer');
+		if (onClick) mapViewContext.actions.toggleCursor('pointer');
 		setHoveredFeature(relevantFeature as unknown as Feature<Point, MapOverlayMultipleStopsDataProps>);
 	};
 

@@ -12,7 +12,7 @@ import styles from './styles.module.css';
 
 /* * */
 
-export interface MapOverlayMultipleStopsFCProps {
+export interface MapOverlayMultipleStopsDataProps {
 	id: string
 	name: string
 }
@@ -20,9 +20,9 @@ export interface MapOverlayMultipleStopsFCProps {
 /* * */
 
 interface MapOverlayMultipleStopsProps {
-	data?: FeatureCollection<Point, MapOverlayMultipleStopsFCProps> | null
+	data?: FeatureCollection<Point, MapOverlayMultipleStopsDataProps> | null
 	id: string
-	onClick?: (value: MapOverlayMultipleStopsFCProps) => void
+	onClick?: (value: MapOverlayMultipleStopsDataProps) => void
 	visible: boolean
 }
 
@@ -41,26 +41,7 @@ export function MapOverlayMultipleStops({ data, id, onClick, visible = true }: M
 	const primaryColorHexValue = useCssVariable('--color-primary', '#000000');
 	const secondaryColorHexValue = useCssVariable('--color-secondary', '#000000');
 
-	const [hoveredFeature, setHoveredFeature] = useState<Feature<Point, MapOverlayMultipleStopsFCProps> | null>(null);
-
-	// MIGRATE TO SAE/STOPS
-	// const stopsAsGeojsonFC = useMemo(() => {
-	// 	// Prepare an empty feature collection
-	// 	const baseGeoJson = getBaseGeoJsonFeatureCollection<Point, Stop>();
-	// 	// Skip if no data is provided
-	// 	if (!data) return baseGeoJson;
-	// 	// Add the features to the base GeoJSON
-	// 	baseGeoJson.features = data.map(item => ({
-	// 		geometry: {
-	// 			coordinates: [item.longitude, item.latitude],
-	// 			type: 'Point',
-	// 		},
-	// 		properties: item,
-	// 		type: 'Feature',
-	// 	}));
-	// 	// Return the collection
-	// 	return baseGeoJson;
-	// }, [data]);
+	const [hoveredFeature, setHoveredFeature] = useState<Feature<Point, MapOverlayMultipleStopsDataProps> | null>(null);
 
 	//
 	// B. Handle actions
@@ -78,7 +59,7 @@ export function MapOverlayMultipleStops({ data, id, onClick, visible = true }: M
 			.queryRenderedFeatures(event.point)
 			.find(feature => interactiveLayerIds.includes(feature.layer.id));
 		if (!relevantFeature) return;
-		if (onClick) onClick(relevantFeature.properties as MapOverlayMultipleStopsFCProps);
+		if (onClick) onClick(relevantFeature.properties as MapOverlayMultipleStopsDataProps);
 	};
 
 	const handleMouseOverEvent = (event: MapMouseEvent) => {
@@ -86,7 +67,7 @@ export function MapOverlayMultipleStops({ data, id, onClick, visible = true }: M
 			.queryRenderedFeatures(event.point)
 			.find(feature => interactiveLayerIds.includes(feature.layer.id));
 		if (!relevantFeature) return setHoveredFeature(null);
-		setHoveredFeature(relevantFeature as unknown as Feature<Point, MapOverlayMultipleStopsFCProps>);
+		setHoveredFeature(relevantFeature as unknown as Feature<Point, MapOverlayMultipleStopsDataProps>);
 	};
 
 	useEffect(() => {

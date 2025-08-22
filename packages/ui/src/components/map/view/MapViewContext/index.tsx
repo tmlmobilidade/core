@@ -13,7 +13,7 @@ import { createContext, type PropsWithChildren, type RefObject, useContext, useE
 
 interface MapViewContextState {
 	actions: {
-		centerMapOnFeatures: () => void
+		centerMapOnRegisteredSources: () => void
 		initMap: (event: MapLibreEvent) => void
 		registerOverlaySource: (sourceId: string, data: Feature<Geometry, GeoJsonProperties>[] | FeatureCollection<Geometry, GeoJsonProperties>) => void
 		toggleAutoZoom: (value?: boolean) => void
@@ -50,7 +50,7 @@ export const MapViewContextProvider = ({ children }: PropsWithChildren) => {
 
 	const mapRef = useRef<MapRef | null>(null);
 
-	const registeredSources = useRef<Map<string, Feature<Geometry, GeoJsonProperties>[]>>(new Map());
+	const [registeredSources, setRegisteredSources] = useState<Map<string, Feature<Geometry, GeoJsonProperties>[]>>(new Map());
 
 	const [flagLoading, setFlagLoading] = useState<boolean>(true);
 	const [flagAutoZoom, setFlagAutoZoom] = useState<boolean>(true);
@@ -62,31 +62,34 @@ export const MapViewContextProvider = ({ children }: PropsWithChildren) => {
 		// Skip if map is loading or Auto Zoom is disabled
 		if (flagLoading || !flagAutoZoom) return;
 		// Center the map on the registered sources
-		centerMapOnFeatures();
-	}, [flagLoading, flagAutoZoom]);
+		centerMapOnRegisteredSources();
+	}, [flagLoading, flagAutoZoom, registeredSources]);
 
 	const initMap = (event: MapLibreEvent) => {
-		console.log('map loaded');
 		loadMapAssets(event.target);
 		setFlagLoading(false);
 	};
 
 	const registerOverlaySource = (sourceId: string, data: Feature<Geometry, GeoJsonProperties>[] | FeatureCollection<Geometry, GeoJsonProperties>) => {
-		// If the source is a FeatureCollection then register the features
-		if ('features' in data) registeredSources.current.set(sourceId, data.features);
-		// If the source is an array of features then register them
-		else registeredSources.current.set(sourceId, data);
+		// If the data is a FeatureCollection then register the features
+		if ('features' in data) setRegisteredSources(prev => new Map(prev).set(sourceId, data.features));
+		// If the data is an array of features then register them
+		else if (Array.isArray(data)) setRegisteredSources(prev => new Map(prev).set(sourceId, data));
 	};
 
 	const unregisterOverlaySource = (sourceId: string) => {
-		registeredSources.current.delete(sourceId);
+		setRegisteredSources((prev) => {
+			const next = new Map(prev);
+			next.delete(sourceId);
+			return next;
+		});
 	};
 
-	const centerMapOnFeatures = () => {
+	const centerMapOnRegisteredSources = () => {
 		// Skip if the map is not available
 		if (!mapRef.current) return;
 		// Get the features to center the map on
-		const features = Array.from(registeredSources.current.values()).flat();
+		const features = Array.from(registeredSources.values()).flat();
 		// Center the map
 		centerMapView(mapRef.current, features);
 		// Re-enable auto zoom, if it was disabled
@@ -103,7 +106,7 @@ export const MapViewContextProvider = ({ children }: PropsWithChildren) => {
 
 	const contextValue: MapViewContextState = useMemo(() => ({
 		actions: {
-			centerMapOnFeatures,
+			centerMapOnRegisteredSources,
 			initMap,
 			registerOverlaySource,
 			toggleAutoZoom,

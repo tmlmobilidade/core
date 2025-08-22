@@ -7,7 +7,7 @@ import { loadMapAssets } from '@/components/map/utils/load-map-assets';
 import { type MapRef } from '@vis.gl/react-maplibre';
 import { type Feature, type FeatureCollection, type GeoJsonProperties, type Geometry } from 'geojson';
 import { type MapLibreEvent } from 'maplibre-gl';
-import { createContext, type PropsWithChildren, type RefObject, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { createContext, type CSSProperties, type PropsWithChildren, type RefObject, useContext, useEffect, useMemo, useRef, useState } from 'react';
 
 /* * */
 
@@ -17,10 +17,12 @@ interface MapViewContextState {
 		initMap: (event: MapLibreEvent) => void
 		registerOverlaySource: (sourceId: string, data: Feature<Geometry, GeoJsonProperties>[] | FeatureCollection<Geometry, GeoJsonProperties>) => void
 		toggleAutoZoom: (value?: boolean) => void
+		toggleCursor: (cursor: CSSProperties['cursor']) => void
 		unregisterOverlaySource: (sourceId: string) => void
 	}
 	flags: {
 		auto_zoom: boolean
+		cursor: CSSProperties['cursor']
 		loading: boolean
 	}
 	ref: {
@@ -52,6 +54,7 @@ export const MapViewContextProvider = ({ children }: PropsWithChildren) => {
 
 	const [registeredSources, setRegisteredSources] = useState<Map<string, Feature<Geometry, GeoJsonProperties>[]>>(new Map());
 
+	const [flagCursor, setFlagCursor] = useState<CSSProperties['cursor']>('auto');
 	const [flagLoading, setFlagLoading] = useState<boolean>(true);
 	const [flagAutoZoom, setFlagAutoZoom] = useState<boolean>(true);
 
@@ -101,6 +104,11 @@ export const MapViewContextProvider = ({ children }: PropsWithChildren) => {
 		else setFlagAutoZoom(prev => !prev);
 	};
 
+	const toggleCursor = (cursor?: CSSProperties['cursor']) => {
+		if (!cursor) setFlagCursor('auto');
+		setFlagCursor(cursor);
+	};
+
 	//
 	// C. Define context value
 
@@ -110,10 +118,12 @@ export const MapViewContextProvider = ({ children }: PropsWithChildren) => {
 			initMap,
 			registerOverlaySource,
 			toggleAutoZoom,
+			toggleCursor,
 			unregisterOverlaySource,
 		},
 		flags: {
 			auto_zoom: flagAutoZoom,
+			cursor: flagCursor,
 			loading: flagLoading,
 		},
 		ref: {

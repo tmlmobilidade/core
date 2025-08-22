@@ -66,7 +66,12 @@ export function MapOverlayMultipleStops({ data, id, onClick, visible = true }: M
 		const relevantFeature = event.target
 			.queryRenderedFeatures(event.point)
 			.find(feature => interactiveLayerIds.includes(feature.layer.id));
-		if (!relevantFeature) return setHoveredFeature(null);
+		if (!relevantFeature) {
+			setHoveredFeature(null);
+			mapViewContext.actions.toggleCursor('auto');
+			return;
+		}
+		mapViewContext.actions.toggleCursor('pointer');
 		setHoveredFeature(relevantFeature as unknown as Feature<Point, MapOverlayMultipleStopsDataProps>);
 	};
 

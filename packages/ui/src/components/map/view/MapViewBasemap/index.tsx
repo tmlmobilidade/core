@@ -8,7 +8,7 @@ import { useMapViewContext } from '@/components/map/view/MapViewContext';
 import { useMapContext } from '@/contexts/Map.context';
 import { mapDefaultConfig } from '@/settings/map.settings';
 import { FullscreenControl, GeolocateControl, Map, type MapLayerMouseEvent, NavigationControl, ScaleControl, type ViewStateChangeEvent } from '@vis.gl/react-maplibre';
-import { type CSSProperties, type PropsWithChildren, useCallback, useMemo, useState } from 'react';
+import { type PropsWithChildren, useCallback, useMemo } from 'react';
 
 import styles from './styles.module.css';
 
@@ -39,8 +39,6 @@ export function MapViewBasemap({ children, id, interactiveLayerIds = [], onClick
 	const mapContext = useMapContext();
 	const mapViewContext = useMapViewContext();
 
-	const [mouseCursor, setMouseCursor] = useState<CSSProperties['cursor']>('auto');
-
 	//
 	// B. Transform data
 
@@ -54,23 +52,23 @@ export function MapViewBasemap({ children, id, interactiveLayerIds = [], onClick
 	// C. Handle actions
 
 	const handleOnMouseEnter = useCallback((event: MapLayerMouseEvent) => {
-		setMouseCursor('pointer');
+		mapContext.actions.toggleMouseCursor('pointer');
 		if (onMouseEnter) onMouseEnter(event);
 	}, []);
 
 	const handleOnMouseLeave = useCallback((event: MapLayerMouseEvent) => {
-		setMouseCursor('auto');
+		mapContext.actions.toggleMouseCursor('auto');
 		if (onMouseLeave) onMouseLeave(event);
 	}, []);
 
 	const handleOnDragStart = useCallback((event: ViewStateChangeEvent) => {
-		setMouseCursor('grab');
+		mapContext.actions.toggleMouseCursor('grab');
 		mapViewContext.actions.toggleAutoZoom(false);
 		if (onDragStart) onDragStart(event);
 	}, []);
 
 	const handleOnDragEnd = useCallback((event: ViewStateChangeEvent) => {
-		setMouseCursor('auto');
+		mapContext.actions.toggleMouseCursor('auto');
 		if (onDragEnd) onDragEnd(event);
 	}, []);
 
@@ -81,7 +79,7 @@ export function MapViewBasemap({ children, id, interactiveLayerIds = [], onClick
 		<Map
 			ref={mapViewContext.ref.map}
 			attributionControl={false}
-			cursor={mouseCursor}
+			cursor={mapContext.flags.mouse_cursor}
 			id={id}
 			initialViewState={mapDefaultConfig.initialViewState}
 			interactive={true}

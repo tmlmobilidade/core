@@ -38,8 +38,8 @@ export function MapOverlayMultipleStops({ data, id, onClick, visible = true }: M
 
 	const interactiveLayerIds = [`${id}:multiple-stops:layer:points`];
 
-	const circleColorHexValue = useCssVariable('--color-primary', '#000000');
-	const borderColorHexValue = useCssVariable('--color-secondary', '#000000');
+	const primaryColorHexValue = useCssVariable('--color-primary', '#000000');
+	const secondaryColorHexValue = useCssVariable('--color-secondary', '#000000');
 
 	const [hoveredFeature, setHoveredFeature] = useState<Feature<Point, MapOverlayMultipleStopsFCProps> | null>(null);
 
@@ -132,7 +132,7 @@ export function MapOverlayMultipleStops({ data, id, onClick, visible = true }: M
 					visibility: visible ? 'visible' : 'none',
 				}}
 				paint={{
-					'circle-color': circleColorHexValue,
+					'circle-color': primaryColorHexValue,
 					'circle-pitch-alignment': 'map',
 					'circle-radius': [
 						'interpolate',
@@ -143,7 +143,7 @@ export function MapOverlayMultipleStops({ data, id, onClick, visible = true }: M
 						26, // max zoom level
 						22, // max radius
 					],
-					'circle-stroke-color': borderColorHexValue,
+					'circle-stroke-color': secondaryColorHexValue,
 					'circle-stroke-width': [
 						'interpolate',
 						['linear'],

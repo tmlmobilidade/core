@@ -2,7 +2,7 @@
 
 /* * */
 
-import { PropsWithChildren, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import styles from './styles.module.css';
@@ -10,12 +10,13 @@ import styles from './styles.module.css';
 /* * */
 
 interface SidebarItemTooltipProps {
+	label: string
 	target: HTMLElement | null
 }
 
 /* * */
 
-export function SidebarItemTooltip({ children, target }: PropsWithChildren<SidebarItemTooltipProps>) {
+export function SidebarItemTooltip({ label, target }: SidebarItemTooltipProps) {
 	//
 
 	//
@@ -58,7 +59,7 @@ export function SidebarItemTooltip({ children, target }: PropsWithChildren<Sideb
 				zIndex: 1000,
 			}}
 		>
-			{children}
+			{label}
 		</div>,
 		root,
 	);

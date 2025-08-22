@@ -71,10 +71,12 @@ export function SidebarItem({ href, icon, label, permission }: SidebarItemProps)
 			>
 				{icon}
 			</a>
-			{hover && <SidebarItemTooltip target={ref.current}>{label}</SidebarItemTooltip>}
-			{/* <span className={styles.tooltip}>
-				{label}
-			</span> */}
+			{hover && (
+				<SidebarItemTooltip
+					label={label}
+					target={ref.current}
+				/>
+			)}
 		</>
 	);
 

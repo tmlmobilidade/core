@@ -3,7 +3,7 @@
 import { mapDefaultValues } from '@/settings/map.settings';
 import * as turf from '@turf/turf';
 import { MapRef } from '@vis.gl/react-maplibre';
-import { Feature, FeatureCollection, GeoJsonProperties, LineString, Point, Polygon, Position } from 'geojson';
+import { type Position } from 'geojson';
 
 /**
  *
@@ -47,24 +47,4 @@ export const moveMap = (mapObject: MapRef, coordinates: Position) => {
 	}
 
 	//
-};
-
-/* * */
-
-/**
- * Return a base GeoJSON Feature for LineString object
- * @returns A GeoJSON Feature for LineString object with an empty features array
- */
-
-export const getBaseGeoJsonFeatureLineString = (): Feature<LineString> => {
-	return Object.assign({ geometry: { coordinates: [], type: 'LineString' }, properties: {}, type: 'Feature' });
-};
-
-/**
- * Return a base GeoJSON FeatureCollection object
- * @returns A GeoJSON FeatureCollection object with an empty features array
- */
-
-export const getBaseGeoJsonFeatureCollection = (): FeatureCollection<LineString | Point | Polygon, GeoJsonProperties> => {
-	return Object.assign({ features: [], type: 'FeatureCollection' });
 };

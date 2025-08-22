@@ -38,14 +38,14 @@ export function clampCoordinate(value: number): number {
 }
 
 /**
- * Parses a coordinate string in the following formats:
+ * Parses a coordinate pair string in the following formats:
  * - `lat, lng`
  * - `lat lng` (with a space or a tab)
- * @param input The coordinate string to parse.
+ * @param input The coordinate pair string to parse.
  * @param clamp Whether to clamp the latitude and longitude values to 6 decimal places.
  * @returns The parsed coordinates as an object, or null if the input is invalid.
  */
-export const parseCoordinateString = (input: string, clamp = true): null | { lat: number, lng: number } => {
+export const parseCoordinatePairString = (input: string, clamp = true): null | { lat: number, lng: number } => {
 	const regex = /^\s*([+-]?\d+(?:\.\d+)?)\s*(?:,|\s)\s*([+-]?\d+(?:\.\d+)?)\s*$/;
 	const match = input.match(regex);
 	if (!match) return null;

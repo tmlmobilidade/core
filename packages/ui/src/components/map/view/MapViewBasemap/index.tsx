@@ -3,6 +3,7 @@
 /* * */
 
 import { MAP_STYLES } from '@/components/map/configs/styles';
+import { MapOverlayPins } from '@/components/map/overlays/MapOverlayPins';
 import { MapViewAttribution } from '@/components/map/view/MapViewAttribution';
 import { useMapViewContext } from '@/components/map/view/MapViewContext';
 import { useMapContext } from '@/contexts/Map.context';
@@ -85,7 +86,7 @@ export function MapViewBasemap({ children, id, interactiveLayerIds = [], onClick
 	}, []);
 
 	//
-	// C. Render components
+	// D. Render components
 
 	return (
 		<Map
@@ -116,6 +117,7 @@ export function MapViewBasemap({ children, id, interactiveLayerIds = [], onClick
 			<FullscreenControl />
 			<GeolocateControl />
 			<ScaleControl />
+			<MapOverlayPins id="pins" pinsData={mapContext.data.search_pin} />
 			<div className={styles.children}>
 				<MapViewAttribution />
 				{children}

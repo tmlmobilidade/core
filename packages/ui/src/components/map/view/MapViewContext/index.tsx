@@ -86,7 +86,6 @@ export const MapViewContextProvider = ({ children }: PropsWithChildren) => {
 	};
 
 	const centerMapOnRegisteredSources = () => {
-		console.log('centerMapOnRegisteredSources', 'mapRef.current', mapRef.current);
 		// Skip if the map is not available
 		if (!mapRef.current) return;
 		// Get the features to center the map on

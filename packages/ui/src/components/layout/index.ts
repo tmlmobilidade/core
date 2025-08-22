@@ -5,3 +5,4 @@ export * from '@/components/layout/Grid';
 export * from '@/components/layout/Section';
 export * from '@/components/layout/Spacer';
 export * from '@/components/layout/Surface';
+export * from '@/components/layout/Toolbar';

@@ -1,9 +1,8 @@
 /* * */
 
 import { Label } from '@/components/display/Label';
+import { Toolbar } from '@/components/layout';
 import { type PropsWithChildren } from 'react';
-
-import styles from './styles.module.css';
 
 /* * */
 
@@ -15,9 +14,9 @@ interface FiltersBarProps {
 
 export function FiltersBar({ children, label = 'Filtrar por' }: PropsWithChildren<FiltersBarProps>) {
 	return (
-		<div className={styles.toolbar}>
+		<Toolbar>
 			<Label size="sm" caps singleLine>{label}</Label>
 			{children}
-		</div>
+		</Toolbar>
 	);
 }

@@ -2,7 +2,7 @@
 
 /* * */
 
-import { SegmentedControl as MantineSegmentedControl, SegmentedControlProps as MantineSegmentedControlProps } from '@mantine/core';
+import { SegmentedControl as MantineSegmentedControl, type SegmentedControlProps as MantineSegmentedControlProps } from '@mantine/core';
 
 /* * */
 
@@ -12,7 +12,7 @@ export interface SegmentedControlProps extends MantineSegmentedControlProps {
 
 /* * */
 
-export default function SegmentedControl({ fullWidth, ...props }: SegmentedControlProps) {
+export function SegmentedControl({ fullWidth, ...props }: SegmentedControlProps) {
 	return (
 		<MantineSegmentedControl
 			style={{ width: fullWidth ? '100%' : undefined }}

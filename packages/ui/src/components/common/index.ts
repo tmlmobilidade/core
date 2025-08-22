@@ -6,7 +6,6 @@ export { default as DateTimePicker } from './DateTimePicker';
 export { default as Description } from './Description';
 export { default as Menu } from './Menu';
 export { default as MultiSelect } from './MultiSelect';
-export { default as SegmentedControl } from './SegmentedControl';
 export { default as Tooltip } from './Tooltip';
 
 /* * */
@@ -14,6 +13,7 @@ export { default as Tooltip } from './Tooltip';
 export * from '@/components/common/AppLogos';
 export * from '@/components/common/Checkbox';
 export * from '@/components/common/Popover';
+export * from '@/components/common/SegmentedControl';
 export * from '@/components/common/Slider';
 export * from '@/components/common/Switch';
 export * from '@/components/common/Tree';

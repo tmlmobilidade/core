@@ -30,13 +30,19 @@ export function Pane({ children, header }: PaneProps) {
 	return (
 		<Surface height="full">
 			{header && (
-				<div className={styles.headerWrapper}>
-					{header.map((headerItem, index) => (
-						<div key={index} className={styles.headerItem}>{headerItem}</div>
+				<div className={styles.header}>
+					{header.map((headerRow, index) => (
+						<div key={index} className={styles.headerRow}>
+							{headerRow}
+						</div>
 					))}
 				</div>
 			)}
-			{children && <div className={styles.children}>{children}</div>}
+			{children && (
+				<div className={styles.children}>
+					{children}
+				</div>
+			)}
 		</Surface>
 	);
 }

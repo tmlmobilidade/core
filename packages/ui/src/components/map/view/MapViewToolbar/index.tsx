@@ -3,16 +3,16 @@
 /* * */
 
 import { Button } from '@/components/buttons';
-import { SegmentedControl, Switch } from '@/components/common';
+import { SegmentedControl } from '@/components/common/SegmentedControl';
+import { Switch } from '@/components/common/Switch';
 import { SearchInput } from '@/components/inputs';
-import { Spacer } from '@/components/layout';
+import { Spacer } from '@/components/layout/Spacer';
+import { Toolbar } from '@/components/layout/Toolbar';
 import { MAP_STYLES } from '@/components/map/configs/styles';
 import { useMapViewContext } from '@/components/map/view/MapViewContext';
 import { useMapContext } from '@/contexts';
 import { IconCrosshair } from '@tabler/icons-react';
 import { useMemo } from 'react';
-
-import styles from './styles.module.css';
 
 /* * */
 
@@ -38,14 +38,14 @@ export function MapViewToolbar() {
 	// C. Render components
 
 	return (
-		<div className={styles.toolbar}>
+		<Toolbar>
 			<Switch checked={mapContext.flags.scroll_zoom} label="Permitir Zoom" onChange={() => mapContext.actions.toggleScrollZoom()} />
 			<Switch checked={mapViewContext.flags.auto_zoom} label="Auto Zoom" onChange={() => mapViewContext.actions.toggleAutoZoom()} />
 			<Spacer />
 			<SearchInput onChange={mapContext.actions.handleSearch} value={mapContext.data.search} />
 			<Button icon={<IconCrosshair />} label="Centrar" loading={mapViewContext.flags.loading} onClick={() => mapViewContext.actions.toggleAutoZoom(true)} />
 			<SegmentedControl data={mapStyleOptions} onChange={() => mapContext.actions.toggleStyle()} value={mapContext.flags.style} />
-		</div>
+		</Toolbar>
 	);
 
 	//

@@ -3,11 +3,11 @@
 /* * */
 
 import { MAP_STYLES } from '@/components/map/configs/styles';
+import { MAP_VIEWPORT } from '@/components/map/configs/viewport';
 import { MapOverlayPins } from '@/components/map/overlays/MapOverlayPins';
 import { MapViewAttribution } from '@/components/map/view/MapViewAttribution';
 import { useMapViewContext } from '@/components/map/view/MapViewContext';
 import { useMapContext } from '@/contexts/Map.context';
-import { mapDefaultConfig } from '@/settings/map.settings';
 import { FullscreenControl, GeolocateControl, Map, type MapLayerMouseEvent, type MapWheelEvent, NavigationControl, ScaleControl, type ViewStateChangeEvent } from '@vis.gl/react-maplibre';
 import { type PropsWithChildren, useCallback, useMemo } from 'react';
 
@@ -94,7 +94,7 @@ export function MapViewBasemap({ children, id, interactiveLayerIds = [], onClick
 			attributionControl={false}
 			cursor={mapViewContext.flags.cursor}
 			id={id}
-			initialViewState={mapDefaultConfig.initialViewState}
+			initialViewState={MAP_VIEWPORT}
 			interactive={true}
 			interactiveLayerIds={interactiveLayerIds}
 			mapStyle={currentMapStyleConfig.value}

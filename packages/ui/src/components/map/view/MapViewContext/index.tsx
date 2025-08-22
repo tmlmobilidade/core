@@ -58,15 +58,6 @@ export const MapViewContextProvider = ({ children }: PropsWithChildren) => {
 	//
 	// B. Handle actions
 
-	// useEffect(() => {
-	// 	// Skip if no map available
-	// 	if (!mapRef.current) return;
-	// 	// Load common map assets
-	// 	// loadMapAssets(mapRef.current);
-	// 	// Set loading flag to false when map is loaded
-	// 	mapRef.current.on('load', () => setFlagLoading(false));
-	// }, []);
-
 	useEffect(() => {
 		// Skip if map is loading or Auto Zoom is disabled
 		if (flagLoading || !flagAutoZoom) return;
@@ -128,7 +119,6 @@ export const MapViewContextProvider = ({ children }: PropsWithChildren) => {
 	}), [
 		flagAutoZoom,
 		flagLoading,
-		mapRef.current,
 	]);
 
 	//

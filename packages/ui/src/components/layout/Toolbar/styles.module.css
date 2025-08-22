@@ -3,10 +3,10 @@
 
 .toolbar {
 	display: flex;
-	gap: var(--size-spacing-sm);
+	gap: var(--size-spacing-md);
 	align-items: center;
 	justify-content: flex-start;
 	width: 100%;
-	padding: var(--size-spacing-sm);
+	padding: var(--size-spacing-md);
 	overflow-x: auto;
 }

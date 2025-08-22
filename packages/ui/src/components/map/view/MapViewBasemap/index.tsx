@@ -117,7 +117,11 @@ export function MapViewBasemap({ children, id, interactiveLayerIds = [], onClick
 			<FullscreenControl />
 			<GeolocateControl />
 			<ScaleControl />
-			<MapOverlayPins id="pins" pinsData={mapContext.data.search_pin} />
+			<MapOverlayPins
+				id="pins"
+				pinsData={mapContext.data.search_pin}
+				focusOnChange
+			/>
 			<div className={styles.children}>
 				<MapViewAttribution />
 				{children}

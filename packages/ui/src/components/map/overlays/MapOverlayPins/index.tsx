@@ -3,9 +3,12 @@
 /* * */
 
 import { useMapViewContext } from '@/components/map/view/MapViewContext';
+import { useMapContext } from '@/contexts/Map.context';
 import { Layer, Source } from '@vis.gl/react-maplibre';
 import { type FeatureCollection, type Point } from 'geojson';
 import { useEffect } from 'react';
+
+import { centerMapView, moveMapView } from '../../utils';
 
 /* * */
 
@@ -16,6 +19,7 @@ export interface MapOverlayPinsPointDataProps {
 /* * */
 
 interface MapOverlayPinsProps {
+	focusOnChange?: boolean
 	id: string
 	pinsData?: FeatureCollection<Point, MapOverlayPinsPointDataProps> | null
 	visible?: boolean
@@ -23,12 +27,13 @@ interface MapOverlayPinsProps {
 
 /* * */
 
-export function MapOverlayPins({ id, pinsData, visible = true }: MapOverlayPinsProps) {
+export function MapOverlayPins({ focusOnChange, id, pinsData, visible = true }: MapOverlayPinsProps) {
 	//
 
 	//
 	// A. Setup variables
 
+	const mapContext = useMapContext();
 	const mapViewContext = useMapViewContext();
 
 	//
@@ -40,6 +45,25 @@ export function MapOverlayPins({ id, pinsData, visible = true }: MapOverlayPinsP
 		return () => {
 			mapViewContext.actions.unregisterOverlaySource(`${id}:pins:source:points`);
 		};
+	}, [pinsData]);
+
+	useEffect(() => {
+		// Skip if focus on change is disabled
+		if (!focusOnChange) return;
+		// Skip if no map is available
+		if (!mapViewContext.ref.map.current) return;
+		// Skip if no search pin coordinates are available
+		if (!mapContext.data.search_pin?.features.length) return;
+		// Disable auto zoom (to prevent collisions)
+		mapViewContext.actions.toggleAutoZoom(false);
+		// If there is more than one feature, center the map on them
+		if (mapContext.data.search_pin.features.length > 1) {
+			centerMapView(mapViewContext.ref.map.current, mapContext.data.search_pin.features);
+		}
+		// If there is only one feature, move the map to it
+		else if (mapContext.data.search_pin.features[0]) {
+			moveMapView(mapViewContext.ref.map.current, mapContext.data.search_pin.features[0].geometry.coordinates);
+		}
 	}, [pinsData]);
 
 	//

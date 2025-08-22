@@ -9,7 +9,7 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 import { type MapStyle } from '@/components/map/configs/styles';
 import { useLocalStorage } from '@mantine/hooks';
 import { MapProvider } from '@vis.gl/react-maplibre';
-import { createContext, type PropsWithChildren, useContext } from 'react';
+import { createContext, type PropsWithChildren, useContext, useMemo } from 'react';
 
 /* * */
 
@@ -63,7 +63,7 @@ export const MapContextProvider = ({ children }: PropsWithChildren) => {
 	//
 	// C. Define context value
 
-	const contextValue: MapContextState = {
+	const contextValue: MapContextState = useMemo(() => ({
 		actions: {
 			toggleScrollZoom,
 			toggleStyle,
@@ -72,7 +72,10 @@ export const MapContextProvider = ({ children }: PropsWithChildren) => {
 			scroll_zoom: flagScrollZoom,
 			style: flagStyle,
 		},
-	};
+	}), [
+		flagScrollZoom,
+		flagStyle,
+	]);
 
 	//
 	// D. Render components

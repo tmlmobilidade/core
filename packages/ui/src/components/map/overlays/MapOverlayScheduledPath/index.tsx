@@ -63,7 +63,6 @@ export function MapOverlayScheduledPath({ id, lineData, pointsData, visible = tr
 		const relevantFeature = event.target
 			.queryRenderedFeatures(event.point)
 			.find(feature => interactiveLayerIds.includes(feature.layer.id));
-		console.log(relevantFeature);
 		if (!relevantFeature) return setHoveredFeature(null);
 		setHoveredFeature(relevantFeature as unknown as Feature<Point, MapOverlayScheduledPathPointsDataProps>);
 	};

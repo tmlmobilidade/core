@@ -5,6 +5,8 @@
 import { ActionIcon as MantineActionIcon, TextInput as MantineTextInput } from '@mantine/core';
 import { IconSearch, IconX } from '@tabler/icons-react';
 
+import styles from './styles.module.css';
+
 /* * */
 
 export interface SearchInputProps {
@@ -35,6 +37,7 @@ export function SearchInput({ onChange, value }: SearchInputProps) {
 
 	return (
 		<MantineTextInput
+			classNames={{ input: styles.input }}
 			leftSection={<IconSearch size={20} />}
 			onChange={handleChange}
 			placeholder="Pesquisar..."

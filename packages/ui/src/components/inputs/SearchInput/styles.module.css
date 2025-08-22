@@ -1,0 +1,7 @@
+/* * */
+/* SEARCH INPUT */
+
+.input:focus {
+	width: min-content;
+	min-width: auto;
+}

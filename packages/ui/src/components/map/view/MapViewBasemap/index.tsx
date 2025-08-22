@@ -18,6 +18,7 @@ export interface MapViewBasemapProps {
 	id: string
 	interactiveLayerIds?: string[]
 	onClick?: (e: MapLayerMouseEvent) => void
+	onContextMenu?: (e: MapLayerMouseEvent) => void
 	onDrag?: (e: ViewStateChangeEvent) => void
 	onDragEnd?: (e: ViewStateChangeEvent) => void
 	onDragStart?: (e: ViewStateChangeEvent) => void
@@ -26,11 +27,12 @@ export interface MapViewBasemapProps {
 	onMouseLeave?: (e: MapLayerMouseEvent) => void
 	onMouseOut?: (e: MapLayerMouseEvent) => void
 	onMouseOver?: (e: MapLayerMouseEvent) => void
+	onZoom?: (e: ViewStateChangeEvent) => void
 }
 
 /* * */
 
-export function MapViewBasemap({ children, id, interactiveLayerIds = [], onClick, onDragEnd, onDragStart, onMouseEnter, onMouseLeave, onMouseOut, onMouseOver }: PropsWithChildren<MapViewBasemapProps>) {
+export function MapViewBasemap({ children, id, interactiveLayerIds = [], onClick, onContextMenu, onDragEnd, onDragStart, onMouseEnter, onMouseLeave, onMouseOut, onMouseOver, onZoom }: PropsWithChildren<MapViewBasemapProps>) {
 	//
 
 	//
@@ -52,24 +54,34 @@ export function MapViewBasemap({ children, id, interactiveLayerIds = [], onClick
 	// C. Handle actions
 
 	const handleOnMouseEnter = useCallback((event: MapLayerMouseEvent) => {
-		mapContext.actions.toggleMouseCursor('pointer');
+		mapViewContext.actions.toggleCursor('pointer');
 		if (onMouseEnter) onMouseEnter(event);
 	}, []);
 
+	const handleOnContextMenu = useCallback((event: MapLayerMouseEvent) => {
+		console.log('Map Right Click', event.lngLat);
+		if (onContextMenu) onContextMenu(event);
+	}, []);
+
 	const handleOnMouseLeave = useCallback((event: MapLayerMouseEvent) => {
-		mapContext.actions.toggleMouseCursor('auto');
+		mapViewContext.actions.toggleCursor('auto');
 		if (onMouseLeave) onMouseLeave(event);
 	}, []);
 
 	const handleOnDragStart = useCallback((event: ViewStateChangeEvent) => {
-		mapContext.actions.toggleMouseCursor('grab');
+		mapViewContext.actions.toggleCursor('grab');
 		mapViewContext.actions.toggleAutoZoom(false);
 		if (onDragStart) onDragStart(event);
 	}, []);
 
 	const handleOnDragEnd = useCallback((event: ViewStateChangeEvent) => {
-		mapContext.actions.toggleMouseCursor('auto');
+		mapViewContext.actions.toggleCursor('auto');
 		if (onDragEnd) onDragEnd(event);
+	}, []);
+
+	const handleOnZoom = useCallback((event: ViewStateChangeEvent) => {
+		mapViewContext.actions.toggleAutoZoom(false);
+		if (onZoom) onZoom(event);
 	}, []);
 
 	//
@@ -79,7 +91,7 @@ export function MapViewBasemap({ children, id, interactiveLayerIds = [], onClick
 		<Map
 			ref={mapViewContext.ref.map}
 			attributionControl={false}
-			cursor={mapContext.flags.mouse_cursor}
+			cursor={mapViewContext.flags.cursor}
 			id={id}
 			initialViewState={mapDefaultConfig.initialViewState}
 			interactive={true}
@@ -88,6 +100,7 @@ export function MapViewBasemap({ children, id, interactiveLayerIds = [], onClick
 			maxZoom={currentMapStyleConfig.max_zoom}
 			minZoom={currentMapStyleConfig.min_zoom}
 			onClick={onClick}
+			onContextMenu={handleOnContextMenu}
 			onDragEnd={handleOnDragEnd}
 			onDragStart={handleOnDragStart}
 			onLoad={mapViewContext.actions.initMap}
@@ -95,6 +108,7 @@ export function MapViewBasemap({ children, id, interactiveLayerIds = [], onClick
 			onMouseLeave={handleOnMouseLeave}
 			onMouseOut={onMouseOut}
 			onMouseOver={onMouseOver}
+			onZoom={handleOnZoom}
 			scrollZoom={mapContext.flags.scroll_zoom}
 			style={{ height: '100%', width: '100%' }}
 		>

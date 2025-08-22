@@ -68,16 +68,16 @@ export const MapViewContextProvider = ({ children }: PropsWithChildren) => {
 	// }, []);
 
 	useEffect(() => {
-		// Skip if no map available or is loading
-		if (!mapRef.current || flagLoading) return;
-		// Skip if auto zoom is disabled
-		if (!flagAutoZoom) return;
+		// Skip if map is loading or Auto Zoom is disabled
+		if (flagLoading || !flagAutoZoom) return;
 		// Center the map on the registered sources
 		centerMapOnFeatures();
 	}, [flagLoading, flagAutoZoom]);
 
 	const initMap = (event: MapLibreEvent) => {
+		console.log('map Init request');
 		event.target.on('load', () => {
+			console.log('Map loaded');
 			loadMapAssets(event.target);
 			setFlagLoading(false);
 		});

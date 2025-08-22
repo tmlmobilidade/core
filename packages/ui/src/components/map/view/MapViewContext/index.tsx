@@ -75,12 +75,9 @@ export const MapViewContextProvider = ({ children }: PropsWithChildren) => {
 	}, [flagLoading, flagAutoZoom]);
 
 	const initMap = (event: MapLibreEvent) => {
-		console.log('map Init request');
-		event.target.on('load', () => {
-			console.log('Map loaded');
-			loadMapAssets(event.target);
-			setFlagLoading(false);
-		});
+		console.log('map loaded');
+		loadMapAssets(event.target);
+		setFlagLoading(false);
 	};
 
 	const registerOverlaySource = (sourceId: string, data: Feature<Geometry, GeoJsonProperties>[] | FeatureCollection<Geometry, GeoJsonProperties>) => {

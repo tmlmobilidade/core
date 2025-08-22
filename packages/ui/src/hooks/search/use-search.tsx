@@ -11,7 +11,7 @@ import { useMemo } from 'react';
 /* * */
 
 interface UseSearchProps<T> {
-	accessors?: (keyof T)[] //  (keyof T | (string & {}))[]
+	accessors?: (keyof T)[]
 	customSearch?: (record: T, query: string) => boolean
 	data: T[]
 	debounce?: number
@@ -20,7 +20,7 @@ interface UseSearchProps<T> {
 
 /* * */
 
-export function useSearch<T>({ accessors, customSearch, data, debounce = 200, query }: UseSearchProps<T>) {
+export function useSearch<T>({ accessors, customSearch, data, debounce = 500, query }: UseSearchProps<T>) {
 	//
 
 	//

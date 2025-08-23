@@ -1,10 +1,10 @@
 /* * */
-/* GROW WHEN USED */
+/* IN USE OVERRIDE */
 
-.growWhenUsed {
+.override {
 	transition: width 200ms ease-in-out;
 }
 
-.growWhenUsed[data-with-right-section="true"] {
+.override[data-in-use="true"] {
 	width: 100%;
 }

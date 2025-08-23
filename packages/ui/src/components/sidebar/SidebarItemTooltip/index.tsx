@@ -76,7 +76,7 @@ export function SidebarItemTooltip({ label, target }: SidebarItemTooltipProps) {
 		<div
 			className={styles.tooltip}
 			style={{
-				left: targetPosition.right + 8,
+				left: targetPosition.right + 5,
 				top: targetPosition.top + targetPosition.height / 2,
 				transform: 'translateY(-50%)',
 			}}

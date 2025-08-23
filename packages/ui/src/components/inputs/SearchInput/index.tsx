@@ -51,7 +51,6 @@ export function SearchInput({ onChange, value }: SearchInputProps) {
 
 	return (
 		<MantineTextInput
-			data-in-use={isInUse}
 			leftSection={<IconSearch size={20} />}
 			onBlur={handleBlur}
 			onChange={handleChange}

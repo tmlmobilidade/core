@@ -6,8 +6,6 @@ import { ActionIcon as MantineActionIcon, TextInput as MantineTextInput } from '
 import { IconSearch, IconX } from '@tabler/icons-react';
 import { useState } from 'react';
 
-import styles from './styles.module.css';
-
 /* * */
 
 export interface SearchInputProps {
@@ -26,7 +24,7 @@ export function SearchInput({ onChange, value }: SearchInputProps) {
 	const [isInUse, setIsInUse] = useState(false);
 
 	//
-	// A. Handle actions
+	// B. Handle actions
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (!onChange) return;
@@ -49,17 +47,17 @@ export function SearchInput({ onChange, value }: SearchInputProps) {
 	};
 
 	//
-	// B. Render components
+	// C. Render components
 
 	return (
 		<MantineTextInput
-			classNames={{ root: styles.override }}
 			data-in-use={isInUse}
 			leftSection={<IconSearch size={20} />}
 			onBlur={handleBlur}
 			onChange={handleChange}
 			onFocus={handleFocus}
 			placeholder="Pesquisar..."
+			styles={{ root: { width: isInUse ? '100%' : 'auto' } }}
 			value={value ?? ''}
 			rightSection={
 				(typeof value === 'string' && value.length > 0) && (

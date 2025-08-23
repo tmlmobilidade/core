@@ -4,6 +4,7 @@
 	--input-height: 40px;
 	min-width: 200px;
 	overflow: visible;
+	transition: width 300ms ease-in-out
 }
 
 /* * */

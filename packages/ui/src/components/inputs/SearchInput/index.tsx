@@ -56,7 +56,7 @@ export function SearchInput({ onChange, value }: SearchInputProps) {
 			onChange={handleChange}
 			onFocus={handleFocus}
 			placeholder="Pesquisar..."
-			styles={{ root: { width: isInUse ? '100%' : 'inherit' } }}
+			styles={{ root: { width: isInUse ? '100%' : 200 } }}
 			value={value ?? ''}
 			rightSection={
 				(typeof value === 'string' && value.length > 0) && (

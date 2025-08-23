@@ -4,4 +4,5 @@
 .growWhenUsed[data-with-right-section="true"] {
 	width: 100%;
 	min-width: initial;
+	transition: width 200ms ease-in-out;
 }

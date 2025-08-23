@@ -1,7 +1,7 @@
 /* * */
-/* SEARCH INPUT */
+/* GROW WHEN USED */
 
-.input:focus {
-	width: min-content;
-	min-width: auto;
+.growWhenUsed[data-with-right-section="true"] {
+	width: 100%;
+	min-width: initial;
 }

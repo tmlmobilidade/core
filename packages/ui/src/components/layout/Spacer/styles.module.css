@@ -36,3 +36,10 @@
     width: var(--spacer-size);
     height: 2px;
 }
+
+/* * */
+/* PROPS / SHRINK */
+
+.container[data-shrink="true"] {
+	flex-shrink: 999;
+}

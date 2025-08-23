@@ -24,6 +24,7 @@
 	aspect-ratio: 1;
 	font-size: 30px;
 	color: var(--color-system-text-100);
+	cursor: pointer;
 	background-color: transparent;
 	border: 2px solid transparent;
 	border-radius: var(--border-radius-sm);

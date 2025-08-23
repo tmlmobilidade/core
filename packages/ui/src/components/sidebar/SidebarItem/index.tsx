@@ -54,6 +54,15 @@ export function SidebarItem({ href, icon, label, permission }: SidebarItemProps)
 		return false;
 	}, [href, isDisabled, currentUrl]);
 
+	const hrefValue = useMemo(() => {
+		// Skip if item is disabled
+		if (isDisabled) return;
+		// Skip if item is active
+		if (isActive) return;
+		// Return the href value
+		return href;
+	}, [isDisabled, isActive, href]);
+
 	//
 	// C. Render components
 
@@ -68,7 +77,7 @@ export function SidebarItem({ href, icon, label, permission }: SidebarItemProps)
 				className={styles.icon}
 				data-active={isActive}
 				data-disabled={isDisabled}
-				href={(isActive && isDisabled) ? href : undefined}
+				href={hrefValue}
 				onMouseEnter={() => setHover(true)}
 				onMouseLeave={() => setHover(false)}
 			>

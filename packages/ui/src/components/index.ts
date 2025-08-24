@@ -9,6 +9,7 @@ export * from '@/components/inputs';
 export * from '@/components/layout';
 export * from '@/components/loaders';
 export * from '@/components/map';
+export * from '@/components/modals';
 export * from '@/components/panes';
 export * from '@/components/sidebar';
 export * from '@/components/theme';

@@ -6,7 +6,7 @@ import { SidebarItemTooltip } from '@/components/sidebar/SidebarItemTooltip';
 import { useMeContext } from '@/contexts/Me.context';
 import { useCurrentUrl } from '@/hooks';
 import { type Permission } from '@tmlmobilidade/types';
-import { getPermission } from '@tmlmobilidade/utils';
+import { hasPermission } from '@tmlmobilidade/utils';
 import { useMemo, useRef, useState } from 'react';
 
 import styles from './styles.module.css';
@@ -17,12 +17,12 @@ export interface SidebarItemProps {
 	href: string
 	icon: React.ReactNode
 	label: string
-	permission: Permission<unknown>
+	permissions: Permission<unknown>[]
 }
 
 /* * */
 
-export function SidebarItem({ href, icon, label, permission }: SidebarItemProps) {
+export function SidebarItem({ href, icon, label, permissions }: SidebarItemProps) {
 	//
 
 	//
@@ -38,35 +38,42 @@ export function SidebarItem({ href, icon, label, permission }: SidebarItemProps)
 	//
 	// B. Transform data
 
-	const isDisabled = useMemo(() => {
-		const userPermission = getPermission(meContext.data.user?.permissions as unknown as Permission<unknown>[], permission.scope, permission.action);
-		return !userPermission || (userPermission.action !== permission.action || userPermission.scope !== permission.scope);
-	}, [meContext.data.user?.permissions, permission]);
+	const isEnabled = useMemo(() => {
+		// Skip if user has no permissions
+		if (!meContext.data.user?.permissions) return false;
+		// For all possible permissions...
+		for (const permissionObject of permissions) {
+			// ... check if the user is allowed to see this item
+			return hasPermission(meContext.data.user?.permissions, permissionObject.scope, permissionObject.action);
+		}
+		// If no permissions matched
+		return false;
+	}, [meContext.data.user?.permissions, permissions]);
 
 	const isActive = useMemo(() => {
 		// Skip if window is not defined
 		if (typeof window === 'undefined') return false;
 		// Skip if is disabled
-		if (isDisabled) return false;
+		if (!isEnabled) return false;
 		// The current item is active if the
 		// current URL starts with the item href
 		if (currentUrl?.startsWith(href)) return true;
 		return false;
-	}, [href, isDisabled, currentUrl]);
+	}, [href, isEnabled, currentUrl]);
 
 	const hrefValue = useMemo(() => {
 		// Skip if item is disabled
-		if (isDisabled) return;
+		if (!isEnabled) return;
 		// Skip if item is active
 		if (isActive) return;
 		// Return the href value
 		return href;
-	}, [isDisabled, isActive, href]);
+	}, [isEnabled, isActive, href]);
 
 	//
 	// C. Render components
 
-	if (isDisabled) {
+	if (!isEnabled) {
 		return null;
 	}
 
@@ -76,7 +83,7 @@ export function SidebarItem({ href, icon, label, permission }: SidebarItemProps)
 				ref={ref}
 				className={styles.icon}
 				data-active={isActive}
-				data-disabled={isDisabled}
+				data-disabled={!isEnabled}
 				href={hrefValue}
 				onMouseEnter={() => setHover(true)}
 				onMouseLeave={() => setHover(false)}

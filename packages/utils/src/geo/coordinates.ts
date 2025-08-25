@@ -1,21 +1,25 @@
 /* * */
 
 /**
- * Checks if the given latitude value is valid.
+ * Checks if the given latitude value is valid given Portugal limits.
  * @param value The latitude value to check.
  * @returns True if the latitude is valid, false otherwise.
  */
 export function isValidLatitude(value: number): boolean {
-	return value >= -90 && value <= 90;
+	const hasValue = value !== undefined && value !== null;
+	const isWithinPortugal = value >= 36.9 && value <= 42.0;
+	return hasValue && isWithinPortugal;
 }
 
 /**
- * Checks if the given longitude value is valid.
+ * Checks if the given longitude value is valid given Portugal limits.
  * @param value The longitude value to check.
  * @returns True if the longitude is valid, false otherwise.
  */
 export function isValidLongitude(value: number): boolean {
-	return value >= -180 && value <= 180;
+	const hasValue = value !== undefined && value !== null;
+	const isWithinPortugal = value >= -9.5 && value <= -6.0;
+	return hasValue && isWithinPortugal;
 }
 
 /**

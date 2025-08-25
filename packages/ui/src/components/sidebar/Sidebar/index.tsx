@@ -3,7 +3,7 @@
 /* * */
 
 import { SidebarItem } from '@/components/sidebar/SidebarItem';
-import { IconAlertTriangle, IconBuildings, IconBusStop, IconFileCertificate, IconFileCheck, IconHome, IconKey, IconListCheck, IconUser } from '@tabler/icons-react';
+import { IconAlertTriangle, IconBuildings, IconBusStop, IconClockExclamation, IconFileCertificate, IconFileCheck, IconHome, IconKey, IconListCheck, IconUser } from '@tabler/icons-react';
 import { getAppConfig, Permissions } from '@tmlmobilidade/lib';
 
 import styles from './styles.module.css';
@@ -48,6 +48,13 @@ export const sidebarApps = [
 		icon: <IconAlertTriangle size={26} />,
 		label: 'Alertas',
 		permissions: [{ action: Permissions.alerts.actions.read, scope: Permissions.alerts.scope }],
+	},
+	{
+		_id: 'alerts_realtime',
+		href: `${getAppConfig('alerts', 'frontend_url')}/realtime`,
+		icon: <IconClockExclamation size={26} />,
+		label: 'Alertas - Tempo Real',
+		permissions: [{ action: Permissions.alerts_realtime.actions.read, scope: Permissions.alerts_realtime.scope }],
 	},
 	{
 		_id: 'rides',

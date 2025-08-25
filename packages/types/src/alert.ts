@@ -158,7 +158,6 @@ export type UpdateAlertDto = Partial<Omit<CreateAlertDto, 'created_by'>>;
 
 export const AlertPermissionSchema = z.object({
 	agency_ids: z.array(z.string()),
-	municipality_ids: z.array(z.string()),
 });
 
 export type AlertPermission = z.infer<typeof AlertPermissionSchema>;

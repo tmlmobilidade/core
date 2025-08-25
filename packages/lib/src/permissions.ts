@@ -1,6 +1,6 @@
 /* * */
 
-import { GtfsValidationPermissionSchema, PlanPermissionSchema } from '@tmlmobilidade/types';
+import { AlertPermissionSchema, GtfsValidationPermissionSchema, PlanPermissionSchema } from '@tmlmobilidade/types';
 
 /* * */
 
@@ -30,6 +30,17 @@ export const Permissions = Object.freeze({
 		},
 		resources: {},
 		scope: 'alerts',
+	},
+	alerts_realtime: {
+		actions: {
+			create: 'create',
+			delete: 'delete',
+			read: 'read',
+			toggle_lock: 'toggle_lock',
+			update: 'update',
+		},
+		resources: AlertPermissionSchema.shape,
+		scope: 'alerts_realtime',
 	},
 	home: {
 		actions: {

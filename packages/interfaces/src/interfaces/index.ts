@@ -1,6 +1,7 @@
 /* * */
 
 export * from '@/interfaces/agencies/agencies.interface.js';
+export * from '@/interfaces/alerts/alerts-realtime.interface.js';
 export * from '@/interfaces/alerts/alerts.interface.js';
 export * from '@/interfaces/auth/roles.interface.js';
 export * from '@/interfaces/auth/sessions.interface.js';

@@ -9,13 +9,14 @@ import { MapViewAttribution } from '@/components/map/view/MapViewAttribution';
 import { useMapViewContext } from '@/components/map/view/MapViewContext';
 import { useMapContext } from '@/contexts/Map.context';
 import { FullscreenControl, GeolocateControl, Map, type MapLayerMouseEvent, type MapWheelEvent, NavigationControl, ScaleControl, type ViewStateChangeEvent } from '@vis.gl/react-maplibre';
-import { type PropsWithChildren, useCallback, useMemo } from 'react';
+import { type CSSProperties, type PropsWithChildren, useCallback, useMemo } from 'react';
 
 import styles from './styles.module.css';
 
 /* * */
 
 export interface MapViewBasemapProps {
+	cursor?: CSSProperties['cursor'] | null
 	id: string
 	interactiveLayerIds?: string[]
 	onClick?: (e: MapLayerMouseEvent) => void
@@ -33,7 +34,7 @@ export interface MapViewBasemapProps {
 
 /* * */
 
-export function MapViewBasemap({ children, id, interactiveLayerIds = [], onClick, onContextMenu, onDragEnd, onDragStart, onMouseEnter, onMouseLeave, onMouseOut, onMouseOver, onWheel }: PropsWithChildren<MapViewBasemapProps>) {
+export function MapViewBasemap({ children, cursor, id, interactiveLayerIds = [], onClick, onContextMenu, onDragEnd, onDragStart, onMouseEnter, onMouseLeave, onMouseOut, onMouseOver, onWheel }: PropsWithChildren<MapViewBasemapProps>) {
 	//
 
 	//
@@ -65,18 +66,18 @@ export function MapViewBasemap({ children, id, interactiveLayerIds = [], onClick
 	}, []);
 
 	const handleOnMouseLeave = useCallback((event: MapLayerMouseEvent) => {
-		mapViewContext.actions.toggleCursor('auto');
+		mapViewContext.actions.toggleCursor(cursor ?? 'auto');
 		if (onMouseLeave) onMouseLeave(event);
 	}, []);
 
 	const handleOnDragStart = useCallback((event: ViewStateChangeEvent) => {
-		mapViewContext.actions.toggleCursor('grab');
+		mapViewContext.actions.toggleCursor('grabbing');
 		mapViewContext.actions.toggleAutoZoom(false);
 		if (onDragStart) onDragStart(event);
 	}, []);
 
 	const handleOnDragEnd = useCallback((event: ViewStateChangeEvent) => {
-		mapViewContext.actions.toggleCursor('auto');
+		mapViewContext.actions.toggleCursor(cursor ?? 'auto');
 		if (onDragEnd) onDragEnd(event);
 	}, []);
 

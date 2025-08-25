@@ -6,13 +6,14 @@ import { MapViewBasemap } from '@/components/map/view/MapViewBasemap';
 import { MapViewContextProvider } from '@/components/map/view/MapViewContext';
 import { MapViewToolbar } from '@/components/map/view/MapViewToolbar';
 import { type MapLayerMouseEvent, type ViewStateChangeEvent } from '@vis.gl/react-maplibre';
-import { type PropsWithChildren } from 'react';
+import { type CSSProperties, type PropsWithChildren } from 'react';
 
 import styles from './styles.module.css';
 
 /* * */
 
 interface MapViewProps {
+	cursor?: CSSProperties['cursor'] | null
 	height?: number
 	id: string
 	interactiveLayerIds?: string[]
@@ -29,7 +30,7 @@ interface MapViewProps {
 
 /* * */
 
-export function MapView({ children, height, id, interactiveLayerIds = [], onClick, onDrag, onDragEnd, onDragStart, onMouseDrag, onMouseEnter, onMouseLeave, onMouseOut, onMouseOver }: PropsWithChildren<MapViewProps>) {
+export function MapView({ children, cursor, height, id, interactiveLayerIds = [], onClick, onDrag, onDragEnd, onDragStart, onMouseDrag, onMouseEnter, onMouseLeave, onMouseOut, onMouseOver }: PropsWithChildren<MapViewProps>) {
 	return (
 		<MapViewContextProvider>
 			<div
@@ -37,6 +38,7 @@ export function MapView({ children, height, id, interactiveLayerIds = [], onClic
 				style={{ gridTemplateRows: height ? `${height}px auto` : '1fr auto' }}
 			>
 				<MapViewBasemap
+					cursor={cursor}
 					id={id}
 					interactiveLayerIds={interactiveLayerIds}
 					onClick={onClick}

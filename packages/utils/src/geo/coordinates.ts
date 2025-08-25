@@ -3,23 +3,25 @@
 /**
  * Checks if the given latitude value is valid given Portugal limits.
  * @param value The latitude value to check.
- * @returns True if the latitude is valid, false otherwise.
+ * @returns The clamped latitude value if valid, false otherwise.
  */
-export function isValidLatitude(value: number): boolean {
+export function isValidLatitude(value: number): false | number {
 	const hasValue = value !== undefined && value !== null;
 	const isWithinPortugal = value >= 36.9 && value <= 42.0;
-	return hasValue && isWithinPortugal;
+	if (!hasValue || !isWithinPortugal) return false;
+	return clampCoordinate(value);
 }
 
 /**
  * Checks if the given longitude value is valid given Portugal limits.
  * @param value The longitude value to check.
- * @returns True if the longitude is valid, false otherwise.
+ * @returns The clamped longitude value if valid, false otherwise.
  */
-export function isValidLongitude(value: number): boolean {
+export function isValidLongitude(value: number): false | number {
 	const hasValue = value !== undefined && value !== null;
 	const isWithinPortugal = value >= -9.5 && value <= -6.0;
-	return hasValue && isWithinPortugal;
+	if (!hasValue || !isWithinPortugal) return false;
+	return clampCoordinate(value);
 }
 
 /**
@@ -29,7 +31,9 @@ export function isValidLongitude(value: number): boolean {
  * @returns True if the coordinate pair is valid, false otherwise.
  */
 export function isValidCoordinatePair(lat: number, lng: number): boolean {
-	return isValidLatitude(lat) && isValidLongitude(lng);
+	const isValidLat = isValidLatitude(lat);
+	const isValidLng = isValidLongitude(lng);
+	return !!isValidLat && !!isValidLng;
 }
 
 /**

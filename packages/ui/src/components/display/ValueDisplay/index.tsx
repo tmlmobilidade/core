@@ -7,6 +7,7 @@ import styles from './styles.module.css';
 /* * */
 
 interface ValueDisplayProps {
+	bordered?: boolean
 	label: string
 	raised?: boolean
 	value: ReactNode | string
@@ -14,9 +15,9 @@ interface ValueDisplayProps {
 
 /* * */
 
-export function ValueDisplay({ label, raised, value }: ValueDisplayProps) {
+export function ValueDisplay({ bordered, label, raised, value }: ValueDisplayProps) {
 	return (
-		<div className={styles.container} data-raised={raised}>
+		<div className={styles.container} data-bordered={bordered} data-raised={raised}>
 			<p className={styles.label}>{label}</p>
 			<p className={styles.value}>{value}</p>
 		</div>

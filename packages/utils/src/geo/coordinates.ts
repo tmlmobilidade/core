@@ -5,7 +5,7 @@
  * @param value The latitude value to check.
  * @returns True if the latitude is valid, false otherwise.
  */
-export function isValidLatitude(value: number) {
+export function isValidLatitude(value: number): boolean {
 	return value >= -90 && value <= 90;
 }
 
@@ -14,7 +14,7 @@ export function isValidLatitude(value: number) {
  * @param value The longitude value to check.
  * @returns True if the longitude is valid, false otherwise.
  */
-export function isValidLongitude(value: number) {
+export function isValidLongitude(value: number): boolean {
 	return value >= -180 && value <= 180;
 }
 
@@ -24,7 +24,7 @@ export function isValidLongitude(value: number) {
  * @param lng The longitude value to check.
  * @returns True if the coordinate pair is valid, false otherwise.
  */
-export function isValidCoordinatePair(lat: number, lng: number) {
+export function isValidCoordinatePair(lat: number, lng: number): boolean {
 	return isValidLatitude(lat) && isValidLongitude(lng);
 }
 

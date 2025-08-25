@@ -16,7 +16,7 @@ export const sidebarApps = [
 		href: `${getAppConfig('auth', 'frontend_url')}/home`,
 		icon: <IconHome size={26} />,
 		label: 'Home',
-		permission: { action: Permissions.agencies.actions.read, scope: Permissions.agencies.scope },
+		permission: { action: Permissions.home.actions.read_links, scope: Permissions.home.scope },
 	},
 	{
 		_id: 'users',

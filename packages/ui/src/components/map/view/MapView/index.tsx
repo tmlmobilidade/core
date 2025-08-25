@@ -13,6 +13,7 @@ import styles from './styles.module.css';
 /* * */
 
 interface MapViewProps {
+	height?: number
 	id: string
 	interactiveLayerIds?: string[]
 	onClick?: (e: MapLayerMouseEvent) => void
@@ -28,10 +29,13 @@ interface MapViewProps {
 
 /* * */
 
-export function MapView({ children, id, interactiveLayerIds = [], onClick, onDrag, onDragEnd, onDragStart, onMouseDrag, onMouseEnter, onMouseLeave, onMouseOut, onMouseOver }: PropsWithChildren<MapViewProps>) {
+export function MapView({ children, height, id, interactiveLayerIds = [], onClick, onDrag, onDragEnd, onDragStart, onMouseDrag, onMouseEnter, onMouseLeave, onMouseOut, onMouseOver }: PropsWithChildren<MapViewProps>) {
 	return (
 		<MapViewContextProvider>
-			<div className={styles.container}>
+			<div
+				className={styles.container}
+				style={{ gridTemplateRows: height ? `${height}px auto` : '1fr auto' }}
+			>
 				<MapViewBasemap
 					id={id}
 					interactiveLayerIds={interactiveLayerIds}

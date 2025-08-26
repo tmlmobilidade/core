@@ -114,7 +114,7 @@ class RidesClass extends MongoCollectionClass<Ride, CreateRideDto, UpdateRideDto
 	}
 
 	protected getEnvName(): string {
-		return 'TML_INTERFACE_RIDES';
+		return 'DATABASE_URI';
 	}
 }
 

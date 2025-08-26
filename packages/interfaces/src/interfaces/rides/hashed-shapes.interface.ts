@@ -37,7 +37,7 @@ class HashedShapesClass extends MongoCollectionClass<HashedShape, HashedShape, H
 	}
 
 	protected getEnvName(): string {
-		return 'TML_INTERFACE_HASHED_SHAPES';
+		return 'DATABASE_URI';
 	}
 }
 

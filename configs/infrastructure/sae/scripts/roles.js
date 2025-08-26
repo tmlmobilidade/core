@@ -85,5 +85,5 @@ db.createRole({
 		{ actions: ['find', 'update', 'insert', 'remove'], resource: { collection: 'hashed_shapes', db: 'production' } },
 	],
 	role: 'controller',
-	roles: [],
+	roles: [{ db: 'admin', role: 'common' }],
 });

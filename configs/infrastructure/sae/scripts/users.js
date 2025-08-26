@@ -35,6 +35,12 @@ db.createUser({
 });
 
 db.createUser({
+	pwd: USER_REPLICATOR_PASSWORD,
+	roles: [{ db: 'admin', role: 'replicator' }],
+	user: 'replicator',
+});
+
+db.createUser({
 	pwd: USER_PASSWORD_CMET_API,
 	roles: [{ db: 'admin', role: 'cmet-api' }],
 	user: 'cmet-api',

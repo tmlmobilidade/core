@@ -93,6 +93,15 @@ db.createRole({
 
 db.createRole({
 	privileges: [
+		{ actions: ['find', 'update'], resource: { collection: 'rides', db: 'production' } },
+		{ actions: ['find', 'update'], resource: { collection: 'sams', db: 'production' } },
+	],
+	role: 'replicator',
+	roles: [],
+});
+
+db.createRole({
+	privileges: [
 		{ actions: ['find'], resource: { collection: 'rides', db: 'production' } },
 	],
 	role: 'cmet-api',

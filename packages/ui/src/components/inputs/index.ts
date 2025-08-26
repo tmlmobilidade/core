@@ -1,5 +1,4 @@
 export * from '@/components/inputs/CoordinatesInput';
-export * from '@/components/inputs/GiantSearchInput';
 export * from '@/components/inputs/NumberInput';
 export * from '@/components/inputs/PasswordInput';
 export * from '@/components/inputs/PillsInput';

@@ -27,3 +27,9 @@ db.createUser({
 	roles: [{ db: 'admin', role: 'locations' }],
 	user: 'locations',
 });
+
+db.createUser({
+	pwd: USER_CONTROLLER_PASSWORD,
+	roles: [{ db: 'admin', role: 'controller' }],
+	user: 'controller',
+});

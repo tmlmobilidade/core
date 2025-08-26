@@ -75,3 +75,15 @@ db.createRole({
 	role: 'locations',
 	roles: [],
 });
+
+db.createRole({
+	privileges: [
+		{ actions: ['find'], resource: { collection: 'plans', db: 'production' } },
+		{ actions: ['find', 'update', 'insert', 'remove'], resource: { collection: 'sams', db: 'production' } },
+		{ actions: ['find', 'update', 'insert', 'remove'], resource: { collection: 'rides', db: 'production' } },
+		{ actions: ['find', 'update', 'insert', 'remove'], resource: { collection: 'hashed_trips', db: 'production' } },
+		{ actions: ['find', 'update', 'insert', 'remove'], resource: { collection: 'hashed_shapes', db: 'production' } },
+	],
+	role: 'controller',
+	roles: [],
+});

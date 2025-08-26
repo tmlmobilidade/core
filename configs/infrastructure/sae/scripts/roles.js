@@ -20,6 +20,9 @@ db.createRole({
 	privileges: [
 		{ actions: ['find', 'update', 'insert', 'remove'], resource: { collection: 'plans', db: 'production' } },
 		{ actions: ['find', 'update', 'insert', 'remove'], resource: { collection: 'gtfs_validations', db: 'production' } },
+		{ actions: ['find'], resource: { collection: 'rides', db: 'production' } },
+		{ actions: ['find'], resource: { collection: 'hashed_trips', db: 'production' } },
+		{ actions: ['find'], resource: { collection: 'hashed_shapes', db: 'production' } },
 	],
 	role: 'plans',
 	roles: [{

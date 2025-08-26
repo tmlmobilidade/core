@@ -6,11 +6,13 @@ import { useMeContext } from '@/contexts';
 import { useEffect, useState } from 'react';
 
 /**
- * A custom hook to get the current URL.
- * @param refreshRate The rate at which to refresh the URL. Defaults to `100` ms.
- * @returns The current URL.
+ * A hook to manage user preferences as state.
+ * @param scope The scope of the preference.
+ * @param key The key of the preference.
+ * @param defaultValue The optional default value of the preference.
+ * @returns The current preference value and a function to update it.
  */
-export function useUserPreference<T>(scope: string, key: string, defaultValue?: T, refreshRate?: number): { update: (value: T | undefined) => void, value: T | undefined } {
+export function useUserPreference(scope: string, key: string, defaultValue?: number | string): { update: (value: number | string | undefined) => void, value: number | string | undefined } {
 	//
 
 	//
@@ -18,26 +20,29 @@ export function useUserPreference<T>(scope: string, key: string, defaultValue?: 
 
 	const meContext = useMeContext();
 
-	const [localPreference, setLocalPreference] = useState<T | undefined>(defaultValue);
+	const [preferenceValue, setPreferenceValue] = useState<number | string | undefined>(defaultValue);
 
 	//
 	// B. Handle actions
 
-	const updateLocalPreference = () => {
-		// const value = meContext.data.user.preferences?.[scope]?.[key] as T | undefined ?? defaultValue;
-		// setLocalPreference();
-	};
+	useEffect(() => {
+		const value = meContext.data.user?.preferences?.[scope]?.[key] ?? defaultValue;
+		setPreferenceValue(value);
+	}, [meContext.data.user?.preferences]);
 
 	useEffect(() => {
-		updateLocalPreference();
-		const interval = setInterval(updateLocalPreference, refreshRate ?? 100);
-		return () => clearInterval(interval);
-	}, []);
+		const currentValue = meContext.data.user?.preferences?.[scope]?.[key];
+		if (currentValue === preferenceValue) return;
+		meContext.actions.updatePreference(scope, key, preferenceValue);
+	}, [preferenceValue]);
 
 	//
 	// C. Render components
 
-	return { update: setLocalPreference, value: localPreference };
+	return {
+		update: setPreferenceValue,
+		value: preferenceValue,
+	};
 
 	//
 }

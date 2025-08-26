@@ -18,7 +18,7 @@ interface MeContextState {
 		hasPermission: (scope: string, action: string) => boolean
 		hasPermissionResource: <T>(args: HasPermissionResourceArgs<T>) => boolean
 		logout: () => Promise<void>
-		updatetheme: (themeId: string) => Promise<void>
+		updatePreference: (scope: string, key: string, value: number | string | undefined) => Promise<void>
 	}
 	data: {
 		user: undefined | User
@@ -89,10 +89,16 @@ export const MeContextProvider = ({ children }: PropsWithChildren) => {
 		window.location.href = `${getAppConfig('auth', 'frontend_url')}/login`;
 	}
 
-	async function updatetheme(themeId: string) {
-		if (!meData || !meData.permissions) return;
-		// Call the theme endpoint
-		await fetchData(`${getAppConfig('auth', 'frontend_url')}/api/users/me`, 'PUT', { theme_id: themeId });
+	async function updatePreference(scope: string, key: string, value: number | string | undefined) {
+		// Skip if user data is not available
+		if (!meData) return;
+		// Merge current with updated preferences
+		const currentPreferences = meData.preferences ?? {};
+		const currentScope = currentPreferences[scope] ?? {};
+		const updatedScope = { ...currentScope, [key]: value };
+		const updatedPreferences = { ...currentPreferences, [scope]: updatedScope };
+		// Call the update endpoint
+		await fetchData(`${getAppConfig('auth', 'frontend_url')}/api/users/me`, 'PUT', { preferences: updatedPreferences });
 		// Mutate the SWR cache to update user data
 		meMutate();
 	}
@@ -105,7 +111,7 @@ export const MeContextProvider = ({ children }: PropsWithChildren) => {
 			hasPermission,
 			hasPermissionResource,
 			logout,
-			updatetheme,
+			updatePreference,
 		},
 		data: {
 			user: meData,

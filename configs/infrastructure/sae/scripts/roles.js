@@ -10,6 +10,7 @@ db.createRole({
 		{ actions: ['find'], resource: { collection: 'localities', db: 'production' } },
 		{ actions: ['find'], resource: { collection: 'municipalities', db: 'production' } },
 		{ actions: ['find'], resource: { collection: 'parishes', db: 'production' } },
+		{ actions: ['find'], resource: { collection: 'verification_tokens', db: 'production' } },
 	],
 	role: 'common',
 	roles: [],
@@ -54,6 +55,7 @@ db.createRole({
 		{ actions: ['find', 'update', 'insert', 'remove'], resource: { collection: 'sessions', db: 'production' } },
 		{ actions: ['find', 'update', 'insert', 'remove'], resource: { collection: 'roles', db: 'production' } },
 		{ actions: ['find', 'update', 'insert', 'remove'], resource: { collection: 'files', db: 'production' } },
+		{ actions: ['find', 'update', 'insert', 'remove'], resource: { collection: 'verification_tokens', db: 'production' } },
 	],
 	role: 'auth',
 	roles: [{

@@ -35,11 +35,11 @@ class UniqueSamsClass extends MongoCollectionClass<UniqueSam, CreateUniqueSamDto
 	}
 
 	protected getCollectionName(): string {
-		return 'unique_sams';
+		return 'sams';
 	}
 
 	protected getEnvName(): string {
-		return 'TML_INTERFACE_UNIQUE_SAMS';
+		return 'DATABASE_URI';
 	}
 }
 

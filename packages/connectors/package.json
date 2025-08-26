@@ -46,7 +46,7 @@
 		"@types/amqplib": "0.10.7",
 		"amqplib": "0.10.9",
 		"fastify": "5.5.0",
-		"mongodb": "6.18.0",
+		"mongodb": "6.19.0",
 		"pg": "8.16.3",
 		"trino-client": "0.2.8",
 		"tunnel-ssh": "5.2.0"

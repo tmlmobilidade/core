@@ -42,7 +42,7 @@
 		"path": false
 	},
 	"dependencies": {
-		"@carrismetropolitana/api-types": "^20250820.1130.53",
+		"@carrismetropolitana/api-types": "20250826.1442.52",
 		"@mantine/core": "8.2.5",
 		"@mantine/dates": "8.2.5",
 		"@mantine/form": "8.2.5",
@@ -71,7 +71,7 @@
 		"@types/luxon": "3.7.1",
 		"@types/node": "24.3.0",
 		"@types/react": "19.1.11",
-		"@types/react-dom": "19.1.7",
+		"@types/react-dom": "19.1.8",
 		"nodemon": "3.1.10",
 		"postcss": "8.5.6",
 		"react": "19.1.1",

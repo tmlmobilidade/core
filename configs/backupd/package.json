@@ -11,7 +11,7 @@
 		"start": "npm run build && node dist/index.js"
 	},
 	"dependencies": {
-		"@aws-sdk/client-s3": "3.873.0",
+		"@aws-sdk/client-s3": "3.876.0",
 		"@helperkits/logger": "20250628.901.58",
 		"@tmlmobilidade/emails": "*",
 		"@tmlmobilidade/interfaces": "*",
@@ -20,7 +20,7 @@
 		"@tmlmobilidade/utils": "*",
 		"@types/archiver": "6.0.3",
 		"archiver": "7.0.1",
-		"mongodb": "6.18.0",
+		"mongodb": "6.19.0",
 		"nodemailer": "7.0.5",
 		"pg": "8.16.3",
 		"react": "19.1.1",

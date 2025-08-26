@@ -47,6 +47,14 @@
 	justify-content: flex-end;
 }
 
+.root[data-justify-content="space-between"] {
+	justify-content: space-between;
+}
+
+.root[data-justify-content="space-around"] {
+	justify-content: space-around;
+}
+
 /* * */
 /* PROPS / GAP */
 

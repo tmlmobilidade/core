@@ -93,4 +93,5 @@ db.createRole({
 		{ actions: ['find'], resource: { collection: 'rides', db: 'production' } },
 	],
 	role: 'cmet-api',
+	roles: [],
 });

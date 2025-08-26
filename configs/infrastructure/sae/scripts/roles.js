@@ -82,8 +82,8 @@ db.createRole({
 db.createRole({
 	privileges: [
 		{ actions: ['find', 'update'], resource: { collection: 'plans', db: 'production' } },
-		{ actions: ['find', 'update', 'insert', 'remove'], resource: { collection: 'sams', db: 'production' } },
-		{ actions: ['find', 'update', 'insert', 'remove'], resource: { collection: 'rides', db: 'production' } },
+		{ actions: ['find', 'update', 'insert', 'remove', 'changeStream'], resource: { collection: 'sams', db: 'production' } },
+		{ actions: ['find', 'update', 'insert', 'remove', 'changeStream'], resource: { collection: 'rides', db: 'production' } },
 		{ actions: ['find', 'update', 'insert', 'remove'], resource: { collection: 'hashed_trips', db: 'production' } },
 		{ actions: ['find', 'update', 'insert', 'remove'], resource: { collection: 'hashed_shapes', db: 'production' } },
 	],

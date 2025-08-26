@@ -39,6 +39,7 @@ import SwitchOverride from '@/styles/mantine/Switch.module.css';
 import TextOverride from '@/styles/mantine/Text.module.css';
 import TextareaOverride from '@/styles/mantine/Textarea.module.css';
 import TextInputOverrideSm from '@/styles/mantine/TextInput-sm.module.css';
+import TextInputOverrideXl from '@/styles/mantine/TextInput-xl.module.css';
 import TextInputOverride from '@/styles/mantine/TextInput.module.css';
 
 /* * */
@@ -171,6 +172,7 @@ export const themeData: MantineThemeOverride = createTheme({
 				return {
 					...TextInputOverride,
 					...(props.size === 'sm' && TextInputOverrideSm),
+					...(props.size === 'xl' && TextInputOverrideXl),
 					...(props.variant === 'white' && {
 						input: TextInputOverrideSm.variantWhite,
 						section: TextInputOverrideSm.variantWhite,

@@ -10,12 +10,14 @@ import { useState } from 'react';
 
 export interface SearchInputProps {
 	onChange: (value: string) => void
+	placeholder?: string
+	size?: 'md' | 'sm' | 'xl'
 	value?: null | string
 }
 
 /* * */
 
-export function SearchInput({ onChange, value }: SearchInputProps) {
+export function SearchInput({ onChange, placeholder = 'Pesquisar...', size = 'md', value }: SearchInputProps) {
 	//
 
 	//
@@ -51,12 +53,13 @@ export function SearchInput({ onChange, value }: SearchInputProps) {
 
 	return (
 		<MantineTextInput
-			leftSection={<IconSearch size={20} />}
+			leftSection={<IconSearch size={size === 'xl' ? 28 : 20} />}
 			onBlur={handleBlur}
 			onChange={handleChange}
 			onFocus={handleFocus}
-			placeholder="Pesquisar..."
-			styles={{ root: { width: isInUse ? '100%' : 200 } }}
+			placeholder={placeholder}
+			size={size}
+			styles={{ root: { width: isInUse || size === 'xl' ? '100%' : 200 } }}
 			value={value ?? ''}
 			rightSection={
 				(typeof value === 'string' && value.length > 0) && (

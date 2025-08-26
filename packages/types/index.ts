@@ -7,7 +7,7 @@ export * from '@/_common/index.js';
 
 export * from '@/agency.js';
 export * from '@/alert.js';
-export * from '@/auth.js';
+export * from '@/auth/index.js';
 export * from '@/file.js';
 export * from '@/gtfs.js';
 export * from '@/gtfs/index.js';

@@ -87,3 +87,10 @@ db.createRole({
 	role: 'controller',
 	roles: [{ db: 'admin', role: 'common' }],
 });
+
+db.createRole({
+	privileges: [
+		{ actions: ['find'], resource: { collection: 'rides', db: 'production' } },
+	],
+	role: 'cmet-api',
+});

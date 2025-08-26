@@ -33,3 +33,9 @@ db.createUser({
 	roles: [{ db: 'admin', role: 'controller' }],
 	user: 'controller',
 });
+
+db.createUser({
+	pwd: USER_PASSWORD_CMET_API,
+	roles: [{ db: 'admin', role: 'cmet-api' }],
+	user: 'cmet-api',
+});

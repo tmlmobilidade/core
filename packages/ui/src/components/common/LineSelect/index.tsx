@@ -27,7 +27,7 @@ export interface LineSelectProps {
 
 /* * */
 
-export function LineSelect({ data = [], label, nothingFound, onSelectLineId, placeholder, selectedLineId, variant }: LineSelectProps) {
+export function LineSelect({ data = [], label, nothingFound = 'Nenhuma linha encontrada', onSelectLineId, placeholder = 'Selecione uma linha', selectedLineId, variant }: LineSelectProps) {
 	//
 
 	//

@@ -12,7 +12,7 @@ import { useEffect, useState } from 'react';
  * @param defaultValue The optional default value of the preference.
  * @returns The current preference value and a function to update it.
  */
-export function useUserPreference(scope: string, key: string, defaultValue?: number | string): { update: (value: number | string | undefined) => void, value: number | string | undefined } {
+export function useUserPreference<T extends number | string>(scope: string, key: string, defaultValue: T): { update: (value: T) => void, value: T } {
 	//
 
 	//
@@ -20,13 +20,13 @@ export function useUserPreference(scope: string, key: string, defaultValue?: num
 
 	const meContext = useMeContext();
 
-	const [preferenceValue, setPreferenceValue] = useState<number | string | undefined>(defaultValue);
+	const [preferenceValue, setPreferenceValue] = useState<T>(defaultValue);
 
 	//
 	// B. Handle actions
 
 	useEffect(() => {
-		const value = meContext.data.user?.preferences?.[scope]?.[key] ?? defaultValue;
+		const value = meContext.actions.getPreference<T>(scope, key) ?? defaultValue;
 		setPreferenceValue(value);
 	}, [meContext.data.user?.preferences]);
 

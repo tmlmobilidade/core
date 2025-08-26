@@ -1,5 +1,6 @@
 'use client';
 
+import { useUserPreference } from '@/hooks';
 /* * */
 
 import { themeData } from '@/styles/theme';
@@ -7,7 +8,7 @@ import { MantineProvider } from '@mantine/core';
 import { DatesProvider, DatesProviderSettings } from '@mantine/dates';
 import { ModalsProvider } from '@mantine/modals';
 import { Notifications } from '@mantine/notifications';
-import { createContext, type PropsWithChildren, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, type PropsWithChildren, useContext, useEffect, useMemo } from 'react';
 
 /* * */
 
@@ -53,7 +54,7 @@ export const ThemeContextProvider = ({ children }: PropsWithChildren) => {
 	//
 	// A. Setup variables
 
-	const [activeTheme, setActiveTheme] = useState<ThemeType>(AVAILABLE_THEMES[0]._id);
+	const { update: setActiveTheme, value: activeTheme } = useUserPreference<ThemeType>('ui', 'active_theme', AVAILABLE_THEMES[0]._id);
 
 	const mantineDatesSettings: Partial<DatesProviderSettings> = {
 		firstDayOfWeek: 1,
@@ -67,6 +68,7 @@ export const ThemeContextProvider = ({ children }: PropsWithChildren) => {
 	useEffect(() => {
 		// Apply the active theme to the document
 		if (typeof document === 'undefined') return;
+		if (typeof activeTheme !== 'string') return;
 		document.documentElement.setAttribute('data-theme', activeTheme);
 	}, [activeTheme]);
 

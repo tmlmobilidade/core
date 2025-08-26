@@ -15,6 +15,7 @@ import useSWR from 'swr';
 
 interface MeContextState {
 	actions: {
+		getPreference: <T extends number | string>(scope: string, key: string) => T | undefined
 		hasPermission: (scope: string, action: string) => boolean
 		hasPermissionResource: <T>(args: HasPermissionResourceArgs<T>) => boolean
 		logout: () => Promise<void>
@@ -89,6 +90,10 @@ export const MeContextProvider = ({ children }: PropsWithChildren) => {
 		window.location.href = `${getAppConfig('auth', 'frontend_url')}/login`;
 	}
 
+	function getPreference<T extends number | string>(scope: string, key: string): T | undefined {
+		return meData?.preferences?.[scope]?.[key];
+	}
+
 	async function updatePreference(scope: string, key: string, value: number | string | undefined) {
 		// Skip if user data is not available
 		if (!meData) return;
@@ -108,6 +113,7 @@ export const MeContextProvider = ({ children }: PropsWithChildren) => {
 
 	const contextValue: MeContextState = useMemo(() => ({
 		actions: {
+			getPreference,
 			hasPermission,
 			hasPermissionResource,
 			logout,

@@ -20,7 +20,6 @@ export * from '@/components/common/Popover';
 export * from '@/components/common/SegmentedControl';
 export * from '@/components/common/Slider';
 export * from '@/components/common/StopDisplay';
-export * from '@/components/common/StopDisplayLocation';
 export * from '@/components/common/StopDisplayName';
 export * from '@/components/common/StopSelect';
 export * from '@/components/common/Switch';

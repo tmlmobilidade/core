@@ -12,7 +12,7 @@ import { useEffect, useState } from 'react';
  * @param defaultValue The optional default value of the preference.
  * @returns The current preference value and a function to update it.
  */
-export function useUserPreference<T extends number | string>(scope: string, key: string, defaultValue: T): { update: (value: T) => void, value: T } {
+export function useUserPreference<T extends number | string>(scope: string, key: string, defaultValue: T): [T, (value: T) => void] {
 	//
 
 	//
@@ -39,10 +39,5 @@ export function useUserPreference<T extends number | string>(scope: string, key:
 	//
 	// C. Render components
 
-	return {
-		update: setPreferenceValue,
-		value: preferenceValue,
-	};
-
-	//
+	return [preferenceValue, setPreferenceValue];
 }

@@ -41,13 +41,13 @@ export function AppProvider({ children }: PropsWithChildren) {
 
 	return (
 		<SWRConfig value={swrSettings}>
-			<ThemeContextProvider>
-				<MeContextProvider>
+			<MeContextProvider>
+				<ThemeContextProvider>
 					<MapContextProvider>
 						{children}
 					</MapContextProvider>
-				</MeContextProvider>
-			</ThemeContextProvider>
+				</ThemeContextProvider>
+			</MeContextProvider>
 		</SWRConfig>
 	);
 

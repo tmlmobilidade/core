@@ -54,7 +54,7 @@ export const ThemeContextProvider = ({ children }: PropsWithChildren) => {
 	//
 	// A. Setup variables
 
-	const { update: setActiveTheme, value: activeTheme } = useUserPreference<ThemeType>('ui', 'active_theme', AVAILABLE_THEMES[0]._id);
+	const [activeTheme, setActiveTheme] = useUserPreference<ThemeType>('ui', 'active_theme', AVAILABLE_THEMES[0]._id);
 
 	const mantineDatesSettings: Partial<DatesProviderSettings> = {
 		firstDayOfWeek: 1,

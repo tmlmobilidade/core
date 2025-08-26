@@ -4,7 +4,6 @@
 
 import { ErrorDisplay } from '@/components/display/ErrorDisplay';
 import { LoadingOverlay } from '@/components/loaders/LoadingOverlay';
-import { useThemeContext } from '@/contexts/Theme.context';
 import { getAppConfig, HttpException } from '@tmlmobilidade/lib';
 import { type User } from '@tmlmobilidade/types';
 import { fetchData, type HasPermissionResourceArgs, hasPermissionResource as hasPermissionResourceUtils, hasPermission as hasPermissionUtils, swrFetcher } from '@tmlmobilidade/utils';
@@ -46,11 +45,6 @@ export const MeContextProvider = ({ children }: PropsWithChildren) => {
 	//
 
 	//
-	// A. Setup variables
-
-	const themeContext = useThemeContext();
-
-	//
 	// B. Fetch data
 
 	const { data: meData, error: meError, isLoading: meLoading, mutate: meMutate } = useSWR<User, HttpException>(`${getAppConfig('auth', 'api_url')}/users/me`, swrFetcher);
@@ -64,12 +58,6 @@ export const MeContextProvider = ({ children }: PropsWithChildren) => {
 		// If a user is not available redirect to login page
 		if (!meData) window.location.href = `${getAppConfig('auth', 'frontend_url')}/login`;
 	}, [meLoading, meData]);
-
-	useEffect(() => {
-		if (!meData) return;
-		// Set User configurations on load, if available
-		if (meData.theme_id) themeContext.actions.activateTheme(meData.theme_id);
-	}, [meData?.theme_id]);
 
 	function hasPermission(scope: string, action: string) {
 		if (!meData || !meData.permissions) return false;

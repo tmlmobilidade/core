@@ -1,0 +1,39 @@
+/* * */
+/* ROOT */
+
+.root {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+    border-bottom: 1px solid var(--color-system-border-200);
+
+    
+    /* * */
+    /* PROPS / SEPARATOR TYPE */
+    &[data-separator-type="dashed"] {
+        border-bottom: 1px dashed var(--color-system-border-100);
+    }
+
+    &[data-separator-type="solid"] {
+        border-bottom: 1px solid var(--color-system-border-100);
+    }
+
+    /* * */
+    /* PROPS / MARGIN */
+
+    &[data-margin="sm"] {
+        margin: var(--size-spacing-sm);
+    }
+
+    &[data-margin="md"] {
+        margin: var(--size-spacing-md);
+    }
+
+    &[data-margin="lg"] {
+        margin: var(--size-spacing-lg);
+    }
+
+    &[data-margin="none"] {
+        margin: 0;
+    }
+}

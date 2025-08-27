@@ -6,7 +6,7 @@ import { generateRandomNumber } from './generate-random-number.js';
 
 interface GenerateRandomStringProps {
 	length?: number
-	type?: 'alphanumeric' | 'numeric'
+	type?: 'alphabetic' | 'alphanumeric' | 'numeric'
 }
 
 /**
@@ -19,11 +19,15 @@ export function generateRandomString({ length = 6, type = 'alphanumeric' }: Gene
 	//
 
 	const numericSet = '0123456789';
+	const alphabeticSet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 	const alphanumericSet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
 	let allowedCharacters: string;
 
 	switch (type) {
+		case 'alphabetic':
+			allowedCharacters = alphabeticSet;
+			break;
 		case 'numeric':
 			allowedCharacters = numericSet;
 			break;

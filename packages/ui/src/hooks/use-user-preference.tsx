@@ -27,20 +27,27 @@ export function useUserPreference<T extends number | string>(scope: string, key:
 
 	useEffect(() => {
 		const value = meContext.actions.getPreference<T>(scope, key);
+		console.log('[hook] Loaded preference', { key, scope, value });
 		setPreferenceValue(value);
-	}, [meContext.data.user?.preferences]);
+	}, [meContext.data.user]);
 
-	useEffect(() => {
-		console.log('Updating preference', { key, preferenceValue, scope });
-		const currentValue = meContext.data.user?.preferences?.[scope]?.[key];
-		console.log('Current value', currentValue);
-		if (currentValue === preferenceValue) return;
-		console.log('Saving preference', { key, preferenceValue, scope });
-		meContext.actions.updatePreference(scope, key, preferenceValue);
-	}, [preferenceValue]);
+	const handleSetPreferenceValue = (value: T) => {
+		console.log('[hook] Updating preference', { key, scope, value });
+		meContext.actions.updatePreference(scope, key, value);
+		// setPreferenceValue(value);
+	};
+
+	// useEffect(() => {
+	// 	console.log('[hook] Updating preference', { key, preferenceValue, scope });
+	// 	const currentValue = meContext.data.user?.preferences?.[scope]?.[key];
+	// 	console.log('[hook] Current value', currentValue);
+	// 	if (currentValue === preferenceValue) return;
+	// 	console.log('[hook] Saving preference', { key, preferenceValue, scope });
+	// 	meContext.actions.updatePreference(scope, key, preferenceValue);
+	// }, [preferenceValue]);
 
 	//
 	// C. Render components
 
-	return [preferenceValue ?? defaultValue, setPreferenceValue];
+	return [preferenceValue ?? defaultValue, handleSetPreferenceValue];
 }

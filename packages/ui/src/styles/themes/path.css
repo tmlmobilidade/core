@@ -6,14 +6,12 @@
 	--theme-path-color-shadow: #32322d40;
 }
 
-@media (prefers-color-scheme: dark) {
-	:root {
-		--theme-path-color-primary: #6e6a64;
-		--theme-path-color-secondary: #5f5a55;
-		--theme-path-color-background: #232328;
-		--theme-path-color-contrast: #d2cdc8;
-		--theme-path-color-shadow: #32322d40;
-	}
+:root[data-mode="dark"] {
+	--theme-path-color-primary: #6e6a64;
+	--theme-path-color-secondary: #5f5a55;
+	--theme-path-color-background: #232328;
+	--theme-path-color-contrast: #d2cdc8;
+	--theme-path-color-shadow: #32322d40;
 }
 
 /* * */

@@ -6,14 +6,12 @@
 	--theme-royal-color-shadow: #1e0a4640;
 }
 
-@media (prefers-color-scheme: dark) {
-	:root {
-		--theme-royal-color-primary: #783cc8;
-		--theme-royal-color-secondary: #460a96;
-		--theme-royal-color-background: #1e1e46;
-		--theme-royal-color-contrast: #ebe1ff;
-		--theme-royal-color-shadow: #1e0a4640;
-	}
+:root[data-mode="dark"] {
+	--theme-royal-color-primary: #783cc8;
+	--theme-royal-color-secondary: #460a96;
+	--theme-royal-color-background: #1e1e46;
+	--theme-royal-color-contrast: #ebe1ff;
+	--theme-royal-color-shadow: #1e0a4640;
 }
 
 /* * */

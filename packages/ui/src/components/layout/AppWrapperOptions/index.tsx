@@ -4,9 +4,9 @@
 
 import { Label } from '@/components/display/Label';
 import { useMeContext } from '@/contexts';
-import { AVAILABLE_THEMES, useThemeContext } from '@/contexts/Theme.context';
+import { AVAILABLE_MODES, AVAILABLE_THEMES, useThemeContext } from '@/contexts/Theme.context';
 import { ActionIcon, ColorSwatch, Menu } from '@mantine/core';
-import { IconChevronRight, IconColorSwatch, IconLogout, IconSettings } from '@tabler/icons-react';
+import { IconChevronRight, IconColorSwatch, IconLogout, IconSettings, IconSunMoon } from '@tabler/icons-react';
 
 /* * */
 
@@ -34,14 +34,21 @@ export function AppWrapperOptions() {
 
 	const MENU_ITEMS: MenuItem[] = [
 		{
+			icon: <IconSunMoon size={18} />,
+			label: 'Modo',
+			submenu: AVAILABLE_MODES.map(item => ({
+				icon: item.icon,
+				label: item.name,
+				onClick: () => themeContext.actions.activateMode(item._id),
+			})),
+		},
+		{
 			icon: <IconColorSwatch size={18} />,
 			label: 'Temas',
 			submenu: AVAILABLE_THEMES.map(item => ({
 				icon: <ColorSwatch color={item.primary_color} size={16} />,
 				label: item.name,
-				onClick: () => {
-					themeContext.actions.activateTheme(item._id);
-				},
+				onClick: () => themeContext.actions.activateTheme(item._id),
 			})),
 		},
 		{
@@ -85,11 +92,11 @@ export function AppWrapperOptions() {
 									onClick={subItem.onClick}
 									px={12}
 									py={6}
-									style={{
-										backgroundColor: themeContext.data.active_theme === AVAILABLE_THEMES[subIndex]?._id
-											? 'var(--mantine-color-gray-1)'
-											: undefined,
-									}}
+									// style={{
+									// 	backgroundColor: themeContext.data.active_theme === AVAILABLE_THEMES[subIndex]?._id
+									// 		? 'var(--mantine-color-gray-1)'
+									// 		: undefined,
+									// }}
 								>
 									<Label size="md" singleLine>{subItem.label}</Label>
 								</Menu.Item>

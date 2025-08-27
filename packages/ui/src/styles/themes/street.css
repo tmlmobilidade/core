@@ -6,14 +6,12 @@
 	--theme-street-color-shadow: #283c1440;
 }
 
-@media (prefers-color-scheme: dark) {
-	:root[data-theme="street"] {
-		--theme-street-color-primary: #82be00;
-		--theme-street-color-secondary: #64a000;
-		--theme-street-color-background: #3c4137;
-		--theme-street-color-contrast: #1e320a;
-		--theme-street-color-shadow: #283c1440;
-	}
+:root[data-mode="dark"] {
+	--theme-street-color-primary: #82be00;
+	--theme-street-color-secondary: #64a000;
+	--theme-street-color-background: #3c4137;
+	--theme-street-color-contrast: #1e320a;
+	--theme-street-color-shadow: #283c1440;
 }
 
 /* * */

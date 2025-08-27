@@ -6,14 +6,12 @@
 	--theme-park-color-shadow: #1e3c1e40;
 }
 
-@media (prefers-color-scheme: dark) {
-	:root {
-		--theme-park-color-primary: #509b50;
-		--theme-park-color-secondary: #2d8c2d;
-		--theme-park-color-background: #233223;
-		--theme-park-color-contrast: #e6ffdc;
-		--theme-park-color-shadow: #1e3c1e40;
-	}
+:root[data-mode="dark"] {
+	--theme-park-color-primary: #509b50;
+	--theme-park-color-secondary: #2d8c2d;
+	--theme-park-color-background: #233223;
+	--theme-park-color-contrast: #e6ffdc;
+	--theme-park-color-shadow: #1e3c1e40;
 }
 
 /* * */

@@ -41,7 +41,7 @@ export function BaseProvider({ children }: PropsWithChildren) {
 	// B. Render components
 
 	return (
-		<html data-theme="ocean" lang="pt">
+		<html data-mode="system" data-theme="ocean" lang="pt">
 			<body>
 				<SWRConfig value={swrSettings}>
 					<MantineProvider defaultColorScheme="auto" theme={themeData}>

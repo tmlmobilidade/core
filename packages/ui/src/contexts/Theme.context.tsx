@@ -3,6 +3,8 @@
 /* * */
 
 import { useUserPreference } from '@/hooks/use-user-preference';
+import { useColorScheme } from '@mantine/hooks';
+import { IconAB2, IconMoonFilled, IconSunFilled } from '@tabler/icons-react';
 import { createContext, type PropsWithChildren, useContext, useEffect, useMemo } from 'react';
 
 /* * */
@@ -16,15 +18,27 @@ export const AVAILABLE_THEMES = [
 	{ _id: 'street', name: 'Street', primary_color: 'var(--theme-street-color-primary)' },
 ] as const;
 
+export type ThemeType = (typeof AVAILABLE_THEMES)[number]['_id'];
+
 /* * */
 
-export type ThemeType = (typeof AVAILABLE_THEMES)[number]['_id'];
+export const AVAILABLE_MODES = [
+	{ _id: 'dark', icon: <IconMoonFilled />, name: 'Escuro' },
+	{ _id: 'light', icon: <IconSunFilled />, name: 'Claro' },
+	{ _id: 'system', icon: <IconAB2 />, name: 'Sistema' },
+] as const;
+
+export type ModeType = (typeof AVAILABLE_MODES)[number]['_id'];
+
+/* * */
 
 interface ThemeContextState {
 	actions: {
-		activateTheme: (theme: string | ThemeType) => void
+		activateMode: (modeId: ModeType) => void
+		activateTheme: (themeId: ThemeType) => void
 	}
 	data: {
+		active_mode: ModeType
 		active_theme: ThemeType
 	}
 }
@@ -49,10 +63,23 @@ export const ThemeContextProvider = ({ children }: PropsWithChildren) => {
 	//
 	// A. Setup variables
 
-	const [activeTheme, setActiveTheme] = useUserPreference<ThemeType>('ui', 'active_theme', AVAILABLE_THEMES[0]._id);
+	const systemColorScheme = useColorScheme();
+
+	const [activeMode, setActiveMode] = useUserPreference<ModeType>('ui', 'active_mode', 'system');
+	const [activeTheme, setActiveTheme] = useUserPreference<ThemeType>('ui', 'active_theme', 'ocean');
 
 	//
 	// B. Handle actions
+
+	useEffect(() => {
+		// Apply the active mode to the document
+		if (typeof document === 'undefined') return;
+		if (typeof activeMode !== 'string') return;
+		// If the preferred mode is 'system', use the system color scheme...
+		if (activeMode === 'system') document.documentElement.setAttribute('data-mode', systemColorScheme);
+		// ...otherwise, use the active mode
+		else document.documentElement.setAttribute('data-mode', activeMode);
+	}, [activeMode]);
 
 	useEffect(() => {
 		// Apply the active theme to the document
@@ -61,9 +88,14 @@ export const ThemeContextProvider = ({ children }: PropsWithChildren) => {
 		document.documentElement.setAttribute('data-theme', activeTheme);
 	}, [activeTheme]);
 
-	const handleActivateTheme = (theme: string | ThemeType) => {
-		if (!AVAILABLE_THEMES.some(t => t._id === theme)) return;
-		setActiveTheme(theme as ThemeType);
+	const activateMode = (modeId: ModeType) => {
+		if (!AVAILABLE_MODES.some(t => t._id === modeId)) return;
+		setActiveMode(modeId);
+	};
+
+	const activateTheme = (themeId: ThemeType) => {
+		if (!AVAILABLE_THEMES.some(t => t._id === themeId)) return;
+		setActiveTheme(themeId);
 	};
 
 	//
@@ -71,9 +103,11 @@ export const ThemeContextProvider = ({ children }: PropsWithChildren) => {
 
 	const contextValue: ThemeContextState = useMemo(() => ({
 		actions: {
-			activateTheme: handleActivateTheme,
+			activateMode,
+			activateTheme,
 		},
 		data: {
+			active_mode: activeMode,
 			active_theme: activeTheme,
 		},
 	}), [activeTheme]);

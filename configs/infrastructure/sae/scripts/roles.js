@@ -120,14 +120,14 @@ db.createRole({
 
 db.createRole({
 	privileges: [
-		{ actions: ['find'], resource: { collection: 'agencies', db: 'production' } },
-		{ actions: ['find'], resource: { collection: 'alerts', db: 'production' } },
-		{ actions: ['find'], resource: { collection: 'stops', db: 'production' } },
-		{ actions: ['find'], resource: { collection: 'plans', db: 'production' } },
-		{ actions: ['find'], resource: { collection: 'rides', db: 'production' } },
-		{ actions: ['find'], resource: { collection: 'hashed_trips', db: 'production' } },
-		{ actions: ['find'], resource: { collection: 'hashed_shapes', db: 'production' } },
-		{ actions: ['find'], resource: { collection: 'sams', db: 'production' } },
+		{ actions: ['find', 'listIndexes', 'collStats'], resource: { collection: 'agencies', db: 'production' } },
+		{ actions: ['find', 'listIndexes', 'collStats'], resource: { collection: 'alerts', db: 'production' } },
+		{ actions: ['find', 'listIndexes', 'collStats'], resource: { collection: 'stops', db: 'production' } },
+		{ actions: ['find', 'listIndexes', 'collStats'], resource: { collection: 'plans', db: 'production' } },
+		{ actions: ['find', 'listIndexes', 'collStats'], resource: { collection: 'rides', db: 'production' } },
+		{ actions: ['find', 'listIndexes', 'collStats'], resource: { collection: 'hashed_trips', db: 'production' } },
+		{ actions: ['find', 'listIndexes', 'collStats'], resource: { collection: 'hashed_shapes', db: 'production' } },
+		{ actions: ['find', 'listIndexes', 'collStats'], resource: { collection: 'sams', db: 'production' } },
 	],
 	role: 'dgc-user',
 	roles: [],

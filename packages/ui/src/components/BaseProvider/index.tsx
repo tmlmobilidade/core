@@ -5,6 +5,7 @@
 import { themeData } from '@/styles/theme';
 import { MantineProvider } from '@mantine/core';
 import { DatesProvider, DatesProviderSettings } from '@mantine/dates';
+import { ModalsProvider } from '@mantine/modals';
 import { Notifications } from '@mantine/notifications';
 import { type PropsWithChildren } from 'react';
 
@@ -33,8 +34,10 @@ export function BaseProvider({ children }: PropsWithChildren) {
 			<body>
 				<MantineProvider defaultColorScheme="auto" theme={themeData}>
 					<DatesProvider settings={mantineDatesSettings}>
-						<Notifications styles={{ root: { marginTop: '60px' } }} />
-						{children}
+						<ModalsProvider>
+							<Notifications styles={{ root: { marginTop: '60px' } }} />
+							{children}
+						</ModalsProvider>
 					</DatesProvider>
 				</MantineProvider>
 			</body>

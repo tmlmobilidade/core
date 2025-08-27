@@ -1,13 +1,8 @@
 'use client';
 
-import { useUserPreference } from '@/hooks';
 /* * */
 
-import { themeData } from '@/styles/theme';
-import { MantineProvider } from '@mantine/core';
-import { DatesProvider, DatesProviderSettings } from '@mantine/dates';
-import { ModalsProvider } from '@mantine/modals';
-import { Notifications } from '@mantine/notifications';
+import { useUserPreference } from '@/hooks/use-user-preference';
 import { createContext, type PropsWithChildren, useContext, useEffect, useMemo } from 'react';
 
 /* * */
@@ -56,12 +51,6 @@ export const ThemeContextProvider = ({ children }: PropsWithChildren) => {
 
 	const [activeTheme, setActiveTheme] = useUserPreference<ThemeType>('ui', 'active_theme', AVAILABLE_THEMES[0]._id);
 
-	const mantineDatesSettings: Partial<DatesProviderSettings> = {
-		firstDayOfWeek: 1,
-		locale: 'pt',
-		weekendDays: [6, 0],
-	};
-
 	//
 	// B. Handle actions
 
@@ -94,14 +83,7 @@ export const ThemeContextProvider = ({ children }: PropsWithChildren) => {
 
 	return (
 		<ThemeContext.Provider value={contextValue}>
-			<MantineProvider defaultColorScheme="auto" theme={themeData}>
-				<DatesProvider settings={mantineDatesSettings}>
-					<ModalsProvider>
-						<Notifications styles={{ root: { marginTop: '60px' } }} />
-						{children}
-					</ModalsProvider>
-				</DatesProvider>
-			</MantineProvider>
+			{children}
 		</ThemeContext.Provider>
 	);
 

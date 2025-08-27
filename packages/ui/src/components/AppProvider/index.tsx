@@ -5,6 +5,7 @@
 import { MapContextProvider } from '@/contexts/Map.context';
 import { MeContextProvider } from '@/contexts/Me.context';
 import { ThemeContextProvider } from '@/contexts/Theme.context';
+import { ThemeAnonymousContextProvider } from '@/contexts/ThemeAnonymous.context';
 import { type PropsWithChildren } from 'react';
 import { SWRConfig, type SWRConfiguration } from 'swr';
 
@@ -41,13 +42,15 @@ export function AppProvider({ children }: PropsWithChildren) {
 
 	return (
 		<SWRConfig value={swrSettings}>
-			<MeContextProvider>
-				<ThemeContextProvider>
-					<MapContextProvider>
-						{children}
-					</MapContextProvider>
-				</ThemeContextProvider>
-			</MeContextProvider>
+			<ThemeAnonymousContextProvider>
+				<MeContextProvider>
+					<ThemeContextProvider>
+						<MapContextProvider>
+							{children}
+						</MapContextProvider>
+					</ThemeContextProvider>
+				</MeContextProvider>
+			</ThemeAnonymousContextProvider>
 		</SWRConfig>
 	);
 

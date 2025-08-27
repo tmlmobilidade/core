@@ -8,7 +8,7 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 
 import { type MapStyle } from '@/components/map/configs/styles';
 import { type MapOverlayPinsPointDataProps } from '@/components/map/overlays/MapOverlayPins';
-import { useLocalStorage } from '@mantine/hooks';
+import { useUserPreference } from '@/hooks/use-user-preference';
 import { getBaseGeoJsonFeatureCollection, parseCoordinatePairString } from '@tmlmobilidade/utils';
 import { MapProvider } from '@vis.gl/react-maplibre';
 import { type FeatureCollection, type Point } from 'geojson';
@@ -52,10 +52,9 @@ export const MapContextProvider = ({ children }: PropsWithChildren) => {
 	//
 	// A. Setup variables
 
-	const [dataSearch, setDataSearch] = useLocalStorage<string>({ defaultValue: '', key: 'map:data:search' });
-
-	const [flagStyle, setFlagStyle] = useLocalStorage<MapStyle>({ defaultValue: 'map', key: 'map:flags:style' });
-	const [flagScrollZoom, setFlagScrollZoom] = useLocalStorage<boolean>({ defaultValue: true, key: 'map:flags:scroll-zoom' });
+	const [dataSearch, setDataSearch] = useUserPreference<string>('map', 'data:search', '');
+	const [flagStyle, setFlagStyle] = useUserPreference<MapStyle>('map', 'flags:style', 'map');
+	const [flagScrollZoom, setFlagScrollZoom] = useUserPreference<boolean>('map', 'flags:scroll-zoom', true);
 
 	//
 	// B. Transform data
@@ -87,12 +86,12 @@ export const MapContextProvider = ({ children }: PropsWithChildren) => {
 
 	const toggleScrollZoom = (value?: boolean) => {
 		if (value !== undefined) setFlagScrollZoom(value);
-		else setFlagScrollZoom(prev => !prev);
+		else setFlagScrollZoom(!flagScrollZoom);
 	};
 
 	const toggleStyle = (value?: MapStyle) => {
 		if (value) setFlagStyle(value);
-		else setFlagStyle(prev => (prev === 'map' ? 'satellite' : 'map'));
+		else setFlagStyle(flagStyle === 'map' ? 'satellite' : 'map');
 	};
 
 	const handleSearch = (value: string) => {

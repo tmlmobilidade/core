@@ -1,6 +1,8 @@
 'use client';
 
-import { Themer } from '@/components/theme';
+/* * */
+
+import { WhenMode } from '@/components/layout/WhenMode';
 
 // CM ICON
 export function CMIcon() {
@@ -118,9 +120,7 @@ export function CMLogo() {
 }
 
 export function TMLogo() {
-	return (
-		<Themer dark={<TMLogoDark />} light={<TMLogoLight />} />
-	);
+	return <WhenMode dark={<TMLogoDark />} light={<TMLogoLight />} />;
 }
 
 export function TMLogoDark() {

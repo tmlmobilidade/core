@@ -6,8 +6,11 @@ import '@mantine/notifications/styles.layer.css';
 
 /* * */
 
-import '@/styles/font.css';
-import '@/styles/index.css';
+import '@/styles/system/reset.css';
+import '@/styles/system/font.css';
+import '@/styles/system/color.css';
+import '@/styles/system/size.css';
+import '@/styles/system/utils.css';
 
 /* * */
 

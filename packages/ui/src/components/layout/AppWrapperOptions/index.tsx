@@ -92,11 +92,11 @@ export function AppWrapperOptions() {
 									onClick={subItem.onClick}
 									px={12}
 									py={6}
-									// style={{
-									// 	backgroundColor: themeContext.data.active_theme === AVAILABLE_THEMES[subIndex]?._id
-									// 		? 'var(--mantine-color-gray-1)'
-									// 		: undefined,
-									// }}
+									style={{
+										backgroundColor: themeContext.data.active_theme === AVAILABLE_THEMES[subIndex]?._id
+											? 'var(--color-system-background-200)'
+											: undefined,
+									}}
 								>
 									<Label size="md" singleLine>{subItem.label}</Label>
 								</Menu.Item>

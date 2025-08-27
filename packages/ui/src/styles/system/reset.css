@@ -18,6 +18,10 @@ body {
 	scroll-behavior: smooth;
 }
 
+body {
+	height: 100vh;
+}
+
 
 /* * */
 /* TEXT ELEMENTS */

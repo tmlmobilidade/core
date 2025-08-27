@@ -1,6 +1,4 @@
-export * from '@/components/AppProvider';
 export * from '@/components/authentication';
-export * from '@/components/BaseProvider';
 export * from '@/components/buttons';
 export * from '@/components/common';
 export * from '@/components/datatable';
@@ -13,5 +11,4 @@ export * from '@/components/map';
 export * from '@/components/modals';
 export * from '@/components/panes';
 export * from '@/components/sidebar';
-export * from '@/components/theme';
 export * from '@/components/upload';

@@ -1,0 +1,78 @@
+/* * *
+ * WHAT IS THIS?
+ * This file has all color definitions used in the project
+ * for light and dark modes, except theme colors.
+ * For theme colors, check ./themes/*.css files.
+ */
+
+:root {
+
+	/* SYSTEM / BACKGROUND */
+	--color-system-background-100: #FFF;
+	--color-system-background-200: #F6F8FA;
+	--color-system-background-300: #F0F0F0;
+
+	/* SYSTEM / BORDER */
+	--color-system-border-100: #E1E1E6;
+	--color-system-border-200: #d3d3d5;
+
+	/* SYSTEM / TEXT */
+	--color-system-text-100: #000;
+	--color-system-text-200: #646482;
+	--color-system-text-300: #BEBEC8;
+
+
+	/* STATUS / SUCCESS */
+	--color-status-success-primary: #00B932;
+	--color-status-success-contrast: #E6FAEB;
+
+	/* STATUS / WARNING */
+	--color-status-warning-primary: #F09600;
+	--color-status-warning-contrast: #FFFAF0;
+
+	/* STATUS / DANGER */
+	--color-status-danger-primary: #D20F1E;
+	--color-status-danger-contrast: #FFEBEB;
+	--color-status-danger-shadow: #d20f1f40;
+
+	/* STATUS / INFO */
+	--color-status-info-primary: #054b8c;
+	--color-status-info-contrast: #e6f0fa;
+
+}
+
+:root[data-mode="dark"] {
+
+	/* SYSTEM / BACKGROUND */
+	--color-system-background-100: #282832;
+	--color-system-background-200: #1e1e28;
+	--color-system-background-300: #0a0a14;
+
+	/* SYSTEM / BORDER */
+	--color-system-border-100: #3c3c41;
+	--color-system-border-200: #505055;
+
+	/* SYSTEM / TEXT */
+	--color-system-text-100: #fff;
+	--color-system-text-200: #c8c8d2;
+	--color-system-text-300: #9696a5;
+
+
+	/* STATUS / SUCCESS */
+	--color-status-success-primary: #00B932;
+	--color-status-success-contrast: #E6FAEB;
+
+	/* STATUS / WARNING */
+	--color-status-warning-primary: #F09600;
+	--color-status-warning-contrast: #FFFAF0;
+
+	/* STATUS / DANGER */
+	--color-status-danger-primary: #D20F1E;
+	--color-status-danger-contrast: #FFEBEB;
+	--color-status-danger-shadow: #d20f1f40;
+
+	/* STATUS / INFO */
+	--color-status-info-primary: #054b8c;
+	--color-status-info-contrast: #e6f0fa;
+
+}

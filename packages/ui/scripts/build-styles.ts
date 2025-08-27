@@ -11,7 +11,7 @@ export function buildStyles() {
 	// Read all necessary files first
 
 	const indexCss = fs.readFileSync('dist/index.css');
-	const resetCss = fs.readFileSync('src/styles/reset.css');
+	const resetCss = fs.readFileSync('src/styles/system/reset.css');
 
 	//
 	// Concatenate all contents

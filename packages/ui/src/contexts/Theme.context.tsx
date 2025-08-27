@@ -79,7 +79,7 @@ export const ThemeContextProvider = ({ children }: PropsWithChildren) => {
 		if (activeMode === 'system') document.documentElement.setAttribute('data-mode', systemColorScheme);
 		// ...otherwise, use the active mode
 		else document.documentElement.setAttribute('data-mode', activeMode);
-	}, [activeMode]);
+	}, [activeMode, systemColorScheme]);
 
 	useEffect(() => {
 		// Apply the active theme to the document

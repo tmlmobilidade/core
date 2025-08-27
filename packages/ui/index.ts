@@ -1,5 +1,6 @@
-export * from '@/components/index';
-export * from '@/contexts/index';
-export * from '@/hooks/index';
+export * from '@/components';
+export * from '@/contexts';
+export * from '@/hooks';
+export * from '@/providers';
 export * from '@mantine/form';
 export { zod4Resolver, zodResolver } from 'mantine-form-zod-resolver';

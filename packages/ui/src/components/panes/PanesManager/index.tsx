@@ -2,7 +2,7 @@
 
 /* * */
 
-import { useLocalStorage } from '@mantine/hooks';
+import { useUserPreference } from '@/hooks/use-user-preference';
 import { type ReactNode, useRef } from 'react';
 
 import styles from './styles.module.css';
@@ -28,7 +28,7 @@ export function PanesManager({ id, panes }: PanesManagerProps) {
 
 	const containerRef = useRef<HTMLDivElement | null>(null);
 
-	const [paneFractions, setPaneFractions] = useLocalStorage<number[]>({ defaultValue: Array(panes.length).fill(1 / panes.length), key: `panes:${id}:fractions` });
+	const [paneFractions, setPaneFractions] = useUserPreference<number[]>('panes', `${id}:fractions`, Array(panes.length).fill(1 / panes.length));
 
 	//
 	// B. Transform data

@@ -5,7 +5,7 @@
 import { ErrorDisplay } from '@/components/display/ErrorDisplay';
 import { LoadingOverlay } from '@/components/loaders/LoadingOverlay';
 import { getAppConfig, HttpException } from '@tmlmobilidade/lib';
-import { type User } from '@tmlmobilidade/types';
+import { type User, type UserPreferenceValue } from '@tmlmobilidade/types';
 import { fetchData, type HasPermissionResourceArgs, hasPermissionResource as hasPermissionResourceUtils, hasPermission as hasPermissionUtils, swrFetcher } from '@tmlmobilidade/utils';
 import { createContext, type PropsWithChildren, useContext, useEffect, useMemo } from 'react';
 import useSWR from 'swr';
@@ -14,11 +14,11 @@ import useSWR from 'swr';
 
 interface MeContextState {
 	actions: {
-		getPreference: <T extends boolean | number | string>(scope: string, key: string) => T | undefined
+		getPreference: <T extends UserPreferenceValue>(scope: string, key: string) => T | undefined
 		hasPermission: (scope: string, action: string) => boolean
 		hasPermissionResource: <T>(args: HasPermissionResourceArgs<T>) => boolean
 		logout: () => Promise<void>
-		updatePreference: (scope: string, key: string, value: boolean | number | string | undefined) => Promise<void>
+		updatePreference: (scope: string, key: string, value: undefined | UserPreferenceValue) => Promise<void>
 	}
 	data: {
 		user: undefined | User
@@ -78,11 +78,11 @@ export const MeContextProvider = ({ children }: PropsWithChildren) => {
 		window.location.href = `${getAppConfig('auth', 'frontend_url')}/login`;
 	}
 
-	function getPreference<T extends boolean | number | string>(scope: string, key: string): T | undefined {
-		return meData?.preferences?.[scope]?.[key];
+	function getPreference<T extends UserPreferenceValue>(scope: string, key: string): T | undefined {
+		return meData?.preferences?.[scope]?.[key] as T | undefined;
 	}
 
-	async function updatePreference(scope: string, key: string, value: boolean | number | string | undefined) {
+	async function updatePreference(scope: string, key: string, value: undefined | UserPreferenceValue) {
 		console.log('[meContext] Updating preference', { key, scope, value });
 		// Skip if user data is not available
 		if (!meData) return;

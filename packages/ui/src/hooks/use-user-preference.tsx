@@ -3,6 +3,7 @@
 /* * */
 
 import { useMeContext } from '@/contexts/Me.context';
+import { type UserPreferenceValue } from '@tmlmobilidade/types';
 import { useEffect, useState } from 'react';
 
 /**
@@ -12,7 +13,7 @@ import { useEffect, useState } from 'react';
  * @param defaultValue The optional default value of the preference.
  * @returns The current preference value and a function to update it.
  */
-export function useUserPreference<T extends boolean | number | string>(scope: string, key: string, defaultValue: T): [T, (value: T) => void] {
+export function useUserPreference<T extends UserPreferenceValue>(scope: string, key: string, defaultValue: T): [T, (value: T) => void] {
 	//
 
 	//

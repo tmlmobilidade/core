@@ -7,6 +7,18 @@ import { z } from 'zod';
 
 /* * */
 
+export const UserPreferenceValueSchema = z.union([
+	z.string(),
+	z.number(),
+	z.boolean(),
+	z.array(z.string()),
+	z.array(z.number()),
+]);
+
+export type UserPreferenceValue = z.infer<typeof UserPreferenceValueSchema>;
+
+/* * */
+
 export const UserSchema = DocumentSchema.extend({
 	avatar: z.string().nullish(),
 	bio: z.string().nullish(),
@@ -18,7 +30,7 @@ export const UserSchema = DocumentSchema.extend({
 	password_hash: z.string().nullish(),
 	permissions: z.array(PermissionSchema),
 	phone: z.string().nullish(),
-	preferences: z.record(z.record(z.any())).nullish(),
+	preferences: z.record(z.record(UserPreferenceValueSchema)).nullish(),
 	role_ids: z.array(z.string()).default([]),
 	session_ids: z.array(z.string()).default([]),
 	theme_id: z.string().nullish(),
@@ -40,29 +52,3 @@ export interface CreateUserDto extends Omit<z.infer<typeof CreateUserSchema>, 'c
 	updated_at?: UnixTimestamp
 }
 export type UpdateUserDto = Partial<CreateUserDto> & { password_hash?: string };
-
-// const newUser: User = {
-// 	_id: 'string',
-// 	avatar: 'avatar.png',
-// 	bio: 'This is a bio',
-// 	created_at: 1 as UnixTimestamp,
-// 	email: 'user@example.com',
-// 	email_verified: null,
-// 	first_name: 'First',
-// 	last_name: 'Last',
-// 	organization_ids: [],
-// 	password_hash: 'hashed_password',
-// 	permissions: [],
-// 	phone: null,
-// 	preferences: {
-// 		theme: {
-// 			darkMode: 'system',
-// 		},
-// 	},
-// 	role_ids: [],
-// 	session_ids: [],
-// 	theme_id: null,
-// 	updated_at: 1 as UnixTimestamp,
-// 	verification_token_ids: [],
-
-// };

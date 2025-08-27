@@ -7,6 +7,8 @@ import { Dates, generateRandomString } from '@tmlmobilidade/utils';
 import { Collection, DeleteOptions, DeleteResult, Document, Filter, FindOptions, IndexDescription, InsertOneOptions, InsertOneResult, MongoClientOptions, OptionalUnlessRequiredId, UpdateOptions, UpdateResult, WithId } from 'mongodb';
 import { z } from 'zod';
 
+import { AggregationPipeline } from './aggregation-pipeline.js';
+
 /* * */
 
 export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate> {
@@ -15,8 +17,13 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	protected mongoConnector: MongoConnector;
 	protected updateSchema: null | z.ZodSchema = null;
 
-	public async aggregate(pipeline: AggregationPipeline<T>): Promise<Document[]> {
-		return await this.mongoCollection.aggregate(pipeline).toArray();
+	/**
+	 * Aggregates documents in the collection.
+	 * @param pipeline - The aggregation pipeline to execute
+	 * @returns A promise that resolves to an array of aggregated documents
+	 */
+	public async aggregate(pipeline: AggregationPipeline<T>): Promise<T[]> {
+		return await this.mongoCollection.aggregate(pipeline).toArray() as T[];
 	}
 
 	/**
@@ -337,31 +344,3 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	// Abstract method for subclasses to provide the environment variable name
 	protected abstract getEnvName(): string;
 }
-
-interface MatchStage<T> { $match: Partial<T> }
-
-interface ProjectStage<T> { $project: Partial<Record<keyof T, 0 | 1>> }
-
-interface GroupStage<T> {
-	$group: {
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		[key: string]: any
-		_id: Record<string, keyof T> | string
-	}
-}
-
-interface SortStage<T> { $sort: Partial<Record<keyof T, -1 | 1>> }
-
-interface LimitStage { $limit: number }
-interface SkipStage { $skip: number }
-
-// Extend as needed for other stages: $lookup, $unwind, etc.
-type AggregationStage<T> =
-  | GroupStage<T>
-  | LimitStage
-  | MatchStage<T>
-  | ProjectStage<T>
-  | SkipStage
-  | SortStage<T>;
-
-export type AggregationPipeline<T> = AggregationStage<T>[];

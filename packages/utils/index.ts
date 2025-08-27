@@ -1,6 +1,7 @@
 export * from '@/batching/index.js';
 export * from '@/convert-object.js';
 export * from '@/css/index.js';
+export * from '@/databases/index.js';
 export * from '@/dates/index.js';
 export * from '@/files/files.js';
 export * from '@/generic/index.js';

@@ -1,6 +1,6 @@
 /* * */
 
-import { generateRandomString } from '@/random/generate-random-string.js';
+import { generateRandomString } from '@tmlmobilidade/utils';
 import BSQLite3, { type Database } from 'better-sqlite3';
 
 /* * */

@@ -33,6 +33,7 @@ export function useUserPreference<T extends UserPreferenceValue>(scope: string, 
 
 	const handleSetPreferenceValue = (value: T) => {
 		meContext.actions.updatePreference(scope, key, value);
+		setPreferenceValue(value);
 	};
 
 	//

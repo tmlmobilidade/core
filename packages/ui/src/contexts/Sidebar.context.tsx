@@ -5,7 +5,6 @@
 import { Loader } from '@/components/loaders/Loader';
 import { type SidebarItemProps } from '@/components/sidebar/SidebarItem';
 import { getAppConfig } from '@tmlmobilidade/lib';
-import { swrFetcher } from '@tmlmobilidade/utils';
 import { createContext, type PropsWithChildren, useContext, useEffect, useMemo, useState } from 'react';
 import useSWR from 'swr';
 
@@ -44,7 +43,7 @@ export const SidebarContextProvider = ({ children }: PropsWithChildren) => {
 	//
 	// B. Fetch data
 
-	const { data, error, isLoading } = useSWR<{ sidebar: SidebarItemProps[] }>(`${getAppConfig('auth', 'api_url')}/users/me`, swrFetcher);
+	const { data, error, isLoading } = useSWR<{ sidebar: SidebarItemProps[] }>(`${getAppConfig('auth', 'api_url')}/users/me`);
 
 	//
 	// C. Handle actions

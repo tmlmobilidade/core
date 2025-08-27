@@ -6,7 +6,7 @@ import { ErrorDisplay } from '@/components/display/ErrorDisplay';
 import { LoadingOverlay } from '@/components/loaders/LoadingOverlay';
 import { getAppConfig, HttpException } from '@tmlmobilidade/lib';
 import { type User, type UserPreferenceValue } from '@tmlmobilidade/types';
-import { fetchData, type HasPermissionResourceArgs, hasPermissionResource as hasPermissionResourceUtils, hasPermission as hasPermissionUtils, swrFetcher } from '@tmlmobilidade/utils';
+import { fetchData, type HasPermissionResourceArgs, hasPermissionResource as hasPermissionResourceUtils, hasPermission as hasPermissionUtils } from '@tmlmobilidade/utils';
 import { createContext, type PropsWithChildren, useContext, useEffect, useMemo } from 'react';
 import useSWR from 'swr';
 
@@ -47,7 +47,7 @@ export const MeContextProvider = ({ children }: PropsWithChildren) => {
 	//
 	// B. Fetch data
 
-	const { data: meData, error: meError, isLoading: meLoading, mutate: meMutate } = useSWR<User, HttpException>(`${getAppConfig('auth', 'api_url')}/users/me`, swrFetcher);
+	const { data: meData, error: meError, isLoading: meLoading, mutate: meMutate } = useSWR<User, HttpException>(`${getAppConfig('auth', 'api_url')}/users/me`);
 
 	//
 	// C. Handle actions
@@ -83,19 +83,15 @@ export const MeContextProvider = ({ children }: PropsWithChildren) => {
 	}
 
 	async function updatePreference(scope: string, key: string, value: undefined | UserPreferenceValue) {
-		console.log('[meContext] Updating preference', { key, scope, value });
 		// Skip if user data is not available
 		if (!meData) return;
-		console.log('[meContext] Current preferences', meData.preferences);
 		// Merge current with updated preferences
 		const currentPreferences = meData.preferences ?? {};
 		const currentScope = currentPreferences[scope] ?? {};
 		const updatedScope = { ...currentScope, [key]: value };
 		const updatedPreferences = { ...currentPreferences, [scope]: updatedScope };
-		console.log('[meContext] Updated preferences', updatedPreferences);
 		// Call the update endpoint
-		const response = await fetchData(`${getAppConfig('auth', 'frontend_url')}/api/users/me`, 'PUT', { preferences: updatedPreferences });
-		console.log('[meContext] Update response', response);
+		await fetchData(`${getAppConfig('auth', 'frontend_url')}/api/users/me`, 'PUT', { preferences: updatedPreferences });
 		// Mutate the SWR cache to update user data
 		meMutate();
 	}

@@ -83,13 +83,16 @@ export const MeContextProvider = ({ children }: PropsWithChildren) => {
 	}
 
 	async function updatePreference(scope: string, key: string, value: number | string | undefined) {
+		console.log('[meContext] Updating preference', { key, scope, value });
 		// Skip if user data is not available
 		if (!meData) return;
+		console.log('Current preferences', meData.preferences);
 		// Merge current with updated preferences
 		const currentPreferences = meData.preferences ?? {};
 		const currentScope = currentPreferences[scope] ?? {};
 		const updatedScope = { ...currentScope, [key]: value };
 		const updatedPreferences = { ...currentPreferences, [scope]: updatedScope };
+		console.log('Updated preferences', updatedPreferences);
 		// Call the update endpoint
 		await fetchData(`${getAppConfig('auth', 'frontend_url')}/api/users/me`, 'PUT', { preferences: updatedPreferences });
 		// Mutate the SWR cache to update user data

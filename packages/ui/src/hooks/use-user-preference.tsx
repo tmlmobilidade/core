@@ -31,8 +31,11 @@ export function useUserPreference<T extends number | string>(scope: string, key:
 	}, [meContext.data.user?.preferences]);
 
 	useEffect(() => {
+		console.log('Updating preference', { key, preferenceValue, scope });
 		const currentValue = meContext.data.user?.preferences?.[scope]?.[key];
+		console.log('Current value', currentValue);
 		if (currentValue === preferenceValue) return;
+		console.log('Saving preference', { key, preferenceValue, scope });
 		meContext.actions.updatePreference(scope, key, preferenceValue);
 	}, [preferenceValue]);
 

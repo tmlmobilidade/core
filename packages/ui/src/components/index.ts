@@ -1,5 +1,6 @@
 export * from '@/components/AppProvider';
 export * from '@/components/authentication';
+export * from '@/components/BaseProvider';
 export * from '@/components/buttons';
 export * from '@/components/common';
 export * from '@/components/datatable';

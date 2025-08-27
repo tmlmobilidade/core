@@ -5,12 +5,14 @@
 import { MapContextProvider } from '@/contexts/Map.context';
 import { MeContextProvider } from '@/contexts/Me.context';
 import { ThemeContextProvider } from '@/contexts/Theme.context';
-import { ThemeAnonymousContextProvider } from '@/contexts/ThemeAnonymous.context';
 import { type PropsWithChildren } from 'react';
 import { SWRConfig, type SWRConfiguration } from 'swr';
 
-/* * */
-
+/**
+ * `AppProvider` component that wraps the application with necessary context providers.
+ * This should wrap the whole authenticated application. For non-authenticated
+ * parts of the application, use only the `BaseProvider` component.
+ */
 export function AppProvider({ children }: PropsWithChildren) {
 	//
 
@@ -42,15 +44,13 @@ export function AppProvider({ children }: PropsWithChildren) {
 
 	return (
 		<SWRConfig value={swrSettings}>
-			<ThemeAnonymousContextProvider>
-				<MeContextProvider>
-					<ThemeContextProvider>
-						<MapContextProvider>
-							{children}
-						</MapContextProvider>
-					</ThemeContextProvider>
-				</MeContextProvider>
-			</ThemeAnonymousContextProvider>
+			<MeContextProvider>
+				<ThemeContextProvider>
+					<MapContextProvider>
+						{children}
+					</MapContextProvider>
+				</ThemeContextProvider>
+			</MeContextProvider>
 		</SWRConfig>
 	);
 

@@ -20,13 +20,13 @@ export function useUserPreference<T extends number | string>(scope: string, key:
 
 	const meContext = useMeContext();
 
-	const [preferenceValue, setPreferenceValue] = useState<T>(defaultValue);
+	const [preferenceValue, setPreferenceValue] = useState<T>();
 
 	//
 	// B. Handle actions
 
 	useEffect(() => {
-		const value = meContext.actions.getPreference<T>(scope, key) ?? defaultValue;
+		const value = meContext.actions.getPreference<T>(scope, key);
 		setPreferenceValue(value);
 	}, [meContext.data.user?.preferences]);
 
@@ -42,5 +42,5 @@ export function useUserPreference<T extends number | string>(scope: string, key:
 	//
 	// C. Render components
 
-	return [preferenceValue, setPreferenceValue];
+	return [preferenceValue ?? defaultValue, setPreferenceValue];
 }

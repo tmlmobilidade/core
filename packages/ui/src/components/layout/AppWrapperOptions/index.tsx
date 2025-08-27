@@ -41,7 +41,6 @@ export function AppWrapperOptions() {
 				label: item.name,
 				onClick: () => {
 					themeContext.actions.activateTheme(item._id);
-					meContext.actions.updatetheme(item._id);
 				},
 			})),
 		},

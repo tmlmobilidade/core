@@ -84,3 +84,11 @@ export interface CreateRideDto extends Omit<z.infer<typeof CreateRideSchema>, 'e
 }
 
 export type UpdateRideDto = Partial<CreateRideDto>;
+
+/* * */
+
+export const RidePermissionSchema = z.object({
+	agency_ids: z.array(z.string()),
+});
+
+export type RidePermission = z.infer<typeof RidePermissionSchema>;

@@ -7,7 +7,9 @@ import { MantineProvider } from '@mantine/core';
 import { DatesProvider, DatesProviderSettings } from '@mantine/dates';
 import { ModalsProvider } from '@mantine/modals';
 import { Notifications } from '@mantine/notifications';
+import { swrFetcher } from '@tmlmobilidade/utils';
 import { type PropsWithChildren } from 'react';
+import { SWRConfig, type SWRConfiguration } from 'swr';
 
 /**
  * This is the application base provider component. The whole application should be
@@ -26,20 +28,31 @@ export function BaseProvider({ children }: PropsWithChildren) {
 		weekendDays: [6, 0],
 	};
 
+	const swrSettings: SWRConfiguration = {
+		fetcher: swrFetcher,
+		refreshInterval: 60_000, // 1 minute
+		refreshWhenHidden: true,
+		revalidateIfStale: true,
+		revalidateOnFocus: true,
+		revalidateOnMount: true,
+	};
+
 	//
 	// B. Render components
 
 	return (
 		<html data-theme="ocean" lang="pt">
 			<body>
-				<MantineProvider defaultColorScheme="auto" theme={themeData}>
-					<DatesProvider settings={mantineDatesSettings}>
-						<ModalsProvider>
-							<Notifications styles={{ root: { marginTop: '60px' } }} />
-							{children}
-						</ModalsProvider>
-					</DatesProvider>
-				</MantineProvider>
+				<SWRConfig value={swrSettings}>
+					<MantineProvider defaultColorScheme="auto" theme={themeData}>
+						<DatesProvider settings={mantineDatesSettings}>
+							<ModalsProvider>
+								<Notifications styles={{ root: { marginTop: '60px' } }} />
+								{children}
+							</ModalsProvider>
+						</DatesProvider>
+					</MantineProvider>
+				</SWRConfig>
 			</body>
 		</html>
 	);

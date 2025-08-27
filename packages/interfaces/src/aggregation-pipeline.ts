@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Ride } from '@tmlmobilidade/types';
 import { Filter } from 'mongodb';
 
 interface MatchStage<T> { $match: Filter<T> }
@@ -13,13 +12,19 @@ interface GroupStage {
 interface SortStage<T> { $sort: Partial<Record<keyof T, -1 | 1>> }
 interface LimitStage { $limit: number }
 interface SkipStage { $skip: number }
+interface UnwindStage { $unwind: string | { path: string, preserveNullAndEmptyArrays: boolean } }
+interface AddFieldsStage { $addFields: Record<string, any> }
+interface LookupStage { $lookup: { as: string, foreignField: string, from: string, localField: string } }
 
 type AggregationStage<T> =
+  | AddFieldsStage
   | GroupStage
   | LimitStage
+  | LookupStage
   | MatchStage<T>
   | ProjectStage<T>
   | SkipStage
-  | SortStage<T>;
+  | SortStage<T>
+  | UnwindStage;
 
 export type AggregationPipeline<T> = AggregationStage<T>[];

@@ -5,3 +5,4 @@ export * from '@/_common/fastify.js';
 export * from '@/_common/operational-date.js';
 export * from '@/_common/proposed-change.js';
 export * from '@/_common/unix-timestamp.js';
+export * from '@/_common/utility.js';

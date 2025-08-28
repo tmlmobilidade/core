@@ -16,6 +16,7 @@ export * from '@/components/common/LineBadge';
 export * from '@/components/common/LineDisplay';
 export * from '@/components/common/LineName';
 export * from '@/components/common/LineSelect';
+export * from '@/components/common/PillGroup';
 export * from '@/components/common/Popover';
 export * from '@/components/common/SegmentedControl';
 export * from '@/components/common/Slider';

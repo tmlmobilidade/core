@@ -41,19 +41,19 @@ db.createUser({
 });
 
 db.createUser({
-	pwd: USER_PASSWORD_CMET_API,
+	pwd: USER_CMET_API_PASSWORD,
 	roles: [{ db: 'admin', role: 'cmet-api' }],
 	user: 'cmet-api',
 });
 
 db.createUser({
-	pwd: USER_PASSWORD_GO_V1,
+	pwd: USER_GO_V1_PASSWORD,
 	roles: [{ db: 'admin', role: 'go-v1' }],
 	user: 'go-v1',
 });
 
 db.createUser({
-	pwd: USER_PASSWORD_DGC_USER,
+	pwd: USER_DGC_USER_PASSWORD,
 	roles: [{ db: 'admin', role: 'dgc-user' }],
 	user: 'dgc-user',
 });

@@ -18,6 +18,19 @@ db.createRole({
 
 db.createRole({
 	privileges: [
+		{ actions: ['find', 'update', 'insert', 'remove'], resource: { collection: 'agencies', db: 'production' } },
+		{ actions: ['find', 'update', 'insert', 'remove'], resource: { collection: 'users', db: 'production' } },
+		{ actions: ['find', 'update', 'insert', 'remove'], resource: { collection: 'sessions', db: 'production' } },
+		{ actions: ['find', 'update', 'insert', 'remove'], resource: { collection: 'roles', db: 'production' } },
+		{ actions: ['find', 'update', 'insert', 'remove'], resource: { collection: 'files', db: 'production' } },
+		{ actions: ['find', 'update', 'insert', 'remove'], resource: { collection: 'verification_tokens', db: 'production' } },
+	],
+	role: 'auth',
+	roles: [],
+});
+
+db.createRole({
+	privileges: [
 		{ actions: ['find', 'update', 'insert', 'remove'], resource: { collection: 'plans', db: 'production' } },
 		{ actions: ['find', 'update', 'insert', 'remove'], resource: { collection: 'gtfs_validations', db: 'production' } },
 		{ actions: ['find'], resource: { collection: 'rides', db: 'production' } },
@@ -45,22 +58,6 @@ db.createRole({
 	privileges: [
 		{ actions: ['find', 'update', 'insert', 'remove'], resource: { collection: 'stops', db: 'production' } }],
 	role: 'stops',
-	roles: [{
-		db: 'admin',
-		role: 'common',
-	}],
-});
-
-db.createRole({
-	privileges: [
-		{ actions: ['find', 'update', 'insert', 'remove'], resource: { collection: 'agencies', db: 'production' } },
-		{ actions: ['find', 'update', 'insert', 'remove'], resource: { collection: 'users', db: 'production' } },
-		{ actions: ['find', 'update', 'insert', 'remove'], resource: { collection: 'sessions', db: 'production' } },
-		{ actions: ['find', 'update', 'insert', 'remove'], resource: { collection: 'roles', db: 'production' } },
-		{ actions: ['find', 'update', 'insert', 'remove'], resource: { collection: 'files', db: 'production' } },
-		{ actions: ['find', 'update', 'insert', 'remove'], resource: { collection: 'verification_tokens', db: 'production' } },
-	],
-	role: 'auth',
 	roles: [{
 		db: 'admin',
 		role: 'common',

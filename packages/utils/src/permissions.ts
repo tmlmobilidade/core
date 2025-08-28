@@ -16,7 +16,6 @@ export function getPermission(permissions: Permission<unknown>[], scope: string,
 	return mergekit([...(permissions ?? [])], {
 		appendArrays: true,
 		dedupArrays: true,
-
 		onlyObjectWithKeyValues: [
 			{ key: 'scope', value: scope },
 			{ key: 'action', value: action },
@@ -25,11 +24,11 @@ export function getPermission(permissions: Permission<unknown>[], scope: string,
 }
 
 /**
- * Check if a permission exists in a list of permissions
- * @param permissions - The list of permissions
- * @param scope - The scope of the permission
- * @param action - The action of the permission
- * @returns The permission
+ * Check if a permission exists in a list of permissions.
+ * @param permissions The list of permissions.
+ * @param scope The scope of the permission.
+ * @param action The action of the permission.
+ * @returns The permission object or undefined if not found.
  */
 export function hasPermission(permissions: Permission<unknown>[], scope: string, action: string): boolean {
 	return permissions.find(permission => permission.scope === scope && permission.action === action) !== undefined;

@@ -32,13 +32,13 @@ export function useUserPreference<T extends UserPreferenceValue>(scope: string, 
 		setPreferenceValue(value);
 	}, [meContext.data.user]);
 
-	const savePreferenceValue = useDebouncedCallback((value: T) => {
+	const savePreferenceValueDebounced = useDebouncedCallback((value: T) => {
 		meContext.actions.updatePreference(scope, key, value);
 	}, 500);
 
 	const handleSetPreferenceValue = (value: T) => {
 		setPreferenceValue(value);
-		savePreferenceValue(value);
+		savePreferenceValueDebounced(value);
 	};
 
 	//

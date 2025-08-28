@@ -43,7 +43,7 @@ class SimplifiedApexOnBoardRefundsClass extends MongoCollectionClass<SimplifiedA
 	}
 
 	protected getEnvName(): string {
-		return 'TML_INTERFACE_SIMPLIFIED_APEX_ON_BOARD_REFUNDS';
+		return 'DATABASE_URI';
 	}
 }
 

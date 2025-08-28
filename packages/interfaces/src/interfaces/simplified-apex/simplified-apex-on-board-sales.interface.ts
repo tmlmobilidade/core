@@ -44,7 +44,7 @@ class SimplifiedApexOnBoardSalesClass extends MongoCollectionClass<SimplifiedApe
 	}
 
 	protected getEnvName(): string {
-		return 'TML_INTERFACE_SIMPLIFIED_APEX_ON_BOARD_SALES';
+		return 'DATABASE_URI';
 	}
 }
 

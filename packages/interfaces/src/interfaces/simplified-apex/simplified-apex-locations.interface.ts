@@ -42,7 +42,7 @@ class SimplifiedApexLocationsClass extends MongoCollectionClass<SimplifiedApexLo
 	}
 
 	protected getEnvName(): string {
-		return 'TML_INTERFACE_SIMPLIFIED_APEX_LOCATIONS';
+		return 'DATABASE_URI';
 	}
 }
 

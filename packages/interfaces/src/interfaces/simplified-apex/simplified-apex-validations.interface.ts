@@ -43,7 +43,7 @@ class SimplifiedApexValidationsClass extends MongoCollectionClass<SimplifiedApex
 	}
 
 	protected getEnvName(): string {
-		return 'TML_INTERFACE_SIMPLIFIED_APEX_VALIDATIONS';
+		return 'DATABASE_URI';
 	}
 }
 

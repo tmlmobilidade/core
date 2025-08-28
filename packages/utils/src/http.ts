@@ -171,3 +171,21 @@ export const swrFetcher = async <T>(url: string): Promise<T> => {
 
 	return data.data as T;
 };
+
+/**
+ * Fetches data from a URL using the SWR fetcher function without authentication.
+ * @param url - The URL to fetch from
+ * @returns Promise resolving to the fetched data
+ * @example
+ * ```ts
+ * const data = await standardSwrFetcher('/api/users/123');
+ * ```
+ */
+export const standardSwrFetcher = async <T>(url: string): Promise<T> => {
+	const res = await fetch(url, { credentials: 'omit' });
+	if (!res.ok) {
+		throw new HttpException(res.status, res.statusText);
+	}
+
+	return res.json() as T;
+};

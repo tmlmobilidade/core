@@ -34,6 +34,7 @@ import ButtonOverride from '@/styles/mantine/Button.module.css';
 import CheckboxOverride from '@/styles/mantine/Checkbox.module.css';
 import CheckboxGroupOverride from '@/styles/mantine/CheckboxGroup.module.css';
 import PasswordInputOverride from '@/styles/mantine/PasswordInput.module.css';
+import PillsInputOverride from '@/styles/mantine/PillsInput.module.css';
 import PopoverOverride from '@/styles/mantine/Popover.module.css';
 import SegmentedControlOverride from '@/styles/mantine/SegmentedControl.module.css';
 import SkeletonOverride from '@/styles/mantine/Skeleton.module.css';
@@ -118,7 +119,7 @@ export const themeData: MantineThemeOverride = createTheme({
 				description: TextInputOverride.description,
 				error: TextInputOverride.error,
 				label: TextInputOverride.label,
-				root: TextInputOverride.root,
+				root: PillsInputOverride.root,
 			},
 		}),
 

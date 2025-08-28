@@ -2,7 +2,7 @@
 
 /* * */
 
-import { Center, PillsInput as MantinePillsInput, PillsInputProps as MantinePillsInputProps, Pill, Tooltip } from '@mantine/core';
+import { Center, PillsInput as MantinePillsInput, type PillsInputProps as MantinePillsInputProps, Pill, Tooltip } from '@mantine/core';
 import { IconInfoCircle } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
 
@@ -126,10 +126,6 @@ export function PillsInput({ onChange, validate, values, ...props }: PillsInputP
 		<MantinePillsInput
 			error={isValid ? '' : validate?.message}
 			rightSection={props.tooltip && renderTooltip(props.tooltip)}
-			classNames={{
-				input: styles.pillsInputInput,
-				root: styles.pillsInput,
-			}}
 			{...props}
 		>
 			<Pill.Group className={styles.pillsInputPillGroup}>

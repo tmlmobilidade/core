@@ -1,4 +1,11 @@
 /* * */
+/* ITEM */
+
+.item {
+	border-bottom-color: var(--color-system-border-100);
+}
+
+/* * */
 /* LABEL */
 
 .label {

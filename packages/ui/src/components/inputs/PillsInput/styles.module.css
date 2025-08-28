@@ -1,23 +1,6 @@
 /* * */
 /* PILLS INPUT */
 
-.pillsInput {
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-	padding: 0;
-	border: none;
-}
-
-.pillsInputInput {
-	display: flex;
-	flex-direction: column;
-	gap: var(--size-spacing-sm);
-	width: 100%;
-	padding: 0;
-	border: none;
-}
-
 .pillsInputPillGroup {
 	display: flex;
 	flex-wrap: wrap;
@@ -41,7 +24,7 @@
 	background-color: var(--color-system-background-200);
     border-radius: var(--border-radius-xs);
 	box-shadow: 1px 2px 3px 1px rgb(0 0 0 / 15%);
-	
+
 	& * {
 		user-select: none;
 	}

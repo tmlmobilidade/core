@@ -3,6 +3,7 @@
 /* * */
 
 import { useMeContext } from '@/contexts/Me.context';
+import { useDebouncedCallback } from '@mantine/hooks';
 import { type UserPreferenceValue } from '@tmlmobilidade/types';
 import { useEffect, useState } from 'react';
 
@@ -31,9 +32,13 @@ export function useUserPreference<T extends UserPreferenceValue>(scope: string, 
 		setPreferenceValue(value);
 	}, [meContext.data.user]);
 
-	const handleSetPreferenceValue = (value: T) => {
+	const savePreferenceValue = useDebouncedCallback((value: T) => {
 		meContext.actions.updatePreference(scope, key, value);
+	}, 500);
+
+	const handleSetPreferenceValue = (value: T) => {
 		setPreferenceValue(value);
+		savePreferenceValue(value);
 	};
 
 	//

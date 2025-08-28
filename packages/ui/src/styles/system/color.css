@@ -57,18 +57,18 @@
 
 
 	/* STATUS / SUCCESS */
-	--color-status-success-primary: #00B932;
-	--color-status-success-contrast: #E6FAEB;
+	--color-status-success-primary: #329150;
+	--color-status-success-contrast: #052314;
 	--color-status-success-shadow: #d20f1f40;
 
 	/* STATUS / WARNING */
-	--color-status-warning-primary: #F09600;
-	--color-status-warning-contrast: #FFFAF0;
+	--color-status-warning-primary: #be781e;
+	--color-status-warning-contrast: #2d1e05;
 	--color-status-warning-shadow: #d20f1f40;
 
 	/* STATUS / DANGER */
-	--color-status-danger-primary: #D20F1E;
-	--color-status-danger-contrast: #FFEBEB;
+	--color-status-danger-primary: #c83c3c;
+	--color-status-danger-contrast: #2d0505;
 	--color-status-danger-shadow: #d20f1f40;
 
 }

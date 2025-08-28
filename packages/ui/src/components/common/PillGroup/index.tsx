@@ -4,8 +4,7 @@
 
 import { Pill } from '@mantine/core';
 import { IconCheck, IconPlus, IconX } from '@tabler/icons-react';
-import { ExactlyOne } from '@tmlmobilidade/types';
-import { Fragment, useMemo } from 'react';
+import { useMemo } from 'react';
 
 import styles from './styles.module.css';
 
@@ -21,11 +20,12 @@ interface PillGroupBaseProps {
 	data: DataItem[] | string[]
 	onChange?: (value: string[]) => void
 	selected?: string[]
+	size?: 'lg' | 'md' | 'sm' | 'xl'
 }
 
 type PillGroupProps = PillGroupBaseProps;
 
-export function PillGroup({ data, onChange, selected }: PillGroupProps) {
+export function PillGroup({ data, onChange, selected, size = 'md' }: PillGroupProps) {
 	//
 
 	const preparedData = useMemo(() => {
@@ -40,6 +40,7 @@ export function PillGroup({ data, onChange, selected }: PillGroupProps) {
 			{preparedData.map(item => (
 				<Pill
 					key={item.value}
+					data-size={size}
 					classNames={{
 						label: styles.label,
 						root: styles.pill,

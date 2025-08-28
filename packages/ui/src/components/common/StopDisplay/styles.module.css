@@ -5,4 +5,5 @@
 	display: grid;
 	grid-template-columns: auto 1fr;
 	gap: var(--size-spacing-sm);
+	align-items: center;
 }

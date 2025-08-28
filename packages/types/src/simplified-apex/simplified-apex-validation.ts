@@ -102,6 +102,7 @@ export const SimplifiedApexValidationSchema = DocumentSchema.extend({
 	agency_id: z.string(),
 	apex_version: z.string(),
 	card_serial_number: z.string(),
+	category: z.enum(['prepaid', 'subscription', 'on_board_sale']),
 	device_id: z.string(),
 	event_type: z.number(),
 	is_passenger: z.boolean(),

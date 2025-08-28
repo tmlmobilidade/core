@@ -3,6 +3,7 @@
 /* * */
 
 import { StopDisplay } from '@/components/common/StopDisplay';
+import { Loader } from '@/components/loaders';
 import { createDocCollection } from '@/hooks/use-other-search';
 import { type Stop } from '@carrismetropolitana/api-types/network';
 import { ActionIcon, Combobox, Group, TextInput, useCombobox } from '@mantine/core';
@@ -17,6 +18,7 @@ import styles from './styles.module.css';
 interface SelectStopProps {
 	data: Stop[]
 	label?: string
+	loading?: boolean
 	nothingFound?: string
 	onSelectStopId: (stopId: null | string) => void
 	placeholder?: string
@@ -26,7 +28,7 @@ interface SelectStopProps {
 
 /* * */
 
-export function StopSelect({ data = [], label, nothingFound = 'Nenhuma paragem encontrada', onSelectStopId, placeholder = 'Selecione uma paragem', selectedStopId, variant }: SelectStopProps) {
+export function StopSelect({ data = [], label, loading, nothingFound = 'Nenhuma paragem encontrada', onSelectStopId, placeholder = 'Selecione uma paragem', selectedStopId, variant }: SelectStopProps) {
 	//
 
 	//
@@ -44,10 +46,9 @@ export function StopSelect({ data = [], label, nothingFound = 'Nenhuma paragem e
 		// Prepare data for search function
 		const preparedSearchCollection = data.map(item => ({ ...item, boost: selectedStopId === item.id ? 10 : 1 }));
 		return createDocCollection(preparedSearchCollection, {
-			id: 2,
-			long_name: 1,
-			short_name: 1,
-			tts_name: 1.5,
+			id: 1,
+			long_name: 0.8,
+			short_name: 0.7,
 		});
 	}, [data]);
 
@@ -118,7 +119,8 @@ export function StopSelect({ data = [], label, nothingFound = 'Nenhuma paragem e
 						<TextInput
 							aria-label={label}
 							autoComplete="off"
-							leftSection={<IconBusStop size={20} />}
+							classNames={{ input: styles.comboboxTargetTextInput }}
+							leftSection={loading ? <Loader size="sm" /> : <IconBusStop size={20} />}
 							onBlur={handleExitSearchField}
 							onChange={handleSearchQueryChange}
 							onClick={handleClickSearchField}

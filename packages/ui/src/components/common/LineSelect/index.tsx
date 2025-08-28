@@ -3,6 +3,7 @@
 /* * */
 
 import { LineDisplay } from '@/components/common/LineDisplay';
+import { Loader } from '@/components/loaders';
 import { createDocCollection } from '@/hooks/use-other-search';
 import { Line } from '@carrismetropolitana/api-types/network';
 import { ActionIcon, Combobox, Group, TextInput, useCombobox } from '@mantine/core';
@@ -18,6 +19,7 @@ import styles from './styles.module.css';
 export interface LineSelectProps {
 	data: Line[]
 	label?: string
+	loading?: boolean
 	nothingFound?: string
 	onSelectLineId: (lineId: null | string) => void
 	placeholder?: string
@@ -27,7 +29,7 @@ export interface LineSelectProps {
 
 /* * */
 
-export function LineSelect({ data = [], label, nothingFound = 'Nenhuma linha encontrada', onSelectLineId, placeholder = 'Selecione uma linha', selectedLineId, variant }: LineSelectProps) {
+export function LineSelect({ data = [], label, loading, nothingFound = 'Nenhuma linha encontrada', onSelectLineId, placeholder = 'Selecione uma linha', selectedLineId, variant }: LineSelectProps) {
 	//
 
 	//
@@ -43,11 +45,11 @@ export function LineSelect({ data = [], label, nothingFound = 'Nenhuma linha enc
 	const { search } = useMemo(() => {
 		const boostedData = data.map(item => ({ ...item, boost: selectedLineId === item.id ? 10 : 1 }));
 		return createDocCollection(boostedData, {
-			id: 2,
-			locality_ids: 1,
-			long_name: 1,
-			short_name: 1,
-			tts_name: 0.9,
+			id: 1,
+			locality_ids: 0.8,
+			long_name: 0.8,
+			short_name: 0.7,
+			tts_name: 0.8,
 		});
 	}, [data]);
 
@@ -123,7 +125,8 @@ export function LineSelect({ data = [], label, nothingFound = 'Nenhuma linha enc
 						<TextInput
 							aria-label={label}
 							autoComplete="off"
-							leftSection={<IconArrowLoopRight size={20} />}
+							classNames={{ input: styles.comboboxTargetTextInput }}
+							leftSection={loading ? <Loader size="sm" /> : <IconArrowLoopRight size={20} />}
 							onBlur={handleExitSearchField}
 							onChange={handleSearchQueryChange}
 							onClick={handleClickSearchField}

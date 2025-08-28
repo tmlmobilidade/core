@@ -8,11 +8,19 @@
 }
 
 /* * */
+/* COMBOBOX TARGET TEXT INPUT */
+
+.comboboxTargetTextInput {
+	min-height: 60px;
+}
+
+/* * */
 /* COMBOBOX TARGET INPUT */
 
 .comboboxTargetInput {
 	width: 100%;
 	height: auto;
+	min-height: 60px;
 	max-height: none;
 	padding: 13px calc(var(--size-spacing-md) + 30px);
 	padding-bottom: 12px;
@@ -20,8 +28,8 @@
 	line-height: 1;
 	color: var(--color-system-text-100);
 	background-color: var(--color-system-background-100);
-	border: 1px solid var(--color-system-border-200);
-	border-radius: 5px;
+	border: 2px solid var(--color-system-border-100);
+	border-radius: var(--border-radius-sm);
 }
 
 /* * */

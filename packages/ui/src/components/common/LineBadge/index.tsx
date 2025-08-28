@@ -35,7 +35,7 @@ export function LineBadge({ color, lineData, onClick, shortName, size = 'md', te
 			onClick={onClick}
 			style={{ backgroundColor: color || lineData?.color, color: textColor || lineData?.text_color }}
 		>
-			{shortName || lineData?.short_name || '• • •'}
+			{shortName || lineData?.id || '• • •'}
 			{withAlertIcon && (
 				<div className={styles.alertIcon}>
 					<IconInfoTriangleFilled size={12} />

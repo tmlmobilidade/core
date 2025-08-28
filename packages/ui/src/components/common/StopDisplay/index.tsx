@@ -6,6 +6,7 @@ import { Skeleton } from '@mantine/core';
 
 import styles from './styles.module.css';
 
+import { StopBadge } from '../StopBadge';
 import { StopDisplayName } from '../StopDisplayName';
 
 /* * */
@@ -22,7 +23,8 @@ export function StopDisplay({ size = 'md', skeletonWidth = 200, stopData }: Prop
 	return stopData
 		? (
 			<div className={`${styles.container} ${styles[size]}`}>
-				<StopDisplayName longName={stopData.long_name} />
+				<StopBadge stopId={stopData.id} />
+				<StopDisplayName longName={stopData.long_name} size={size} />
 			</div>
 		)
 		: (

@@ -141,6 +141,7 @@ export type MatchingVehicleIds = z.infer<typeof matchingVehicleIdsSchema>;
 
 export const normalValidationIntervalSchema = RideAnalysisSchema.extend({
 	reason: z.enum(['NORMAL_VALIDATION_INTERVALS', 'ABNORMAL_VALIDATION_INTERVALS', 'NO_VALIDATIONS_FOUND']),
+	value: z.number(),
 }).strict();
 
 export type NormalValidationInterval = z.infer<typeof normalValidationIntervalSchema>;

@@ -12,9 +12,7 @@ export const RideAnalysisGradeSchema = z.enum(RIDE_ANALYSIS_GRADE_OPTIONS);
 
 export const RideAnalysisSchema = z.object({
 	grade: RideAnalysisGradeSchema,
-	message: z.string(),
 	reason: z.string(),
-	value: z.number().nullable(),
 }).strict();
 
 export type RideAnalysis = z.infer<typeof RideAnalysisSchema>;

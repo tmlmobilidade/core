@@ -4,8 +4,14 @@ import { z } from 'zod';
 
 /* * */
 
+export const ANALYSIS_GRADE_OPTIONS = ['pass', 'fail', 'error'] as const;
+
+export const AnalysisGradeSchema = z.enum(ANALYSIS_GRADE_OPTIONS);
+
+/* * */
+
 export const RideAnalysisSchema = z.object({
-	grade: z.enum(['pass', 'fail', 'error']),
+	grade: AnalysisGradeSchema,
 	message: z.string(),
 	reason: z.string(),
 	value: z.number().nullable(),

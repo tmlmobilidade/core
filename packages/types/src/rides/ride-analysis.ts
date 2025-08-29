@@ -4,7 +4,7 @@ import { z } from 'zod';
 
 /* * */
 
-export const RIDE_ANALYSIS_GRADE_OPTIONS = ['pass', 'fail', 'error'] as const;
+export const RIDE_ANALYSIS_GRADE_OPTIONS = ['pass', 'fail', 'skip', 'error'] as const;
 
 export const RideAnalysisGradeSchema = z.enum(RIDE_ANALYSIS_GRADE_OPTIONS);
 

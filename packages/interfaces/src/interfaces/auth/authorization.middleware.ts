@@ -10,7 +10,7 @@ import { hasPermission } from '@tmlmobilidade/utils';
 
 declare module 'fastify' {
 	export interface FastifyRequest {
-		me: null | User
+		me: User
 		permissions: Permission<unknown>[]
 	}
 }

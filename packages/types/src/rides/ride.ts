@@ -3,7 +3,7 @@
 import { DocumentSchema } from '@/_common/document.js';
 import { type OperationalDate, validateOperationalDate } from '@/_common/operational-date.js';
 import { type UnixTimestamp, validateUnixTimestamp } from '@/_common/unix-timestamp.js';
-import { atLeasOneEventOnFirstStopSchema, atMostTwoDriverIdsSchema, atMostTwoVehicleIdsSchema, avgIntervalVehicleEventsSchema, endedAtLastStopSchema, excessiveVehicleEventDelaySchema, lessThanTenVehicleEventsSchema, matchingLocationTransactionsSchema, ontimeStartSchema, simpleOneValidationTransactionSchema, simpleOneVehicleEventOrValidationTransactionSchema, simpleThreeVehicleEventsSchema, transactionSequentialitySchema } from '@/rides/ride-analysis.js';
+import { atLeasOneEventOnFirstStopSchema, atMostTwoDriverIdsSchema, atMostTwoVehicleIdsSchema, avgIntervalVehicleEventsSchema, endedAtLastStopSchema, excessiveVehicleEventDelaySchema, lessThanTenVehicleEventsSchema, matchingDriverIdsSchema, matchingLocationTransactionsSchema, matchingVehicleIdsSchema, normalValidationIntervalSchema, ontimeStartSchema, simpleOneValidationTransactionSchema, simpleOneVehicleEventOrValidationTransactionSchema, simpleThreeVehicleEventsSchema, transactionSequentialitySchema } from '@/rides/ride-analysis.js';
 import { ProcessingStatusSchema } from '@/system/processing-status.js';
 import { z } from 'zod';
 
@@ -19,7 +19,10 @@ export const RideSchema = DocumentSchema.extend({
 		ENDED_AT_LAST_STOP: endedAtLastStopSchema,
 		EXCESSIVE_VEHICLE_EVENT_DELAY: excessiveVehicleEventDelaySchema,
 		LESS_THAN_TEN_VEHICLE_EVENTS: lessThanTenVehicleEventsSchema,
+		MATCHING_DRIVER_IDS: matchingDriverIdsSchema,
 		MATCHING_LOCATION_TRANSACTIONS: matchingLocationTransactionsSchema,
+		MATCHING_VEHICLE_IDS: matchingVehicleIdsSchema,
+		NORMAL_VALIDATION_INTERVAL: normalValidationIntervalSchema,
 		ONTIME_START: ontimeStartSchema,
 		SIMPLE_ONE_VALIDATION_TRANSACTION: simpleOneValidationTransactionSchema,
 		SIMPLE_ONE_VEHICLE_EVENT_OR_VALIDATION_TRANSACTION: simpleOneVehicleEventOrValidationTransactionSchema,
@@ -45,7 +48,6 @@ export const RideSchema = DocumentSchema.extend({
 	hashed_shape_id: z.string(),
 	hashed_trip_id: z.string(),
 	headsign: z.string(),
-	is_locked: z.boolean().default(false),
 	line_id: z.number(),
 	operational_date: z.string().transform(validateOperationalDate).brand('OperationalDate'),
 	passengers_estimated: z.number().nullable(),

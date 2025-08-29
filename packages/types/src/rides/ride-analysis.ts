@@ -4,14 +4,14 @@ import { z } from 'zod';
 
 /* * */
 
-export const ANALYSIS_GRADE_OPTIONS = ['pass', 'fail', 'error'] as const;
+export const RIDE_ANALYSIS_GRADE_OPTIONS = ['pass', 'fail', 'error'] as const;
 
-export const AnalysisGradeSchema = z.enum(ANALYSIS_GRADE_OPTIONS);
+export const RideAnalysisGradeSchema = z.enum(RIDE_ANALYSIS_GRADE_OPTIONS);
 
 /* * */
 
 export const RideAnalysisSchema = z.object({
-	grade: AnalysisGradeSchema,
+	grade: RideAnalysisGradeSchema,
 	message: z.string(),
 	reason: z.string(),
 	value: z.number().nullable(),
@@ -122,3 +122,27 @@ export const transactionSequentialitySchema = RideAnalysisSchema.extend({
 }).strict();
 
 export type TransactionSequentiality = z.infer<typeof transactionSequentialitySchema>;
+
+/* * */
+
+export const matchingDriverIdsSchema = RideAnalysisSchema.extend({
+	reason: z.enum(['MATCHING_DRIVER_IDS', 'DRIVER_IDS_MISMATCH', 'NO_DRIVER_IDS_FOUND']),
+}).strict();
+
+export type MatchingDriverIds = z.infer<typeof matchingDriverIdsSchema>;
+
+/* * */
+
+export const matchingVehicleIdsSchema = RideAnalysisSchema.extend({
+	reason: z.enum(['MATCHING_VEHICLE_IDS', 'VEHICLE_ID_MISMATCH', 'NO_VEHICLE_ID_FOUND']),
+}).strict();
+
+export type MatchingVehicleIds = z.infer<typeof matchingVehicleIdsSchema>;
+
+/* * */
+
+export const normalValidationIntervalSchema = RideAnalysisSchema.extend({
+	reason: z.enum(['NORMAL_VALIDATION_INTERVALS', 'ABNORMAL_VALIDATION_INTERVALS', 'NO_VALIDATIONS_FOUND']),
+}).strict();
+
+export type NormalValidationInterval = z.infer<typeof normalValidationIntervalSchema>;

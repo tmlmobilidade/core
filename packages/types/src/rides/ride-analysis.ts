@@ -11,6 +11,7 @@ export const RideAnalysisGradeSchema = z.enum(RIDE_ANALYSIS_GRADE_OPTIONS);
 /* * */
 
 export const RideAnalysisSchema = z.object({
+	error_message: z.string().optional(),
 	grade: RideAnalysisGradeSchema,
 	reason: z.string(),
 }).strict();

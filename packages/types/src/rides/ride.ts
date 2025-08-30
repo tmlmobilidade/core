@@ -3,7 +3,7 @@
 import { DocumentSchema } from '@/_common/document.js';
 import { type OperationalDate, validateOperationalDate } from '@/_common/operational-date.js';
 import { type UnixTimestamp, validateUnixTimestamp } from '@/_common/unix-timestamp.js';
-import { atLeastOneVehicleEventOnFirstStopSchema, avgIntervalVehicleEventsSchema, endedAtLastStopSchema, expectedApexValidationIntervalSchema, expectedDriverIdQtySchema, expectedStartTimeSchema, expectedVehicleEventDelaySchema, expectedVehicleEventsQtySchema, expectedVehicleIdQtySchema, matchingApexLocationsSchema, matchingVehicleIdsSchema, simpleOneApexValidationSchema, simpleOneVehicleEventOrApexValidationSchema, simpleThreeVehicleEventsSchema, transactionSequentialitySchema } from '@/rides/ride-analysis.js';
+import { atLeastOneVehicleEventOnFirstStopSchema, endedAtLastStopSchema, expectedApexValidationIntervalSchema, expectedDriverIdQtySchema, expectedStartTimeSchema, expectedVehicleEventDelaySchema, expectedVehicleEventIntervalSchema, expectedVehicleEventQtySchema, expectedVehicleIdQtySchema, matchingApexLocationsSchema, matchingVehicleIdsSchema, simpleOneApexValidationSchema, simpleOneVehicleEventOrApexValidationSchema, simpleThreeVehicleEventsSchema, transactionSequentialitySchema } from '@/rides/ride-analysis.js';
 import { ProcessingStatusSchema } from '@/system/processing-status.js';
 import { z } from 'zod';
 
@@ -13,13 +13,13 @@ export const RideSchema = DocumentSchema.extend({
 	agency_id: z.string(),
 	analysis: z.object({
 		AT_LEAST_ONE_VEHICLE_EVENT_ON_FIRST_STOP: atLeastOneVehicleEventOnFirstStopSchema,
-		AVG_INTERVAL_VEHICLE_EVENTS: avgIntervalVehicleEventsSchema,
 		ENDED_AT_LAST_STOP: endedAtLastStopSchema,
 		EXPECTED_APEX_VALIDATION_INTERVAL: expectedApexValidationIntervalSchema,
 		EXPECTED_DRIVER_ID_QTY: expectedDriverIdQtySchema,
 		EXPECTED_START_TIME: expectedStartTimeSchema,
 		EXPECTED_VEHICLE_EVENT_DELAY: expectedVehicleEventDelaySchema,
-		EXPECTED_VEHICLE_EVENTS_QTY: expectedVehicleEventsQtySchema,
+		EXPECTED_VEHICLE_EVENT_INTERVAL: expectedVehicleEventIntervalSchema,
+		EXPECTED_VEHICLE_EVENT_QTY: expectedVehicleEventQtySchema,
 		EXPECTED_VEHICLE_ID_QTY: expectedVehicleIdQtySchema,
 		MATCHING_APEX_LOCATIONS: matchingApexLocationsSchema,
 		MATCHING_VEHICLE_IDS: matchingVehicleIdsSchema,

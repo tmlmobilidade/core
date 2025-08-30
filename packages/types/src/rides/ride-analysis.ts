@@ -47,12 +47,12 @@ export type ExpectedVehicleIdQty = z.infer<typeof expectedVehicleIdQtySchema>;
 
 /* * */
 
-export const avgIntervalVehicleEventsSchema = RideAnalysisSchema.extend({
-	reason: z.enum(['NO_VEHICLE_EVENTS', 'AVG_INTERVAL_OUTSIDE_LIMIT', 'AVG_INTERVAL_WITHIN_LIMIT']),
+export const expectedVehicleEventIntervalSchema = RideAnalysisSchema.extend({
+	reason: z.enum(['NO_VEHICLE_EVENTS', 'EXPECTED_VEHICLE_EVENT_INTERVAL', 'UNEXPECTED_VEHICLE_EVENT_INTERVAL']),
 	value: z.number().nullable(),
 }).strict();
 
-export type AvgIntervalVehicleEvents = z.infer<typeof avgIntervalVehicleEventsSchema>;
+export type ExpectedVehicleEventInterval = z.infer<typeof expectedVehicleEventIntervalSchema>;
 
 /* * */
 
@@ -73,12 +73,12 @@ export type ExpectedVehicleEventDelay = z.infer<typeof expectedVehicleEventDelay
 
 /* * */
 
-export const expectedVehicleEventsQtySchema = RideAnalysisSchema.extend({
-	reason: z.enum(['NO_VEHICLE_EVENTS', 'EXPECTED_VEHICLE_EVENTS_QTY', 'UNEXPECTED_VEHICLE_EVENTS_QTY']),
+export const expectedVehicleEventQtySchema = RideAnalysisSchema.extend({
+	reason: z.enum(['NO_VEHICLE_EVENTS', 'EXPECTED_VEHICLE_EVENT_QTY', 'UNEXPECTED_VEHICLE_EVENT_QTY']),
 	value: z.number().nullable(),
 }).strict();
 
-export type ExpectedVehicleEventsQty = z.infer<typeof expectedVehicleEventsQtySchema>;
+export type ExpectedVehicleEventQty = z.infer<typeof expectedVehicleEventQtySchema>;
 
 /* * */
 

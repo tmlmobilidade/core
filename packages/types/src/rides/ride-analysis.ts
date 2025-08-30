@@ -128,6 +128,9 @@ export type SimpleThreeVehicleEvents = z.infer<typeof simpleThreeVehicleEventsSc
 /* * */
 
 export const transactionSequentialitySchema = RideAnalysisSchema.extend({
+	expected_qty: z.number().nullable(),
+	found_qty: z.number().nullable(),
+	missing_qty: z.number().nullable(),
 	reason: z.enum(['MISSING_TRANSACTIONS', 'ALL_TRANSACTIONS_RECEIVED']),
 }).strict();
 

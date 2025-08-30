@@ -125,7 +125,6 @@ export type TransactionSequentiality = z.infer<typeof transactionSequentialitySc
 
 export const matchingVehicleIdsSchema = RideAnalysisSchema.extend({
 	reason: z.enum(['MATCHING_VEHICLE_IDS', 'VEHICLE_ID_MISMATCH', 'NO_VEHICLE_EVENTS_FOUND', 'NO_APEX_TRANSACTIONS_FOUND']),
-	value: z.number().nullable(),
 }).strict();
 
 export type MatchingVehicleIds = z.infer<typeof matchingVehicleIdsSchema>;

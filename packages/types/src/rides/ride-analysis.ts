@@ -19,32 +19,36 @@ export type RideAnalysis = z.infer<typeof RideAnalysisSchema>;
 
 /* * */
 
-export const atLeasOneEventOnFirstStopSchema = RideAnalysisSchema.extend({
-	reason: z.enum(['FOUND_ONE_OR_MORE_EVENTS_ON_FIRST_STOP', 'NO_EVENTS_FOUND_ON_FIRST_STOP']),
+export const atLeastOneVehicleEventOnFirstStopSchema = RideAnalysisSchema.extend({
+	reason: z.enum(['NO_VEHICLE_EVENTS', 'NO_VEHICLE_EVENTS_ON_FIRST_STOP', 'ONE_OR_MORE_VEHICLE_EVENTS_ON_FIRST_STOP']),
+	value: z.number().nullable(),
 }).strict();
 
-export type AtLeastOneEventOnFirstStop = z.infer<typeof atLeasOneEventOnFirstStopSchema>;
+export type AtLeastOneVehicleEventOnFirstStop = z.infer<typeof atLeastOneVehicleEventOnFirstStopSchema>;
 
 /* * */
 
-export const atMostTwoDriverIdsSchema = RideAnalysisSchema.extend({
-	reason: z.enum(['FOUND_MORE_THAN_2_DRIVER_IDS', 'FOUND_ONE_OR_TWO_DRIVER_IDS', 'NO_DRIVER_ID_FOUND']),
+export const expectedDriverIdsQtySchema = RideAnalysisSchema.extend({
+	reason: z.enum(['NO_VEHICLE_EVENTS', 'UNEXPECTED_DRIVER_IDS_QTY', 'EXPECTED_DRIVER_IDS_QTY']),
+	value: z.number().nullable(),
 }).strict();
 
-export type AtMostTwoDriverIds = z.infer<typeof atMostTwoDriverIdsSchema>;
+export type ExpectedDriverIdsQty = z.infer<typeof expectedDriverIdsQtySchema>;
 
 /* * */
 
-export const atMostTwoVehicleIdsSchema = RideAnalysisSchema.extend({
-	reason: z.enum(['FOUND_MORE_THAN_2_VEHICLE_IDS', 'FOUND_ONE_OR_TWO_VEHICLE_IDS', 'NO_VEHICLE_ID_FOUND']),
+export const expectedVehicleIdsSchema = RideAnalysisSchema.extend({
+	reason: z.enum(['NO_VEHICLE_EVENTS', 'NO_APEX_VALIDATIONS', 'UNEXPECTED_VEHICLE_IDS_QTY', 'EXPECTED_VEHICLE_IDS_QTY']),
+	value: z.number().nullable(),
 }).strict();
 
-export type AtMostTwoVehicleIds = z.infer<typeof atMostTwoVehicleIdsSchema>;
+export type ExpectedVehicleIds = z.infer<typeof expectedVehicleIdsSchema>;
 
 /* * */
 
 export const avgIntervalVehicleEventsSchema = RideAnalysisSchema.extend({
-	reason: z.enum(['AVG_INTERVAL_HIGHER_THAN_20_SECONDS', 'AVG_INTERVAL_LOWER_THAN_OR_EQUAL_TO_20_SECONDS', 'NO_VEHICLE_EVENTS_FOUND']),
+	reason: z.enum(['NO_VEHICLE_EVENTS', 'AVG_INTERVAL_OUTSIDE_LIMIT', 'AVG_INTERVAL_WITHIN_LIMIT']),
+	value: z.number().nullable(),
 }).strict();
 
 export type AvgIntervalVehicleEvents = z.infer<typeof avgIntervalVehicleEventsSchema>;
@@ -52,63 +56,70 @@ export type AvgIntervalVehicleEvents = z.infer<typeof avgIntervalVehicleEventsSc
 /* * */
 
 export const endedAtLastStopSchema = RideAnalysisSchema.extend({
-	reason: z.enum(['ENDED_AT_LAST_STOP', 'ENDED_OUTSIDE_OF_LAST_STOP', 'NO_VEHICLE_EVENTS_FOUND', 'NO_PATH_DATA']),
+	reason: z.enum(['NO_PATH_DATA', 'NO_VEHICLE_EVENTS', 'ENDED_AT_LAST_STOP', 'ENDED_OUTSIDE_OF_LAST_STOP']),
 }).strict();
 
 export type EndedAtLastStop = z.infer<typeof endedAtLastStopSchema>;
 
 /* * */
 
-export const excessiveVehicleEventDelaySchema = RideAnalysisSchema.extend({
-	reason: z.enum(['ALL_VEHICLE_EVENTS_ARE_WITHIN_DELAY_LIMITS', 'THERE_ARE_VEHICLE_EVENTS_WITH_EXCESSIVE_DELAY']),
+export const expectedVehicleEventDelaySchema = RideAnalysisSchema.extend({
+	reason: z.enum(['NO_VEHICLE_EVENTS', 'UNEXPECTED_VEHICLE_EVENTS_DELAY', 'EXPECTED_VEHICLE_EVENTS_DELAY']),
+	value: z.number().nullable(),
 }).strict();
 
-export type ExcessiveVehicleEventDelay = z.infer<typeof excessiveVehicleEventDelaySchema>;
+export type ExpectedVehicleEventDelay = z.infer<typeof expectedVehicleEventDelaySchema>;
 
 /* * */
 
-export const lessThanTenVehicleEventsSchema = RideAnalysisSchema.extend({
-	reason: z.enum(['FOUND_MORE_THAN_10_VEHICLE_EVENTS', 'FOUND_ONLY_1_VEHICLE_EVENT', 'FOUND_LESS_THAN_10_VEHICLE_EVENTS']),
+export const expectedVehicleEventsQtySchema = RideAnalysisSchema.extend({
+	reason: z.enum(['NO_VEHICLE_EVENTS', 'EXPECTED_VEHICLE_EVENTS_QTY', 'UNEXPECTED_VEHICLE_EVENTS_QTY']),
+	value: z.number().nullable(),
 }).strict();
 
-export type LessThanTenVehicleEvents = z.infer<typeof lessThanTenVehicleEventsSchema>;
+export type ExpectedVehicleEventsQty = z.infer<typeof expectedVehicleEventsQtySchema>;
 
 /* * */
 
-export const matchingLocationTransactionsSchema = RideAnalysisSchema.extend({
-	reason: z.enum(['ALL_STOPS_HAVE_LOCATION_TRANSACTIONS', 'MISSING_LOCATION_TRANSACTION_FOR_AT_LEAST_ONE_STOP', 'NO_PATH_DATA']),
+export const matchingApexLocationsSchema = RideAnalysisSchema.extend({
+	reason: z.enum(['NO_PATH_DATA', 'NO_APEX_LOCATIONS', 'MISSING_APEX_LOCATION_FOR_AT_LEAST_ONE_STOP', 'MATCHING_APEX_LOCATIONS']),
 }).strict();
 
-export type MatchingLocationTransactions = z.infer<typeof matchingLocationTransactionsSchema>;
+export type MatchingApexLocations = z.infer<typeof matchingApexLocationsSchema>;
 
 /* * */
 
-export const ontimeStartSchema = RideAnalysisSchema.extend({
-	reason: z.enum(['NO_OBSERVED_START_TIME', 'NO_SCHEDULED_START_TIME', 'RIDE_STARTED_EARLY', 'RIDE_STARTED_MORE_THAN_FIVE_MINUTES_LATE', 'RIDE_STARTED_ZERO_TO_FIVE_MINUTES_LATE']),
+export const expectedStartTimeSchema = RideAnalysisSchema.extend({
+	reason: z.enum(['NO_PATH_DATA', 'NO_VEHICLE_EVENTS', 'UNKNOWN_START', 'EARLY_START', 'LATE_START', 'START_ON_TIME']),
+	value: z.number().nullable(),
 }).strict();
 
-export type OntimeStart = z.infer<typeof ontimeStartSchema>;
+export type ExpectedStartTime = z.infer<typeof expectedStartTimeSchema>;
 
 /* * */
 
-export const simpleOneValidationTransactionSchema = RideAnalysisSchema.extend({
-	reason: z.enum(['FOUND_AT_LEAST_ONE_VALIDATION_TRANSACTION', 'NO_VALIDATION_TRANSACTION_FOUND']),
+export const simpleOneApexValidationSchema = RideAnalysisSchema.extend({
+	reason: z.enum(['NO_APEX_VALIDATIONS', 'ONE_OR_MORE_APEX_VALIDATIONS']),
+	value: z.number().nullable(),
 }).strict();
 
-export type SimpleOneValidationTransaction = z.infer<typeof simpleOneValidationTransactionSchema>;
+export type SimpleOneApexValidation = z.infer<typeof simpleOneApexValidationSchema>;
 
 /* * */
 
-export const simpleOneVehicleEventOrValidationTransactionSchema = RideAnalysisSchema.extend({
-	reason: z.enum(['FOUND_VEHICLE_EVENT_OR_VALIDATION_TRANSACTION', 'NO_VEHICLE_EVENT_OR_VALIDATION_TRANSACTION_FOUND']),
+export const simpleOneVehicleEventOrApexValidationSchema = RideAnalysisSchema.extend({
+	reason: z.enum(['NO_VEHICLE_EVENTS_OR_APEX_VALIDATIONS', 'FOUND_VEHICLE_EVENT_OR_APEX_VALIDATION']),
 }).strict();
 
-export type SimpleOneVehicleEventOrValidationTransaction = z.infer<typeof simpleOneVehicleEventOrValidationTransactionSchema>;
+export type SimpleOneVehicleEventOrApexValidation = z.infer<typeof simpleOneVehicleEventOrApexValidationSchema>;
 
 /* * */
 
 export const simpleThreeVehicleEventsSchema = RideAnalysisSchema.extend({
-	reason: z.enum(['ALL_STOPS_FOUND', 'MISSING_FIRST_STOPS', 'MISSING_LAST_STOPS', 'MISSING_MIDDLE_STOPS', 'NO_PATH_DATA']),
+	reason: z.enum(['NO_PATH_DATA', 'NO_VEHICLE_EVENTS', 'MISSING_FIRST_STOPS', 'MISSING_MIDDLE_STOPS', 'MISSING_LAST_STOPS', 'ALL_STOPS_FOUND']),
+	stop_ids_first: z.array(z.string()).nullable(),
+	stop_ids_last: z.array(z.string()).nullable(),
+	stop_ids_middle: z.array(z.string()).nullable(),
 }).strict();
 
 export type SimpleThreeVehicleEvents = z.infer<typeof simpleThreeVehicleEventsSchema>;
@@ -116,7 +127,7 @@ export type SimpleThreeVehicleEvents = z.infer<typeof simpleThreeVehicleEventsSc
 /* * */
 
 export const transactionSequentialitySchema = RideAnalysisSchema.extend({
-	reason: z.enum(['ALL_TRANSACTIONS_RECEIVED_SO_FAR', 'MISSING_TRANSACTIONS']),
+	reason: z.enum(['MISSING_TRANSACTIONS', 'ALL_TRANSACTIONS_RECEIVED']),
 }).strict();
 
 export type TransactionSequentiality = z.infer<typeof transactionSequentialitySchema>;
@@ -131,9 +142,9 @@ export type MatchingVehicleIds = z.infer<typeof matchingVehicleIdsSchema>;
 
 /* * */
 
-export const normalValidationIntervalSchema = RideAnalysisSchema.extend({
-	reason: z.enum(['NORMAL_VALIDATION_INTERVALS', 'ABNORMAL_VALIDATION_INTERVALS', 'NO_VALIDATIONS_FOUND']),
+export const expectedApexValidationIntervalSchema = RideAnalysisSchema.extend({
+	reason: z.enum(['NO_VALIDATIONS_FOUND', 'UNEXPECTED_VALIDATION_INTERVALS', 'EXPECTED_VALIDATION_INTERVALS']),
 	value: z.number().nullable(),
 }).strict();
 
-export type NormalValidationInterval = z.infer<typeof normalValidationIntervalSchema>;
+export type ExpectedApexValidationInterval = z.infer<typeof expectedApexValidationIntervalSchema>;

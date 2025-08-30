@@ -3,7 +3,7 @@
 import { DocumentSchema } from '@/_common/document.js';
 import { type OperationalDate, validateOperationalDate } from '@/_common/operational-date.js';
 import { type UnixTimestamp, validateUnixTimestamp } from '@/_common/unix-timestamp.js';
-import { atLeasOneEventOnFirstStopSchema, atMostTwoDriverIdsSchema, atMostTwoVehicleIdsSchema, avgIntervalVehicleEventsSchema, endedAtLastStopSchema, excessiveVehicleEventDelaySchema, lessThanTenVehicleEventsSchema, matchingLocationTransactionsSchema, matchingVehicleIdsSchema, normalValidationIntervalSchema, ontimeStartSchema, simpleOneValidationTransactionSchema, simpleOneVehicleEventOrValidationTransactionSchema, simpleThreeVehicleEventsSchema, transactionSequentialitySchema } from '@/rides/ride-analysis.js';
+import { atLeastOneVehicleEventOnFirstStopSchema, avgIntervalVehicleEventsSchema, endedAtLastStopSchema, expectedApexValidationIntervalSchema, expectedDriverIdsQtySchema, expectedStartTimeSchema, expectedVehicleEventDelaySchema, expectedVehicleEventsQtySchema, expectedVehicleIdsSchema, matchingApexLocationsSchema, matchingVehicleIdsSchema, simpleOneApexValidationSchema, simpleOneVehicleEventOrApexValidationSchema, simpleThreeVehicleEventsSchema, transactionSequentialitySchema } from '@/rides/ride-analysis.js';
 import { ProcessingStatusSchema } from '@/system/processing-status.js';
 import { z } from 'zod';
 
@@ -12,19 +12,19 @@ import { z } from 'zod';
 export const RideSchema = DocumentSchema.extend({
 	agency_id: z.string(),
 	analysis: z.object({
-		AT_LEAST_ONE_EVENT_ON_FIRST_STOP: atLeasOneEventOnFirstStopSchema,
-		AT_MOST_TWO_DRIVER_IDS: atMostTwoDriverIdsSchema,
-		AT_MOST_TWO_VEHICLE_IDS: atMostTwoVehicleIdsSchema,
+		AT_LEAST_ONE_VEHICLE_EVENT_ON_FIRST_STOP: atLeastOneVehicleEventOnFirstStopSchema,
 		AVG_INTERVAL_VEHICLE_EVENTS: avgIntervalVehicleEventsSchema,
 		ENDED_AT_LAST_STOP: endedAtLastStopSchema,
-		EXCESSIVE_VEHICLE_EVENT_DELAY: excessiveVehicleEventDelaySchema,
-		LESS_THAN_TEN_VEHICLE_EVENTS: lessThanTenVehicleEventsSchema,
-		MATCHING_LOCATION_TRANSACTIONS: matchingLocationTransactionsSchema,
+		EXPECTED_APEX_VALIDATION_INTERVAL: expectedApexValidationIntervalSchema,
+		EXPECTED_DRIVER_IDS_QTY: expectedDriverIdsQtySchema,
+		EXPECTED_START_TIME: expectedStartTimeSchema,
+		EXPECTED_VEHICLE_EVENT_DELAY: expectedVehicleEventDelaySchema,
+		EXPECTED_VEHICLE_EVENTS_QTY: expectedVehicleEventsQtySchema,
+		EXPECTED_VEHICLE_IDS_QTY: expectedVehicleIdsSchema,
+		MATCHING_APEX_LOCATIONS: matchingApexLocationsSchema,
 		MATCHING_VEHICLE_IDS: matchingVehicleIdsSchema,
-		NORMAL_VALIDATION_INTERVAL: normalValidationIntervalSchema,
-		ONTIME_START: ontimeStartSchema,
-		SIMPLE_ONE_VALIDATION_TRANSACTION: simpleOneValidationTransactionSchema,
-		SIMPLE_ONE_VEHICLE_EVENT_OR_VALIDATION_TRANSACTION: simpleOneVehicleEventOrValidationTransactionSchema,
+		SIMPLE_ONE_APEX_VALIDATION: simpleOneApexValidationSchema,
+		SIMPLE_ONE_VEHICLE_EVENT_OR_APEX_VALIDATION: simpleOneVehicleEventOrApexValidationSchema,
 		SIMPLE_THREE_VEHICLE_EVENTS: simpleThreeVehicleEventsSchema,
 		TRANSACTION_SEQUENTIALITY: transactionSequentialitySchema,
 	}).nullable(),

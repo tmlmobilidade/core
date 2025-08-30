@@ -148,7 +148,7 @@ export type MatchingVehicleIds = z.infer<typeof matchingVehicleIdsSchema>;
 /* * */
 
 export const expectedApexValidationIntervalSchema = RideAnalysisSchema.extend({
-	reason: z.enum(['NO_APEX_VALIDATIONS', 'UNEXPECTED_VALIDATION_INTERVALS', 'EXPECTED_VALIDATION_INTERVALS']),
+	reason: z.enum(['NO_APEX_VALIDATIONS', 'VERY_SHORT_INTERVALS', 'NON_ORGANIC_INTERVALS', 'EXPECTED_VALIDATION_INTERVALS']),
 	value: z.number().nullable(),
 }).strict();
 

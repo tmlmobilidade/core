@@ -91,7 +91,7 @@ export type MatchingApexLocations = z.infer<typeof matchingApexLocationsSchema>;
 /* * */
 
 export const expectedStartTimeSchema = RideAnalysisSchema.extend({
-	reason: z.enum(['NO_SCHEDULED_START_TIME', 'NO_VEHICLE_EVENTS', 'UNKNOWN_START', 'EARLY_START', 'LATE_START', 'START_ON_TIME']),
+	reason: z.enum(['NO_START_TIME_SCHEDULED', 'NO_VEHICLE_EVENTS', 'UNKNOWN_START', 'EARLY_START', 'LATE_START', 'START_ON_TIME']),
 	value: z.number().nullable(),
 }).strict();
 

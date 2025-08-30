@@ -3,7 +3,7 @@
 import { DocumentSchema } from '@/_common/document.js';
 import { type OperationalDate, validateOperationalDate } from '@/_common/operational-date.js';
 import { type UnixTimestamp, validateUnixTimestamp } from '@/_common/unix-timestamp.js';
-import { atLeasOneEventOnFirstStopSchema, atMostTwoDriverIdsSchema, atMostTwoVehicleIdsSchema, avgIntervalVehicleEventsSchema, endedAtLastStopSchema, excessiveVehicleEventDelaySchema, lessThanTenVehicleEventsSchema, matchingDriverIdsSchema, matchingLocationTransactionsSchema, matchingVehicleIdsSchema, normalValidationIntervalSchema, ontimeStartSchema, simpleOneValidationTransactionSchema, simpleOneVehicleEventOrValidationTransactionSchema, simpleThreeVehicleEventsSchema, transactionSequentialitySchema } from '@/rides/ride-analysis.js';
+import { atLeasOneEventOnFirstStopSchema, atMostTwoDriverIdsSchema, atMostTwoVehicleIdsSchema, avgIntervalVehicleEventsSchema, endedAtLastStopSchema, excessiveVehicleEventDelaySchema, lessThanTenVehicleEventsSchema, matchingLocationTransactionsSchema, matchingVehicleIdsSchema, normalValidationIntervalSchema, ontimeStartSchema, simpleOneValidationTransactionSchema, simpleOneVehicleEventOrValidationTransactionSchema, simpleThreeVehicleEventsSchema, transactionSequentialitySchema } from '@/rides/ride-analysis.js';
 import { ProcessingStatusSchema } from '@/system/processing-status.js';
 import { z } from 'zod';
 
@@ -19,7 +19,6 @@ export const RideSchema = DocumentSchema.extend({
 		ENDED_AT_LAST_STOP: endedAtLastStopSchema,
 		EXCESSIVE_VEHICLE_EVENT_DELAY: excessiveVehicleEventDelaySchema,
 		LESS_THAN_TEN_VEHICLE_EVENTS: lessThanTenVehicleEventsSchema,
-		MATCHING_DRIVER_IDS: matchingDriverIdsSchema,
 		MATCHING_LOCATION_TRANSACTIONS: matchingLocationTransactionsSchema,
 		MATCHING_VEHICLE_IDS: matchingVehicleIdsSchema,
 		NORMAL_VALIDATION_INTERVAL: normalValidationIntervalSchema,

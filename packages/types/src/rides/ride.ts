@@ -3,7 +3,7 @@
 import { DocumentSchema } from '@/_common/document.js';
 import { type OperationalDate, validateOperationalDate } from '@/_common/operational-date.js';
 import { type UnixTimestamp, validateUnixTimestamp } from '@/_common/unix-timestamp.js';
-import { atLeastOneVehicleEventOnFirstStopSchema, avgIntervalVehicleEventsSchema, endedAtLastStopSchema, expectedApexValidationIntervalSchema, expectedDriverIdsQtySchema, expectedStartTimeSchema, expectedVehicleEventDelaySchema, expectedVehicleEventsQtySchema, expectedVehicleIdsSchema, matchingApexLocationsSchema, matchingVehicleIdsSchema, simpleOneApexValidationSchema, simpleOneVehicleEventOrApexValidationSchema, simpleThreeVehicleEventsSchema, transactionSequentialitySchema } from '@/rides/ride-analysis.js';
+import { atLeastOneVehicleEventOnFirstStopSchema, avgIntervalVehicleEventsSchema, endedAtLastStopSchema, expectedApexValidationIntervalSchema, expectedDriverIdQtySchema, expectedStartTimeSchema, expectedVehicleEventDelaySchema, expectedVehicleEventsQtySchema, expectedVehicleIdQtySchema, matchingApexLocationsSchema, matchingVehicleIdsSchema, simpleOneApexValidationSchema, simpleOneVehicleEventOrApexValidationSchema, simpleThreeVehicleEventsSchema, transactionSequentialitySchema } from '@/rides/ride-analysis.js';
 import { ProcessingStatusSchema } from '@/system/processing-status.js';
 import { z } from 'zod';
 
@@ -16,11 +16,11 @@ export const RideSchema = DocumentSchema.extend({
 		AVG_INTERVAL_VEHICLE_EVENTS: avgIntervalVehicleEventsSchema,
 		ENDED_AT_LAST_STOP: endedAtLastStopSchema,
 		EXPECTED_APEX_VALIDATION_INTERVAL: expectedApexValidationIntervalSchema,
-		EXPECTED_DRIVER_IDS_QTY: expectedDriverIdsQtySchema,
+		EXPECTED_DRIVER_ID_QTY: expectedDriverIdQtySchema,
 		EXPECTED_START_TIME: expectedStartTimeSchema,
 		EXPECTED_VEHICLE_EVENT_DELAY: expectedVehicleEventDelaySchema,
 		EXPECTED_VEHICLE_EVENTS_QTY: expectedVehicleEventsQtySchema,
-		EXPECTED_VEHICLE_IDS_QTY: expectedVehicleIdsSchema,
+		EXPECTED_VEHICLE_ID_QTY: expectedVehicleIdQtySchema,
 		MATCHING_APEX_LOCATIONS: matchingApexLocationsSchema,
 		MATCHING_VEHICLE_IDS: matchingVehicleIdsSchema,
 		SIMPLE_ONE_APEX_VALIDATION: simpleOneApexValidationSchema,

@@ -29,21 +29,21 @@ export type AtLeastOneVehicleEventOnFirstStop = z.infer<typeof atLeastOneVehicle
 
 /* * */
 
-export const expectedDriverIdsQtySchema = RideAnalysisSchema.extend({
-	reason: z.enum(['NO_VEHICLE_EVENTS', 'UNEXPECTED_DRIVER_IDS_QTY', 'EXPECTED_DRIVER_IDS_QTY']),
+export const expectedDriverIdQtySchema = RideAnalysisSchema.extend({
+	reason: z.enum(['NO_VEHICLE_EVENTS', 'UNEXPECTED_DRIVER_ID_QTY', 'EXPECTED_DRIVER_ID_QTY']),
 	value: z.number().nullable(),
 }).strict();
 
-export type ExpectedDriverIdsQty = z.infer<typeof expectedDriverIdsQtySchema>;
+export type ExpectedDriverIdQty = z.infer<typeof expectedDriverIdQtySchema>;
 
 /* * */
 
-export const expectedVehicleIdsSchema = RideAnalysisSchema.extend({
-	reason: z.enum(['NO_VEHICLE_EVENTS', 'NO_APEX_VALIDATIONS', 'UNEXPECTED_VEHICLE_IDS_QTY', 'EXPECTED_VEHICLE_IDS_QTY']),
+export const expectedVehicleIdQtySchema = RideAnalysisSchema.extend({
+	reason: z.enum(['NO_VEHICLE_EVENTS', 'NO_APEX_VALIDATIONS', 'UNEXPECTED_VEHICLE_ID_QTY', 'EXPECTED_VEHICLE_ID_QTY']),
 	value: z.number().nullable(),
 }).strict();
 
-export type ExpectedVehicleIds = z.infer<typeof expectedVehicleIdsSchema>;
+export type ExpectedVehicleIdQty = z.infer<typeof expectedVehicleIdQtySchema>;
 
 /* * */
 

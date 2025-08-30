@@ -74,7 +74,7 @@ export type ExpectedVehicleEventDelay = z.infer<typeof expectedVehicleEventDelay
 /* * */
 
 export const expectedVehicleEventQtySchema = RideAnalysisSchema.extend({
-	reason: z.enum(['NO_VEHICLE_EVENTS', 'EXPECTED_VEHICLE_EVENT_QTY', 'UNEXPECTED_VEHICLE_EVENT_QTY']),
+	reason: z.enum(['NO_PATH_DATA', 'NO_VEHICLE_EVENTS', 'EXPECTED_VEHICLE_EVENT_QTY', 'UNEXPECTED_VEHICLE_EVENT_QTY']),
 	value: z.number().nullable(),
 }).strict();
 

@@ -136,7 +136,7 @@ export type TransactionSequentiality = z.infer<typeof transactionSequentialitySc
 /* * */
 
 export const matchingVehicleIdsSchema = RideAnalysisSchema.extend({
-	reason: z.enum(['MATCHING_VEHICLE_IDS', 'VEHICLE_ID_MISMATCH', 'NO_VEHICLE_EVENTS_FOUND', 'NO_APEX_TRANSACTIONS_FOUND']),
+	reason: z.enum(['MATCHING_VEHICLE_IDS', 'VEHICLE_ID_MISMATCH', 'NO_VEHICLE_EVENTS', 'NO_APEX_TRANSACTIONS']),
 }).strict();
 
 export type MatchingVehicleIds = z.infer<typeof matchingVehicleIdsSchema>;
@@ -144,7 +144,7 @@ export type MatchingVehicleIds = z.infer<typeof matchingVehicleIdsSchema>;
 /* * */
 
 export const expectedApexValidationIntervalSchema = RideAnalysisSchema.extend({
-	reason: z.enum(['NO_VALIDATIONS_FOUND', 'UNEXPECTED_VALIDATION_INTERVALS', 'EXPECTED_VALIDATION_INTERVALS']),
+	reason: z.enum(['NO_APEX_VALIDATIONS', 'UNEXPECTED_VALIDATION_INTERVALS', 'EXPECTED_VALIDATION_INTERVALS']),
 	value: z.number().nullable(),
 }).strict();
 

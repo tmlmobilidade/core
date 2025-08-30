@@ -123,16 +123,9 @@ export type TransactionSequentiality = z.infer<typeof transactionSequentialitySc
 
 /* * */
 
-export const matchingDriverIdsSchema = RideAnalysisSchema.extend({
-	reason: z.enum(['MATCHING_DRIVER_IDS', 'DRIVER_IDS_MISMATCH', 'NO_DRIVER_IDS_FOUND']),
-}).strict();
-
-export type MatchingDriverIds = z.infer<typeof matchingDriverIdsSchema>;
-
-/* * */
-
 export const matchingVehicleIdsSchema = RideAnalysisSchema.extend({
-	reason: z.enum(['MATCHING_VEHICLE_IDS', 'VEHICLE_ID_MISMATCH', 'NO_VEHICLE_ID_FOUND']),
+	reason: z.enum(['MATCHING_VEHICLE_IDS', 'VEHICLE_ID_MISMATCH', 'NO_VEHICLE_EVENTS_FOUND', 'NO_APEX_TRANSACTIONS_FOUND']),
+	value: z.number().nullable(),
 }).strict();
 
 export type MatchingVehicleIds = z.infer<typeof matchingVehicleIdsSchema>;

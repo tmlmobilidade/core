@@ -29,7 +29,7 @@ export type AtLeastOneVehicleEventOnFirstStop = z.infer<typeof atLeastOneVehicle
 /* * */
 
 export const expectedDriverIdsQtySchema = RideAnalysisSchema.extend({
-	reason: z.enum(['NO_VEHICLE_EVENTS', 'UNEXPECTED_DRIVER_IDS_QTY', 'EXPECTED_DRIVER_IDS_QTY']),
+	reason: z.enum(['NO_PATH_DATA', 'NO_VEHICLE_EVENTS', 'UNEXPECTED_DRIVER_IDS_QTY', 'EXPECTED_DRIVER_IDS_QTY']),
 	value: z.number().nullable(),
 }).strict();
 

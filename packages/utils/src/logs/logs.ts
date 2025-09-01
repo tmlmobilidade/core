@@ -19,16 +19,15 @@ interface LogColumn {
 
 }
 
-/**
- * Logger class for structured logging.
- */
-export class Logs {
+/* * */
+
+class LogsClass {
 	//
 
 	/**
 	 * Logs a divider line in the console.
 	 * @param message Optional message to display.
-	 * @param size Width of the divider line.
+	 * @param size Width of the divider line. Default is `75`.
 	 */
 	divider(message?: string, size = 75) {
 		console.log();
@@ -41,6 +40,8 @@ export class Logs {
 	 * Logs an error message in the console.
 	 * @param message Error message to display.
 	 * @param error Optional error object to display.
+	 * @param spacesAfter Optional number of blank lines to add after the message.
+	 * @param spacesBefore Optional number of blank lines to add before the message.
 	 */
 	error(message: string, error?: Error, spacesAfter?: number, spacesBefore?: number) {
 		if (spacesBefore && spacesBefore > 0) this.spacer(spacesBefore);
@@ -89,9 +90,9 @@ export class Logs {
 
 	/**
 	 * Logs a spacer line in the console.
-	 * @param lines Number of blank lines to add.
+	 * @param lines Number of blank lines to add. Default is `1`.
 	 */
-	spacer(lines: number) {
+	spacer(lines = 1) {
 		for (let i = 0; i < lines; i++) {
 			console.log();
 		}
@@ -132,6 +133,11 @@ export class Logs {
 		console.log();
 	}
 
+	/**
+	 * Formats an array of log columns or strings into a single string.
+	 * @param columns Array of log columns or strings to format.
+	 * @returns Formatted string.
+	 */
 	private formatColumns(columns: (LogColumn | string)[]): string {
 		return columns
 			.map((item) => {
@@ -145,3 +151,8 @@ export class Logs {
 
 	//
 }
+
+/**
+ * Logger class for structured logging.
+ */
+export const Logs = new LogsClass();

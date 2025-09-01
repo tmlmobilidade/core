@@ -15,7 +15,7 @@ interface LogColumn {
 	/**
 	 * Column text.
 	 */
-	txt: string
+	txt: number | string
 
 }
 
@@ -142,9 +142,9 @@ class LogsClass {
 		return columns
 			.map((item) => {
 				if (typeof item === 'string') return item;
-				if (!item.cols) return item.txt;
-				if (item.align === 'right') return item.txt.padStart(item.cols);
-				return item.txt.padEnd(item.cols);
+				if (!item.cols) return String(item.txt);
+				if (item.align === 'right') return String(item.txt).padStart(item.cols);
+				return String(item.txt).padEnd(item.cols);
 			})
 			.join(' ');
 	}

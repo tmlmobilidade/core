@@ -6,6 +6,7 @@ export * from '@/files/files.js';
 export * from '@/generic/index.js';
 export * from '@/geo/index.js';
 export * from '@/http.js';
+export * from '@/logs/index.js';
 export * from '@/math/index.js';
 export * from '@/navigation/index.js';
 export * from '@/permissions.js';

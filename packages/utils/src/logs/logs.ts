@@ -5,17 +5,17 @@ interface LogColumn {
 	/**
 	 * Column alignment.
 	 */
-	align?: 'left' | 'right'
+	a?: 'left' | 'right'
 
 	/**
 	 * Column width.
 	 */
-	cols?: number
+	c?: number
 
 	/**
 	 * Column text.
 	 */
-	txt: number | string
+	t: number | string
 
 }
 
@@ -144,9 +144,9 @@ class LogsClass {
 		return columns
 			.map((item) => {
 				if (typeof item === 'string') return item;
-				if (!item.cols) return String(item.txt);
-				if (item.align === 'right') return String(item.txt).padStart(item.cols);
-				return String(item.txt).padEnd(item.cols);
+				if (!item.c) return String(item.t);
+				if (item.a === 'right') return String(item.t).padStart(item.c);
+				return String(item.t).padEnd(item.c);
 			})
 			.join('');
 	}

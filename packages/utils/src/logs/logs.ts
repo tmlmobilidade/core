@@ -43,7 +43,7 @@ class LogsClass {
 	 * @param spacesAfter Optional number of blank lines to add after the message.
 	 * @param spacesBefore Optional number of blank lines to add before the message.
 	 */
-	error(message: string, error?: Error, spacesAfter?: number, spacesBefore?: number) {
+	error(message: LogColumn[] | string, error?: Error, spacesAfter?: number, spacesBefore?: number) {
 		if (spacesBefore && spacesBefore > 0) this.spacer(spacesBefore);
 		if (Array.isArray(message)) console.error(`✘ ${this.formatColumns(message)}`, error ?? '');
 		else console.error(`✘ ${message}`, error ?? '');
@@ -104,7 +104,7 @@ class LogsClass {
 	 * @param spacesAfter Optional number of blank lines to add after the message.
 	 * @param spacesBefore Optional number of blank lines to add before the message.
 	 */
-	success(message: string, spacesAfter?: number, spacesBefore?: number) {
+	success(message: LogColumn[] | string, spacesAfter?: number, spacesBefore?: number) {
 		if (spacesBefore && spacesBefore > 0) this.spacer(spacesBefore);
 		if (Array.isArray(message)) console.log(`✓ ${this.formatColumns(message)}`);
 		else console.log(`✓ ${message}`);

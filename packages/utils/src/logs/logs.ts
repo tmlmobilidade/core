@@ -148,7 +148,7 @@ class LogsClass {
 				if (item.align === 'right') return String(item.txt).padStart(item.cols);
 				return String(item.txt).padEnd(item.cols);
 			})
-			.join(' ');
+			.join('');
 	}
 
 	//

@@ -37,7 +37,6 @@ export const RideSchema = DocumentSchema.extend({
 	driver_ids: z.array(z.string()),
 	end_time_observed: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullable(),
 	end_time_scheduled: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp'),
-	execution_status: z.enum(['success', 'failure', 'warning']).nullable(),
 	extension_observed: z.number().nullable(),
 	extension_scheduled: z.number(),
 	hashed_shape_id: z.string(),

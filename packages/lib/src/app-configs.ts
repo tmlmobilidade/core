@@ -60,8 +60,8 @@ const APP_CONFIGS: Record<string, Record<Environment, AppConfigGroup>> = {
 			...DEFAULT_NON_DEV_CONFIG,
 		},
 		staging: {
-			api_url: 'https://auth.sae.carrismetropolitana.pt/api',
-			frontend_url: 'https://auth.sae.carrismetropolitana.pt',
+			api_url: 'https://staging.auth.sae.carrismetropolitana.pt/api',
+			frontend_url: 'https://staging.auth.sae.carrismetropolitana.pt',
 			...DEFAULT_NON_DEV_CONFIG,
 		},
 	},

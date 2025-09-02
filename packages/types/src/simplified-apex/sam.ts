@@ -7,7 +7,7 @@ import { z } from 'zod';
 
 /* * */
 
-export const UniqueSamSchema = DocumentSchema.extend({
+export const SamSchema = DocumentSchema.extend({
 	_id: z.number(),
 	agency_id: z.string(),
 	device_ids: z.array(z.string()).nullable(),
@@ -22,8 +22,8 @@ export const UniqueSamSchema = DocumentSchema.extend({
 	vehicle_ids: z.array(z.number()).nullable(),
 }).strict();
 
-export const CreateUniqueSamSchema = UniqueSamSchema.omit({ created_at: true, updated_at: true });
-export const UpdateUniqueSamSchema = CreateUniqueSamSchema.partial();
+export const CreateSamSchema = SamSchema.omit({ created_at: true, updated_at: true });
+export const UpdateSamSchema = CreateSamSchema.partial();
 
 /**
  * SAMs are the chips that contain the keys used to sign APEX transactions.
@@ -32,16 +32,16 @@ export const UpdateUniqueSamSchema = CreateUniqueSamSchema.partial();
  * the transactions are real, unique and incremental. This allows the system to
  * detect if a transaction has been tampered with or if any transactions are missing.
  */
-export interface UniqueSam extends Omit<z.infer<typeof UniqueSamSchema>, 'created_at' | 'seen_first_at' | 'seen_last_at' | 'updated_at'> {
+export interface Sam extends Omit<z.infer<typeof SamSchema>, 'created_at' | 'seen_first_at' | 'seen_last_at' | 'updated_at'> {
 	created_at: UnixTimestamp
 	seen_first_at: null | UnixTimestamp
 	seen_last_at: null | UnixTimestamp
 	updated_at: UnixTimestamp
 }
 
-export interface CreateUniqueSamDto extends Omit<z.infer<typeof CreateUniqueSamSchema>, 'seen_first_at' | 'seen_last_at'> {
+export interface CreateSamDto extends Omit<z.infer<typeof CreateSamSchema>, 'seen_first_at' | 'seen_last_at'> {
 	seen_first_at: null | UnixTimestamp
 	seen_last_at: null | UnixTimestamp
 }
 
-export type UpdateUniqueSamDto = Partial<CreateUniqueSamDto>;
+export type UpdateSamDto = Partial<CreateSamDto>;

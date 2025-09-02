@@ -48,4 +48,9 @@ export const RideAnnotationSchema = DocumentSchema.extend({
 	ride_id: z.string(),
 }).strict();
 
+export const CreateRideAnnotationSchema = RideAnnotationSchema.partial({ _id: true }).omit({ created_at: true, updated_at: true });
+export const UpdateRideAnnotationSchema = CreateRideAnnotationSchema.partial();
+
 export type RideAnnotation = z.infer<typeof RideAnnotationSchema>;
+export type CreateRideAnnotationDto = z.infer<typeof CreateRideAnnotationSchema>;
+export type UpdateRideAnnotationDto = Partial<CreateRideAnnotationDto>;

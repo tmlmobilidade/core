@@ -28,8 +28,7 @@ class ZonesClass extends MongoCollectionClass<Zone, CreateZoneDto, UpdateZoneDto
 
 	/**
 	 * Finds a zone document by its code.
-	 *
-	 * @param code - The code of the zone to find
+	 * @param code The code of the zone to find
 	 * @returns A promise that resolves to the matching zone document or null if not found
 	 */
 	async findByCode(code: string) {
@@ -38,8 +37,7 @@ class ZonesClass extends MongoCollectionClass<Zone, CreateZoneDto, UpdateZoneDto
 
 	/**
 	 * Finds a zone document by its name.
-	 *
-	 * @param name - The name of the zone to find
+	 * @param name The name of the zone to find
 	 * @returns A promise that resolves to the matching zone document or null if not found
 	 */
 	async findByName(name: string) {
@@ -48,9 +46,8 @@ class ZonesClass extends MongoCollectionClass<Zone, CreateZoneDto, UpdateZoneDto
 
 	/**
 	 * Updates a zone document by its code.
-	 *
-	 * @param code - The code of the zone to update.
-	 * @param updateFields - The fields to update in the zone document.
+	 * @param code The code of the zone to update.
+	 * @param updateFields The fields to update in the zone document.
 	 * @returns A promise that resolves to the result of the update operation.
 	 */
 	async updateByCode(code: string, updateFields: Partial<Zone>) {

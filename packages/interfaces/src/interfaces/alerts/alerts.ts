@@ -5,6 +5,7 @@ import { Alert, AlertSchema, CreateAlertDto, UpdateAlertDto, UpdateAlertSchema }
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
 import { Filter, IndexDescription } from 'mongodb';
 import { z } from 'zod';
+
 /* * */
 
 class AlertsClass extends MongoCollectionClass<Alert, CreateAlertDto, UpdateAlertDto> {

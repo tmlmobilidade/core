@@ -62,7 +62,7 @@ export const RideSchema = DocumentSchema.extend({
 	system_status: ProcessingStatusSchema.default('waiting'),
 	trip_id: z.string(),
 	vehicle_ids: z.array(z.number()),
-}).strict();
+}).strip();
 
 export const CreateRideSchema = RideSchema.partial({ _id: true }).omit({ created_at: true, updated_at: true });
 export const UpdateRideSchema = CreateRideSchema.partial();

@@ -16,6 +16,7 @@ export * from '@/organization.js';
 export * from '@/pcgi/index.js';
 export * from '@/plans/index.js';
 export * from '@/rides/index.js';
+export * from '@/sams/index.js';
 export * from '@/simplified-apex/index.js';
 export * from '@/stop.js';
 export * from '@/system/index.js';

@@ -3,7 +3,7 @@
 import { DocumentSchema } from '@/_common/document.js';
 import { type OperationalDate, validateOperationalDate } from '@/_common/operational-date.js';
 import { type UnixTimestamp, validateUnixTimestamp } from '@/_common/unix-timestamp.js';
-import { atLeastOneVehicleEventOnFirstStopSchema, endedAtLastStopSchema, expectedApexValidationIntervalSchema, expectedDriverIdQtySchema, expectedStartTimeSchema, expectedVehicleEventDelaySchema, expectedVehicleEventIntervalSchema, expectedVehicleEventQtySchema, expectedVehicleIdQtySchema, matchingApexLocationsSchema, matchingVehicleIdsSchema, RideAnalysisGradeSchema, simpleOneApexValidationSchema, simpleOneVehicleEventOrApexValidationSchema, simpleThreeVehicleEventsSchema, transactionSequentialitySchema } from '@/rides/ride-analysis.js';
+import { atLeastOneVehicleEventOnFirstStopSchema, endedAtLastStopSchema, expectedApexValidationIntervalSchema, expectedDriverIdQtySchema, expectedStartTimeSchema, expectedVehicleEventDelaySchema, expectedVehicleEventIntervalSchema, expectedVehicleEventQtySchema, expectedVehicleIdQtySchema, matchingApexLocationsSchema, matchingVehicleIdsSchema, simpleOneApexValidationSchema, simpleOneVehicleEventOrApexValidationSchema, simpleThreeVehicleEventsSchema, transactionSequentialitySchema } from '@/rides/ride-analysis.js';
 import { ProcessingStatusSchema } from '@/system/processing-status.js';
 import { z } from 'zod';
 
@@ -97,49 +97,3 @@ export const RidePermissionSchema = z.object({
 });
 
 export type RidePermission = z.infer<typeof RidePermissionSchema>;
-
-/* * */
-
-const RideAnalysisGradeWithNoneSchema = RideAnalysisGradeSchema.or(z.literal('none'));
-
-const operationalStatusOptions = ['ended', 'missed', 'running', 'scheduled'] as const;
-export const operationalStatusValues = [...operationalStatusOptions];
-
-/* * */
-
-const delayStatusOptions = ['delayed', 'early', 'ontime', 'none'] as const;
-export const delayStatusValues = [...delayStatusOptions];
-
-/* * */
-
-const seenStatusOptions = ['gone', 'seen', 'unseen'] as const;
-export const seenStatusValues = [...seenStatusOptions];
-
-export const GetRidesBatchQuerySchema = z.object({
-	agency_ids: z.preprocess((val: string) => val ? val.split(',').map(id => id.trim()) : [], z.array(z.string())).optional(),
-	search: z.string().optional(),
-
-	/* * */
-
-	analysis_ended_at_last_stop_grade: z.preprocess((val: string) => val ? val.split(',').map(grade => grade.trim()) : [], z.array(RideAnalysisGradeWithNoneSchema)).optional(),
-	analysis_expected_apex_validation_interval: z.preprocess((val: string) => val ? val.split(',').map(grade => grade.trim()) : [], z.array(RideAnalysisGradeWithNoneSchema)).optional(),
-	analysis_simple_three_vehicle_events_grade: z.preprocess((val: string) => val ? val.split(',').map(grade => grade.trim()) : [], z.array(RideAnalysisGradeWithNoneSchema)).optional(),
-
-	/* * */
-
-	date_end: z.coerce.number().transform(validateUnixTimestamp).brand('UnixTimestamp'),
-	date_start: z.coerce.number().transform(validateUnixTimestamp).brand('UnixTimestamp'),
-
-	/* * */
-
-	delay_statuses: z.preprocess((val: string) => val ? val.split(',').map(status => status.trim()) : [], z.array(z.enum(delayStatusOptions))).optional(),
-	operational_statuses: z.preprocess((val: string) => val ? val.split(',').map(status => status.trim()) : [], z.array(z.enum(operationalStatusOptions))).optional(),
-	seen_statuses: z.preprocess((val: string) => val ? val.split(',').map(status => status.trim()) : [], z.array(z.enum(seenStatusOptions))).optional(),
-
-	/* * */
-
-	line_ids: z.preprocess((val: string) => val ? val.split(',').map(id => id.trim()) : [], z.array(z.string())).optional(),
-	stop_ids: z.preprocess((val: string) => val ? val.split(',').map(id => id.trim()) : [], z.array(z.string())).optional(),
-});
-
-export type GetRidesBatchQuery = z.infer<typeof GetRidesBatchQuerySchema>;

@@ -5,7 +5,7 @@ import { type UnixTimestamp, validateUnixTimestamp } from '@/_common/unix-timest
 import { ProcessingStatusSchema } from '@/system/processing-status.js';
 import { z } from 'zod';
 
-import { SamAnalysisSchema } from './sam-analysis.js';
+import { SamAnalysis, SamAnalysisSchema } from './sam-analysis.js';
 
 /* * */
 
@@ -33,7 +33,8 @@ export const UpdateSamSchema = CreateSamSchema.partial();
  * the transactions are real, unique and incremental. This allows the system to
  * detect if a transaction has been tampered with or if any transactions are missing.
  */
-export interface Sam extends Omit<z.infer<typeof SamSchema>, 'created_at' | 'seen_first_at' | 'seen_last_at' | 'updated_at'> {
+export interface Sam extends Omit<z.infer<typeof SamSchema>, 'analysis' | 'created_at' | 'seen_first_at' | 'seen_last_at' | 'updated_at'> {
+	analysis: SamAnalysis[]
 	created_at: UnixTimestamp
 	seen_first_at: null | UnixTimestamp
 	seen_last_at: null | UnixTimestamp

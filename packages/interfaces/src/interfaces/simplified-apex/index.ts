@@ -1,4 +1,3 @@
-export * from '@/interfaces/simplified-apex/sams.js';
 export * from '@/interfaces/simplified-apex/simplified-apex-inspection-decisions.js';
 export * from '@/interfaces/simplified-apex/simplified-apex-inspections.js';
 export * from '@/interfaces/simplified-apex/simplified-apex-locations.js';

@@ -45,4 +45,4 @@ class SamsClass extends MongoCollectionClass<Sam, CreateSamDto, UpdateSamDto> {
 
 /* * */
 
-export const uniqueSams = AsyncSingletonProxy(SamsClass);
+export const sams = AsyncSingletonProxy(SamsClass);

@@ -3,7 +3,7 @@
 import { DocumentSchema } from '@/_common/document.js';
 import { type OperationalDate, validateOperationalDate } from '@/_common/operational-date.js';
 import { type UnixTimestamp, validateUnixTimestamp } from '@/_common/unix-timestamp.js';
-import { atLeastOneVehicleEventOnFirstStopSchema, endedAtLastStopSchema, expectedApexValidationIntervalSchema, expectedDriverIdQtySchema, expectedStartTimeSchema, expectedVehicleEventDelaySchema, expectedVehicleEventIntervalSchema, expectedVehicleEventQtySchema, expectedVehicleIdQtySchema, matchingApexLocationsSchema, matchingVehicleIdsSchema, RIDE_ANALYSIS_GRADE_OPTIONS, RideAnalysisGradeSchema, RideAnalysisSchema, simpleOneApexValidationSchema, simpleOneVehicleEventOrApexValidationSchema, simpleThreeVehicleEventsSchema, transactionSequentialitySchema } from '@/rides/ride-analysis.js';
+import { atLeastOneVehicleEventOnFirstStopSchema, endedAtLastStopSchema, expectedApexValidationIntervalSchema, expectedDriverIdQtySchema, expectedStartTimeSchema, expectedVehicleEventDelaySchema, expectedVehicleEventIntervalSchema, expectedVehicleEventQtySchema, expectedVehicleIdQtySchema, matchingApexLocationsSchema, matchingVehicleIdsSchema, RideAnalysisGradeSchema, simpleOneApexValidationSchema, simpleOneVehicleEventOrApexValidationSchema, simpleThreeVehicleEventsSchema, transactionSequentialitySchema } from '@/rides/ride-analysis.js';
 import { ProcessingStatusSchema } from '@/system/processing-status.js';
 import { z } from 'zod';
 
@@ -104,21 +104,30 @@ const RideAnalysisGradeWithNoneSchema = RideAnalysisGradeSchema.or(z.literal('no
 
 export const GetRidesBatchQuerySchema = z.object({
 	agency_ids: z.preprocess(
-		(val: string) => val.split(',').map(id => id.trim()),
+		(val: string) => val ? val.split(',').map(id => id.trim()) : [],
 		z.array(z.string()),
 	).optional(),
-	analysis_ended_at_last_stop_grade: RideAnalysisGradeWithNoneSchema.optional(),
-	analysis_expected_apex_validation_interval: RideAnalysisGradeWithNoneSchema.optional(),
-	analysis_simple_three_vehicle_events_grade: RideAnalysisGradeWithNoneSchema.optional(),
-	date_end: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp'),
-	date_start: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp'),
+	analysis_ended_at_last_stop_grade: z.preprocess(
+		(val: string) => val ? val.split(',').map(grade => grade.trim()) : [],
+		z.array(RideAnalysisGradeWithNoneSchema),
+	).optional(),
+	analysis_expected_apex_validation_interval: z.preprocess(
+		(val: string) => val ? val.split(',').map(grade => grade.trim()) : [],
+		z.array(RideAnalysisGradeWithNoneSchema),
+	).optional(),
+	analysis_simple_three_vehicle_events_grade: z.preprocess(
+		(val: string) => val ? val.split(',').map(grade => grade.trim()) : [],
+		z.array(RideAnalysisGradeWithNoneSchema),
+	).optional(),
+	date_end: z.coerce.number().transform(validateUnixTimestamp).brand('UnixTimestamp'),
+	date_start: z.coerce.number().transform(validateUnixTimestamp).brand('UnixTimestamp'),
 	line_ids: z.preprocess(
-		(val: string) => val.split(',').map(id => id.trim()),
+		(val: string) => val ? val.split(',').map(id => id.trim()) : [],
 		z.array(z.string()),
 	).optional(),
 	search: z.string().optional(),
 	stop_ids: z.preprocess(
-		(val: string) => val.split(',').map(id => id.trim()),
+		(val: string) => val ? val.split(',').map(id => id.trim()) : [],
 		z.array(z.string()),
 	).optional(),
 });

@@ -7,7 +7,7 @@ import { z } from 'zod';
 
 export const SamAnalysisSchema = z.object({
 	apex_version: z.string().nullable(),
-	device_id: z.number().nullable(),
+	device_id: z.string().nullable(),
 	end_time: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullable(),
 	start_time: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullable(),
 	transactions_expected: z.number().nullable(),

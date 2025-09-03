@@ -14,6 +14,7 @@ export const SamSchema = DocumentSchema.extend({
 	agency_id: z.string(),
 	analysis: z.array(SamAnalysisSchema).default([]),
 	latest_apex_version: z.string().nullable(),
+	remarks: z.string(),
 	seen_first_at: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullable(),
 	seen_last_at: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullable(),
 	system_status: ProcessingStatusSchema.default('waiting'),

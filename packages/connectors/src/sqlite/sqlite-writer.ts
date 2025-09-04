@@ -3,35 +3,7 @@
 import { generateRandomString } from '@tmlmobilidade/utils';
 import BSQLite3, { type Database, type Statement } from 'better-sqlite3';
 
-/* * */
-
-interface SQLiteWriterColumn<T> {
-	indexed?: boolean
-	name: Extract<keyof T, string>
-	not_null?: boolean
-	primary_key?: boolean
-	type: 'BLOB' | 'INTEGER' | 'REAL' | 'TEXT'
-}
-
-/* * */
-
-export interface SQLiteWriterParams<T> {
-
-	/**
-	 * The maximum number of items to hold in memory
-	 * before flushing to the database.
-	 * @default 3000
-	 */
-	batch_size?: number
-
-	/**
-	 * Columns in the table.
-	 * Order matters for INSERT.
-	 * Must be keys of T or custom names.
-	 */
-	columns: SQLiteWriterColumn<T>[]
-
-}
+import { SQLiteColumn, SQLiteWriterParams } from './types.js';
 
 /* * */
 
@@ -58,7 +30,7 @@ export class SQLiteWriter<T> {
 
 	private batch: T[] = [];
 	private batchSize = 3000;
-	private columns: SQLiteWriterColumn<T>[];
+	private columns: SQLiteColumn<T>[];
 	private databaseInstance: Database;
 	private insertStatement: Statement;
 	private instanceName: string;

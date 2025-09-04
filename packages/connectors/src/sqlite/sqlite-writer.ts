@@ -39,6 +39,14 @@ export class SQLiteWriter<T> {
 	//
 
 	/**
+	 * Get the instance path.
+	 * @returns The instance path.
+	 */
+	get instancePath(): string {
+		return `/tmp/${this.instanceName}.db`;
+	}
+
+	/**
 	 * Get the number of rows in the table.
 	 * @returns The number of rows.
 	 */
@@ -70,7 +78,7 @@ export class SQLiteWriter<T> {
 		//
 		// Create a new SQLite instance
 
-		this.databaseInstance = new BSQLite3(`/tmp/${this.instanceName}.db`);
+		this.databaseInstance = new BSQLite3(this.instancePath);
 
 		//
 		// Setup table columns from params

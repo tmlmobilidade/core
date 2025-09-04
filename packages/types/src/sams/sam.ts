@@ -41,7 +41,8 @@ export interface Sam extends Omit<z.infer<typeof SamSchema>, 'analysis' | 'creat
 	updated_at: UnixTimestamp
 }
 
-export interface CreateSamDto extends Omit<z.infer<typeof CreateSamSchema>, 'seen_first_at' | 'seen_last_at'> {
+export interface CreateSamDto extends Omit<z.infer<typeof CreateSamSchema>, 'analysis' | 'seen_first_at' | 'seen_last_at'> {
+	analysis: SamAnalysis[]
 	seen_first_at: null | UnixTimestamp
 	seen_last_at: null | UnixTimestamp
 }

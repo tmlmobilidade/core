@@ -59,6 +59,16 @@ export class SQLiteDatabase {
 export class SQLiteTableInstance<T> {
 	//
 
+	/**
+	 * Get the number of rows in the table.
+	 * @returns The number of rows.
+	 */
+	get size(): number {
+		const sql = `SELECT COUNT(*) as count FROM ${this.table_name}`;
+		const row = this.databaseInstance.prepare(sql).get() as { count: number };
+		return row.count;
+	}
+
 	//
 	//  Constructor
 	private batch: T[] = [];
@@ -66,6 +76,7 @@ export class SQLiteTableInstance<T> {
 	private columns: SQLiteColumn<T>[];
 	private databaseInstance: Database;
 	private insertStatement: Statement;
+
 	private table_name: string;
 
 	constructor(databaseInstance: Database, table_name: string, params: SQLiteTable<T>) {

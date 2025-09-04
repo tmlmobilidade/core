@@ -2,10 +2,9 @@
 
 import { DocumentSchema } from '@/_common/document.js';
 import { type UnixTimestamp, validateUnixTimestamp } from '@/_common/unix-timestamp.js';
+import { type SamAnalysis, SamAnalysisSchema } from '@/sams/sam-analysis.js';
 import { ProcessingStatusSchema } from '@/system/processing-status.js';
 import { z } from 'zod';
-
-import { SamAnalysis, SamAnalysisSchema } from './sam-analysis.js';
 
 /* * */
 

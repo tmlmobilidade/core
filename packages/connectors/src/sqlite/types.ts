@@ -8,7 +8,7 @@ export interface SQLiteColumn<T> {
 	type: 'BLOB' | 'INTEGER' | 'REAL' | 'TEXT'
 }
 
-export interface SQLiteWriterParams<T> {
+export interface SQLiteTable<T> {
 
 	/**
 	 * The maximum number of items to hold in memory
@@ -24,11 +24,4 @@ export interface SQLiteWriterParams<T> {
 	 */
 	columns: SQLiteColumn<T>[]
 
-}
-
-export interface SQLiteTable<T> extends SQLiteWriterParams<T> {
-	/**
-	 * The name of the table.
-	 */
-	table_name: string
 }

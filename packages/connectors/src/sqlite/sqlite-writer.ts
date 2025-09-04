@@ -3,7 +3,7 @@
 import { generateRandomString } from '@tmlmobilidade/utils';
 import BSQLite3, { type Database, type Statement } from 'better-sqlite3';
 
-import { SQLiteColumn, SQLiteWriterParams } from './types.js';
+import { SQLiteColumn, SQLiteTable } from './types.js';
 
 /* * */
 
@@ -35,7 +35,7 @@ export class SQLiteWriter<T> {
 	private insertStatement: Statement;
 	private instanceName: string;
 
-	constructor(params: SQLiteWriterParams<T>) {
+	constructor(params: SQLiteTable<T>) {
 		//
 
 		//

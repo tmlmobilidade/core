@@ -5,7 +5,7 @@ export interface SQLiteColumn<T> {
 	name: Extract<keyof T, string>
 	not_null?: boolean
 	primary_key?: boolean
-	type: 'BLOB' | 'INTEGER' | 'REAL' | 'TEXT'
+	type: 'BLOB' | 'BOOLEAN' | 'INTEGER' | 'REAL' | 'TEXT'
 }
 
 export interface SQLiteTable<T> {

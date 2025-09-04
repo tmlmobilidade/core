@@ -7,7 +7,7 @@ import { SQLiteTable } from './types.js';
 
 /* * */
 
-export class SQLiteMultiWriter {
+export class SQLiteDatabase {
 	//
 
 	//

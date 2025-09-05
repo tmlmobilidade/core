@@ -41,7 +41,7 @@
 		"configs/*",
 		"packages/*"
 	],
-	"packageManager": "npm@11.5.2",
+	"packageManager": "npm@11.6.0",
 	"peerDependencyRules": {
 		"allowedVersions": {
 			"react": "^18.x || ^19.x",

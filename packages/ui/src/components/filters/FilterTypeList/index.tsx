@@ -19,7 +19,6 @@ interface FilterTypeListProps {
 	label: string
 	onChange?: (values: string[]) => void
 	options?: FilterTypeListOption[]
-	type?: 'checkboxes'
 	withToggleAll?: boolean
 }
 

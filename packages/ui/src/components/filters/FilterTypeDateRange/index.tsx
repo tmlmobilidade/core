@@ -2,6 +2,7 @@
 
 import { DateTimePicker } from '@/components/dates/DateTimePicker';
 import { FilterWrapper } from '@/components/filters/FilterWrapper';
+import { Section } from '@/components/layout/Section';
 import { type UnixTimestamp } from '@tmlmobilidade/types';
 
 /* * */
@@ -25,16 +26,20 @@ export function FilterTypeDateRange({ active, disabled, endDate, label, onEndDat
 			disabled={disabled}
 			label={label}
 		>
-			<DateTimePicker
-				onChange={onStartDateChange}
-				placeholder="Data de Início"
-				value={startDate}
-			/>
-			<DateTimePicker
-				onChange={onEndDateChange}
-				placeholder="Data de Fim"
-				value={endDate}
-			/>
+			<Section gap="md" padding="md">
+				<DateTimePicker
+					onChange={onStartDateChange}
+					placeholder="Data de Início"
+					value={startDate}
+					fullWidth
+				/>
+				<DateTimePicker
+					onChange={onEndDateChange}
+					placeholder="Data de Fim"
+					value={endDate}
+					fullWidth
+				/>
+			</Section>
 		</FilterWrapper>
 	);
 };

@@ -14,8 +14,6 @@ interface FilterTypeDateRangeProps {
 	onEndDateChange?: (values: null | UnixTimestamp) => void
 	onStartDateChange?: (values: null | UnixTimestamp) => void
 	startDate?: null | UnixTimestamp
-	type?: 'checkboxes'
-	withToggleAll?: boolean
 }
 
 /* * */

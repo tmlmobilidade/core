@@ -6,7 +6,7 @@ import styles from './styles.module.css';
 
 /* * */
 
-interface FilterMenuTargetProps extends React.ComponentPropsWithoutRef<'div'> {
+interface FilterTargetProps extends React.ComponentPropsWithoutRef<'div'> {
 	active?: boolean
 	disabled?: boolean
 	label: string
@@ -14,7 +14,7 @@ interface FilterMenuTargetProps extends React.ComponentPropsWithoutRef<'div'> {
 
 /* * */
 
-export const FilterMenuTarget = forwardRef<HTMLDivElement, FilterMenuTargetProps>(({ active, disabled, label, ...props }: FilterMenuTargetProps, ref) => (
+export const FilterTarget = forwardRef<HTMLDivElement, FilterTargetProps>(({ active, disabled, label, ...props }: FilterTargetProps, ref) => (
 	<div {...props} ref={ref} className={styles.root} data-active={active} data-disabled={disabled}>
 		{label ?? 'Missing Label!'}
 	</div>

@@ -2,14 +2,15 @@
 
 /* * */
 
-import {
-	DatePickerInput as MantineDatePickerInput,
-	DatePickerInputProps as MantineDatePickerInputProps,
-} from '@mantine/dates';
+import { DatePickerInput as MantineDatePickerInput, DatePickerInputProps as MantineDatePickerInputProps } from '@mantine/dates';
 import { IconCalendar } from '@tabler/icons-react';
 
 import styles from './styles.module.css';
+
+/* * */
+
 export interface DatePickerProps extends Omit<MantineDatePickerInputProps, 'type'> {
+
 	/**
 	 * Full width of the input.
 	 */
@@ -20,12 +21,12 @@ export interface DatePickerProps extends Omit<MantineDatePickerInputProps, 'type
 	 * @default <IconCalendar size={20} />
 	 */
 	leftSection?: React.ReactNode
+
 }
 
-export default function DatePicker({
-	leftSection = <IconCalendar size={20} />,
-	...props
-}: DatePickerProps) {
+/* * */
+
+export function DatePicker({ leftSection = <IconCalendar size={20} />, ...props }: DatePickerProps) {
 	return (
 		<MantineDatePickerInput
 			classNames={{ ...styles, ...props.classNames }}

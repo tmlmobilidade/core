@@ -1,31 +1,31 @@
 /* * */
 
-import { FilterMenuTarget } from '@/components/filters/FilterMenuTarget';
-import { Checkbox, Popover, ScrollArea } from '@mantine/core';
+import { DateTimePicker } from '@/components/dates/DateTimePicker';
+import { FilterWrapper } from '@/components/filters/FilterWrapper';
 import { useMemo } from 'react';
 
 /* * */
 
-interface FilterMenuOption {
+interface FilterTypeDateRangeOption {
 	checked?: boolean
 	disabled?: boolean
 	label: string
 	value: string
 }
 
-interface FilterMenuProps {
+interface FilterTypeDateRangeProps {
 	active?: boolean
 	disabled?: boolean
 	label: string
 	onChange?: (values: string[]) => void
-	options?: FilterMenuOption[]
+	options?: FilterTypeDateRangeOption[]
 	type?: 'checkboxes'
 	withToggleAll?: boolean
 }
 
 /* * */
 
-export function FilterMenu({ active, disabled, label, onChange, options, withToggleAll }: FilterMenuProps) {
+export function FilterTypeDateRange({ active, disabled, label, onChange, options, withToggleAll }: FilterTypeDateRangeProps) {
 	//
 
 	//
@@ -71,38 +71,18 @@ export function FilterMenu({ active, disabled, label, onChange, options, withTog
 	// C. Render components
 
 	return (
-		<Popover position="bottom" withArrow>
-			<Popover.Target>
-				<FilterMenuTarget
-					active={active}
-					disabled={isDisabled}
-					label={label}
-				/>
-			</Popover.Target>
-			<Popover.Dropdown>
-				<ScrollArea.Autosize mah={400} offsetScrollbars="y" scrollbars="y" type="auto">
-					{withToggleAll && (
-						<Checkbox
-							key="toggle-all"
-							checked={toggleAllActive}
-							label="Selecionar Tudo"
-							onChange={handleToggleAll}
-							value="all"
-						/>
-					)}
-					<Checkbox.Group onChange={onChange} value={checkedOptionValues}>
-						{options?.map(option => (
-							<Checkbox
-								key={option.value}
-								disabled={option.disabled}
-								label={option.label}
-								value={option.value}
-							/>
-						))}
-					</Checkbox.Group>
-				</ScrollArea.Autosize>
-			</Popover.Dropdown>
-		</Popover>
+		<FilterWrapper
+			active={active}
+			disabled={isDisabled}
+			label={label}
+		>
+			<DateTimePicker
+				onChange={handleChange}
+				placeholder="end"
+				value={valueAsString}
+				clearable
+			/>
+		</FilterWrapper>
 	);
 
 	//

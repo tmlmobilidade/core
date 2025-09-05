@@ -2,6 +2,7 @@ export * from '@/components/authentication';
 export * from '@/components/buttons';
 export * from '@/components/common';
 export * from '@/components/datatable';
+export * from '@/components/dates';
 export * from '@/components/display';
 export * from '@/components/filters';
 export * from '@/components/inputs';

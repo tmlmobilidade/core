@@ -33,20 +33,6 @@ export class SQLiteDatabase {
 			throw new Error(`Table "${tableName}" already registered`);
 		}
 
-		// Create table
-		this.databaseInstance
-			.prepare(`CREATE TABLE IF NOT EXISTS ${tableName} (${params.columns.map(c => `"${c.name}"`).join(', ')})`)
-			.run();
-
-		// Create indexes
-		params.columns.forEach((c) => {
-			if (c.indexed) {
-				this.databaseInstance.exec(
-					`CREATE INDEX IF NOT EXISTS idx_${tableName}_${c.name} ON ${tableName}("${c.name}")`,
-				);
-			}
-		});
-
 		const tableInstance = new SQLiteTableInstance<T>(this.databaseInstance, tableName, params);
 		this.tables.set(tableName, tableInstance);
 
@@ -89,6 +75,18 @@ export class SQLiteTableInstance<T> {
 		this.batchSize = params.batch_size ?? 3000;
 		this.columns = params.columns;
 		this.table_name = table_name;
+
+		// Create table
+		this.databaseInstance
+			.prepare(`CREATE TABLE IF NOT EXISTS ${table_name} (${params.columns.map(c => `"${c.name}"`).join(', ')})`)
+			.run();
+
+		// Create indexes
+		params.columns.forEach((c) => {
+			if (c.indexed) {
+				this.databaseInstance.exec(`CREATE INDEX IF NOT EXISTS idx_${table_name}_${c.name} ON ${table_name}("${c.name}")`);
+			}
+		});
 
 		//
 		// Prepare insert statement

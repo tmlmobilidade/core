@@ -121,7 +121,14 @@ export class SQLiteTableInstance<T> {
 			rows.forEach((row) => {
 				// Populate the columns with the row values
 				// to ensure the order of placeholders is preserved
-				const rowValues = this.columns.map(col => row[col.name]);
+				const rowValues = this.columns.map((col) => {
+					const value = row[col.name];
+					// Convert boolean to 0 or 1
+					if (typeof value === 'boolean') {
+						return value ? 1 : 0;
+					}
+					return value;
+				});
 				this.insertStatement.run(rowValues);
 			});
 		});

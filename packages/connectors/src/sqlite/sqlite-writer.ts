@@ -1,162 +1,49 @@
-/* * */
-
 import { generateRandomString } from '@tmlmobilidade/utils';
-import BSQLite3, { type Database, type Statement } from 'better-sqlite3';
+import BSQLite3, { type Database } from 'better-sqlite3';
 
-import { SQLiteColumn, SQLiteTable } from './types.js';
+import { SQLiteTableInstance } from './sqlite-db.js';
+import { SQLiteTable } from './types.js';
 
-/* * */
-
-export class SQLiteWriter<T> {
+export class SQLiteWriter<T> extends SQLiteTableInstance<T> {
 	//
 
-	/**
-	 * Get the instance path.
-	 * @returns The instance path.
-	 */
-	get instancePath(): string {
-		return `/tmp/${this.instanceName}.db`;
-	}
+	//
+	// Properties
+	public readonly instanceName: string;
+	public readonly instancePath: string;
 
-	/**
-	 * Get the number of rows in the table.
-	 * @returns The number of rows.
-	 */
-	get size(): number {
-		const sql = `SELECT COUNT(*) as count FROM ${this.instanceName}`;
-		const row = this.databaseInstance.prepare(sql).get() as { count: number };
-		return row.count;
-	}
-
-	private batch: T[] = [];
-	private batchSize = 3000;
-	private columns: SQLiteColumn<T>[];
-	private databaseInstance: Database;
-	private insertStatement: Statement;
-	private instanceName: string;
-
+	//
+	// Constructor
 	constructor(params: SQLiteTable<T>) {
-		//
+		// 1. Generate a random table name
+		const instanceName = generateRandomString({ type: 'alphabetic' });
+		const instancePath = `/tmp/${instanceName}.db`;
 
-		//
-		// Set up options
+		// 2. Create a fresh SQLite DB just for this writer
+		const db = SQLiteWriter.createDatabase(instancePath);
 
-		this.batchSize = params.batch_size ?? 3000;
+		// 3. Call parent constructor (this does CREATE TABLE, prepare inserts, etc.)
+		super(db, instanceName, params);
 
-		this.columns = params.columns;
-
-		this.instanceName = generateRandomString({ type: 'alphabetic' });
-
-		//
-		// Create a new SQLite instance
-
-		this.databaseInstance = new BSQLite3(this.instancePath);
-
-		//
-		// Setup table columns from params
-
-		const preparedColumns: string[] = [];
-		const preparedIndexes: string[] = [];
-
-		for (const columnSpec of this.columns) {
-			// Extract column definition
-			const parts: string[] = [`"${columnSpec.name}"`, columnSpec.type];
-			// Set column preferences
-			if (columnSpec.not_null) parts.push('NOT NULL');
-			if (columnSpec.primary_key) parts.push('PRIMARY KEY');
-			// Save the column definition
-			preparedColumns.push(parts.join(' '));
-			// Save the index definition
-			if (columnSpec.indexed) preparedIndexes.push(`CREATE INDEX IF NOT EXISTS idx_${this.instanceName}_${columnSpec.name} ON ${this.instanceName}("${columnSpec.name}")`);
-		}
-
-		//
-		// Create the table with the prepared columns and indexes
-
-		this.databaseInstance.pragma('journal_mode = WAL');
-		this.databaseInstance.pragma('synchronous = OFF');
-		this.databaseInstance.pragma('temp_store = MEMORY');
-
-		this.databaseInstance
-			.prepare(`CREATE TABLE IF NOT EXISTS ${this.instanceName} (${preparedColumns.join(',\n')})`)
-			.run();
-
-		preparedIndexes.forEach(i => this.databaseInstance.exec(i));
-
-		//
-		// Prepare insert statement
-
-		const placeholders = this.columns.map(() => '?').join(', ');
-		const insertSQL = `INSERT INTO ${this.instanceName} (${this.columns.map(c => `"${c.name}"`).join(', ')}) VALUES (${placeholders})`;
-		this.insertStatement = this.databaseInstance.prepare(insertSQL);
-
-		//
-	}
-
-	all(whereClause = '', params: (boolean | number | string)[] = []): T[] {
-		const sql = `SELECT * FROM ${this.instanceName} ${whereClause}`;
-		return this.databaseInstance.prepare(sql).all(...params) as T[];
-	}
-
-	/**
-	 * Clears all entries from the map.
-	 */
-	clear(): void {
-		this.databaseInstance
-			.prepare(`DELETE FROM ${this.instanceName}`)
-			.run();
-	}
-
-	/**
-	 * Flush current buffer into DB synchronously.
-	 */
-	flush(): void {
-		// Skip if batch is empty
-		if (this.batch.length === 0) return;
-		// Prepare the operation
-		const insertManyOperation = this.databaseInstance.transaction((rows: T[]) => {
-			rows.forEach((row) => {
-				// Populate the columns with the row values
-				// to ensure the order of placeholders is preserved
-				const rowValues = this.columns.map(col => row[col.name]);
-				this.insertStatement.run(rowValues);
-			});
-		});
-		// Run the operation
-		insertManyOperation(this.batch);
-		// Empty batch
-		this.batch = [];
-	}
-
-	/**
-	 * Get a single row by column value.
-	 * @param col The column to filter by.
-	 * @param value The value to match.
-	 * @returns The matching row, or undefined if not found.
-	 */
-	get<K extends keyof T>(col: K, value: T[K]): T | undefined {
-		const sql = `SELECT * FROM ${this.instanceName} WHERE ${String(col)} = ? LIMIT 1`;
-		return this.databaseInstance.prepare(sql).get(value) as T | undefined;
-	}
-
-	/**
-	 * Check if a row exists by column value.
-	 * @param col The column to filter by.
-	 * @param value The value to match.
-	 * @returns True if the row exists, false otherwise.
-	 */
-	has<K extends keyof T>(col: K, value: T[K]): boolean {
-		const sql = `SELECT 1 FROM ${this.instanceName} WHERE ${String(col)} = ? LIMIT 1`;
-		return !!this.databaseInstance.prepare(sql).get(value);
-	}
-
-	/**
-	 * Add one item to buffer, flush automatically when batchSize reached.
-	 */
-	write(item: T): void {
-		this.batch.push(item);
-		if (this.batch.length >= this.batchSize) this.flush();
+		// 4. Save references
+		this.instanceName = instanceName;
+		this.instancePath = instancePath;
 	}
 
 	//
+	//  Methods
+
+	private static createDatabase(path: string): Database {
+		//
+		// Set up the database
+		const db = new BSQLite3(path);
+
+		db.pragma('journal_mode = WAL');
+		db.pragma('synchronous = OFF');
+		db.pragma('temp_store = MEMORY');
+
+		//
+		// Return the database
+		return db;
+	}
 }

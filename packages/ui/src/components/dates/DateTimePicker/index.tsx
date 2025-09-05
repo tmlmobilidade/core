@@ -82,6 +82,7 @@ export function DateTimePicker({ fullWidth, leftSection = <IconCalendar size={20
 			placeholder={placeholder}
 			style={{ width: fullWidth ? '100%' : undefined }}
 			value={valueAsString}
+			valueFormat="YYYY-MM-DD HH:mm"
 			clearable
 		/>
 	);

@@ -76,11 +76,11 @@ export function DateTimePicker({ fullWidth, leftSection = <IconCalendar size={20
 
 	return (
 		<MantineDateTimePicker
+			classNames={styles}
 			leftSection={leftSection}
 			onChange={handleChange}
 			placeholder={placeholder}
 			style={{ width: fullWidth ? '100%' : undefined }}
-			styles={styles}
 			value={valueAsString}
 			clearable
 		/>

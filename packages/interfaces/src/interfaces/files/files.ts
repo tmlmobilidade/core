@@ -211,7 +211,6 @@ class FilesClass extends MongoCollectionClass<File, CreateFileDto, UpdateFileDto
 						throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'File ID is provided, but the file path is different from the existing file', { cause: { existingFilePath, filePath } });
 					}
 
-					await this.storageService.deleteFile(existingFilePath);
 					await this.deleteById(fileId);
 				}
 			}

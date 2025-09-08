@@ -191,10 +191,6 @@ class FilesClass extends MongoCollectionClass<File, CreateFileDto, UpdateFileDto
 		const filePath = `${createFileDto.scope}/${createFileDto.resource_id}/${fileId}.${fileExtension}`;
 
 		//
-		// B. Upload file to storage
-		await this.storageService.uploadFile(filePath, file, mimeType);
-
-		//
 		// C. Handle database transaction
 		const session = this.getMongoConnector().client.startSession();
 		let result: File;
@@ -211,13 +207,21 @@ class FilesClass extends MongoCollectionClass<File, CreateFileDto, UpdateFileDto
 					const existingFileExtension = Files.getFileExtension(existingFile.name);
 					const existingFilePath = `${existingFile.scope}/${existingFile.resource_id}/${existingFile._id}.${existingFileExtension}`;
 
+					if (existingFilePath !== filePath) {
+						throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'File ID is provided, but the file path is different from the existing file', { cause: { existingFilePath, filePath } });
+					}
+
 					await this.storageService.deleteFile(existingFilePath);
 					await this.deleteById(fileId);
 				}
 			}
 
 			//
-			// C.2. Insert file record
+			// C.2. Upload file to storage
+			await this.storageService.uploadFile(filePath, file, mimeType);
+
+			//
+			// C.3. Insert file record
 			result = await this.insertOne({ ...createFileDto, _id: fileId }, { options });
 			await session.commitTransaction();
 		}

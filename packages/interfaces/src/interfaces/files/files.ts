@@ -176,10 +176,60 @@ class FilesClass extends MongoCollectionClass<File, CreateFileDto, UpdateFileDto
 	 * @param createFileDto - The file type to create.
 	 * @returns The file that was uploaded.
 	 */
-	public async upload(file: Buffer, createFileDto: CreateFileDto, options?: InsertOneOptions): Promise<File> {
-		const _id = generateRandomString({ length: 5 });
-		await this.storageService.uploadFile(`${createFileDto.scope}/${createFileDto.resource_id}/${_id}.${Files.getFileExtension(createFileDto.name)}`, file, Files.getMimeTypeFromFileExtension(createFileDto.name));
-		return await this.insertOne({ ...createFileDto, _id }, { options });
+	public async upload(file: Buffer, createFileDto: CreateFileDto & { _id?: string }, options?: InsertOneOptions & { override?: boolean }): Promise<File> {
+		//
+
+		//
+		// A. Define variables
+		if (createFileDto._id && !options?.override) {
+			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'When File ID is provided, override must be true');
+		}
+
+		const fileId = createFileDto._id || generateRandomString({ length: 5 });
+		const fileExtension = Files.getFileExtension(createFileDto.name);
+		const mimeType = Files.getMimeTypeFromFileExtension(createFileDto.name);
+		const filePath = `${createFileDto.scope}/${createFileDto.resource_id}/${fileId}.${fileExtension}`;
+
+		//
+		// B. Upload file to storage
+		await this.storageService.uploadFile(filePath, file, mimeType);
+
+		//
+		// C. Handle database transaction
+		const session = this.getMongoConnector().client.startSession();
+		let result: File;
+
+		try {
+			session.startTransaction();
+
+			//
+			// C.1. Handle file override if specified
+			if (options?.override) {
+				const existingFile = await this.findOne({ _id: fileId });
+
+				if (existingFile) {
+					const existingFileExtension = Files.getFileExtension(existingFile.name);
+					const existingFilePath = `${existingFile.scope}/${existingFile.resource_id}/${existingFile._id}.${existingFileExtension}`;
+
+					await this.storageService.deleteFile(existingFilePath);
+					await this.deleteById(fileId);
+				}
+			}
+
+			//
+			// C.2. Insert file record
+			result = await this.insertOne({ ...createFileDto, _id: fileId }, { options });
+			await session.commitTransaction();
+		}
+		catch (error) {
+			await session.abortTransaction();
+			throw error;
+		}
+		finally {
+			session.endSession();
+		}
+
+		return result;
 	}
 
 	protected getCollectionIndexes(): IndexDescription[] {

@@ -3,6 +3,7 @@
 import { IStorageProvider } from '@/providers/storage/storage.interface.js';
 import { HttpException, HttpStatus, mimeTypes } from '@tmlmobilidade/lib';
 import { readFileSync } from 'node:fs';
+import { Readable } from 'node:stream';
 import { OciError, Region, SimpleAuthenticationDetailsProvider } from 'oci-common';
 import { ObjectStorageClient, UploadManager } from 'oci-objectstorage';
 import { CreatePreauthenticatedRequestDetails } from 'oci-objectstorage/lib/model/create-preauthenticated-request-details.js';
@@ -117,20 +118,27 @@ export class OCIStorageProvider implements IStorageProvider {
 		return result.listObjects?.objects?.map(obj => obj.name) ?? [];
 	}
 
-	async uploadFile(key: string, body: Buffer, mimeType?: string): Promise<void> {
+	async uploadFile(key: string, body: Buffer | Readable | ReadableStream, mimeType?: string): Promise<void> {
 		const isImage = mimeType === mimeTypes.png || mimeType === mimeTypes.jpg || mimeType === mimeTypes.jpeg || mimeType === mimeTypes.gif || mimeType === mimeTypes.svg;
 		const uploadManager = new UploadManager(this.ociClient, { enforceMD5: true });
-		await uploadManager.upload({
-			content: {
-				blob: new Blob([body], { type: mimeType }),
-			},
-			requestDetails: {
-				bucketName: this.bucketName,
-				contentDisposition: isImage ? 'inline' : 'attachment',
-				contentType: mimeType,
-				namespaceName: this.namespace,
-				objectName: key,
-			},
-		});
+
+		try {
+			await uploadManager.upload({
+				content: body instanceof Buffer
+					? { blob: new Blob([body], { type: mimeType }) }
+					: { stream: body },
+				requestDetails: {
+					bucketName: this.bucketName,
+					contentDisposition: isImage ? 'inline' : 'attachment',
+					contentType: mimeType,
+					namespaceName: this.namespace,
+					objectName: key,
+				},
+			});
+		}
+		catch (error) {
+			console.error('Error uploading file:', JSON.stringify(error, null, 2));
+			throw error;
+		}
 	}
 }

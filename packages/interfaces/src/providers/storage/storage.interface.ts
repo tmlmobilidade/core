@@ -1,5 +1,9 @@
 /* * */
 
+import { Readable } from 'node:stream';
+
+/* * */
+
 export interface IStorageProvider {
 	// Copy a file from one path to another.
 	copyFile(source: string, destination: string): Promise<void>
@@ -20,5 +24,5 @@ export interface IStorageProvider {
 	listFiles(prefix?: string): Promise<string[]>
 
 	// Upload a file to the storage.
-	uploadFile(key: string, body: Buffer, mimeType?: string): Promise<void>
+	uploadFile(key: string, body: Buffer | Readable | ReadableStream | string, mimeType?: string): Promise<void>
 }

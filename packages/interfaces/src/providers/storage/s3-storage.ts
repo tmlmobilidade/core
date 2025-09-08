@@ -189,7 +189,7 @@ export class S3StorageProvider implements IStorageProvider {
 	 * @param key - The file path and name in S3.
 	 * @param body - The content to upload, either as a string, buffer, or readable stream.
 	 */
-	async uploadFile(key: string, body: Buffer | Readable | string, mimeType?: string): Promise<void> {
+	async uploadFile(key: string, body: Buffer | Readable | ReadableStream | string, mimeType?: string): Promise<void> {
 		const isImage = mimeType === mimeTypes.png || mimeType === mimeTypes.jpg || mimeType === mimeTypes.jpeg || mimeType === mimeTypes.gif || mimeType === mimeTypes.svg;
 		try {
 			await this.checkBucket();

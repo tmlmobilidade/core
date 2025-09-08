@@ -8,6 +8,7 @@ import { AsyncSingletonProxy, convertObject } from '@tmlmobilidade/utils';
 import { generateRandomString } from '@tmlmobilidade/utils';
 import { Files } from '@tmlmobilidade/utils';
 import { DeleteOptions, DeleteResult, IndexDescription, InsertOneOptions, WithId } from 'mongodb';
+import { Readable } from 'node:stream';
 import { z } from 'zod';
 
 /* * */
@@ -172,11 +173,11 @@ class FilesClass extends MongoCollectionClass<File, CreateFileDto, UpdateFileDto
 
 	/**
 	 * Uploads a file to the storage service and inserts it into the database.
-	 * @param file - The file to upload.
+	 * @param file - The file to upload, either as a string, buffer, or readable stream.
 	 * @param createFileDto - The file type to create.
 	 * @returns The file that was uploaded.
 	 */
-	public async upload(file: Buffer, createFileDto: CreateFileDto & { _id?: string }, options?: InsertOneOptions & { override?: boolean }): Promise<File> {
+	public async upload(file: Buffer | Readable | ReadableStream | string, createFileDto: CreateFileDto & { _id?: string }, options?: InsertOneOptions & { override?: boolean }): Promise<File> {
 		//
 
 		//

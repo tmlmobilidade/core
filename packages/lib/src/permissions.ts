@@ -61,6 +61,7 @@ export const Permissions = Object.freeze({
 			update: 'update',
 			update_controller: 'update_controller',
 			update_feed_info_dates: 'update_feed_info_dates',
+			update_gtfs_plan: 'update_gtfs_plan',
 			update_pcgi_legacy: 'update_pcgi_legacy',
 		},
 		resources: PlanPermissionSchema.shape,

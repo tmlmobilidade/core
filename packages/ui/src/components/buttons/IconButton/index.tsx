@@ -25,12 +25,12 @@ type IconButtonProps = (ButtonProps | LinkProps) & {
 	isLoading?: boolean
 	isReadOnly?: boolean
 	tooltip?: string
-	variant?: 'danger' | 'disabled' | 'muted' | 'primary' | 'secondary'
+	variant?: 'danger' | 'disabled' | 'muted' | 'primary' | 'secondary' | 'subtle'
 };
 
 /* * */
 
-export function IconButton({ color, disabled, icon, isLoading, isReadOnly, tooltip, variant = 'primary', ...props }: IconButtonProps) {
+export function IconButton({ color, disabled, icon, isLoading, isReadOnly, tooltip, variant = 'subtle', ...props }: IconButtonProps) {
 	//
 
 	//
@@ -74,5 +74,13 @@ export function IconButton({ color, disabled, icon, isLoading, isReadOnly, toolt
 		);
 	};
 
-	return tooltip ? <Tooltip label={tooltip}> {renderButton()}</Tooltip> : renderButton();
+	return (
+		tooltip ? (
+			<Tooltip label={tooltip} withArrow>
+				{renderButton()}
+			</Tooltip>
+		) : (
+			renderButton()
+		)
+	);
 }

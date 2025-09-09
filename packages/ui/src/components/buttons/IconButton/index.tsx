@@ -25,18 +25,21 @@ type IconButtonProps = (ButtonProps | LinkProps) & {
 	isLoading?: boolean
 	isReadOnly?: boolean
 	tooltip?: string
+	variant?: 'danger' | 'disabled' | 'muted' | 'primary' | 'secondary'
 };
 
 /* * */
 
-export function IconButton(props: IconButtonProps) {
+export function IconButton({ color, disabled, icon, isLoading, isReadOnly, tooltip, variant = 'primary', ...props }: IconButtonProps) {
 	//
 
 	//
 	// A. Define variables
-
-	const { color, disabled, icon, isLoading, isReadOnly, tooltip } = props;
 	const isLink = props.type === 'link';
+
+	if (disabled) {
+		variant = 'disabled';
+	}
 
 	//
 	// B. Handle actions
@@ -64,7 +67,7 @@ export function IconButton(props: IconButtonProps) {
 				href={isLink ? (props as LinkProps).href : undefined}
 				loading={isLoading}
 				onClick={isLink ? undefined : handleClick}
-				variant="subtle"
+				variant={variant}
 			>
 				{icon}
 			</ActionIcon>

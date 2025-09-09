@@ -141,6 +141,7 @@ export default function ComboboxComponent(props: Props) {
 			setSearch(searchable ? parseComboboxItem(itemData)?.label : '');
 			setValue(newValue as any);
 			onChange?.(newValue as any); // Type assertion handled via discriminated union
+			combobox.closeDropdown();
 		}
 	}
 

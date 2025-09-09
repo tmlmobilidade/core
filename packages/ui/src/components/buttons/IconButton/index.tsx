@@ -54,10 +54,8 @@ export function IconButton(props: IconButtonProps) {
 	//
 	// C. Render components
 
-	return (
-		<Tooltip
-			label={tooltip}
-		>
+	const renderButton = () => {
+		return (
 			<ActionIcon
 				color={color ?? 'var(--color-primary)'}
 				component={isLink ? 'a' : 'button'}
@@ -70,6 +68,8 @@ export function IconButton(props: IconButtonProps) {
 			>
 				{icon}
 			</ActionIcon>
-		</Tooltip>
-	);
+		);
+	};
+
+	return tooltip ? <Tooltip label={tooltip}> {renderButton()}</Tooltip> : renderButton();
 }

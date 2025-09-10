@@ -10,6 +10,10 @@ export const RIDE_ACCEPTANCE_STATUS_OPTIONS = ['justification_required', 'under_
 export const RideAcceptanceStatusSchema = z.enum(RIDE_ACCEPTANCE_STATUS_OPTIONS);
 export type RideAcceptanceStatus = z.infer<typeof RideAcceptanceStatusSchema>;
 
+export const RIDE_JUSTIFICATION_CAUSE_OPTIONS = ['TECHNICAL_PROBLEM', 'DEMONSTRATION', 'ACCIDENT', 'WEATHER', 'CONSTRUCTION', 'POLICE_ACTIVITY', 'MEDICAL_EMERGENCY', 'OTHER_CAUSE'] as const;
+export const RideJustificationCauseSchema = z.enum(RIDE_JUSTIFICATION_CAUSE_OPTIONS);
+export type RideJustificationCause = z.infer<typeof RideJustificationCauseSchema>;
+
 /* * */
 
 const CommentSchemaWithRideJustificationStatus = CommentSchema.superRefine((data, ctx) => {
@@ -37,6 +41,7 @@ const CommentSchemaWithRideJustificationStatus = CommentSchema.superRefine((data
 export const RideJustificationSchema = DocumentSchema.extend({
 	acceptance_status: RideAcceptanceStatusSchema,
 	comments: z.array(CommentSchemaWithRideJustificationStatus).default([]),
+	justification_cause: RideJustificationCauseSchema,
 	pto_message: z.string().min(2).max(5000).default(''),
 }).strict();
 

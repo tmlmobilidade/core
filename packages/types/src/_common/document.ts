@@ -7,6 +7,8 @@ import { z } from 'zod';
 
 export const DocumentSchema = z.object({
 	_id: z.string(),
-	created_at: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullish(),
-	updated_at: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullish(),
+	created_at: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp'),
+	created_by: z.string().default('system'),
+	updated_at: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp'),
+	updated_by: z.string().default('system'),
 });

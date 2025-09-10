@@ -65,22 +65,3 @@ export const UpdateRideJustificationSchema = CreateRideJustificationSchema.parti
 export type RideJustification = z.infer<typeof RideJustificationSchema>;
 export type CreateRideJustificationDto = z.infer<typeof CreateRideJustificationSchema>;
 export type UpdateRideJustificationDto = Partial<CreateRideJustificationDto>;
-
-const example: CreateRideJustificationDto = {
-	_id: '64b64f4f8f1d2c001f6e4b8a',
-	acceptance_status: 'rejected',
-	comments: [
-		{
-			_id: '64b64f4f8f1d2c001f6e4b8a',
-			created_at: 1690400000 as UnixTimestamp,
-			created_by: 'system',
-			message: 'Ride justification created',
-			type: 'system_info',
-			updated_at: 1690400000 as UnixTimestamp,
-			updated_by: 'system',
-		},
-	],
-	created_by: 'joao',
-	pto_message: '',
-	updated_by: '',
-};

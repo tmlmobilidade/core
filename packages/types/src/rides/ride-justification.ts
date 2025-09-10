@@ -2,8 +2,6 @@
 
 import { CommentSchema, CommentTypeSchema } from '@/_common/comment.js';
 import { DocumentSchema } from '@/_common/document.js';
-import { type UnixTimestamp, validateUnixTimestamp } from '@/_common/unix-timestamp.js';
-import { RideAnalysisSchema } from '@/rides/ride-analysis.js';
 import { z } from 'zod';
 
 /* * */
@@ -13,23 +11,6 @@ export const RideAcceptanceStatusSchema = z.enum(RIDE_ACCEPTANCE_STATUS_OPTIONS)
 export type RideAcceptanceStatus = z.infer<typeof RideAcceptanceStatusSchema>;
 
 /* * */
-
-export const RideJustificationChangelogSchema = z.object({
-	acceptance_status: RideAcceptanceStatusSchema,
-	analysis_result: RideAnalysisSchema,
-	created_at: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp'),
-	created_by: z.string().min(2).max(100),
-}).strict();
-
-export interface RideJustificationChangelog extends Omit<z.infer<typeof RideJustificationChangelogSchema>, 'created_at'> {
-	created_at: UnixTimestamp
-}
-
-/* * */
-
-export const RIDE_JUSTIFICATION_TYPE_OPTIONS = ['traffic_accident', 'traffic_delay', 'accepted', 'rejected'] as const;
-export const RideJustificationTypeSchema = z.enum(RIDE_JUSTIFICATION_TYPE_OPTIONS);
-export type RideJustificationType = z.infer<typeof RideJustificationTypeSchema>;
 
 const CommentSchemaWithRideJustificationStatus = CommentSchema.superRefine((data, ctx) => {
 	if (data.type === CommentTypeSchema.enum.statusChanged) {
@@ -64,4 +45,4 @@ export const UpdateRideJustificationSchema = CreateRideJustificationSchema.parti
 
 export type RideJustification = z.infer<typeof RideJustificationSchema>;
 export type CreateRideJustificationDto = z.infer<typeof CreateRideJustificationSchema>;
-export type UpdateRideJustificationDto = Partial<CreateRideJustificationDto>;
+export type UpdateRideJustificationDto = z.infer<typeof UpdateRideJustificationSchema>;

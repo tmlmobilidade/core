@@ -13,8 +13,7 @@ export type UnixTimestamp = number & {
 
 export const unixTimeStampSchema = z
 	.number()
-	.transform(validateUnixTimestamp)
-	.brand('UnixTimestamp');
+	.transform(validateUnixTimestamp);
 
 /**
  * This function validates if a number is a valid Unix Timestamp, in milliseconds.

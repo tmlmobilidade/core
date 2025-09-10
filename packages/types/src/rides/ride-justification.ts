@@ -1,17 +1,15 @@
 /* * */
 
-import { CommentSchema } from '@/_common/comment.js';
+import { CommentSchema, CommentTypeSchema } from '@/_common/comment.js';
 import { DocumentSchema } from '@/_common/document.js';
 import { type UnixTimestamp, validateUnixTimestamp } from '@/_common/unix-timestamp.js';
-import { RideAnalysisGradeSchema, RideAnalysisSchema } from '@/rides/ride-analysis.js';
+import { RideAnalysisSchema } from '@/rides/ride-analysis.js';
 import { z } from 'zod';
 
 /* * */
 
 export const RIDE_ACCEPTANCE_STATUS_OPTIONS = ['justification_required', 'under_review', 'accepted', 'rejected'] as const;
-
 export const RideAcceptanceStatusSchema = z.enum(RIDE_ACCEPTANCE_STATUS_OPTIONS);
-
 export type RideAcceptanceStatus = z.infer<typeof RideAcceptanceStatusSchema>;
 
 /* * */
@@ -30,44 +28,59 @@ export interface RideJustificationChangelog extends Omit<z.infer<typeof RideJust
 /* * */
 
 export const RIDE_JUSTIFICATION_TYPE_OPTIONS = ['traffic_accident', 'traffic_delay', 'accepted', 'rejected'] as const;
-
 export const RideJustificationTypeSchema = z.enum(RIDE_JUSTIFICATION_TYPE_OPTIONS);
-
 export type RideJustificationType = z.infer<typeof RideJustificationTypeSchema>;
+
+const CommentSchemaWithRideJustificationStatus = CommentSchema.superRefine((data, ctx) => {
+	if (data.type === CommentTypeSchema.enum.statusChanged) {
+		const d = data as unknown as { curr_status: string, prev_status: string };
+		if (RideAcceptanceStatusSchema.safeParse(d.curr_status).error) {
+			ctx.addIssue({
+				code: z.ZodIssueCode.custom,
+				message: 'curr_status must be a valid ride acceptance status',
+				path: ['curr_status'],
+			});
+		}
+		if (RideAcceptanceStatusSchema.safeParse(d.prev_status).error) {
+			ctx.addIssue({
+				code: z.ZodIssueCode.custom,
+				message: 'prev_status must be a valid ride acceptance status',
+				path: ['prev_status'],
+			});
+		}
+	}
+});
 
 /* * */
 
 export const RideJustificationSchema = DocumentSchema.extend({
 	acceptance_status: RideAcceptanceStatusSchema,
-	changelog: z.array(RideJustificationChangelogSchema).default([]),
-	comments: z.array(CommentSchema).default([]),
+	comments: z.array(CommentSchemaWithRideJustificationStatus).default([]),
 	pto_message: z.string().min(2).max(5000).default(''),
 }).strict();
 
 export const CreateRideJustificationSchema = RideJustificationSchema.partial({ _id: true }).omit({ created_at: true, updated_at: true });
 export const UpdateRideJustificationSchema = CreateRideJustificationSchema.partial();
 
-export interface RideJustification extends Omit<z.infer<typeof RideJustificationSchema>, 'changelog' | 'created_at' | 'updated_at'> {
-	changelog: RideJustificationChangelog[]
-	created_at: UnixTimestamp
-	updated_at: UnixTimestamp
-}
-
+export type RideJustification = z.infer<typeof RideJustificationSchema>;
 export type CreateRideJustificationDto = z.infer<typeof CreateRideJustificationSchema>;
 export type UpdateRideJustificationDto = Partial<CreateRideJustificationDto>;
 
-// const example: RideJustification = {
-// 	_id: '64b64f4f8f1d2c001f6e4b8a',
-// 	acceptance_status: 'rejected',
-// 	analysis_result: null,
-// 	changelog: [
-// 		{
-// 			acceptance_status: 'justification_required',
-// 			created_at: 1690400000 as UnixTimestamp,
-// 			created_by: 'joao',
-// 		},
-// 	],
-// 	comments: [],
-// 	created_by: 'joao',
-// 	pto_message: '',
-// };
+const example: CreateRideJustificationDto = {
+	_id: '64b64f4f8f1d2c001f6e4b8a',
+	acceptance_status: 'rejected',
+	comments: [
+		{
+			_id: '64b64f4f8f1d2c001f6e4b8a',
+			created_at: 1690400000 as UnixTimestamp,
+			created_by: 'system',
+			message: 'Ride justification created',
+			type: 'system_info',
+			updated_at: 1690400000 as UnixTimestamp,
+			updated_by: 'system',
+		},
+	],
+	created_by: 'joao',
+	pto_message: '',
+	updated_by: '',
+};

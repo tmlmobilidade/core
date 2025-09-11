@@ -102,6 +102,9 @@ export function DateTimePicker({ clearable, description, fullWidth, label, leftS
 			style={{ width: fullWidth ? '100%' : undefined }}
 			value={valueAsString}
 			valueFormat="YYYY-MM-DD HH:mm"
+			popoverProps={{
+				withinPortal: false,
+			}}
 		/>
 	);
 

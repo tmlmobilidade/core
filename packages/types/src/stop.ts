@@ -2,7 +2,7 @@
 
 import { CommentSchema } from '@/_common/comment.js';
 import { DocumentSchema } from '@/_common/document.js';
-import { type UnixTimestamp, unixTimeStampSchema } from '@/_common/unix-timestamp.js';
+import { unixTimeStampSchema } from '@/_common/unix-timestamp.js';
 import { z } from 'zod';
 
 /* * */
@@ -10,84 +10,15 @@ import { z } from 'zod';
 //
 // Define constants for enum values for better maintainability
 
-const JURISDICTION_VALUES = [
-	'ip',
-	'municipality',
-	'other',
-	'unknown',
-] as const;
-
-const OPERATIONAL_STATUS_VALUES = [
-	'active',
-	'inactive',
-	'provisional',
-	'seasonal',
-	'voided',
-] as const;
-
-const ELECTRICITY_STATUS_VALUES = [
-	'available',
-	'unavailable',
-	'unknown',
-] as const;
-
-const ROAD_TYPE_VALUES = [
-	'complementary_itinerary',
-	'highway',
-	'main_itinerary',
-	'national_road',
-	'regional_road',
-	'secondary_road',
-	'unknown',
-] as const;
-
-const INFRASTRUCTURE_STATUS_VALUES = [
-	'not_applicable',
-	'unknown',
-	'missing',
-	'damaged',
-	'ok',
-] as const;
-
-const CONNECTIONS_VALUES = [
-	'ferry',
-	'light_rail',
-	'subway',
-	'train',
-	'boat',
-	'airport',
-	'bike_sharing',
-	'bike_parking',
-	'car_parking',
-] as const;
-
-const FACILITIES_VALUES = [
-	'fire_station',
-	'health_clinic',
-	'historic_building',
-	'hospital',
-	'police_station',
-	'school',
-	'shopping',
-	'transit_office',
-	'university',
-	'beach',
-] as const;
-
-const HAS_ANY = [
-	'yes',
-	'no',
-	'unknown',
-] as const;
-
-const EQUIPMENT_VALUES = [
-	'pip',
-	'mupi',
-	'mini_pip',
-] as const;
-
-//
-// Define schemas using constants
+const JURISDICTION_VALUES = ['ip', 'municipality', 'other', 'unknown'] as const;
+const OPERATIONAL_STATUS_VALUES = ['active', 'inactive', 'provisional', 'seasonal', 'voided'] as const;
+const ELECTRICITY_STATUS_VALUES = ['available', 'unavailable', 'unknown'] as const;
+const ROAD_TYPE_VALUES = ['complementary_itinerary', 'highway', 'main_itinerary', 'national_road', 'regional_road', 'secondary_road', 'unknown'] as const;
+const INFRASTRUCTURE_STATUS_VALUES = ['not_applicable', 'unknown', 'missing', 'damaged', 'ok'] as const;
+const CONNECTIONS_VALUES = ['ferry', 'light_rail', 'subway', 'train', 'boat', 'airport', 'bike_sharing', 'bike_parking', 'car_parking'] as const;
+const FACILITIES_VALUES = ['fire_station', 'health_clinic', 'historic_building', 'hospital', 'police_station', 'school', 'shopping', 'transit_office', 'university', 'beach'] as const;
+const HAS_ANY = ['yes', 'no', 'unknown'] as const;
+const EQUIPMENT_VALUES = ['pip', 'mupi', 'mini_pip'] as const;
 
 export const jurisdictionSchema = z.enum(JURISDICTION_VALUES);
 export const operationalStatusSchema = z.enum(OPERATIONAL_STATUS_VALUES);
@@ -98,6 +29,18 @@ export const connectionsSchema = z.enum(CONNECTIONS_VALUES);
 export const facilitiesSchema = z.enum(FACILITIES_VALUES);
 export const hasAnySchema = z.enum(HAS_ANY);
 export const equipmentSchema = z.enum(EQUIPMENT_VALUES);
+
+//
+// Define types based on schemas
+
+export type Jurisdiction = z.infer<typeof jurisdictionSchema>;
+export type OperationalStatus = z.infer<typeof operationalStatusSchema>;
+export type ElectricityStatus = z.infer<typeof electricityStatusSchema>;
+export type RoadType = z.infer<typeof roadTypeSchema>;
+export type InfrastructureStatus = z.infer<typeof infrastructureStatusSchema>;
+export type Connections = z.infer<typeof connectionsSchema>;
+export type Facilities = z.infer<typeof facilitiesSchema>;
+export type Equipment = z.infer<typeof equipmentSchema>;
 
 export const StopSchema = DocumentSchema.extend({
 
@@ -196,61 +139,15 @@ export const stopAreaSchema = DocumentSchema.extend({
 	parent_station_ids: z.array(z.string()),
 }).strict();
 
-//
-// Define types based on schemas
-
-export type Jurisdiction = z.infer<typeof jurisdictionSchema>;
-export type OperationalStatus = z.infer<typeof operationalStatusSchema>;
-export type ElectricityStatus = z.infer<typeof electricityStatusSchema>;
-export type RoadType = z.infer<typeof roadTypeSchema>;
-export type InfrastructureStatus = z.infer<typeof infrastructureStatusSchema>;
-export type Connections = z.infer<typeof connectionsSchema>;
-export type Facilities = z.infer<typeof facilitiesSchema>;
-export type Equipment = z.infer<typeof equipmentSchema>;
-
-export const CreateStopSchema = StopSchema
-	.omit({ created_at: true, updated_at: true });
-
-export const UpdateStopSchema = StopSchema
-	.omit({ _id: true, created_at: true, updated_at: true })
-	.partial();
+export const CreateStopSchema = StopSchema.omit({ created_at: true, updated_at: true });
+export const UpdateStopSchema = StopSchema.omit({ _id: true, created_at: true, updated_at: true }).partial();
 
 //
 // Define the Stop interface
 
-export interface Stop
-	extends Omit<
-		z.infer<typeof StopSchema>,
-		| 'last_infrastructure_check'
-		| 'last_infrastructure_maintenance'
-		| 'last_schedules_check'
-		| 'last_schedules_maintenance'
-		| 'last_shelter_installation'
-	> {
-	last_infrastructure_check?: UnixTimestamp
-	last_infrastructure_maintenance?: UnixTimestamp
-	last_schedules_check?: UnixTimestamp
-	last_schedules_maintenance?: UnixTimestamp
-	last_shelter_installation?: UnixTimestamp
-}
-
-export interface CreateStopDto
-	extends Omit<
-		z.infer<typeof CreateStopSchema>,
-		| 'last_infrastructure_check'
-		| 'last_infrastructure_maintenance'
-		| 'last_schedules_check'
-		| 'last_schedules_maintenance'
-		| 'last_shelter_installation'
-	> {
-	last_infrastructure_check?: UnixTimestamp
-	last_infrastructure_maintenance?: UnixTimestamp
-	last_schedules_check?: UnixTimestamp
-	last_schedules_maintenance?: UnixTimestamp
-	last_shelter_installation?: UnixTimestamp
-}
-
-export type UpdateStopDto = Partial<Omit<CreateStopDto, 'created_by'>>;
+export type Stop = z.infer<typeof StopSchema>;
+export type CreateStopDto = z.infer<typeof CreateStopSchema>;
+export type UpdateStopDto = z.infer<typeof UpdateStopSchema>;
 
 /* * */
 

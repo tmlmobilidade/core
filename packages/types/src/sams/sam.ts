@@ -1,8 +1,8 @@
 /* * */
 
 import { DocumentSchema } from '@/_common/document.js';
-import { UnixTimestamp, unixTimeStampSchema } from '@/_common/unix-timestamp.js';
-import { type SamAnalysis, SamAnalysisSchema } from '@/sams/sam-analysis.js';
+import { unixTimeStampSchema } from '@/_common/unix-timestamp.js';
+import { SamAnalysisSchema } from '@/sams/sam-analysis.js';
 import { ProcessingStatusSchema } from '@/system/processing-status.js';
 import { z } from 'zod';
 

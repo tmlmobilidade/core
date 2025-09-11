@@ -3,7 +3,7 @@
 import { type Alert as ServiceAlert } from 'gtfs-types';
 import { z } from 'zod';
 
-import { OperationalDate, operationalDateSchema } from './_common/operational-date.js';
+import { operationalDateSchema } from './_common/operational-date.js';
 
 /* * */
 
@@ -30,15 +30,8 @@ export const GtfsAgencySchema = z.object({
 	agency_url: z.string().nullish(),
 });
 
-export type GtfsFeedInfo = Omit<z.infer<typeof GtfsFeedInfoSchema>, 'feed_end_date' | 'feed_start_date'> & {
-	feed_end_date?: null | OperationalDate
-	feed_start_date?: null | OperationalDate
-};
-
-export type GtfsAgency = Omit<z.infer<typeof GtfsAgencySchema>, 'feed_end_date' | 'feed_start_date'> & {
-	feed_end_date?: null | OperationalDate
-	feed_start_date?: null | OperationalDate
-};
+export type GtfsFeedInfo = z.infer<typeof GtfsFeedInfoSchema>;
+export type GtfsAgency = z.infer<typeof GtfsAgencySchema>;
 
 export interface ServiceAlertExtended extends Omit<ServiceAlert, 'cause' | 'effect'> {
 	cause: string

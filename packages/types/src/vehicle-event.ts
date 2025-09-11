@@ -1,7 +1,7 @@
 /* * */
 
 import { DocumentSchema } from '@/_common/document.js';
-import { type UnixTimestamp, unixTimeStampSchema } from '@/_common/unix-timestamp.js';
+import { unixTimeStampSchema } from '@/_common/unix-timestamp.js';
 import { z } from 'zod';
 
 /* * */
@@ -30,8 +30,4 @@ export const VehicleEventSchema = DocumentSchema.extend({
  * These events are based on the GTFS-RT specification but extended with additional fields
  * specific to TML's needs.
  */
-export interface VehicleEvent extends Omit<z.infer<typeof VehicleEventSchema>, 'created_at' | 'received_at' | 'updated_at'> {
-	created_at: UnixTimestamp
-	received_at: UnixTimestamp
-	updated_at: UnixTimestamp
-}
+export type VehicleEvent = z.infer<typeof VehicleEventSchema>;

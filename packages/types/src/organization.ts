@@ -15,4 +15,4 @@ export const UpdateOrganizationSchema = CreateOrganizationSchema.partial();
 
 export type Organization = z.infer<typeof OrganizationSchema>;
 export type CreateOrganizationDto = z.infer<typeof CreateOrganizationSchema>;
-export type UpdateOrganizationDto = Partial<CreateOrganizationDto>;
+export type UpdateOrganizationDto = z.infer<typeof UpdateOrganizationSchema>;

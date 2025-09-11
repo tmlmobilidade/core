@@ -1,16 +1,14 @@
 /* * */
 
+import { NoteCommentSchema } from '@/_common/comment.js';
 import { DocumentSchema } from '@/_common/document.js';
-import { RideAnalysisSchema } from '@/rides/ride-analysis.js';
-import { RideJustificationSchema } from '@/rides/ride-justification.js';
 import { z } from 'zod';
 
 /* * */
 
 export const RideAuditSchema = DocumentSchema.extend({
-	analysis: RideAnalysisSchema,
+	comments: z.array(NoteCommentSchema),
 	is_locked: z.boolean().default(false),
-	justification: RideJustificationSchema,
 	ride_id: z.string(),
 }).strict();
 

@@ -1,16 +1,16 @@
 /* * */
 
 import { MongoCollectionClass } from '@/mongo-collection.js';
-import { CreateOrganizationDto, Organization, OrganizationSchema, UpdateOrganizationDto, UpdateOrganizationSchema } from '@tmlmobilidade/types';
+import { CreateOrganizationDto, CreateOrganizationSchema, Organization, OrganizationSchema, UpdateOrganizationDto, UpdateOrganizationSchema } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
-import { Filter, IndexDescription } from 'mongodb';
+import { Filter, FindOptions, IndexDescription } from 'mongodb';
 import { z } from 'zod';
 
 /* * */
 
-class OrganizationsClass extends MongoCollectionClass<Organization, CreateOrganizationDto, UpdateOrganizationDto> {
-	private static _instance: OrganizationsClass;
-	protected override createSchema: z.ZodSchema = OrganizationSchema;
+class OrganizationClass extends MongoCollectionClass<Organization, CreateOrganizationDto, UpdateOrganizationDto> {
+	private static _instance: OrganizationClass;
+	protected override createSchema: z.ZodSchema = CreateOrganizationSchema;
 	protected override updateSchema: z.ZodSchema = UpdateOrganizationSchema;
 
 	private constructor() {
@@ -18,33 +18,36 @@ class OrganizationsClass extends MongoCollectionClass<Organization, CreateOrgani
 	}
 
 	public static async getInstance() {
-		if (!OrganizationsClass._instance) {
-			const instance = new OrganizationsClass();
+		if (!OrganizationClass._instance) {
+			const instance = new OrganizationClass();
 			await instance.connect();
-			OrganizationsClass._instance = instance;
+			OrganizationClass._instance = instance;
 		}
-		return OrganizationsClass._instance;
+		return OrganizationClass._instance;
 	}
 
 	/**
-	 * Finds an organization by its code
-	 *
-	 * @param code - The code of the organization to find
-	 * @returns A promise that resolves to the matching organization document or null if not found
-	 */
-	async findByCode(code: string) {
-		return this.mongoCollection.findOne({ code } as Filter<Organization>);
+     * Finds a document by its ID.
+     *
+     * @param id - The ID of the document to find
+     * @returns A promise that resolves to the matching document or null if not found
+     */
+	override async findById(id: string, options?: FindOptions<Organization>) {
+		const organization = await this.mongoCollection.findOne({ _id: id } as unknown as Filter<Organization>, options);
+		if (!organization) {
+			return null;
+		}
+
+		return organization;
 	}
 
-	/**
-	 * Updates an organization by its code
-	 *
-	 * @param code - The code of the organization to update
-	 * @param fields - The fields to update
-	 * @returns A promise that resolves to the result of the update operation
-	 */
-	async updateByCode(code: string, fields: Partial<Organization>) {
-		return this.mongoCollection.updateOne({ code } as Filter<Organization>, { $set: fields });
+	override async findOne(filter: Filter<Organization>) {
+		const organization = await this.mongoCollection.findOne(filter);
+		if (!organization) {
+			return null;
+		}
+
+		return organization;
 	}
 
 	protected getCollectionIndexes(): IndexDescription[] {
@@ -58,8 +61,8 @@ class OrganizationsClass extends MongoCollectionClass<Organization, CreateOrgani
 	}
 
 	protected getEnvName(): string {
-		return 'TML_INTERFACE_ORGANIZATIONS';
+		return 'DATABASE_URI';
 	}
 }
 
-export const organizations = AsyncSingletonProxy(OrganizationsClass);
+export const organization = AsyncSingletonProxy(OrganizationClass);

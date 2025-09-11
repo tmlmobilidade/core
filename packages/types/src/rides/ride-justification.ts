@@ -2,6 +2,7 @@
 
 import { CommentSchema, CommentTypeSchema } from '@/_common/comment.js';
 import { DocumentSchema } from '@/_common/document.js';
+import { RideAnalysisSchema } from '@/rides/ride-analysis.js';
 import { z } from 'zod';
 
 /* * */
@@ -40,9 +41,11 @@ const CommentSchemaWithRideJustificationStatus = CommentSchema.superRefine((data
 
 export const RideJustificationSchema = DocumentSchema.extend({
 	acceptance_status: RideAcceptanceStatusSchema,
+	analysis: RideAnalysisSchema,
 	comments: z.array(CommentSchemaWithRideJustificationStatus).default([]),
 	justification_cause: RideJustificationCauseSchema,
 	pto_message: z.string().min(2).max(5000).default(''),
+	trip_id: z.string(),
 }).strict();
 
 export const CreateRideJustificationSchema = RideJustificationSchema.partial({ _id: true }).omit({ created_at: true, updated_at: true });

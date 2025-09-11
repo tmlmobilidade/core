@@ -1,9 +1,8 @@
 /* * */
 
 import { DocumentSchema } from '@/_common/document.js';
-import { type UnixTimestamp } from '@/_common/unix-timestamp.js';
-import { GtfsAgency, GtfsAgencySchema, GtfsFeedInfo, GtfsFeedInfoSchema } from '@/gtfs.js';
-import { PlanController, PlanControllerSchema } from '@/plans/plan-controller.js';
+import { GtfsAgencySchema, GtfsFeedInfoSchema } from '@/gtfs.js';
+import { PlanControllerSchema } from '@/plans/plan-controller.js';
 import { PlanPcgiLegacySchema } from '@/plans/plan-pcgi-legacy.js';
 import { ProcessingStatusSchema } from '@/system/processing-status.js';
 import { z } from 'zod';

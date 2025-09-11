@@ -40,6 +40,8 @@ export const UserSchema = DocumentSchema.extend({
 export const CreateUserSchema = UserSchema.omit({ _id: true, created_at: true, updated_at: true });
 export const UpdateUserSchema = CreateUserSchema.omit({ created_by: true }).partial();
 
-export type User = z.infer<typeof UserSchema & { permissions: Permission<unknown>[] }>;
+export interface User extends Omit<z.infer<typeof UserSchema>, 'permissions'> {
+	permissions: Permission<unknown>[]
+}
 export type CreateUserDto = z.infer<typeof CreateUserSchema>;
 export type UpdateUserDto = z.infer<typeof UpdateUserSchema>;

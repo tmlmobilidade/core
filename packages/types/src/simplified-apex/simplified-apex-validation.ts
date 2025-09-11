@@ -1,7 +1,7 @@
 /* * */
 
 import { DocumentSchema } from '@/_common/document.js';
-import { type UnixTimestamp, validateUnixTimestamp } from '@/_common/unix-timestamp.js';
+import { unixTimeStampSchema } from '@/_common/unix-timestamp.js';
 import { z } from 'zod';
 
 /* * */
@@ -113,7 +113,7 @@ export const SimplifiedApexValidationSchema = DocumentSchema.extend({
 	on_board_sale_id: z.string().nullable(),
 	pattern_id: z.string(),
 	product_id: z.string(),
-	received_at: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp'),
+	received_at: unixTimeStampSchema,
 	stop_id: z.string(),
 	trip_id: z.string(),
 	units_qty: z.number().nullable(),
@@ -130,13 +130,8 @@ export const UpdateSimplifiedApexValidationSchema = SimplifiedApexValidationSche
  * or not, and with which conditions. A validation also contains information about the card holder's card, the vehicle,
  * the validator machine, the route, and the time and location of the validation.
  */
-export interface SimplifiedApexValidation extends Omit<z.infer<typeof SimplifiedApexValidationSchema>, 'created_at' | 'received_at' | 'updated_at'> {
-	created_at: UnixTimestamp
-	received_at: UnixTimestamp
-	updated_at: UnixTimestamp
-}
-
-export type UpdateSimplifiedApexValidationDto = Partial<SimplifiedApexValidation>;
+export type SimplifiedApexValidation = z.infer<typeof SimplifiedApexValidationSchema>;
+export type UpdateSimplifiedApexValidationDto = z.infer<typeof UpdateSimplifiedApexValidationSchema>;
 
 /**
  * Validation statuses that are considered valid for the card holder to travel.

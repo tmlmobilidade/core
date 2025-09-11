@@ -1,7 +1,7 @@
 /* * */
 
 import { DocumentSchema } from '@/_common/document.js';
-import { type UnixTimestamp, validateUnixTimestamp } from '@/_common/unix-timestamp.js';
+import { type UnixTimestamp, unixTimeStampSchema } from '@/_common/unix-timestamp.js';
 import { type Permission, PermissionSchema } from '@/auth/permission.js';
 import { z } from 'zod';
 
@@ -23,7 +23,7 @@ export const UserSchema = DocumentSchema.extend({
 	avatar: z.string().nullish(),
 	bio: z.string().nullish(),
 	email: z.string().email(),
-	email_verified: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullish(),
+	email_verified: unixTimeStampSchema.nullish(),
 	first_name: z.string().nonempty(),
 	last_name: z.string().nonempty(),
 	organization_ids: z.array(z.string()).default([]),

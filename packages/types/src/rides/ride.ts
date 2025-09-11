@@ -2,7 +2,7 @@
 
 import { DocumentSchema } from '@/_common/document.js';
 import { type OperationalDate, validateOperationalDate } from '@/_common/operational-date.js';
-import { type UnixTimestamp, validateUnixTimestamp } from '@/_common/unix-timestamp.js';
+import { type UnixTimestamp, unixTimeStampSchema } from '@/_common/unix-timestamp.js';
 import { atLeastOneVehicleEventOnFirstStopSchema, endedAtLastStopSchema, expectedApexValidationIntervalSchema, expectedDriverIdQtySchema, expectedStartTimeSchema, expectedVehicleEventDelaySchema, expectedVehicleEventIntervalSchema, expectedVehicleEventQtySchema, expectedVehicleIdQtySchema, matchingApexLocationsSchema, matchingVehicleIdsSchema, simpleOneApexValidationSchema, simpleOneVehicleEventOrApexValidationSchema, simpleThreeVehicleEventsSchema, transactionSequentialitySchema } from '@/rides/ride-analysis.js';
 import { ProcessingStatusSchema } from '@/system/processing-status.js';
 import { z } from 'zod';
@@ -35,8 +35,8 @@ export const RideSchema = DocumentSchema.extend({
 	apex_on_board_sales_qty: z.number().nullable(),
 	apex_validations_qty: z.number().nullable(),
 	driver_ids: z.array(z.string()),
-	end_time_observed: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullable(),
-	end_time_scheduled: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp'),
+	end_time_observed: unixTimeStampSchema.nullable(),
+	end_time_scheduled: unixTimeStampSchema,
 	extension_observed: z.number().nullable(),
 	extension_scheduled: z.number(),
 	hashed_shape_id: z.string(),
@@ -54,10 +54,10 @@ export const RideSchema = DocumentSchema.extend({
 	pattern_id: z.string(),
 	plan_id: z.string(),
 	route_id: z.string(),
-	seen_first_at: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullable(),
-	seen_last_at: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullable(),
-	start_time_observed: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullable(),
-	start_time_scheduled: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp'),
+	seen_first_at: unixTimeStampSchema.nullable(),
+	seen_last_at: unixTimeStampSchema.nullable(),
+	start_time_observed: unixTimeStampSchema.nullable(),
+	start_time_scheduled: unixTimeStampSchema,
 	system_status: ProcessingStatusSchema.default('waiting'),
 	trip_id: z.string(),
 	vehicle_ids: z.array(z.number()),

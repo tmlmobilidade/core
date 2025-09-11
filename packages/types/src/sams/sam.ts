@@ -1,7 +1,7 @@
 /* * */
 
 import { DocumentSchema } from '@/_common/document.js';
-import { type UnixTimestamp, validateUnixTimestamp } from '@/_common/unix-timestamp.js';
+import { type UnixTimestamp, unixTimeStampSchema } from '@/_common/unix-timestamp.js';
 import { type SamAnalysis, SamAnalysisSchema } from '@/sams/sam-analysis.js';
 import { ProcessingStatusSchema } from '@/system/processing-status.js';
 import { z } from 'zod';
@@ -14,8 +14,8 @@ export const SamSchema = DocumentSchema.extend({
 	analysis: z.array(SamAnalysisSchema).default([]),
 	latest_apex_version: z.string().nullable(),
 	remarks: z.string().nullable().default(null),
-	seen_first_at: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullable(),
-	seen_last_at: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullable(),
+	seen_first_at: unixTimeStampSchema.nullable(),
+	seen_last_at: unixTimeStampSchema.nullable(),
 	system_status: ProcessingStatusSchema.default('waiting'),
 	transactions_expected: z.number().nullable(),
 	transactions_found: z.number().nullable(),

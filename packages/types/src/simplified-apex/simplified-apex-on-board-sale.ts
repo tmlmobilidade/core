@@ -1,7 +1,7 @@
 /* * */
 
 import { DocumentSchema } from '@/_common/document.js';
-import { type UnixTimestamp, validateUnixTimestamp } from '@/_common/unix-timestamp.js';
+import { type UnixTimestamp, unixTimeStampSchema } from '@/_common/unix-timestamp.js';
 import { z } from 'zod';
 
 /* * */
@@ -24,7 +24,7 @@ export const SimplifiedApexOnBoardSaleSchema = DocumentSchema.extend({
 	price: z.number(),
 	product_long_id: z.string(),
 	product_quantity: z.number(),
-	received_at: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp'),
+	received_at: unixTimeStampSchema,
 	stop_id: z.string().nullable(),
 	trip_id: z.string().nullable(),
 	validation_id: z.string().nullable(),

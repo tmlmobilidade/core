@@ -1,7 +1,7 @@
 /* * */
 
 import { DocumentSchema } from '@/_common/document.js';
-import { type UnixTimestamp, validateUnixTimestamp } from '@/_common/unix-timestamp.js';
+import { type UnixTimestamp, unixTimeStampSchema } from '@/_common/unix-timestamp.js';
 import { z } from 'zod';
 
 /* * */
@@ -15,7 +15,7 @@ export const VehicleEventSchema = DocumentSchema.extend({
 	longitude: z.number(),
 	odometer: z.number(),
 	pattern_id: z.string(),
-	received_at: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp'),
+	received_at: unixTimeStampSchema,
 	stop_id: z.string(),
 	trigger_activity: z.string(),
 	trigger_door: z.string(),

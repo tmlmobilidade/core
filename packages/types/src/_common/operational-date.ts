@@ -13,8 +13,7 @@ export type OperationalDate = string & {
 
 export const operationalDateSchema = z
 	.string()
-	.transform(validateOperationalDate)
-	.brand('OperationalDate');
+	.transform(validateOperationalDate);
 
 /**
  * This function validates if a string is a valid operational date.

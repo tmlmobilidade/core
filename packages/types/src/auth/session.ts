@@ -1,13 +1,13 @@
 /* * */
 
 import { DocumentSchema } from '@/_common/document.js';
-import { type UnixTimestamp, validateUnixTimestamp } from '@/_common/unix-timestamp.js';
+import { type UnixTimestamp, unixTimeStampSchema } from '@/_common/unix-timestamp.js';
 import { z } from 'zod';
 
 /* * */
 
 export const SessionSchema = DocumentSchema.extend({
-	expires_at: z.number().transform(validateUnixTimestamp).brand('UnixTimestamp').nullish(),
+	expires_at: unixTimeStampSchema.nullish(),
 	token: z.string(),
 	user_id: z.string(),
 }).strict();

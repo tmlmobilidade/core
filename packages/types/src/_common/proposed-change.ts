@@ -1,7 +1,6 @@
 /* * */
 
 import { DocumentSchema } from '@/_common/document.js';
-import { type UnixTimestamp } from '@/_common/unix-timestamp.js';
 import { z } from 'zod';
 
 /* * */
@@ -9,20 +8,16 @@ import { z } from 'zod';
 //
 // Define constants for enum values for better maintainability
 
-const SCOPE_VALUES = [
-	'stop',
-	'lines',
-] as const;
-
-const STATUS_VALUES = [
-	'pending', 'accepted', 'declined',
-] as const;
-
-//
-// Define schemas using constants
+const SCOPE_VALUES = ['stop', 'lines'] as const;
+const STATUS_VALUES = ['pending', 'accepted', 'declined'] as const;
 
 export const scopeSchema = z.enum(SCOPE_VALUES);
 export const statusSchema = z.enum(STATUS_VALUES).default('pending');
+
+export type Scope = z.infer<typeof scopeSchema>;
+export type Status = z.infer<typeof statusSchema>;
+
+// Define schemas using constants
 
 export const ProposedChangeSchema = DocumentSchema.extend({
 	field_path: z.string(),
@@ -33,64 +28,12 @@ export const ProposedChangeSchema = DocumentSchema.extend({
 	user_id: z.string(),
 }).strict();
 
-export const CreateProposedChangeSchema = ProposedChangeSchema
-	.omit({ _id: true, created_at: true, updated_at: true });
-
-export const UpdateProposedChangeSchema = ProposedChangeSchema
-	.omit({ _id: true, created_at: true, updated_at: true })
-	.partial();
+export const CreateProposedChangeSchema = ProposedChangeSchema.omit({ _id: true, created_at: true, updated_at: true });
+export const UpdateProposedChangeSchema = CreateProposedChangeSchema.omit({ created_by: true }).partial();
 
 //
-// Define types based on schemas
+// Define the Proposed Change types
 
-export type Scope = z.infer<typeof scopeSchema>;
-export type Status = z.infer<typeof statusSchema>;
-
-//
-// Define the Proposed Change interface
-
-export interface ProposedChange
-	extends Omit<
-		z.infer<typeof ProposedChangeSchema>,
-		'created_at'
-		| 'field_path'
-		| 'field_value'
-		| 'scope'
-		| 'status'
-		| 'target_id'
-		| 'updated_at'
-		| 'user_id'
-	> {
-	created_at: UnixTimestamp
-	field_path: string
-	field_value: unknown
-	scope: Scope
-	status: Status
-	target_id: string
-	updated_at: UnixTimestamp
-	user_id: string
-}
-
-export interface CreateProposedChangeDto
-	extends Omit<
-		z.infer<typeof CreateProposedChangeSchema>,
-		'created_at'
-		| 'field_path'
-		| 'field_value'
-		| 'scope'
-		| 'status'
-		| 'target_id'
-		| 'updated_at'
-		| 'user_id'
-	> {
-	created_at: UnixTimestamp
-	field_path: string
-	field_value: unknown
-	scope: Scope
-	status: Status
-	target_id: string
-	updated_at: UnixTimestamp
-	user_id: string
-}
-
-export type UpdateProposedChangeDto = Partial<Omit<CreateProposedChangeDto, 'created_by'>>;
+export type ProposedChange = z.infer<typeof ProposedChangeSchema>;
+export type CreateProposedChangeDto = z.infer<typeof CreateProposedChangeSchema>;
+export type UpdateProposedChangeDto = z.infer<typeof UpdateProposedChangeSchema>;

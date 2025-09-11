@@ -1,7 +1,7 @@
 /* * */
 
 import { DocumentSchema } from '@/_common/document.js';
-import { type UnixTimestamp, unixTimeStampSchema } from '@/_common/unix-timestamp.js';
+import { unixTimeStampSchema } from '@/_common/unix-timestamp.js';
 import { type Permission, PermissionSchema } from '@/auth/permission.js';
 import { z } from 'zod';
 
@@ -40,15 +40,6 @@ export const UserSchema = DocumentSchema.extend({
 export const CreateUserSchema = UserSchema.omit({ _id: true, created_at: true, updated_at: true });
 export const UpdateUserSchema = CreateUserSchema.partial();
 
-export interface User extends Omit<z.infer<typeof UserSchema>, 'created_at' | 'email_verified' | 'permissions' | 'updated_at'> {
-	created_at: UnixTimestamp
-	email_verified?: null | UnixTimestamp
-	permissions: Permission<unknown>[]
-	updated_at: UnixTimestamp
-}
-export interface CreateUserDto extends Omit<z.infer<typeof CreateUserSchema>, 'created_at' | 'email_verified' | 'updated_at'> {
-	created_at?: UnixTimestamp
-	email_verified?: null | UnixTimestamp
-	updated_at?: UnixTimestamp
-}
-export type UpdateUserDto = Partial<CreateUserDto> & { password_hash?: string };
+export type User = z.infer<typeof UserSchema & { permissions: Permission<unknown>[] }>;
+export type CreateUserDto = z.infer<typeof CreateUserSchema>;
+export type UpdateUserDto = z.infer<typeof UpdateUserSchema>;

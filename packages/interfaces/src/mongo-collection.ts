@@ -210,12 +210,14 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	 * @param options - The options for the insert operation
 	 * @returns A promise that resolves to the result of the insert operation
 	 */
-	public async insertOne<TReturnDocument extends boolean = true>(doc: TCreate & { _id?: string, created_at?: UnixTimestamp, updated_at?: UnixTimestamp }, { options, unsafe = false }: { options?: InsertOneOptions & { returnResult?: TReturnDocument }, unsafe?: boolean } = {}): Promise<TReturnDocument extends true ? WithId<T> : InsertOneResult<T>> {
+	public async insertOne<TReturnDocument extends boolean = true>(doc: TCreate & { _id?: string, created_at?: UnixTimestamp, created_by?: string, updated_at?: UnixTimestamp, updated_by?: string }, { options, unsafe = false }: { options?: InsertOneOptions & { returnResult?: TReturnDocument }, unsafe?: boolean } = {}): Promise<TReturnDocument extends true ? WithId<T> : InsertOneResult<T>> {
 		const newDocument = {
 			...doc,
 			_id: doc._id || generateRandomString({ length: 5 }),
 			created_at: doc.created_at || Dates.now('utc').unix_timestamp,
+			created_by: doc.created_by || 'system',
 			updated_at: doc.updated_at || Dates.now('utc').unix_timestamp,
+			updated_by: doc.updated_by || 'system',
 		} as unknown as OptionalUnlessRequiredId<T>;
 
 		if (!doc._id) {
@@ -273,8 +275,13 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	 * @param options - The options for the update operation
 	 * @returns A promise that resolves to the result of the update operation
 	 */
-	public async updateMany<TReturnDocument extends boolean = true>(filter: Filter<T>, updateFields: TUpdate, options?: UpdateOptions & { returnResults?: TReturnDocument }): Promise<TReturnDocument extends true ? WithId<T>[] : UpdateResult<T>> {
-		let parsedUpdateFields = updateFields;
+	public async updateMany<TReturnDocument extends boolean = true>(filter: Filter<T>, updateFields: TUpdate & { updated_at?: UnixTimestamp, updated_by?: string }, options?: UpdateOptions & { returnResults?: TReturnDocument }): Promise<TReturnDocument extends true ? WithId<T>[] : UpdateResult<T>> {
+		let parsedUpdateFields = {
+			...updateFields,
+			updated_at: updateFields.updated_at || Dates.now('utc').unix_timestamp,
+			updated_by: updateFields.updated_by || 'system',
+		};
+
 		if (this.updateSchema) {
 			try {
 				parsedUpdateFields = this.updateSchema.parse(updateFields);

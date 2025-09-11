@@ -15,9 +15,25 @@ import styles from './styles.module.css';
 export interface DateTimePickerProps {
 
 	/**
+	 * Whether the input is clearable.
+	 * @default false
+	 */
+	clearable?: boolean
+
+	/**
+	 * Description of the input.
+	 */
+	description?: string
+
+	/**
 	 * Full width of the input.
 	 */
 	fullWidth?: boolean
+
+	/**
+	 * Label of the input.
+	 */
+	label?: string
 
 	/**
 	 * Left section of the input.
@@ -45,7 +61,7 @@ export interface DateTimePickerProps {
 
 /* * */
 
-export function DateTimePicker({ fullWidth, leftSection = <IconCalendar size={20} />, onChange, placeholder, value }: DateTimePickerProps) {
+export function DateTimePicker({ clearable, description, fullWidth, label, leftSection = <IconCalendar size={20} />, onChange, placeholder, value }: DateTimePickerProps) {
 	//
 
 	//
@@ -77,13 +93,18 @@ export function DateTimePicker({ fullWidth, leftSection = <IconCalendar size={20
 	return (
 		<MantineDateTimePicker
 			classNames={styles}
+			clearable={clearable}
+			description={description}
+			label={label}
 			leftSection={leftSection}
 			onChange={handleChange}
 			placeholder={placeholder}
 			style={{ width: fullWidth ? '100%' : undefined }}
 			value={valueAsString}
 			valueFormat="YYYY-MM-DD HH:mm"
-			clearable
+			popoverProps={{
+				withinPortal: false,
+			}}
 		/>
 	);
 

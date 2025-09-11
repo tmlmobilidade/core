@@ -66,29 +66,9 @@ export const RideSchema = DocumentSchema.extend({
 export const CreateRideSchema = RideSchema.partial({ _id: true }).omit({ created_at: true, updated_at: true });
 export const UpdateRideSchema = CreateRideSchema.partial();
 
-export interface Ride extends Omit<z.infer<typeof RideSchema>, 'created_at' | 'end_time_observed' | 'end_time_scheduled' | 'operational_date' | 'seen_first_at' | 'seen_last_at' | 'start_time_observed' | 'start_time_scheduled' | 'updated_at'> {
-	created_at: UnixTimestamp
-	end_time_observed: null | UnixTimestamp
-	end_time_scheduled: null | UnixTimestamp
-	operational_date: OperationalDate
-	seen_first_at: null | UnixTimestamp
-	seen_last_at: null | UnixTimestamp
-	start_time_observed: null | UnixTimestamp
-	start_time_scheduled: null | UnixTimestamp
-	updated_at: UnixTimestamp
-}
-
-export interface CreateRideDto extends Omit<z.infer<typeof CreateRideSchema>, 'end_time_observed' | 'end_time_scheduled' | 'operational_date' | 'seen_first_at' | 'seen_last_at' | 'start_time_observed' | 'start_time_scheduled'> {
-	end_time_observed: null | UnixTimestamp
-	end_time_scheduled: null | UnixTimestamp
-	operational_date: OperationalDate
-	seen_first_at: null | UnixTimestamp
-	seen_last_at: null | UnixTimestamp
-	start_time_observed: null | UnixTimestamp
-	start_time_scheduled: null | UnixTimestamp
-}
-
-export type UpdateRideDto = Partial<CreateRideDto>;
+export type Ride = z.infer<typeof RideSchema>;
+export type CreateRideDto = z.infer<typeof CreateRideSchema>;
+export type UpdateRideDto = z.infer<typeof UpdateRideSchema>;
 
 /* * */
 

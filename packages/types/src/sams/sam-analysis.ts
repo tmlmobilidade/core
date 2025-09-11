@@ -1,6 +1,6 @@
 /* * */
 
-import { type UnixTimestamp, unixTimeStampSchema } from '@/_common/unix-timestamp.js';
+import { unixTimeStampSchema } from '@/_common/unix-timestamp.js';
 import { SimplifiedApexTypeSchema } from '@/simplified-apex/simplified-apex-type.js';
 import { z } from 'zod';
 
@@ -23,7 +23,4 @@ export const SamAnalysisSchema = z.object({
 	vehicle_id: z.number().nullable(),
 }).strict();
 
-export interface SamAnalysis extends Omit<z.infer<typeof SamAnalysisSchema>, 'end_time' | 'start_time'> {
-	end_time: null | UnixTimestamp
-	start_time: null | UnixTimestamp
-}
+export type SamAnalysis = z.infer<typeof SamAnalysisSchema>;

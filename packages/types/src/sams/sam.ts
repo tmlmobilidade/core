@@ -1,7 +1,7 @@
 /* * */
 
 import { DocumentSchema } from '@/_common/document.js';
-import { type UnixTimestamp, unixTimeStampSchema } from '@/_common/unix-timestamp.js';
+import { UnixTimestamp, unixTimeStampSchema } from '@/_common/unix-timestamp.js';
 import { type SamAnalysis, SamAnalysisSchema } from '@/sams/sam-analysis.js';
 import { ProcessingStatusSchema } from '@/system/processing-status.js';
 import { z } from 'zod';
@@ -32,18 +32,6 @@ export const UpdateSamSchema = CreateSamSchema.partial();
  * the transactions are real, unique and incremental. This allows the system to
  * detect if a transaction has been tampered with or if any transactions are missing.
  */
-export interface Sam extends Omit<z.infer<typeof SamSchema>, 'analysis' | 'created_at' | 'seen_first_at' | 'seen_last_at' | 'updated_at'> {
-	analysis: SamAnalysis[]
-	created_at: UnixTimestamp
-	seen_first_at: null | UnixTimestamp
-	seen_last_at: null | UnixTimestamp
-	updated_at: UnixTimestamp
-}
-
-export interface CreateSamDto extends Omit<z.infer<typeof CreateSamSchema>, 'analysis' | 'seen_first_at' | 'seen_last_at'> {
-	analysis: SamAnalysis[]
-	seen_first_at: null | UnixTimestamp
-	seen_last_at: null | UnixTimestamp
-}
-
-export type UpdateSamDto = Partial<CreateSamDto>;
+export type Sam = z.infer<typeof SamSchema>;
+export type CreateSamDto = z.infer<typeof CreateSamSchema>;
+export type UpdateSamDto = z.infer<typeof UpdateSamSchema>;

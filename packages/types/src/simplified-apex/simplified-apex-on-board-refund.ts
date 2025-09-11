@@ -1,7 +1,7 @@
 /* * */
 
 import { DocumentSchema } from '@/_common/document.js';
-import { type UnixTimestamp, unixTimeStampSchema } from '@/_common/unix-timestamp.js';
+import { unixTimeStampSchema } from '@/_common/unix-timestamp.js';
 import { z } from 'zod';
 
 /* * */
@@ -39,10 +39,5 @@ export const UpdateSimplifiedApexOnBoardRefundSchema = SimplifiedApexOnBoardRefu
  * for on-board ticket sales inside vehicles only. Refunds of tickets when inside vehicles also generate a validation transaction.
  * Refunds can be refunded, and refunds are also APEX transactions of type 3.
  */
-export interface SimplifiedApexOnBoardRefund extends Omit<z.infer<typeof SimplifiedApexOnBoardRefundSchema>, 'created_at' | 'received_at' | 'updated_at'> {
-	created_at: UnixTimestamp
-	received_at: UnixTimestamp
-	updated_at: UnixTimestamp
-}
-
-export type UpdateSimplifiedApexOnBoardRefundDto = Partial<SimplifiedApexOnBoardRefund>;
+export type SimplifiedApexOnBoardRefund = z.infer<typeof SimplifiedApexOnBoardRefundSchema>;
+export type UpdateSimplifiedApexOnBoardRefundDto = z.infer<typeof UpdateSimplifiedApexOnBoardRefundSchema>;

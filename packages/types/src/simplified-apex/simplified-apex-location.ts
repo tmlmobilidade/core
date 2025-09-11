@@ -1,7 +1,7 @@
 /* * */
 
 import { DocumentSchema } from '@/_common/document.js';
-import { type UnixTimestamp, unixTimeStampSchema } from '@/_common/unix-timestamp.js';
+import { unixTimeStampSchema } from '@/_common/unix-timestamp.js';
 import { z } from 'zod';
 
 /* * */
@@ -29,10 +29,5 @@ export const UpdateSimplifiedApexLocationSchema = SimplifiedApexLocationSchema.p
  * of products. In summary, these transactions are generated every time the vehicle has a change
  * in the current stop ID, trip ID, route ID, pattern ID, etc.
  */
-export interface SimplifiedApexLocation extends Omit<z.infer<typeof SimplifiedApexLocationSchema>, 'created_at' | 'received_at' | 'updated_at'> {
-	created_at: UnixTimestamp
-	received_at: UnixTimestamp
-	updated_at: UnixTimestamp
-}
-
-export type UpdateSimplifiedApexLocationDto = Partial<SimplifiedApexLocation>;
+export type SimplifiedApexLocation = z.infer<typeof SimplifiedApexLocationSchema>;
+export type UpdateSimplifiedApexLocationDto = z.infer<typeof UpdateSimplifiedApexLocationSchema>;

@@ -31,7 +31,7 @@ export const SimplifiedApexOnBoardSaleSchema = DocumentSchema.extend({
 	vehicle_id: z.number().nullable(),
 }).strict();
 
-export const UpdateSimplifiedApexOnBoardSaleSchema = SimplifiedApexOnBoardSaleSchema.partial();
+export const UpdateSimplifiedApexOnBoardSaleSchema = SimplifiedApexOnBoardSaleSchema.omit({ created_by: true }).partial();
 
 /**
  * APEX OnBoard Sales are APEX transactions of type 3 that are generated whenever a sale

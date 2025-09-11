@@ -13,7 +13,7 @@ export const VerificationTokenSchema = DocumentSchema.extend({
 }).strict();
 
 export const CreateVerificationTokenSchema = VerificationTokenSchema.omit({ _id: true, created_at: true, updated_at: true });
-export const UpdateVerificationTokenSchema = CreateVerificationTokenSchema.partial();
+export const UpdateVerificationTokenSchema = CreateVerificationTokenSchema.omit({ created_by: true }).partial();
 
 /* * */
 

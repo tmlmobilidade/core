@@ -1,6 +1,6 @@
 /* * */
 
-import { type UnixTimestamp, unixTimeStampSchema } from '@/_common/unix-timestamp.js';
+import { unixTimeStampSchema } from '@/_common/unix-timestamp.js';
 import { ProcessingStatusSchema } from '@/system/processing-status.js';
 import { z } from 'zod';
 
@@ -14,6 +14,4 @@ export const PlanControllerSchema = z.object({
 
 /* * */
 
-export interface PlanController extends Omit<z.infer<typeof PlanControllerSchema>, 'timestamp'> {
-	timestamp: UnixTimestamp
-}
+export type PlanController = z.infer<typeof PlanControllerSchema>;

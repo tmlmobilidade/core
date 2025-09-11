@@ -72,6 +72,7 @@ export function SucessfulGtfsValidationEmail({ first_name, validation }: Sucessf
 const validation: GtfsValidation = {
 	_id: '123',
 	created_at: 1715328000 as UnixTimestamp,
+	created_by: '',
 	feeder_status: 'success' as ProcessingStatus,
 	file_id: '123',
 	gtfs_agency: {
@@ -89,6 +90,7 @@ const validation: GtfsValidation = {
 		total_warnings: 3,
 	},
 	updated_at: 1715328000 as UnixTimestamp,
+	updated_by: '',
 };
 
 SucessfulGtfsValidationEmail.PreviewProps = {

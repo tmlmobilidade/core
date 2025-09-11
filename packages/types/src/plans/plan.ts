@@ -21,31 +21,14 @@ export const PlanSchema = DocumentSchema.extend({
 	status_merger: ProcessingStatusSchema.default('waiting'),
 }).strict();
 
-export const CreatePlanSchema = PlanSchema.omit({
-	_id: true,
-	created_at: true,
-	updated_at: true,
-});
-
-export const UpdatePlanSchema = CreatePlanSchema.partial();
+export const CreatePlanSchema = PlanSchema.omit({ _id: true, created_at: true, updated_at: true });
+export const UpdatePlanSchema = CreatePlanSchema.omit({ created_by: true }).partial();
 
 /* * */
 
-export interface Plan extends Omit<z.infer<typeof PlanSchema>, 'controller' | 'created_at' | 'gtfs_agency' | 'gtfs_feed_info' | 'updated_at'> {
-	controller: PlanController
-	created_at: UnixTimestamp
-	gtfs_agency: GtfsAgency
-	gtfs_feed_info: GtfsFeedInfo
-	updated_at: UnixTimestamp
-}
-
-export interface CreatePlanDto extends Omit<z.infer<typeof CreatePlanSchema>, 'controller' | 'gtfs_agency' | 'gtfs_feed_info'> {
-	controller: PlanController
-	gtfs_agency: GtfsAgency
-	gtfs_feed_info: GtfsFeedInfo
-}
-
-export type UpdatePlanDto = Partial<CreatePlanDto>;
+export type Plan = z.infer<typeof PlanSchema>;
+export type CreatePlanDto = z.infer<typeof CreatePlanSchema>;
+export type UpdatePlanDto = z.infer<typeof UpdatePlanSchema>;
 
 /* * */
 

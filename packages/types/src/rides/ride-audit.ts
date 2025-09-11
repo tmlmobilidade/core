@@ -13,7 +13,7 @@ export const RideAuditSchema = DocumentSchema.extend({
 }).strict();
 
 export const CreateRideAuditSchema = RideAuditSchema.partial({ _id: true }).omit({ created_at: true, updated_at: true });
-export const UpdateRideAuditSchema = CreateRideAuditSchema.partial();
+export const UpdateRideAuditSchema = CreateRideAuditSchema.omit({ created_by: true }).partial();
 
 /* * */
 

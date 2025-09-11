@@ -98,6 +98,7 @@ const mockPlan: Plan = {
 		timestamp: 1715328000 as UnixTimestamp,
 	},
 	created_at: 1715328000 as UnixTimestamp,
+	created_by: '',
 	gtfs_agency: {
 		agency_id: 'TML001',
 		agency_name: 'Transportes Metropolitanos de Lisboa',
@@ -116,6 +117,7 @@ const mockPlan: Plan = {
 	},
 	status_merger: 'complete',
 	updated_at: 1715328000 as UnixTimestamp,
+	updated_by: '',
 };
 
 PlanApprovedEmail.PreviewProps = {

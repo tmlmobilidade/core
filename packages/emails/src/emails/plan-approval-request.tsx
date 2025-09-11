@@ -74,6 +74,7 @@ export function PlanApprovalRequestEmail({
 const mockValidation: GtfsValidation = {
 	_id: 'ABC123',
 	created_at: 1753885477000 as UnixTimestamp,
+	created_by: '',
 	feeder_status: 'complete',
 	file_id: '64f8b2a3c1d2e3f4a5b6c7d9',
 	gtfs_agency: {
@@ -91,6 +92,7 @@ const mockValidation: GtfsValidation = {
 		total_warnings: 2,
 	},
 	updated_at: 1753885477000 as UnixTimestamp,
+	updated_by: '',
 };
 
 PlanApprovalRequestEmail.PreviewProps = {

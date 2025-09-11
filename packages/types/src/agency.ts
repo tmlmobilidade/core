@@ -24,7 +24,7 @@ export const AgencySchema = DocumentSchema.extend({
 }).strip();
 
 export const CreateAgencySchema = AgencySchema.omit({ created_at: true, updated_at: true });
-export const UpdateAgencySchema = CreateAgencySchema.partial();
+export const UpdateAgencySchema = CreateAgencySchema.omit({ created_by: true }).partial();
 
 /* * */
 

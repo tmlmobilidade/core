@@ -20,7 +20,7 @@ export const ZoneSchema = DocumentSchema.extend({
 }).strict();
 
 export const CreateZoneSchema = ZoneSchema.omit({ _id: true, created_at: true, updated_at: true });
-export const UpdateZoneSchema = CreateZoneSchema.partial();
+export const UpdateZoneSchema = CreateZoneSchema.omit({ created_by: true }).partial();
 
 export type Zone = Omit<z.infer<typeof ZoneSchema>, 'geojson'> & { geojson: GeoJSON };
 export type CreateZoneDto = Omit<z.infer<typeof CreateZoneSchema>, 'geojson'> & { geojson: GeoJSON };

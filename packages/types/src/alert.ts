@@ -53,7 +53,7 @@ export const AlertSchema = DocumentSchema.extend({
 }).strict();
 
 export const CreateAlertSchema = AlertSchema.omit({ _id: true, created_at: true, updated_at: true });
-export const UpdateAlertSchema = CreateAlertSchema.partial();
+export const UpdateAlertSchema = CreateAlertSchema.omit({ created_by: true }).partial();
 
 // Define the Alert interface
 export type Alert = z.infer<typeof AlertSchema>;

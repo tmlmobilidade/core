@@ -12,7 +12,7 @@ export const RoleSchema = DocumentSchema.extend({
 }).strict();
 
 export const CreateRoleSchema = RoleSchema.omit({ _id: true, created_at: true, updated_at: true });
-export const UpdateRoleSchema = CreateRoleSchema.partial();
+export const UpdateRoleSchema = CreateRoleSchema.omit({ created_by: true }).partial();
 
 export type Role = z.infer<typeof RoleSchema>;
 export type CreateRoleDto = z.infer<typeof CreateRoleSchema>;

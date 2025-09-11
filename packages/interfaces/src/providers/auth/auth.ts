@@ -137,8 +137,10 @@ class AuthProvider {
 		const session: Session = {
 			_id: generateRandomString(),
 			created_at: Dates.now('utc').unix_timestamp,
+			created_by: 'system',
 			token: generateRandomToken(),
 			updated_at: Dates.now('utc').unix_timestamp,
+			updated_by: 'system',
 			user_id: userData._id.toString(),
 		};
 
@@ -179,8 +181,10 @@ class AuthProvider {
 		const verificationToken = generateRandomToken();
 
 		await verificationTokens.insertOne({
+			created_by: 'system',
 			expires_at: Dates.now('utc').plus({ days: 7 }).unix_timestamp,
 			token: verificationToken,
+			updated_by: 'system',
 			user_id: insertNewUserResult._id,
 		});
 

@@ -23,7 +23,7 @@ export const SamSchema = DocumentSchema.extend({
 }).strict();
 
 export const CreateSamSchema = SamSchema.omit({ created_at: true, updated_at: true });
-export const UpdateSamSchema = CreateSamSchema.partial();
+export const UpdateSamSchema = CreateSamSchema.omit({ created_by: true }).partial();
 
 /**
  * SAMs are the chips that contain the keys used to sign APEX transactions.

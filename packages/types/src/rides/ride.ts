@@ -64,7 +64,7 @@ export const RideSchema = DocumentSchema.extend({
 }).strip();
 
 export const CreateRideSchema = RideSchema.partial({ _id: true }).omit({ created_at: true, updated_at: true });
-export const UpdateRideSchema = CreateRideSchema.partial();
+export const UpdateRideSchema = CreateRideSchema.omit({ created_by: true }).partial();
 
 export type Ride = z.infer<typeof RideSchema>;
 export type CreateRideDto = z.infer<typeof CreateRideSchema>;

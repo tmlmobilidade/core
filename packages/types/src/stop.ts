@@ -139,8 +139,8 @@ export const stopAreaSchema = DocumentSchema.extend({
 	parent_station_ids: z.array(z.string()),
 }).strict();
 
-export const CreateStopSchema = StopSchema.omit({ created_at: true, updated_at: true });
-export const UpdateStopSchema = StopSchema.omit({ _id: true, created_at: true, updated_at: true }).partial();
+export const CreateStopSchema = StopSchema.omit({ _id: true, created_at: true, updated_at: true });
+export const UpdateStopSchema = CreateStopSchema.omit({ created_by: true }).partial();
 
 //
 // Define the Stop interface

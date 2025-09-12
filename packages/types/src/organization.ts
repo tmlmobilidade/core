@@ -11,6 +11,7 @@ export const OrganizationValueSchema = z.union([
 	z.boolean(),
 	z.array(z.string()),
 	z.array(z.string()),
+	z.string(),
 ]);
 
 export type OrganizationValue = z.infer<typeof OrganizationValueSchema>;
@@ -18,6 +19,7 @@ export type OrganizationValue = z.infer<typeof OrganizationValueSchema>;
 /* * */
 
 export const OrganizationSchema = DocumentSchema.extend({
+	abbreviation: z.string().nullish(),
 	home_links: z.array(z.string()).default([]),
 	home_wikis: z.array(z.string()).default([]),
 	logo: z.string().nullish(),

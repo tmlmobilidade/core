@@ -68,7 +68,7 @@ class UsersClass extends MongoCollectionClass<User, CreateUserDto, UpdateUserDto
 	 * @returns A promise that resolves to the matching user documents or null if not found
 	 */
 	async findByOrganization(id: NewType, includePasswordHash = false) {
-		const users = await this.mongoCollection.find({ organization_ids: { $in: [id] } } as unknown as Filter<User>).toArray();
+		const users = await this.mongoCollection.find({ organization_id: { $in: [id] } } as unknown as Filter<User>).toArray();
 		return includePasswordHash ? users : users.map(user => this.deletePasswordHash(user));
 	}
 

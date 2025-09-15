@@ -26,6 +26,7 @@ export const SystemInfoCommentSchema = DocumentSchema.extend({
 });
 
 export const StatusChangedCommentSchema = DocumentSchema.extend({
+	accessor: z.string(),
 	curr_status: z.string().or(z.boolean()),
 	metadata: z.record(z.unknown()).nullish(),
 	prev_status: z.string().or(z.boolean()),

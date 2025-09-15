@@ -1,6 +1,6 @@
 /* * */
 
-import { AlertPermissionSchema, GtfsValidationPermissionSchema, PlanPermissionSchema } from '@tmlmobilidade/types';
+import { AlertPermissionSchema, GtfsValidationPermissionSchema, PlanPermissionSchema, RidePermissionSchema } from '@tmlmobilidade/types';
 
 /* * */
 
@@ -69,11 +69,20 @@ export const Permissions = Object.freeze({
 	},
 	rides: {
 		actions: {
-			read: 'read',
-			toggle_lock: 'toggle_lock',
-			update: 'update',
+			analsys_lock: 'analsys_lock',
+			analysis_lock: 'analysis_lock',
+			analysis_reprocess: 'analysis_reprocess',
+			analysis_update: 'analysis_update',
+			analysis_view: 'analysis_view',
+			audit_lock: 'audit_lock',
+			audit_update: 'audit_update',
+			audit_view: 'audit_view',
+			justification_approve: 'approve_justification',
+			justification_justify: 'justify',
+			justification_lock: 'lock_justification',
+			justification_view: 'view_justification',
 		},
-		resources: {},
+		resources: RidePermissionSchema.shape,
 		scope: 'rides',
 	},
 	roles: {

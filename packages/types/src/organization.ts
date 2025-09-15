@@ -5,9 +5,27 @@ import { z } from 'zod';
 
 /* * */
 
+export const OrganizationValueSchema = z.union([
+	z.string(),
+	z.string(),
+	z.boolean(),
+	z.array(z.string()),
+	z.array(z.string()),
+	z.string(),
+]);
+
+export type OrganizationValue = z.infer<typeof OrganizationValueSchema>;
+
+/* * */
+
 export const OrganizationSchema = DocumentSchema.extend({
-	code: z.string(),
-	name: z.string(),
+	home_links: z.array(z.string()).default([]),
+	home_wikis: z.array(z.string()).default([]),
+	logo: z.string().nullish(),
+	longname: z.string().nonempty(),
+	shortname: z.string().nonempty(),
+	theme: z.string().nullish(),
+
 }).strict();
 
 export const CreateOrganizationSchema = OrganizationSchema.omit({ _id: true, created_at: true, updated_at: true });

@@ -2,6 +2,7 @@
 
 /* * */
 
+import { useUserOrganization } from '@/hooks/use-user-organization';
 import { useUserPreference } from '@/hooks/use-user-preference';
 import { useColorScheme } from '@mantine/hooks';
 import { IconAB2, IconMoonFilled, IconSunFilled } from '@tabler/icons-react';
@@ -66,7 +67,11 @@ export const ThemeContextProvider = ({ children }: PropsWithChildren) => {
 	const systemColorScheme = useColorScheme();
 
 	const [activeMode, setActiveMode] = useUserPreference<ModeType>('ui', 'active_mode', 'system');
-	const [activeTheme, setActiveTheme] = useUserPreference<ThemeType>('ui', 'active_theme', 'ocean');
+	const [organization] = useUserOrganization();
+
+	const theme: ThemeType = organization && organization.theme && AVAILABLE_THEMES.some(t => t._id === organization.theme) ? organization.theme as ThemeType : 'ocean';
+
+	const [activeTheme, setActiveTheme] = useUserPreference<ThemeType>('ui', 'active_theme', theme);
 
 	//
 	// B. Handle actions
@@ -110,7 +115,7 @@ export const ThemeContextProvider = ({ children }: PropsWithChildren) => {
 			active_mode: activeMode,
 			active_theme: activeTheme,
 		},
-	}), [activeTheme]);
+	}), [activeTheme, activeMode]);
 
 	//
 	// D. Render components

@@ -9,18 +9,19 @@ import { isUrl } from '@tmlmobilidade/utils';
 /* * */
 
 export interface AvatarProps {
+	size?: 'lg' | 'md' | 'sm' | 'xl' | 'xs'
 	user: User
 }
 
-export function Avatar({ user }: AvatarProps) {
+export function Avatar({ size = 'md', user }: AvatarProps) {
 	//
 
 	//
 	// User has an avatar and it is a valid URL
 	if (user.avatar && isUrl(user.avatar)) {
-		return <MantineAvatar src={user.avatar} />;
+		return <MantineAvatar size={size} src={user.avatar} />;
 	}
 
 	// User does not have an avatar or the avatar is not a valid URL
-	return <MantineAvatar>{user.first_name.charAt(0) + user.last_name.charAt(0)}</MantineAvatar>;
+	return <MantineAvatar size={size}>{user.first_name.charAt(0) + user.last_name.charAt(0)}</MantineAvatar>;
 }

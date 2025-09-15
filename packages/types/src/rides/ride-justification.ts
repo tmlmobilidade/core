@@ -15,6 +15,10 @@ export const RIDE_JUSTIFICATION_CAUSE_OPTIONS = ['TECHNICAL_PROBLEM', 'DEMONSTRA
 export const RideJustificationCauseSchema = z.enum(RIDE_JUSTIFICATION_CAUSE_OPTIONS);
 export type RideJustificationCause = z.infer<typeof RideJustificationCauseSchema>;
 
+export const RIDE_JUSTIFICATION_SOURCE_OPTIONS = ['MANUAL', 'REALTIME_ALERT'] as const;
+export const RideJustificationSourceSchema = z.enum(RIDE_JUSTIFICATION_SOURCE_OPTIONS);
+export type RideJustificationSource = z.infer<typeof RideJustificationSourceSchema>;
+
 /* * */
 
 const CommentSchemaWithRideJustificationStatus = CommentSchema.superRefine((data, ctx) => {
@@ -44,6 +48,7 @@ export const RideJustificationSchema = DocumentSchema.extend({
 	analysis: RideAnalysisSchema,
 	comments: z.array(CommentSchemaWithRideJustificationStatus).default([]),
 	justification_cause: RideJustificationCauseSchema,
+	justification_source: RideJustificationSourceSchema,
 	pto_message: z.string().min(2).max(5000).default(''),
 	trip_id: z.string(),
 }).strict();

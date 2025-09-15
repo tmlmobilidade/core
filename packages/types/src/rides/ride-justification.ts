@@ -54,7 +54,7 @@ export const RideJustificationSchema = DocumentSchema.extend({
 }).strict();
 
 export const CreateRideJustificationSchema = RideJustificationSchema.partial({ _id: true }).omit({ created_at: true, updated_at: true });
-export const UpdateRideJustificationSchema = CreateRideJustificationSchema.omit({ created_by: true }).partial();
+export const UpdateRideJustificationSchema = CreateRideJustificationSchema.omit({ analysis: true, created_by: true, justification_source: true }).partial();
 
 export type RideJustification = z.infer<typeof RideJustificationSchema>;
 export type CreateRideJustificationDto = z.infer<typeof CreateRideJustificationSchema>;

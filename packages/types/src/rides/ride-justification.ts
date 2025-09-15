@@ -41,6 +41,8 @@ const CommentSchemaWithRideJustificationStatus = CommentSchema.superRefine((data
 	}
 });
 
+export type RideJustificationComment = z.infer<typeof CommentSchemaWithRideJustificationStatus>;
+
 /* * */
 
 export const RideJustificationSchema = DocumentSchema.extend({

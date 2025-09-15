@@ -3,7 +3,7 @@
 import { MongoCollectionClass } from '@/mongo-collection.js';
 import { CreateRideJustificationDto, RideJustification, RideJustificationSchema, UpdateRideJustificationDto, UpdateRideJustificationSchema } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
-import { IndexDescription } from 'mongodb';
+import { Filter, IndexDescription } from 'mongodb';
 import { z } from 'zod';
 
 /* * */
@@ -24,6 +24,18 @@ class RideJustificationClass extends MongoCollectionClass<RideJustification, Cre
 			RideJustificationClass._instance = instance;
 		}
 		return RideJustificationClass._instance;
+	}
+
+	public async createByTripId(trip_id: string, data: CreateRideJustificationDto): Promise<RideJustification> {
+		return super.insertOne({ ...data, trip_id } as RideJustification) as Promise<RideJustification>;
+	}
+
+	public async findByTripId(trip_id: string): Promise<null | RideJustification> {
+		return super.findOne({ trip_id } as Filter<RideJustification>) as Promise<null | RideJustification>;
+	}
+
+	public async updateByTripId(trip_id: string, data: UpdateRideJustificationDto): Promise<RideJustification> {
+		return super.updateOne({ trip_id } as Filter<RideJustification>, data) as Promise<RideJustification>;
 	}
 
 	protected getCollectionIndexes(): IndexDescription[] {

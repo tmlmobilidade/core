@@ -9,6 +9,7 @@ import { useThemeContext } from '@/contexts';
 import { useMeContext } from '@/contexts/Me.context';
 import { useUserOrganization } from '@/hooks/use-user-organization';
 import { Image } from '@mantine/core';
+import { useColorScheme } from '@mantine/hooks';
 import { type PropsWithChildren, Suspense } from 'react';
 
 import styles from './styles.module.css';
@@ -24,15 +25,16 @@ export function AppWrapper({ children }: PropsWithChildren) {
 	const meContext = useMeContext();
 	const themeContext = useThemeContext();
 	const [organization] = useUserOrganization();
+	const colorScheme = useColorScheme();
 
 	//
 	// B. Render components
 
 	const renderLogo = () => {
-		if (!organization) return <Loader size="sm" />;
+		if (!organization) return;
 
 		const themeMode = themeContext.data.active_mode;
-		const logoSrc = `/images/${organization.logo}-${themeMode}.png`;
+		const logoSrc = `/images/${organization.logo}-${themeMode === 'system' ? colorScheme : themeMode}.png`;
 
 		return (
 			<Image key={logoSrc} alt="App Logo" height={40} src={logoSrc} />

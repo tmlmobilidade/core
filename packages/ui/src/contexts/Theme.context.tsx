@@ -95,7 +95,17 @@ export const ThemeContextProvider = ({ children }: PropsWithChildren) => {
 
 	const activateMode = (modeId: ModeType) => {
 		if (!AVAILABLE_MODES.some(t => t._id === modeId)) return;
-		setActiveMode(modeId);
+
+		if (modeId === 'system') {
+			setActiveMode(systemColorScheme);
+			document.documentElement.setAttribute('data-mode', systemColorScheme);
+			document.documentElement.setAttribute('data-mantine-color-scheme', systemColorScheme);
+		}
+		else {
+			document.documentElement.setAttribute('data-mode', modeId);
+			document.documentElement.setAttribute('data-mantine-color-scheme', modeId);
+			setActiveMode(modeId);
+		}
 	};
 
 	const activateTheme = (themeId: ThemeType) => {

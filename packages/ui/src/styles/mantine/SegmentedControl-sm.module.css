@@ -15,8 +15,8 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	padding: calc(var(--size-spacing-md) / 2) var(--size-spacing-md);
-	font-size: var(--font-size-md);
+	padding: calc(var(--size-spacing-sm) / 2) var(--size-spacing-sm);
+	font-size: var(--font-size-sm);
 	font-weight: var(--font-weight-semibold);
 	line-height: 1;
     color: var(--color-primary);

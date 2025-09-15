@@ -22,8 +22,8 @@ export const OrganizationSchema = DocumentSchema.extend({
 	home_links: z.array(z.string()).default([]),
 	home_wikis: z.array(z.string()).default([]),
 	logo: z.string().nullish(),
-	longname: z.string().nonempty(),
-	shortname: z.string().nonempty(),
+	long_name: z.string().nonempty(),
+	short_name: z.string().nonempty(),
 	theme: z.string().nullish(),
 
 }).strict();

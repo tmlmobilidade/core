@@ -3,7 +3,7 @@
 /* * */
 
 import { SidebarItem } from '@/components/sidebar/SidebarItem';
-import { IconAlertTriangle, IconBuildings, IconBusStop, IconClockExclamation, IconFileCertificate, IconFileCheck, IconHome, IconKey, IconListCheck, IconUser } from '@tabler/icons-react';
+import { IconAlertTriangle, IconBuildings, IconBusStop, IconClockExclamation, IconFileCertificate, IconFileCheck, IconHome, IconKey, IconListCheck, IconSitemap, IconUser } from '@tabler/icons-react';
 import { getAppConfig, Permissions } from '@tmlmobilidade/lib';
 
 import styles from './styles.module.css';
@@ -41,6 +41,13 @@ export const sidebarApps = [
 		icon: <IconBuildings size={26} />,
 		label: 'Operadores',
 		permissions: [{ action: Permissions.agencies.actions.read, scope: Permissions.agencies.scope }],
+	},
+	{
+		_id: 'organizations',
+		href: `${getAppConfig('auth', 'frontend_url')}/organizations`,
+		icon: <IconSitemap size={26} />,
+		label: 'Organizações',
+		permissions: [{ action: Permissions.organizations.actions.read, scope: Permissions.organizations.scope }],
 	},
 	{
 		_id: 'alerts',

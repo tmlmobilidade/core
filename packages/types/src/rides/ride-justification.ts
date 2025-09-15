@@ -1,6 +1,6 @@
 /* * */
 
-import { CommentSchema, CommentTypeSchema } from '@/_common/comment.js';
+import { CommentSchema } from '@/_common/comment.js';
 import { DocumentSchema } from '@/_common/document.js';
 import { RideAnalysisSchema } from '@/rides/ride-analysis.js';
 import { z } from 'zod';
@@ -19,36 +19,16 @@ export const RIDE_JUSTIFICATION_SOURCE_OPTIONS = ['MANUAL', 'REALTIME_ALERT'] as
 export const RideJustificationSourceSchema = z.enum(RIDE_JUSTIFICATION_SOURCE_OPTIONS);
 export type RideJustificationSource = z.infer<typeof RideJustificationSourceSchema>;
 
-/* * */
-
-const CommentSchemaWithRideJustificationStatus = CommentSchema.superRefine((data, ctx) => {
-	if (data.type === CommentTypeSchema.enum.statusChanged) {
-		const d = data as unknown as { curr_status: string, prev_status: string };
-		if (RideAcceptanceStatusSchema.safeParse(d.curr_status).error) {
-			ctx.addIssue({
-				code: z.ZodIssueCode.custom,
-				message: 'curr_status must be a valid ride acceptance status',
-				path: ['curr_status'],
-			});
-		}
-		if (RideAcceptanceStatusSchema.safeParse(d.prev_status).error) {
-			ctx.addIssue({
-				code: z.ZodIssueCode.custom,
-				message: 'prev_status must be a valid ride acceptance status',
-				path: ['prev_status'],
-			});
-		}
-	}
-});
-
-export type RideJustificationComment = z.infer<typeof CommentSchemaWithRideJustificationStatus>;
+export const RIDE_JUSTIFICATION_STATUS_TYPE_OPTIONS = ['locked_status', 'acceptance_status', 'pto_message'] as const;
+export const RideJustificationStatusTypeSchema = z.enum(RIDE_JUSTIFICATION_STATUS_TYPE_OPTIONS);
+export type RideJustificationStatusType = z.infer<typeof RideJustificationStatusTypeSchema>;
 
 /* * */
 
 export const RideJustificationSchema = DocumentSchema.extend({
 	acceptance_status: RideAcceptanceStatusSchema,
 	analysis: RideAnalysisSchema,
-	comments: z.array(CommentSchemaWithRideJustificationStatus).default([]),
+	comments: z.array(CommentSchema).default([]),
 	is_locked: z.boolean().default(false),
 	justification_cause: RideJustificationCauseSchema,
 	justification_source: RideJustificationSourceSchema,

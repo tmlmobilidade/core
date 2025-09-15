@@ -1,7 +1,7 @@
 /* * */
 
 import { DocumentSchema } from '@/_common/document.js';
-import { validateOperationalDate } from '@/_common/operational-date.js';
+import { operationalDateSchema } from '@/_common/operational-date.js';
 import { z } from 'zod';
 
 /* * */
@@ -15,7 +15,7 @@ export const AgencySchema = DocumentSchema.extend({
 		total_vkm_per_year: z.number(),
 	}),
 	name: z.string(),
-	operation_start_date: z.string().transform(validateOperationalDate).brand('OperationalDate'),
+	operation_start_date: operationalDateSchema,
 	phone: z.string(),
 	public_email: z.string().email(),
 	short_name: z.string(),

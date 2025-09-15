@@ -51,10 +51,11 @@ async function fetchUserPermissions<T>(sessionToken: string): Promise<Permission
 /**
  * Creates an authorization middleware that validates user authentication and permissions
  * @param scope - The permission scope to check (optional)
- * @param action - The permission action to check (optional)
+ * @param action - The permission action(s) to check (optional)
+ * @param requireAll - Whether all actions must be true or at least one must be true
  * @returns Fastify middleware function
  */
-export function authorizationMiddleware<T = unknown>(scope?: string, action?: string) {
+export function authorizationMiddleware<T = unknown>(scope?: string, actions?: string | string[], requireAll = false) {
 	return async (request: FastifyRequest): Promise<void> => {
 		const sessionToken = request.cookies.session_token;
 
@@ -70,9 +71,26 @@ export function authorizationMiddleware<T = unknown>(scope?: string, action?: st
 		const permissions = await fetchUserPermissions<T>(sessionToken);
 		request.permissions = permissions;
 
-		// Check specific permissions if required
-		if (scope && action && !hasPermission(permissions, scope, action)) {
-			throw new HttpException(HttpStatus.FORBIDDEN, 'Insufficient permissions');
+		//
+		// Check Permissions
+
+		if (!scope) return;
+
+		if (Array.isArray(actions)) {
+			const results = actions.map(action => hasPermission(permissions, scope, action));
+
+			const isAllowed = requireAll
+				? results.every(Boolean) // all must be true
+				: results.some(Boolean); // at least one must be true
+
+			if (!isAllowed) {
+				throw new HttpException(HttpStatus.FORBIDDEN, 'Insufficient permissions');
+			}
+		}
+		else {
+			if (!hasPermission(permissions, scope, actions as string)) {
+				throw new HttpException(HttpStatus.FORBIDDEN, 'Insufficient permissions');
+			}
 		}
 	};
 }

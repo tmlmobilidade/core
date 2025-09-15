@@ -61,7 +61,7 @@ export const sidebarApps = [
 		href: `${getAppConfig('controller', 'frontend_url')}/rides`,
 		icon: <IconListCheck size={26} />,
 		label: 'Circulações',
-		permissions: [{ action: Permissions.rides.actions.read, scope: Permissions.rides.scope }],
+		permissions: [{ action: Permissions.rides.actions.analysis_read, scope: Permissions.rides.scope }],
 	},
 	// {
 	// 	_id: 'sams',

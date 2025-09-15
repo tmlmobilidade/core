@@ -1,7 +1,7 @@
 /* * */
 
 import { DocumentSchema } from '@/_common/document.js';
-import { validateOperationalDate } from '@/_common/operational-date.js';
+import { operationalDateSchema } from '@/_common/operational-date.js';
 import { unixTimeStampSchema } from '@/_common/unix-timestamp.js';
 import { atLeastOneVehicleEventOnFirstStopSchema, endedAtLastStopSchema, expectedApexValidationIntervalSchema, expectedDriverIdQtySchema, expectedStartTimeSchema, expectedVehicleEventDelaySchema, expectedVehicleEventIntervalSchema, expectedVehicleEventQtySchema, expectedVehicleIdQtySchema, matchingApexLocationsSchema, matchingVehicleIdsSchema, simpleOneApexValidationSchema, simpleOneVehicleEventOrApexValidationSchema, simpleThreeVehicleEventsSchema, transactionSequentialitySchema } from '@/rides/ride-analysis.js';
 import { ProcessingStatusSchema } from '@/system/processing-status.js';
@@ -43,7 +43,7 @@ export const RideSchema = DocumentSchema.extend({
 	hashed_trip_id: z.string(),
 	headsign: z.string(),
 	line_id: z.number(),
-	operational_date: z.string().transform(validateOperationalDate).brand('OperationalDate'),
+	operational_date: operationalDateSchema,
 	passengers_estimated: z.number().nullable(),
 	passengers_observed: z.number().nullable(),
 	passengers_observed_on_board_sales_amount: z.number().nullable(),

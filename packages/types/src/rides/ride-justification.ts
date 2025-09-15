@@ -15,6 +15,10 @@ export const RIDE_JUSTIFICATION_CAUSE_OPTIONS = ['TECHNICAL_PROBLEM', 'DEMONSTRA
 export const RideJustificationCauseSchema = z.enum(RIDE_JUSTIFICATION_CAUSE_OPTIONS);
 export type RideJustificationCause = z.infer<typeof RideJustificationCauseSchema>;
 
+export const RIDE_JUSTIFICATION_SOURCE_OPTIONS = ['MANUAL', 'REALTIME_ALERT'] as const;
+export const RideJustificationSourceSchema = z.enum(RIDE_JUSTIFICATION_SOURCE_OPTIONS);
+export type RideJustificationSource = z.infer<typeof RideJustificationSourceSchema>;
+
 /* * */
 
 const CommentSchemaWithRideJustificationStatus = CommentSchema.superRefine((data, ctx) => {
@@ -37,19 +41,23 @@ const CommentSchemaWithRideJustificationStatus = CommentSchema.superRefine((data
 	}
 });
 
+export type RideJustificationComment = z.infer<typeof CommentSchemaWithRideJustificationStatus>;
+
 /* * */
 
 export const RideJustificationSchema = DocumentSchema.extend({
 	acceptance_status: RideAcceptanceStatusSchema,
 	analysis: RideAnalysisSchema,
 	comments: z.array(CommentSchemaWithRideJustificationStatus).default([]),
+	is_locked: z.boolean().default(false),
 	justification_cause: RideJustificationCauseSchema,
+	justification_source: RideJustificationSourceSchema,
 	pto_message: z.string().min(2).max(5000).default(''),
 	trip_id: z.string(),
 }).strict();
 
 export const CreateRideJustificationSchema = RideJustificationSchema.partial({ _id: true }).omit({ created_at: true, updated_at: true });
-export const UpdateRideJustificationSchema = CreateRideJustificationSchema.omit({ created_by: true }).partial();
+export const UpdateRideJustificationSchema = CreateRideJustificationSchema.omit({ analysis: true, created_by: true, justification_source: true }).partial();
 
 export type RideJustification = z.infer<typeof RideJustificationSchema>;
 export type CreateRideJustificationDto = z.infer<typeof CreateRideJustificationSchema>;

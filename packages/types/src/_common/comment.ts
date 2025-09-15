@@ -1,7 +1,6 @@
 /* * */
 
 import { DocumentSchema } from '@/_common/document.js';
-import { type UnixTimestamp } from '@/_common/unix-timestamp.js';
 import { z } from 'zod';
 
 /* * */
@@ -50,10 +49,7 @@ export const CommentSchema = z
 	});
 
 /* * */
-export interface Comment extends Omit<z.infer<typeof CommentSchema>, 'created_at' | 'updated_at'> {
-	created_at: UnixTimestamp
-	updated_at: UnixTimestamp
-}
 
-export type CreateCommentDto = Omit<z.infer<typeof CommentSchema>, 'created_at' | 'updated_at'>;
-export type UpdateCommentDto = Partial<Omit<CreateCommentDto, 'created_by'>>;
+export type Comment = z.infer<typeof CommentSchema>;
+export type CreateCommentDto = z.infer<typeof CommentSchema>;
+export type UpdateCommentDto = Partial<CreateCommentDto>;

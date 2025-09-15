@@ -8,8 +8,8 @@ import { z } from 'zod';
 
 /* * */
 
-class OrganizationClass extends MongoCollectionClass<Organization, CreateOrganizationDto, UpdateOrganizationDto> {
-	private static _instance: OrganizationClass;
+class OrganizationsClass extends MongoCollectionClass<Organization, CreateOrganizationDto, UpdateOrganizationDto> {
+	private static _instance: OrganizationsClass;
 	protected override createSchema: z.ZodSchema = CreateOrganizationSchema;
 	protected override updateSchema: z.ZodSchema = UpdateOrganizationSchema;
 
@@ -18,12 +18,12 @@ class OrganizationClass extends MongoCollectionClass<Organization, CreateOrganiz
 	}
 
 	public static async getInstance() {
-		if (!OrganizationClass._instance) {
-			const instance = new OrganizationClass();
+		if (!OrganizationsClass._instance) {
+			const instance = new OrganizationsClass();
 			await instance.connect();
-			OrganizationClass._instance = instance;
+			OrganizationsClass._instance = instance;
 		}
-		return OrganizationClass._instance;
+		return OrganizationsClass._instance;
 	}
 
 	/**
@@ -60,9 +60,13 @@ class OrganizationClass extends MongoCollectionClass<Organization, CreateOrganiz
 		return 'organizations';
 	}
 
+	protected getCreateSchema(): z.ZodSchema {
+		return OrganizationSchema;
+	}
+
 	protected getEnvName(): string {
 		return 'DATABASE_URI';
 	}
 }
 
-export const organization = AsyncSingletonProxy(OrganizationClass);
+export const organizations = AsyncSingletonProxy(OrganizationsClass);

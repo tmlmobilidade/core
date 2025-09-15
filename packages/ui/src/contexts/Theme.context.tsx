@@ -110,7 +110,7 @@ export const ThemeContextProvider = ({ children }: PropsWithChildren) => {
 			active_mode: activeMode,
 			active_theme: activeTheme,
 		},
-	}), [activeTheme]);
+	}), [activeTheme, activeMode]);
 
 	//
 	// D. Render components

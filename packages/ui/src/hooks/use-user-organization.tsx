@@ -3,7 +3,7 @@
 /* * */
 import { getAppConfig, HttpException } from '@tmlmobilidade/lib';
 import { type Organization } from '@tmlmobilidade/types';
-import { useMeContext, useThemeContext } from 'index';
+import { useMeContext } from 'index';
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 

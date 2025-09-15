@@ -47,6 +47,7 @@ export const RideJustificationSchema = DocumentSchema.extend({
 	acceptance_status: RideAcceptanceStatusSchema,
 	analysis: RideAnalysisSchema,
 	comments: z.array(CommentSchemaWithRideJustificationStatus).default([]),
+	is_locked: z.boolean().default(false),
 	justification_cause: RideJustificationCauseSchema,
 	justification_source: RideJustificationSourceSchema,
 	pto_message: z.string().min(2).max(5000).default(''),

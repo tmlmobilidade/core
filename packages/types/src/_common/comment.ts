@@ -53,4 +53,9 @@ export const CommentSchema = z
 
 export type Comment = z.infer<typeof CommentSchema>;
 export type NoteComment = z.infer<typeof NoteCommentSchema>;
-export type FieldChangedComment = z.infer<typeof FieldChangedCommentSchema>;
+export interface FieldChangedComment<T, K extends keyof T> {
+	curr_value: T[K]
+	field: K
+	prev_value: T[K]
+	type: typeof CommentTypeSchema.enum.field_changed
+}

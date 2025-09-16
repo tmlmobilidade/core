@@ -52,3 +52,5 @@ export const CommentSchema = z
 /* * */
 
 export type Comment = z.infer<typeof CommentSchema>;
+export type NoteComment = z.infer<typeof NoteCommentSchema>;
+export type FieldChangedComment = z.infer<typeof FieldChangedCommentSchema>;

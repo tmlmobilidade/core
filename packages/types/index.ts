@@ -15,6 +15,7 @@ export * from '@/locations.js';
 export * from '@/organization.js';
 export * from '@/pcgi/index.js';
 export * from '@/plans/index.js';
+export * from '@/quick-link.js';
 export * from '@/rides/index.js';
 export * from '@/sams/index.js';
 export * from '@/simplified-apex/index.js';

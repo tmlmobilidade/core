@@ -43,10 +43,6 @@ class OrganizationsClass extends MongoCollectionClass<Organization, CreateOrgani
 	protected getEnvName(): string {
 		return 'DATABASE_URI';
 	}
-
-	protected getUpdateSchema(): z.ZodSchema {
-		return UpdateOrganizationSchema;
-	}
 }
 
 export const organizations = AsyncSingletonProxy(OrganizationsClass);

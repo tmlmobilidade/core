@@ -7,6 +7,7 @@ export * from '@/interfaces/locations/index.js';
 export * from '@/interfaces/organizations/index.js';
 export * from '@/interfaces/plans/index.js';
 export * from '@/interfaces/proposed-changes/index.js';
+export * from '@/interfaces/quick-links/index.js';
 export * from '@/interfaces/rides/index.js';
 export * from '@/interfaces/sams/index.js';
 export * from '@/interfaces/simplified-apex/index.js';

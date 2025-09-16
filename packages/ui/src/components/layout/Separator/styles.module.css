@@ -6,6 +6,7 @@
 	align-items: center;
 	justify-content: center;
     width: 100%;
+    margin: 0 auto;
     border-bottom: 1px solid var(--color-system-border-200);
 
     
@@ -23,18 +24,18 @@
     /* PROPS / MARGIN */
 
     &[data-margin="sm"] {
-        margin: var(--size-spacing-sm);
+        width: 98%;
     }
 
     &[data-margin="md"] {
-        margin: var(--size-spacing-md);
+        width: 85%;
     }
 
     &[data-margin="lg"] {
-        margin: var(--size-spacing-lg);
+        width: 70%;
     }
 
     &[data-margin="none"] {
-        margin: 0;
+        width: 100%;
     }
 }

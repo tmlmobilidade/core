@@ -2,7 +2,7 @@
 
 import { CommentSchema } from '@/_common/comment.js';
 import { DocumentSchema } from '@/_common/document.js';
-import { RideAnalysisSchema } from '@/rides/ride-analysis.js';
+import { atLeastOneVehicleEventOnFirstStopSchema, endedAtLastStopSchema, expectedApexValidationIntervalSchema, expectedDriverIdQtySchema, expectedStartTimeSchema, expectedVehicleEventDelaySchema, expectedVehicleEventIntervalSchema, expectedVehicleEventQtySchema, expectedVehicleIdQtySchema, matchingApexLocationsSchema, matchingVehicleIdsSchema, RideAnalysisSchema, simpleOneApexValidationSchema, simpleOneVehicleEventOrApexValidationSchema, simpleThreeVehicleEventsSchema, transactionSequentialitySchema } from '@/rides/ride-analysis.js';
 import { z } from 'zod';
 
 /* * */
@@ -27,7 +27,24 @@ export type RideJustificationStatusType = z.infer<typeof RideJustificationStatus
 
 export const RideJustificationSchema = DocumentSchema.extend({
 	acceptance_status: RideAcceptanceStatusSchema,
-	analysis: RideAnalysisSchema,
+	analysis: z.object({
+		AT_LEAST_ONE_VEHICLE_EVENT_ON_FIRST_STOP: atLeastOneVehicleEventOnFirstStopSchema,
+		ENDED_AT_LAST_STOP: endedAtLastStopSchema,
+		EXPECTED_APEX_VALIDATION_INTERVAL: expectedApexValidationIntervalSchema,
+		EXPECTED_DRIVER_ID_QTY: expectedDriverIdQtySchema,
+		EXPECTED_START_TIME: expectedStartTimeSchema,
+		EXPECTED_VEHICLE_EVENT_DELAY: expectedVehicleEventDelaySchema,
+		EXPECTED_VEHICLE_EVENT_INTERVAL: expectedVehicleEventIntervalSchema,
+		EXPECTED_VEHICLE_EVENT_QTY: expectedVehicleEventQtySchema,
+		EXPECTED_VEHICLE_ID_QTY: expectedVehicleIdQtySchema,
+		MATCHING_APEX_LOCATIONS: matchingApexLocationsSchema,
+		MATCHING_VEHICLE_IDS: matchingVehicleIdsSchema,
+		SIMPLE_ONE_APEX_VALIDATION: simpleOneApexValidationSchema,
+		SIMPLE_ONE_VEHICLE_EVENT_OR_APEX_VALIDATION: simpleOneVehicleEventOrApexValidationSchema,
+		SIMPLE_THREE_VEHICLE_EVENTS: simpleThreeVehicleEventsSchema,
+		TRANSACTION_SEQUENTIALITY: transactionSequentialitySchema,
+	}).nullable(),
+	analysisSummary: RideAnalysisSchema,
 	comments: z.array(CommentSchema).default([]),
 	is_locked: z.boolean().default(false),
 	justification_cause: RideJustificationCauseSchema,

@@ -3,25 +3,20 @@
 import { DocumentSchema } from '@/_common/document.js';
 import { z } from 'zod';
 
-import { QuickLinkSchema } from './quick-link.js';
-
 /* * */
 
-export const OrganizationValueSchema = z.union([
-	z.string(),
-	z.string(),
-	z.boolean(),
-	z.array(z.string()),
-	z.array(z.string()),
-	z.string(),
-]);
+export const HomeLinkSchema = z.object({
+	href: z.string(),
+	icon: z.string(),
+	title: z.string(),
+}).strict();
 
-export type OrganizationValue = z.infer<typeof OrganizationValueSchema>;
+export type HomeLink = z.infer<typeof HomeLinkSchema>;
 
 /* * */
 
 export const OrganizationSchema = DocumentSchema.extend({
-	home_links: z.array(QuickLinkSchema).default([]),
+	home_links: z.array(HomeLinkSchema).default([]),
 	home_wikis: z.array(z.string()).default([]),
 	logo: z.string().nullish(),
 	long_name: z.string().nonempty(),

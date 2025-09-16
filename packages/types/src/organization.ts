@@ -3,6 +3,8 @@
 import { DocumentSchema } from '@/_common/document.js';
 import { z } from 'zod';
 
+import { QuickLinkSchema } from './quick-link.js';
+
 /* * */
 
 export const OrganizationValueSchema = z.union([
@@ -19,7 +21,7 @@ export type OrganizationValue = z.infer<typeof OrganizationValueSchema>;
 /* * */
 
 export const OrganizationSchema = DocumentSchema.extend({
-	home_links: z.array(z.string()).default([]),
+	home_links: z.array(QuickLinkSchema).default([]),
 	home_wikis: z.array(z.string()).default([]),
 	logo: z.string().nullish(),
 	long_name: z.string().nonempty(),

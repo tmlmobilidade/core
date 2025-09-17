@@ -97,10 +97,10 @@ export function CommentBox({
 	);
 
 	const handleSubmit = useCallback(() => {
-		if (isSendDisabled) return;
+		if (isSendDisabled || loading) return;
 		onSubmit(value.trim());
 		setValue('');
-	}, [isSendDisabled, onSubmit, value]);
+	}, [isSendDisabled, loading, onSubmit, value]);
 
 	//
 	// D. Render

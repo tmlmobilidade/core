@@ -13,6 +13,14 @@ const CRUD_COMMENT_ACTION_OPTIONS = ['create', 'update', 'delete', 'archived', '
 export const CrudCommentSchemaActionSchema = z.enum(CRUD_COMMENT_ACTION_OPTIONS);
 export type CrudCommentSchemaAction = z.infer<typeof CrudCommentSchemaActionSchema>;
 
+export const CRUD_COMMENT_ACTION_OPTIONS_ICONS = Object.freeze({
+	archived: 'IconCircleDashedMinus',
+	create: 'IconCircleDashed',
+	delete: 'IconCircleDashedX',
+	restored: 'IconCircleDashedLetterR',
+	update: 'IconCircleDashedLetterU',
+});
+
 /* * */
 
 export const NoteCommentSchema = DocumentSchema.extend({

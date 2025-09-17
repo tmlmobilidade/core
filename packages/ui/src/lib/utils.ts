@@ -69,3 +69,7 @@ export function formatDate(input: number | string): string {
 export function tryParseDateToTimestamp(input: string): number | undefined {
 	return DateTime.fromISO(input).toMillis();
 }
+
+export function isPlatformMac() {
+	return navigator.userAgent.toUpperCase().includes('MAC');
+}

@@ -43,6 +43,7 @@ import SkeletonOverride from '@/styles/mantine/Skeleton.module.css';
 import SliderOverride from '@/styles/mantine/Slider.module.css';
 import SwitchOverride from '@/styles/mantine/Switch.module.css';
 import TextOverride from '@/styles/mantine/Text.module.css';
+import TextareaOverrideComment from '@/styles/mantine/Textarea-comment.module.css';
 import TextareaOverride from '@/styles/mantine/Textarea.module.css';
 import TextInputOverrideSm from '@/styles/mantine/TextInput-sm.module.css';
 import TextInputOverrideXl from '@/styles/mantine/TextInput-xl.module.css';
@@ -177,8 +178,11 @@ export const themeData: MantineThemeOverride = createTheme({
 		}),
 
 		Textarea: Textarea.extend({
-			classNames: {
-				...TextareaOverride,
+			classNames: (_, props) => {
+				return {
+					...TextareaOverride,
+					...(props.variant === 'comment' && TextareaOverrideComment),
+				};
 			},
 		}),
 

@@ -14,7 +14,7 @@ export type CommentType = z.infer<typeof CommentTypeSchema>;
 export const NoteCommentSchema = DocumentSchema.extend({
 	message: z.string(),
 	type: z.literal(CommentTypeSchema.enum.note),
-});
+}).partial({ _id: true });
 
 export const FieldChangedCommentSchema = DocumentSchema.extend({
 	curr_value: z.any(),
@@ -22,7 +22,7 @@ export const FieldChangedCommentSchema = DocumentSchema.extend({
 	metadata: z.record(z.unknown()).nullish(),
 	prev_value: z.any(),
 	type: z.literal(CommentTypeSchema.enum.field_changed),
-});
+}).partial({ _id: true });
 
 /* * */
 

@@ -9,17 +9,9 @@ const COMMENT_TYPE_OPTIONS = ['field_changed', 'note', 'crud'] as const;
 export const CommentTypeSchema = z.enum(COMMENT_TYPE_OPTIONS);
 export type CommentType = z.infer<typeof CommentTypeSchema>;
 
-const CRUD_COMMENT_ACTION_OPTIONS = ['create', 'update', 'delete', 'archived', 'restored'] as const;
+const CRUD_COMMENT_ACTION_OPTIONS = ['create', 'update', 'delete', 'archive', 'restore'] as const;
 export const CrudCommentSchemaActionSchema = z.enum(CRUD_COMMENT_ACTION_OPTIONS);
 export type CrudCommentSchemaAction = z.infer<typeof CrudCommentSchemaActionSchema>;
-
-export const CRUD_COMMENT_ACTION_OPTIONS_ICONS = Object.freeze({
-	archived: 'IconCircleDashedMinus',
-	create: 'IconCircleDashed',
-	delete: 'IconCircleDashedX',
-	restored: 'IconCircleDashedLetterR',
-	update: 'IconCircleDashedLetterU',
-});
 
 /* * */
 

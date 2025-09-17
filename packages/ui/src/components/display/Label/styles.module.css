@@ -50,3 +50,26 @@
 	font-weight: var(--font-weight-bold);
 	color: var(--color-system-text-100);
 }
+
+/* * */
+/* LABEL / VARIANT */
+
+.label[data-variant='default'] {
+	color: var(--color-system-text-100);
+}
+
+.label[data-variant='danger'] {
+	color: var(--color-status-danger-primary);
+}
+
+.label[data-variant='muted'] {
+	color: var(--color-system-text-300);
+}
+
+.label[data-variant='success'] {
+	color: var(--color-status-success-primary);
+}
+
+.label[data-variant='warning'] {
+	color: var(--color-status-warning-primary);
+}

@@ -12,13 +12,21 @@ export interface LabelProps {
 	overflow?: boolean
 	singleLine?: boolean
 	size?: 'lg' | 'md' | 'sm'
+	variant?: 'danger' | 'default' | 'muted' | 'success' | 'warning'
 }
 
 /* * */
 
-export function Label({ caps = false, children, overflow = false, singleLine = false, size = 'md' }: LabelProps) {
+export function Label({ caps = false, children, overflow = false, singleLine = false, size = 'md', variant }: LabelProps) {
 	return (
-		<p className={styles.label} data-caps={caps} data-overflow={overflow} data-single-line={singleLine} data-size={size}>
+		<p
+			className={styles.label}
+			data-caps={caps}
+			data-overflow={overflow}
+			data-single-line={singleLine}
+			data-size={size}
+			data-variant={variant}
+		>
 			{children}
 		</p>
 	);

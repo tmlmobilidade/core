@@ -14,7 +14,7 @@ import styles from './styles.module.css';
 
 /* * */
 
-export interface CommentBoxProps {
+export interface CommentInputProps {
 	/**
 	 * Disable the input and actions.
 	 */
@@ -48,14 +48,14 @@ export interface CommentBoxProps {
 
 /* * */
 
-export function CommentBox({
+export function CommentInput({
 	disabled,
 	error,
 	loading,
 	maxChars = 300,
 	onSubmit,
 	placeholder = 'Deixa um comentário...',
-}: CommentBoxProps) {
+}: CommentInputProps) {
 	//
 	// A. State
 	const [isFocused, setIsFocused] = useState(false);

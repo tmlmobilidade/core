@@ -1,5 +1,6 @@
 export * from '@/components/authentication';
 export * from '@/components/buttons';
+export * from '@/components/comments';
 export * from '@/components/common';
 export * from '@/components/datatable';
 export * from '@/components/dates';

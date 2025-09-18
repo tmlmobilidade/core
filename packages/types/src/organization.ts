@@ -6,8 +6,9 @@ import { z } from 'zod';
 /* * */
 
 export const HomeLinkSchema = z.object({
-	href: z.string(),
+	href: z.string().url(),
 	icon: z.string(),
+	order: z.number().min(0),
 	title: z.string(),
 }).strict();
 

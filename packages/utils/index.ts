@@ -1,6 +1,4 @@
 export * from '@/batching/index.js';
-export * from '@/compare-objects.js';
-export * from '@/convert-object.js';
 export * from '@/css/index.js';
 export * from '@/dates/index.js';
 export * from '@/files/files.js';
@@ -10,6 +8,7 @@ export * from '@/http.js';
 export * from '@/logs/index.js';
 export * from '@/math/index.js';
 export * from '@/navigation/index.js';
+export * from '@/objects/index.js';
 export * from '@/permissions.js';
 export * from '@/random/index.js';
 export * from '@/singleton-proxy.js';

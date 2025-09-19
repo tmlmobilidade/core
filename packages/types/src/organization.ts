@@ -3,8 +3,6 @@
 import { DocumentSchema } from '@/_common/document.js';
 import { z } from 'zod';
 
-import { FileSchema } from './file.js';
-
 /* * */
 
 export const HomeLinkSchema = z.object({

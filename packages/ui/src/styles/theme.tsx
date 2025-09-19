@@ -23,13 +23,14 @@ import '@/styles/themes/street.css';
 
 /* * */
 
-import { Accordion, ActionIcon, Button, Checkbox, createTheme, MantineThemeOverride, NumberInput, PasswordInput, PillsInput, PillsInputField, Popover, SegmentedControl, Skeleton, Slider, Switch, Text, Textarea, TextInput } from '@mantine/core';
+import { Accordion, ActionIcon, Avatar, Button, Checkbox, createTheme, MantineThemeOverride, NumberInput, PasswordInput, PillsInput, PillsInputField, Popover, SegmentedControl, Skeleton, Slider, Switch, Text, Textarea, TextInput } from '@mantine/core';
 import { IconCaretLeftFilled } from '@tabler/icons-react';
 
 /* * */
 
 import AccordionOverride from '@/styles/mantine/Accordion.module.css';
 import ActionIconOverride from '@/styles/mantine/ActionIcon.module.css';
+import AvatarOverride from '@/styles/mantine/Avatar.module.css';
 import ButtonOverride from '@/styles/mantine/Button.module.css';
 import CheckboxOverride from '@/styles/mantine/Checkbox.module.css';
 import CheckboxGroupOverride from '@/styles/mantine/CheckboxGroup.module.css';
@@ -42,6 +43,7 @@ import SkeletonOverride from '@/styles/mantine/Skeleton.module.css';
 import SliderOverride from '@/styles/mantine/Slider.module.css';
 import SwitchOverride from '@/styles/mantine/Switch.module.css';
 import TextOverride from '@/styles/mantine/Text.module.css';
+import TextareaOverrideComment from '@/styles/mantine/Textarea-comment.module.css';
 import TextareaOverride from '@/styles/mantine/Textarea.module.css';
 import TextInputOverrideSm from '@/styles/mantine/TextInput-sm.module.css';
 import TextInputOverrideXl from '@/styles/mantine/TextInput-xl.module.css';
@@ -64,6 +66,12 @@ export const themeData: MantineThemeOverride = createTheme({
 		ActionIcon: ActionIcon.extend({
 			classNames: {
 				...ActionIconOverride,
+			},
+		}),
+
+		Avatar: Avatar.extend({
+			classNames: {
+				...AvatarOverride,
 			},
 		}),
 
@@ -170,8 +178,11 @@ export const themeData: MantineThemeOverride = createTheme({
 		}),
 
 		Textarea: Textarea.extend({
-			classNames: {
-				...TextareaOverride,
+			classNames: (_, props) => {
+				return {
+					...TextareaOverride,
+					...(props.variant === 'comment' && TextareaOverrideComment),
+				};
 			},
 		}),
 

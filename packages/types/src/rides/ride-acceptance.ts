@@ -2,8 +2,9 @@
 
 import { CommentSchema } from '@/_common/comment.js';
 import { DocumentSchema } from '@/_common/document.js';
-import { RideAnalysisSchema } from '@/rides/ride-analysis.js';
 import { z } from 'zod';
+
+import { RideAnalysisSummarySchema } from './ride-analysis.js';
 
 /* * */
 
@@ -15,7 +16,7 @@ export const RIDE_JUSTIFICATION_CAUSE_OPTIONS = ['TECHNICAL_PROBLEM', 'DEMONSTRA
 export const RideJustificationCauseSchema = z.enum(RIDE_JUSTIFICATION_CAUSE_OPTIONS);
 export type RideJustificationCause = z.infer<typeof RideJustificationCauseSchema>;
 
-export const RIDE_JUSTIFICATION_SOURCE_OPTIONS = ['MANUAL', 'REALTIME_ALERT'] as const;
+export const RIDE_JUSTIFICATION_SOURCE_OPTIONS = ['MANUAL', 'ALERT'] as const;
 export const RideJustificationSourceSchema = z.enum(RIDE_JUSTIFICATION_SOURCE_OPTIONS);
 export type RideJustificationSource = z.infer<typeof RideJustificationSourceSchema>;
 
@@ -26,19 +27,27 @@ export type RideJustificationStatusType = z.infer<typeof RideJustificationStatus
 /* * */
 
 export const RideJustificationSchema = DocumentSchema.extend({
-	acceptance_status: RideAcceptanceStatusSchema,
-	analysis: RideAnalysisSchema,
-	comments: z.array(CommentSchema).default([]),
-	is_locked: z.boolean().default(false),
 	justification_cause: RideJustificationCauseSchema,
 	justification_source: RideJustificationSourceSchema,
 	pto_message: z.string().min(2).max(5000).default(''),
-	trip_id: z.string(),
-}).strict();
-
-export const CreateRideJustificationSchema = RideJustificationSchema.partial({ _id: true }).omit({ created_at: true, updated_at: true });
-export const UpdateRideJustificationSchema = CreateRideJustificationSchema.omit({ analysis: true, created_by: true, justification_source: true }).partial();
+}).omit({ _id: true }).strict();
 
 export type RideJustification = z.infer<typeof RideJustificationSchema>;
-export type CreateRideJustificationDto = z.infer<typeof CreateRideJustificationSchema>;
-export type UpdateRideJustificationDto = z.infer<typeof UpdateRideJustificationSchema>;
+
+/* * */
+
+export const RideAcceptanceSchema = DocumentSchema.extend({
+	acceptance_status: RideAcceptanceStatusSchema,
+	analysis_summary: RideAnalysisSummarySchema,
+	comments: z.array(CommentSchema).default([]),
+	is_locked: z.boolean().default(false),
+	justification: RideJustificationSchema.nullable(),
+	ride_id: z.string(),
+}).strict();
+
+export const CreateRideAcceptanceSchema = RideAcceptanceSchema.partial({ _id: true }).omit({ created_at: true, updated_at: true });
+export const UpdateRideAcceptanceSchema = RideAcceptanceSchema.omit({ created_at: true, created_by: true }).partial();
+
+export type RideAcceptance = z.infer<typeof RideAcceptanceSchema>;
+export type CreateRideAcceptanceDto = z.infer<typeof CreateRideAcceptanceSchema>;
+export type UpdateRideAcceptanceDto = z.infer<typeof UpdateRideAcceptanceSchema>;

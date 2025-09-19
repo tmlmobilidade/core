@@ -5,8 +5,32 @@ import { z } from 'zod';
 /* * */
 
 export const RIDE_ANALYSIS_GRADE_OPTIONS = ['pass', 'fail', 'skip', 'error'] as const;
-
 export const RideAnalysisGradeSchema = z.enum(RIDE_ANALYSIS_GRADE_OPTIONS);
+
+/* * */
+
+/**
+ * Schema for ride analysis summary.
+ *
+ * This schema represents a record where each key is a string and the value is an object
+ * containing:
+ * - grade: A value from the RideAnalysisGradeSchema, indicating the result of the analysis.
+ * - reason: A string providing the reason for the given grade.
+ *
+ * @example
+ * {
+ *   TEST_1: { grade: 'failed', reason: 'TEST_REASON' },
+ *   TEST_2: { grade: 'failed', reason: 'TEST_REASON' },
+ * }
+ */
+export const RideAnalysisSummarySchema = z.record(
+	z.string(), z.object({
+		grade: RideAnalysisGradeSchema,
+		reason: z.string(),
+	}),
+);
+
+export type RideAnalysisSummary = z.infer<typeof RideAnalysisSummarySchema>;
 
 /* * */
 

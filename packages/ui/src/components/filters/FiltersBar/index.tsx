@@ -1,7 +1,7 @@
 /* * */
 
 import { Label } from '@/components/display/Label';
-import { Toolbar } from '@/components/layout';
+import { Toolbar } from '@/components/layout/Toolbar';
 import { type PropsWithChildren } from 'react';
 
 /* * */

@@ -2,52 +2,42 @@
 
 /* * */
 
-import { files } from '@tmlmobilidade/interfaces';
 import { getAppConfig, HttpException } from '@tmlmobilidade/lib';
-import { type Organization } from '@tmlmobilidade/types';
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 import useSWR from 'swr';
 
 /* * */
+
+interface GetLogoSchema {
+	logo_dark: null | string
+	logo_light: null | string
+}
 
 /**
  * A hook to get organization logo as state.
  * @returns The current organization logo value.
  */
 
-export function useOrganizationLogo(organization_id: string): string | undefined {
+export function useOrganizationLogo(organization_id: string): null | string | undefined {
 	//
 
 	//
 	// A. Setup variables
 
-	const theme = document.getElementsByTagName('html')[0]?.getAttribute('data-mantine-color-scheme');
-	const [activeLogoData, setActiveLogoData] = useState<string | undefined>(undefined);
-	const { data: raw, error: error, isLoading: loading } = useSWR<Organization, HttpException>(`${getAppConfig('auth', 'api_url')}/organizations/${organization_id}`);
+	const theme = document.documentElement.getAttribute('data-mode');
+	const { data, error, isLoading } = useSWR<GetLogoSchema, HttpException>(`${getAppConfig('auth', 'api_url')}/organizations/${organization_id}/logo`);
 
 	//
 	// B. Handle actions
 
-	useEffect(() => {
-		if (!raw || organization_id || error) return;
-		(async () => {
-			if (!raw) return;
-
-			const logoId = theme === 'dark' ? raw.logo_dark || raw.logo_light : theme === 'light' ? raw.logo_light || raw.logo_dark : raw.logo_dark || raw.logo_light;
-
-			if (logoId) {
-				const file = await files.findById(logoId);
-				if (file?.url) {
-					setActiveLogoData(file?.url);
-				}
-			}
-		})();
-	}, [raw, organization_id, theme, loading]);
-
+	const themeLogo = useMemo(() => {
+		if (!data || isLoading || error || !theme) return undefined;
+		return theme === 'dark' ? data.logo_dark : data.logo_light;
+	}, [data, isLoading, error, theme]);
 	//
 	// C. Render components
 
-	return activeLogoData;
+	return themeLogo;
 
 	//
 }

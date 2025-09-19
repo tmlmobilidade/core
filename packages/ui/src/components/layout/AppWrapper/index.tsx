@@ -34,10 +34,10 @@ export function AppWrapper({ children }: PropsWithChildren) {
 		if (!organization) return;
 
 		const themeMode = themeContext.data.active_mode;
-		const logoSrc = `/images/${organization.logo}-${themeMode === 'system' ? colorScheme : themeMode}.png`;
-
+		const activeLogo = themeMode === 'system' ? (colorScheme === 'dark' ? organization.logo_dark : organization.logo_light) : (themeMode === 'dark' ? organization.logo_dark : organization.logo_light);
+		console.log('ACTIVE LOGO: ', activeLogo);
 		return (
-			<Image key={logoSrc} alt="App Logo" height={40} src={logoSrc} />
+			<Image key={activeLogo} alt="App Logo" height={40} src={activeLogo} />
 		);
 	};
 

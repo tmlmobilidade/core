@@ -65,6 +65,7 @@ class RideAcceptanceClass extends MongoCollectionClass<RideAcceptance, CreateRid
 					prev_value: prevAcceptance[key],
 					type: 'field_changed',
 					updated_at: Dates.now('utc').unix_timestamp,
+					updated_by: data.updated_by || 'system',
 				});
 			}
 
@@ -77,30 +78,20 @@ class RideAcceptanceClass extends MongoCollectionClass<RideAcceptance, CreateRid
 					prev_value: prevAcceptance[key],
 					type: 'field_changed',
 					updated_at: Dates.now('utc').unix_timestamp,
+					updated_by: data.updated_by || 'system',
 				});
 			}
 
-			if (key === 'justification.pto_message' && data.justification?.pto_message) {
+			if (key === 'justification' && data.justification) {
 				data.comments.push({
 					created_at: Dates.now('utc').unix_timestamp,
-					created_by: data.updated_by || 'system',
-					curr_value: data.justification.pto_message,
+					created_by: data.justification.updated_by || 'system',
+					curr_value: data.justification,
 					field: key,
-					prev_value: prevAcceptance.justification?.pto_message,
+					prev_value: prevAcceptance.justification,
 					type: 'field_changed',
 					updated_at: Dates.now('utc').unix_timestamp,
-				});
-			}
-
-			if (key === 'justification.justification_cause' && data.justification?.justification_cause) {
-				data.comments.push({
-					created_at: Dates.now('utc').unix_timestamp,
-					created_by: data.updated_by || 'system',
-					curr_value: data.justification.justification_cause,
-					field: key,
-					prev_value: prevAcceptance.justification?.justification_cause,
-					type: 'field_changed',
-					updated_at: Dates.now('utc').unix_timestamp,
+					updated_by: data.justification.updated_by || 'system',
 				});
 			}
 		}

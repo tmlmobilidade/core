@@ -9,7 +9,7 @@ import useSWR from 'swr';
 
 /* * */
 
-/**
+/*
  * A hook to get user organization as state.
  * @returns The current organization value.
  */

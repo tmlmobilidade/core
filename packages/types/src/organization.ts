@@ -3,27 +3,28 @@
 import { DocumentSchema } from '@/_common/document.js';
 import { z } from 'zod';
 
+import { FileSchema } from './file.js';
+
 /* * */
 
-export const OrganizationValueSchema = z.union([
-	z.string(),
-	z.string(),
-	z.boolean(),
-	z.array(z.string()),
-	z.array(z.string()),
-	z.string(),
-]);
+export const HomeLinkSchema = z.object({
+	href: z.string().url(),
+	icon: z.string(),
+	order: z.number().min(0),
+	title: z.string(),
+}).strict();
 
-export type OrganizationValue = z.infer<typeof OrganizationValueSchema>;
+export type HomeLink = z.infer<typeof HomeLinkSchema>;
 
 /* * */
 
 export const OrganizationSchema = DocumentSchema.extend({
-	home_links: z.array(z.string()).default([]),
+	home_links: z.array(HomeLinkSchema).default([]),
 	home_wikis: z.array(z.string()).default([]),
-	logo: z.string().nullish(),
-	longname: z.string().nonempty(),
-	shortname: z.string().nonempty(),
+	logo_dark: z.string().nullish(),
+	logo_light: z.string().nullish(),
+	long_name: z.string().nonempty(),
+	short_name: z.string().nonempty(),
 	theme: z.string().nullish(),
 
 }).strict();

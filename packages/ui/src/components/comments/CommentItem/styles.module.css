@@ -12,6 +12,7 @@
 
 .icon {
     z-index: 2;
+    margin-top: 10px;
     background-color: var(--color-system-background-100);
 }
 
@@ -22,7 +23,11 @@
     background-color: var(--color-system-border-100);
 }
 
-.item:last-child .path {
+.item[data-reverse="false"]:last-child .path {
+    display: none;
+}
+
+.item[data-reverse="true"]:first-child .path {
     display: none;
 }
 

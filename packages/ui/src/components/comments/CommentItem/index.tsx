@@ -14,13 +14,14 @@ export interface CommentItemProps {
 	created_by: string
 	icon: React.ReactNode
 	iconTopMargin?: number
+	reverse?: boolean
 }
 
-export function CommentItem({ content, created_at, created_by, icon, iconTopMargin }: CommentItemProps) {
+export function CommentItem({ content, created_at, created_by, icon, iconTopMargin, reverse }: CommentItemProps) {
 	return (
-		<div className={styles.item}>
+		<div className={styles.item} data-reverse={reverse}>
 			<div className={styles.itemWrapper}>
-				<div className={styles.icon} style={{ marginTop: iconTopMargin ? `${iconTopMargin}px` : '0' }}>
+				<div className={styles.icon} style={{ marginTop: iconTopMargin && `${iconTopMargin}px` }}>
 					{icon}
 				</div>
 				<div className={styles.path} />

@@ -56,7 +56,7 @@ class RideAcceptanceClass extends MongoCollectionClass<RideAcceptance, CreateRid
 		data.comments = data.comments || prevAcceptance.comments || [];
 
 		for (const key of Object.keys(flattenedDiff)) {
-			if (key === 'is_locked') {
+			if (key === 'is_locked' || key === 'acceptance_status' || key === 'justification') {
 				data.comments.push({
 					created_at: Dates.now('utc').unix_timestamp,
 					created_by: data.updated_by || 'system',
@@ -66,32 +66,6 @@ class RideAcceptanceClass extends MongoCollectionClass<RideAcceptance, CreateRid
 					type: 'field_changed',
 					updated_at: Dates.now('utc').unix_timestamp,
 					updated_by: data.updated_by || 'system',
-				});
-			}
-
-			if (key === 'acceptance_status') {
-				data.comments.push({
-					created_at: Dates.now('utc').unix_timestamp,
-					created_by: data.updated_by || 'system',
-					curr_value: data[key],
-					field: key,
-					prev_value: prevAcceptance[key],
-					type: 'field_changed',
-					updated_at: Dates.now('utc').unix_timestamp,
-					updated_by: data.updated_by || 'system',
-				});
-			}
-
-			if (key === 'justification' && data.justification) {
-				data.comments.push({
-					created_at: Dates.now('utc').unix_timestamp,
-					created_by: data.justification.updated_by || 'system',
-					curr_value: data.justification,
-					field: key,
-					prev_value: prevAcceptance.justification,
-					type: 'field_changed',
-					updated_at: Dates.now('utc').unix_timestamp,
-					updated_by: data.justification.updated_by || 'system',
 				});
 			}
 		}

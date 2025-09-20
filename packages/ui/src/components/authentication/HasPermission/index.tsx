@@ -9,6 +9,7 @@ import { useMeContext } from '@/contexts/Me.context';
 interface HasPermissionProps {
 	action: string
 	children: React.ReactNode
+	fallback?: React.ReactNode
 	scope: string
 }
 
@@ -26,7 +27,7 @@ type HasPermissionFinalProps<T> = HasPermissionProps & (NoResourceKeyOrValue | R
 
 /* * */
 
-export function HasPermission<T extends Record<string, unknown>>({ action, children, resource_key, scope, value }: HasPermissionFinalProps<T>) {
+export function HasPermission<T extends Record<string, unknown>>({ action, children, fallback, resource_key, scope, value }: HasPermissionFinalProps<T>) {
 	//
 
 	//
@@ -45,7 +46,7 @@ export function HasPermission<T extends Record<string, unknown>>({ action, child
 		return <>{children}</>;
 	}
 
-	return null;
+	return fallback ?? null;
 
 	//
 }

@@ -28,10 +28,9 @@ export function AppWrapperNotificationCentral() {
 			</Menu.Target>
 			<Menu.Dropdown>
 				<>
-					<p>CASTELO</p>
-					<p>FUCK </p>
-					<p>biiii</p>
-					<p>	WHT</p>
+					<p>teste</p>
+					<p>teste2</p>
+					<p>teste3</p>
 				</>
 			</Menu.Dropdown>
 		</Menu>

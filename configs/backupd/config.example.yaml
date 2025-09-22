@@ -55,6 +55,12 @@ database:
       readPreference: YOUR_READ_PREFERENCE
       # The time in milliseconds to wait for a server to respond to a request before timing out.
       serverSelectionTimeoutMS: 10000
+    # The MongoDB dump options.
+    dump_options: # (Optional) The options to pass to the MongoDB dump command.
+      # The collections to exclude from the dump.
+      exclude_collections:
+        - YOUR_COLLECTION_NAME
+        - YOUR_COLLECTION_NAME
 
   # The PostgreSQL configuration (required if type is postgres)
   postgres_config:

@@ -16,6 +16,9 @@ export interface StorageConfig {
 export interface MongoDBOptions {
 	connectTimeoutMS: number
 	directConnection: boolean
+	dump_options?: {
+		exclude_collections?: string[]
+	}
 	maxPoolSize: number
 	minPoolSize: number
 	readPreference: string

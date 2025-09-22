@@ -6,22 +6,6 @@
     width: 100%;
     padding: var(--size-spacing-xs) 0;
     overflow-y: scroll;
-    scrollbar-color: var(--color-primary) var(--color-primary);
-    scrollbar-width: thin;
-
-    &::-webkit-scrollbar {
-        width: 8px;
-    }
-
-    &::-webkit-scrollbar-track {
-        background: var(--color-system-background-100);
-    }
-
-    &::-webkit-scrollbar-thumb {
-        background-color: var(--color-system-border-100);
-        border: 2px solid var(--color-system-background-100);
-        border-radius: 10px;
-    }
 
     &[data-reverse="true"] {
         flex-direction: column-reverse;

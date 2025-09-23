@@ -37,7 +37,7 @@ class NotificationsClass extends MongoCollectionClass<Notification, CreateNotifi
 	}
 
 	protected getCreateSchema(): z.ZodSchema {
-		return NotificationsClass;
+		return NotificationSchema;
 	}
 
 	protected getEnvName(): string {

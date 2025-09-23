@@ -21,7 +21,6 @@ export * from '@/sams/index.js';
 export * from '@/simplified-apex/index.js';
 export * from '@/stop.js';
 export * from '@/system/index.js';
-export * from '@/topic.js';
 export * from '@/vehicle-event.js';
 export * from '@/wiki.js';
 export * from '@/zone.js';

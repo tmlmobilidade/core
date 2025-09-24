@@ -28,12 +28,25 @@ class RideAcceptanceClass extends MongoCollectionClass<RideAcceptance, CreateRid
 	}
 
 	public async createByRideId(ride_id: string, data: CreateRideAcceptanceDto): Promise<RideAcceptance> {
+		const currentTimestamp = Dates.now('utc').unix_timestamp;
+		const createdBy = data.created_by || 'system';
+
 		data.comments.push({
-			created_at: Dates.now('utc').unix_timestamp,
-			created_by: data.created_by || 'system',
+			created_at: currentTimestamp,
+			created_by: createdBy,
 			message: 'Ride acceptance created',
 			type: 'note',
-			updated_at: Dates.now('utc').unix_timestamp,
+			updated_at: currentTimestamp,
+		});
+
+		data.comments.push({
+			created_at: currentTimestamp,
+			created_by: createdBy,
+			curr_value: data.analysis_summary,
+			field: 'analysis_summary',
+			prev_value: null,
+			type: 'field_changed',
+			updated_at: currentTimestamp,
 		});
 
 		return super.insertOne({ ...data, ride_id } as RideAcceptance) as Promise<RideAcceptance>;

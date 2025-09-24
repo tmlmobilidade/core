@@ -4,7 +4,7 @@ import { MongoConnector } from '@tmlmobilidade/connectors';
 import { HttpException, HttpStatus } from '@tmlmobilidade/lib';
 import { type UnixTimestamp } from '@tmlmobilidade/types';
 import { Dates, generateRandomString } from '@tmlmobilidade/utils';
-import { Collection, DeleteOptions, DeleteResult, Document, Filter, FindOptions, IndexDescription, InsertOneOptions, InsertOneResult, MongoClientOptions, OptionalUnlessRequiredId, UpdateOptions, UpdateResult, WithId } from 'mongodb';
+import { AggregateOptions, AggregationCursor, Collection, DeleteOptions, DeleteResult, Document, Filter, FindOptions, IndexDescription, InsertOneOptions, InsertOneResult, MongoClientOptions, OptionalUnlessRequiredId, UpdateOptions, UpdateResult, WithId } from 'mongodb';
 import { z } from 'zod';
 
 import { AggregationPipeline } from './aggregation-pipeline.js';
@@ -20,10 +20,19 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	/**
 	 * Aggregates documents in the collection.
 	 * @param pipeline - The aggregation pipeline to execute
+	 * @param options - The options for the aggregation operation
 	 * @returns A promise that resolves to an array of aggregated documents
 	 */
-	public async aggregate(pipeline: AggregationPipeline<T>): Promise<T[]> {
-		return await this.mongoCollection.aggregate(pipeline).toArray() as T[];
+	public async aggregate(pipeline: AggregationPipeline<T>, options?: AggregateOptions & { returnResult?: true }): Promise<T[]>;
+	public async aggregate(pipeline: AggregationPipeline<T>, options: AggregateOptions & { returnResult: false }): Promise<AggregationCursor<T>>;
+	public async aggregate(pipeline: AggregationPipeline<T>, options?: AggregateOptions & { returnResult?: boolean }): Promise<AggregationCursor<T> | T[]> {
+		const aggregation = this.mongoCollection.aggregate(pipeline, options);
+
+		if (options?.returnResult === false) {
+			return aggregation as AggregationCursor<T>;
+		}
+
+		return aggregation.toArray() as Promise<T[]>;
 	}
 
 	/**

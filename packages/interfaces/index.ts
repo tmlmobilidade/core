@@ -10,7 +10,10 @@ export * from '@/providers/index.js';
 /* * */
 
 export type {
+	ChangeStreamDeleteDocument,
 	ChangeStreamDocument,
+	ChangeStreamInsertDocument,
+	ChangeStreamUpdateDocument,
 	Collection,
 	DeleteOptions,
 	Document,
@@ -22,6 +25,7 @@ export type {
 	MongoClientOptions,
 	OptionalUnlessRequiredId,
 	Sort,
+	UpdateDescription,
 	UpdateOptions,
 	UpdateResult,
 	WithId,

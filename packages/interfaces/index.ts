@@ -10,6 +10,7 @@ export * from '@/providers/index.js';
 /* * */
 
 export type {
+	ChangeStreamDocument,
 	Collection,
 	DeleteOptions,
 	Document,

@@ -56,7 +56,7 @@ class RideAcceptanceClass extends MongoCollectionClass<RideAcceptance, CreateRid
 		data.comments = data.comments || prevAcceptance.comments || [];
 
 		for (const key of Object.keys(flattenedDiff)) {
-			if (key === 'is_locked' || key === 'acceptance_status' || key === 'justification') {
+			if (key === 'is_locked' || key === 'acceptance_status' || key === 'justification' || key === 'analysis_summary') {
 				data.comments.push({
 					created_at: Dates.now('utc').unix_timestamp,
 					created_by: data.updated_by || 'system',

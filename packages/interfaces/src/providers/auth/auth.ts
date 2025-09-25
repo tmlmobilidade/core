@@ -49,6 +49,7 @@ class AuthProvider {
 			combinedPermissions = [
 				...rolesData.flatMap(role => role.permissions),
 				...userData.permissions,
+				...userData.subscribed_topics,
 			] as Permission<unknown>[];
 		}
 		catch (e) {

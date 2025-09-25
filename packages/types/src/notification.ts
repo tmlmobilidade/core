@@ -8,14 +8,18 @@ import { z } from 'zod';
 export type Notification = z.infer<typeof NotificationSchema>;
 
 export const NotificationSchema = DocumentSchema.extend({
-	archived_by: z.array(z.string()).default([]),
-	description: z.string().nullish(),
-	link: z.string().url().nullish(),
-	priority: z.string().nullish(),
-	read_by: z.array(z.string()).default([]),
-	related_topic: z.string().nullish(),
-	title: z.string().nullish(),
-
+	is_read: z.boolean(),
+	needs_email: z.boolean().default(false),
+	payload: z.object({
+		body: z.string().min(1),
+		href: z.string().url().optional(),
+		icon: z.string().url().optional(),
+		title: z.string().min(1),
+	}),
+	priority: z.enum(['high', 'normal', 'low']).default('normal'),
+	scope: z.string().min(1), // e.g., 'agencies', 'alerts', 'auth'
+	topic: z.string().min(1), // e.g., 'new_alert', 'plan_update'
+	user_id: z.string(), // Id of the user this notification belongs to
 }).strict();
 
 /* * */
@@ -25,3 +29,5 @@ export const UpdateNotificationSchema = CreateNotificationSchema.omit({ created_
 
 export type CreateNotificationDto = z.infer<typeof CreateNotificationSchema>;
 export type UpdateNotificationDto = z.infer<typeof UpdateNotificationSchema>;
+
+/* * */

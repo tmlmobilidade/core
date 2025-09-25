@@ -32,7 +32,6 @@ export const UserSchema = DocumentSchema.extend({
 	permissions: z.array(PermissionSchema),
 	phone: z.string().nullish(),
 	preferences: z.record(z.record(UserPreferenceValueSchema)).nullish(),
-	read_notifications: z.array(z.string()).default([]),
 	role_ids: z.array(z.string()).default([]),
 	session_ids: z.array(z.string()).default([]),
 	subscribed_topics: z.array(z.string()).default([]),

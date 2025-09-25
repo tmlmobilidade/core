@@ -40,6 +40,7 @@
 		"@clickhouse/client": "1.12.1",
 		"@fastify/cookie": "11.0.2",
 		"@fastify/cors": "11.1.0",
+		"@fastify/websocket": "^11.2.0",
 		"@tmlmobilidade/lib": "*",
 		"@tmlmobilidade/types": "*",
 		"@tmlmobilidade/utils": "*",

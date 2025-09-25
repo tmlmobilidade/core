@@ -33,7 +33,7 @@ services:
 
   # # # # # # # # # # # # # # # # # # # # #
   # # # # # # # # # # # # # # # # # # # # #
-  
+
   database:
     image: mongo:latest
     restart: unless-stopped
@@ -46,7 +46,7 @@ services:
       - "27017:27017"
     env_file:
       - ./secrets/.env
-    command: mongod --replSet rs0 --auth --keyFile /data/replica.key --bind_ip_all
+    command: mongod --replSet rs0 --auth --keyFile /data/replica.key --bind_ip_all --oplogSize 100000
     healthcheck:
       test: echo 'db.runCommand("ping").ok' | mongosh mongodb://localhost:27017/ --quiet
       interval: 5s

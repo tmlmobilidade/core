@@ -4,7 +4,7 @@ import { MongoConnector } from '@tmlmobilidade/connectors';
 import { HttpException, HttpStatus } from '@tmlmobilidade/lib';
 import { type UnixTimestamp } from '@tmlmobilidade/types';
 import { Dates, generateRandomString } from '@tmlmobilidade/utils';
-import { AggregateOptions, AggregationCursor, Collection, DeleteOptions, DeleteResult, Document, Filter, FindOptions, IndexDescription, InsertOneOptions, InsertOneResult, MongoClientOptions, OptionalUnlessRequiredId, UpdateOptions, UpdateResult, WithId } from 'mongodb';
+import { AggregateOptions, AggregationCursor, Collection, DeleteOptions, DeleteResult, Document, Filter, FindOptions, IndexDescription, InsertManyResult, InsertOneOptions, InsertOneResult, MongoClientOptions, OptionalUnlessRequiredId, UpdateOptions, UpdateResult, WithId } from 'mongodb';
 import { z } from 'zod';
 
 import { AggregationPipeline } from './aggregation-pipeline.js';
@@ -214,12 +214,61 @@ export abstract class MongoCollectionClass<T extends Document, TCreate, TUpdate>
 	}
 
 	/**
+	 * Inserts multiple documents into the collection.
+	 * @param docs - The documents to insert
+	 * @param options - The options for the insert operation
+	 * @returns A promise that resolves to the result of the insert operation
+	 */
+	public async insertMany(docs: (TCreate & { _id?: string, created_at?: UnixTimestamp, created_by?: string, updated_at?: UnixTimestamp, updated_by?: string })[], { options, unsafe = false }: { options?: InsertOneOptions, unsafe?: boolean } = {}): Promise<InsertManyResult<T>> {
+		const newDocuments = docs.map((doc) => {
+			return {
+				...doc,
+				_id: doc._id || generateRandomString({ length: 5 }),
+				created_at: doc.created_at || Dates.now('utc').unix_timestamp,
+				created_by: doc.created_by || 'system',
+				updated_at: doc.updated_at || Dates.now('utc').unix_timestamp,
+				updated_by: doc.updated_by || 'system',
+			} as unknown as OptionalUnlessRequiredId<T>;
+		});
+
+		// Ensure all documents have a unique ID
+		const foundIds = await this.mongoCollection.find({ _id: { $in: newDocuments.map(doc => doc._id) } }, { projection: { _id: 1 } }).toArray();
+		for (const newDocument of newDocuments) {
+			if (foundIds.find(id => id._id === newDocument._id)) {
+				newDocument._id = generateRandomString({ length: 5 });
+			}
+		}
+
+		const parsedDocuments: OptionalUnlessRequiredId<T>[] = [];
+		for (const newDocument of newDocuments) {
+			let parsedDocument = newDocument;
+			if (!unsafe) {
+				try {
+					if (!this.createSchema) {
+						throw new Error('No schema defined for insert operation. This is either an internal interface error or you should pass unsafe=true to the insert operation.');
+					}
+					parsedDocument = this.createSchema.parse(newDocument) as OptionalUnlessRequiredId<T>;
+				}
+				catch (error) {
+					throw new HttpException(HttpStatus.BAD_REQUEST, error.message, { cause: error });
+				}
+			}
+			parsedDocuments.push(parsedDocument);
+		}
+
+		return await this.mongoCollection.insertMany(parsedDocuments, options);
+	}
+
+	/**
 	 * Inserts a single document into the collection.
 	 * @param doc - The document to insert
 	 * @param options - The options for the insert operation
 	 * @returns A promise that resolves to the result of the insert operation
 	 */
-	public async insertOne<TReturnDocument extends boolean = true>(doc: TCreate & { _id?: string, created_at?: UnixTimestamp, created_by?: string, updated_at?: UnixTimestamp, updated_by?: string }, { options, unsafe = false }: { options?: InsertOneOptions & { returnResult?: TReturnDocument }, unsafe?: boolean } = {}): Promise<TReturnDocument extends true ? WithId<T> : InsertOneResult<T>> {
+	public async insertOne<TReturnDocument extends boolean = true>(
+		doc: TCreate & { _id?: string, created_at?: UnixTimestamp, created_by?: string, updated_at?: UnixTimestamp, updated_by?: string },
+		{ options, unsafe = false }: { options?: InsertOneOptions & { returnResult?: TReturnDocument }, unsafe?: boolean } = {},
+	): Promise<TReturnDocument extends true ? WithId<T> : InsertOneResult<T>> {
 		const newDocument = {
 			...doc,
 			_id: doc._id || generateRandomString({ length: 5 }),

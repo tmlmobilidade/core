@@ -2,10 +2,10 @@
 
 /* * */
 
+import { AppWrapperNotificationCentralItem } from '@/components/layout/AppWrapperNotificationCentralItem';
 import { useMeContext } from '@/contexts';
 import { ActionIcon, Menu } from '@mantine/core';
 import { IconNotification } from '@tabler/icons-react';
-import { Notification } from '@tmlmobilidade/types';
 
 /* * */
 
@@ -17,33 +17,12 @@ export function AppWrapperNotificationCentral() {
 
 	const meContext = useMeContext();
 	const notifications = meContext.data.user?.active_notifications ? meContext.data.user?.active_notifications : [];
-	const color = notifications.length ? 'red' : 'gray';
+	const hasUnread = notifications.some(item => !item.is_read);
+	const color = notifications.length && hasUnread ? 'red' : 'gray';
 	const notificationCount = notifications.length || 0;
 
-	console.log('Active notifications:', notifications);
-
 	//
-	// B. Handle Actions
-
-	const handleNotificationClick = (notification: Notification) => {
-		console.log('Notification clicked:', notification);
-	};
-
-	//
-	// C. Render components
-
-	const renderNotifications = () => {
-		return (
-			<>
-				{!notifications.length && (
-					<Menu.Item disabled>Nenhuma notificação</Menu.Item>
-				)}
-				{notifications.map((notification: Notification) => (
-					<Menu.Item key={notification._id} onClick={() => handleNotificationClick(notification)}>{notification.payload?.title || 'Sem titulo'}</Menu.Item>
-				))}
-			</>
-		);
-	};
+	// B. Render components
 
 	return (
 		<Menu offset={0} position="bottom-end" shadow="lg" width="40%">
@@ -56,7 +35,7 @@ export function AppWrapperNotificationCentral() {
 				</ActionIcon>
 			</Menu.Target>
 			<Menu.Dropdown>
-				{renderNotifications()}
+				<AppWrapperNotificationCentralItem />
 			</Menu.Dropdown>
 		</Menu>
 	);

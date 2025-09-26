@@ -28,6 +28,22 @@ class NotificationsClass extends MongoCollectionClass<Notification, CreateNotifi
 		return NotificationsClass._instance;
 	}
 
+	public async markAsRead(notificationId: string, userId: string): Promise<void> {
+		console.log('Marking notification as read:', notificationId, userId);
+		const user = await users.findById(userId);
+		if (!user) throw new Error('User not found');
+
+		const updatedNotifications = (user.active_notifications || []).map((notification) => {
+			if (notification._id === notificationId) {
+				return { ...notification, is_read: true };
+			}
+			return notification;
+		});
+
+		await notifications.updateById(notificationId, { is_read: true });
+		await users.updateById(userId, { active_notifications: updatedNotifications });
+	}
+
 	public async sendNotification({ payload, scope, topic }: { payload: Notification['payload'], scope: string, topic: string }): Promise<void> {
 		const usersWithTopic = await users.findMany({ subscribed_topics: { $in: [topic] } });
 

@@ -3,6 +3,7 @@
 import { DocumentSchema } from '@/_common/document.js';
 import { unixTimeStampSchema } from '@/_common/unix-timestamp.js';
 import { type Permission, PermissionSchema } from '@/auth/permission.js';
+import { NotificationSchema } from '@/notification.js';
 import { z } from 'zod';
 
 /* * */
@@ -20,7 +21,7 @@ export type UserPreferenceValue = z.infer<typeof UserPreferenceValueSchema>;
 /* * */
 
 export const UserSchema = DocumentSchema.extend({
-	active_notifications: z.array(z.string()).default([]),
+	active_notifications: z.array(NotificationSchema).default([]),
 	avatar: z.string().nullish(),
 	bio: z.string().nullish(),
 	email: z.string().email(),

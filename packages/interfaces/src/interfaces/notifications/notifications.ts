@@ -1,7 +1,7 @@
 /* * */
 
 import { MongoCollectionClass } from '@/mongo-collection.js';
-import { CreateNotificationDto, Notification, NotificationSchema, Permission, UpdateNotificationDto, UpdateNotificationSchema } from '@tmlmobilidade/types';
+import { CreateNotificationDto, Notification, NotificationSchema, UpdateNotificationDto, UpdateNotificationSchema } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
 import { IndexDescription } from 'mongodb';
 import { z } from 'zod';
@@ -34,8 +34,31 @@ class NotificationsClass extends MongoCollectionClass<Notification, CreateNotifi
 		if (usersWithTopic.length === 0) return;
 
 		for (const user of usersWithTopic) {
-			console.log('user updated', payload, scope);
-			users.updateById(user._id, { active_notifications: [...user.active_notifications, JSON.stringify(payload)] });
+			const notification: Notification = {
+				_id: crypto.randomUUID(),
+				created_at: Date.now() as Notification['created_at'],
+				is_read: false,
+				needs_email: false,
+				payload: {
+					body: payload.body || 'Sem corpo',
+					href: payload.href || 'http://www.carrismetropolitana.pt',
+					icon: payload.icon || 'http://www.carrismetropolitana.pt',
+					title: payload.title || 'Sem titulo',
+				},
+				priority: 'normal',
+				scope: scope,
+				topic: topic,
+				updated_at: Date.now() as Notification['updated_at'],
+				user_id: user._id,
+			};
+			try {
+				await users.updateById(user._id, {
+					active_notifications: [...(user.active_notifications || []), notification],
+				});
+			}
+			catch (err) {
+				console.error('Failed to update user notifications:', err);
+			}
 		}
 	}
 

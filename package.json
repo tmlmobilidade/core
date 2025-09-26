@@ -51,5 +51,8 @@
 			"react",
 			"react-dom"
 		]
+	},
+	"dependencies": {
+		"@esbuild/darwin-arm64": "^0.25.10"
 	}
 }

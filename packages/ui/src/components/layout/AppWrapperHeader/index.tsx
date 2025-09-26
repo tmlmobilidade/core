@@ -3,6 +3,7 @@
 /* * */
 
 import { Label } from '@/components/display/Label';
+import { Skeleton } from '@mantine/core';
 import { useState } from 'react';
 
 import styles from './styles.module.css';

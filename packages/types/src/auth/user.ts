@@ -21,7 +21,7 @@ export type UserPreferenceValue = z.infer<typeof UserPreferenceValueSchema>;
 /* * */
 
 export const UserSchema = DocumentSchema.extend({
-	active_notifications: z.array(NotificationSchema).default([]),
+	active_notifications: z.array(z.string()).default([]),
 	avatar: z.string().nullish(),
 	bio: z.string().nullish(),
 	email: z.string().email(),

@@ -3,7 +3,7 @@
 /* * */
 
 import { AppWrapperNotificationCentralItemContent } from '@/components/layout/AppWrapperNotificationCentralItemContent';
-import { useMeContext } from '@/contexts/Me.context';
+import { useMeContext } from '@/contexts';
 import { useNotificationsContext } from '@/contexts/Notifications.context';
 import { Menu } from '@mantine/core';
 import { Notification } from '@tmlmobilidade/types';
@@ -17,7 +17,7 @@ export const AppWrapperNotificationCentralItem = () => {
 
 	const meContext = useMeContext();
 	const notificationsContext = useNotificationsContext();
-	const allNotifications = meContext.data.user?.active_notifications ? meContext.data.user?.active_notifications : [];
+	const allNotifications = notificationsContext.data.allNotifications || [];
 	//
 	// B. Handle Actions
 

@@ -3,7 +3,7 @@
 /* * */
 
 import { AppWrapperNotificationCentralItem } from '@/components/layout/AppWrapperNotificationCentralItem';
-import { useMeContext } from '@/contexts';
+import { useNotificationsContext } from '@/contexts';
 import { ActionIcon, Menu } from '@mantine/core';
 import { IconNotification } from '@tabler/icons-react';
 
@@ -14,9 +14,9 @@ export function AppWrapperNotificationCentral() {
 
 	//
 	// A. Setup variables
+	const notificationsContext = useNotificationsContext();
 
-	const meContext = useMeContext();
-	const notifications = meContext.data.user?.active_notifications ? meContext.data.user?.active_notifications : [];
+	const notifications = notificationsContext.data.allNotifications;
 	const hasUnread = notifications.some(item => !item.is_read);
 	const color = notifications.length && hasUnread ? 'red' : 'gray';
 	const notificationCount = notifications.length || 0;

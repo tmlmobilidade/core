@@ -3,13 +3,23 @@
 /* * */
 
 import { notifications } from '@tmlmobilidade/interfaces';
-import { createContext, type PropsWithChildren, useContext } from 'react';
+import { getAppConfig, HttpException } from '@tmlmobilidade/lib';
+import { Notification } from '@tmlmobilidade/types';
+import { createContext, type PropsWithChildren, useContext, useMemo } from 'react';
+import useSWR from 'swr';
 
 /* * */
 
 interface NotificationsContextState {
 	actions: {
 		markAsRead: (notificationId: string, userId: string) => void
+	}
+	data: {
+		allNotifications: Notification[]
+	}
+	flags: {
+		error?: HttpException
+		loading: boolean
 	}
 }
 
@@ -29,7 +39,12 @@ export const NotificationsContextProvider = ({ children }: PropsWithChildren) =>
 	//
 
 	//
-	// A. Handle actions
+	// B. Fetch data
+
+	const { data: notificationsData, error: notificationsError, isLoading: notificationsLoading } = useSWR<Notification[], HttpException>(`${getAppConfig('auth', 'api_url')}/notifications`);
+
+	//
+	// C. Handle actions
 
 	async function markAsRead(notificationId: string, userId: string) {
 		console.log('Marking notification as read from context:', notificationId, userId);
@@ -39,11 +54,18 @@ export const NotificationsContextProvider = ({ children }: PropsWithChildren) =>
 	//
 	// D. Define context value
 
-	const contextValue: NotificationsContextState = {
+	const contextValue: NotificationsContextState = useMemo(() => ({
 		actions: {
 			markAsRead,
 		},
-	};
+		data: {
+			allNotifications: notificationsData ?? [],
+		},
+		flags: {
+			error: notificationsError,
+			loading: notificationsLoading,
+		},
+	}), [notificationsData, notificationsError, notificationsLoading]);
 
 	//
 	// B. Render components

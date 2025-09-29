@@ -202,7 +202,7 @@ export class FastifyService {
 
 		await this.server.register(cors, {
 			credentials: true,
-			methods: ['GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'OPTIONS'],
+			methods: ['GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'OPTIONS', 'DELETE'],
 			origin: this.origin,
 		});
 		await this.server.register(cookie);

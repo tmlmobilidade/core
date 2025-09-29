@@ -12,6 +12,9 @@ import { useMeContext } from './Me.context';
 /* * */
 
 interface NotificationsContextState {
+	count: {
+		unreadNotifications: number
+	}
 	data: {
 		allNotifications: Notification[]
 		allUserNotifications: Notification[]
@@ -42,6 +45,7 @@ export const NotificationsContextProvider = ({ children }: PropsWithChildren) =>
 
 	const meContext = useMeContext();
 	const [userNotifications, setUserNotificationsData] = useState<[] | Notification[]>([]);
+	const [unreadNotifications, setUnreadNotifications] = useState<number>(0);
 
 	//
 	// B. Fetch data
@@ -52,16 +56,24 @@ export const NotificationsContextProvider = ({ children }: PropsWithChildren) =>
 	// C. Transform data
 
 	useEffect(() => {
-		if (notificationsData) {
-			const userNotifications = notificationsData.filter(notification => notification.user_id === meContext.data?.user?._id);
-			setUserNotificationsData(userNotifications);
-		}
+		if (!notificationsData) return;
+		const userNotifications = notificationsData.filter(notification => notification.user_id === meContext.data?.user?._id);
+		setUserNotificationsData(userNotifications);
 	}, [notificationsData, meContext.data?.user?._id]);
+
+	useEffect(() => {
+		if (!userNotifications) return;
+		const filteredNotifications = userNotifications.filter(notification => !notification.is_read);
+		setUnreadNotifications(filteredNotifications.length);
+	}, [userNotifications]);
 
 	//
 	// D. Define context value
 
 	const contextValue: NotificationsContextState = useMemo(() => ({
+		count: {
+			unreadNotifications: unreadNotifications,
+		},
 		data: {
 			allNotifications: notificationsData ?? [],
 			allUserNotifications: userNotifications ?? [],
@@ -70,7 +82,7 @@ export const NotificationsContextProvider = ({ children }: PropsWithChildren) =>
 			error: notificationsError,
 			loading: notificationsLoading,
 		},
-	}), [notificationsData, notificationsError, notificationsLoading]);
+	}), [notificationsData, unreadNotifications, notificationsError, notificationsLoading]);
 
 	//
 	// E. Render components

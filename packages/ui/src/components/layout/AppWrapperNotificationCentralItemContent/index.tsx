@@ -28,7 +28,6 @@ export const AppWrapperNotificationCentralItemContent = ({ notification_id }: Ap
 	const icon = notificationData?.payload?.icon;
 	const body = notificationData?.payload?.body || 'Sem corpo';
 
-	console.log(icon);
 	//
 	// B. Fetch data
 
@@ -46,8 +45,10 @@ export const AppWrapperNotificationCentralItemContent = ({ notification_id }: Ap
 	//
 	// C. Render components
 
-	const handleNotificationClick = (notification: Notification) => {
+	const handleNotificationClick = async (notification: Notification) => {
 		if (!notification) return;
+		const { _id, created_at, created_by, updated_at, ...updateData } = notification;
+		await fetchData(`${getAppConfig('auth', 'api_url')}/notifications/mark-as-read/${notification._id}`, 'PUT', updateData, undefined);
 		if (notification.payload?.href) {
 			window.open(notification.payload.href, '_blank');
 		}

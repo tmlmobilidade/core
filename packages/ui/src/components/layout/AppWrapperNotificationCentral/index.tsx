@@ -18,17 +18,16 @@ export function AppWrapperNotificationCentral() {
 	const notificationsContext = useNotificationsContext();
 
 	const notifications = notificationsContext.data.allUserNotifications || [];
-	const hasUnread = notifications.some(notification => notification.is_read === false);
-	const color = notifications.length && hasUnread ? 'red' : 'gray';
+	const UnreadNotificationsCount = notificationsContext.count.unreadNotifications;
 	const notificationCount = notifications.length || 0;
 
 	//
-	// B. Render components
+	// C. Render components
 
 	return (
 		<Menu offset={0} position="bottom-end" shadow="lg" width="40%">
 			<Menu.Target>
-				<ActionIcon color={color} variant="subtle">
+				<ActionIcon color={UnreadNotificationsCount > 0 ? '#C73B3B' : 'gray'} variant="subtle">
 					{notificationCount > 0 && (
 						<div>{notificationCount}</div>
 					)}

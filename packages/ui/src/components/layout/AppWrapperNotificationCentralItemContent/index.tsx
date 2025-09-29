@@ -3,6 +3,7 @@
 /* * */
 
 import { Image } from '@mantine/core';
+import { IconX } from '@tabler/icons-react';
 import { getAppConfig } from '@tmlmobilidade/lib';
 import { Notification } from '@tmlmobilidade/types';
 import { fetchData } from '@tmlmobilidade/utils';
@@ -54,18 +55,28 @@ export const AppWrapperNotificationCentralItemContent = ({ notification_id }: Ap
 		}
 	};
 
+	const handleNotificationDelete = async (notificationId: string, e: React.MouseEvent<SVGElement>) => {
+		e.stopPropagation();
+		if (!notificationId) return;
+		await fetchData(`${getAppConfig('auth', 'api_url')}/notifications/${notificationId}`, 'DELETE');
+		console.log('delete noti id', notificationId);
+	};
+
 	return (
 		<div className={styles.notificationContentWrapper} onClick={() => notificationData && handleNotificationClick(notificationData)}>
 			<div className={styles.notificationLeftTop}>
 				<p className={styles.notificationTitle}>{title}</p>
 			</div>
-
 			<div className={styles.notificationLeftBottom}>
 				<p className={styles.notificationBody}>{body}</p>
 			</div>
-
 			<div className={styles.notificationRight}>
-				{icon ? <Image alt="Icon" height={50} src={icon} width={50} /> : <span>Sem Imagem</span>}
+				<div className={styles.notificationRightImage}>
+					{icon && <Image alt="Icon" height={50} src={icon} width={50} />}
+				</div>
+				<div className={styles.notificationRightDelete}>
+					<IconX className={styles.notificationDeleteIcon} onClick={e => handleNotificationDelete(notification_id, e)} size={16} />
+				</div>
 			</div>
 		</div>
 	);

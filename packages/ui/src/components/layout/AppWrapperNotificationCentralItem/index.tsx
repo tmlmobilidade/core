@@ -16,8 +16,6 @@ export const AppWrapperNotificationCentralItem = () => {
 
 	const notificationsContext = useNotificationsContext();
 	const allNotifications = notificationsContext.data.allNotifications || [];
-	//
-	// B. Handle Actions
 
 	//
 	// C. Render components

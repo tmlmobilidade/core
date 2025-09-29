@@ -2,20 +2,19 @@
 
 /* * */
 
-import { notifications } from '@tmlmobilidade/interfaces';
 import { getAppConfig, HttpException } from '@tmlmobilidade/lib';
 import { Notification } from '@tmlmobilidade/types';
-import { createContext, type PropsWithChildren, useContext, useMemo } from 'react';
+import { createContext, type PropsWithChildren, useContext, useEffect, useMemo, useState } from 'react';
 import useSWR from 'swr';
+
+import { useMeContext } from './Me.context';
 
 /* * */
 
 interface NotificationsContextState {
-	actions: {
-		markAsRead: (notificationId: string, userId: string) => void
-	}
 	data: {
 		allNotifications: Notification[]
+		allUserNotifications: Notification[]
 	}
 	flags: {
 		error?: HttpException
@@ -39,27 +38,33 @@ export const NotificationsContextProvider = ({ children }: PropsWithChildren) =>
 	//
 
 	//
+	// A. Setup variables
+
+	const meContext = useMeContext();
+	const [userNotifications, setUserNotificationsData] = useState<[] | Notification[]>([]);
+
+	//
 	// B. Fetch data
 
 	const { data: notificationsData, error: notificationsError, isLoading: notificationsLoading } = useSWR<Notification[], HttpException>(`${getAppConfig('auth', 'api_url')}/notifications`);
 
 	//
-	// C. Handle actions
+	// C. Transform data
 
-	async function markAsRead(notificationId: string, userId: string) {
-		console.log('Marking notification as read from context:', notificationId, userId);
-		await notifications.markAsRead(notificationId, userId);
-	}
+	useEffect(() => {
+		if (notificationsData) {
+			const userNotifications = notificationsData.filter(notification => notification.user_id === meContext.data?.user?._id);
+			setUserNotificationsData(userNotifications);
+		}
+	}, [notificationsData, meContext.data?.user?._id]);
 
 	//
 	// D. Define context value
 
 	const contextValue: NotificationsContextState = useMemo(() => ({
-		actions: {
-			markAsRead,
-		},
 		data: {
 			allNotifications: notificationsData ?? [],
+			allUserNotifications: userNotifications ?? [],
 		},
 		flags: {
 			error: notificationsError,
@@ -68,7 +73,7 @@ export const NotificationsContextProvider = ({ children }: PropsWithChildren) =>
 	}), [notificationsData, notificationsError, notificationsLoading]);
 
 	//
-	// B. Render components
+	// E. Render components
 
 	return (
 		<NotificationsContext.Provider value={contextValue}>

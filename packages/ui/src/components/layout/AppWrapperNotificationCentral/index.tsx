@@ -14,10 +14,11 @@ export function AppWrapperNotificationCentral() {
 
 	//
 	// A. Setup variables
+
 	const notificationsContext = useNotificationsContext();
 
-	const notifications = notificationsContext.data.allNotifications;
-	const hasUnread = notifications.some(item => !item.is_read);
+	const notifications = notificationsContext.data.allUserNotifications || [];
+	const hasUnread = notifications.some(notification => notification.is_read === false);
 	const color = notifications.length && hasUnread ? 'red' : 'gray';
 	const notificationCount = notifications.length || 0;
 

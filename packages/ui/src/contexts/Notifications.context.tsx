@@ -12,6 +12,9 @@ import { useMeContext } from './Me.context';
 /* * */
 
 interface NotificationsContextState {
+	actions: {
+		triggerNotificationToast: () => void
+	}
 	count: {
 		unreadNotifications: number
 	}
@@ -68,9 +71,34 @@ export const NotificationsContextProvider = ({ children }: PropsWithChildren) =>
 	}, [userNotifications, notificationsData]);
 
 	//
-	// D. Define context value
+	// D. Handle actions
+	const triggerNotificationToast = async () => {
+		if (typeof window === 'undefined') return;
+		if (!('Notification' in window)) {
+			alert('Notifications are not supported in this browser');
+			return;
+		}
+
+		if (Notification.permission !== 'granted') {
+			const permission = await Notification.requestPermission();
+			if (permission !== 'granted') {
+				alert('Notifications blocked');
+				return;
+			}
+		}
+
+		new Notification('🔔 Hello!', {
+			body: 'This is a test notification',
+		});
+	};
+
+	//
+	// E. Define context value
 
 	const contextValue: NotificationsContextState = useMemo(() => ({
+		actions: {
+			triggerNotificationToast: triggerNotificationToast,
+		},
 		count: {
 			unreadNotifications: unreadNotifications,
 		},

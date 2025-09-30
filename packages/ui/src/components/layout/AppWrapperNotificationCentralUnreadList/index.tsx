@@ -39,20 +39,15 @@ export function AppWrapperNotificationCentralUnreadList({ notifications }: AppWr
 	return (
 		<>
 			<Menu.Label>Não Lidas ({notifications.length})</Menu.Label>
+
 			{displayNotifications.map((notification: Notification) => (
 				<Menu.Item key={notification._id}>
 					<AppWrapperNotificationCentralItemContent notification_id={notification._id} />
-
 				</Menu.Item>
 			))}
 
 			{hasMoreNotifications && (
-				<Button
-					label={showAll ? 'Mostrar menos' : `Mostrar mais (${notifications.length - 5}) não lidas`}
-					onClick={handleShowMore}
-					variant="primary"
-					fullWidth
-				/>
+				<Button label={showAll ? 'Mostrar menos' : `Mostrar mais (${notifications.length - 5}) não lidas`} onClick={handleShowMore} variant="secondary" fullWidth />
 			)}
 		</>
 	);

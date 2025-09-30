@@ -46,7 +46,7 @@ export const AppWrapperNotificationCentralItemContent = ({ notification_id }: Ap
 
 	const handleNotificationClick = async (notification: Notification) => {
 		if (!notification) return;
-
+		
 		const { _id, created_at, created_by, updated_at, ...updateData } = notification;
 		await fetchData(`${getAppConfig('auth', 'api_url')}/notifications/mark-as-read/${notification._id}`, 'PUT', updateData, undefined);
 		if (notification.payload?.href) {

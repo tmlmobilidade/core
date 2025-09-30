@@ -30,6 +30,7 @@ class NotificationsClass extends MongoCollectionClass<Notification, CreateNotifi
 
 	public async sendNotification({ payload, scope, topic }: { payload: Notification['payload'], scope: string, topic: string }): Promise<void> {
 		const usersWithTopic = await users.findMany({ subscribed_topics: { $in: [topic] } });
+		console.log('creating', scope, topic, usersWithTopic);
 
 		if (usersWithTopic.length === 0) return;
 

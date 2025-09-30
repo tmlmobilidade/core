@@ -6,7 +6,7 @@ import { AppWrapperNotificationCentralReadList } from '@/components/layout/AppWr
 import { AppWrapperNotificationCentralUnreadList } from '@/components/layout/AppWrapperNotificationCentralUnreadList';
 import { useNotificationsContext } from '@/contexts';
 import { ActionIcon, Menu } from '@mantine/core';
-import { IconNotification } from '@tabler/icons-react';
+import { IconBell } from '@tabler/icons-react';
 
 /* * */
 
@@ -20,8 +20,6 @@ export function AppWrapperNotificationCentral() {
 
 	const notifications = notificationsContext.data.allUserNotifications || [];
 	const UnreadNotificationsCount = notificationsContext.count.unreadNotifications;
-	const notificationCount = notifications.length || 0;
-
 	const unreadNotifications = notifications.filter(n => !n.is_read);
 	const readNotifications = notifications.filter(n => n.is_read);
 
@@ -32,17 +30,13 @@ export function AppWrapperNotificationCentral() {
 		<Menu offset={0} position="bottom-end" shadow="lg" width="40%">
 			<Menu.Target>
 				<ActionIcon color={UnreadNotificationsCount > 0 ? '#C73B3B' : 'gray'} variant="subtle">
-					{notificationCount > 0 && (
-						<div>{notificationCount}</div>
+					{notifications.length > 0 && (
+						<div>{notifications.length}</div>
 					)}
-					<IconNotification size={20} />
+					<IconBell size={20} />
 				</ActionIcon>
 			</Menu.Target>
 			<Menu.Dropdown>
-
-				{notifications.length === 0 && (
-					<p>Sem Notificações</p>
-				)}
 
 				{unreadNotifications.length > 0 && (
 					<AppWrapperNotificationCentralUnreadList notifications={unreadNotifications} />
@@ -50,6 +44,10 @@ export function AppWrapperNotificationCentral() {
 
 				{readNotifications.length > 0 && (
 					<AppWrapperNotificationCentralReadList notifications={readNotifications} />
+				)}
+
+				{notifications.length === 0 && (
+					<p>Sem Notificações</p>
 				)}
 
 			</Menu.Dropdown>

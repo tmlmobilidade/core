@@ -82,7 +82,7 @@ export const NotificationsContextProvider = ({ children }: PropsWithChildren) =>
 			error: notificationsError,
 			loading: notificationsLoading,
 		},
-	}), [notificationsData, unreadNotifications, notificationsError, notificationsLoading]);
+	}), [notificationsData, unreadNotifications, notificationsError, notificationsLoading, userNotifications]);
 
 	//
 	// E. Render components

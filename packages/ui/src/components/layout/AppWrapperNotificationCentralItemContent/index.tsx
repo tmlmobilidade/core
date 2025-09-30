@@ -25,9 +25,7 @@ export const AppWrapperNotificationCentralItemContent = ({ notification_id }: Ap
 	// A. Setup variables
 
 	const [notificationData, setNotificationData] = useState<Notification | null>(null);
-	const title = notificationData?.payload?.title || 'Sem titulo';
-	const icon = notificationData?.payload?.icon;
-	const body = notificationData?.payload?.body || 'Sem corpo';
+	const isRead = notificationData?.is_read || false;
 
 	//
 	// B. Fetch data
@@ -44,10 +42,11 @@ export const AppWrapperNotificationCentralItemContent = ({ notification_id }: Ap
 	};
 
 	//
-	// C. Render components
+	// C. Handle actions
 
 	const handleNotificationClick = async (notification: Notification) => {
 		if (!notification) return;
+
 		const { _id, created_at, created_by, updated_at, ...updateData } = notification;
 		await fetchData(`${getAppConfig('auth', 'api_url')}/notifications/mark-as-read/${notification._id}`, 'PUT', updateData, undefined);
 		if (notification.payload?.href) {
@@ -62,17 +61,20 @@ export const AppWrapperNotificationCentralItemContent = ({ notification_id }: Ap
 		console.log('delete noti id', notificationId);
 	};
 
+	//
+	// D. Render components
+
 	return (
-		<div className={styles.notificationContentWrapper} onClick={() => notificationData && handleNotificationClick(notificationData)}>
+		<div className={isRead ? styles.notificationContentWrapperRead : styles.notificationContentWrapperUnread} onClick={() => notificationData && handleNotificationClick(notificationData)}>
 			<div className={styles.notificationLeftTop}>
-				<p className={styles.notificationTitle}>{title}</p>
+				<p className={styles.notificationTitle}>{notificationData?.payload?.title || 'Sem titulo'}</p>
 			</div>
 			<div className={styles.notificationLeftBottom}>
-				<p className={styles.notificationBody}>{body}</p>
+				<p className={styles.notificationBody}>{notificationData?.payload?.body || 'Sem Descrição'}</p>
 			</div>
 			<div className={styles.notificationRight}>
 				<div className={styles.notificationRightImage}>
-					{icon && <Image alt="Icon" height={50} src={icon} width={50} />}
+					{notificationData?.payload?.icon && <Image alt="Icon" height={50} src={notificationData?.payload?.icon || undefined} width={50} />}
 				</div>
 				<div className={styles.notificationRightDelete}>
 					<IconX className={styles.notificationDeleteIcon} onClick={e => handleNotificationDelete(notification_id, e)} size={16} />

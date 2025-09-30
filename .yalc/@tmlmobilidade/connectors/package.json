@@ -1,0 +1,56 @@
+{
+	"name": "@tmlmobilidade/connectors",
+	"version": "1.0.0",
+	"author": "João de Vasconcelos & Jusi Monteiro",
+	"license": "AGPL-3.0-or-later",
+	"homepage": "https://github.com/tmlmobilidade/services#readme",
+	"bugs": {
+		"url": "https://github.com/tmlmobilidade/services/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/tmlmobilidade/services.git"
+	},
+	"keywords": [
+		"public transit",
+		"tml",
+		"transportes metropolitanos de lisboa",
+		"services"
+	],
+	"publishConfig": {
+		"access": "public"
+	},
+	"type": "module",
+	"files": [
+		"dist/"
+	],
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.js"
+		}
+	},
+	"scripts": {
+		"build": "rimraf ./dist && tsc && resolve-tspaths",
+		"lint": "eslint && tsc --noEmit",
+		"lint:fix": "eslint --fix"
+	},
+	"module": "dist/index.js",
+	"dependencies": {
+		"@clickhouse/client": "1.12.1",
+		"@fastify/cookie": "11.0.2",
+		"@fastify/cors": "11.1.0",
+		"@tmlmobilidade/lib": "*",
+		"@tmlmobilidade/types": "*",
+		"@tmlmobilidade/utils": "*",
+		"@types/amqplib": "0.10.7",
+		"amqplib": "0.10.9",
+		"better-sqlite3": "12.2.0",
+		"fastify": "5.6.0",
+		"mongodb": "6.19.0",
+		"pg": "8.16.3",
+		"trino-client": "0.2.8",
+		"tunnel-ssh": "5.2.0"
+	},
+	"yalcSig": "c8160f260cc981caf8e0ed2f3747e360"
+}

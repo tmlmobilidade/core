@@ -30,7 +30,7 @@
 		"test:prod": "turbo test:prod",
 		"yalc:push": "command -v yalc >/dev/null 2>&1 && sh scripts/yalc.sh || echo 'yalc not installed, skipping yalc push...'"
 	},
-		"devDependencies": {
+	"devDependencies": {
 		"@carrismetropolitana/eslint": "20250622.1204.50",
 		"tsx": "4.20.5",
 		"turbo": "2.5.6"
@@ -51,5 +51,11 @@
 			"react",
 			"react-dom"
 		]
+	},
+	"dependencies": {
+		"@tmlmobilidade/connectors": "file:.yalc/@tmlmobilidade/connectors",
+		"@tmlmobilidade/interfaces": "file:.yalc/@tmlmobilidade/interfaces",
+		"@tmlmobilidade/lib": "file:.yalc/@tmlmobilidade/lib",
+		"@tmlmobilidade/types": "file:.yalc/@tmlmobilidade/types"
 	}
 }

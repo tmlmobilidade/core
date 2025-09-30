@@ -1,0 +1,21 @@
+{
+  "version": "v1",
+  "packages": {
+    "@tmlmobilidade/types": {
+      "signature": "238f3dd60558f9a47482b98a1643b0b9"
+    },
+    "@tmlmobilidade/lib": {
+      "signature": "05216b35eba906eeb1b9534b06496698"
+    },
+    "@tmlmobilidade/connectors": {
+      "signature": "c8160f260cc981caf8e0ed2f3747e360",
+      "pure": true
+    },
+    "@tmlmobilidade/interfaces": {
+      "signature": "cf2d69a79fc09820e402c295b088bb9a"
+    },
+    "@tmlmobilidade/ui": {
+      "signature": "81c0bf003d68ce2b8e8e3e2a80e29136"
+    }
+  }
+}

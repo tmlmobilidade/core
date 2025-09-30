@@ -1,0 +1,56 @@
+{
+	"name": "@tmlmobilidade/interfaces",
+	"version": "1.0.0",
+	"author": "João de Vasconcelos & Jusi Monteiro",
+	"license": "AGPL-3.0-or-later",
+	"homepage": "https://github.com/tmlmobilidade/services#readme",
+	"bugs": {
+		"url": "https://github.com/tmlmobilidade/services/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/tmlmobilidade/services.git"
+	},
+	"keywords": [
+		"public transit",
+		"tml",
+		"transportes metropolitanos de lisboa",
+		"services"
+	],
+	"publishConfig": {
+		"access": "public"
+	},
+	"type": "module",
+	"files": [
+		"dist/"
+	],
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.js"
+		}
+	},
+	"scripts": {
+		"build": "rimraf ./dist && tsc && resolve-tspaths",
+		"lint": "eslint && tsc --noEmit",
+		"lint:fix": "eslint --fix"
+	},
+	"dependencies": {
+		"@aws-sdk/client-s3": "3.882.0",
+		"@aws-sdk/s3-request-presigner": "3.882.0",
+		"@tmlmobilidade/connectors": "*",
+		"@tmlmobilidade/emails": "*",
+		"@tmlmobilidade/lib": "*",
+		"@tmlmobilidade/tsconfig": "*",
+		"@tmlmobilidade/types": "*",
+		"@tmlmobilidade/utils": "*",
+		"bcryptjs": "3.0.2",
+		"luxon": "3.7.2",
+		"mongodb": "6.19.0",
+		"nodemailer": "7.0.6",
+		"oci-common": "2.116.2",
+		"oci-objectstorage": "2.116.2",
+		"zod": "3.25.76"
+	},
+	"yalcSig": "cf2d69a79fc09820e402c295b088bb9a"
+}

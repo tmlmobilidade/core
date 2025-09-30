@@ -50,7 +50,7 @@ export const NotificationsContextProvider = ({ children }: PropsWithChildren) =>
 	//
 	// B. Fetch data
 
-	const { data: notificationsData, error: notificationsError, isLoading: notificationsLoading } = useSWR<Notification[], HttpException>(`${getAppConfig('auth', 'api_url')}/notifications`);
+	const { data: notificationsData, error: notificationsError, isLoading: notificationsLoading } = useSWR<Notification[], HttpException>(`${getAppConfig('auth', 'api_url')}/notifications`, { refreshInterval: 5000 });
 
 	//
 	// C. Transform data
@@ -65,7 +65,7 @@ export const NotificationsContextProvider = ({ children }: PropsWithChildren) =>
 		if (!userNotifications) return;
 		const filteredNotifications = userNotifications.filter(notification => !notification.is_read);
 		setUnreadNotifications(filteredNotifications.length);
-	}, [userNotifications]);
+	}, [userNotifications, notificationsData]);
 
 	//
 	// D. Define context value

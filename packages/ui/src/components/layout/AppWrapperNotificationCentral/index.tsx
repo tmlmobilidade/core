@@ -2,7 +2,8 @@
 
 /* * */
 
-import { AppWrapperNotificationCentralItem } from '@/components/layout/AppWrapperNotificationCentralItem';
+import { AppWrapperNotificationCentralReadList } from '@/components/layout/AppWrapperNotificationCentralReadList';
+import { AppWrapperNotificationCentralUnreadList } from '@/components/layout/AppWrapperNotificationCentralUnreadList';
 import { useNotificationsContext } from '@/contexts';
 import { ActionIcon, Menu } from '@mantine/core';
 import { IconNotification } from '@tabler/icons-react';
@@ -21,8 +22,11 @@ export function AppWrapperNotificationCentral() {
 	const UnreadNotificationsCount = notificationsContext.count.unreadNotifications;
 	const notificationCount = notifications.length || 0;
 
+	const unreadNotifications = notifications.filter(n => !n.is_read);
+	const readNotifications = notifications.filter(n => n.is_read);
+
 	//
-	// C. Render components
+	// B. Render components
 
 	return (
 		<Menu offset={0} position="bottom-end" shadow="lg" width="40%">
@@ -35,7 +39,19 @@ export function AppWrapperNotificationCentral() {
 				</ActionIcon>
 			</Menu.Target>
 			<Menu.Dropdown>
-				<AppWrapperNotificationCentralItem />
+
+				{notifications.length === 0 && (
+					<p>Sem Notificações</p>
+				)}
+
+				{unreadNotifications.length > 0 && (
+					<AppWrapperNotificationCentralUnreadList notifications={unreadNotifications} />
+				)}
+
+				{readNotifications.length > 0 && (
+					<AppWrapperNotificationCentralReadList notifications={readNotifications} />
+				)}
+
 			</Menu.Dropdown>
 		</Menu>
 	);

@@ -2,7 +2,7 @@
 
 /* * */
 
-import { Image } from '@mantine/core';
+import { AppWrapperNotificationCentralItemContentIcon } from '@/components/layout/AppWrapperNotificationCentralItemContentIcon';
 import { IconX } from '@tabler/icons-react';
 import { getAppConfig } from '@tmlmobilidade/lib';
 import { Notification } from '@tmlmobilidade/types';
@@ -46,7 +46,7 @@ export const AppWrapperNotificationCentralItemContent = ({ notification_id }: Ap
 
 	const handleNotificationClick = async (notification: Notification) => {
 		if (!notification) return;
-		
+
 		const { _id, created_at, created_by, updated_at, ...updateData } = notification;
 		await fetchData(`${getAppConfig('auth', 'api_url')}/notifications/mark-as-read/${notification._id}`, 'PUT', updateData, undefined);
 		if (notification.payload?.href) {
@@ -74,7 +74,7 @@ export const AppWrapperNotificationCentralItemContent = ({ notification_id }: Ap
 			</div>
 			<div className={styles.notificationRight}>
 				<div className={styles.notificationRightImage}>
-					{notificationData?.payload?.icon && <Image alt="Icon" height={50} src={notificationData?.payload?.icon || undefined} width={50} />}
+					<AppWrapperNotificationCentralItemContentIcon scope={notificationData?.payload?.icon || ''} />
 				</div>
 				<div className={styles.notificationRightDelete}>
 					<IconX className={styles.notificationDeleteIcon} onClick={e => handleNotificationDelete(notification_id, e)} size={16} />

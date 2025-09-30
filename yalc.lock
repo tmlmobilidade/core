@@ -12,10 +12,10 @@
       "pure": true
     },
     "@tmlmobilidade/interfaces": {
-      "signature": "bcb49d4248839949023352c96d5db616"
+      "signature": "cf2d69a79fc09820e402c295b088bb9a"
     },
     "@tmlmobilidade/ui": {
-      "signature": "d31c5bf4f9f25b721e6d6db1baa7a7e7"
+      "signature": "34e7657a2d6a86acc03842a68460dad6"
     }
   }
 }

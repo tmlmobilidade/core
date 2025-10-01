@@ -30,14 +30,10 @@ class NotificationsClass extends MongoCollectionClass<Notification, CreateNotifi
 
 	public async sendNotification({ needs_email, payload, scope, topic }: { needs_email: boolean, payload: Notification['payload'], scope: string, topic: string }): Promise<void> {
 		const usersWithTopic = await users.findMany({ subscribed_topics: { $in: [topic] } });
-		console.log('Sending notification to users:', usersWithTopic.map(u => u._id));
-
 		if (usersWithTopic.length === 0) return;
 
 		for (const user of usersWithTopic) {
-			const notification: Notification = {
-				_id: crypto.randomUUID(),
-				created_at: Date.now() as Notification['created_at'],
+			const notification: CreateNotificationDto = {
 				is_read: false,
 				needs_email: needs_email,
 				payload: {
@@ -49,12 +45,12 @@ class NotificationsClass extends MongoCollectionClass<Notification, CreateNotifi
 				priority: 'normal',
 				scope: scope,
 				topic: topic,
-				updated_at: Date.now() as Notification['updated_at'],
 				user_id: user._id,
 			};
 			try {
-				await users.updateById(user._id, {
-					active_notifications: [...(user.active_notifications || []), notification._id],
+				const response = await notifications.insertOne(notification);
+				users.updateById(user._id, {
+					active_notifications: [...(user.active_notifications || []), response._id],
 				});
 			}
 			catch (err) {

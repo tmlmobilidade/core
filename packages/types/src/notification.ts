@@ -13,7 +13,7 @@ export const NotificationSchema = DocumentSchema.extend({
 	payload: z.object({
 		body: z.string().min(1),
 		href: z.string().url().optional(),
-		icon: z.string().url().optional(),
+		icon: z.string().optional(),
 		title: z.string().min(1),
 	}),
 	priority: z.enum(['high', 'normal', 'low']).default('normal'),

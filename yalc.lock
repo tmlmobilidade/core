@@ -2,7 +2,7 @@
   "version": "v1",
   "packages": {
     "@tmlmobilidade/types": {
-      "signature": "238f3dd60558f9a47482b98a1643b0b9"
+      "signature": "683abd473b7d13ef6e629b1ca6dabc32"
     },
     "@tmlmobilidade/lib": {
       "signature": "05216b35eba906eeb1b9534b06496698"
@@ -12,7 +12,7 @@
       "pure": true
     },
     "@tmlmobilidade/interfaces": {
-      "signature": "7b174a7ab537663d022c75eeafb1289c"
+      "signature": "7bf61e20dcb6f950ffd05af9d7d19c42"
     },
     "@tmlmobilidade/ui": {
       "signature": "85f335593790ace5f1cc3c60c6a83434"

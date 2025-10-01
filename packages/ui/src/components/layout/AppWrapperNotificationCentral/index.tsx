@@ -28,7 +28,7 @@ export function AppWrapperNotificationCentral() {
 	return (
 		<Menu offset={0} position="bottom-end" shadow="lg" width="40%">
 			<Menu.Target>
-				<ActionIcon color={unreadNotifications.length > 0 ? '#C73B3B' : 'gray'} variant="subtle">
+				<ActionIcon color={unreadNotifications.length > 0 ? 'var(--color-status-danger-primary)' : 'var(--color-system-text-200)'} variant="subtle">
 					{notifications.length > 0 && (
 						<div>{notifications.length}</div>
 					)}

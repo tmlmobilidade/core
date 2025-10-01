@@ -12,6 +12,7 @@ export * from '@/file.js';
 export * from '@/gtfs.js';
 export * from '@/gtfs/index.js';
 export * from '@/locations.js';
+export * from '@/notification.js';
 export * from '@/organization.js';
 export * from '@/pcgi/index.js';
 export * from '@/plans/index.js';

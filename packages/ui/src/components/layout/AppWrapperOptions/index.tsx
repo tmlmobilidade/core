@@ -135,9 +135,7 @@ export function AppWrapperOptions() {
 			<Menu.Dropdown>
 				<Menu.Label>Personalização</Menu.Label>
 				{MENU_ITEMS.slice(0, 1).map(renderMenuItem)}
-
 				<Menu.Divider />
-
 				<Menu.Label>Conta</Menu.Label>
 				{MENU_ITEMS.slice(1).map(renderMenuItem)}
 			</Menu.Dropdown>

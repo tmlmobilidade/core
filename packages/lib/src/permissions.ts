@@ -1,6 +1,6 @@
 /* * */
 
-import { AlertPermissionSchema, GtfsValidationPermissionSchema, PlanPermissionSchema, RidePermissionSchema } from '@tmlmobilidade/types';
+import { AlertPermissionSchema, GtfsValidationPermissionSchema, NotificationSchema, PlanPermissionSchema, RidePermissionSchema } from '@tmlmobilidade/types';
 
 /* * */
 
@@ -114,6 +114,24 @@ export const Permissions = Object.freeze({
 		},
 		resources: {},
 		scope: 'stops',
+	},
+	topics: {
+		actions: {
+			acceptance_state_modified: 'acceptance_state_modified',
+			active_plan: 'active_plan',
+			approved_plan: 'approved_plan',
+			approved_validation: 'approved_validation',
+			concluded_validation: 'plan_continue_validation',
+			created_alert: 'created_alert',
+			created_plan: 'created_plan',
+			new_comentary_network_acceptance: 'new_comentary_network_acceptance',
+			ride_requires_justification: 'ride_requires_justification',
+			sent_validation: 'sent_validation',
+			submit_justification: 'justification_submit',
+			submit_plan: 'plan_submit',
+		},
+		resources: NotificationSchema.shape,
+		scope: 'notifications',
 	},
 	users: {
 		actions: {

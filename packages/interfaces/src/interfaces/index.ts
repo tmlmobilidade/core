@@ -4,6 +4,7 @@ export * from '@/interfaces/auth/index.js';
 export * from '@/interfaces/files/index.js';
 export * from '@/interfaces/gtfs-validations/index.js';
 export * from '@/interfaces/locations/index.js';
+export * from '@/interfaces/notifications/index.js';
 export * from '@/interfaces/organizations/index.js';
 export * from '@/interfaces/plans/index.js';
 export * from '@/interfaces/proposed-changes/index.js';

@@ -62,15 +62,15 @@ export const NotificationsContextProvider = ({ children }: PropsWithChildren) =>
 	}, [notificationsData, meContext.data?.user?._id]);
 
 	useEffect(() => {
-		if (!userNotifications) return;
+		if (!userNotifications && !notificationsLoading && !notificationsError) return;
 		const currentIds = userNotifications.map(n => n._id);
 		const prevIds = prevNotificationIdsRef.current;
 		const newIds = currentIds.filter(id => !prevIds.includes(id));
-		if (newIds.length > 0) {
+		if (prevIds.length > 0 && newIds.length > 0) {
 			triggerNotificationToast('Tem uma nova notificação', 'Clique no sino para ver suas notificações.');
 		}
 		prevNotificationIdsRef.current = currentIds;
-	}, [userNotifications]);
+	}, [userNotifications, notificationsLoading]);
 
 	//
 	// D. Handle actions

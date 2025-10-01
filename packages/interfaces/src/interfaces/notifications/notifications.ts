@@ -28,8 +28,9 @@ class NotificationsClass extends MongoCollectionClass<Notification, CreateNotifi
 		return NotificationsClass._instance;
 	}
 
-	public async sendNotification({ payload, scope, topic }: { payload: Notification['payload'], scope: string, topic: string }): Promise<void> {
+	public async sendNotification({ needs_email, payload, scope, topic }: { needs_email: boolean, payload: Notification['payload'], scope: string, topic: string }): Promise<void> {
 		const usersWithTopic = await users.findMany({ subscribed_topics: { $in: [topic] } });
+		console.log('Sending notification to users:', usersWithTopic.map(u => u._id));
 
 		if (usersWithTopic.length === 0) return;
 
@@ -38,7 +39,7 @@ class NotificationsClass extends MongoCollectionClass<Notification, CreateNotifi
 				_id: crypto.randomUUID(),
 				created_at: Date.now() as Notification['created_at'],
 				is_read: false,
-				needs_email: false,
+				needs_email: needs_email,
 				payload: {
 					body: payload.body || 'Sem corpo',
 					href: payload.href || 'http://www.carrismetropolitana.pt',

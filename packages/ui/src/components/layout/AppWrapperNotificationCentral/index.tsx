@@ -4,7 +4,7 @@
 
 import { AppWrapperNotificationCentralReadList } from '@/components/layout/AppWrapperNotificationCentralReadList';
 import { AppWrapperNotificationCentralUnreadList } from '@/components/layout/AppWrapperNotificationCentralUnreadList';
-import { useNotificationsContext } from '@/contexts';
+import { useNotificationsContext } from '@/contexts/Notifications.context';
 import { ActionIcon, Menu } from '@mantine/core';
 import { IconBell } from '@tabler/icons-react';
 
@@ -19,7 +19,6 @@ export function AppWrapperNotificationCentral() {
 	const notificationsContext = useNotificationsContext();
 
 	const notifications = notificationsContext.data.allUserNotifications || [];
-	const UnreadNotificationsCount = notificationsContext.count.unreadNotifications;
 	const unreadNotifications = notifications.filter(n => !n.is_read);
 	const readNotifications = notifications.filter(n => n.is_read);
 
@@ -29,7 +28,7 @@ export function AppWrapperNotificationCentral() {
 	return (
 		<Menu offset={0} position="bottom-end" shadow="lg" width="40%">
 			<Menu.Target>
-				<ActionIcon color={UnreadNotificationsCount > 0 ? '#C73B3B' : 'gray'} variant="subtle">
+				<ActionIcon color={unreadNotifications.length > 0 ? '#C73B3B' : 'gray'} variant="subtle">
 					{notifications.length > 0 && (
 						<div>{notifications.length}</div>
 					)}

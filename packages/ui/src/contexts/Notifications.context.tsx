@@ -13,7 +13,7 @@ import { useMeContext } from './Me.context';
 
 interface NotificationsContextState {
 	actions: {
-		triggerNotificationToast: () => void
+		triggerNotificationToast: (title: string, body: string) => void
 	}
 	data: {
 		allNotifications: Notification[]
@@ -50,7 +50,7 @@ export const NotificationsContextProvider = ({ children }: PropsWithChildren) =>
 	//
 	// B. Fetch data
 
-	const { data: notificationsData, error: notificationsError, isLoading: notificationsLoading } = useSWR<Notification[], HttpException>(`${getAppConfig('auth', 'api_url')}/notifications`, { refreshInterval: 5000 });
+	const { data: notificationsData, error: notificationsError, isLoading: notificationsLoading } = useSWR<Notification[], HttpException>(`${getAppConfig('auth', 'api_url')}/notifications`, { refreshInterval: 2000 });
 
 	//
 	// C. Transform data
@@ -67,7 +67,7 @@ export const NotificationsContextProvider = ({ children }: PropsWithChildren) =>
 		const prevIds = prevNotificationIdsRef.current;
 		const newIds = currentIds.filter(id => !prevIds.includes(id));
 		if (newIds.length > 0) {
-			triggerNotificationToast();
+			triggerNotificationToast('Tem uma nova notificação', 'Clique no sino para ver suas notificações.');
 		}
 		prevNotificationIdsRef.current = currentIds;
 	}, [userNotifications]);
@@ -92,10 +92,10 @@ export const NotificationsContextProvider = ({ children }: PropsWithChildren) =>
 		}
 	};
 
-	const triggerNotificationToast = async () => {
+	const triggerNotificationToast = async (title: string, body: string) => {
 		handleNotificationPermission();
-		new Notification('🔔 Hello!', {
-			body: 'This is a test notification',
+		new Notification(title, {
+			body: body,
 		});
 	};
 
@@ -104,7 +104,7 @@ export const NotificationsContextProvider = ({ children }: PropsWithChildren) =>
 
 	const contextValue: NotificationsContextState = useMemo(() => ({
 		actions: {
-			triggerNotificationToast: triggerNotificationToast,
+			triggerNotificationToast,
 		},
 		data: {
 			allNotifications: notificationsData ?? [],

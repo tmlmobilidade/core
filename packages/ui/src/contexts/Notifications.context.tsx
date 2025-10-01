@@ -4,7 +4,7 @@
 
 import { getAppConfig, HttpException } from '@tmlmobilidade/lib';
 import { Notification } from '@tmlmobilidade/types';
-import { createContext, type PropsWithChildren, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, type PropsWithChildren, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import useSWR from 'swr';
 
 import { useMeContext } from './Me.context';
@@ -47,6 +47,7 @@ export const NotificationsContextProvider = ({ children }: PropsWithChildren) =>
 	// A. Setup variables
 
 	const meContext = useMeContext();
+	const prevNotificationIdsRef = useRef<string[]>([]);
 	const [userNotifications, setUserNotificationsData] = useState<[] | Notification[]>([]);
 	const [unreadNotifications, setUnreadNotifications] = useState<number>(0);
 
@@ -70,9 +71,21 @@ export const NotificationsContextProvider = ({ children }: PropsWithChildren) =>
 		setUnreadNotifications(filteredNotifications.length);
 	}, [userNotifications, notificationsData]);
 
+	useEffect(() => {
+		if (!userNotifications) return;
+		const currentIds = userNotifications.map(n => n._id);
+		const prevIds = prevNotificationIdsRef.current;
+		const newIds = currentIds.filter(id => !prevIds.includes(id));
+		if (newIds.length > 0) {
+			triggerNotificationToast();
+		}
+		prevNotificationIdsRef.current = currentIds;
+	}, [userNotifications]);
+
 	//
 	// D. Handle actions
-	const triggerNotificationToast = async () => {
+
+	const handleNotificationPermission = async () => {
 		if (typeof window === 'undefined') return;
 		if (!('Notification' in window)) {
 			alert('Notifications are not supported in this browser');
@@ -86,7 +99,10 @@ export const NotificationsContextProvider = ({ children }: PropsWithChildren) =>
 				return;
 			}
 		}
+	};
 
+	const triggerNotificationToast = async () => {
+		handleNotificationPermission();
 		new Notification('🔔 Hello!', {
 			body: 'This is a test notification',
 		});

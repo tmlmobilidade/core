@@ -3,7 +3,6 @@
 /* * */
 
 import { Label } from '@/components/display/Label';
-import { useNotificationsContext } from '@/contexts/Notifications.context';
 import { Skeleton } from '@mantine/core';
 import { useState } from 'react';
 
@@ -32,7 +31,6 @@ export function AppWrapperHeader({ userName }: AppWrapperHeaderProps) {
 	// A. Setup variables
 
 	const [drawnGreeting] = useState(AVAILABLE_GREETINGS[(AVAILABLE_GREETINGS.length * Math.random()) | 0]);
-	const notificationContext = useNotificationsContext();
 
 	//
 	// B. Render components
@@ -49,7 +47,6 @@ export function AppWrapperHeader({ userName }: AppWrapperHeaderProps) {
 		<div className={styles.container}>
 			<Label size="md" caps singleLine>{drawnGreeting} {userName}</Label>
 			<Spacer />
-			<button onClick={notificationContext.actions.triggerNotificationToast}>Send Test Notification</button>
 			<AppWrapperNotificationCentral />
 			<AppWrapperOptions />
 		</div>

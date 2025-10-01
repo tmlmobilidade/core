@@ -39,15 +39,15 @@
 	"dependencies": {
 		"@react-email/components": "0.5.2",
 		"@tmlmobilidade/utils": "*",
-		"@types/nodemailer": "^7.0.1",
+		"@types/nodemailer": "7.0.1",
 		"browserslist": "4.25.4",
-		"nodemailer": "^7.0.6",
+		"nodemailer": "7.0.6",
 		"react": "19.1.1",
 		"react-email": "4.2.8"
 	},
 	"devDependencies": {
 		"@carrismetropolitana/eslint": "20250622.1204.50",
-		"@react-email/preview-server": "^4.2.11",
+		"@react-email/preview-server": "4.2.11",
 		"@tmlmobilidade/lib": "*",
 		"@tmlmobilidade/tsconfig": "*",
 		"@tmlmobilidade/types": "*",

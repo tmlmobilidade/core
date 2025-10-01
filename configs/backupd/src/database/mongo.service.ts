@@ -7,6 +7,11 @@ import path from 'path';
 import { IDatabaseService } from './database.interface.js';
 
 export interface MongoDbConfig {
+	/** Options to control dump behavior */
+	dump_options?: {
+		database?: string
+		exclude_collections?: string[]
+	}
 	options?: MongoClientOptions
 	uri: string
 }
@@ -19,11 +24,13 @@ export class MongoDbService implements IDatabaseService {
 
 	private _client: MongoClient;
 
+	private _dumpOptions?: MongoDbConfig['dump_options'];
 	private _uri: string;
 
 	constructor(config: MongoDbConfig) {
 		this._client = new MongoClient(config.uri, config.options);
 		this._uri = config.uri;
+		this._dumpOptions = config.dump_options;
 
 		this._client.on('close', () => {
 			console.warn('MongoDB connection closed unexpectedly.');
@@ -57,7 +64,10 @@ export class MongoDbService implements IDatabaseService {
 		const dumpDir = path.resolve(outputPath);
 
 		return new Promise((resolve, reject) => {
-			const command = `mongodump --uri="${this._uri}" --out="${dumpDir}"`;
+			const excludeFlags = this._dumpOptions?.exclude_collections?.map(c => `--excludeCollection="${c}"`).join(' ') || '';
+			const databaseFlag = this._dumpOptions?.database ? `--db="${this._dumpOptions.database}"` : '';
+
+			const command = `mongodump --uri="${this._uri}" --out="${dumpDir}" ${excludeFlags} ${databaseFlag}`.trim();
 
 			exec(command, (error, stdout, stderr) => {
 				if (error) {

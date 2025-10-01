@@ -4,7 +4,7 @@ import { roles, sessions, users, verificationTokens } from '@/interfaces/index.j
 import { sendWelcomeEmail } from '@tmlmobilidade/emails';
 import { getAppConfig, HttpException, HttpStatus } from '@tmlmobilidade/lib';
 import { CreateUserDto, LoginDto, Permission, Session, User } from '@tmlmobilidade/types';
-import { AsyncSingletonProxy, Dates, generateRandomString, generateRandomToken } from '@tmlmobilidade/utils';
+import { AsyncSingletonProxy, Dates, generateRandomString, generateRandomToken, mergeObjects } from '@tmlmobilidade/utils';
 import bcrypt from 'bcryptjs';
 
 /* * */
@@ -38,35 +38,28 @@ class AuthProvider {
 		const userData = await this.getUser(sessionToken);
 		const rolesData = await roles.findMany({ _id: { $in: userData.role_ids } });
 
-		//
-		// Build the permissions list
+		const allPermissions = [...rolesData.flatMap(role => role.permissions), ...userData.permissions, ...userData.subscribed_topics] as Permission<unknown>[];
 
-		let combinedPermissions: Permission<T>[] = [];
+		const permissionsMap = new Map<string, Permission<unknown>>();
 
-		try {
-			// Combine permissions from associated roles
-			// and user-specific permissions
-			combinedPermissions = [
-				...rolesData.flatMap(role => role.permissions),
-				...userData.permissions,
-				...userData.subscribed_topics,
-			] as Permission<unknown>[];
-		}
-		catch (e) {
-			throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Error getting permissions', { cause: e });
-		}
+		for (const permission of allPermissions) {
+			const key = `${permission.scope}:${permission.action}`;
 
-		//
-		// If no permission found, throw an error
+			if (permissionsMap.has(key)) {
+				const existingPermission = permissionsMap.get(key);
 
-		if (!combinedPermissions?.length) {
-			throw new HttpException(HttpStatus.FORBIDDEN, 'User does not have permissions');
+				if (!existingPermission) {
+					throw new HttpException(HttpStatus.INTERNAL_SERVER_ERROR, 'Error getting permissions');
+				}
+
+				permissionsMap.set(key, mergeObjects(existingPermission, permission));
+				continue;
+			}
+
+			permissionsMap.set(key, permission);
 		}
 
-		//
-		// Else, return the permission
-
-		return combinedPermissions;
+		return Array.from(permissionsMap.values());
 	}
 
 	/**

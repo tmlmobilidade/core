@@ -4,7 +4,7 @@ import { MongoCollectionClass } from '@/mongo-collection.js';
 import { HttpException, HttpStatus } from '@tmlmobilidade/lib';
 import { CreateRideAcceptanceDto, RideAcceptance, RideAcceptanceSchema, UpdateRideAcceptanceDto, UpdateRideAcceptanceSchema } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy, compareObjects, Dates, flattenObject } from '@tmlmobilidade/utils';
-import { Filter, IndexDescription } from 'mongodb';
+import { Filter, IndexDescription, InsertOneOptions, UpdateOptions } from 'mongodb';
 import { z } from 'zod';
 
 /* * */
@@ -27,23 +27,36 @@ class RideAcceptanceClass extends MongoCollectionClass<RideAcceptance, CreateRid
 		return RideAcceptanceClass._instance;
 	}
 
-	public async createByRideId(ride_id: string, data: CreateRideAcceptanceDto): Promise<RideAcceptance> {
+	public async createByRideId(ride_id: string, data: CreateRideAcceptanceDto, options: InsertOneOptions & { returnResult?: boolean } = {}): Promise<RideAcceptance> {
+		const currentTimestamp = Dates.now('utc').unix_timestamp;
+		const createdBy = data.created_by || 'system';
+
 		data.comments.push({
-			created_at: Dates.now('utc').unix_timestamp,
-			created_by: data.created_by || 'system',
+			created_at: currentTimestamp,
+			created_by: createdBy,
 			message: 'Ride acceptance created',
 			type: 'note',
-			updated_at: Dates.now('utc').unix_timestamp,
+			updated_at: currentTimestamp,
 		});
 
-		return super.insertOne({ ...data, ride_id } as RideAcceptance) as Promise<RideAcceptance>;
+		data.comments.push({
+			created_at: currentTimestamp,
+			created_by: createdBy,
+			curr_value: data.analysis_summary,
+			field: 'analysis_summary',
+			prev_value: null,
+			type: 'field_changed',
+			updated_at: currentTimestamp,
+		});
+
+		return super.insertOne({ ...data, ride_id } as RideAcceptance, { options }) as Promise<RideAcceptance>;
 	}
 
 	public async findByRideId(ride_id: string): Promise<null | RideAcceptance> {
 		return super.findOne({ ride_id } as Filter<RideAcceptance>) as Promise<null | RideAcceptance>;
 	}
 
-	public async updateByRideId(ride_id: string, data: UpdateRideAcceptanceDto): Promise<RideAcceptance> {
+	public async updateByRideId(ride_id: string, data: UpdateRideAcceptanceDto, options: UpdateOptions & { returnResult?: boolean } = {}): Promise<RideAcceptance> {
 		const prevAcceptance = await this.findByRideId(ride_id);
 
 		if (!prevAcceptance) {
@@ -56,7 +69,7 @@ class RideAcceptanceClass extends MongoCollectionClass<RideAcceptance, CreateRid
 		data.comments = data.comments || prevAcceptance.comments || [];
 
 		for (const key of Object.keys(flattenedDiff)) {
-			if (key === 'is_locked' || key === 'acceptance_status' || key === 'justification') {
+			if (key === 'is_locked' || key === 'acceptance_status' || key === 'justification' || key === 'analysis_summary') {
 				data.comments.push({
 					created_at: Dates.now('utc').unix_timestamp,
 					created_by: data.updated_by || 'system',
@@ -70,7 +83,7 @@ class RideAcceptanceClass extends MongoCollectionClass<RideAcceptance, CreateRid
 			}
 		}
 
-		return super.updateOne({ ride_id } as Filter<RideAcceptance>, data) as Promise<RideAcceptance>;
+		return super.updateOne({ ride_id } as Filter<RideAcceptance>, data, options) as Promise<RideAcceptance>;
 	}
 
 	protected getCollectionIndexes(): IndexDescription[] {
@@ -91,4 +104,4 @@ class RideAcceptanceClass extends MongoCollectionClass<RideAcceptance, CreateRid
 
 /* * */
 
-export const rideAcceptances: Omit<RideAcceptanceClass, 'deleteById' | 'deleteMany' | 'deleteOne' | 'insertOne' | 'updateById' | 'updateMany' | 'updateOne'> = AsyncSingletonProxy(RideAcceptanceClass);
+export const rideAcceptances: Omit<RideAcceptanceClass, 'deleteById' | 'deleteMany' | 'deleteOne' | 'insertOne' | 'updateById' | 'updateOne'> = AsyncSingletonProxy(RideAcceptanceClass);

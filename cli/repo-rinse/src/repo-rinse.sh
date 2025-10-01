@@ -35,6 +35,11 @@ find . -type d -name ".yalc" -prune | xargs rm -rf
 echo "✓ Done"
 echo ""
 
+echo "→ Removing '.expo' directories..."
+find . -type d -name ".expo" -prune | xargs rm -rf
+echo "✓ Done"
+echo ""
+
 # # #
 
 echo "→ Removing 'package-lock.json' files..."

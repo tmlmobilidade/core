@@ -42,14 +42,14 @@
 		"path": false
 	},
 	"dependencies": {
-		"@carrismetropolitana/api-types": "^20250903.1518.40",
-		"@mantine/core": "8.2.8",
-		"@mantine/dates": "8.2.8",
-		"@mantine/form": "8.2.8",
-		"@mantine/hooks": "8.2.8",
-		"@mantine/modals": "8.2.8",
-		"@mantine/notifications": "8.2.8",
-		"@tabler/icons-react": "3.34.1",
+		"@carrismetropolitana/api-types": "^20251001.1550.12",
+		"@mantine/core": "8.3.2",
+		"@mantine/dates": "8.3.2",
+		"@mantine/form": "8.3.2",
+		"@mantine/hooks": "8.3.2",
+		"@mantine/modals": "8.3.2",
+		"@mantine/notifications": "8.3.2",
+		"@tabler/icons-react": "3.35.0",
 		"@tmlmobilidade/lib": "*",
 		"@tmlmobilidade/types": "*",
 		"@tmlmobilidade/utils": "*",
@@ -57,7 +57,7 @@
 		"clsx": "2.1.1",
 		"luxon": "3.7.2",
 		"mantine-form-zod-resolver": "1.3.0",
-		"maplibre-gl": "5.7.1",
+		"maplibre-gl": "5.8.0",
 		"react": "19.x",
 		"react-viewport-list": "7.1.2",
 		"ukkonen": "^2.2.0"
@@ -69,8 +69,8 @@
 		"@turf/turf": "7.2.0",
 		"@types/geojson": "7946.0.16",
 		"@types/luxon": "3.7.1",
-		"@types/node": "24.3.1",
-		"@types/react": "19.1.12",
+		"@types/node": "24.6.1",
+		"@types/react": "19.1.16",
 		"@types/react-dom": "19.1.9",
 		"nodemon": "3.1.10",
 		"postcss": "8.5.6",
@@ -82,7 +82,7 @@
 		"rollup-plugin-tsconfig-paths": "1.5.2",
 		"rollup-preserve-directives": "1.1.3",
 		"swr": "2.3.6",
-		"tsx": "4.20.5",
-		"typescript": "5.9.2"
+		"tsx": "4.20.6",
+		"typescript": "5.9.3"
 	}
 }

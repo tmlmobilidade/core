@@ -57,3 +57,9 @@ db.createUser({
 	roles: [{ db: 'admin', role: 'dgc-user' }],
 	user: 'dgc-user',
 });
+
+db.createUser({
+	pwd: USER_PASSWORD_BACKUP,
+	roles: [{ db: 'admin', role: 'backup' }],
+	user: 'backup',
+});

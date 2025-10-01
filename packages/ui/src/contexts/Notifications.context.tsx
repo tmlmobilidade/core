@@ -15,9 +15,6 @@ interface NotificationsContextState {
 	actions: {
 		triggerNotificationToast: () => void
 	}
-	count: {
-		unreadNotifications: number
-	}
 	data: {
 		allNotifications: Notification[]
 		allUserNotifications: Notification[]
@@ -49,7 +46,6 @@ export const NotificationsContextProvider = ({ children }: PropsWithChildren) =>
 	const meContext = useMeContext();
 	const prevNotificationIdsRef = useRef<string[]>([]);
 	const [userNotifications, setUserNotificationsData] = useState<[] | Notification[]>([]);
-	const [unreadNotifications, setUnreadNotifications] = useState<number>(0);
 
 	//
 	// B. Fetch data
@@ -67,12 +63,6 @@ export const NotificationsContextProvider = ({ children }: PropsWithChildren) =>
 
 	useEffect(() => {
 		if (!userNotifications) return;
-		const filteredNotifications = userNotifications.filter(notification => !notification.is_read);
-		setUnreadNotifications(filteredNotifications.length);
-	}, [userNotifications, notificationsData]);
-
-	useEffect(() => {
-		if (!userNotifications) return;
 		const currentIds = userNotifications.map(n => n._id);
 		const prevIds = prevNotificationIdsRef.current;
 		const newIds = currentIds.filter(id => !prevIds.includes(id));
@@ -87,6 +77,7 @@ export const NotificationsContextProvider = ({ children }: PropsWithChildren) =>
 
 	const handleNotificationPermission = async () => {
 		if (typeof window === 'undefined') return;
+
 		if (!('Notification' in window)) {
 			alert('Notifications are not supported in this browser');
 			return;
@@ -115,9 +106,6 @@ export const NotificationsContextProvider = ({ children }: PropsWithChildren) =>
 		actions: {
 			triggerNotificationToast: triggerNotificationToast,
 		},
-		count: {
-			unreadNotifications: unreadNotifications,
-		},
 		data: {
 			allNotifications: notificationsData ?? [],
 			allUserNotifications: userNotifications ?? [],
@@ -126,7 +114,7 @@ export const NotificationsContextProvider = ({ children }: PropsWithChildren) =>
 			error: notificationsError,
 			loading: notificationsLoading,
 		},
-	}), [notificationsData, unreadNotifications, notificationsError, notificationsLoading, userNotifications]);
+	}), [notificationsData, notificationsError, notificationsLoading, userNotifications]);
 
 	//
 	// E. Render components

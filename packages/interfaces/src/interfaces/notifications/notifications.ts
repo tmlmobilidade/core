@@ -28,27 +28,14 @@ class NotificationsClass extends MongoCollectionClass<Notification, CreateNotifi
 		return NotificationsClass._instance;
 	}
 
-	public async sendNotification({ needs_email, payload, scope, topic }: { needs_email: boolean, payload: Notification['payload'], scope: string, topic: string }): Promise<void> {
-		const usersWithTopic = await users.findMany({ subscribed_topics: { $in: [topic] } });
+	public async sendNotification(notification: CreateNotificationDto): Promise<void> {
+		const usersWithTopic = await users.findMany({ subscribed_topics: { $in: [notification.topic] } });
 		if (usersWithTopic.length === 0) return;
 
-		for (const user of usersWithTopic) {
-			const notification: CreateNotificationDto = {
-				is_read: false,
-				needs_email: needs_email,
-				payload: {
-					body: payload.body || 'Sem corpo',
-					href: payload.href || 'http://www.carrismetropolitana.pt',
-					icon: payload.icon || 'http://www.carrismetropolitana.pt',
-					title: payload.title || 'Sem titulo',
-				},
-				priority: 'normal',
-				scope: scope,
-				topic: topic,
-				user_id: user._id,
-			};
+		for (const user of usersWithTopic.filter(u => u._id !== notification.created_by)) {
+			const newNotification: CreateNotificationDto = { ...notification, user_id: user._id };
 			try {
-				const response = await notifications.insertOne(notification);
+				const response = await notifications.insertOne(newNotification);
 				users.updateById(user._id, {
 					active_notifications: [...(user.active_notifications || []), response._id],
 				});

@@ -19,7 +19,7 @@ export const NotificationSchema = DocumentSchema.extend({
 	priority: z.enum(['high', 'normal', 'low']).default('normal'),
 	scope: z.string().min(1), // e.g., 'agencies', 'alerts', 'auth'
 	topic: z.string().min(1), // e.g., 'new_alert', 'plan_update'
-	user_id: z.string(), // Id of the user this notification belongs to
+	user_id: z.string().optional(), // Id of the user this notification belongs to
 }).strict();
 
 /* * */

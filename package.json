@@ -51,11 +51,5 @@
 			"react",
 			"react-dom"
 		]
-	},
-	"dependencies": {
-		"@tmlmobilidade/connectors": "file:.yalc/@tmlmobilidade/connectors",
-		"@tmlmobilidade/interfaces": "file:.yalc/@tmlmobilidade/interfaces",
-		"@tmlmobilidade/lib": "file:.yalc/@tmlmobilidade/lib",
-		"@tmlmobilidade/types": "file:.yalc/@tmlmobilidade/types"
 	}
 }

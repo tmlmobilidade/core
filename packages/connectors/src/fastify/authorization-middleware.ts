@@ -71,8 +71,6 @@ export function authorizationMiddleware<T = unknown>(scope?: string, actions?: s
 		if (cachedRequest) {
 			user = cachedRequest.user;
 			permissions = cachedRequest.permissions;
-
-			console.log('HERE =======> CACHE HIT');
 		}
 		else {
 			user = await fetchUserData(sessionToken);

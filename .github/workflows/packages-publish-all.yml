@@ -25,7 +25,7 @@ jobs:
         run: |
           version="$(date +%Y%m%d).$(date +%H%M).$(date +%S)"
           if [ "${GITHUB_REF_NAME}" = "staging" ]; then
-            version="${version}-rc.0"
+            version="${version}-staging.0"
             npm_tag="staging"
           else
             npm_tag="latest"

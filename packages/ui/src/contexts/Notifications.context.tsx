@@ -75,30 +75,23 @@ export const NotificationsContextProvider = ({ children }: PropsWithChildren) =>
 	//
 	// D. Handle actions
 
-	const handleNotificationPermission = async () => {
-		if (typeof window === 'undefined') return;
-
+	async function handleNotificationPermission() {
 		if (!('Notification' in window)) {
-			alert('Notifications are not supported in this browser');
-
-			const permission = await Notification.requestPermission();
-
-			if (permission !== 'granted') {
-				alert('Permitir notificações para receber alertas');
-				return;
-			}
-
-			return;
+			console.warn('This browser does not support notifications.');
+			return false;
 		}
 
-		if (Notification.permission !== 'granted') {
-			const permission = await Notification.requestPermission();
-			if (permission !== 'granted') {
-				alert('Notifications blocked');
-				return;
-			}
+		if (Notification.permission === 'granted') {
+			return true;
 		}
-	};
+
+		if (Notification.permission === 'denied') {
+			return false;
+		}
+
+		const permission = await Notification.requestPermission();
+		return permission;
+	}
 
 	const triggerNotificationToast = async (title: string, body: string) => {
 		handleNotificationPermission();

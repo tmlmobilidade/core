@@ -29,7 +29,10 @@ class NotificationsClass extends MongoCollectionClass<Notification, CreateNotifi
 	}
 
 	public async sendNotification(notification: CreateNotificationDto): Promise<void> {
-		const usersWithTopic = await users.findMany({ subscribed_topics: { $in: [notification.topic] } });
+		const usersWithTopic = await users.findMany({ permissions: { $in: [notification.topic] } });
+
+		console.log('Users with topic ====>>>>>', usersWithTopic);
+
 		if (usersWithTopic.length === 0) return;
 
 		for (const user of usersWithTopic.filter(u => u._id !== notification.created_by)) {

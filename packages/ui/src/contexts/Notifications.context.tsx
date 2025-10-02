@@ -80,6 +80,14 @@ export const NotificationsContextProvider = ({ children }: PropsWithChildren) =>
 
 		if (!('Notification' in window)) {
 			alert('Notifications are not supported in this browser');
+
+			const permission = await Notification.requestPermission();
+
+			if (permission !== 'granted') {
+				alert('Permitir notificações para receber alertas');
+				return;
+			}
+
 			return;
 		}
 

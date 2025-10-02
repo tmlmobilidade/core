@@ -30,7 +30,7 @@ export function AppWrapperNotificationCentralUnreadList({ notifications }: AppWr
 	// B.Handle Actions
 
 	const handleShowMore = () => {
-		setShowAll(!showAll);
+		setShowAll(prev => !prev);
 	};
 
 	//
@@ -42,7 +42,7 @@ export function AppWrapperNotificationCentralUnreadList({ notifications }: AppWr
 
 			{displayNotifications.map((notification: Notification) => (
 				<Menu.Item key={notification._id}>
-					<AppWrapperNotificationCentralItemContent notification_id={notification._id} />
+					<AppWrapperNotificationCentralItemContent notificationId={notification._id} />
 				</Menu.Item>
 			))}
 

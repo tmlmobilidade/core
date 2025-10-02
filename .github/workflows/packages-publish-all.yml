@@ -7,6 +7,7 @@ on:
   push:
     branches:
       - production
+      - staging
     paths:
       - 'packages/**'
       - '.github/workflows/packages-publish-all.yml'
@@ -23,10 +24,18 @@ jobs:
       - id: generate-version-number
         run: |
           version="$(date +%Y%m%d).$(date +%H%M).$(date +%S)"
-          echo "Generated version: $version"
+          if [ "${GITHUB_REF_NAME}" = "staging" ]; then
+            version="${version}-rc.${GITHUB_RUN_NUMBER}"
+            npm_tag="next"
+          else
+            npm_tag="latest"
+          fi
+          echo "Generated version: $version ($npm_tag)"
           echo "version_number=$version" >> "$GITHUB_OUTPUT"
+          echo "npm_tag=$npm_tag" >> "$GITHUB_OUTPUT"
     outputs:
       version_number: ${{ steps.generate-version-number.outputs.version_number }}
+      npm_tag: ${{ steps.generate-version-number.outputs.npm_tag }}
 
   # # # # # # # # # # # # # # # # # # # # #
   # # # # # # # # # # # # # # # # # # # # #
@@ -52,7 +61,7 @@ jobs:
         # # #
       - name: Publish package to NPM
         working-directory: packages/connectors
-        run: npm publish --access public
+        run: npm publish --access public --tag ${{ needs.version-number.outputs.npm_tag }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
 
@@ -80,7 +89,7 @@ jobs:
         # # #
       - name: Publish package to NPM
         working-directory: packages/interfaces
-        run: npm publish --access public
+        run: npm publish --access public --tag ${{ needs.version-number.outputs.npm_tag }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
 
@@ -108,7 +117,7 @@ jobs:
         # # #
       - name: Publish package to NPM
         working-directory: packages/lib
-        run: npm publish --access public
+        run: npm publish --access public --tag ${{ needs.version-number.outputs.npm_tag }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
 
@@ -132,7 +141,7 @@ jobs:
         # # #
       - name: Publish package to NPM
         working-directory: packages/tsconfig
-        run: npm publish --access public
+        run: npm publish --access public --tag ${{ needs.version-number.outputs.npm_tag }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
 
@@ -160,7 +169,7 @@ jobs:
         # # #
       - name: Publish package to NPM
         working-directory: packages/types
-        run: npm publish --access public
+        run: npm publish --access public --tag ${{ needs.version-number.outputs.npm_tag }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
 
@@ -188,7 +197,7 @@ jobs:
         # # #
       - name: Publish package to NPM
         working-directory: packages/ui
-        run: npm publish --access public
+        run: npm publish --access public --tag ${{ needs.version-number.outputs.npm_tag }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
 
@@ -216,7 +225,7 @@ jobs:
         # # #
       - name: Publish package to NPM
         working-directory: packages/utils
-        run: npm publish --access public
+        run: npm publish --access public --tag ${{ needs.version-number.outputs.npm_tag }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
 
@@ -244,6 +253,6 @@ jobs:
         # # #
       - name: Publish package to NPM
         working-directory: packages/emails
-        run: npm publish --access public
+        run: npm publish --access public --tag ${{ needs.version-number.outputs.npm_tag }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}

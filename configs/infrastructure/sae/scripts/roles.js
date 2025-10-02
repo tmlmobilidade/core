@@ -12,6 +12,7 @@ db.createRole({
 		{ actions: ['find'], resource: { collection: 'parishes', db: 'production' } },
 		{ actions: ['find'], resource: { collection: 'verification_tokens', db: 'production' } },
 		{ actions: ['find'], resource: { collection: 'organizations', db: 'production' } },
+		{ actions: ['find', 'insert', 'update', 'remove'], resource: { collection: 'notifications', db: 'production' } },
 	],
 	role: 'common',
 	roles: [],

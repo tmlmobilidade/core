@@ -1,7 +1,7 @@
 import { type FastifyRequest } from '@/fastify/fastify-service.js';
 import { getAppConfig, HttpException, HttpStatus } from '@tmlmobilidade/lib';
 import { type Permission, type User } from '@tmlmobilidade/types';
-import { fetchData, hasPermission } from '@tmlmobilidade/utils';
+import { Cache, fetchData, hasPermission } from '@tmlmobilidade/utils';
 
 declare module 'fastify' {
 	export interface FastifyRequest {
@@ -11,6 +11,7 @@ declare module 'fastify' {
 }
 
 const AUTH_API_BASE_URL = () => getAppConfig('auth', 'api_url');
+const REQUEST_CACHE = new Cache<string, { permissions: Permission<unknown>[], user: User }>(60_000); // 1 minute TTL
 
 /**
  * Fetches user data from the authentication API
@@ -63,12 +64,23 @@ export function authorizationMiddleware<T = unknown>(scope?: string, actions?: s
 			throw new HttpException(HttpStatus.UNAUTHORIZED, 'Invalid authorization token');
 		}
 
-		// Fetch user data
-		const user = await fetchUserData(sessionToken);
-		request.me = user;
+		let user: User;
+		let permissions: Permission<T>[];
 
-		// Fetch user permissions
-		const permissions = await fetchUserPermissions<T>(sessionToken);
+		const cachedRequest = REQUEST_CACHE.get(sessionToken);
+		if (cachedRequest) {
+			user = cachedRequest.user;
+			permissions = cachedRequest.permissions;
+
+			console.log('HERE =======> CACHE HIT');
+		}
+		else {
+			user = await fetchUserData(sessionToken);
+			permissions = await fetchUserPermissions<T>(sessionToken);
+			REQUEST_CACHE.set(sessionToken, { permissions, user });
+		}
+
+		request.me = user;
 		request.permissions = permissions;
 
 		//
@@ -77,7 +89,7 @@ export function authorizationMiddleware<T = unknown>(scope?: string, actions?: s
 		if (!scope) return;
 
 		if (Array.isArray(actions)) {
-			const results = actions.map(action => hasPermission(permissions, scope, action));
+			const results = actions.map(action => hasPermission(request.permissions, scope, action));
 
 			const isAllowed = requireAll
 				? results.every(Boolean) // all must be true
@@ -88,7 +100,7 @@ export function authorizationMiddleware<T = unknown>(scope?: string, actions?: s
 			}
 		}
 		else {
-			if (!hasPermission(permissions, scope, actions as string)) {
+			if (!hasPermission(request.permissions, scope, actions as string)) {
 				throw new HttpException(HttpStatus.FORBIDDEN, 'Insufficient permissions');
 			}
 		}

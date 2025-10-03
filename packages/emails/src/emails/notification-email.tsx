@@ -2,22 +2,19 @@
 
 import { EmailWrapper, InfoBox, styles } from '@/components/index.js';
 import { Button, Hr, Section, Text } from '@react-email/components';
-import { getAppConfig } from '@tmlmobilidade/lib';
-import { type UnixTimestamp } from '@tmlmobilidade/types';
-import { Dates } from '@tmlmobilidade/utils';
 
 /* * */
 
 export interface NotificationEmailProps {
-	action: string
-	creation_date: UnixTimestamp
-	description: string
+	body: string
+	href: string
+	priority: string
+	scope: string
 	title: string
+	topic: string
 }
 
-export function NotificationEmail({ action, creation_date, description, title }: NotificationEmailProps) {
-	const url = getAppConfig('plans', 'frontend_url') + '/validations/';
-
+export function NotificationEmail({ body, href, priority, scope, title, topic }: NotificationEmailProps) {
 	return (
 		<EmailWrapper preview="Pedido de aprovação de plano">
 			<Section>
@@ -42,15 +39,15 @@ export function NotificationEmail({ action, creation_date, description, title }:
 						{title}
 						<br />
 						<strong>Descrição</strong>
-						{description}
+						{body}
 						<br />
-						<strong>Data de Criação:</strong>
+						<strong>Prioridade:</strong>
 						{' '}
-						{Dates.fromUnixTimestamp(creation_date).setZone('Europe/Lisbon', 'offset_only').toLocaleString(Dates.FORMATS.DATETIME_SHORT, 'pt-PT')}
+						{priority}
 					</Text>
 				</InfoBox>
 
-				<Button href={url} style={styles.button}>
+				<Button href={href} style={styles.button}>
 					Ver Notificação
 				</Button>
 

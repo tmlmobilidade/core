@@ -29,7 +29,7 @@ export const AppWrapperNotificationCentralItemContent = ({ notificationId }: App
 	// C. Handle actions
 
 	const handleNotificationClick = async () => {
-		await fetchData(`${getAppConfig('auth', 'api_url')}/notifications/${notificationId}/mark-as-read/`);
+		await fetchData(`${getAppConfig('auth', 'api_url')}/notifications/${notificationId}/mark-as-read`);
 		if (notificationData?.payload?.href) {
 			window.open(notificationData.payload.href, '_blank');
 		}

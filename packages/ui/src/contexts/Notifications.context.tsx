@@ -75,7 +75,7 @@ export const NotificationsContextProvider = ({ children }: PropsWithChildren) =>
 	//
 	// D. Handle actions
 
-	const handleNotificationPermission = async (): Promise<boolean> => {
+	const askNotificationPermission = async (): Promise<boolean> => {
 		if (typeof window === 'undefined') return false;
 
 		if (!('Notification' in window)) {
@@ -109,7 +109,7 @@ export const NotificationsContextProvider = ({ children }: PropsWithChildren) =>
 
 	const triggerNotificationToast = async (title: string, body: string) => {
 		try {
-			const allowed = await handleNotificationPermission();
+			const allowed = await askNotificationPermission();
 			if (!allowed) {
 				console.warn('Notifications not allowed, skipping.');
 				return;

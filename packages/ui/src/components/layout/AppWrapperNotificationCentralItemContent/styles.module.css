@@ -1,7 +1,7 @@
  /* * */   
  /* Notification Content Wrapper */
 .notificationContentWrapperRead {
-     display: grid;
+    display: grid;
     grid-template-rows: auto auto;
     grid-template-columns: auto 1fr;
     gap: 8px;
@@ -32,18 +32,6 @@
     background-color: var(--color-system-background-50);
 }
 
-/* Left side: two stacked rows */
-.notificationLeftTop {
-    grid-row: 1;
-    grid-column: 1;
-}
-
-.notificationLeftBottom {
-    grid-row: 2;
-    grid-column: 1;
-    align-self: start;
-}
-
 /* Right side: spans both rows */
 .notificationRight {
     display: grid;
@@ -55,12 +43,6 @@
     align-items: center;
 }
 
-.notificationRightDelete {
-    display: flex;
-    align-items: center;
-    justify-content: end;
-}
-
 .notificationRightImage {
     display: flex;
     align-items: center;
@@ -70,6 +52,8 @@
 /* * */
 /* Notification Title */
 .notificationTitle{
+    grid-row: 1;
+    grid-column: 1;
     font-size: 14px;
     font-weight: bold;
 }
@@ -77,6 +61,9 @@
 /* * */
 /* Notification Body */
 .notificationBody{
+    grid-row: 2;
+    grid-column: 1;
+    align-self: start;
     font-size: 14px;
     font-weight: normal;
 }
@@ -85,7 +72,9 @@
 /* Notification Delete Icon */
 .notificationDeleteIcon {
     z-index: 998;
-   justify-content: end;
+    display: flex;
+    align-items: center;
+    justify-content: end;
     color: var(--color-system-icon);
     cursor: pointer;
 }

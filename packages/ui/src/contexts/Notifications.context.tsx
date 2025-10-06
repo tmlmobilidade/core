@@ -3,7 +3,7 @@
 /* * */
 
 import { getAppConfig, HttpException } from '@tmlmobilidade/lib';
-import { Notification } from '@tmlmobilidade/types';
+import { Notification as TmlNotification } from '@tmlmobilidade/types';
 import { createContext, type PropsWithChildren, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import useSWR from 'swr';
 
@@ -16,8 +16,8 @@ interface NotificationsContextState {
 		triggerNotificationToast: (title: string, body: string) => void
 	}
 	data: {
-		allNotifications: Notification[]
-		allUserNotifications: Notification[]
+		allNotifications: TmlNotification[]
+		allUserNotifications: TmlNotification[]
 	}
 	flags: {
 		error?: HttpException
@@ -45,12 +45,12 @@ export const NotificationsContextProvider = ({ children }: PropsWithChildren) =>
 
 	const meContext = useMeContext();
 	const prevNotificationIdsRef = useRef<string[]>([]);
-	const [userNotifications, setUserNotificationsData] = useState<[] | Notification[]>([]);
+	const [userNotifications, setUserNotificationsData] = useState<[] | TmlNotification[]>([]);
 
 	//
 	// B. Fetch data
 
-	const { data: notificationsData, error: notificationsError, isLoading: notificationsLoading } = useSWR<Notification[], HttpException>(`${getAppConfig('auth', 'api_url')}/notifications`, { refreshInterval: 2000 });
+	const { data: notificationsData, error: notificationsError, isLoading: notificationsLoading } = useSWR<TmlNotification[], HttpException>(`${getAppConfig('auth', 'api_url')}/notifications`, { refreshInterval: 2000 });
 
 	//
 	// C. Transform data
@@ -75,28 +75,54 @@ export const NotificationsContextProvider = ({ children }: PropsWithChildren) =>
 	//
 	// D. Handle actions
 
-	const handleNotificationPermission = async () => {
-		if (typeof window === 'undefined') return;
+	const askNotificationPermission = async (): Promise<boolean> => {
+		if (typeof window === 'undefined') return false;
 
 		if (!('Notification' in window)) {
-			alert('Notifications are not supported in this browser');
-			return;
+			console.warn('This browser does not support notifications.');
+			return false;
 		}
 
-		if (Notification.permission !== 'granted') {
+		if (!window.isSecureContext) {
+			console.warn('Notifications require HTTPS or localhost.');
+			return false;
+		}
+
+		if (Notification.permission === 'granted') {
+			return true;
+		}
+
+		if (Notification.permission === 'denied') {
+			console.warn('Notification permission was denied.');
+			return false;
+		}
+
+		try {
 			const permission = await Notification.requestPermission();
-			if (permission !== 'granted') {
-				alert('Notifications blocked');
-				return;
-			}
+			return permission === 'granted';
+		}
+		catch (err) {
+			console.error('Error requesting notification permission:', err);
+			return false;
 		}
 	};
 
 	const triggerNotificationToast = async (title: string, body: string) => {
-		handleNotificationPermission();
-		new Notification(title, {
-			body: body,
-		});
+		try {
+			const allowed = await askNotificationPermission();
+			if (!allowed) {
+				console.warn('Notifications not allowed, skipping.');
+				return;
+			}
+
+			const notification = new Notification(title, { body });
+			notification.onclick = () => {
+				window.focus();
+			};
+		}
+		catch (err) {
+			console.error('Failed to trigger notification:', err);
+		}
 	};
 
 	//

@@ -4,6 +4,7 @@
 
 import { MapContextProvider } from '@/contexts/Map.context';
 import { MeContextProvider } from '@/contexts/Me.context';
+import { NotificationsContextProvider } from '@/contexts/Notifications.context';
 import { ThemeContextProvider } from '@/contexts/Theme.context';
 import { type PropsWithChildren } from 'react';
 
@@ -15,11 +16,13 @@ import { type PropsWithChildren } from 'react';
 export function AppProvider({ children }: PropsWithChildren) {
 	return (
 		<MeContextProvider>
-			<ThemeContextProvider>
-				<MapContextProvider>
-					{children}
-				</MapContextProvider>
-			</ThemeContextProvider>
+			<NotificationsContextProvider>
+				<ThemeContextProvider>
+					<MapContextProvider>
+						{children}
+					</MapContextProvider>
+				</ThemeContextProvider>
+			</NotificationsContextProvider>
 		</MeContextProvider>
 	);
 }

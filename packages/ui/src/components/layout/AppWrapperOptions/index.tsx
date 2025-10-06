@@ -6,7 +6,7 @@ import { Label } from '@/components/display/Label';
 import { useMeContext } from '@/contexts';
 import { AVAILABLE_MODES, AVAILABLE_THEMES, useThemeContext } from '@/contexts/Theme.context';
 import { ActionIcon, ColorSwatch, Menu } from '@mantine/core';
-import { IconChevronRight, IconColorSwatch, IconLogout, IconSettings, IconSunMoon } from '@tabler/icons-react';
+import { IconBellRinging, IconChevronRight, IconColorSwatch, IconLogout, IconSettings, IconSunMoon } from '@tabler/icons-react';
 
 /* * */
 
@@ -41,6 +41,11 @@ export function AppWrapperOptions() {
 				label: item.name,
 				onClick: () => themeContext.actions.activateMode(item._id),
 			})),
+		},
+		{
+			icon: <IconBellRinging size={18} />,
+			label: 'Ativar Notificações',
+			onClick: () => Notification.requestPermission(),
 		},
 		{
 			icon: <IconColorSwatch size={18} />,
@@ -134,10 +139,10 @@ export function AppWrapperOptions() {
 			</Menu.Target>
 			<Menu.Dropdown>
 				<Menu.Label>Personalização</Menu.Label>
-				{MENU_ITEMS.slice(0, 1).map(renderMenuItem)}
+				{MENU_ITEMS.slice(0, 2).map(renderMenuItem)}
 				<Menu.Divider />
 				<Menu.Label>Conta</Menu.Label>
-				{MENU_ITEMS.slice(1).map(renderMenuItem)}
+				{MENU_ITEMS.slice(2).map(renderMenuItem)}
 			</Menu.Dropdown>
 		</Menu>
 	);

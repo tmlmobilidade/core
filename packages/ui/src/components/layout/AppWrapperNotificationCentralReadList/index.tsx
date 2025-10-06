@@ -41,7 +41,7 @@ export function AppWrapperNotificationCentralReadList({ notifications }: AppWrap
 			<Menu.Label>Lidas ({notifications.length})</Menu.Label>
 			{displayNotifications.map((notification: Notification) => (
 				<Menu.Item key={notification._id}>
-					<AppWrapperNotificationCentralItemContent notification_id={notification._id} />
+					<AppWrapperNotificationCentralItemContent notificationId={notification._id} />
 
 				</Menu.Item>
 			))}

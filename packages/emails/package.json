@@ -42,7 +42,7 @@
 		"@types/nodemailer": "7.0.2",
 		"browserslist": "4.26.3",
 		"nodemailer": "7.0.7",
-		"react": "19.2.0",
+		"react": "19.1.1",
 		"react-email": "4.2.12"
 	},
 	"devDependencies": {

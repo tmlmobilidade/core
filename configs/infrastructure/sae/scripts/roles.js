@@ -116,6 +116,7 @@ db.createRole({
 	privileges: [
 		{ actions: ['find'], resource: { collection: 'rides', db: 'production' } },
 		{ actions: ['find'], resource: { collection: 'simplified_apex_validations', db: 'production' } },
+		{ actions: ['find'], resource: { collection: 'alerts', db: 'production' } },
 	],
 	role: 'cmet-api',
 	roles: [],

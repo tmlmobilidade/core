@@ -21,3 +21,5 @@ npx @tmlmobilidade/repo-version --output=<path-to-package.json | console> --form
 ##### `--output`
 - "<path-to-package.json>" - Modify the package.json.
 - "console" - Output to the console. This will hide any other logs.
+
+:)

@@ -16,6 +16,7 @@
 		"build:lib": "turbo build --filter=@tmlmobilidade/lib",
 		"build:packages": "turbo build --filter=./packages/*",
 		"build:providers": "turbo build --filter=@tmlmobilidade/providers",
+		"build:repo-version": "turbo build --filter=@tmlmobilidade/repo-version",
 		"build:types": "turbo build --filter=@tmlmobilidade/types",
 		"build:ui": "turbo build --filter=@tmlmobilidade/ui",
 		"build:utils": "turbo build --filter=@tmlmobilidade/utils",

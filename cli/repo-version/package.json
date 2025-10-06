@@ -6,18 +6,18 @@
 	"license": "AGPL-3.0-or-later",
 	"type": "module",
 	"files": [
-		"dist/"
+		"dist"
 	],
-	"main": "./dist/index.js",
-	"types": "./dist/index.d.ts",
+	"main": "dist/index.js",
+	"bin": {
+		"repo-version": "./dist/index.js"
+	},
+	"types": "dist/index.d.ts",
 	"scripts": {
 		"build": "tsc && resolve-tspaths",
 		"lint": "eslint .",
 		"lint:fix": "eslint . --fix",
 		"start": "tsc && resolve-tspaths && node dist/index.js"
-	},
-	"bin": {
-		"repo-version": "./dist/index.js"
 	},
 	"dependencies": {
 		"@tmlmobilidade/utils": "*"

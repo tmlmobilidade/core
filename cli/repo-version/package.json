@@ -1,5 +1,5 @@
 {
-	"name": "@tmlmobilidade/bump-version",
+	"name": "@tmlmobilidade/repo-version",
 	"description": "A CLI tool to bump the version of a NodeJS package.",
 	"version": "1.0.0",
 	"author": "João de Vasconcelos & Jusi Monteiro",
@@ -17,10 +17,10 @@
 		"start": "tsc && resolve-tspaths && node dist/index.js"
 	},
 	"bin": {
-		"bump": "./dist/index.js"
+		"repo-version": "./dist/index.js"
 	},
 	"dependencies": {
-		"@tmlmobilidade/utils": "1.0.0"
+		"@tmlmobilidade/utils": "*"
 	},
 	"devDependencies": {
 		"@carrismetropolitana/eslint": "20250622.1204.50",

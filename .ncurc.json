@@ -2,6 +2,10 @@
 	"reject": [
 		"fastify-type-provider-zod",
 		"zod",
-		"rollup"
+		"rollup",
+		"react",
+		"react-dom",
+		"@types/react",
+		"@types/react-dom"
 	]
 }

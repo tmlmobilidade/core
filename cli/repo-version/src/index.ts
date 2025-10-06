@@ -14,24 +14,14 @@ const args = process.argv.slice(2);
 const prefixArg = args.find(arg => arg.startsWith('--prefix='));
 const prefix = prefixArg ? prefixArg.split('=')[1] : '';
 
+const suffixArg = args.find(arg => arg.startsWith('--suffix='));
+const suffix = suffixArg ? suffixArg.split('=')[1] : '';
+
 const formatArg = args.find(arg => arg.startsWith('--format='));
 const format = formatArg ? formatArg.split('=')[1] : '';
 
-//
-// Extract the package.json path (the first non-flag argument)
-
-const packageJsonPathArg = args.find(arg => !arg.startsWith('--'));
-
-if (!packageJsonPathArg) {
-	console.error('✘ Error: No path to package.json provided.');
-	process.exit(1);
-}
-
-//
-// Read the package.json file
-
-const packageJsonFile = fs.readFileSync(packageJsonPathArg, 'utf8');
-const packageJsonData = JSON.parse(packageJsonFile);
+const outputArg = args.find(arg => arg.startsWith('--output='));
+const output = outputArg ? outputArg.split('=')[1] : '';
 
 //
 // Generate the new version based on the current date and time
@@ -52,12 +42,33 @@ const seconds = now.getSeconds();
 let futurePackageVersion = '';
 
 if (!format || format === 'default') {
-	futurePackageVersion = `${prefix}${year}${month}${day}.${hours}${minutes}.${seconds}`;
+	futurePackageVersion = `${prefix}${year}${month}${day}.${hours}${minutes}.${seconds}${suffix}`;
 }
 
 if (format === 'code') {
 	futurePackageVersion = `${year}${month}${day}${hours}${minutes}${seconds}`;
 }
+
+//
+// If the ouput is set to "console",
+// just print the version to the console and exit.
+
+if (output === 'console') {
+	console.log(futurePackageVersion);
+	process.exit(0);
+}
+
+//
+// If there is a package.json path argument,
+// read the file and parse its content.
+
+if (!output) {
+	console.error('✘ Error: No path to package.json provided.');
+	process.exit(1);
+}
+
+const packageJsonFile = fs.readFileSync(output, 'utf8');
+const packageJsonData = JSON.parse(packageJsonFile);
 
 //
 // Update the package.json file with the new version
@@ -67,6 +78,6 @@ const currentPackageVersion = packageJsonData.version;
 
 packageJsonData.version = futurePackageVersion;
 
-fs.writeFileSync(packageJsonPathArg, JSON.stringify(packageJsonData, null, '\t'));
+fs.writeFileSync(output, JSON.stringify(packageJsonData, null, '\t'));
 
 console.log(`✓ Package Version updated from "${currentPackageVersion}" to "${futurePackageVersion}".`);

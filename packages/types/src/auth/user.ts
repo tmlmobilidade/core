@@ -20,7 +20,6 @@ export type UserPreferenceValue = z.infer<typeof UserPreferenceValueSchema>;
 /* * */
 
 export const UserSchema = DocumentSchema.extend({
-	active_notifications: z.array(z.string()).default([]),
 	avatar: z.string().nullish(),
 	bio: z.string().nullish(),
 	email: z.string().email(),
@@ -34,7 +33,6 @@ export const UserSchema = DocumentSchema.extend({
 	preferences: z.record(z.record(UserPreferenceValueSchema)).nullish(),
 	role_ids: z.array(z.string()).default([]),
 	session_ids: z.array(z.string()).default([]),
-	subscribed_topics: z.array(z.string()).default([]),
 	theme_id: z.string().nullish(),
 	verification_token_ids: z.array(z.string()).default([]),
 }).strict();

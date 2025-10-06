@@ -8,8 +8,6 @@ import { z } from 'zod';
 
 /* * */
 
-type NewType = string;
-
 class UsersClass extends MongoCollectionClass<User, CreateUserDto, UpdateUserDto> {
 	private static _instance: UsersClass;
 	protected override createSchema: z.ZodSchema = UserSchema;
@@ -67,7 +65,7 @@ class UsersClass extends MongoCollectionClass<User, CreateUserDto, UpdateUserDto
 	 * @param includePasswordHash - Whether to include the password hash in the result
 	 * @returns A promise that resolves to the matching user documents or null if not found
 	 */
-	async findByOrganization(id: NewType, includePasswordHash = false) {
+	async findByOrganization(id: string, includePasswordHash = false) {
 		const users = await this.mongoCollection.find({ organization_id: { $in: [id] } } as unknown as Filter<User>).toArray();
 		return includePasswordHash ? users : users.map(user => this.deletePasswordHash(user));
 	}

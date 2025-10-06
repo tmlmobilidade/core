@@ -9,7 +9,6 @@ export type Notification = z.infer<typeof NotificationSchema>;
 
 export const NotificationSchema = DocumentSchema.extend({
 	is_read: z.boolean(),
-	needs_email: z.boolean().default(false),
 	payload: z.object({
 		body: z.string().min(1),
 		href: z.string().url().optional(),
@@ -31,3 +30,9 @@ export type CreateNotificationDto = z.infer<typeof CreateNotificationSchema>;
 export type UpdateNotificationDto = z.infer<typeof UpdateNotificationSchema>;
 
 /* * */
+
+export const NotificationPermissionSchema = z.object({
+	send_mail: z.boolean().default(false).nullish(),
+});
+
+export type NotificationPermission = z.infer<typeof NotificationPermissionSchema>;

@@ -3,7 +3,6 @@
 import { DocumentSchema } from '@/_common/document.js';
 import { unixTimeStampSchema } from '@/_common/unix-timestamp.js';
 import { type Permission, PermissionSchema } from '@/auth/permission.js';
-import { NotificationSchema } from '@/notification.js';
 import { z } from 'zod';
 
 /* * */

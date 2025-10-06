@@ -1,7 +1,9 @@
 /* * */
 
 import { MongoCollectionClass } from '@/mongo-collection.js';
-import { CreateNotificationDto, Notification, NotificationSchema, UpdateNotificationDto, UpdateNotificationSchema } from '@tmlmobilidade/types';
+import { sendNotificationEmail } from '@tmlmobilidade/emails';
+import { getAppConfig } from '@tmlmobilidade/lib';
+import { CreateNotificationDto, Notification, NotificationPermission, NotificationSchema, UpdateNotificationDto, UpdateNotificationSchema, User } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
 import { IndexDescription } from 'mongodb';
 import { z } from 'zod';
@@ -28,13 +30,42 @@ class NotificationsClass extends MongoCollectionClass<Notification, CreateNotifi
 		return NotificationsClass._instance;
 	}
 
-	public async sendNotification(notification: CreateNotificationDto): Promise<void> {
-		const usersWithTopic = await users.findMany({ 'permissions.action': notification.topic });
+	public async sendNotification(scope: string, topic: string, user: User, id: string, title: string, description: string): Promise<void> {
+		const usersWithTopic: User[] = await users.findMany({ 'permissions.action': topic });
 
 		if (usersWithTopic.length === 0) return;
 
+		const notification: CreateNotificationDto = {
+			created_by: user?._id,
+			is_read: false,
+			payload: {
+				body: description,
+				href: `${getAppConfig(`${topic}`, 'frontend_url')}/${topic}/${id}`,
+				icon: topic,
+				title: title,
+			},
+			priority: 'normal',
+			scope: scope,
+			topic: topic,
+			updated_by: user?._id,
+		};
+
 		for (const user of usersWithTopic.filter(u => u._id !== notification.created_by)) {
+			const sendMail = user?.permissions.find(p => p.scope === 'notifications' && p.action === 'created_alert')?.resource as NotificationPermission ?? false;
 			const newNotification: CreateNotificationDto = { ...notification, user_id: user._id };
+			if (sendMail) {
+				await sendNotificationEmail({
+					props: {
+						body: notification.payload.body,
+						href: notification.payload.href || '',
+						priority: notification.priority,
+						scope: notification.scope,
+						title: notification.payload.title,
+						topic: notification.topic,
+					}, to: user.email,
+				});
+			}
+
 			await notifications.insertOne(newNotification);
 		}
 	}

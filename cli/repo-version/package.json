@@ -10,7 +10,7 @@
 	],
 	"main": "dist/index.js",
 	"bin": {
-		"repo-version": "./dist/index.js"
+		"repo-version": "dist/index.js"
 	},
 	"types": "dist/index.d.ts",
 	"scripts": {

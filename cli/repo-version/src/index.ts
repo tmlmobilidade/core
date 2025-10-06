@@ -24,6 +24,9 @@ import fs from 'node:fs';
 	const formatArg = args.find(arg => arg.startsWith('--format='));
 	const format = formatArg ? formatArg.split('=')[1] : '';
 
+	const limitArg = args.find(arg => arg.startsWith('--limit='));
+	const limit = limitArg ? limitArg.split('=')[1] : '';
+
 	const outputArg = args.find(arg => arg.startsWith('--output='));
 	const output = outputArg ? outputArg.split('=')[1] : '';
 
@@ -32,12 +35,12 @@ import fs from 'node:fs';
 
 	const dateValue = Dates.now('Europe/Lisbon');
 
+	let futurePackageVersion = '';
+
 	//
 	// Format the version string.
 	// For "default" format: [prefix]YYYYMMDD.HHMM.SS
 	// For "code" format: YYYYMMDDHHMMSS (as a single number, no prefix)
-
-	let futurePackageVersion = '';
 
 	if (!format || format === 'default') {
 		futurePackageVersion = `${prefix}${dateValue.toFormat('yyyyMMdd.HHmm.ss')}${suffix}`;
@@ -45,6 +48,14 @@ import fs from 'node:fs';
 
 	if (format === 'code') {
 		futurePackageVersion = String(Number(dateValue.toFormat('yyyyMMddHHmmss')));
+	}
+
+	//
+	// Check if the version exceeds the limit, if provided.
+	// Cut the version string if it exceeds the limit.
+
+	if (limit && Number(limit) > 0) {
+		futurePackageVersion = futurePackageVersion.slice(0, Number(limit));
 	}
 
 	//

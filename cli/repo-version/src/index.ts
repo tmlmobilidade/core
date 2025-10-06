@@ -2,6 +2,7 @@
 
 /* * */
 
+import { Dates } from '@tmlmobilidade/utils';
 import fs from 'node:fs';
 
 /* * */
@@ -26,13 +27,7 @@ const output = outputArg ? outputArg.split('=')[1] : '';
 //
 // Generate the new version based on the current date and time
 
-const now = new Date();
-const year = now.getFullYear();
-const month = now.getMonth() + 1;
-const day = now.getDate();
-const hours = now.getHours();
-const minutes = now.getMinutes();
-const seconds = now.getSeconds();
+const dateValue = Dates.now('Europe/Lisbon');
 
 //
 // Format the version string.
@@ -42,11 +37,11 @@ const seconds = now.getSeconds();
 let futurePackageVersion = '';
 
 if (!format || format === 'default') {
-	futurePackageVersion = `${prefix}${year}${month}${day}.${hours}${minutes}.${seconds}${suffix}`;
+	futurePackageVersion = `${prefix}${dateValue.toFormat('yyyyMMdd.HHmm.ss')}${suffix}`;
 }
 
 if (format === 'code') {
-	futurePackageVersion = `${year}${month}${day}${hours}${minutes}${seconds}`;
+	futurePackageVersion = String(Number(dateValue.toFormat('yyyyMMddHHmmss')));
 }
 
 //

@@ -7,72 +7,78 @@ import fs from 'node:fs';
 
 /* * */
 
-//
-// Parse command-line arguments
+(async function init() {
+	//
 
-const args = process.argv.slice(2);
+	//
+	// Parse command-line arguments
 
-const prefixArg = args.find(arg => arg.startsWith('--prefix='));
-const prefix = prefixArg ? prefixArg.split('=')[1] : '';
+	const args = process.argv.slice(2);
 
-const suffixArg = args.find(arg => arg.startsWith('--suffix='));
-const suffix = suffixArg ? suffixArg.split('=')[1] : '';
+	const prefixArg = args.find(arg => arg.startsWith('--prefix='));
+	const prefix = prefixArg ? prefixArg.split('=')[1] : '';
 
-const formatArg = args.find(arg => arg.startsWith('--format='));
-const format = formatArg ? formatArg.split('=')[1] : '';
+	const suffixArg = args.find(arg => arg.startsWith('--suffix='));
+	const suffix = suffixArg ? suffixArg.split('=')[1] : '';
 
-const outputArg = args.find(arg => arg.startsWith('--output='));
-const output = outputArg ? outputArg.split('=')[1] : '';
+	const formatArg = args.find(arg => arg.startsWith('--format='));
+	const format = formatArg ? formatArg.split('=')[1] : '';
 
-//
-// Generate the new version based on the current date and time
+	const outputArg = args.find(arg => arg.startsWith('--output='));
+	const output = outputArg ? outputArg.split('=')[1] : '';
 
-const dateValue = Dates.now('Europe/Lisbon');
+	//
+	// Generate the new version based on the current date and time
 
-//
-// Format the version string.
-// For "default" format: [prefix]YYYYMMDD.HHMM.SS
-// For "code" format: YYYYMMDDHHMMSS (as a single number, no prefix)
+	const dateValue = Dates.now('Europe/Lisbon');
 
-let futurePackageVersion = '';
+	//
+	// Format the version string.
+	// For "default" format: [prefix]YYYYMMDD.HHMM.SS
+	// For "code" format: YYYYMMDDHHMMSS (as a single number, no prefix)
 
-if (!format || format === 'default') {
-	futurePackageVersion = `${prefix}${dateValue.toFormat('yyyyMMdd.HHmm.ss')}${suffix}`;
-}
+	let futurePackageVersion = '';
 
-if (format === 'code') {
-	futurePackageVersion = String(Number(dateValue.toFormat('yyyyMMddHHmmss')));
-}
+	if (!format || format === 'default') {
+		futurePackageVersion = `${prefix}${dateValue.toFormat('yyyyMMdd.HHmm.ss')}${suffix}`;
+	}
 
-//
-// If the ouput is set to "console",
-// just print the version to the console and exit.
+	if (format === 'code') {
+		futurePackageVersion = String(Number(dateValue.toFormat('yyyyMMddHHmmss')));
+	}
 
-if (output === 'console') {
-	console.log(futurePackageVersion);
-	process.exit(0);
-}
+	//
+	// If the ouput is set to "console",
+	// just print the version to the console and exit.
 
-//
-// If there is a package.json path argument,
-// read the file and parse its content.
+	if (output === 'console') {
+		console.log(futurePackageVersion);
+		process.exit(0);
+	}
 
-if (!output) {
-	console.error('✘ Error: No path to package.json provided.');
-	process.exit(1);
-}
+	//
+	// If there is a package.json path argument,
+	// read the file and parse its content.
 
-const packageJsonFile = fs.readFileSync(output, 'utf8');
-const packageJsonData = JSON.parse(packageJsonFile);
+	if (!output) {
+		console.error('✘ Error: No path to package.json provided.');
+		process.exit(1);
+	}
 
-//
-// Update the package.json file with the new version
-// and log the change to the console.
+	const packageJsonFile = fs.readFileSync(output, 'utf8');
+	const packageJsonData = JSON.parse(packageJsonFile);
 
-const currentPackageVersion = packageJsonData.version;
+	//
+	// Update the package.json file with the new version
+	// and log the change to the console.
 
-packageJsonData.version = futurePackageVersion;
+	const currentPackageVersion = packageJsonData.version;
 
-fs.writeFileSync(output, JSON.stringify(packageJsonData, null, '\t'));
+	packageJsonData.version = futurePackageVersion;
 
-console.log(`✓ Package Version updated from "${currentPackageVersion}" to "${futurePackageVersion}".`);
+	fs.writeFileSync(output, JSON.stringify(packageJsonData, null, '\t'));
+
+	console.log(`✓ Package Version updated from "${currentPackageVersion}" to "${futurePackageVersion}".`);
+
+	//
+}());

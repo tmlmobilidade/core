@@ -23,6 +23,7 @@ export type Status = z.infer<typeof statusSchema>;
 
 export const ProposedChangeSchema = DocumentSchema.extend({
 	comments: z.array(CommentSchema),
+	municipality_id: z.string(),
 	original_id: z.string().nullish(),
 	scope: scopeSchema,
 	status: statusSchema,

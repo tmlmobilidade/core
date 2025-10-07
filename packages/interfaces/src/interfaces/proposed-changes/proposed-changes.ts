@@ -1,10 +1,12 @@
 // /* * */
 
 import { MongoCollectionClass } from '@/mongo-collection.js';
-import { CreateProposedChangeDto, ProposedChange, ProposedChangeSchema, Stop, UpdateProposedChangeDto, UpdateProposedChangeSchema } from '@tmlmobilidade/types';
+import { CreateProposedChangeDto, ProposedChange, ProposedChangeSchema, UpdateProposedChangeDto, UpdateProposedChangeSchema } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
 import { Filter, IndexDescription, Sort } from 'mongodb';
 import { z } from 'zod';
+
+import { stops } from '../stops/stops.js';
 
 /* * */
 
@@ -27,7 +29,7 @@ class ProposedChangesClass extends MongoCollectionClass<ProposedChange, CreatePr
 	}
 
 	/**
-	 * Finds stop documents by municipality ID with optional pagination and sorting.
+	 * Finds proposal changes documents by municipality ID with optional pagination and sorting.
 	 *
 	 * @param id - The municipality ID to search for
 	 * @param perPage - Optional number of documents per page for pagination
@@ -36,11 +38,11 @@ class ProposedChangesClass extends MongoCollectionClass<ProposedChange, CreatePr
 	 * @returns A promise that resolves to an array of matching proposed changes documents
 	 */
 	async findByMunicipalityId(id: string, perPage?: number, page?: number, sort?: Sort) {
-		const query = this.mongoCollection.find({ municipality_id: id } as Filter<ProposedChange>);
-		if (perPage) query.limit(perPage);
-		if (page && perPage) query.skip(perPage * (page - 1));
-		if (sort) query.sort(sort);
-		return query.toArray();
+		const foundStops = this.mongoCollection.find({ municipality_id: id } as Filter<ProposedChange>);
+		if (perPage) foundStops.limit(perPage);
+		if (page && perPage) foundStops.skip(perPage * (page - 1));
+		if (sort) foundStops.sort(sort);
+		return foundStops.toArray();
 	}
 
 	/**

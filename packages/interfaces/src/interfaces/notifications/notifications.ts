@@ -40,8 +40,8 @@ class NotificationsClass extends MongoCollectionClass<Notification, CreateNotifi
 			is_read: false,
 			payload: {
 				body: description,
-				href: `${getAppConfig(`${topic}`, 'frontend_url')}/${topic}/${id}`,
-				icon: topic,
+				href: `${getAppConfig(`${scope}`, 'frontend_url')}/${scope}/${id}`,
+				icon: scope,
 				title: title,
 			},
 			priority: 'normal',
@@ -51,8 +51,9 @@ class NotificationsClass extends MongoCollectionClass<Notification, CreateNotifi
 		};
 
 		for (const user of usersWithTopic.filter(u => u._id !== notification.created_by)) {
-			const sendMail = user?.permissions.find(p => p.scope === 'notifications' && p.action === 'created_alert')?.resource as NotificationPermission ?? false;
+			const sendMail = user?.permissions.find(p => p.scope === 'notifications' && p.action === topic)?.resource as NotificationPermission ?? false;
 			const newNotification: CreateNotificationDto = { ...notification, user_id: user._id };
+
 			if (sendMail) {
 				await sendNotificationEmail({
 					props: {

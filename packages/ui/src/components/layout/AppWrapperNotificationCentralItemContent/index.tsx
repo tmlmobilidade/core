@@ -2,66 +2,50 @@
 
 /* * */
 
-import { AppWrapperNotificationCentralItemContentIcon } from '@/components/layout/AppWrapperNotificationCentralItemContentIcon';
-import { IconX } from '@tabler/icons-react';
-import { getAppConfig, HttpException } from '@tmlmobilidade/lib';
+import { DeleteButton } from '@/components/buttons';
+import { Label } from '@/components/display/Label';
+import { useNotificationsContext } from '@/contexts/Notifications.context';
 import { Notification } from '@tmlmobilidade/types';
-import { fetchData } from '@tmlmobilidade/utils';
-import useSWR from 'swr';
+import { Section, sidebarApps } from 'index';
+import React from 'react';
 
 import styles from './styles.module.css';
 
 /* * */
-
-interface AppWrapperNotificationCentralItemContentProps {
-	notificationId: string
-}
-
-/* * */
-export const AppWrapperNotificationCentralItemContent = ({ notificationId }: AppWrapperNotificationCentralItemContentProps) => {
+export const AppWrapperNotificationCentralItemContent = ({ notification }: { notification: Notification }) => {
 	//
 
 	//
 	// A. Setup variables
 
-	const { data: notificationData, error: notificationError, isLoading: notificationLoading } = useSWR<Notification, HttpException>(`${getAppConfig('auth', 'api_url')}/notifications/${notificationId}`);
-	//
-	// C. Handle actions
+	const notificationsContext = useNotificationsContext();
+	const icon = sidebarApps.find(app => app._id === notification.scope)?.icon;
 
-	const handleNotificationClick = async () => {
-		await fetchData(`${getAppConfig('auth', 'api_url')}/notifications/${notificationId}/mark-as-read`);
-		if (notificationData?.payload?.href) {
-			window.open(notificationData.payload.href, '_blank');
-		}
-	};
-
-	const handleNotificationDelete = async (notificationId: string, e: React.MouseEvent<SVGElement>) => {
-		if (!notificationId) return;
-		e.stopPropagation();
-		await fetchData(`${getAppConfig('auth', 'api_url')}/notifications/${notificationId}`, 'DELETE');
-	};
-
-	//
-	// D. Render components
-
-	if (!notificationData && notificationLoading && !notificationError) {
-		return <div>A carregar...</div>;
-	}
-
-	if (notificationError) {
-		return <div>Erro ao carregar notificação</div>;
+	if (!notification.payload) {
+		return null;
 	}
 
 	return (
-		<div className={notificationData?.is_read ? styles.notificationContentWrapperRead : styles.notificationContentWrapperUnread} onClick={handleNotificationClick}>
-			<p className={styles.notificationTitle}>{notificationData?.payload?.title || 'Sem titulo'}</p>
-			<p className={styles.notificationBody}>{notificationData?.payload?.body || 'Sem Descrição'}</p>
-			<div className={styles.notificationRight}>
-				<div className={styles.notificationRightImage}>
-					<AppWrapperNotificationCentralItemContentIcon scope={notificationData?.payload?.icon || ''} />
-				</div>
-				<IconX className={styles.notificationDeleteIcon} onClick={e => handleNotificationDelete(notificationId, e)} size={16} />
+		<div className={styles.root}>
+			<div
+				aria-label="Marcar como lido"
+				className={styles.left}
+				onClick={() => notificationsContext.actions.markAsRead(notification)}
+			>
+				<Section flexDirection="row" gap="sm" padding="none" width="fit-content">
+					<div className={styles.iconWrapper}>{icon && React.cloneElement(icon, { size: 20 })}</div>
+					<div>
+						<Label size="md">{notification.payload.title || 'Sem titulo'}</Label>
+						<div className={styles.body}>
+							<Label size="sm">{notification.payload.body || 'Sem Descrição'}</Label>
+						</div>
+					</div>
+				</Section>
 			</div>
+			<DeleteButton
+				onDelete={() => { notificationsContext.actions.deleteNotification(notification._id); }}
+				variant="subtle"
+			/>
 		</div>
 	);
 

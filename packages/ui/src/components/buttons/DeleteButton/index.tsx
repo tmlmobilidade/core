@@ -6,6 +6,8 @@ import { ActionIcon } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { IconTrash } from '@tabler/icons-react';
 
+import styles from './styles.module.css';
+
 /* * */
 
 /**
@@ -69,9 +71,14 @@ interface DeleteButtonWithoutConfirmationProps {
 
 }
 
+type DeleteButtonProps = (DeleteButtonWithConfirmationProps | DeleteButtonWithoutConfirmationProps) & {
+	size?: 'lg' | 'md' | 'sm'
+	variant?: 'danger' | 'subtle'
+};
+
 /* * */
 
-export function DeleteButton(props: DeleteButtonWithConfirmationProps | DeleteButtonWithoutConfirmationProps) {
+export function DeleteButton({ size = 'md', variant = 'danger', ...props }: DeleteButtonProps) {
 	//
 
 	//
@@ -102,8 +109,8 @@ export function DeleteButton(props: DeleteButtonWithConfirmationProps | DeleteBu
 	// C. Render components
 
 	return (
-		<ActionIcon onClick={handleClick} variant="danger">
-			<IconTrash />
+		<ActionIcon classNames={{ root: styles.root }} data-variant={variant} onClick={handleClick} variant={variant}>
+			<IconTrash size={size === 'sm' ? 16 : size === 'md' ? 20 : 24} />
 		</ActionIcon>
 	);
 

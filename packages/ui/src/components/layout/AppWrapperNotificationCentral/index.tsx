@@ -1,12 +1,13 @@
 'use client';
 
+import { Label } from '@/components/display/Label';
 /* * */
 
-import { AppWrapperNotificationCentralReadList } from '@/components/layout/AppWrapperNotificationCentralReadList';
-import { AppWrapperNotificationCentralUnreadList } from '@/components/layout/AppWrapperNotificationCentralUnreadList';
+import { AppWrapperNotificationCentralList } from '@/components/layout/AppWrapperNotificationCentralList';
+import { Section } from '@/components/layout/Section';
 import { useNotificationsContext } from '@/contexts/Notifications.context';
 import { ActionIcon, Menu } from '@mantine/core';
-import { IconBell } from '@tabler/icons-react';
+import { IconBell, IconBellOff } from '@tabler/icons-react';
 
 /* * */
 
@@ -18,9 +19,9 @@ export function AppWrapperNotificationCentral() {
 
 	const notificationsContext = useNotificationsContext();
 
-	const notifications = notificationsContext.data.allUserNotifications || [];
-	const unreadNotifications = notifications.filter(n => !n.is_read);
-	const readNotifications = notifications.filter(n => n.is_read);
+	const notifications = notificationsContext.data.allNotifications || [];
+	const unreadNotifications = notificationsContext.data.unreadNotifications || [];
+	const readNotifications = notificationsContext.data.readNotifications || [];
 
 	//
 	// B. Render components
@@ -35,18 +36,15 @@ export function AppWrapperNotificationCentral() {
 					<IconBell size={20} />
 				</ActionIcon>
 			</Menu.Target>
-			<Menu.Dropdown>
-
-				{unreadNotifications.length > 0 && (
-					<AppWrapperNotificationCentralUnreadList notifications={unreadNotifications} />
-				)}
-
-				{readNotifications.length > 0 && (
-					<AppWrapperNotificationCentralReadList notifications={readNotifications} />
-				)}
+			<Menu.Dropdown style={{ maxHeight: '90vh', overflow: 'scroll' }}>
+				<AppWrapperNotificationCentralList notifications={unreadNotifications} title="Não Lidas" />
+				<AppWrapperNotificationCentralList notifications={readNotifications} title="Lidas" />
 
 				{notifications.length === 0 && (
-					<p>Sem Notificações</p>
+					<Section alignItems="center" gap="md" justifyContent="center">
+						<IconBellOff color="var(--color-system-text-200)" />
+						<Label>Sem Notificações</Label>
+					</Section>
 				)}
 
 			</Menu.Dropdown>

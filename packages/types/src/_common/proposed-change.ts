@@ -3,6 +3,8 @@
 import { DocumentSchema } from '@/_common/document.js';
 import { z } from 'zod';
 
+import { CommentSchema } from './comment.js';
+
 /* * */
 
 //
@@ -20,11 +22,10 @@ export type Status = z.infer<typeof statusSchema>;
 // Define schemas using constants
 
 export const ProposedChangeSchema = DocumentSchema.extend({
-	field_path: z.string(),
-	field_value: z.any(),
+	comments: z.array(CommentSchema),
+	original_id: z.string().nullish(),
 	scope: scopeSchema,
 	status: statusSchema,
-	target_id: z.string(),
 	user_id: z.string(),
 }).strict();
 

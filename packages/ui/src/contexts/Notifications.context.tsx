@@ -54,6 +54,9 @@ export const NotificationsContextProvider = ({ children }: PropsWithChildren) =>
 
 	//
 	// C. Transform data
+	useEffect(() => {
+		askNotificationPermission();
+	}, []);
 
 	useEffect(() => {
 		if (!notificationsData) return;

@@ -46,6 +46,23 @@ class ProposedChangesClass extends MongoCollectionClass<ProposedChange, CreatePr
 	}
 
 	/**
+	 * Finds proposal changes documents of a certain scope by municipality ID with optional pagination and sorting.
+	 *
+	 * @param id - The municipality ID to search for
+	 * @param perPage - Optional number of documents per page for pagination
+	 * @param page - Optional page number for pagination
+	 * @param sort - Optional sort specification
+	 * @returns A promise that resolves to an array of matching proposed changes documents
+	 */
+	async findByMunicipalityIdAndScope(id: string, scope: string, perPage?: number, page?: number, sort?: Sort) {
+		const foundStops = this.mongoCollection.find({ municipality_id: id, scope: scope } as Filter<ProposedChange>);
+		if (perPage) foundStops.limit(perPage);
+		if (page && perPage) foundStops.skip(perPage * (page - 1));
+		if (sort) foundStops.sort(sort);
+		return foundStops.toArray();
+	}
+
+	/**
 	 * Finds multiple Proposed Changes documents by their IDs.
 	 *
 	 * @param ids - Array of Proposed Changes IDs to search for

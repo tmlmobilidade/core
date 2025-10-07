@@ -60,7 +60,7 @@ class ProposedChangesClass extends MongoCollectionClass<ProposedChange, CreatePr
 	}
 
 	protected getCollectionName(): string {
-		return 'proposed-changes';
+		return 'proposed_changes';
 	}
 
 	protected getEnvName(): string {

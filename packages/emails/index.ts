@@ -2,17 +2,19 @@
 
 import { emailProvider } from '@/email.provider.js';
 import { FailedBackupEmailProps } from '@/emails/failed-backup.js';
+import { NotificationEmailProps } from '@/emails/notification-email.js';
 import { PlanApprovalRequestEmailProps } from '@/emails/plan-approval-request.js';
 import { ResetPasswordEmailProps } from '@/emails/reset-password.js';
 import { SucessfulGtfsValidationEmailProps } from '@/emails/sucessful-gtfs-validation.js';
 import { UnsuccessfulGtfsValidationEmailProps } from '@/emails/unsucessful-gtfs-validation.js';
 import { WelcomeEmailProps } from '@/emails/welcome.js';
-import { RenderFailedBackupEmail, RenderPlanApprovalRequestEmail, RenderResetPasswordEmail, RenderSucessfulGtfsValidationEmail, RenderUnsuccessfulGtfsValidationEmail, RenderWelcomeEmail } from '@/renderer.js';
+import { RenderEmailNotificationEmail, RenderFailedBackupEmail, RenderPlanApprovalRequestEmail, RenderResetPasswordEmail, RenderSucessfulGtfsValidationEmail, RenderUnsuccessfulGtfsValidationEmail, RenderWelcomeEmail } from '@/renderer.js';
 
 /* * */
 
 export type {
 	FailedBackupEmailProps,
+	NotificationEmailProps,
 	PlanApprovalRequestEmailProps,
 	ResetPasswordEmailProps,
 	SucessfulGtfsValidationEmailProps,
@@ -73,6 +75,15 @@ export async function sendPlanApprovalRequestEmail(props: SendEmailProps<PlanApp
 	await emailProvider.send({
 		html: emailHtml,
 		subject: 'Pedido de aprovação de plano',
+		to: props.to,
+	});
+};
+
+export async function sendNotificationEmail(props: SendEmailProps<NotificationEmailProps>) {
+	const emailHtml = await RenderEmailNotificationEmail(props.props);
+	await emailProvider.send({
+		html: emailHtml,
+		subject: 'Nova Notificação',
 		to: props.to,
 	});
 };

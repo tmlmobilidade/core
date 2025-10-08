@@ -46,8 +46,11 @@ export interface User extends Omit<z.infer<typeof UserSchema>, 'permissions'> {
 export type CreateUserDto = z.infer<typeof CreateUserSchema>;
 export type UpdateUserDto = z.infer<typeof UpdateUserSchema>;
 
-export type UserDisplay = Pick<User, 'avatar' | 'email' | 'first_name' | 'last_name' | 'phone'>;
-export type WithUser<T> = T & {
-	created_by: Partial<UserDisplay>
-	updated_by: Partial<UserDisplay>
+export const UserDisplayFields = { _id: true, avatar: true, email: true, first_name: true, last_name: true, phone: true } as const;
+export const UserDisplaySchema = UserSchema.pick(UserDisplayFields);
+
+export type UserDisplay = z.infer<typeof UserDisplaySchema>;
+export type WithUser<T> = Omit<T, 'created_by' | 'updated_by'> & {
+	created_by?: string | UserDisplay
+	updated_by?: string | UserDisplay
 };

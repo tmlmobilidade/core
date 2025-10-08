@@ -1,4 +1,5 @@
 export * from '@/batching/index.js';
+export * from '@/caching/index.js';
 export * from '@/css/index.js';
 export * from '@/dates/index.js';
 export * from '@/files/files.js';

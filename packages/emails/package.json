@@ -41,7 +41,7 @@
 		"@tmlmobilidade/utils": "*",
 		"@types/nodemailer": "7.0.2",
 		"browserslist": "4.26.3",
-		"nodemailer": "7.0.6",
+		"nodemailer": "7.0.7",
 		"react": "19.1.1",
 		"react-email": "4.2.12"
 	},
@@ -51,7 +51,7 @@
 		"@tmlmobilidade/lib": "*",
 		"@tmlmobilidade/tsconfig": "*",
 		"@tmlmobilidade/types": "*",
-		"@types/node": "24.6.1",
+		"@types/node": "24.7.0",
 		"resolve-tspaths": "0.8.23",
 		"rimraf": "6.0.1",
 		"typescript": "5.9.3"

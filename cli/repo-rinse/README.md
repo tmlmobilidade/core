@@ -10,8 +10,11 @@ This is sometimes required as large package-lock.json files may become out-of-sy
 - `.next/`
 - `.turbo/`
 - `.source/`
-- `pnpm-lock.yaml`
+- `.yalc/`
+- `.expo/`
 - `package-lock.json`
+- `pnpm-lock.yaml`
+- `yalc.lock`
 
 ### ⚠️ WARNING
 

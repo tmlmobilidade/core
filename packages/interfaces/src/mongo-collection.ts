@@ -1,13 +1,12 @@
 /* * */
 
+import { AggregationPipeline } from '@/aggregation-pipeline.js';
 import { MongoConnector } from '@tmlmobilidade/connectors';
 import { HttpException, HttpStatus } from '@tmlmobilidade/lib';
 import { type UnixTimestamp } from '@tmlmobilidade/types';
 import { Dates, generateRandomString } from '@tmlmobilidade/utils';
 import { AggregateOptions, AggregationCursor, Collection, DeleteOptions, DeleteResult, Document, Filter, FindOptions, IndexDescription, InsertManyResult, InsertOneOptions, InsertOneResult, MongoClientOptions, OptionalUnlessRequiredId, UpdateOptions, UpdateResult, WithId } from 'mongodb';
 import { z } from 'zod';
-
-import { AggregationPipeline } from './aggregation-pipeline.js';
 
 /* * */
 

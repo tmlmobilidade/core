@@ -1,0 +1,41 @@
+name: 'CLI | repo-version'
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - production
+    paths:
+      - 'cli/repo-version/**'
+      - '.github/workflows/cli-repo-version.yml'
+
+jobs:
+
+  # # # # # # # # # # # # # # # # # # # # #
+  # # # # # # # # # # # # # # # # # # # # #
+
+  publish:
+    name: 'Publish package'
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - uses: ./.github/actions/setup-node
+        with:
+          node-version: 20
+
+      - name: Build package
+        working-directory: .
+        run: npm run build:repo-version
+
+      - name: Bump package version
+        working-directory: cli/repo-version
+        run: npx @helperkits/bumper package.json
+
+      - name: Publish package to NPM
+        working-directory: cli/repo-version
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}

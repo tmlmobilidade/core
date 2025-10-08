@@ -29,7 +29,10 @@ db.createRole({
 		{ actions: ['find', 'update', 'insert', 'remove'], resource: { collection: 'organizations', db: 'production' } },
 	],
 	role: 'auth',
-	roles: [],
+	roles: [{
+		db: 'admin',
+		role: 'common',
+	}],
 });
 
 db.createRole({

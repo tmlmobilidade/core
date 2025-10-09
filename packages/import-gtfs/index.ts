@@ -7,12 +7,23 @@ import { processShapesFile } from '@/processors/shapes.js';
 import { processStopTimesFile } from '@/processors/stop_times.js';
 import { processStopsFile } from '@/processors/stops.js';
 import { processTripsFile } from '@/processors/trips.js';
-import { type GtfsSQLTables, type ImportGtfsContext, type ImportGtfsToDatabaseConfig } from '@/types.js';
+import { type GtfsSQLTables, type ImportGtfsContext } from '@/types.js';
 import { downloadAndExtractGtfs } from '@/utils/extract-file.js';
 import { initGtfsSqlTables } from '@/utils/init-tables.js';
 import TIMETRACKER from '@helperkits/timer';
-import { type Plan } from '@tmlmobilidade/types';
+import { type OperationalDate, type Plan } from '@tmlmobilidade/types';
 import { Logs } from '@tmlmobilidade/utils';
+
+/**
+ * Configuration options for importing GTFS data into a database.
+ */
+export interface ImportGtfsToDatabaseConfig {
+	date_range?: {
+		end: OperationalDate
+		start: OperationalDate
+	}
+	discrete_dates?: OperationalDate[]
+}
 
 /**
  * Imports GTFS data into the database for a given plan.

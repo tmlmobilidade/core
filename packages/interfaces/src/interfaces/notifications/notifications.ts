@@ -121,7 +121,7 @@ class NotificationsClass extends MongoCollectionClass<Notification, CreateNotifi
 			.filter(role => user.role_ids?.includes(role._id))
 			.flatMap(role => role.permissions ?? []);
 
-		const allPermissions = [...(user.permissions ?? []), ...rolePermissions];
+		const allPermissions = [...rolePermissions, ...(user.permissions ?? [])];
 
 		const map = new Map<string, Permission<unknown>>();
 

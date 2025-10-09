@@ -1,7 +1,7 @@
 /* * */
 
 import { type ImportGtfsContext } from '@/types.js';
-import { parseCsvFile } from '@/utils/unzip-file.js';
+import { parseCsvFile } from '@/utils/parse-csv.js';
 import TIMETRACKER from '@helperkits/timer';
 import { GTFS_Calendar_Raw, validateGtfsCalendar } from '@tmlmobilidade/types';
 import { OperationalDate } from '@tmlmobilidade/types';

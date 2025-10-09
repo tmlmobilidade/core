@@ -1,7 +1,7 @@
 /* * */
 
 import { type ImportGtfsContext } from '@/types.js';
-import { parseCsvFile } from '@/utils/unzip-file.js';
+import { parseCsvFile } from '@/utils/parse-csv.js';
 import TIMETRACKER from '@helperkits/timer';
 import { type GTFS_StopTime_Raw, validateGtfsStopTime } from '@tmlmobilidade/types';
 import { Logs } from '@tmlmobilidade/utils';

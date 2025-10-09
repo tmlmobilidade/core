@@ -1,8 +1,11 @@
+/* * */
+
+import { SQLiteTableInstance } from '@/sqlite/sqlite-db.js';
+import { type SQLiteTable } from '@/sqlite/types.js';
 import { generateRandomString } from '@tmlmobilidade/utils';
 import BSQLite3, { type Database } from 'better-sqlite3';
 
-import { SQLiteTableInstance } from './sqlite-db.js';
-import { SQLiteTable } from './types.js';
+/* * */
 
 export class SQLiteWriter<T> extends SQLiteTableInstance<T> {
 	//

@@ -33,7 +33,7 @@ export function ProposedChangesWrapperModal({ actualValue, inputName, isOpen, on
 		console.log('value changes', proposedValue);
 	}, [proposedValue]);
 
-	const approve = () => {
+	const approve = async () => {
 		console.log('approve change');
 	};
 

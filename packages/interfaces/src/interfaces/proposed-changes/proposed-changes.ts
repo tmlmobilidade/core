@@ -8,9 +8,9 @@ import { z } from 'zod';
 
 /* * */
 
-class ProposedChangesClass<T> extends MongoCollectionClass<ProposedChange<T>, CreateProposedChangeDto, UpdateProposedChangeDto> {
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	private static _instances = new Map<string, ProposedChangesClass<any>>();
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+class ProposedChangesClass extends MongoCollectionClass<ProposedChange<any>, CreateProposedChangeDto<any>, UpdateProposedChangeDto<any>> {
+	private static _instances = new Map<string, ProposedChangesClass>();
 	protected override createSchema: z.ZodSchema = ProposedChangeSchema;
 	protected override updateSchema: z.ZodSchema = UpdateProposedChangeSchema;
 
@@ -18,16 +18,16 @@ class ProposedChangesClass<T> extends MongoCollectionClass<ProposedChange<T>, Cr
 		super();
 	}
 
-	public static async getInstance<T>(typeName?: string): Promise<ProposedChangesClass<T>> {
+	public static async getInstance(typeName?: string): Promise<ProposedChangesClass> {
 		const key = typeName ?? 'default';
 
 		if (!this._instances.has(key)) {
-			const instance = new ProposedChangesClass<T>();
+			const instance = new ProposedChangesClass();
 			await instance.connect();
 			this._instances.set(key, instance);
 		}
 
-		return this._instances.get(key) as ProposedChangesClass<T>;
+		return this._instances.get(key) as ProposedChangesClass;
 	}
 
 	protected getCollectionIndexes(): IndexDescription[] {

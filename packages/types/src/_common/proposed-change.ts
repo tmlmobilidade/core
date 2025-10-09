@@ -22,6 +22,7 @@ export type Status = z.infer<typeof statusSchema>;
 export const ProposedChangeSchema = DocumentSchema.extend({
 	curr_value: z.any(),
 	field: z.string(),
+	related_id: z.string(), // this is a generic id, but can be a stop id, line id, etc.
 	scope: scopeSchema,
 	status: statusSchema,
 }).strict();
@@ -33,13 +34,13 @@ export type ProposedChange<T> = {
 	[P in keyof T]: {
 		curr_value: T[P]
 		field: P
-		scope: string
-		status: string
+		scope: Scope
+		status: Status
 	}
 }[keyof T];
 
 export const CreateProposedChangeSchema = ProposedChangeSchema.omit({ _id: true, created_at: true, updated_at: true });
 export const UpdateProposedChangeSchema = CreateProposedChangeSchema.omit({ created_by: true }).partial();
 
-export type CreateProposedChangeDto = z.infer<typeof CreateProposedChangeSchema>;
-export type UpdateProposedChangeDto = z.infer<typeof UpdateProposedChangeSchema>;
+export type CreateProposedChangeDto<T> = Omit<ProposedChange<T>, '_id' | 'created_at' | 'updated_at'>;
+export type UpdateProposedChangeDto<T> = Omit<CreateProposedChangeDto<T>, 'created_by'>;

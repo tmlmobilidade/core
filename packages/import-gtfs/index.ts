@@ -1,6 +1,12 @@
 /* * */
 
-import { processCalendarDatesFile, processCalendarFile, processRoutesFile, processShapesFile, processStopsFile, processStopTimesFile, processTripsFile } from '@/processors/index.js';
+import { processCalendarFile } from '@/processors/calendar.js';
+import { processCalendarDatesFile } from '@/processors/calendar_dates.js';
+import { processRoutesFile } from '@/processors/routes.js';
+import { processShapesFile } from '@/processors/shapes.js';
+import { processStopTimesFile } from '@/processors/stop_times.js';
+import { processStopsFile } from '@/processors/stops.js';
+import { processTripsFile } from '@/processors/trips.js';
 import { type GtfsSQLTables, type ImportGtfsContext, type ImportGtfsToDatabaseConfig } from '@/types.js';
 import { downloadAndExtractGtfs } from '@/utils/extract-file.js';
 import { initGtfsSqlTables } from '@/utils/init-tables.js';
@@ -8,11 +14,12 @@ import TIMETRACKER from '@helperkits/timer';
 import { type Plan } from '@tmlmobilidade/types';
 import { Logs } from '@tmlmobilidade/utils';
 
-/* * */
-
-/* * */
-/* MAIN FUNCTION */
-
+/**
+ * Imports GTFS data into the database for a given plan.
+ * @param plan The plan containing GTFS feed information.
+ * @param config Optional configuration for the import process.
+ * @returns A promise that resolves to the imported GTFS SQL tables.
+ */
 export async function importGtfsToDatabase(plan: Plan, config: ImportGtfsToDatabaseConfig = {}): Promise<GtfsSQLTables> {
 	try {
 		//
@@ -40,6 +47,14 @@ export async function importGtfsToDatabase(plan: Plan, config: ImportGtfsToDatab
 			workdir: await downloadAndExtractGtfs(plan),
 		};
 
+		//
+		// Validate GTFS feed info
+
+		if (!plan.gtfs_feed_info?.feed_start_date || !plan.gtfs_feed_info?.feed_end_date) {
+			throw new Error(`Plan "${plan._id}" is missing GTFS feed start and/or end date.`);
+		}
+
+		//
 		// Process GTFS files in the correct order
 
 		await processCalendarFile(context, config.start_date ?? plan.gtfs_feed_info.feed_start_date, config.end_date ?? plan.gtfs_feed_info.feed_end_date);

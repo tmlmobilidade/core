@@ -8,8 +8,11 @@ import { type OperationalDate } from '@tmlmobilidade/types';
  * Configuration options for importing GTFS data into a database.
  */
 export interface ImportGtfsToDatabaseConfig {
-	end_date?: OperationalDate
-	start_date?: OperationalDate
+	date_range?: {
+		end: OperationalDate
+		start: OperationalDate
+	}
+	discrete_dates?: OperationalDate[]
 }
 
 /**

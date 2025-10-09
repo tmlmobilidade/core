@@ -57,8 +57,8 @@ export async function importGtfsToDatabase(plan: Plan, config: ImportGtfsToDatab
 		//
 		// Process GTFS files in the correct order
 
-		await processCalendarFile(context, config.start_date ?? plan.gtfs_feed_info.feed_start_date, config.end_date ?? plan.gtfs_feed_info.feed_end_date);
-		await processCalendarDatesFile(context, config.start_date ?? plan.gtfs_feed_info.feed_start_date, config.end_date ?? plan.gtfs_feed_info.feed_end_date);
+		await processCalendarFile(context, config);
+		await processCalendarDatesFile(context, config);
 
 		await processTripsFile(context);
 		await processRoutesFile(context);

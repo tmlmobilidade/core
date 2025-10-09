@@ -1,6 +1,6 @@
 /* * */
 
-import { type ImportGtfsContext } from '@/types.js';
+import { type ImportGtfsContext, type ImportGtfsToDatabaseConfig } from '@/types.js';
 import { parseCsvFile } from '@/utils/parse-csv.js';
 import TIMETRACKER from '@helperkits/timer';
 import { GTFS_Calendar_Raw, validateGtfsCalendar } from '@tmlmobilidade/types';
@@ -16,7 +16,7 @@ import fs from 'node:fs';
  * @param startDate The start date of the range to filter service_ids.
  * @param endDate The end date of the range to filter service_ids.
  */
-export async function processCalendarFile(context: ImportGtfsContext, startDate: OperationalDate, endDate: OperationalDate): Promise<void> {
+export async function processCalendarFile(context: ImportGtfsContext, config: ImportGtfsToDatabaseConfig): Promise<void> {
 	try {
 		//
 
@@ -33,23 +33,46 @@ export async function processCalendarFile(context: ImportGtfsContext, startDate:
 			const validatedData = validateGtfsCalendar(data);
 
 			//
-			// Check if this service_id is between the given start_date and end_date.
-			// Clip the service_id's start and end dates to the given start and end dates.
+			// Setup an array to keep track of the valid operational dates for this service_id
+			// for the given start_date and end_date or single dates from the config.
 
-			let serviceIdStartDate = validatedData.start_date;
-			let serviceIdEndDate = validatedData.end_date;
+			const allOperationalDatesInRange: OperationalDate[] = [];
 
-			if (serviceIdEndDate < startDate || serviceIdStartDate > endDate) return;
+			//
+			// If the config is of date-range type, check if this service_id
+			// is between the given start_date and end_date. Clip the service_id's
+			// start and end dates to the given start and end dates.
 
-			if (serviceIdStartDate < startDate) serviceIdStartDate = startDate;
-			if (serviceIdEndDate > endDate) serviceIdEndDate = endDate;
+			if (config.date_range?.start && config.date_range?.end) {
+				let serviceIdStartDate = validatedData.start_date;
+				let serviceIdEndDate = validatedData.end_date;
+
+				if (serviceIdEndDate < config.date_range.start || serviceIdStartDate > config.date_range.end) return;
+
+				if (serviceIdStartDate < config.date_range.start) serviceIdStartDate = config.date_range.start;
+				if (serviceIdEndDate > config.date_range.end) serviceIdEndDate = config.date_range.end;
+
+				const operationalDates = getOperationalDatesFromRange(serviceIdStartDate, serviceIdEndDate);
+
+				allOperationalDatesInRange.push(...operationalDates);
+			}
+
+			//
+			// If the config is of discrete-dates type, get the operational dates
+			// for this service_id that are in the given discrete dates array.
+
+			if (config.discrete_dates?.length) {
+				config.discrete_dates.forEach((date) => {
+					if (date >= validatedData.start_date && date <= validatedData.end_date) {
+						allOperationalDatesInRange.push(date);
+					}
+				});
+			}
 
 			//
 			// If we're here, it means the service_id is valid between the given dates.
 			// For the configured weekly schedule, create the individual operational dates
 			// for each day of the week that is active.
-
-			const allOperationalDatesInRange = getOperationalDatesFromRange(serviceIdStartDate, serviceIdEndDate);
 
 			const validOperationalDates = new Set<OperationalDate>();
 

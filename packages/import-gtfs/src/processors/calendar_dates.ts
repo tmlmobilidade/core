@@ -1,10 +1,9 @@
 /* * */
 
-import { type ImportGtfsContext } from '@/types.js';
+import { type ImportGtfsContext, type ImportGtfsToDatabaseConfig } from '@/types.js';
 import { parseCsvFile } from '@/utils/parse-csv.js';
 import TIMETRACKER from '@helperkits/timer';
 import { GTFS_CalendarDate_Raw, validateGtfsCalendarDate } from '@tmlmobilidade/types';
-import { OperationalDate } from '@tmlmobilidade/types';
 import { Logs } from '@tmlmobilidade/utils';
 import fs from 'node:fs';
 
@@ -16,7 +15,7 @@ import fs from 'node:fs';
  * @param startDate The start date of the range to filter service_ids.
  * @param endDate The end date of the range to filter service_ids.
  */
-export async function processCalendarDatesFile(context: ImportGtfsContext, startDate: OperationalDate, endDate: OperationalDate): Promise<void> {
+export async function processCalendarDatesFile(context: ImportGtfsContext, config: ImportGtfsToDatabaseConfig): Promise<void> {
 	try {
 		//
 
@@ -34,8 +33,19 @@ export async function processCalendarDatesFile(context: ImportGtfsContext, start
 
 			//
 			// Skip if this row's date is not between the given start and end dates
+			// if they are provided in the config.
 
-			if (validatedData.date < startDate || validatedData.date > endDate) return;
+			if (config.date_range?.start && config.date_range?.end) {
+				if (validatedData.date < config.date_range.start || validatedData.date > config.date_range.end) return;
+			}
+
+			//
+			// Skip if this row's date is not in the given discrete dates array
+			// if it is provided in the config.
+
+			if (config.discrete_dates?.length) {
+				if (!config.discrete_dates.includes(validatedData.date)) return;
+			}
 
 			//
 			// If we're here, it means the service_id is valid between the given dates.

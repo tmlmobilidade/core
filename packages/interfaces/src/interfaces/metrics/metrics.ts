@@ -1,7 +1,7 @@
 /* * */
 
 import { MongoCollectionClass } from '@/mongo-collection.js';
-import { CreateMetricDto, MetricSchema, UpdateMetricDto } from '@tmlmobilidade/types';
+import { MetricSchema } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
 import { IndexDescription } from 'mongodb';
 import { z } from 'zod';
@@ -12,7 +12,7 @@ export type MetricDocument = z.infer<typeof MetricSchema>;
 
 /* * */
 
-class MetricsClass extends MongoCollectionClass<MetricDocument, CreateMetricDto, UpdateMetricDto> {
+class MetricsClass extends MongoCollectionClass<MetricDocument, MetricDocument, MetricDocument> {
 	private static _instance: MetricsClass;
 	protected override createSchema: z.ZodSchema = MetricSchema;
 	protected override updateSchema: z.ZodSchema = MetricSchema;

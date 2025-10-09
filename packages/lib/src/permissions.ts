@@ -76,6 +76,19 @@ export const Permissions = Object.freeze({
 		resources: PlanPermissionSchema.shape,
 		scope: 'plans',
 	},
+	proposed_changes: {
+		actions: {
+			approve: 'approve',
+			comment: 'comment',
+			create: 'create',
+			delete: 'delete',
+			read: 'read',
+			reject: 'reject',
+		},
+		resources: {
+		},
+		scope: 'proposed_changes',
+	},
 	rides: {
 		actions: {
 			analsys_lock: 'analsys_lock',

@@ -3,15 +3,14 @@
 import { MongoCollectionClass } from '@/mongo-collection.js';
 import { CreateProposedChangeDto, ProposedChange, ProposedChangeSchema, UpdateProposedChangeDto, UpdateProposedChangeSchema } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
-import { Filter, IndexDescription, Sort } from 'mongodb';
+import { IndexDescription } from 'mongodb';
 import { z } from 'zod';
-
-import { stops } from '../stops/stops.js';
 
 /* * */
 
-class ProposedChangesClass extends MongoCollectionClass<ProposedChange, CreateProposedChangeDto, UpdateProposedChangeDto> {
-	private static _instance: ProposedChangesClass;
+class ProposedChangesClass<T> extends MongoCollectionClass<ProposedChange<T>, CreateProposedChangeDto, UpdateProposedChangeDto> {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	private static _instances = new Map<string, ProposedChangesClass<any>>();
 	protected override createSchema: z.ZodSchema = ProposedChangeSchema;
 	protected override updateSchema: z.ZodSchema = UpdateProposedChangeSchema;
 
@@ -19,63 +18,20 @@ class ProposedChangesClass extends MongoCollectionClass<ProposedChange, CreatePr
 		super();
 	}
 
-	public static async getInstance() {
-		if (!ProposedChangesClass._instance) {
-			const instance = new ProposedChangesClass();
+	public static async getInstance<T>(typeName?: string): Promise<ProposedChangesClass<T>> {
+		const key = typeName ?? 'default';
+
+		if (!this._instances.has(key)) {
+			const instance = new ProposedChangesClass<T>();
 			await instance.connect();
-			ProposedChangesClass._instance = instance;
+			this._instances.set(key, instance);
 		}
-		return ProposedChangesClass._instance;
-	}
 
-	/**
-	 * Finds proposal changes documents by municipality ID with optional pagination and sorting.
-	 *
-	 * @param id - The municipality ID to search for
-	 * @param perPage - Optional number of documents per page for pagination
-	 * @param page - Optional page number for pagination
-	 * @param sort - Optional sort specification
-	 * @returns A promise that resolves to an array of matching proposed changes documents
-	 */
-	async findByMunicipalityId(id: string, perPage?: number, page?: number, sort?: Sort) {
-		const foundStops = this.mongoCollection.find({ municipality_id: id } as Filter<ProposedChange>);
-		if (perPage) foundStops.limit(perPage);
-		if (page && perPage) foundStops.skip(perPage * (page - 1));
-		if (sort) foundStops.sort(sort);
-		return foundStops.toArray();
-	}
-
-	/**
-	 * Finds proposal changes documents of a certain scope by municipality ID with optional pagination and sorting.
-	 *
-	 * @param id - The municipality ID to search for
-	 * @param perPage - Optional number of documents per page for pagination
-	 * @param page - Optional page number for pagination
-	 * @param sort - Optional sort specification
-	 * @returns A promise that resolves to an array of matching proposed changes documents
-	 */
-	async findByMunicipalityIdAndScope(id: string, scope: string, perPage?: number, page?: number, sort?: Sort) {
-		const foundStops = this.mongoCollection.find({ municipality_id: id, scope: scope } as Filter<ProposedChange>);
-		if (perPage) foundStops.limit(perPage);
-		if (page && perPage) foundStops.skip(perPage * (page - 1));
-		if (sort) foundStops.sort(sort);
-		return foundStops.toArray();
-	}
-
-	/**
-	 * Finds multiple Proposed Changes documents by their IDs.
-	 *
-	 * @param ids - Array of Proposed Changes IDs to search for
-	 * @returns A promise that resolves to an array of matching Proposed Changes documents
-	 */
-	async findManyByIds(ids: string[]) {
-		return this.mongoCollection.find({ _id: { $in: ids } } as Filter<ProposedChange>).toArray();
+		return this._instances.get(key) as ProposedChangesClass<T>;
 	}
 
 	protected getCollectionIndexes(): IndexDescription[] {
-		return [
-			{ background: true, key: { name: 1 } },
-		];
+		return [{ background: true, key: { name: 1 } }];
 	}
 
 	protected getCollectionName(): string {
@@ -86,7 +42,6 @@ class ProposedChangesClass extends MongoCollectionClass<ProposedChange, CreatePr
 		return 'TML_INTERFACE_PROPOSED_CHANGES';
 	}
 }
-
 /* * */
 
 export const proposedChanges = AsyncSingletonProxy(ProposedChangesClass);

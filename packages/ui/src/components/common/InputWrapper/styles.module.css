@@ -1,0 +1,10 @@
+/* * */
+/* Icon */
+
+.inputLabelWrapper {
+	display: flex;
+	gap: var(--size-spacing-sm);
+	cursor: pointer;
+}
+
+/* * */

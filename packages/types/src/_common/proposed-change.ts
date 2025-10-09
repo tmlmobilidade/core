@@ -3,8 +3,6 @@
 import { DocumentSchema } from '@/_common/document.js';
 import { z } from 'zod';
 
-import { CommentSchema } from './comment.js';
-
 /* * */
 
 //
@@ -22,20 +20,26 @@ export type Status = z.infer<typeof statusSchema>;
 // Define schemas using constants
 
 export const ProposedChangeSchema = DocumentSchema.extend({
-	comments: z.array(CommentSchema),
-	municipality_id: z.string(),
-	original_id: z.string().nullish(),
+	curr_value: z.any(),
+	field: z.string(),
 	scope: scopeSchema,
 	status: statusSchema,
-	user_id: z.string(),
 }).strict();
-
-export const CreateProposedChangeSchema = ProposedChangeSchema.omit({ _id: true, created_at: true, updated_at: true });
-export const UpdateProposedChangeSchema = CreateProposedChangeSchema.omit({ created_by: true }).partial();
 
 //
 // Define the Proposed Change types
 
-export type ProposedChange = z.infer<typeof ProposedChangeSchema>;
+export type ProposedChange<T> = {
+	[P in keyof T]: {
+		curr_value: T[P]
+		field: P
+		scope: string
+		status: string
+	}
+}[keyof T];
+
+export const CreateProposedChangeSchema = ProposedChangeSchema.omit({ _id: true, created_at: true, updated_at: true });
+export const UpdateProposedChangeSchema = CreateProposedChangeSchema.omit({ created_by: true }).partial();
+
 export type CreateProposedChangeDto = z.infer<typeof CreateProposedChangeSchema>;
 export type UpdateProposedChangeDto = z.infer<typeof UpdateProposedChangeSchema>;

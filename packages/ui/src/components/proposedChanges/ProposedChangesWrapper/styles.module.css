@@ -1,9 +1,10 @@
 /* * */
-/* Icon */
+/* label wrapper */
 
-.inputLabelWrapper {
+.labelWrapper {
 	display: flex;
 	gap: var(--size-spacing-sm);
+	align-items: center;
 	cursor: pointer;
 }
 

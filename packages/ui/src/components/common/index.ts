@@ -2,7 +2,6 @@ export { default as Badge } from './Badge';
 export { default as Combobox, DataItem } from './Combobox';
 export { default as ComponentWrapper } from './ComponentWrapper';
 export { default as Description } from './Description';
-export { default as InputWrapper } from './InputWrapper';
 export { default as Menu } from './Menu';
 export { default as MultiSelect } from './MultiSelect';
 export { default as Tooltip } from './Tooltip';

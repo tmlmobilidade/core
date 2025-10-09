@@ -22,7 +22,7 @@ import { Logs } from '@tmlmobilidade/utils';
  */
 export async function importGtfsToDatabase(plan: Plan, config: ImportGtfsToDatabaseConfig = {}): Promise<GtfsSQLTables> {
 	try {
-		//
+	//
 
 		const globalTimer = new TIMETRACKER();
 

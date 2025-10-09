@@ -12,7 +12,7 @@
 		"build:create-tml-app": "turbo build --filter=create-tml-app",
 		"build:emails": "turbo build --filter=@tmlmobilidade/emails",
 		"build:generate-offer-files": "turbo build --filter=@tmlmobilidade/generate-offer-files",
-		"build:import-gtfs": "turbo build --filter=@tmlmobilidade/import-package",
+		"build:import-gtfs": "turbo build --filter=@tmlmobilidade/import-gtfs",
 		"build:interfaces": "turbo build --filter=@tmlmobilidade/interfaces",
 		"build:lib": "turbo build --filter=@tmlmobilidade/lib",
 		"build:packages": "turbo build --filter=./packages/*",

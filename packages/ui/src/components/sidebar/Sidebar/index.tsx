@@ -3,7 +3,7 @@
 /* * */
 
 import { SidebarItem } from '@/components/sidebar/SidebarItem';
-import { IconAlertTriangle, IconBuildings, IconBusStop, IconClockExclamation, IconFileCertificate, IconFileCheck, IconHome, IconKey, IconListCheck, IconSitemap, IconUser } from '@tabler/icons-react';
+import { IconActivity, IconAlertTriangle, IconBuildings, IconBusStop, IconClockExclamation, IconFileCertificate, IconFileCheck, IconHome, IconKey, IconListCheck, IconSitemap, IconUser } from '@tabler/icons-react';
 import { getAppConfig, Permissions } from '@tmlmobilidade/lib';
 
 import styles from './styles.module.css';
@@ -97,6 +97,13 @@ export const sidebarApps = [
 		icon: <IconFileCheck size={26} />,
 		label: 'Validações GTFS',
 		permissions: [{ action: Permissions.validations.actions.read, scope: Permissions.validations.scope }],
+	},
+	{
+		_id: 'performance',
+		href: `${getAppConfig('performance', 'frontend_url')}/performance`,
+		icon: <IconActivity size={26} />,
+		label: 'Métricas',
+		permissions: [{ action: Permissions.performance.actions.read, scope: Permissions.performance.scope }],
 	},
 ];
 

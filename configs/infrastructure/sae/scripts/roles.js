@@ -119,6 +119,20 @@ db.createRole({
 db.createRole({
 	privileges: [
 		{ actions: ['find'], resource: { collection: 'rides', db: 'production' } },
+		{ actions: ['find'], resource: { collection: 'sams', db: 'production' } },
+		{ actions: ['find'], resource: { collection: 'simplified_apex_locations', db: 'production' } },
+		{ actions: ['find'], resource: { collection: 'simplified_apex_on_board_refunds', db: 'production' } },
+		{ actions: ['find'], resource: { collection: 'simplified_apex_on_board_sales', db: 'production' } },
+		{ actions: ['find'], resource: { collection: 'simplified_apex_validations', db: 'production' } },
+		{ actions: ['find', 'update', 'insert', 'remove'], resource: { collection: 'metrics', db: 'production' } },
+	],
+	role: 'performance',
+	roles: [],
+});
+
+db.createRole({
+	privileges: [
+		{ actions: ['find'], resource: { collection: 'rides', db: 'production' } },
 		{ actions: ['find'], resource: { collection: 'simplified_apex_validations', db: 'production' } },
 		{ actions: ['find'], resource: { collection: 'alerts', db: 'production' } },
 	],

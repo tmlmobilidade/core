@@ -45,7 +45,7 @@ export const NotificationsContextProvider = ({ children }: PropsWithChildren) =>
 	//
 	// A. Setup variables
 
-	const { data: notificationsData, error: notificationsError, isLoading: notificationsLoading } = useSWR<TmlNotification[], HttpException>(`${getAppConfig('auth', 'api_url')}/notifications`, { refreshInterval: 2000 });
+	const { data: notificationsData, error: notificationsError, isLoading: notificationsLoading } = useSWR<TmlNotification[], HttpException>(`${getAppConfig('auth', 'api_url')}/notifications`, { refreshInterval: 10_000 });
 
 	//
 	// C. Transform data

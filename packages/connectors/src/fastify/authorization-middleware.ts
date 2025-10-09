@@ -11,7 +11,7 @@ declare module 'fastify' {
 }
 
 const AUTH_API_BASE_URL = () => getAppConfig('auth', 'api_url');
-const REQUEST_CACHE = new Cache<string, { permissions: Permission<unknown>[], user: User }>(60_000); // 1 minute TTL
+const REQUEST_CACHE = new Cache<string, { permissions: Permission<unknown>[], user: User }>(5 * 60_000); // 5 minutes TTL
 
 /**
  * Fetches user data from the authentication API

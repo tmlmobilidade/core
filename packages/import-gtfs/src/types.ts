@@ -5,6 +5,17 @@ import { type GTFS_Route_Extended, type GTFS_Shape, type GTFS_Stop_Extended, typ
 import { type OperationalDate } from '@tmlmobilidade/types';
 
 /**
+ * Configuration options for importing GTFS data into a database.
+ */
+export interface ImportGtfsToDatabaseConfig {
+	date_range?: {
+		end: OperationalDate
+		start: OperationalDate
+	}
+	discrete_dates?: OperationalDate[]
+}
+
+/**
  * Holds references to all GTFS-related SQL tables and writers.
  * Each property corresponds to a specific GTFS entity and is associated
  * with a SQLiteWriter instance for that entity.

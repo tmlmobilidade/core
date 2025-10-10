@@ -160,6 +160,10 @@ export class SQLiteTableInstance<T> {
 		return !!this.databaseInstance.prepare(sql).get(value);
 	}
 
+	query(sqlQuery = '', params: (boolean | number | string)[] = []): T[] {
+		return this.databaseInstance.prepare(sqlQuery).all(...params) as T[];
+	}
+
 	/**
 	 * Add one item to buffer, flush automatically when batchSize reached.
 	 */

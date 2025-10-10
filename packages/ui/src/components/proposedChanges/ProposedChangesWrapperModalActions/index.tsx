@@ -7,12 +7,13 @@ import { Permission } from '@tmlmobilidade/types';
 
 interface ProposedChangesWrapperModalActionsProps {
 	approve: () => void
+	isNew: boolean
 	permissions: Permission<unknown>[]
 	reject: () => void
 	submit: () => void
 }
 
-export function ProposedChangesWrapperModalActions({ approve, permissions, reject, submit }: ProposedChangesWrapperModalActionsProps) {
+export function ProposedChangesWrapperModalActions({ approve, isNew, permissions, reject, submit }: ProposedChangesWrapperModalActionsProps) {
 	//
 
 	//
@@ -24,11 +25,12 @@ export function ProposedChangesWrapperModalActions({ approve, permissions, rejec
 		{ action: 'create', label: 'Submeter', onclick: submit, variant: 'primary' },
 	];
 
-	const visibleButtons = buttons.filter(btn =>
-		permissions.find(p => p.action === btn.action),
-	);
+	const visibleButtons = isNew ? buttons.filter(btn => btn.action === 'create') : buttons.filter(btn => permissions.find(p => p.action === btn.action));
+
 	//
 	// B. Render Components
+
+	console.log('isNew', isNew);
 
 	return (
 		<ButtonGroup buttons={visibleButtons} />

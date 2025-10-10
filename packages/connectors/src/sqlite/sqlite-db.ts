@@ -3,6 +3,7 @@
 import { SQLiteColumn, SQLiteDatabaseConfig, SQLiteTable } from '@/sqlite/types.js';
 import { generateRandomString } from '@tmlmobilidade/utils';
 import BSQLite3, { type Database, Statement } from 'better-sqlite3';
+import fs from 'node:fs';
 
 /* * */
 
@@ -32,11 +33,12 @@ export class SQLiteDatabase {
 		}
 
 		if (!config.instancePath) {
-			config.instancePath = `/tmp/${config.instanceName}.db`;
+			config.instancePath = `/tmp/${config.instanceName}/${config.instanceName}.db`;
+			fs.mkdirSync(`/tmp/${config.instanceName}`, { recursive: true });
 		}
 
 		if (!config.databaseInstance) {
-			config.databaseInstance = new BSQLite3(config.instancePath, { fileMustExist: false });
+			config.databaseInstance = new BSQLite3(config.instancePath);
 		}
 
 		//
@@ -188,8 +190,8 @@ export class SQLiteTableInstance<T> {
 		return !!this.databaseInstance.prepare(sql).get(value);
 	}
 
-	query(sqlQuery = '', params: (boolean | number | string)[] = []): T[] {
-		return this.databaseInstance.prepare(sqlQuery).all(...params) as T[];
+	query(sqlQuery = '', params: (boolean | number | string)[] = []) {
+		return this.databaseInstance.prepare(sqlQuery).run(...params);
 	}
 
 	update(whereClause = '', newData: Partial<T>, params: (boolean | number | string)[] = []): T[] {

@@ -2,6 +2,7 @@
 
 import { ProposedChangesWrapperModalActions } from '@/components/proposedChanges/ProposedChangesWrapperModalActions';
 import { ProposedChangesWrapperModalContent } from '@/components/proposedChanges/ProposedChangesWrapperModalContent';
+import { ProposedChangesWrapperModalMetadata } from '@/components/proposedChanges/ProposedChangesWrapperModalMetadata';
 import { Modal } from '@mantine/core';
 import { useMeContext } from 'index';
 import { useState } from 'react';
@@ -59,10 +60,10 @@ export function ProposedChangesWrapperModal({ actualValue, inputName, isNew, isO
 		<Modal onClose={onClose} opened={isOpen} title={`Proposta de alteração para: ${inputName}`}>
 			<p>Related ID: {relatedId} : {scope}</p>
 			{
-				// if has already create proposed changes, show metadata
+				!isNew && <ProposedChangesWrapperModalMetadata />
 			}
 			<ProposedChangesWrapperModalContent actualValue={actualValue} proposedValue={proposedValue || ''} setProposedValue={setProposedValue} />
-			<ProposedChangesWrapperModalActions approve={approve} isNew={false} permissions={permissions} reject={reject} submit={submit} />
+			<ProposedChangesWrapperModalActions approve={approve} isNew={isNew} permissions={permissions} reject={reject} submit={submit} />
 		</Modal>
 	);
 

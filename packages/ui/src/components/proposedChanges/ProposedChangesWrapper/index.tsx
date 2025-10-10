@@ -29,7 +29,7 @@ export function ProposedChangesWrapper({ actualValue, children, inputName, label
 
 	const status: StatusType = 'pending';
 	const [opened, setOpened] = useState(false);
-	const [isNew, setIsNew] = useState(false);
+	const [isNew, setIsNew] = useState(true);
 	const colorLevel = status === 'pending' ? 'var(	--color-status-warning-primary)' : status === 'approved' ? ' var(--color-status-success-primary)' : status === 'rejected' ? 'var(--color-status-danger-primary)' : 'var(--color-system-text-200)';
 
 	//

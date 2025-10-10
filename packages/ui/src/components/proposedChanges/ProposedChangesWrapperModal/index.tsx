@@ -3,7 +3,8 @@
 import { ProposedChangesWrapperModalActions } from '@/components/proposedChanges/ProposedChangesWrapperModalActions';
 import { ProposedChangesWrapperModalContent } from '@/components/proposedChanges/ProposedChangesWrapperModalContent';
 import { Modal } from '@mantine/core';
-import { useEffect, useState } from 'react';
+import { Permission } from '@tmlmobilidade/types';
+import { useState } from 'react';
 
 /* * */
 
@@ -12,29 +13,27 @@ interface ProposedChangesWrapperModalProps {
 	inputName: string
 	isOpen: boolean
 	onClose: () => void
+	permissions: Permission<unknown>[]
+	relatedId: string
 	scope: string
 	status: string
 }
 
 /* * */
 
-export function ProposedChangesWrapperModal({ actualValue, inputName, isOpen, onClose, status }: ProposedChangesWrapperModalProps) {
+export function ProposedChangesWrapperModal({ actualValue, inputName, isOpen, onClose, permissions, relatedId, scope, status }: ProposedChangesWrapperModalProps) {
 	//
 
 	//
 	// A. Setup variables
 
-	const [proposedValue, setProposedValue] = useState<string>('');
+	const [proposedValue, setProposedValue] = useState<string | undefined>(undefined);
 
 	//
 	// B. Handler Actions
 
-	useEffect(() => {
-		console.log('value changes', proposedValue);
-	}, [proposedValue]);
-
 	const approve = async () => {
-		console.log('approve change');
+		//
 	};
 
 	const reject = () => {
@@ -42,6 +41,14 @@ export function ProposedChangesWrapperModal({ actualValue, inputName, isOpen, on
 	};
 	const submit = () => {
 		console.log('submit change');
+		// const proposedChanges: ProposedChange<unknown> = {
+		// 	curr_value: z.any(),
+		// 	field: z.string(),
+		// 	related_id: z.string(),
+		// 	scope: scopeSchema,
+		// 	status: statusSchema,
+		// };
+		// await fetchData(`${getAppConfig('auth', 'api_url')}/api/proposed-changes`, 'POST', proposedChanges);
 	};
 
 	//
@@ -49,8 +56,9 @@ export function ProposedChangesWrapperModal({ actualValue, inputName, isOpen, on
 
 	return (
 		<Modal onClose={onClose} opened={isOpen} title={`Proposta de alteração para: ${inputName}`}>
-			<ProposedChangesWrapperModalContent actualValue={actualValue} proposedValue={proposedValue} setProposedValue={setProposedValue} />
-			<ProposedChangesWrapperModalActions approve={approve} reject={reject} submit={submit} />
+			<p>Related ID: {relatedId} : {scope}</p>
+			<ProposedChangesWrapperModalContent actualValue={actualValue} proposedValue={proposedValue || ''} setProposedValue={setProposedValue} />
+			<ProposedChangesWrapperModalActions approve={approve} permissions={permissions} reject={reject} submit={submit} />
 		</Modal>
 	);
 

@@ -7,7 +7,7 @@ import styles from './styles.module.css';
 /* * */
 
 export interface ButtonGroupProps extends MantineButtonGroupProps {
-	buttons: { label: string, onclick: () => void, variant?: 'danger' | 'disabled' | 'muted' | 'primary' | 'secondary' }[]
+	buttons: { action: 'approve' | 'create' | 'reject', label: string, onclick: () => void, variant?: 'danger' | 'disabled' | 'muted' | 'primary' | 'secondary' }[]
 }
 
 /* * */
@@ -18,7 +18,7 @@ export function ButtonGroup({ buttons }: ButtonGroupProps) {
 	//
 	// A. Setup Variables
 
-	//
+	console.log('buttons to render', buttons);
 
 	// B. Render Components
 	return (

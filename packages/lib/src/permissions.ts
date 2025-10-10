@@ -79,9 +79,7 @@ export const Permissions = Object.freeze({
 	proposed_changes: {
 		actions: {
 			approve: 'approve',
-			comment: 'comment',
 			create: 'create',
-			delete: 'delete',
 			read: 'read',
 			reject: 'reject',
 		},

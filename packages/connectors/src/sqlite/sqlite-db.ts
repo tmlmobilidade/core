@@ -164,6 +164,11 @@ export class SQLiteTableInstance<T> {
 		return this.databaseInstance.prepare(sqlQuery).all(...params) as T[];
 	}
 
+	update(whereClause = '', newData: Partial<T>, params: (boolean | number | string)[] = []): T[] {
+		const sql = `UPDATE ${this.table_name} SET ${Object.keys(newData).map(key => `${key} = ?`).join(', ')} WHERE ${whereClause}`;
+		return this.databaseInstance.prepare(sql).all(...params) as T[];
+	}
+
 	/**
 	 * Add one item to buffer, flush automatically when batchSize reached.
 	 */

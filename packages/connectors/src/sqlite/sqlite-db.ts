@@ -4,6 +4,7 @@ import { SQLiteColumn, SQLiteDatabaseConfig, SQLiteTable } from '@/sqlite/types.
 import { generateRandomString } from '@tmlmobilidade/utils';
 import BSQLite3, { type Database, Statement } from 'better-sqlite3';
 import fs from 'node:fs';
+import { Readable } from 'node:stream';
 
 /* * */
 
@@ -192,6 +193,25 @@ export class SQLiteTableInstance<T> {
 
 	query(sqlQuery = '', params: (boolean | number | string)[] = []) {
 		return this.databaseInstance.prepare(sqlQuery).run(...params);
+	}
+
+	/**
+	 * Iterator to go through all rows in the table.
+	 */
+	stream(whereClause = '', params: (boolean | number | string)[] = []): Readable {
+		// Create an iterator for the query
+		const iterator = this.databaseInstance
+			.prepare(`SELECT * FROM ${this.tableName} ${whereClause}`)
+			.iterate(...params);
+		// Return a Readable stream in object mode
+		return new Readable({
+			objectMode: true,
+			read() {
+				const next = iterator.next();
+				if (next.done) this.push(null); // end of stream
+				else this.push(next.value as T);
+			},
+		});
 	}
 
 	update(whereClause = '', newData: Partial<T>, params: (boolean | number | string)[] = []): T[] {

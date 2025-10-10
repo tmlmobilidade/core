@@ -36,8 +36,7 @@ export class SQLiteDatabase {
 		}
 
 		if (!config.databaseInstance) {
-			const randomDatabasePath = `/tmp/${generateRandomString()}.db`;
-			config.databaseInstance = new BSQLite3(`/tmp/${randomDatabasePath}.db`);
+			config.databaseInstance = new BSQLite3(config.instancePath, { fileMustExist: false });
 		}
 
 		//

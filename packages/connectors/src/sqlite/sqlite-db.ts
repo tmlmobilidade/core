@@ -1,7 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import BSQLite3, { type Database, Statement } from 'better-sqlite3';
+/* * */
 
-import { SQLiteColumn, SQLiteTable } from './types.js';
+import { SQLiteColumn, SQLiteDatabaseConfig, SQLiteTable } from '@/sqlite/types.js';
+import { generateRandomString } from '@tmlmobilidade/utils';
+import BSQLite3, { type Database, Statement } from 'better-sqlite3';
 
 /* * */
 
@@ -12,14 +13,37 @@ export class SQLiteDatabase {
 	//  Properties
 
 	public databaseInstance: Database;
+
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	private tables = new Map<string, SQLiteTableInstance<any>>();
 
 	//
 	//  Constructor
 
-	constructor(public instanceName: string, public instancePath = `/tmp/${instanceName}.db`) {
-		this.databaseInstance = new BSQLite3(this.instancePath);
+	constructor(config: SQLiteDatabaseConfig = {}) {
+		//
 
+		//
+		// If not provided, generate random values
+		// and create a new database instance.
+
+		if (!config.instanceName) {
+			config.instanceName = generateRandomString();
+		}
+
+		if (!config.instancePath) {
+			config.instancePath = `/tmp/${config.instanceName}.db`;
+		}
+
+		if (!config.databaseInstance) {
+			const randomDatabasePath = `/tmp/${generateRandomString()}.db`;
+			config.databaseInstance = new BSQLite3(`/tmp/${randomDatabasePath}.db`);
+		}
+
+		//
+		// Initialize the database instance
+
+		this.databaseInstance = config.databaseInstance;
 		this.databaseInstance.pragma('journal_mode = WAL');
 		this.databaseInstance.pragma('synchronous = OFF');
 		this.databaseInstance.pragma('temp_store = MEMORY');
@@ -50,7 +74,7 @@ export class SQLiteTableInstance<T> {
 	 * @returns The number of rows.
 	 */
 	get size(): number {
-		const sql = `SELECT COUNT(*) as count FROM ${this.table_name}`;
+		const sql = `SELECT COUNT(*) as count FROM ${this.tableName}`;
 		const row = this.databaseInstance.prepare(sql).get() as { count: number };
 		return row.count;
 	}
@@ -62,10 +86,9 @@ export class SQLiteTableInstance<T> {
 	private columns: SQLiteColumn<T>[];
 	private databaseInstance: Database;
 	private insertStatement: Statement;
+	private tableName: string;
 
-	private table_name: string;
-
-	constructor(databaseInstance: Database, table_name: string, params: SQLiteTable<T>) {
+	constructor(databaseInstance: Database, tableName: string, params: SQLiteTable<T>) {
 		//
 
 		//
@@ -74,17 +97,17 @@ export class SQLiteTableInstance<T> {
 		this.databaseInstance = databaseInstance;
 		this.batchSize = params.batch_size ?? 3000;
 		this.columns = params.columns;
-		this.table_name = table_name;
+		this.tableName = tableName;
 
 		// Create table
 		this.databaseInstance
-			.prepare(`CREATE TABLE IF NOT EXISTS ${table_name} (${params.columns.map(c => `"${c.name}"`).join(', ')})`)
+			.prepare(`CREATE TABLE IF NOT EXISTS ${this.tableName} (${params.columns.map(c => `"${c.name}"`).join(', ')})`)
 			.run();
 
 		// Create indexes
 		params.columns.forEach((c) => {
 			if (c.indexed) {
-				this.databaseInstance.exec(`CREATE INDEX IF NOT EXISTS idx_${table_name}_${c.name} ON ${table_name}("${c.name}")`);
+				this.databaseInstance.exec(`CREATE INDEX IF NOT EXISTS idx_${this.tableName}_${c.name} ON ${this.tableName}("${c.name}")`);
 			}
 		});
 
@@ -92,12 +115,18 @@ export class SQLiteTableInstance<T> {
 		// Prepare insert statement
 
 		const placeholders = this.columns.map(() => '?').join(', ');
-		const insertSQL = `INSERT INTO ${table_name} (${this.columns.map(c => `"${c.name}"`).join(', ')}) VALUES (${placeholders})`;
+		const insertSQL = `INSERT INTO ${this.tableName} (${this.columns.map(c => `"${c.name}"`).join(', ')}) VALUES (${placeholders})`;
 		this.insertStatement = this.databaseInstance.prepare(insertSQL);
 	}
 
+	/**
+	 * Get all rows, optionally filtered by a WHERE clause.
+	 * @param whereClause Optional SQL WHERE clause (e.g., "WHERE id = ?").
+	 * @param params Parameters for the WHERE clause.
+	 * @returns An array of matching rows.
+	 */
 	all(whereClause = '', params: (boolean | number | string)[] = []): T[] {
-		const sql = `SELECT * FROM ${this.table_name} ${whereClause}`;
+		const sql = `SELECT * FROM ${this.tableName} ${whereClause}`;
 		return this.databaseInstance.prepare(sql).all(...params) as T[];
 	}
 
@@ -106,7 +135,7 @@ export class SQLiteTableInstance<T> {
 	 */
 	clear(): void {
 		this.databaseInstance
-			.prepare(`DELETE FROM ${this.table_name}`)
+			.prepare(`DELETE FROM ${this.tableName}`)
 			.run();
 	}
 
@@ -145,7 +174,7 @@ export class SQLiteTableInstance<T> {
 	 * @returns The matching row, or undefined if not found.
 	 */
 	get<K extends keyof T>(col: K, value: T[K]): T | undefined {
-		const sql = `SELECT * FROM ${this.table_name} WHERE ${String(col)} = ? LIMIT 1`;
+		const sql = `SELECT * FROM ${this.tableName} WHERE ${String(col)} = ? LIMIT 1`;
 		return this.databaseInstance.prepare(sql).get(value) as T | undefined;
 	}
 
@@ -156,7 +185,7 @@ export class SQLiteTableInstance<T> {
 	 * @returns True if the row exists, false otherwise.
 	 */
 	has<K extends keyof T>(col: K, value: T[K]): boolean {
-		const sql = `SELECT 1 FROM ${this.table_name} WHERE ${String(col)} = ? LIMIT 1`;
+		const sql = `SELECT 1 FROM ${this.tableName} WHERE ${String(col)} = ? LIMIT 1`;
 		return !!this.databaseInstance.prepare(sql).get(value);
 	}
 
@@ -165,7 +194,7 @@ export class SQLiteTableInstance<T> {
 	}
 
 	update(whereClause = '', newData: Partial<T>, params: (boolean | number | string)[] = []): T[] {
-		const sql = `UPDATE ${this.table_name} SET ${Object.keys(newData).map(key => `${key} = ?`).join(', ')} WHERE ${whereClause}`;
+		const sql = `UPDATE ${this.tableName} SET ${Object.keys(newData).map(key => `${key} = ?`).join(', ')} WHERE ${whereClause}`;
 		return this.databaseInstance.prepare(sql).all(...params) as T[];
 	}
 

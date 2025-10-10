@@ -1,9 +1,9 @@
 /* * */
 
 import { type ImportGtfsContext } from '@/types.js';
-import { SQLiteWriter } from '@tmlmobilidade/connectors';
+import { SQLiteDatabase } from '@tmlmobilidade/connectors';
 import { type GTFS_Route_Extended, type GTFS_Shape, type GTFS_Stop_Extended, type GTFS_StopTime, type GTFS_Trip_Extended } from '@tmlmobilidade/types';
-import { OperationalDate } from '@tmlmobilidade/types';
+import { type OperationalDate } from '@tmlmobilidade/types';
 
 /**
  * Initializes GTFS SQL tables and writers.
@@ -14,7 +14,9 @@ export function initGtfsSqlTables(): ImportGtfsContext['gtfs'] {
 
 	const calendarDatesMap = new Map<string, OperationalDate[]>();
 
-	const tripsWriter = new SQLiteWriter<GTFS_Trip_Extended>({
+	const database = new SQLiteDatabase();
+
+	const tripsTable = database.registerTable<GTFS_Trip_Extended>('trips', {
 		batch_size: 10000,
 		columns: [
 			{ indexed: true, name: 'trip_id', not_null: true, primary_key: true, type: 'TEXT' },
@@ -31,7 +33,7 @@ export function initGtfsSqlTables(): ImportGtfsContext['gtfs'] {
 		],
 	});
 
-	const routesWriter = new SQLiteWriter<GTFS_Route_Extended>({
+	const routesTable = database.registerTable<GTFS_Route_Extended>('routes', {
 		batch_size: 10000,
 		columns: [
 			{ indexed: false, name: 'agency_id', not_null: true, type: 'TEXT' },
@@ -56,7 +58,7 @@ export function initGtfsSqlTables(): ImportGtfsContext['gtfs'] {
 		],
 	});
 
-	const shapesWriter = new SQLiteWriter<GTFS_Shape>({
+	const shapesTable = database.registerTable<GTFS_Shape>('shapes', {
 		batch_size: 100000,
 		columns: [
 			{ indexed: true, name: 'shape_id', not_null: true, type: 'TEXT' },
@@ -67,7 +69,7 @@ export function initGtfsSqlTables(): ImportGtfsContext['gtfs'] {
 		],
 	});
 
-	const stopsWriter = new SQLiteWriter<GTFS_Stop_Extended>({
+	const stopsTable = database.registerTable<GTFS_Stop_Extended>('stops', {
 		batch_size: 10000,
 		columns: [
 			{ indexed: false, name: 'level_id', type: 'TEXT' },
@@ -102,7 +104,7 @@ export function initGtfsSqlTables(): ImportGtfsContext['gtfs'] {
 		],
 	});
 
-	const stopTimesWriter = new SQLiteWriter<GTFS_StopTime>({
+	const stopTimesTable = database.registerTable<GTFS_StopTime>('stop_times', {
 		batch_size: 100000,
 		columns: [
 			{ indexed: false, name: 'arrival_time', not_null: true, type: 'TEXT' },
@@ -122,11 +124,11 @@ export function initGtfsSqlTables(): ImportGtfsContext['gtfs'] {
 
 	return {
 		calendar_dates: calendarDatesMap,
-		routes: routesWriter,
-		shapes: shapesWriter,
-		stop_times: stopTimesWriter,
-		stops: stopsWriter,
-		trips: tripsWriter,
+		routes: routesTable,
+		shapes: shapesTable,
+		stop_times: stopTimesTable,
+		stops: stopsTable,
+		trips: tripsTable,
 	};
 
 	//

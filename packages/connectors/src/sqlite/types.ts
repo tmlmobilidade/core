@@ -1,5 +1,32 @@
 /* * */
 
+import { type Database } from 'better-sqlite3';
+
+/* * */
+
+export interface SQLiteDatabaseConfig {
+	/**
+	 * The BetterSQLite3 database instance to use.
+	 * If not provided, a temporary database will be created.
+	 */
+	databaseInstance?: Database
+
+	/**
+	 * Optional custom instance name.
+	 * If not provided, a random name will be generated.
+	 */
+	instanceName?: string
+
+	/**
+	 * Optional custom database file path.
+	 * If not provided, a temporary file path will be generated.
+	 */
+	instancePath?: string
+
+}
+
+/* * */
+
 export interface SQLiteColumn<T> {
 	indexed?: boolean
 	name: Extract<keyof T, string>
@@ -7,6 +34,8 @@ export interface SQLiteColumn<T> {
 	primary_key?: boolean
 	type: 'BLOB' | 'BOOLEAN' | 'INTEGER' | 'REAL' | 'TEXT'
 }
+
+/* * */
 
 export interface SQLiteTable<T> {
 

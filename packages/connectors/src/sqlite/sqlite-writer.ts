@@ -7,6 +7,9 @@ import BSQLite3, { type Database } from 'better-sqlite3';
 
 /* * */
 
+/**
+ * @deprecated Use `SQLiteDatabase` instead.
+ */
 export class SQLiteWriter<T> extends SQLiteTableInstance<T> {
 	//
 
@@ -18,17 +21,19 @@ export class SQLiteWriter<T> extends SQLiteTableInstance<T> {
 	//
 	// Constructor
 	constructor(params: SQLiteTable<T>) {
-		// 1. Generate a random table name
+		//
+
+		//
+		// Otherwise, generate a random instance name and path
+		// and create a new database instance
+
 		const instanceName = generateRandomString({ type: 'alphabetic' });
 		const instancePath = `/tmp/${instanceName}.db`;
 
-		// 2. Create a fresh SQLite DB just for this writer
 		const db = SQLiteWriter.createDatabase(instancePath);
 
-		// 3. Call parent constructor (this does CREATE TABLE, prepare inserts, etc.)
 		super(db, instanceName, params);
 
-		// 4. Save references
 		this.instanceName = instanceName;
 		this.instancePath = instancePath;
 	}

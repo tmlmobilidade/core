@@ -1,6 +1,6 @@
 /* * */
 
-import { SQLiteWriter } from '@tmlmobilidade/connectors';
+import { type SQLiteTableInstance } from '@tmlmobilidade/connectors';
 import { type GTFS_Route_Extended, type GTFS_Shape, type GTFS_Stop_Extended, type GTFS_StopTime, type GTFS_Trip_Extended, type Plan } from '@tmlmobilidade/types';
 import { type OperationalDate } from '@tmlmobilidade/types';
 
@@ -22,11 +22,11 @@ export interface ImportGtfsToDatabaseConfig {
  */
 export interface GtfsSQLTables {
 	calendar_dates: Map<string, OperationalDate[]>
-	routes: SQLiteWriter<GTFS_Route_Extended>
-	shapes: SQLiteWriter<GTFS_Shape>
-	stop_times: SQLiteWriter<GTFS_StopTime>
-	stops: SQLiteWriter<GTFS_Stop_Extended>
-	trips: SQLiteWriter<GTFS_Trip_Extended>
+	routes: SQLiteTableInstance<GTFS_Route_Extended>
+	shapes: SQLiteTableInstance<GTFS_Shape>
+	stop_times: SQLiteTableInstance<GTFS_StopTime>
+	stops: SQLiteTableInstance<GTFS_Stop_Extended>
+	trips: SQLiteTableInstance<GTFS_Trip_Extended>
 }
 
 /**

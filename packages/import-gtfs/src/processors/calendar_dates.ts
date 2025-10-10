@@ -1,11 +1,13 @@
 /* * */
 
-import { type ImportGtfsContext, type ImportGtfsToDatabaseConfig } from '@/types.js';
+import { type ImportGtfsContext } from '@/types.js';
 import { parseCsvFile } from '@/utils/parse-csv.js';
 import TIMETRACKER from '@helperkits/timer';
 import { GTFS_CalendarDate_Raw, validateGtfsCalendarDate } from '@tmlmobilidade/types';
 import { Logs } from '@tmlmobilidade/utils';
 import fs from 'node:fs';
+
+import { type ImportGtfsToDatabaseConfig } from '../../index.js';
 
 /**
  * Processes the calendar_dates.txt file from the GTFS dataset.

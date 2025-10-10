@@ -39,7 +39,7 @@ class ProposedChangesClass extends MongoCollectionClass<ProposedChange<any>, Cre
 	}
 
 	protected getEnvName(): string {
-		return 'TML_INTERFACE_PROPOSED_CHANGES';
+		return 'DATABASE_URI';
 	}
 }
 /* * */

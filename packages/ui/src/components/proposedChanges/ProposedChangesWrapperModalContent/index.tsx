@@ -19,6 +19,7 @@ export function ProposedChangesWrapperModalContent({ actualValue, proposedValue,
 	return (
 		<div>
 			<TextInput label="Valor atual: " value={actualValue} disabled />
+			<br />
 			<TextInput label="Valor proposto: " onChange={e => setProposedValue(e.target.value)} value={proposedValue} />
 		</div>
 	);

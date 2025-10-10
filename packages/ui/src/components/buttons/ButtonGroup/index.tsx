@@ -14,13 +14,9 @@ export interface ButtonGroupProps extends MantineButtonGroupProps {
 
 export function ButtonGroup({ buttons }: ButtonGroupProps) {
 	//
-
 	//
-	// A. Setup Variables
 
-	console.log('buttons to render', buttons);
-
-	// B. Render Components
+	// A. Render Components
 	return (
 		<MantineButton.Group className={styles.buttonGroup}>
 			{buttons.map((button, index) => (

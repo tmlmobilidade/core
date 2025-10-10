@@ -25,12 +25,13 @@ export function ProposedChangesWrapperModalActions({ approve, isNew, permissions
 		{ action: 'create', label: 'Submeter', onclick: submit, variant: 'primary' },
 	];
 
+	//
+	// B. Transform data
+
 	const visibleButtons = isNew ? buttons.filter(btn => btn.action === 'create') : buttons.filter(btn => permissions.find(p => p.action === btn.action));
 
 	//
-	// B. Render Components
-
-	console.log('isNew', isNew);
+	// C. Render Components
 
 	return (
 		<ButtonGroup buttons={visibleButtons} />

@@ -4,6 +4,9 @@ import { ProposedChangesWrapperModalActions } from '@/components/proposedChanges
 import { ProposedChangesWrapperModalContent } from '@/components/proposedChanges/ProposedChangesWrapperModalContent';
 import { ProposedChangesWrapperModalMetadata } from '@/components/proposedChanges/ProposedChangesWrapperModalMetadata';
 import { Modal } from '@mantine/core';
+import { getAppConfig } from '@tmlmobilidade/lib';
+import { CreateProposedChangeDto, ProposedChange, Stop } from '@tmlmobilidade/types';
+import { fetchData } from '@tmlmobilidade/utils';
 import { useMeContext } from 'index';
 import { useState } from 'react';
 
@@ -15,13 +18,14 @@ interface ProposedChangesWrapperModalProps {
 	isNew: boolean
 	isOpen: boolean
 	onClose: () => void
+	proposedChangesData?: ProposedChange<Stop>
 	relatedId: string
 	scope: string
 }
 
 /* * */
 
-export function ProposedChangesWrapperModal({ actualValue, inputName, isNew, isOpen, onClose, relatedId, scope }: ProposedChangesWrapperModalProps) {
+export function ProposedChangesWrapperModal({ actualValue, inputName, isNew, isOpen, onClose, proposedChangesData, relatedId, scope }: ProposedChangesWrapperModalProps) {
 	//
 
 	//
@@ -35,22 +39,45 @@ export function ProposedChangesWrapperModal({ actualValue, inputName, isNew, isO
 	// B. Handler Actions
 
 	const approve = async () => {
-		//
+		try {
+			await fetchData(
+				`${getAppConfig('auth', 'api_url')}/proposed-changes/${proposedChangesData?._id}`,
+				'PUT',
+				{ status: 'approved' },
+			);
+		}
+		catch (error) {
+			console.error('Error approving proposed change:', error);
+		}
 	};
 
-	const reject = () => {
-		console.log('reject change');
+	const reject = async () => {
+		try {
+			await fetchData(
+				`${getAppConfig('auth', 'api_url')}/proposed-changes/${proposedChangesData?._id}`,
+				'PUT',
+				{ status: 'rejected' },
+			);
+		}
+		catch (error) {
+			console.error('Error rejecting proposed change:', error);
+		}
 	};
-	const submit = () => {
-		console.log('submit change');
-		// const proposedChanges: ProposedChange<unknown> = {
-		// 	curr_value: z.any(),
-		// 	field: z.string(),
-		// 	related_id: z.string(),
-		// 	scope: scopeSchema,
-		// 	status: statusSchema,
-		// };
-		// await fetchData(`${getAppConfig('auth', 'api_url')}/api/proposed-changes`, 'POST', proposedChanges);
+	const submit = async () => {
+		const proposedChange: CreateProposedChangeDto<Stop> = {
+			curr_value: proposedValue,
+			field: inputName,
+			related_id: relatedId,
+			scope: scope,
+			status: 'pending',
+		};
+
+		try {
+			await fetchData(`${getAppConfig('auth', 'api_url')}/proposed-changes`, 'POST', proposedChange);
+		}
+		catch (error) {
+			console.error('Error submitting proposed change:', error);
+		}
 	};
 
 	//

@@ -21,7 +21,7 @@ export interface ImportGtfsToDatabaseConfig {
  * with a SQLiteWriter instance for that entity.
  */
 export interface GtfsSQLTables {
-	calendar_dates: Map<string, OperationalDate[]>
+	calendar_dates: Record<string, OperationalDate[]>
 	routes: SQLiteTableInstance<GTFS_Route_Extended>
 	shapes: SQLiteTableInstance<GTFS_Shape>
 	stop_times: SQLiteTableInstance<GTFS_StopTime>

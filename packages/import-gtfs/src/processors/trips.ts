@@ -24,7 +24,7 @@ export async function processTripsFile(context: ImportGtfsContext): Promise<void
 			const validatedData = validateGtfsTripExtended(data);
 			// For each trip, check if the associated service_id was saved
 			// in the previous step or not. Include it if yes, skip otherwise.
-			if (!context.gtfs.calendar_dates.has(validatedData.service_id)) return;
+			if (!context.gtfs.calendar_dates[validatedData.service_id]) return;
 			// Save the exported row
 			context.gtfs.trips.write(validatedData);
 			// Reference the associated entities to filter them later.

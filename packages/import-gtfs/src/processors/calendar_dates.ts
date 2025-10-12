@@ -51,7 +51,7 @@ export async function processCalendarDatesFile(context: ImportGtfsContext, confi
 			// If we're here, it means the service_id is valid between the given dates.
 			// Get the previously saved calendars and check if it exists for this service_id.
 
-			const savedCalendar = context.gtfs.calendar_dates.get(validatedData.service_id);
+			const savedCalendar = context.gtfs.calendar_dates[validatedData.service_id];
 
 			if (savedCalendar) {
 				// Create a new Set to avoid duplicated dates
@@ -67,13 +67,13 @@ export async function processCalendarDatesFile(context: ImportGtfsContext, confi
 					context.counters.calendar_dates--;
 				}
 				// Update the service_id with the new dates
-				context.gtfs.calendar_dates.set(validatedData.service_id, Array.from(updatedCalendar));
+				context.gtfs.calendar_dates[validatedData.service_id] = Array.from(updatedCalendar);
 			}
 			else {
 				// If this is the first time we're seeing this service_id, then it is only necessary
 				// to initiate a new dates array if it is a service addition
 				if (validatedData.exception_type === 1) {
-					context.gtfs.calendar_dates.set(validatedData.service_id, [validatedData.date]);
+					context.gtfs.calendar_dates[validatedData.service_id] = [validatedData.date];
 					context.counters.calendar_dates++;
 				}
 			}

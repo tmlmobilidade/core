@@ -90,7 +90,7 @@ export async function processCalendarFile(context: ImportGtfsContext, config: Im
 			//
 			// Save the valid operational dates for this service_id
 
-			context.gtfs.calendar_dates.set(validatedData.service_id, Array.from(validOperationalDates));
+			context.gtfs.calendar_dates[validatedData.service_id] = Array.from(validOperationalDates);
 
 			context.counters.calendar_dates += validOperationalDates.size;
 

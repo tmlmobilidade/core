@@ -12,7 +12,7 @@ import { type OperationalDate } from '@tmlmobilidade/types';
 export function initGtfsSqlTables(): ImportGtfsContext['gtfs'] {
 	//
 
-	const calendarDatesMap = new Map<string, OperationalDate[]>();
+	const calendarDatesMap: Record<string, OperationalDate[]> = {};
 
 	const database = new SQLiteDatabase({ memory: true });
 

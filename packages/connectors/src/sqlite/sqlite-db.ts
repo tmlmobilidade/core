@@ -29,17 +29,17 @@ export class SQLiteDatabase {
 		// If not provided, generate random values
 		// and create a new database instance.
 
-		if (!config.instanceName) {
+		if (!config.instanceName && !config.memory) {
 			config.instanceName = generateRandomString();
 		}
 
-		if (!config.instancePath) {
+		if (!config.instancePath && !config.memory) {
 			config.instancePath = `/tmp/${config.instanceName}/${config.instanceName}.db`;
 			fs.mkdirSync(`/tmp/${config.instanceName}`, { recursive: true });
 		}
 
 		if (!config.databaseInstance) {
-			config.databaseInstance = new BSQLite3(config.instancePath);
+			config.databaseInstance = new BSQLite3(config.memory ? ':memory:' : config.instancePath);
 		}
 
 		//
@@ -47,7 +47,7 @@ export class SQLiteDatabase {
 
 		this.databaseInstance = config.databaseInstance;
 		this.databaseInstance.pragma('journal_mode = WAL');
-		this.databaseInstance.pragma('synchronous = OFF');
+		this.databaseInstance.pragma('synchronous = ON');
 		this.databaseInstance.pragma('temp_store = MEMORY');
 	}
 

@@ -23,6 +23,17 @@ export interface SQLiteDatabaseConfig {
 	 */
 	instancePath?: string
 
+	/**
+	 * If true, the database will be created in memory.
+	 * Defaults to false.
+	 * Note: If using in-memory, data will be lost when the process exits.
+	 * Also, multiple instances will not share the same data.
+	 * Use only for testing or ephemeral data storage.
+	 * If true, instancePath is ignored.
+	 * @default false
+	 */
+	memory?: boolean
+
 }
 
 /* * */

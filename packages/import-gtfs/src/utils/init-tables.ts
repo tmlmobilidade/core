@@ -14,7 +14,7 @@ export function initGtfsSqlTables(): ImportGtfsContext['gtfs'] {
 
 	const calendarDatesMap = new Map<string, OperationalDate[]>();
 
-	const database = new SQLiteDatabase();
+	const database = new SQLiteDatabase({ memory: true });
 
 	const tripsTable = database.registerTable<GTFS_Trip_Extended>('trips', {
 		batch_size: 10000,

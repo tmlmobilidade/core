@@ -25,6 +25,7 @@ cursor: pointer;
 .proposedChangeItemWrapper {
 	display: inline-flex;
 	gap: var(--size-spacing-md);
+	margin-bottom: var(--size-spacing-md);
 }
 
 /* * */

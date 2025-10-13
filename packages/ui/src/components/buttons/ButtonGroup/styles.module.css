@@ -3,5 +3,6 @@
 
 .buttonGroup{
 	gap: var(--size-spacing-xs);
+	align-items: flex-end ;
 	justify-content: center;
 }

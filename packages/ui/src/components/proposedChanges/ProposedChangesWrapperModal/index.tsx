@@ -32,7 +32,7 @@ export function ProposedChangesWrapperModal({ currentValue, inputName, isNew, is
 			{
 				!isNew && <ProposedChangesWrapperModalMetadata />
 			}
-			<ProposedChangesWrapperModalContent currentValue={currentValue} isNew={isNew} proposedChanges={proposedChangesData || []} />
+			<ProposedChangesWrapperModalContent currentValue={currentValue} inputName={inputName} isNew={isNew} proposedChanges={proposedChangesData || []} relatedId={relatedId} scope={scope} />
 		</Modal>
 	);
 

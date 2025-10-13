@@ -69,6 +69,8 @@ export function ProposedChangesWrapperModalContent({ currentValue, inputName, is
 			status: 'pending',
 		};
 
+		console.log('proposed Change to submit:', proposedChange);
+
 		try {
 			await fetchData(`${getAppConfig('auth', 'api_url')}/proposed-changes`, 'POST', proposedChange);
 		}

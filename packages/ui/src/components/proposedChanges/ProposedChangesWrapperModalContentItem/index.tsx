@@ -26,9 +26,7 @@ export function ProposedChangesWrapperModalContentItem({ proposedChangeData, set
 
 	const handleChange = (value: string) => {
 		setProposedChangeValue(value);
-		setProposedChange({
-			...proposedChangeData, curr_value: value,
-		});
+		setProposedChange({ ...proposedChangeData, curr_value: value } as ProposedChange<Stop>);
 	};
 
 	//
@@ -38,10 +36,12 @@ export function ProposedChangesWrapperModalContentItem({ proposedChangeData, set
 		<div>
 			{
 				proposedChangeData && (
-					<div key={proposedChangeData?._id}>
-						<p>{proposedChangeData?.field}</p>
-						<TextInput onChange={e => handleChange(e.target.value)} value={proposedChangeData?.curr_value?.toString()} />
-					</div>
+					<>
+						<div key={proposedChangeData?._id}>
+							<p>{proposedChangeData?.field}</p>
+							<TextInput onChange={e => handleChange(e.target.value)} value={proposedChangeData?.curr_value?.toString()} />
+						</div>
+					</>
 				)
 			}
 

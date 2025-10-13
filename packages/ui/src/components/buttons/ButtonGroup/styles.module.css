@@ -2,7 +2,17 @@
 /* Button Group */
 
 .buttonGroup{
-	gap: var(--size-spacing-md);
+	gap: var(--size-spacing-xs);
 	justify-content: center;
 	margin-top: var(--size-spacing-xl);
+}
+
+.inputRow {
+	display: flex;
+	align-items: center;
+}
+
+.afterInput {
+	margin-top: 0;
+	margin-right: var(--size-spacing-sm);
 }

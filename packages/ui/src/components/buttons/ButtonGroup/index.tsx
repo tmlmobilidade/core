@@ -7,21 +7,23 @@ import styles from './styles.module.css';
 /* * */
 
 export interface ButtonGroupProps extends MantineButtonGroupProps {
-	buttons: { action: 'approve' | 'create' | 'reject', label: string, onclick: () => void, variant?: 'danger' | 'disabled' | 'muted' | 'primary' | 'secondary' }[]
+	afterInput?: boolean
+	buttons: { action: string, icon?: React.ReactNode, label?: string, onclick: () => void, variant?: 'danger' | 'disabled' | 'muted' | 'primary' | 'secondary' }[]
 }
 
 /* * */
 
-export function ButtonGroup({ buttons }: ButtonGroupProps) {
+export function ButtonGroup({ afterInput, buttons }: ButtonGroupProps) {
 	//
 	//
 
 	// A. Render Components
 	return (
-		<MantineButton.Group className={styles.buttonGroup}>
+		<MantineButton.Group className={`${afterInput ? styles.afterInput : ''} ${styles.buttonGroup}`}>
 			{buttons.map((button, index) => (
 				<MantineButton key={index} onClick={button.onclick} variant={button.variant}>
-					{button.label}
+					{button.label && button.label}
+					{button.icon && button.icon}
 				</MantineButton>
 			))}
 		</MantineButton.Group>

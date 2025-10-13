@@ -12,8 +12,8 @@ import styles from './styles.module.css';
 /* * */
 
 interface ProposedChangesWrapperProps {
-	actualValue: string
 	children: React.ReactNode
+	currentValue: string
 	inputName: string
 	label: string
 	relatedId: string
@@ -22,7 +22,7 @@ interface ProposedChangesWrapperProps {
 
 /* * */
 
-export function ProposedChangesWrapper({ actualValue, children, inputName, label, relatedId, scope }: ProposedChangesWrapperProps) {
+export function ProposedChangesWrapper({ children, currentValue, inputName, label, relatedId, scope }: ProposedChangesWrapperProps) {
 	//
 
 	//
@@ -31,7 +31,7 @@ export function ProposedChangesWrapper({ actualValue, children, inputName, label
 	const { data: allProposedChanges } = useSWR<ProposedChange<Stop>[]>(`${getAppConfig('auth', 'api_url')}/proposed-changes`);
 	const [opened, setOpened] = useState(false);
 	const [isNew, setIsNew] = useState(true);
-	const [data, setData] = useState<ProposedChange<Stop> | undefined>(undefined);
+	const [data, setData] = useState<ProposedChange<Stop>[] | undefined>(undefined);
 	const [status, setStatus] = useState<'none' | Status>('none');
 
 	const colorLevel = status === 'pending' ? 'var(	--color-status-warning-primary)' : status === 'approved' ? ' var(--color-status-success-primary)' : status === 'rejected' ? 'var(--color-status-danger-primary)' : 'var(--color-system-text-200)';
@@ -40,12 +40,13 @@ export function ProposedChangesWrapper({ actualValue, children, inputName, label
 		if (!allProposedChanges) return;
 		const proposedChangesForCurrentStop = allProposedChanges.filter(pc => pc?.related_id === relatedId && pc.field === inputName && pc.status === 'pending');
 
-		setData(proposedChangesForCurrentStop[0]);
+		setData(proposedChangesForCurrentStop);
 		setIsNew(proposedChangesForCurrentStop.length === 0);
 	}, [relatedId, inputName, allProposedChanges]);
 
 	useEffect(() => {
-		setStatus(data ? data.status : 'none');
+		const hasPending = data?.find(pc => pc?.status === 'pending');
+		setStatus(hasPending ? 'pending' : 'none');
 	}, [data]);
 	//
 	// B. Render Components
@@ -55,7 +56,7 @@ export function ProposedChangesWrapper({ actualValue, children, inputName, label
 			<div className={styles.labelWrapper}>
 				{label}
 				<IconInfoCircle color={colorLevel} onClick={() => setOpened(!opened)} size={18} />
-				<ProposedChangesWrapperModal actualValue={actualValue} inputName={inputName} isNew={isNew} isOpen={opened} onClose={() => setOpened(!opened)} relatedId={relatedId} scope={scope} />
+				<ProposedChangesWrapperModal currentValue={currentValue} inputName={inputName} isNew={isNew} isOpen={opened} onClose={() => setOpened(!opened)} relatedId={relatedId} scope={scope} />
 			</div>
 			{children}
 		</div>

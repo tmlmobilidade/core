@@ -80,8 +80,6 @@ export function ProposedChangesWrapperModalContent({ currentValue, inputName, is
 	//
 	// C. Render Components
 
-	console.log(proposedChanges?.length, 'proposedChanges?.length');
-
 	return (
 		<div>
 			<TextInput label="Valor atual: " value={currentValue} disabled />
@@ -89,8 +87,8 @@ export function ProposedChangesWrapperModalContent({ currentValue, inputName, is
 			<p>Valores propostos: </p>
 			{proposedChanges && proposedChanges.length > 0 ? (
 				proposedChanges.map(proposedChange => (
-					<div className={styles.proposedChangeItemWrapper}>
-						<ProposedChangesWrapperModalContentItem key={proposedChange?._id} proposedChangeData={proposedChange} setProposedChange={setProposedChangeData} />
+					<div key={proposedChange?._id} className={styles.proposedChangeItemWrapper}>
+						<ProposedChangesWrapperModalContentItem proposedChangeData={proposedChange} setProposedChange={setProposedChangeData} />
 						<ProposedChangesWrapperContentItemActions approve={() => approve(proposedChange?._id || '')} isNew={isNew} permissions={permissions} reject={() => reject(proposedChange?._id || '')} submit={submit} />
 
 					</div>

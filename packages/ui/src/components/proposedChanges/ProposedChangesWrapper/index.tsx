@@ -56,7 +56,7 @@ export function ProposedChangesWrapper({ children, currentValue, inputName, labe
 			<div className={styles.labelWrapper}>
 				{label}
 				<IconInfoCircle color={colorLevel} onClick={() => setOpened(!opened)} size={18} />
-				<ProposedChangesWrapperModal currentValue={currentValue} inputName={inputName} isNew={isNew} isOpen={opened} onClose={() => setOpened(!opened)} relatedId={relatedId} scope={scope} />
+				<ProposedChangesWrapperModal currentValue={currentValue} inputName={inputName} isNew={isNew} isOpen={opened} onClose={() => setOpened(!opened)} proposedChangesData={data} relatedId={relatedId} scope={scope} />
 			</div>
 			{children}
 		</div>

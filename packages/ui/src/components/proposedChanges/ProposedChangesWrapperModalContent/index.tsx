@@ -9,6 +9,8 @@ import { CreateProposedChangeDto, ProposedChange, Stop } from '@tmlmobilidade/ty
 import { fetchData } from '@tmlmobilidade/utils';
 import { useState } from 'react';
 
+import styles from './styles.module.css';
+
 interface ProposedChangesWrapperModalContentProps {
 	currentValue: string
 	inputName?: string
@@ -87,17 +89,17 @@ export function ProposedChangesWrapperModalContent({ currentValue, inputName, is
 			<p>Valores propostos: </p>
 			{proposedChanges && proposedChanges.length > 0 ? (
 				proposedChanges.map(proposedChange => (
-					<>
+					<div className={styles.proposedChangeItemWrapper}>
 						<ProposedChangesWrapperModalContentItem key={proposedChange?._id} proposedChangeData={proposedChange} setProposedChange={setProposedChangeData} />
 						<ProposedChangesWrapperContentItemActions approve={() => approve(proposedChange?._id || '')} isNew={isNew} permissions={permissions} reject={() => reject(proposedChange?._id || '')} submit={submit} />
 
-					</>
+					</div>
 				))
 			) : (
-				<>
+				<div className={styles.proposedChangeItemWrapper}>
 					<ProposedChangesWrapperModalContentItem proposedChangeData={undefined} setProposedChange={setProposedChangeData} />
 					<ProposedChangesWrapperContentItemActions approve={() => console.log} isNew={isNew} permissions={permissions} reject={() => console.log()} submit={submit} />
-				</>
+				</div>
 			)}
 		</div>
 	);

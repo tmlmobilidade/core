@@ -1,3 +1,5 @@
+
+
 /* * */
 /* inputWithIcon */
 
@@ -13,6 +15,16 @@ cursor: pointer;
 	display: inline-flex;
 	gap: var(--size-spacing-xs);
 	align-items: center;
+}
+
+/* * */
+
+/* * */
+/* Proposed Change Item Content Wrapper */
+
+.proposedChangeItemWrapper {
+	display: inline-flex;
+	gap: var(--size-spacing-md);
 }
 
 /* * */

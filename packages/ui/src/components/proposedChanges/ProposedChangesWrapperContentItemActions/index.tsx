@@ -36,7 +36,7 @@ export function ProposedChangesWrapperContentItemActions({ approve, isNew, permi
 	// C. Render Components
 
 	return (
-		<ButtonGroup afterInput={true} buttons={visibleButtons} />
+		<ButtonGroup buttons={visibleButtons} />
 	);
 
 	//

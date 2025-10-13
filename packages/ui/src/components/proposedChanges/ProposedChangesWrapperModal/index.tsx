@@ -28,7 +28,7 @@ export function ProposedChangesWrapperModal({ currentValue, inputName, isNew, is
 
 	return (
 		<Modal onClose={onClose} opened={isOpen} title={`Proposta de alteração para: ${inputName}`}>
-			<p>Related ID: {relatedId} : {scope}</p>
+			<p>Related ID: {relatedId} : {scope}</p> {/* Remove when finished */}
 			{
 				!isNew && <ProposedChangesWrapperModalMetadata />
 			}

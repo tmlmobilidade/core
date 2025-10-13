@@ -1,9 +1,10 @@
 /* * */
 
-import { TextInput } from '@/components';
+import { IconButton, TextInput } from '@/components';
 import { ProposedChangesWrapperContentItemActions } from '@/components/proposedChanges//ProposedChangesWrapperContentItemActions';
 import { ProposedChangesWrapperModalContentItem } from '@/components/proposedChanges/ProposedChangesWrapperModalContentItem';
 import { useMeContext } from '@/contexts';
+import { IconPlus } from '@tabler/icons-react';
 import { getAppConfig } from '@tmlmobilidade/lib';
 import { CreateProposedChangeDto, ProposedChange, Stop } from '@tmlmobilidade/types';
 import { fetchData } from '@tmlmobilidade/utils';
@@ -86,13 +87,18 @@ export function ProposedChangesWrapperModalContent({ currentValue, inputName, is
 		<div>
 			<TextInput label="Valor atual: " value={currentValue} disabled />
 			<br />
-			<p>Valores propostos: </p>
+			<span>
+				Valores Propostos:
+				{proposedChanges && proposedChanges.length > 0 && (
+					<IconButton icon={<IconPlus size={12} />} onClick={() => setProposedChangeData(undefined)} />
+				)}
+			</span>
+
 			{proposedChanges && proposedChanges.length > 0 ? (
 				proposedChanges.map(proposedChange => (
 					<div key={proposedChange?._id} className={styles.proposedChangeItemWrapper}>
 						<ProposedChangesWrapperModalContentItem proposedChangeData={proposedChange} setProposedChange={setProposedChangeData} />
 						<ProposedChangesWrapperContentItemActions approve={() => approve(proposedChange?._id || '')} isNew={isNew} permissions={permissions} reject={() => reject(proposedChange?._id || '')} submit={submit} />
-
 					</div>
 				))
 			) : (

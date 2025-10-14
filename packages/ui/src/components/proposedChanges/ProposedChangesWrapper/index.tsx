@@ -3,7 +3,7 @@
 import { ProposedChangesWrapperModal } from '@/components/proposedChanges/ProposedChangesWrapperModal';
 import { useProposedChangesContext } from '@/contexts';
 import { IconInfoCircle } from '@tabler/icons-react';
-import { Status } from '@tmlmobilidade/types';
+import { Status, Stop } from '@tmlmobilidade/types';
 import { useEffect, useState } from 'react';
 
 import styles from './styles.module.css';
@@ -27,11 +27,11 @@ export function ProposedChangesWrapper({ children, currentValue, inputName, labe
 	//
 	// A. Setup variables
 
-	const proposedChangesContext = useProposedChangesContext();
+	const proposedChangesContext = useProposedChangesContext<Stop>();
 	const [opened, setOpened] = useState(false);
 	const [isNew, setIsNew] = useState(true);
 	const [status, setStatus] = useState<'none' | Status>('none');
-	const proposedChangesForCurrentStop = proposedChangesContext.data.allProposedChangesStopsByRelatedId;
+	const proposedChangesForCurrentStop = proposedChangesContext.data.allProposedChangesByRelatedId;
 	const colorLevel = status === 'pending' ? 'var(	--color-status-warning-primary)' : status === 'approved' ? ' var(--color-status-success-primary)' : status === 'rejected' ? 'var(--color-status-danger-primary)' : 'var(--color-system-text-200)';
 
 	useEffect(() => {
@@ -41,7 +41,7 @@ export function ProposedChangesWrapper({ children, currentValue, inputName, labe
 	useEffect(() => {
 		const hasPending = proposedChangesForCurrentStop?.find(pc => pc?.status === 'pending');
 		setStatus(hasPending ? 'pending' : 'none');
-	}, [proposedChangesContext.data.allProposedChangesStopsByRelatedId]);
+	}, [proposedChangesContext.data.allProposedChangesByRelatedId]);
 
 	//
 	// B. Render Components

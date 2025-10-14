@@ -28,7 +28,7 @@ export function ProposedChangesWrapperModalContent({ currentValue, inputName, is
 	//
 	// A. Setup Variables
 
-	const proposedChangesContext = useProposedChangesContext();
+	const proposedChangesContext = useProposedChangesContext<Stop>();
 	const meContext = useMeContext();
 	const [addingNew, setAddingNew] = useState(false);
 	const permissions = meContext.data.user?.permissions.filter(p => p.scope === 'proposed_changes') || [];

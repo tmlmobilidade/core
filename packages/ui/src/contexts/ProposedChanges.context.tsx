@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-/* * */
-
+import { Line } from '@carrismetropolitana/api-types/network';
 import { getAppConfig, HttpException } from '@tmlmobilidade/lib';
 import { CreateProposedChangeDto, ProposedChange, Stop } from '@tmlmobilidade/types';
 import { fetchData } from '@tmlmobilidade/utils';
@@ -10,15 +10,22 @@ import useSWR from 'swr';
 
 /* * */
 
-interface ProposedChangesContextState {
+interface ScopeEntityMap {
+	line: Line
+	stop: Stop
+}
+
+type ScopeKey = keyof ScopeEntityMap;
+
+interface ProposedChangesContextState<T> {
 	actions: {
 		approve: (id: string) => Promise<void>
 		reject: (id: string) => Promise<void>
-		submit: (data: CreateProposedChangeDto<Stop>) => Promise<void>
+		submit: (data: CreateProposedChangeDto<T>) => Promise<void>
 	}
 	data: {
-		allProposedChangesStops: ProposedChange<Stop>[]
-		allProposedChangesStopsByRelatedId: ProposedChange<Stop>[]
+		allProposedChanges: ProposedChange<T>[]
+		allProposedChangesByRelatedId: ProposedChange<T>[]
 	}
 	flags: {
 		error?: HttpException
@@ -28,50 +35,44 @@ interface ProposedChangesContextState {
 
 /* * */
 
-const ProposedChangesContext = createContext<ProposedChangesContextState | undefined>(undefined);
+const ProposedChangesContext = createContext<ProposedChangesContextState<any> | undefined>(undefined);
 
-export function useProposedChangesContext() {
+export function useProposedChangesContext<T>() {
 	const context = useContext(ProposedChangesContext);
 	if (!context) throw new Error('useProposedChangesContext must be used within a ProposedChangesContextProvider');
-	return context;
+	return context as ProposedChangesContextState<T>;
 }
 
 /* * */
 
-export const ProposedChangesContextProvider = ({ children, stopId }: PropsWithChildren<{ stopId?: string }>) => {
-	//
+export function ProposedChangesContextProvider<S extends ScopeKey>({
+	children,
+	scope,
+	stopId,
+}: PropsWithChildren<{ scope: S, stopId?: string }>) {
+	type Entity = ScopeEntityMap[S];
 
 	//
 	// A. Setup variables
-
-	const [stopProposedChanges, setStopProposedChanges] = useState<[] | ProposedChange<Stop>[]>([]);
+	const [relatedProposedChanges, setRelatedProposedChanges] = useState<ProposedChange<Entity>[]>([]);
 
 	//
 	// B. Fetch data
-
-	const { data: proposedChangesData, error: proposedChangesError, isLoading: proposedChangesLoading } = useSWR<ProposedChange<Stop>[], HttpException>(`${getAppConfig('auth', 'api_url')}/proposed-changes`, { refreshInterval: 2000 });
+	const { data: proposedChangesData, error: proposedChangesError, isLoading: proposedChangesLoading } = useSWR<ProposedChange<Entity>[], HttpException>(`${getAppConfig('auth', 'api_url')}/proposed-changes?scope=${scope}`, { refreshInterval: 2000 });
 
 	//
-	// C. Transform data
-
+	// C. Filter by related ID
 	useEffect(() => {
 		if (!proposedChangesData || proposedChangesError || !stopId) return;
-		const stopProposedChanges = proposedChangesData.filter(change => change?.related_id === stopId);
-		console.log(proposedChangesData);
-		console.log('Filtered proposed changes for stopId', stopId, stopProposedChanges);
-		setStopProposedChanges(stopProposedChanges || []);
-	}, [proposedChangesData, stopId, proposedChangesLoading]);
+		const filtered = proposedChangesData.filter(change => change.related_id === stopId);
+		setRelatedProposedChanges(filtered ?? []);
+	}, [proposedChangesData, stopId, proposedChangesError, proposedChangesLoading]);
 
 	//
 	// D. Handle actions
-
 	const approve = async (id: string) => {
 		try {
-			await fetchData(
-				`${getAppConfig('auth', 'api_url')}/proposed-changes/${id}`,
-				'PUT',
-				{ status: 'approved' },
-			);
+			await fetchData(`${getAppConfig('auth', 'api_url')}/proposed-changes/${id}`, 'PUT', { status: 'approved' });
 		}
 		catch (error) {
 			console.error('Error approving proposed change:', error);
@@ -80,18 +81,14 @@ export const ProposedChangesContextProvider = ({ children, stopId }: PropsWithCh
 
 	const reject = async (id: string) => {
 		try {
-			await fetchData(
-				`${getAppConfig('auth', 'api_url')}/proposed-changes/${id}`,
-				'PUT',
-				{ status: 'rejected' },
-			);
+			await fetchData(`${getAppConfig('auth', 'api_url')}/proposed-changes/${id}`, 'PUT', { status: 'rejected' });
 		}
 		catch (error) {
 			console.error('Error rejecting proposed change:', error);
 		}
 	};
 
-	const submit = async (data: CreateProposedChangeDto<Stop>) => {
+	const submit = async (data: CreateProposedChangeDto<Entity>) => {
 		try {
 			await fetchData(`${getAppConfig('auth', 'api_url')}/proposed-changes`, 'POST', data);
 		}
@@ -102,31 +99,22 @@ export const ProposedChangesContextProvider = ({ children, stopId }: PropsWithCh
 
 	//
 	// E. Define context value
-
-	const contextValue: ProposedChangesContextState = useMemo(() => ({
-		actions: {
-			approve,
-			reject,
-			submit,
-		},
+	const contextValue: ProposedChangesContextState<Entity> = useMemo(() => ({
+		actions: { approve, reject, submit },
 		data: {
-			allProposedChangesStops: proposedChangesData ?? [],
-			allProposedChangesStopsByRelatedId: stopProposedChanges ?? [],
+			allProposedChanges: proposedChangesData ?? [],
+			allProposedChangesByRelatedId: relatedProposedChanges ?? [],
 		},
 		flags: {
 			error: proposedChangesError,
 			loading: proposedChangesLoading,
 		},
-	}), [proposedChangesData, proposedChangesError, proposedChangesLoading, stopProposedChanges]);
-
-	//
-	// E. Render components
-
-	return (
-		<ProposedChangesContext.Provider value={contextValue}>
-			{children}
-		</ProposedChangesContext.Provider>
+	}),
+	[proposedChangesData, proposedChangesError, proposedChangesLoading, relatedProposedChanges],
 	);
 
 	//
-};
+	// F. Render Components
+
+	return <ProposedChangesContext.Provider value={contextValue}>{children}</ProposedChangesContext.Provider>;
+}

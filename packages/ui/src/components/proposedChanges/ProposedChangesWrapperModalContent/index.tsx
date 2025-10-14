@@ -30,6 +30,7 @@ export function ProposedChangesWrapperModalContent({ currentValue, inputName, is
 	// A. Setup Variables
 
 	const meContext = useMeContext();
+	const [addingNew, setAddingNew] = useState(false);
 	const permissions = meContext.data.user?.permissions.filter(p => p.scope === 'proposed_changes') || [];
 	const [proposedChangeData, setProposedChangeData] = useState<ProposedChange<Stop> | undefined>(undefined);
 
@@ -90,21 +91,35 @@ export function ProposedChangesWrapperModalContent({ currentValue, inputName, is
 			<span>
 				Valores Propostos:
 				{proposedChanges && proposedChanges.length > 0 && (
-					<IconButton icon={<IconPlus size={12} />} onClick={() => setProposedChangeData(undefined)} />
+					<IconButton
+						icon={<IconPlus size={12} />}
+						onClick={() => {
+							setAddingNew(true);
+							setProposedChangeData(undefined);
+						}}
+					/>
 				)}
 			</span>
 
 			{proposedChanges && proposedChanges.length > 0 ? (
-				proposedChanges.map(proposedChange => (
-					<div key={proposedChange?._id} className={styles.proposedChangeItemWrapper}>
-						<ProposedChangesWrapperModalContentItem proposedChangeData={proposedChange} setProposedChange={setProposedChangeData} />
-						<ProposedChangesWrapperContentItemActions approve={() => approve(proposedChange?._id || '')} isNew={isNew} permissions={permissions} reject={() => reject(proposedChange?._id || '')} submit={submit} />
-					</div>
-				))
+				<>
+					{proposedChanges.map(proposedChange => (
+						<div key={proposedChange?._id} className={styles.proposedChangeItemWrapper}>
+							<ProposedChangesWrapperModalContentItem proposedChangeData={proposedChange} setProposedChange={setProposedChangeData} />
+							<ProposedChangesWrapperContentItemActions approve={() => approve(proposedChange?._id || '')} isNew={isNew} permissions={permissions} reject={() => reject(proposedChange?._id || '')} submit={submit} />
+						</div>
+					))}
+					{addingNew && (
+						<div className={styles.proposedChangeItemWrapper}>
+							<ProposedChangesWrapperModalContentItem proposedChangeData={undefined} setProposedChange={setProposedChangeData} />
+							<ProposedChangesWrapperContentItemActions approve={() => console.log} isNew={true} permissions={permissions} reject={() => setAddingNew(false)} submit={submit} />
+						</div>
+					)}
+				</>
 			) : (
 				<div className={styles.proposedChangeItemWrapper}>
 					<ProposedChangesWrapperModalContentItem proposedChangeData={undefined} setProposedChange={setProposedChangeData} />
-					<ProposedChangesWrapperContentItemActions approve={() => console.log} isNew={isNew} permissions={permissions} reject={() => console.log()} submit={submit} />
+					<ProposedChangesWrapperContentItemActions isNew={isNew} permissions={permissions} submit={submit} />
 				</div>
 			)}
 		</div>

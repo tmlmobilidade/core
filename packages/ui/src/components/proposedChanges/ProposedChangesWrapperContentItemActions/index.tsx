@@ -8,10 +8,10 @@ import { Permission } from '@tmlmobilidade/types';
 /* * */
 
 interface ProposedChangesWrapperContentItemActionsProps {
-	approve: () => void
+	approve?: () => void
 	isNew: boolean
 	permissions: Permission<unknown>[]
-	reject: () => void
+	reject?: () => void
 	submit: () => void
 }
 
@@ -22,8 +22,8 @@ export function ProposedChangesWrapperContentItemActions({ approve, isNew, permi
 	// A. Setup Variables
 
 	const buttons: ButtonGroupProps['buttons'] = [
-		{ action: Permissions.proposed_changes.actions.reject, icon: <IconTrash size={16} />, onclick: reject, variant: 'danger' },
-		{ action: Permissions.proposed_changes.actions.approve, icon: <IconCheck size={16} />, onclick: approve, variant: 'secondary' },
+		{ action: Permissions.proposed_changes.actions.reject, icon: <IconTrash size={16} />, onclick: reject ?? (() => console.log()), variant: 'danger' },
+		{ action: Permissions.proposed_changes.actions.approve, icon: <IconCheck size={16} />, onclick: approve ?? (() => console.log()), variant: 'secondary' },
 		{ action: Permissions.proposed_changes.actions.create, icon: <IconPlus size={16} />, onclick: submit, variant: 'primary' },
 	];
 

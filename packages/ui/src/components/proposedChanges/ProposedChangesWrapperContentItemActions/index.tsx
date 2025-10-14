@@ -30,7 +30,7 @@ export function ProposedChangesWrapperContentItemActions({ approve, isNew, permi
 	//
 	// B. Transform data
 
-	const visibleButtons = isNew ? buttons.filter(btn => btn.action === 'create') : buttons.filter(btn => permissions.find(p => p.action === btn.action));
+	const visibleButtons = isNew ? buttons.filter(btn => btn.action === 'create') : buttons.filter(btn => permissions.find(p => p.action === btn.action && btn.action !== 'create'));
 
 	//
 	// C. Render Components

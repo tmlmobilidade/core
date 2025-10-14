@@ -39,7 +39,7 @@ export function ProposedChangesWrapperModalContentItem({ proposedChangeData, set
 					<>
 						<div key={proposedChangeData?._id}>
 							<p>{proposedChangeData?.field}</p>
-							<TextInput onChange={e => handleChange(e.target.value)} value={proposedChangeData?.curr_value?.toString()} />
+							<TextInput onChange={e => handleChange(e.target.value)} value={proposedChangeData?.curr_value?.toString()} disabled />
 						</div>
 					</>
 				)

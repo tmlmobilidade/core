@@ -47,9 +47,9 @@ export function useProposedChangesContext<T>() {
 
 export function ProposedChangesContextProvider<S extends ScopeKey>({
 	children,
+	relatedId,
 	scope,
-	stopId,
-}: PropsWithChildren<{ scope: S, stopId?: string }>) {
+}: PropsWithChildren<{ relatedId?: string, scope: S }>) {
 	type Entity = ScopeEntityMap[S];
 
 	//
@@ -63,10 +63,10 @@ export function ProposedChangesContextProvider<S extends ScopeKey>({
 	//
 	// C. Filter by related ID
 	useEffect(() => {
-		if (!proposedChangesData || proposedChangesError || !stopId) return;
-		const filtered = proposedChangesData.filter(change => change.related_id === stopId);
+		if (!proposedChangesData || proposedChangesError || !relatedId) return;
+		const filtered = proposedChangesData.filter(change => change.related_id === relatedId);
 		setRelatedProposedChanges(filtered ?? []);
-	}, [proposedChangesData, stopId, proposedChangesError, proposedChangesLoading]);
+	}, [proposedChangesData, relatedId, proposedChangesError, proposedChangesLoading]);
 
 	//
 	// D. Handle actions

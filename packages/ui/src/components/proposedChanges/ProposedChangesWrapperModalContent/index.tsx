@@ -1,8 +1,9 @@
 /* * */
 
 import { IconButton, TextInput } from '@/components';
-import { ProposedChangesWrapperContentItemActions } from '@/components/proposedChanges//ProposedChangesWrapperContentItemActions';
+import { ProposedChangesWrapperContentItemActions } from '@/components/proposedChanges/ProposedChangesWrapperContentItemActions';
 import { ProposedChangesWrapperModalContentItem } from '@/components/proposedChanges/ProposedChangesWrapperModalContentItem';
+import { ProposedChangesWrapperModalMetadata } from '@/components/proposedChanges/ProposedChangesWrapperModalMetadata';
 import { useMeContext } from '@/contexts';
 import { useProposedChangesContext } from '@/contexts/ProposedChanges.context';
 import { IconPlus } from '@tabler/icons-react';
@@ -13,11 +14,11 @@ import styles from './styles.module.css';
 
 interface ProposedChangesWrapperModalContentProps {
 	currentValue: string
-	inputName?: string
+	inputName: string
 	isNew: boolean
 	proposedChanges: ProposedChange<Stop>[]
-	relatedId?: string
-	scope?: string
+	relatedId: string
+	scope: string
 }
 
 /* * */
@@ -37,18 +38,23 @@ export function ProposedChangesWrapperModalContent({ currentValue, inputName, is
 	//
 	// B. Handler Actions
 
-	const handleSubmit = () => {
-		if (proposedChangeData && relatedId && scope) {
-			proposedChangesContext.actions.submit({
-				curr_value: proposedChangeData.curr_value,
-				field: proposedChangeData.field,
-				inputName: inputName || '',
-				related_id: relatedId,
-				scope,
-			});
-			setAddingNew(false);
-			setProposedChangeData(undefined);
-		}
+	const handleSubmit = async () => {
+		if (!proposedChangeData) return;
+
+		console.log('Submitting proposed change:', { curr_value: proposedChangeData.curr_value,
+			field: inputName,
+			related_id: relatedId,
+			scope });
+
+		await proposedChangesContext.actions.submit({
+			curr_value: proposedChangeData.curr_value,
+			field: inputName,
+			related_id: relatedId,
+			scope,
+		});
+
+		setAddingNew(false);
+		setProposedChangeData(undefined);
 	};
 
 	//
@@ -74,13 +80,16 @@ export function ProposedChangesWrapperModalContent({ currentValue, inputName, is
 			{proposedChanges && proposedChanges.length > 0 ? (
 				<>
 					{proposedChanges.map(proposedChange => (
-						<div key={proposedChange?._id} className={styles.proposedChangeItemWrapper}>
-							<ProposedChangesWrapperModalContentItem proposedChangeData={proposedChange} setProposedChange={setProposedChangeData} />
-							<ProposedChangesWrapperContentItemActions approve={() => proposedChangesContext.actions.approve?.(proposedChange?._id || '')} isNew={isNew} permissions={permissions} reject={() => proposedChangesContext.actions.reject?.(proposedChange?._id || '')} submit={handleSubmit} />
-						</div>
+						<>
+							<ProposedChangesWrapperModalMetadata />
+							<div key={proposedChange?._id} className={styles.proposedChangeItemWrapper}>
+								<ProposedChangesWrapperModalContentItem proposedChangeData={proposedChange} setProposedChange={setProposedChangeData} />
+								<ProposedChangesWrapperContentItemActions approve={() => proposedChangesContext.actions.approve?.(proposedChange?._id || '')} isNew={isNew} permissions={permissions} reject={() => proposedChangesContext.actions.reject?.(proposedChange?._id || '')} submit={handleSubmit} />
+							</div>
+						</>
 					))}
 					{addingNew && (
-						<div className={styles.proposedChangeItemWrapper} onClick={() => setAddingNew(false)}>
+						<div className={styles.proposedChangeItemWrapper}>
 							<ProposedChangesWrapperModalContentItem proposedChangeData={undefined} setProposedChange={setProposedChangeData} />
 							<ProposedChangesWrapperContentItemActions isNew={true} permissions={permissions} submit={handleSubmit} />
 						</div>

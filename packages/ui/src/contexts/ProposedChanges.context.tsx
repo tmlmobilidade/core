@@ -10,12 +10,12 @@ import useSWR from 'swr';
 
 /* * */
 
-interface ScopeEntityMap {
+export interface ScopeEntityMap {
 	line: Line
 	stop: Stop
 }
 
-type ScopeKey = keyof ScopeEntityMap;
+export type ScopeKey = keyof ScopeEntityMap;
 
 interface ProposedChangesContextState<T> {
 	actions: {
@@ -37,19 +37,17 @@ interface ProposedChangesContextState<T> {
 
 const ProposedChangesContext = createContext<ProposedChangesContextState<any> | undefined>(undefined);
 
-export function useProposedChangesContext<T>() {
+export function useProposedChangesContext<S extends ScopeKey>(scope: S): ProposedChangesContextState<ScopeEntityMap[S]> {
 	const context = useContext(ProposedChangesContext);
-	if (!context) throw new Error('useProposedChangesContext must be used within a ProposedChangesContextProvider');
-	return context as ProposedChangesContextState<T>;
+	if (!context) {
+		throw new Error('useProposedChangesContext must be used within a ProposedChangesContextProvider');
+	}
+	return context as ProposedChangesContextState<ScopeEntityMap[S]>;
 }
 
 /* * */
 
-export function ProposedChangesContextProvider<S extends ScopeKey>({
-	children,
-	relatedId,
-	scope,
-}: PropsWithChildren<{ relatedId?: string, scope: S }>) {
+export function ProposedChangesContextProvider<S extends ScopeKey>({ children, relatedId, scope }: PropsWithChildren<{ relatedId?: string, scope: S }>) {
 	type Entity = ScopeEntityMap[S];
 
 	//

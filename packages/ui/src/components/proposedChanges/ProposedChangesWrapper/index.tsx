@@ -2,35 +2,37 @@
 
 import { ProposedChangesWrapperModal } from '@/components/proposedChanges/ProposedChangesWrapperModal';
 import { useProposedChangesContext } from '@/contexts';
+import { ScopeKey } from '@/contexts/ProposedChanges.context';
 import { IconInfoCircle } from '@tabler/icons-react';
-import { Status, Stop } from '@tmlmobilidade/types';
+import { Status } from '@tmlmobilidade/types';
 import { useEffect, useState } from 'react';
 
 import styles from './styles.module.css';
 
 /* * */
 
-interface ProposedChangesWrapperProps {
+interface ProposedChangesWrapperProps<S extends ScopeKey> {
 	children: React.ReactNode
 	currentValue: string
 	inputName: string
 	label: string
 	relatedId: string
-	scope: string
+	scope: S
 }
 
 /* * */
 
-export function ProposedChangesWrapper({ children, currentValue, inputName, label, relatedId, scope }: ProposedChangesWrapperProps) {
+export function ProposedChangesWrapper<S extends ScopeKey>({ children, currentValue, inputName, label, relatedId, scope }: ProposedChangesWrapperProps<S>) {
 	//
 
 	//
 	// A. Setup variables
 
-	const proposedChangesContext = useProposedChangesContext<Stop>();
+	const proposedChangesContext = useProposedChangesContext(scope);
 	const [opened, setOpened] = useState(false);
 	const [isNew, setIsNew] = useState(true);
 	const [status, setStatus] = useState<'none' | Status>('none');
+
 	const proposedChangesForCurrentStop = proposedChangesContext.data.allProposedChangesByRelatedId;
 	const colorLevel = status === 'pending' ? 'var(	--color-status-warning-primary)' : status === 'approved' ? ' var(--color-status-success-primary)' : status === 'rejected' ? 'var(--color-status-danger-primary)' : 'var(--color-system-text-200)';
 

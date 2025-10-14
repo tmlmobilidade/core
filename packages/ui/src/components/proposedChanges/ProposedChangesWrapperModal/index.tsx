@@ -1,25 +1,26 @@
 /* * */
 
 import { ProposedChangesWrapperModalContent } from '@/components/proposedChanges/ProposedChangesWrapperModalContent';
+import { ScopeEntityMap, ScopeKey } from '@/contexts/ProposedChanges.context';
 import { Modal } from '@mantine/core';
-import { ProposedChange, Stop } from '@tmlmobilidade/types';
+import { ProposedChange } from '@tmlmobilidade/types';
 
 /* * */
 
-interface ProposedChangesWrapperModalProps {
+interface ProposedChangesWrapperModalProps<S extends ScopeKey> {
 	currentValue: string
 	inputName: string
 	isNew: boolean
 	isOpen: boolean
 	onClose: () => void
-	proposedChangesData?: ProposedChange<Stop>[]
+	proposedChangesData?: ProposedChange<ScopeEntityMap[S]>[]
 	relatedId: string
-	scope: string
+	scope: S
 }
 
 /* * */
 
-export function ProposedChangesWrapperModal({ currentValue, inputName, isNew, isOpen, onClose, proposedChangesData, relatedId, scope }: ProposedChangesWrapperModalProps) {
+export function ProposedChangesWrapperModal<S extends ScopeKey>({ currentValue, inputName, isNew, isOpen, onClose, proposedChangesData, relatedId, scope }: ProposedChangesWrapperModalProps<S>) {
 	//
 
 	//
@@ -27,7 +28,6 @@ export function ProposedChangesWrapperModal({ currentValue, inputName, isNew, is
 
 	return (
 		<Modal onClose={onClose} opened={isOpen} title={`Proposta de alteração para: ${inputName}`}>
-			<p>Related ID: {relatedId} : {scope}</p> {/* Remove when finished */}
 			<ProposedChangesWrapperModalContent currentValue={currentValue} inputName={inputName} isNew={isNew} proposedChanges={proposedChangesData || []} relatedId={relatedId} scope={scope} />
 		</Modal>
 	);

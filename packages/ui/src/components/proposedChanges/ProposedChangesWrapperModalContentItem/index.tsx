@@ -1,19 +1,20 @@
 /* * */
 
 import { TextInput } from '@/components';
-import { ProposedChange, Stop } from '@tmlmobilidade/types';
+import { ScopeEntityMap, ScopeKey } from '@/contexts/ProposedChanges.context';
+import { ProposedChange } from '@tmlmobilidade/types';
 import { useState } from 'react';
 
 /* * */
 
-interface ProposedChangesWrapperModalContentProps {
-	proposedChangeData: ProposedChange<Stop>
-	setProposedChange: (value: ProposedChange<Stop>) => void
+interface ProposedChangesWrapperModalContentProps<S extends ScopeKey> {
+	proposedChangeData: ProposedChange<ScopeEntityMap[S]>
+	setProposedChange: (value: ProposedChange<ScopeEntityMap[S]>) => void
 }
 
 /* * */
 
-export function ProposedChangesWrapperModalContentItem({ proposedChangeData, setProposedChange }: ProposedChangesWrapperModalContentProps) {
+export function ProposedChangesWrapperModalContentItem<S extends ScopeKey>({ proposedChangeData, setProposedChange }: ProposedChangesWrapperModalContentProps<S>) {
 	//
 
 	//
@@ -26,7 +27,7 @@ export function ProposedChangesWrapperModalContentItem({ proposedChangeData, set
 
 	const handleChange = (value: string) => {
 		setProposedChangeValue(value);
-		setProposedChange({ ...proposedChangeData, curr_value: value } as ProposedChange<Stop>);
+		setProposedChange({ ...proposedChangeData, curr_value: value } as ProposedChange<ScopeEntityMap[S]>);
 	};
 
 	//
@@ -38,7 +39,7 @@ export function ProposedChangesWrapperModalContentItem({ proposedChangeData, set
 				proposedChangeData && (
 					<>
 						<div key={proposedChangeData?._id}>
-							<p>{proposedChangeData?.field}</p>
+							<p>{String(proposedChangeData?.field)}</p>
 							<TextInput onChange={e => handleChange(e.target.value)} value={proposedChangeData?.curr_value?.toString()} disabled />
 						</div>
 					</>

@@ -2,14 +2,14 @@
 
 import { TextInput } from '@/components';
 import { ScopeEntityMap, ScopeKey } from '@/contexts/ProposedChanges.context';
-import { ProposedChange } from '@tmlmobilidade/types';
+import { CreateProposedChangeDto, ProposedChange } from '@tmlmobilidade/types';
 import { useState } from 'react';
 
 /* * */
 
 interface ProposedChangesWrapperModalContentProps<S extends ScopeKey> {
-	proposedChangeData: ProposedChange<ScopeEntityMap[S]>
-	setProposedChange: (value: ProposedChange<ScopeEntityMap[S]>) => void
+	proposedChangeData?: ProposedChange<ScopeEntityMap[S]>
+	setProposedChange: (value: CreateProposedChangeDto<ScopeEntityMap[S]> | undefined) => void
 }
 
 /* * */
@@ -20,40 +20,29 @@ export function ProposedChangesWrapperModalContentItem<S extends ScopeKey>({ pro
 	//
 	// A.Setup Variables
 
-	const [proposedChangeValue, setProposedChangeValue] = useState<string>();
+	const [proposedChangeValue, setProposedChangeValue] = useState<string | undefined>(undefined);
 
 	//
 	// B. Handler Actions
 
 	const handleChange = (value: string) => {
 		setProposedChangeValue(value);
-		setProposedChange({ ...proposedChangeData, curr_value: value } as ProposedChange<ScopeEntityMap[S]>);
+		setProposedChange({ ...proposedChangeData, curr_value: value } as CreateProposedChangeDto<ScopeEntityMap[S]>);
 	};
 
 	//
 	// C. Render Components
 
 	return (
-		<div>
-			{
-				proposedChangeData && (
-					<>
-						<div key={proposedChangeData?._id}>
-							<p>{String(proposedChangeData?.field)}</p>
-							<TextInput onChange={e => handleChange(e.target.value)} value={proposedChangeData?.curr_value?.toString()} disabled />
-						</div>
-					</>
-				)
-			}
-
-			{!proposedChangeData && (
-				<TextInput
-					onChange={e => handleChange(e.target.value)}
-					value={proposedChangeValue || ''}
-				/>
+		<>
+			{proposedChangeData && (
+				<TextInput label={proposedChangeData.field.toString()} onChange={e => handleChange(e.target.value)} value={proposedChangeData?.curr_value?.toString()} disabled />
 			)}
 
-		</div>
+			{!proposedChangeData && (
+				<TextInput onChange={e => handleChange(e.target.value)} value={proposedChangeValue || ''} />
+			)}
+		</>
 	);
 
 	//

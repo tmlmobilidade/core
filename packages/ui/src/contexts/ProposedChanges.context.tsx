@@ -52,14 +52,13 @@ export function ProposedChangesContextProvider<S extends ScopeKey>({ children, r
 
 	//
 	// A. Setup variables
-	const [relatedProposedChanges, setRelatedProposedChanges] = useState<ProposedChange<Entity>[]>([]);
 
-	//
-	// B. Fetch data
+	const [relatedProposedChanges, setRelatedProposedChanges] = useState<ProposedChange<Entity>[]>([]);
 	const { data: proposedChangesData, error: proposedChangesError, isLoading: proposedChangesLoading } = useSWR<ProposedChange<Entity>[], HttpException>(`${getAppConfig('auth', 'api_url')}/proposed-changes?scope=${scope}`, { refreshInterval: 2000 });
 
 	//
-	// C. Filter by related ID
+	// B. Transform data
+
 	useEffect(() => {
 		if (!proposedChangesData || proposedChangesError || !relatedId) return;
 		const filtered = proposedChangesData.filter(change => change.related_id === relatedId);
@@ -67,7 +66,7 @@ export function ProposedChangesContextProvider<S extends ScopeKey>({ children, r
 	}, [proposedChangesData, relatedId, proposedChangesError, proposedChangesLoading]);
 
 	//
-	// D. Handle actions
+	// C. Handle actions
 	const approve = async (id: string) => {
 		try {
 			await fetchData(`${getAppConfig('auth', 'api_url')}/proposed-changes/${id}`, 'PUT', { status: 'approved' });

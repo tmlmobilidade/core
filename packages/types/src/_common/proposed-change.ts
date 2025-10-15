@@ -1,3 +1,4 @@
+import { UnixTimestamp } from '@/_common/unix-timestamp.js';
 /* * */
 
 import { DocumentSchema } from '@/_common/document.js';
@@ -33,6 +34,8 @@ export const ProposedChangeSchema = DocumentSchema.extend({
 export type ProposedChange<T> = {
 	[P in keyof T]: {
 		_id: string
+		created_at: UnixTimestamp
+		created_by: string
 		curr_value: T[P]
 		field: P
 		related_id: string

@@ -8,11 +8,11 @@ import { ProposedChange } from '@tmlmobilidade/types';
 /* * */
 
 interface ProposedChangesWrapperModalProps<S extends ScopeKey> {
-	currentValue: string
 	inputName: string
 	isNew: boolean
 	isOpen: boolean
 	onClose: () => void
+	originalInput: React.ReactElement<{ disabled?: boolean }>
 	proposedChangesData?: ProposedChange<ScopeEntityMap[S]>[]
 	relatedId: string
 	scope: S
@@ -20,7 +20,7 @@ interface ProposedChangesWrapperModalProps<S extends ScopeKey> {
 
 /* * */
 
-export function ProposedChangesWrapperModal<S extends ScopeKey>({ currentValue, inputName, isNew, isOpen, onClose, proposedChangesData, relatedId, scope }: ProposedChangesWrapperModalProps<S>) {
+export function ProposedChangesWrapperModal<S extends ScopeKey>({ inputName, isNew, isOpen, onClose, originalInput, proposedChangesData, relatedId, scope }: ProposedChangesWrapperModalProps<S>) {
 	//
 
 	//
@@ -28,7 +28,7 @@ export function ProposedChangesWrapperModal<S extends ScopeKey>({ currentValue, 
 
 	return (
 		<Modal onClose={onClose} opened={isOpen} title={`Proposta de alteração para: ${inputName}`}>
-			<ProposedChangesWrapperModalContent currentValue={currentValue} inputName={inputName} isNew={isNew} proposedChanges={proposedChangesData || []} relatedId={relatedId} scope={scope} />
+			<ProposedChangesWrapperModalContent inputName={inputName} isNew={isNew} originalInput={originalInput} proposedChanges={proposedChangesData || []} relatedId={relatedId} scope={scope} />
 		</Modal>
 	);
 

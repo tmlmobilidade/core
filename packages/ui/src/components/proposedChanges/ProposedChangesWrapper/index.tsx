@@ -12,8 +12,7 @@ import styles from './styles.module.css';
 /* * */
 
 interface ProposedChangesWrapperProps<S extends ScopeKey> {
-	children: React.ReactNode
-	currentValue: string
+	children: React.ReactElement<{ disabled?: boolean }>
 	inputName: string
 	label: string
 	relatedId: string
@@ -22,7 +21,7 @@ interface ProposedChangesWrapperProps<S extends ScopeKey> {
 
 /* * */
 
-export function ProposedChangesWrapper<S extends ScopeKey>({ children, currentValue, inputName, label, relatedId, scope }: ProposedChangesWrapperProps<S>) {
+export function ProposedChangesWrapper<S extends ScopeKey>({ children, inputName, label, relatedId, scope }: ProposedChangesWrapperProps<S>) {
 	//
 
 	//
@@ -33,15 +32,14 @@ export function ProposedChangesWrapper<S extends ScopeKey>({ children, currentVa
 	const [isNew, setIsNew] = useState(true);
 	const [status, setStatus] = useState<'none' | Status>('none');
 
-	const proposedChangesForCurrentStop = proposedChangesContext.data.allProposedChangesByRelatedId;
 	const colorLevel = status === 'pending' ? 'var(	--color-status-warning-primary)' : status === 'approved' ? ' var(--color-status-success-primary)' : status === 'rejected' ? 'var(--color-status-danger-primary)' : 'var(--color-system-text-200)';
 
 	useEffect(() => {
-		setIsNew(proposedChangesForCurrentStop.length === 0);
-	}, [proposedChangesForCurrentStop]);
+		setIsNew(proposedChangesContext.data.allProposedChangesByRelatedId.length === 0);
+	}, [proposedChangesContext.data.allProposedChangesByRelatedId]);
 
 	useEffect(() => {
-		const hasPending = proposedChangesForCurrentStop?.find(pc => pc?.status === 'pending');
+		const hasPending = proposedChangesContext.data.allProposedChangesByRelatedId?.find(pc => pc?.status === 'pending');
 		setStatus(hasPending ? 'pending' : 'none');
 	}, [proposedChangesContext.data.allProposedChangesByRelatedId]);
 
@@ -53,7 +51,7 @@ export function ProposedChangesWrapper<S extends ScopeKey>({ children, currentVa
 			<div className={styles.labelWrapper}>
 				{label}
 				<IconInfoCircle color={colorLevel} onClick={() => setOpened(!opened)} size={18} />
-				<ProposedChangesWrapperModal currentValue={currentValue} inputName={inputName} isNew={isNew} isOpen={opened} onClose={() => setOpened(!opened)} proposedChangesData={proposedChangesForCurrentStop} relatedId={relatedId} scope={scope} />
+				<ProposedChangesWrapperModal inputName={inputName} isNew={isNew} isOpen={opened} onClose={() => setOpened(!opened)} originalInput={children} proposedChangesData={proposedChangesContext.data.allProposedChangesByRelatedId} relatedId={relatedId} scope={scope} />
 			</div>
 			{children}
 		</div>

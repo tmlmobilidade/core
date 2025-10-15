@@ -26,6 +26,11 @@ export interface DateTimePickerProps {
 	description?: string
 
 	/**
+	 * The current edit status of the input.
+	 */
+	disabled?: boolean
+
+	/**
 	 * Full width of the input.
 	 */
 	fullWidth?: boolean
@@ -61,7 +66,7 @@ export interface DateTimePickerProps {
 
 /* * */
 
-export function DateTimePicker({ clearable, description, fullWidth, label, leftSection = <IconCalendar size={20} />, onChange, placeholder, value }: DateTimePickerProps) {
+export function DateTimePicker({ clearable, description, disabled, fullWidth, label, leftSection = <IconCalendar size={20} />, onChange, placeholder, value }: DateTimePickerProps) {
 	//
 
 	//
@@ -95,6 +100,7 @@ export function DateTimePicker({ clearable, description, fullWidth, label, leftS
 			classNames={styles}
 			clearable={clearable}
 			description={description}
+			disabled={disabled}
 			label={label}
 			leftSection={leftSection}
 			onChange={handleChange}

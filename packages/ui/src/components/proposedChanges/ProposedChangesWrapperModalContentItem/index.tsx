@@ -8,13 +8,14 @@ import { useState } from 'react';
 /* * */
 
 interface ProposedChangesWrapperModalContentProps<S extends ScopeKey> {
+	originalInput?: React.ReactElement
 	proposedChangeData?: ProposedChange<ScopeEntityMap[S]>
 	setProposedChange: (value: CreateProposedChangeDto<ScopeEntityMap[S]> | undefined) => void
 }
 
 /* * */
 
-export function ProposedChangesWrapperModalContentItem<S extends ScopeKey>({ proposedChangeData, setProposedChange }: ProposedChangesWrapperModalContentProps<S>) {
+export function ProposedChangesWrapperModalContentItem<S extends ScopeKey>({ originalInput, proposedChangeData, setProposedChange }: ProposedChangesWrapperModalContentProps<S>) {
 	//
 
 	//
@@ -36,7 +37,10 @@ export function ProposedChangesWrapperModalContentItem<S extends ScopeKey>({ pro
 	return (
 		<>
 			{proposedChangeData && (
-				<TextInput label={proposedChangeData.field.toString()} onChange={e => handleChange(e.target.value)} value={proposedChangeData?.curr_value?.toString()} disabled />
+				<>
+					{originalInput}
+					<TextInput label={proposedChangeData.field.toString()} onChange={e => handleChange(e.target.value)} value={proposedChangeData?.curr_value?.toString()} disabled />
+				</>
 			)}
 
 			{!proposedChangeData && (

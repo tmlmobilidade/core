@@ -1,6 +1,6 @@
 /* * */
 
-import { IconButton, TextInput } from '@/components';
+import { IconButton } from '@/components';
 import { ProposedChangesWrapperContentItemActions } from '@/components/proposedChanges/ProposedChangesWrapperContentItemActions';
 import { ProposedChangesWrapperModalContentItem } from '@/components/proposedChanges/ProposedChangesWrapperModalContentItem';
 import { ProposedChangesWrapperModalMetadata } from '@/components/proposedChanges/ProposedChangesWrapperModalMetadata';
@@ -8,14 +8,14 @@ import { useMeContext } from '@/contexts';
 import { ScopeEntityMap, ScopeKey, useProposedChangesContext } from '@/contexts/ProposedChanges.context';
 import { IconPlus } from '@tabler/icons-react';
 import { CreateProposedChangeDto, ProposedChange } from '@tmlmobilidade/types';
-import { useState } from 'react';
+import { cloneElement, useState } from 'react';
 
 import styles from './styles.module.css';
 
 interface ProposedChangesWrapperModalContentProps<S extends ScopeKey> {
-	currentValue: string
 	inputName: string
 	isNew: boolean
+	originalInput: React.ReactElement<{ disabled?: boolean }>
 	proposedChanges: ProposedChange<ScopeEntityMap[S]>[]
 	relatedId: string
 	scope: S
@@ -23,7 +23,7 @@ interface ProposedChangesWrapperModalContentProps<S extends ScopeKey> {
 
 /* * */
 
-export function ProposedChangesWrapperModalContent<S extends ScopeKey>({ currentValue, inputName, isNew, proposedChanges, relatedId, scope }: ProposedChangesWrapperModalContentProps<S>) {
+export function ProposedChangesWrapperModalContent<S extends ScopeKey>({ inputName, isNew, originalInput, proposedChanges, relatedId, scope }: ProposedChangesWrapperModalContentProps<S>) {
 	//
 
 	//
@@ -55,12 +55,13 @@ export function ProposedChangesWrapperModalContent<S extends ScopeKey>({ current
 
 	//
 	// C. Render Components
-
 	return (
 		<div>
-			<TextInput label="Valor atual: " value={currentValue} disabled />
+			<p>Valor Atual</p>
+			{cloneElement(originalInput, { disabled: true })}
+
 			<span>
-				Valores Propostos:
+				Valores Propostos
 				<IconButton
 					icon={<IconPlus size={12} />}
 					onClick={() => {
@@ -73,21 +74,21 @@ export function ProposedChangesWrapperModalContent<S extends ScopeKey>({ current
 			{proposedChanges.map(proposedChange => (
 				<div key={proposedChange?._id} className={styles.proposedChangeItemWrapper}>
 					<ProposedChangesWrapperModalMetadata proposedChangeData={proposedChange} />
-					<ProposedChangesWrapperModalContentItem proposedChangeData={proposedChange} setProposedChange={setProposedChangeData} />
+					<ProposedChangesWrapperModalContentItem originalInput={originalInput} proposedChangeData={proposedChange} setProposedChange={setProposedChangeData} />
 					<ProposedChangesWrapperContentItemActions approve={() => proposedChangesContext.actions.approve?.(proposedChange?._id || '')} isNew={isNew} permissions={permissions} reject={() => proposedChangesContext.actions.reject?.(proposedChange?._id || '')} submit={handleSubmit} />
 				</div>
 			))}
 
 			{addingNew && (
 				<div className={styles.proposedChangeItemWrapper}>
-					<ProposedChangesWrapperModalContentItem proposedChangeData={undefined} setProposedChange={setProposedChangeData} />
+					<ProposedChangesWrapperModalContentItem originalInput={originalInput} proposedChangeData={undefined} setProposedChange={setProposedChangeData} />
 					<ProposedChangesWrapperContentItemActions isNew={true} permissions={permissions} submit={handleSubmit} />
 				</div>
 			)}
 
 			{!addingNew && proposedChanges.length === 0 && (
 				<div className={styles.proposedChangeItemWrapper}>
-					<ProposedChangesWrapperModalContentItem proposedChangeData={undefined} setProposedChange={setProposedChangeData} />
+					<ProposedChangesWrapperModalContentItem originalInput={originalInput} proposedChangeData={undefined} setProposedChange={setProposedChangeData} />
 					<ProposedChangesWrapperContentItemActions isNew={isNew} permissions={permissions} submit={handleSubmit} />
 				</div>
 			)}

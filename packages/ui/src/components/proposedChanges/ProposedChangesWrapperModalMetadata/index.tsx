@@ -3,7 +3,7 @@
 import { ProposedChangesWrapperModalTag } from '@/components/proposedChanges/ProposedChangesWrapperModalTag';
 import { ProposedChangesWrapperModalUserMetadata } from '@/components/proposedChanges/ProposedChangesWrapperModalUserMetadata';
 import { ScopeEntityMap, ScopeKey } from '@/contexts/ProposedChanges.context';
-import { ProposedChange } from '@tmlmobilidade/types';
+import { ProposedChange, User } from '@tmlmobilidade/types';
 
 import styles from './styles.module.css';
 
@@ -26,7 +26,7 @@ export function ProposedChangesWrapperModalMetadata<S extends ScopeKey>({ propos
 	return (
 		<div className={styles.metadataWrapper}>
 			<div className={styles.metadataLeft}>
-				<ProposedChangesWrapperModalUserMetadata createdAt={proposedChangeData.created_at} createdBy={proposedChangeData.created_by} />
+				<ProposedChangesWrapperModalUserMetadata createdAt={proposedChangeData.created_at} createdBy={proposedChangeData.created_by as Partial<User>} />
 			</div>
 			<div className={styles.metadataBadge}>
 				<ProposedChangesWrapperModalTag status={proposedChangeData.status} />

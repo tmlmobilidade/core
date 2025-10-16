@@ -16,9 +16,9 @@ export function ProposedChangesWrapperModalContentHeader({ originalInput }: Prop
 	//
 	// C. Render Components
 	return (
-		<div>
+		<>
 			<p>Valor Atual</p>
 			{cloneElement(originalInput, { disabled: true })}
-		</div>
+		</>
 	);
 };

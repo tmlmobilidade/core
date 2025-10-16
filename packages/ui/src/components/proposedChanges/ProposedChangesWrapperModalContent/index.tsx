@@ -2,16 +2,15 @@
 
 import { Button } from '@/components';
 import { ProposedChangesWrapperContentItemActions } from '@/components/proposedChanges/ProposedChangesWrapperContentItemActions';
+import { ProposedChangesWrapperModalContentHeader } from '@/components/proposedChanges/ProposedChangesWrapperModalContentHeader';
 import { ProposedChangesWrapperModalContentItem } from '@/components/proposedChanges/ProposedChangesWrapperModalContentItem';
 import { ProposedChangesWrapperModalMetadata } from '@/components/proposedChanges/ProposedChangesWrapperModalMetadata';
 import { useMeContext } from '@/contexts';
 import { ScopeEntityMap, ScopeKey, useProposedChangesContext } from '@/contexts/ProposedChanges.context';
 import { CreateProposedChangeDto, ProposedChange } from '@tmlmobilidade/types';
-import { cloneElement, useState } from 'react';
+import { useState } from 'react';
 
 import styles from './styles.module.css';
-
-import { ProposedChangesWrapperModalContentHeader } from '../ProposedChangesWrapperModalContentHeader';
 
 /* * */
 
@@ -56,22 +55,21 @@ export function ProposedChangesWrapperModalContent<S extends ScopeKey>({ inputNa
 		setProposedChangeData(undefined);
 	};
 
+	const handleNew = () => {
+		setAddingNew(true);
+		setProposedChangeData(undefined);
+	};
+
 	//
 	// C. Render Components
 	return (
-		<div>
+		<>
 
 			<ProposedChangesWrapperModalContentHeader originalInput={originalInput} />
 
 			<div className={styles.modalContentHeaderWrapper}>
 				<span>Valores Propostos</span>
-				<Button
-					label="Adicionar"
-					onClick={() => {
-						setAddingNew(true);
-						setProposedChangeData(undefined);
-					}}
-				/>
+				<Button label="Adicionar"onClick={handleNew} />
 			</div>
 
 			{addingNew && (
@@ -80,6 +78,7 @@ export function ProposedChangesWrapperModalContent<S extends ScopeKey>({ inputNa
 					<ProposedChangesWrapperContentItemActions isNew={true} permissions={permissions} submit={handleSubmit} />
 				</div>
 			)}
+
 			{proposedChanges.map(proposedChange => (
 				<div key={proposedChange?._id} className={styles.proposedChangeItemWrapper}>
 					<ProposedChangesWrapperModalMetadata proposedChangeData={proposedChange} />
@@ -94,6 +93,6 @@ export function ProposedChangesWrapperModalContent<S extends ScopeKey>({ inputNa
 					<ProposedChangesWrapperContentItemActions isNew={isNew} permissions={permissions} submit={handleSubmit} />
 				</div>
 			)}
-		</div>
+		</>
 	);
 };

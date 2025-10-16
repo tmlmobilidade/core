@@ -19,10 +19,8 @@ export function ProposedChangesWrapperModalMetadata<S extends ScopeKey>({ propos
 	//
 
 	//
-	// A. Setup Variables
+	// A. Render Components
 
-	//
-	// B. Render Components
 	return (
 		<div className={styles.metadataWrapper}>
 			<div className={styles.metadataLeft}>

@@ -14,7 +14,7 @@ export function ProposedChangesWrapperModalContentHeader({ originalInput }: Prop
 	//
 
 	//
-	// C. Render Components
+	// A. Render Components
 	return (
 		<>
 			<p>Valor Atual</p>

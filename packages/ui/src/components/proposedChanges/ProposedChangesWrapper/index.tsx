@@ -2,9 +2,9 @@
 
 import { ProposedChangesWrapperModal } from '@/components/proposedChanges/ProposedChangesWrapperModal';
 import { useProposedChangesContext } from '@/contexts';
-import { ScopeKey } from '@/contexts/ProposedChanges.context';
+import { ScopeEntityMap, ScopeKey } from '@/contexts/ProposedChanges.context';
 import { IconInfoCircle } from '@tabler/icons-react';
-import { Status } from '@tmlmobilidade/types';
+import { ProposedChange, Status } from '@tmlmobilidade/types';
 import { useEffect, useState } from 'react';
 
 import styles from './styles.module.css';
@@ -28,6 +28,8 @@ export function ProposedChangesWrapper<S extends ScopeKey>({ children, inputName
 	// A. Setup variables
 
 	const proposedChangesContext = useProposedChangesContext(scope);
+
+	const [proposedChangesOfField, setProposedChangesOfField] = useState<ProposedChange<ScopeEntityMap[S]>[]>();
 	const [opened, setOpened] = useState(false);
 	const [isNew, setIsNew] = useState(true);
 	const [status, setStatus] = useState<'none' | Status>('none');
@@ -40,7 +42,9 @@ export function ProposedChangesWrapper<S extends ScopeKey>({ children, inputName
 
 	useEffect(() => {
 		const hasPending = proposedChangesContext.data.allProposedChangesByRelatedId?.find(pc => pc?.status === 'pending');
+		const proposedChangesByRelatedIdAndField = proposedChangesContext.data.allProposedChangesByRelatedId?.filter(pc => pc.field === inputName);
 		setStatus(hasPending ? 'pending' : 'none');
+		setProposedChangesOfField(proposedChangesByRelatedIdAndField);
 	}, [proposedChangesContext.data.allProposedChangesByRelatedId]);
 
 	//
@@ -51,7 +55,7 @@ export function ProposedChangesWrapper<S extends ScopeKey>({ children, inputName
 			<div className={styles.labelWrapper}>
 				{label}
 				<IconInfoCircle color={colorLevel} onClick={() => setOpened(!opened)} size={18} />
-				<ProposedChangesWrapperModal inputName={inputName} isNew={isNew} isOpen={opened} onClose={() => setOpened(!opened)} originalInput={children} proposedChangesData={proposedChangesContext.data.allProposedChangesByRelatedId} relatedId={relatedId} scope={scope} />
+				<ProposedChangesWrapperModal inputName={inputName} isNew={isNew} isOpen={opened} onClose={() => setOpened(!opened)} originalInput={children} proposedChangesData={proposedChangesOfField} relatedId={relatedId} scope={scope} />
 			</div>
 			{children}
 		</div>

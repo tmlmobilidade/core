@@ -11,6 +11,8 @@ import { cloneElement, useState } from 'react';
 
 import styles from './styles.module.css';
 
+import { ProposedChangesWrapperModalContentHeader } from '../ProposedChangesWrapperModalContentHeader';
+
 /* * */
 
 interface ProposedChangesWrapperModalContentProps<S extends ScopeKey> {
@@ -59,8 +61,7 @@ export function ProposedChangesWrapperModalContent<S extends ScopeKey>({ inputNa
 	return (
 		<div>
 
-			<p>Valor Atual</p>
-			{cloneElement(originalInput, { disabled: true })}
+			<ProposedChangesWrapperModalContentHeader originalInput={originalInput} />
 
 			<div className={styles.modalContentHeaderWrapper}>
 				<span>Valores Propostos</span>

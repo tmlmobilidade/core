@@ -12,10 +12,11 @@ interface ProposedChangesWrapperContentItemActionsProps {
 	isNew: boolean
 	permissions: Permission<unknown>[]
 	reject?: () => void
+	status?: string
 	submit: () => void
 }
 
-export function ProposedChangesWrapperContentItemActions({ approve, isNew, permissions, reject, submit }: ProposedChangesWrapperContentItemActionsProps) {
+export function ProposedChangesWrapperContentItemActions({ approve, isNew, permissions, reject, status, submit }: ProposedChangesWrapperContentItemActionsProps) {
 	//
 
 	//
@@ -31,12 +32,13 @@ export function ProposedChangesWrapperContentItemActions({ approve, isNew, permi
 	// B. Transform data
 
 	const visibleButtons = isNew ? buttons.filter(btn => btn.action === 'create') : buttons.filter(btn => permissions.find(p => p.action === btn.action && btn.action !== 'create'));
+	const visibleButtonsStatus = status === 'pending' ? visibleButtons : visibleButtons.filter(btn => btn.action !== Permissions.proposed_changes.actions.approve && btn.action !== Permissions.proposed_changes.actions.reject);
 
 	//
 	// C. Render Components
 
 	return (
-		<ButtonGroup buttons={visibleButtons} />
+		<ButtonGroup buttons={visibleButtonsStatus} />
 	);
 
 	//

@@ -83,7 +83,7 @@ export function ProposedChangesWrapperModalContent<S extends ScopeKey>({ inputNa
 				<div key={proposedChange?._id} className={styles.proposedChangeItemWrapper}>
 					<ProposedChangesWrapperModalMetadata proposedChangeData={proposedChange} />
 					<ProposedChangesWrapperModalContentItem originalInput={originalInput} proposedChangeData={proposedChange} setProposedChange={setProposedChangeData} />
-					<ProposedChangesWrapperContentItemActions approve={() => proposedChangesContext.actions.approve?.(proposedChange?._id || '')} isNew={isNew} permissions={permissions} reject={() => proposedChangesContext.actions.reject?.(proposedChange?._id || '')} submit={handleSubmit} />
+					<ProposedChangesWrapperContentItemActions approve={() => proposedChangesContext.actions.approve?.(proposedChange?._id || '')} isNew={isNew} permissions={permissions} reject={() => proposedChangesContext.actions.reject?.(proposedChange?._id || '')} status={proposedChange.status} submit={handleSubmit} />
 				</div>
 			))}
 

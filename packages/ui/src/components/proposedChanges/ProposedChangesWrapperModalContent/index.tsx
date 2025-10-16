@@ -12,6 +12,8 @@ import { cloneElement, useState } from 'react';
 
 import styles from './styles.module.css';
 
+/* * */
+
 interface ProposedChangesWrapperModalContentProps<S extends ScopeKey> {
 	inputName: string
 	isNew: boolean

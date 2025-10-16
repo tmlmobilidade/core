@@ -1,12 +1,11 @@
 /* * */
 
-import { IconButton } from '@/components';
+import { Button } from '@/components';
 import { ProposedChangesWrapperContentItemActions } from '@/components/proposedChanges/ProposedChangesWrapperContentItemActions';
 import { ProposedChangesWrapperModalContentItem } from '@/components/proposedChanges/ProposedChangesWrapperModalContentItem';
 import { ProposedChangesWrapperModalMetadata } from '@/components/proposedChanges/ProposedChangesWrapperModalMetadata';
 import { useMeContext } from '@/contexts';
 import { ScopeEntityMap, ScopeKey, useProposedChangesContext } from '@/contexts/ProposedChanges.context';
-import { IconPlus } from '@tabler/icons-react';
 import { CreateProposedChangeDto, ProposedChange } from '@tmlmobilidade/types';
 import { cloneElement, useState } from 'react';
 
@@ -59,27 +58,20 @@ export function ProposedChangesWrapperModalContent<S extends ScopeKey>({ inputNa
 	// C. Render Components
 	return (
 		<div>
+
 			<p>Valor Atual</p>
 			{cloneElement(originalInput, { disabled: true })}
 
-			<span>
-				Valores Propostos
-				<IconButton
-					icon={<IconPlus size={12} />}
+			<div className={styles.modalContentHeaderWrapper}>
+				<span>Valores Propostos</span>
+				<Button
+					label="Adicionar"
 					onClick={() => {
 						setAddingNew(true);
 						setProposedChangeData(undefined);
 					}}
 				/>
-			</span>
-
-			{proposedChanges.map(proposedChange => (
-				<div key={proposedChange?._id} className={styles.proposedChangeItemWrapper}>
-					<ProposedChangesWrapperModalMetadata proposedChangeData={proposedChange} />
-					<ProposedChangesWrapperModalContentItem originalInput={originalInput} proposedChangeData={proposedChange} setProposedChange={setProposedChangeData} />
-					<ProposedChangesWrapperContentItemActions approve={() => proposedChangesContext.actions.approve?.(proposedChange?._id || '')} isNew={isNew} permissions={permissions} reject={() => proposedChangesContext.actions.reject?.(proposedChange?._id || '')} submit={handleSubmit} />
-				</div>
-			))}
+			</div>
 
 			{addingNew && (
 				<div className={styles.proposedChangeItemWrapper}>
@@ -87,6 +79,13 @@ export function ProposedChangesWrapperModalContent<S extends ScopeKey>({ inputNa
 					<ProposedChangesWrapperContentItemActions isNew={true} permissions={permissions} submit={handleSubmit} />
 				</div>
 			)}
+			{proposedChanges.map(proposedChange => (
+				<div key={proposedChange?._id} className={styles.proposedChangeItemWrapper}>
+					<ProposedChangesWrapperModalMetadata proposedChangeData={proposedChange} />
+					<ProposedChangesWrapperModalContentItem originalInput={originalInput} proposedChangeData={proposedChange} setProposedChange={setProposedChangeData} />
+					<ProposedChangesWrapperContentItemActions approve={() => proposedChangesContext.actions.approve?.(proposedChange?._id || '')} isNew={isNew} permissions={permissions} reject={() => proposedChangesContext.actions.reject?.(proposedChange?._id || '')} submit={handleSubmit} />
+				</div>
+			))}
 
 			{!addingNew && proposedChanges.length === 0 && (
 				<div className={styles.proposedChangeItemWrapper}>

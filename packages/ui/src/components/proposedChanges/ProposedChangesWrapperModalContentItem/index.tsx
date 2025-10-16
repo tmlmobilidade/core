@@ -26,11 +26,7 @@ export function ProposedChangesWrapperModalContentItem<S extends ScopeKey>({ ori
 	// A. Render Components
 
 	return (
-		<ProposedChangesInteractiveInput
-			originalInput={originalInput}
-			proposedChangeData={proposedChangeData}
-			setProposedChange={setProposedChange}
-		/>
+		<ProposedChangesInteractiveInput originalInput={originalInput} proposedChangeData={proposedChangeData} setProposedChange={setProposedChange} />
 	);
 
 	//

@@ -41,6 +41,8 @@ export type ProposedChange<T> = {
 		related_id: string
 		scope: Scope
 		status: Status
+		updated_at: UnixTimestamp
+		updated_by: string
 	}
 }[keyof T];
 

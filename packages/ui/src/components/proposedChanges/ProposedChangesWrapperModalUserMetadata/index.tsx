@@ -1,13 +1,13 @@
 /* * */
 
-import { UnixTimestamp } from '@tmlmobilidade/types';
+import { UnixTimestamp, User } from '@tmlmobilidade/types';
 import { Dates } from '@tmlmobilidade/utils';
 
 /* * */
 
 interface ProposedChangesWrapperModalUserMetadataProps {
 	createdAt: UnixTimestamp
-	createdBy: string
+	createdBy: Partial<User>
 }
 
 /* * */
@@ -25,7 +25,7 @@ export function ProposedChangesWrapperModalUserMetadata({ createdAt, createdBy }
 
 	return (
 		<>
-			<p>{createdBy}</p>
+			<p>{createdBy.first_name + ' ' + createdBy.last_name}</p>
 			<p>{createdAtFormatted}</p>
 		</>
 

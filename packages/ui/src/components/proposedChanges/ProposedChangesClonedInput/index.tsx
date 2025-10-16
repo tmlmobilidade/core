@@ -9,23 +9,13 @@ interface ProposedChangesInteractiveInputProps<S extends ScopeKey> {
 	setProposedChange: (value: CreateProposedChangeDto<ScopeEntityMap[S]> | undefined) => void
 }
 
-export function ProposedChangesInteractiveInput<S extends ScopeKey>({
-	originalInput,
-	proposedChangeData,
-	setProposedChange,
-}: ProposedChangesInteractiveInputProps<S>) {
-	const handleChange = (value: any) => {
-		setProposedChange({
-			...proposedChangeData,
-			curr_value: value,
-		} as CreateProposedChangeDto<ScopeEntityMap[S]>);
-	};
+export function ProposedChangesInteractiveInput<S extends ScopeKey>({ originalInput, proposedChangeData, setProposedChange }: ProposedChangesInteractiveInputProps<S>) {
+	//
 
-	// detect component type name
-	const inputName
-    = (originalInput.type as any)?.displayName
-      || (originalInput.type as any)?.name
-      || '';
+	//
+	// A. Setup variables
+
+	const inputName = (originalInput.type as any)?.displayName || (originalInput.type as any)?.name || '';
 	const lc = inputName.toLowerCase();
 
 	const isCheckbox = lc.includes('checkbox') || lc.includes('switch');
@@ -49,21 +39,12 @@ export function ProposedChangesInteractiveInput<S extends ScopeKey>({
 			newProps.onChange = (v: any) => handleChange(v);
 		}
 		else if (isDateTime) {
-			newProps.value = proposedChangeData.curr_value
-				? new Date(
-					typeof proposedChangeData.curr_value === 'string'
-					|| typeof proposedChangeData.curr_value === 'number'
-					|| proposedChangeData.curr_value instanceof Date
-						? proposedChangeData.curr_value
-						: '',
-				)
-				: null;
+			newProps.value = proposedChangeData.curr_value ? new Date(typeof proposedChangeData.curr_value === 'string' || typeof proposedChangeData.curr_value === 'number' || proposedChangeData.curr_value instanceof Date ? proposedChangeData.curr_value : '') : null;
 			newProps.onChange = (d: Date | null) => handleChange(d);
 		}
 		else {
 			newProps.value = proposedChangeData.curr_value?.toString() ?? '';
-			newProps.onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-				handleChange(e.currentTarget.value);
+			newProps.onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => handleChange(e.currentTarget.value);
 		}
 	}
 	else {
@@ -102,5 +83,25 @@ export function ProposedChangesInteractiveInput<S extends ScopeKey>({
 	}
 
 	const cloned = React.cloneElement(originalInput, newProps);
-	return <>{cloned}</>;
+
+	//
+	// B. Handle Actions
+
+	const handleChange = (value: any) => {
+		setProposedChange({
+			...proposedChangeData,
+			curr_value: value,
+		} as CreateProposedChangeDto<ScopeEntityMap[S]>);
+	};
+
+	//
+	// C. Render Components
+
+	return (
+		<>
+			{cloned}
+		</>
+	);
+
+	//
 }

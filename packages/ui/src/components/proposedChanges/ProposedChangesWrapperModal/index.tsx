@@ -27,7 +27,7 @@ export function ProposedChangesWrapperModal<S extends ScopeKey>({ inputName, isN
 	// A. Render Components
 
 	return (
-		<Modal onClose={onClose} opened={isOpen} title={`Proposta de alteração para: ${inputName}`}>
+		<Modal onClose={onClose} opened={isOpen} size="xl" title={`Proposta de alteração para: ${inputName}`}>
 			<ProposedChangesWrapperModalContent inputName={inputName} isNew={isNew} originalInput={originalInput} proposedChanges={proposedChangesData || []} relatedId={relatedId} scope={scope} />
 		</Modal>
 	);

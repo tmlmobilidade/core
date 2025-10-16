@@ -16,6 +16,8 @@ interface ProposedChangesWrapperContentItemActionsProps {
 	submit: () => void
 }
 
+/* * */
+
 export function ProposedChangesWrapperContentItemActions({ approve, isNew, permissions, reject, status, submit }: ProposedChangesWrapperContentItemActionsProps) {
 	//
 
@@ -37,9 +39,7 @@ export function ProposedChangesWrapperContentItemActions({ approve, isNew, permi
 	//
 	// C. Render Components
 
-	return (
-		<ButtonGroup buttons={visibleButtonsStatus} />
-	);
+	return <ButtonGroup buttons={visibleButtonsStatus} />;
 
 	//
 };

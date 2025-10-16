@@ -20,7 +20,6 @@ export function ProposedChangesInteractiveInput<S extends ScopeKey>({ originalIn
 
 	const isCheckbox = lc.includes('checkbox') || lc.includes('switch');
 	const isCombobox = lc.includes('combobox') || lc.includes('select');
-	const isDateTime = lc.includes('datetime') || lc.includes('date');
 
 	const origOnChange = originalInput.props?.onChange;
 	const newProps: any = {};
@@ -37,10 +36,6 @@ export function ProposedChangesInteractiveInput<S extends ScopeKey>({ originalIn
 		else if (isCombobox) {
 			newProps.value = proposedChangeData.curr_value ?? '';
 			newProps.onChange = (v: any) => handleChange(v);
-		}
-		else if (isDateTime) {
-			newProps.value = proposedChangeData.curr_value ? new Date(typeof proposedChangeData.curr_value === 'string' || typeof proposedChangeData.curr_value === 'number' || proposedChangeData.curr_value instanceof Date ? proposedChangeData.curr_value : '') : null;
-			newProps.onChange = (d: Date | null) => handleChange(d);
 		}
 		else {
 			newProps.value = proposedChangeData.curr_value?.toString() ?? '';
@@ -62,12 +57,6 @@ export function ProposedChangesInteractiveInput<S extends ScopeKey>({ originalIn
 				origOnChange?.(v);
 			};
 			// do not override value
-		}
-		else if (isDateTime) {
-			newProps.onChange = (d: Date | null) => {
-				handleChange(d);
-				origOnChange?.(d);
-			};
 		}
 		else {
 			newProps.onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

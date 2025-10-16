@@ -19,7 +19,7 @@ export type ScopeKey = keyof ScopeEntityMap;
 
 interface ProposedChangesContextState<T> {
 	actions: {
-		approve: (id: string) => Promise<void>
+		approve: (id: string, field: string, relatedId: string, value: unknown) => Promise<void>
 		reject: (id: string) => Promise<void>
 		submit: (data: CreateProposedChangeDto<T>) => Promise<void>
 	}
@@ -67,9 +67,12 @@ export function ProposedChangesContextProvider<S extends ScopeKey>({ children, r
 
 	//
 	// C. Handle actions
-	const approve = async (id: string) => {
+	const approve = async (id: string, field: string, relatedId: string, value: unknown) => {
 		try {
+			console.log('Approved proposed change:', id, field, relatedId, value);
+
 			await fetchData(`${getAppConfig('auth', 'api_url')}/proposed-changes/${id}`, 'PUT', { status: 'approved' });
+			await fetchData(`${getAppConfig('stops', 'api_url')}/stops/${relatedId}`, 'PUT', { [field]: value });
 		}
 		catch (error) {
 			console.error('Error approving proposed change:', error);

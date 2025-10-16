@@ -89,8 +89,7 @@ export function ProposedChangesWrapperModalContent<S extends ScopeKey>({ inputNa
 
 			{!addingNew && proposedChanges.length === 0 && (
 				<div className={styles.proposedChangeItemWrapper}>
-					<ProposedChangesWrapperModalContentItem originalInput={originalInput} proposedChangeData={undefined} setProposedChange={setProposedChangeData} />
-					<ProposedChangesWrapperContentItemActions isNew={isNew} permissions={permissions} submit={handleSubmit} />
+					<p>Nenhum valor proposto para este campo.</p>
 				</div>
 			)}
 		</>

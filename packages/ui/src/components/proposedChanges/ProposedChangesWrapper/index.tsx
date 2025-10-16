@@ -55,7 +55,7 @@ export function ProposedChangesWrapper<S extends ScopeKey>({ children, inputName
 			<div className={styles.labelWrapper}>
 				{label}
 				<IconInfoCircle color={colorLevel} onClick={() => setOpened(!opened)} size={18} />
-				<ProposedChangesWrapperModal inputName={inputName} isNew={isNew} isOpen={opened} onClose={() => setOpened(!opened)} originalInput={children} proposedChangesData={proposedChangesOfField} relatedId={relatedId} scope={scope} />
+				<ProposedChangesWrapperModal inputName={inputName}isNew={isNew} isOpen={opened} label={label} onClose={() => setOpened(!opened)} originalInput={children} proposedChangesData={proposedChangesOfField} relatedId={relatedId} scope={scope} />
 			</div>
 			{children}
 		</div>

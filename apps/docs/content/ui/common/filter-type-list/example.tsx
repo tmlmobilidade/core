@@ -1,6 +1,6 @@
 'use client';
 
-import { ComponentWrapper, FilterMenu } from '@tmlmobilidade/ui';
+import { ComponentWrapper, FilterTypeList } from '@tmlmobilidade/ui';
 import { useState } from 'react';
 
 export default function FilterMenuExample() {
@@ -18,7 +18,7 @@ export default function FilterMenuExample() {
 
 	return (
 		<ComponentWrapper>
-			<FilterMenu
+			<FilterTypeList
 				label="Status"
 				onChange={setSelectedValues}
 				options={enhancedOptions}

@@ -5,12 +5,13 @@ import '@tmlmobilidade/ui/styles-no-reset';
 
 /* * */
 
-import { ThemeContextProvider } from '@tmlmobilidade/ui';
+import { BaseProvider } from '@tmlmobilidade/ui';
 import { RootProvider } from 'fumadocs-ui/provider';
+import { type PropsWithChildren } from 'react';
 
 /* * */
 
-export default function RootLayout({ children }: { children: React.ReactElement }) {
+export default function RootLayout({ children }: PropsWithChildren) {
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<body
@@ -21,9 +22,9 @@ export default function RootLayout({ children }: { children: React.ReactElement 
 				}}
 			>
 				<RootProvider>
-					<ThemeContextProvider>
+					<BaseProvider>
 						{children}
-					</ThemeContextProvider>
+					</BaseProvider>
 				</RootProvider>
 			</body>
 		</html>

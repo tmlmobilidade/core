@@ -32,10 +32,10 @@ export const DemandByLineByDaySchema = DemandByLineSchema.extend({
 	data: z.record(
 		z.string(),
 		z.object({
-			day_type: z.number(),
-			holiday: z.number(),
+			day_type: z.enum(['1', '2', '3']),
+			holiday: z.enum(['0', '1']),
 			notes: z.string().nullable(),
-			period: z.number(),
+			period: z.enum(['1', '2', '3']),
 			qty: z.number(),
 		}),
 	),

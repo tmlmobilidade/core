@@ -4,33 +4,181 @@ import { z } from 'zod';
 
 import { MetricBasePropertiesSchema, MetricBaseSchema } from '@/metrics/common.js';
 
-// /metrics/demand_by_line_by_year?line=4701
-export const DemandByLineByYearSchema = MetricBaseSchema.extend({
+/* DEMAND BY LINE */
+
+const DemandByLinePropertiesSchema = MetricBasePropertiesSchema.extend({
+	line_id: z.string(),
+});
+
+const DemandByLineSchema = MetricBaseSchema.extend({
 	data: z.record(
-		z.string(), // e.g. "2024", "2025"
+		z.string(),
 		z.object({
 			qty: z.number(),
 		}),
 	),
+	properties: DemandByLinePropertiesSchema,
+});
+
+export const DemandByLineByYearSchema = DemandByLineSchema.extend({
 	metric: z.literal('demand_by_line_by_year'),
+});
+
+export const DemandByLineByMonthSchema = DemandByLineSchema.extend({
+	metric: z.literal('demand_by_line_by_month'),
+});
+
+export const DemandByLineByDaySchema = DemandByLineSchema.extend({
+	data: z.record(
+		z.string(),
+		z.object({
+			day_type: z.number(),
+			holiday: z.number(),
+			notes: z.string().nullable(),
+			period: z.number(),
+			qty: z.number(),
+		}),
+	),
+	metric: z.literal('demand_by_line_by_day'),
+});
+
+// data:  "2025-03": {
+//     "weekday": { "qty": 9300, "count": 31, "avg": 300 },
+//     "saturday": { "qty": 600, "count": 4, "avg": 150 },
+//     "sunday": { "qty": 200, "count": 4, "avg": 50 }
+//   },
+
+export const MeanDemandByLineByMonthSchema = DemandByLineSchema.extend({
+	data: z.record(
+		z.string(),
+		z.record(
+			z.string(),
+			z.object({
+				avg: z.number().optional(),
+				count: z.number(),
+				qty: z.number(),
+			}),
+		),
+	),
+	metric: z.literal('mean_demand_by_line_by_month'),
+});
+
+//   data: {
+//     "12345": { increase: 20, qty: 4800, year_avg: 4000 },
+//     "67890": { increase: 18, qty: 3700, year_avg: 3130 },
+//   },
+
+export const TopMeanDemandByLineByMonthSchema = DemandByLineSchema.extend({
+	data: z.record(
+		z.string(),
+		z.object({
+			increase_pct: z.number(),
+			qty: z.number(),
+			year_avg: z.number(),
+		}),
+	),
+	metric: z.literal('top_mean_demand_by_line_by_month'),
 	properties: MetricBasePropertiesSchema.extend({
-		interval: z.literal(300000),
-		line_id: z.string(),
+		year_month: z.string(),
 	}),
 });
 
-export const DemandByLineByMonthSchema = MetricBaseSchema.extend({
+/* DEMAND BY AGENCY */
+
+const DemandByAgencySchema = MetricBaseSchema.extend({
 	data: z.record(
-		z.string(), // e.g. "2024-01", "2024-02"
+		z.string(),
 		z.object({
 			qty: z.number(),
 		}),
 	),
-	metric: z.literal('demand_by_line_by_month'),
 	properties: MetricBasePropertiesSchema.extend({
-		interval: z.literal(300000),
-		line_id: z.string(),
+		agency_id: z.string(),
 	}),
+});
+
+export const DemandByAgencyByYearSchema = DemandByAgencySchema.extend({
+	metric: z.literal('demand_by_agency_by_year'),
+});
+
+export const DemandByAgencyByMonthSchema = DemandByAgencySchema.extend({
+	metric: z.literal('demand_by_agency_by_month'),
+});
+
+export const DemandByAgencyByDaySchema = DemandByAgencySchema.extend({
+	metric: z.literal('demand_by_agency_by_day'),
+});
+
+/* DEMAND BY PATTERN */
+
+const DemandByPatternSchema = MetricBaseSchema.extend({
+	data: z.record(
+		z.string(),
+		z.object({
+			qty: z.number(),
+		}),
+	),
+	properties: MetricBasePropertiesSchema.extend({
+		pattern_id: z.string(),
+	}),
+});
+
+export const DemandByPatternByYearSchema = DemandByPatternSchema.extend({
+	metric: z.literal('demand_by_pattern_by_year'),
+	properties: MetricBasePropertiesSchema.extend({
+		pattern_id: z.string(),
+	}),
+});
+
+export const DemandByPatternByMonthSchema = DemandByPatternSchema.extend({
+	metric: z.literal('demand_by_pattern_by_month'),
+});
+
+export const DemandByPatternByDaySchema = DemandByPatternSchema.extend({
+	metric: z.literal('demand_by_pattern_by_day'),
+});
+
+/* DEMAND BY PATTERN_HOUR */
+
+export const DemandByPatternHourByYearSchema = DemandByPatternSchema.extend({
+	metric: z.literal('demand_by_pattern_hour_by_year'),
+	properties: MetricBasePropertiesSchema.extend({
+		hour: z.number().min(0).max(23),
+		minute: z.number().min(0).max(59),
+		pattern_id: z.string(),
+	}),
+});
+
+export const DemandByPatternHourByMonthSchema = DemandByPatternSchema.extend({
+	metric: z.literal('demand_by_pattern_hour_by_month'),
+	properties: MetricBasePropertiesSchema.extend({
+		hour: z.number().min(0).max(23),
+		minute: z.number().min(0).max(59),
+		pattern_id: z.string(),
+	}),
+});
+
+/* RECORD BY AGENCY */
+
+export const TopDemandByAgencySchema = MetricBaseSchema.extend({
+	data: z.object({
+		operators: z.record(
+			z.string(),
+			z.record(
+				z.string(),
+				z.object({
+					qty: z.number(),
+				}),
+			),
+		),
+		total: z.record(
+			z.string(),
+			z.object({
+				qty: z.number(),
+			}),
+		),
+	}),
+	metric: z.literal('top_demand_by_agency'),
 });
 
 /* * */

@@ -14,7 +14,7 @@ import styles from './styles.module.css';
 interface ProposedChangesWrapperProps<S extends ScopeKey> {
 	children: React.ReactElement<{ disabled?: boolean }>
 	inputName: string
-	label: string
+	label?: string
 	relatedId: string
 	scope: S
 }
@@ -33,7 +33,7 @@ export function ProposedChangesWrapper<S extends ScopeKey>({ children, inputName
 	const [opened, setOpened] = useState(false);
 	const [isNew, setIsNew] = useState(true);
 	const [status, setStatus] = useState<'none' | Status>('none');
-
+	const isCheckbox = children.type.toString().toLowerCase().includes('checkbox');
 	const colorLevel = status === 'pending' ? 'var(	--color-status-warning-primary)' : status === 'approved' ? ' var(--color-status-success-primary)' : status === 'rejected' ? 'var(--color-status-danger-primary)' : 'var(--color-system-text-200)';
 
 	useEffect(() => {
@@ -41,7 +41,7 @@ export function ProposedChangesWrapper<S extends ScopeKey>({ children, inputName
 	}, [proposedChangesContext.data.allProposedChangesByRelatedId]);
 
 	useEffect(() => {
-		const hasPending = proposedChangesContext.data.allProposedChangesByRelatedId?.find(pc => pc?.status === 'pending');
+		const hasPending = proposedChangesContext.data.allProposedChangesByRelatedId?.find(pc => pc?.status === 'pending' && pc.field === inputName);
 		const proposedChangesByRelatedIdAndField = proposedChangesContext.data.allProposedChangesByRelatedId?.filter(pc => pc.field === inputName);
 		setStatus(hasPending ? 'pending' : 'none');
 		setProposedChangesOfField(proposedChangesByRelatedIdAndField);
@@ -51,11 +51,11 @@ export function ProposedChangesWrapper<S extends ScopeKey>({ children, inputName
 	// B. Render Components
 
 	return (
-		<div>
+		<div className={isCheckbox ? styles.checkboxWrapper : ''}>
 			<div className={styles.labelWrapper}>
 				{label}
 				<IconInfoCircle color={colorLevel} onClick={() => setOpened(!opened)} size={18} />
-				<ProposedChangesWrapperModal inputName={inputName}isNew={isNew} isOpen={opened} label={label} onClose={() => setOpened(!opened)} originalInput={children} proposedChangesData={proposedChangesOfField} relatedId={relatedId} scope={scope} />
+				<ProposedChangesWrapperModal inputName={inputName}isNew={isNew} isOpen={opened} label={label || ''} onClose={() => setOpened(!opened)} originalInput={children} proposedChangesData={proposedChangesOfField} relatedId={relatedId} scope={scope} />
 			</div>
 			{children}
 		</div>

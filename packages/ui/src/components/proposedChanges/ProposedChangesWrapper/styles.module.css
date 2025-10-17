@@ -9,3 +9,10 @@
 }
 
 /* * */
+/* label wrapper */
+
+.checkboxWrapper {
+	display: inline-flex;
+}
+
+/* * */

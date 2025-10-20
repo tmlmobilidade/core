@@ -85,6 +85,10 @@ export const Permissions = Object.freeze({
 	},
 	rides: {
 		actions: {
+			acceptance_change_status: 'acceptance_change_status',
+			acceptance_justify: 'acceptance_justify',
+			acceptance_lock: 'acceptance_lock',
+			acceptance_read: 'acceptance_read',
 			analsys_lock: 'analsys_lock',
 			analysis_lock: 'analysis_lock',
 			analysis_read: 'analysis_read',
@@ -93,10 +97,6 @@ export const Permissions = Object.freeze({
 			audit_lock: 'audit_lock',
 			audit_read: 'audit_read',
 			audit_update: 'audit_update',
-			justification_change_status: 'justification_change_status',
-			justification_justify: 'justification_justify',
-			justification_lock: 'justification_lock',
-			justification_read: 'justification_read',
 		},
 		resources: RidePermissionSchema.shape,
 		scope: 'rides',

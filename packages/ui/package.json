@@ -42,7 +42,7 @@
 		"path": false
 	},
 	"dependencies": {
-		"@carrismetropolitana/api-types": "^20251007.1444.4",
+		"@carrismetropolitana/api-types": "20251021.1634.49",
 		"@mantine/core": "8.3.5",
 		"@mantine/dates": "8.3.5",
 		"@mantine/form": "8.3.5",
@@ -60,7 +60,7 @@
 		"maplibre-gl": "5.9.0",
 		"react": "19.x",
 		"react-viewport-list": "7.1.2",
-		"ukkonen": "^2.2.0"
+		"ukkonen": "2.2.0"
 	},
 	"devDependencies": {
 		"@rollup/plugin-commonjs": "28.0.8",
@@ -69,7 +69,7 @@
 		"@turf/turf": "7.2.0",
 		"@types/geojson": "7946.0.16",
 		"@types/luxon": "3.7.1",
-		"@types/node": "24.8.1",
+		"@types/node": "24.9.1",
 		"@types/react": "19.1.1",
 		"@types/react-dom": "19.1.1",
 		"nodemon": "3.1.10",

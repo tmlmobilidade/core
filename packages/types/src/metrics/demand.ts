@@ -2,13 +2,9 @@ import { z } from 'zod';
 
 /* * */
 
-import { MetricBasePropertiesSchema, MetricBaseSchema } from '@/metrics/common.js';
+import { MetricBaseSchema } from '@/metrics/common.js';
 
 /* DEMAND BY LINE */
-
-const DemandByLinePropertiesSchema = MetricBasePropertiesSchema.extend({
-	line_id: z.string(),
-});
 
 const DemandByLineSchema = MetricBaseSchema.extend({
 	data: z.record(
@@ -17,7 +13,9 @@ const DemandByLineSchema = MetricBaseSchema.extend({
 			qty: z.number(),
 		}),
 	),
-	properties: DemandByLinePropertiesSchema,
+	properties: z.object({
+		line_id: z.string(),
+	}),
 });
 
 export const DemandByLineByYearSchema = DemandByLineSchema.extend({
@@ -78,7 +76,7 @@ export const TopMeanDemandByLineByMonthSchema = DemandByLineSchema.extend({
 		}),
 	),
 	metric: z.literal('top_mean_demand_by_line_by_month'),
-	properties: MetricBasePropertiesSchema.extend({
+	properties: z.object({
 		year_month: z.string(),
 	}),
 });
@@ -92,7 +90,7 @@ const DemandByAgencySchema = MetricBaseSchema.extend({
 			qty: z.number(),
 		}),
 	),
-	properties: MetricBasePropertiesSchema.extend({
+	properties: z.object({
 		agency_id: z.string(),
 	}),
 });
@@ -128,14 +126,14 @@ const DemandByPatternSchema = MetricBaseSchema.extend({
 			qty: z.number(),
 		}),
 	),
-	properties: MetricBasePropertiesSchema.extend({
+	properties: z.object({
 		pattern_id: z.string(),
 	}),
 });
 
 export const DemandByPatternByYearSchema = DemandByPatternSchema.extend({
 	metric: z.literal('demand_by_pattern_by_year'),
-	properties: MetricBasePropertiesSchema.extend({
+	properties: z.object({
 		pattern_id: z.string(),
 	}),
 });
@@ -162,7 +160,7 @@ export const DemandByPatternByDaySchema = DemandByPatternSchema.extend({
 
 export const DemandByPatternHourByYearSchema = DemandByPatternSchema.extend({
 	metric: z.literal('demand_by_pattern_hour_by_year'),
-	properties: MetricBasePropertiesSchema.extend({
+	properties: z.object({
 		hour: z.number().min(0).max(23),
 		minute: z.number().min(0).max(59),
 		pattern_id: z.string(),
@@ -171,7 +169,7 @@ export const DemandByPatternHourByYearSchema = DemandByPatternSchema.extend({
 
 export const DemandByPatternHourByMonthSchema = DemandByPatternSchema.extend({
 	metric: z.literal('demand_by_pattern_hour_by_month'),
-	properties: MetricBasePropertiesSchema.extend({
+	properties: z.object({
 		hour: z.number().min(0).max(23),
 		minute: z.number().min(0).max(59),
 		pattern_id: z.string(),

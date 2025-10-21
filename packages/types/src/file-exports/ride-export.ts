@@ -3,7 +3,7 @@
 import { Ride, RideSchema } from '@/rides/ride.js';
 import { z } from 'zod';
 
-import { FileExportBaseSchema } from './common.js';
+import { CreateFileExportBaseSchema, FileExportBaseSchema } from './common.js';
 
 /* * */
 
@@ -87,15 +87,23 @@ export const FlatRideSchema = z.object({
 	vehicle_ids: z.string(),
 });
 
+export const RideExportPropertiesSchema = z.object({
+	agency_ids: z.array(RideSchema.shape.agency_id).optional(),
+	end_date: RideSchema.shape.end_time_scheduled,
+	line_ids: z.array(RideSchema.shape.line_id).optional(),
+	start_date: RideSchema.shape.start_time_scheduled,
+});
+
+export type RideExportProperties = z.infer<typeof RideExportPropertiesSchema>;
+
 export const RideExportSchema = FileExportBaseSchema.extend({
 	data: FlatRideSchema,
-	properties: z.object({
-		agency_id: RideSchema.shape.agency_id.optional(),
-		end_date: RideSchema.shape.end_time_scheduled,
-		line_id: RideSchema.shape.line_id.optional(),
-		start_date: RideSchema.shape.start_time_scheduled,
-	}),
-	scope: z.literal('ride'),
+	properties: RideExportPropertiesSchema,
+	type: z.literal('ride'),
+}).strict();
+
+export const CreateRideExportSchema = CreateFileExportBaseSchema.extend({
+	properties: RideExportPropertiesSchema,
 	type: z.literal('ride'),
 }).strict();
 

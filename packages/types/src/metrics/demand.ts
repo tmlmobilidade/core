@@ -109,7 +109,7 @@ export const DemandByAgencyByDaySchema = DemandByAgencySchema.extend({
 	data: z.record(
 		z.string(),
 		z.object({
-			day_type: z.number(),
+			day_type: z.enum(['1', '2', '3']),
 			holiday: z.number(),
 			notes: z.string().nullable(),
 			period: z.number(),
@@ -148,7 +148,7 @@ export const DemandByPatternByDaySchema = DemandByPatternSchema.extend({
 	data: z.record(
 		z.string(),
 		z.object({
-			day_type: z.number(),
+			day_type: z.enum(['1', '2', '3']),
 			holiday: z.number(),
 			notes: z.string().nullable(),
 			period: z.number(),

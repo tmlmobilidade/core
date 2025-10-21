@@ -69,12 +69,7 @@ export function ProposedChangesContextProvider<S extends ScopeKey>({ children, r
 	// C. Handle actions
 
 	// C. Handle actions
-	const approve = async <S extends ScopeKey>(
-		id: string,
-		field: keyof ScopeEntityMap[S] | string,
-		relatedId: string,
-		value: unknown,
-	) => {
+	const approve = async <S extends ScopeKey>(id: string, field: keyof ScopeEntityMap[S] | string, relatedId: string, value: unknown) => {
 		try {
 			console.log('Approving proposed change:', { field, id, relatedId, value });
 			await fetchData(`${getAppConfig('auth', 'api_url')}/proposed-changes/${id}`, 'PUT', { status: 'approved' });
@@ -94,10 +89,7 @@ export function ProposedChangesContextProvider<S extends ScopeKey>({ children, r
 					const currentArray = stop[arrayField] as Stop['facilities'];
 					const typedValue = value as Stop['facilities'][number];
 					const exists = currentArray.includes(typedValue);
-
 					updateBody[arrayField] = exists ? currentArray.filter(item => item !== typedValue) : [...currentArray, typedValue];
-
-					console.log('Updating array field:', arrayField, updateBody[arrayField]);
 				}
 
 				// Case 2: normalizedField represents a facility item
@@ -109,8 +101,6 @@ export function ProposedChangesContextProvider<S extends ScopeKey>({ children, r
 					const exists = currentArray.includes(stringValue);
 
 					updateBody[arrayField] = exists ? currentArray.filter(item => item !== stringValue) : [...currentArray, stringValue];
-
-					console.log('Updating facility item in array:', stringValue, updateBody[arrayField]);
 				}
 
 				// Case 3: normal field update (any value allowed)
@@ -118,8 +108,6 @@ export function ProposedChangesContextProvider<S extends ScopeKey>({ children, r
 					updateBody[normalizedField] = value;
 					console.log('Updating normal field:', normalizedField, value);
 				}
-
-				console.log('Final update payload:', updateBody);
 				await fetchData(`${getAppConfig('stops', 'api_url')}/stops/${relatedId}`, 'PUT', updateBody);
 			}
 		}

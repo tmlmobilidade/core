@@ -7,7 +7,7 @@ import { z } from 'zod';
 
 export type FileExport = z.infer<typeof FileExportSchema>;
 
-export { type FileExportType, FileExportTypeSchema } from './common.js';
+export { type CreateFileExportDto, type FileExportType, FileExportTypeSchema } from './common.js';
 export { type RideExportData, type RideExportProperties, RideExportPropertiesSchema, RideExportSchema } from './ride-export.js';
 
 /* * */

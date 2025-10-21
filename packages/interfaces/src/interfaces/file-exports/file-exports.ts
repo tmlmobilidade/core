@@ -1,14 +1,14 @@
 /* * */
 
 import { MongoCollectionClass } from '@/mongo-collection.js';
-import { FileExport, FileExportSchema } from '@tmlmobilidade/types';
+import { CreateFileExportDto, FileExport, FileExportSchema } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
 import { IndexDescription } from 'mongodb';
 import { z } from 'zod';
 
 /* * */
 
-class FileExportsClass extends MongoCollectionClass<FileExport, FileExport, Partial<FileExport>> {
+class FileExportsClass extends MongoCollectionClass<FileExport, CreateFileExportDto, Partial<FileExport>> {
 	//
 
 	//

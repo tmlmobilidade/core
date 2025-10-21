@@ -10,14 +10,10 @@ export type FileExportType = z.infer<typeof FileExportTypeSchema>;
 
 /* * */
 
-export const CreateFileExportBaseSchema = DocumentSchema.extend({
+export const FileExportBaseSchema = DocumentSchema.extend({
+	file_id: z.string().nullable(),
 	file_name: z.string(),
+	processing_status: ProcessingStatusSchema,
 	properties: z.record(z.any()),
 	type: FileExportTypeSchema,
-}).strict();
-
-export const FileExportBaseSchema = CreateFileExportBaseSchema.extend({
-	file_size: z.number().describe('size in bytes'),
-	mime_type: z.string().describe('mime type'),
-	processing_status: ProcessingStatusSchema,
 }).strict();

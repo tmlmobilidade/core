@@ -71,15 +71,12 @@ export function ProposedChangesContextProvider<S extends ScopeKey>({ children, r
 	// C. Handle actions
 	const approve = async <S extends ScopeKey>(id: string, field: keyof ScopeEntityMap[S] | string, relatedId: string, value: unknown) => {
 		try {
-			console.log('Approving proposed change:', { field, id, relatedId, value });
 			await fetchData(`${getAppConfig('auth', 'api_url')}/proposed-changes/${id}`, 'PUT', { status: 'approved' });
-			console.log(`Proposed change ${id} approved`);
 			const normalizedField = String(field).startsWith('near_') ? String(field).replace(/^near_/, '') : String(field);
 
 			if (scope === 'stop') {
 				const stopResponse = await fetchData(`${getAppConfig('stops', 'api_url')}/stops/${relatedId}`, 'GET');
 				const stop = stopResponse.data as Stop;
-				console.log('Current stop data:', stop);
 				const updateBody: Record<string, unknown> = {};
 				const arrayField: keyof Stop = 'facilities';
 				const validFacilityValues: Stop['facilities'] = ['school', 'fire_station', 'health_clinic', 'historic_building', 'hospital', 'police_station', 'shopping', 'transit_office', 'university', 'beach'];

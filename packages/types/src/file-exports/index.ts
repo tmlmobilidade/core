@@ -5,6 +5,14 @@ import { z } from 'zod';
 
 /* * */
 
+export type FileExport = z.infer<typeof FileExportSchema>;
+export type CreateFileExportDto = z.infer<typeof CreateFileExportSchema>;
+
+export { type FileExportType, FileExportTypeSchema } from './common.js';
+export { parseRideToExport, type RideExportProperties, RideExportPropertiesSchema } from './ride-export.js';
+
+/* * */
+
 export const FileExportSchema = z.discriminatedUnion('type', [
 	RideExportSchema,
 ]);
@@ -12,11 +20,3 @@ export const FileExportSchema = z.discriminatedUnion('type', [
 export const CreateFileExportSchema = z.discriminatedUnion('type', [
 	CreateRideExportSchema,
 ]);
-
-/* * */
-
-export type FileExport = z.infer<typeof FileExportSchema>;
-export type CreateFileExportDto = Omit<FileExport, '_id' | 'created_at' | 'data' | 'updated_at'> & { processing_status: 'waiting' };
-export type UpdateFileExportDto = Omit<CreateFileExportDto, 'created_by'> & { processing_status: 'complete' | 'error' | 'processing' };
-
-export { parseRideToExport, type RideExportProperties, RideExportPropertiesSchema } from './ride-export.js';

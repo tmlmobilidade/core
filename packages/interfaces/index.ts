@@ -11,6 +11,7 @@ export * from '@/providers/index.js';
 /* * */
 
 export type {
+	AggregationCursor,
 	ChangeStreamDeleteDocument,
 	ChangeStreamDocument,
 	ChangeStreamInsertDocument,

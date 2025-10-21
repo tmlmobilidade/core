@@ -37,7 +37,3 @@ export type DemandByAgencyByDay = z.infer<typeof DemandByAgencyByDaySchema>;
 export type TopDemandByAgency = z.infer<typeof TopDemandByAgencySchema>;
 export type MeanDemandByLineByMonth = z.infer<typeof MeanDemandByLineByMonthSchema>;
 export type TopMeanDemandByLineByMonth = z.infer<typeof TopMeanDemandByLineByMonthSchema>;
-
-/* * */
-
-export { MetricBasePropertiesSchema } from '@/metrics/common.js';

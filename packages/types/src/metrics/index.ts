@@ -23,5 +23,21 @@ export const MetricSchema = z.discriminatedUnion('metric', [
 /* * */
 
 export type Metric = z.infer<typeof MetricSchema>;
+export type DemandByLineByYear = z.infer<typeof DemandByLineByYearSchema>;
+export type DemandByLineByMonth = z.infer<typeof DemandByLineByMonthSchema>;
+export type DemandByLineByDay = z.infer<typeof DemandByLineByDaySchema>;
+export type DemandByPatternByYear = z.infer<typeof DemandByPatternByYearSchema>;
+export type DemandByPatternByMonth = z.infer<typeof DemandByPatternByMonthSchema>;
+export type DemandByPatternByDay = z.infer<typeof DemandByPatternByDaySchema>;
+export type DemandByPatternHourByYear = z.infer<typeof DemandByPatternHourByYearSchema>;
+export type DemandByPatternHourByMonth = z.infer<typeof DemandByPatternHourByMonthSchema>;
+export type DemandByAgencyByYear = z.infer<typeof DemandByAgencyByYearSchema>;
+export type DemandByAgencyByMonth = z.infer<typeof DemandByAgencyByMonthSchema>;
+export type DemandByAgencyByDay = z.infer<typeof DemandByAgencyByDaySchema>;
+export type TopDemandByAgency = z.infer<typeof TopDemandByAgencySchema>;
+export type MeanDemandByLineByMonth = z.infer<typeof MeanDemandByLineByMonthSchema>;
+export type TopMeanDemandByLineByMonth = z.infer<typeof TopMeanDemandByLineByMonthSchema>;
+
+/* * */
 
 export { MetricBasePropertiesSchema } from '@/metrics/common.js';

@@ -106,6 +106,16 @@ export const DemandByAgencyByMonthSchema = DemandByAgencySchema.extend({
 });
 
 export const DemandByAgencyByDaySchema = DemandByAgencySchema.extend({
+	data: z.record(
+		z.string(),
+		z.object({
+			day_type: z.number(),
+			holiday: z.number(),
+			notes: z.string().nullable(),
+			period: z.number(),
+			qty: z.number(),
+		}),
+	),
 	metric: z.literal('demand_by_agency_by_day'),
 });
 
@@ -135,6 +145,16 @@ export const DemandByPatternByMonthSchema = DemandByPatternSchema.extend({
 });
 
 export const DemandByPatternByDaySchema = DemandByPatternSchema.extend({
+	data: z.record(
+		z.string(),
+		z.object({
+			day_type: z.number(),
+			holiday: z.number(),
+			notes: z.string().nullable(),
+			period: z.number(),
+			qty: z.number(),
+		}),
+	),
 	metric: z.literal('demand_by_pattern_by_day'),
 });
 
@@ -164,19 +184,27 @@ export const TopDemandByAgencySchema = MetricBaseSchema.extend({
 	data: z.object({
 		operators: z.record(
 			z.string(),
-			z.record(
-				z.string(),
-				z.object({
+			z.object({
+				day: z.object({
+					date: z.string(),
 					qty: z.number(),
 				}),
-			),
-		),
-		total: z.record(
-			z.string(),
-			z.object({
-				qty: z.number(),
+				month: z.object({
+					date: z.string(),
+					qty: z.number(),
+				}),
 			}),
 		),
+		total: z.object({
+			day: z.object({
+				date: z.string(),
+				qty: z.number(),
+			}),
+			month: z.object({
+				date: z.string(),
+				qty: z.number(),
+			}),
+		}),
 	}),
 	metric: z.literal('top_demand_by_agency'),
 });

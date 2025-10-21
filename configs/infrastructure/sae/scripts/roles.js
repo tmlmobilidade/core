@@ -135,6 +135,7 @@ db.createRole({
 		{ actions: ['find'], resource: { collection: 'rides', db: 'production' } },
 		{ actions: ['find'], resource: { collection: 'simplified_apex_validations', db: 'production' } },
 		{ actions: ['find'], resource: { collection: 'alerts', db: 'production' } },
+		{ actions: ['find'], resource: { collection: 'metrics', db: 'production' } },
 	],
 	role: 'cmet-api',
 	roles: [],

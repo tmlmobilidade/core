@@ -25,7 +25,6 @@ export function ProposedChangesInteractiveInput<S extends ScopeKey>({ originalIn
 	const newProps: any = {};
 
 	if (proposedChangeData) {
-		// Show the proposed value, disable input
 		newProps.disabled = true;
 
 		if (isCheckbox) {

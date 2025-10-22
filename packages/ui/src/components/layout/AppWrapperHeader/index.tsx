@@ -4,11 +4,13 @@
 
 import { Label } from '@/components/display/Label';
 import { Skeleton } from '@mantine/core';
+import { IconCloudDown } from '@tabler/icons-react';
 import { useState } from 'react';
 
 import styles from './styles.module.css';
 
 import { AppWrapperExportCentral } from '../AppWrapperExportCentral';
+import { AppWrapperMenu } from '../AppWrapperMenu';
 import { AppWrapperNotificationCentral } from '../AppWrapperNotificationCentral';
 import { AppWrapperOptions } from '../AppWrapperOptions';
 import { Spacer } from '../Spacer';
@@ -48,6 +50,11 @@ export function AppWrapperHeader({ userName }: AppWrapperHeaderProps) {
 		<div className={styles.container}>
 			<Label size="md" caps singleLine>{drawnGreeting} {userName}</Label>
 			<Spacer />
+			<AppWrapperMenu counter={10} icon={IconCloudDown}>hello</AppWrapperMenu>
+			<AppWrapperMenu counter={0} icon={IconCloudDown}>hello</AppWrapperMenu>
+			<AppWrapperMenu counter={-30} icon={IconCloudDown}>hello</AppWrapperMenu>
+			<AppWrapperMenu counter={99} icon={IconCloudDown}>hello</AppWrapperMenu>
+			<AppWrapperMenu counter={120} icon={IconCloudDown}>hello</AppWrapperMenu>
 			<AppWrapperExportCentral />
 			<AppWrapperNotificationCentral />
 			<AppWrapperOptions />

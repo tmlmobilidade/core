@@ -26,7 +26,10 @@ export function AppWrapperExportCentral() {
 	return (
 		<Menu offset={0} position="bottom-end" shadow="lg" width="40%" withArrow>
 			<Menu.Target>
-				<ActionIcon color={fileExports.length > 0 ? 'var(--color-status-danger-primary)' : 'var(--color-system-text-200)'} variant="subtle">
+				<ActionIcon
+					color={fileExports.length > 0 ? 'var(--color-status-danger-primary)' : 'var(--color-system-text-200)'}
+					variant="subtle"
+				>
 					{fileExports.length > 0 && (
 						<div>{fileExports.length}</div>
 					)}

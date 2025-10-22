@@ -1,6 +1,6 @@
 'use client';
 
-import { Section } from '@/components';
+import { Section } from '@/components/layout/Section';
 import React from 'react';
 
 /* * */

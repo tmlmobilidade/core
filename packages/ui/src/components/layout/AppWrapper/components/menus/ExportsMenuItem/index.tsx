@@ -3,9 +3,9 @@
 /* * */
 
 import { Label } from '@/components/display/Label';
+import { Section } from '@/components/layout/Section';
 import { IconCheck, IconCircleDashed, IconFileDownload, IconLoader2, IconX } from '@tabler/icons-react';
 import { FileExport } from '@tmlmobilidade/types';
-import { Section } from 'index';
 import { useMemo } from 'react';
 
 import styles from './styles.module.css';

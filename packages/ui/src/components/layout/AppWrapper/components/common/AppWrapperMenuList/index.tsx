@@ -2,8 +2,8 @@
 
 /* * */
 
-import { Section } from '@/components';
 import { Label } from '@/components/display/Label';
+import { Section } from '@/components/layout/Section';
 import React, { useMemo, useState } from 'react';
 
 import styles from './styles.module.css';

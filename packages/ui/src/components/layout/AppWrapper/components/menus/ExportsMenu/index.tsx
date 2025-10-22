@@ -5,8 +5,8 @@
 import { AppWrapperMenu } from '@/components/layout/AppWrapper/components/common/AppWrapperMenu';
 import { AppWrapperMenuList } from '@/components/layout/AppWrapper/components/common/AppWrapperMenuList';
 import { AppWrapperMenuNoContent } from '@/components/layout/AppWrapper/components/common/AppWrapperMenuNoContent';
+import { useMeContext } from '@/contexts/Me.context';
 import { IconCloudDown, IconCloudMinus } from '@tabler/icons-react';
-import { useMeContext } from 'index';
 
 import { ExportsMenuItem } from '../ExportsMenuItem';
 

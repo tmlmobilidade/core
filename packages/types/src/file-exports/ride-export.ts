@@ -96,9 +96,6 @@ export const RideExportPropertiesSchema = z.object({
 	start_date: RideSchema.shape.start_time_scheduled,
 });
 
-export type RideExportProperties = z.infer<typeof RideExportPropertiesSchema>;
-export type RideExportData = z.infer<typeof FlatRideSchema>;
-
 /* CREATE SCHEMA */
 /* * */
 
@@ -106,3 +103,7 @@ export const RideExportSchema = FileExportBaseSchema.extend({
 	properties: RideExportPropertiesSchema,
 	type: z.literal('ride'),
 }).strict();
+
+export type RideExport = z.infer<typeof RideExportSchema>;
+export type RideExportProperties = z.infer<typeof RideExportPropertiesSchema>;
+export type RideExportData = z.infer<typeof FlatRideSchema>;

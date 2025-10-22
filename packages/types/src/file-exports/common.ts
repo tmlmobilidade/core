@@ -18,6 +18,8 @@ export const FileExportBaseSchema = DocumentSchema.extend({
 	type: FileExportTypeSchema,
 }).strict();
 
-export type CreateFileExportDto = Omit<z.infer<typeof FileExportBaseSchema>, '_id' | 'created_at' | 'file_id' | 'processing_status' | 'properties' | 'updated_at'> & {
+export type CreateFileExportDto<T> = Omit<z.infer<typeof FileExportBaseSchema>, '_id' | 'created_at' | 'file_id' | 'processing_status' | 'updated_at'> & {
 	processing_status?: 'waiting'
+	properties: T extends { properties: infer P } ? P : never
+	type: T extends { type: infer U } ? U : never
 };

@@ -1,14 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* * */
 
 import { MongoCollectionClass } from '@/mongo-collection.js';
-import { CreateFileExportDto, FileExport, FileExportSchema } from '@tmlmobilidade/types';
+import { CreateFileExportDto, FileExport, FileExportSchema, UpdateFileExportSchema } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
 import { IndexDescription } from 'mongodb';
 import { z } from 'zod';
 
 /* * */
 
-class FileExportsClass extends MongoCollectionClass<FileExport, CreateFileExportDto, Partial<FileExport>> {
+class FileExportsClass extends MongoCollectionClass<FileExport, CreateFileExportDto<any>, Partial<FileExport>> {
 	//
 
 	//
@@ -16,7 +17,8 @@ class FileExportsClass extends MongoCollectionClass<FileExport, CreateFileExport
 	private static _instance: FileExportsClass;
 
 	protected override createSchema: z.ZodSchema = FileExportSchema;
-	protected override updateSchema: z.ZodSchema = FileExportSchema;
+	protected override updateSchema: z.ZodSchema = UpdateFileExportSchema;
+
 	private constructor() {
 		super();
 	}

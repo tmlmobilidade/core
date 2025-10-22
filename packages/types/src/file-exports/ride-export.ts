@@ -90,20 +90,20 @@ export const FlatRideSchema = z.object({
 /* PROPERTIES SCHEMA */
 /* * */
 export const RideExportPropertiesSchema = z.object({
-	agency_ids: z.array(RideSchema.shape.agency_id).optional(),
-	end_date: RideSchema.shape.end_time_scheduled,
-	line_ids: z.array(RideSchema.shape.line_id).optional(),
-	start_date: RideSchema.shape.start_time_scheduled,
+	properties: z.object({
+		agency_ids: z.array(RideSchema.shape.agency_id).optional(),
+		end_date: RideSchema.shape.end_time_scheduled,
+		line_ids: z.array(RideSchema.shape.line_id).optional(),
+		start_date: RideSchema.shape.start_time_scheduled,
+	}),
+	type: z.literal('ride'),
 });
 
 /* CREATE SCHEMA */
 /* * */
+export const RideExportSchema = FileExportBaseSchema.extend(RideExportPropertiesSchema.shape).strict();
 
-export const RideExportSchema = FileExportBaseSchema.extend({
-	properties: RideExportPropertiesSchema,
-	type: z.literal('ride'),
-}).strict();
-
-export type RideExport = z.infer<typeof RideExportSchema>;
+/* TYPES */
+/* * */
 export type RideExportProperties = z.infer<typeof RideExportPropertiesSchema>;
 export type RideExportData = z.infer<typeof FlatRideSchema>;

@@ -39,8 +39,8 @@ export function AppWrapperMenuList<T>({ data, itemComponent, maxDisplayedItems, 
 	return (
 		<Section flexDirection="column" gap="sm" padding="sm" width="100%">
 			<Label size="sm">({data.length}) {title}</Label>
-			{displayData.map(item => (
-				React.createElement(itemComponent, { item })
+			{displayData.map((item, idx) => (
+				React.createElement(itemComponent, { item, key: idx })
 			))}
 
 			{(data.length > (maxDisplayedItems ?? 0)) && (

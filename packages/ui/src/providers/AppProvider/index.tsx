@@ -2,6 +2,7 @@
 
 /* * */
 
+import { ExportsContextProvider } from '@/contexts/exports.context';
 import { MapContextProvider } from '@/contexts/Map.context';
 import { MeContextProvider } from '@/contexts/Me.context';
 import { NotificationsContextProvider } from '@/contexts/Notifications.context';
@@ -16,12 +17,15 @@ import { type PropsWithChildren } from 'react';
 export function AppProvider({ children }: PropsWithChildren) {
 	return (
 		<MeContextProvider>
+
 			<NotificationsContextProvider>
-				<ThemeContextProvider>
-					<MapContextProvider>
-						{children}
-					</MapContextProvider>
-				</ThemeContextProvider>
+				<ExportsContextProvider>
+					<ThemeContextProvider>
+						<MapContextProvider>
+							{children}
+						</MapContextProvider>
+					</ThemeContextProvider>
+				</ExportsContextProvider>
 			</NotificationsContextProvider>
 		</MeContextProvider>
 	);

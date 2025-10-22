@@ -4,6 +4,7 @@
 
 import { Label } from '@/components/display/Label';
 import { Section } from '@/components/layout/Section';
+import { useExportsContext } from '@/contexts/exports.context';
 import { IconCheck, IconCircleDashed, IconFileDownload, IconLoader2, IconX } from '@tabler/icons-react';
 import { FileExport } from '@tmlmobilidade/types';
 import { useMemo } from 'react';
@@ -16,6 +17,8 @@ export function ExportsMenuItem({ fileExport }: { fileExport: FileExport }) {
 
 	//
 	// A. Setup variables
+	const exportsContext = useExportsContext();
+
 	const icon = useMemo(() => {
 		switch (fileExport.processing_status) {
 			case 'complete':
@@ -36,7 +39,7 @@ export function ExportsMenuItem({ fileExport }: { fileExport: FileExport }) {
 		<div className={styles.root}>
 			<div
 				className={styles.left}
-				// onClick={() => meContext.actions.downloadFileExport(fileExport._id)}
+				onClick={() => exportsContext.actions.download(fileExport._id)}
 			>
 				<Section flexDirection="row" gap="sm" justifyContent="space-between" padding="none" width="fit-content">
 					<div className={styles.iconWrapper}>{icon}</div>

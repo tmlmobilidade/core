@@ -29,7 +29,14 @@ export function ProposedChangesWrapperModal<S extends ScopeKey>({ inputName, isN
 
 	return (
 		<Modal onClose={onClose} opened={isOpen} size="xl" title={`Proposta de alteração para: ${label}`}>
-			<ProposedChangesWrapperModalContent inputName={inputName} isNew={isNew} originalInput={originalInput} proposedChanges={proposedChangesData || []} relatedId={relatedId} scope={scope} />
+			<ProposedChangesWrapperModalContent
+				inputName={inputName}
+				isNew={isNew}
+				originalInput={originalInput}
+				proposedChanges={proposedChangesData || []}
+				relatedId={relatedId}
+				scope={scope}
+			/>
 		</Modal>
 	);
 

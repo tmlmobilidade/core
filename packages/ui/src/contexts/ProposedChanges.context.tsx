@@ -3,7 +3,7 @@
 
 import { Line } from '@carrismetropolitana/api-types/network';
 import { getAppConfig, HttpException } from '@tmlmobilidade/lib';
-import { CreateProposedChangeDto, ProposedChange, Stop } from '@tmlmobilidade/types';
+import { CreateProposedChangeDto, Facilities, facilitiesSchema, ProposedChange, Stop } from '@tmlmobilidade/types';
 import { fetchData } from '@tmlmobilidade/utils';
 import { createContext, type PropsWithChildren, useContext, useEffect, useMemo, useState } from 'react';
 import useSWR from 'swr';
@@ -68,48 +68,62 @@ export function ProposedChangesContextProvider<S extends ScopeKey>({ children, r
 	//
 	// C. Handle actions
 
-	// C. Handle actions
 	const approve = async <S extends ScopeKey>(id: string, field: keyof ScopeEntityMap[S] | string, relatedId: string, value: unknown) => {
 		try {
-			await fetchData(`${getAppConfig('auth', 'api_url')}/proposed-changes/${id}`, 'PUT', { status: 'approved' });
 			const normalizedField = String(field).startsWith('near_') ? String(field).replace(/^near_/, '') : String(field);
 
-			if (scope === 'stop') {
-				const stopResponse = await fetchData(`${getAppConfig('stops', 'api_url')}/stops/${relatedId}`, 'GET');
-				const stop = stopResponse.data as Stop;
-				const updateBody: Record<string, unknown> = {};
-				const arrayField: keyof Stop = 'facilities';
-				const validFacilityValues: Stop['facilities'] = ['school', 'fire_station', 'health_clinic', 'historic_building', 'hospital', 'police_station', 'shopping', 'transit_office', 'university', 'beach'];
+			// 1. Map scope to API endpoint on the correct entity
+			const entityEndpoints: Record<ScopeKey, string> = {
+				line: 'lines',
+				stop: 'stops',
+			};
 
-				// Case 1: direct array update
-				if (normalizedField === arrayField && Array.isArray(stop[arrayField])) {
-					const currentArray = stop[arrayField] as Stop['facilities'];
-					const typedValue = value as Stop['facilities'][number];
-					const exists = currentArray.includes(typedValue);
-					updateBody[arrayField] = exists ? currentArray.filter(item => item !== typedValue) : [...currentArray, typedValue];
-				}
+			const app = entityEndpoints[scope];
 
-				// Case 2: normalizedField represents a facility item
-				else if (
-					validFacilityValues.includes(normalizedField as Stop['facilities'][number]) && Array.isArray(stop[arrayField])
-				) {
-					const currentArray = stop[arrayField] as Stop['facilities'];
-					const stringValue = normalizedField as Stop['facilities'][number];
-					const exists = currentArray.includes(stringValue);
+			const entityResponse = await fetchData(`${getAppConfig(app, 'api_url')}/${app}/${relatedId}`, 'GET');
+			const entity = entityResponse.data as ScopeEntityMap[S];
 
-					updateBody[arrayField] = exists ? currentArray.filter(item => item !== stringValue) : [...currentArray, stringValue];
-				}
+			// 2. Prepare update body
 
-				// Case 3: normal field update (any value allowed)
-				else if (normalizedField in stop) {
-					updateBody[normalizedField] = value;
-					console.log('Updating normal field:', normalizedField, value);
-				}
-				await fetchData(`${getAppConfig('stops', 'api_url')}/stops/${relatedId}`, 'PUT', updateBody);
+			const updateBody: Record<string, unknown> = {};
+
+			// 3. Special handling for facilities array (only for stops)
+
+			if (scope === 'stop' && normalizedField === 'facilities' && Array.isArray(entity['facilities'])) {
+				const currentArray = entity['facilities'] as Facilities[];
+				const typedValue = value as Facilities;
+				const exists = currentArray.includes(typedValue);
+				updateBody['facilities'] = exists ? currentArray.filter(item => item !== typedValue) : [...currentArray, typedValue];
 			}
+
+			// 4. Special handling for individual facility item (only for stops)
+
+			else if (
+				scope === 'stop'
+				&& facilitiesSchema.options.includes(normalizedField as Facilities)
+				&& Array.isArray(entity['facilities'])
+			) {
+				const currentArray = entity['facilities'] as Facilities[];
+				const stringValue = normalizedField as Facilities;
+				const exists = currentArray.includes(stringValue);
+				updateBody['facilities'] = exists
+					? currentArray.filter(item => item !== stringValue)
+					: [...currentArray, stringValue];
+			}
+			// 5. Generic field update for any entity
+
+			else if (normalizedField in entity) {
+				updateBody[normalizedField] = value;
+			}
+
+			// 6. Update entity and approve proposal
+
+			await fetchData(`${getAppConfig(app, 'api_url')}/${app}/${relatedId}`, 'PUT', updateBody);
+			await fetchData(`${getAppConfig('auth', 'api_url')}/proposed-changes/${id}`, 'PUT', { status: 'approved' });
 		}
 		catch (error) {
 			console.error('Error approving proposed change:', error);
+			await fetchData(`${getAppConfig('auth', 'api_url')}/proposed-changes/${id}`, 'PUT', { status: 'pending' });
 		}
 	};
 

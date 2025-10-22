@@ -1,81 +1,51 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ScopeEntityMap, ScopeKey } from '@/contexts/ProposedChanges.context';
 import { CreateProposedChangeDto, ProposedChange } from '@tmlmobilidade/types';
-import React from 'react';
+import React, { useEffect, useId, useState } from 'react';
 
-interface ProposedChangesInteractiveInputProps<S extends ScopeKey> {
+interface ProposedChangesClonedInputProps<S extends ScopeKey> {
 	originalInput: React.ReactElement<any>
 	proposedChangeData?: ProposedChange<ScopeEntityMap[S]>
 	setProposedChange: (value: CreateProposedChangeDto<ScopeEntityMap[S]> | undefined) => void
 }
 
-export function ProposedChangesInteractiveInput<S extends ScopeKey>({ originalInput, proposedChangeData, setProposedChange }: ProposedChangesInteractiveInputProps<S>) {
+export function ProposedChangesClonedInput<S extends ScopeKey>({
+	originalInput,
+	proposedChangeData,
+	setProposedChange,
+}: ProposedChangesClonedInputProps<S>) {
 	//
+	// A. Extract basic input info
 
-	//
-	// A. Setup variables
-
-	const inputName = (originalInput.type as any)?.displayName || (originalInput.type as any)?.name || '';
+	const inputName
+		= (originalInput.type as any)?.displayName || (originalInput.type as any)?.name || '';
 	const lc = inputName.toLowerCase();
 
 	const isCheckbox = lc.includes('checkbox') || lc.includes('switch');
 	const isCombobox = lc.includes('combobox') || lc.includes('select');
 
-	const origOnChange = originalInput.props?.onChange;
-	const newProps: any = {};
-
-	if (proposedChangeData) {
-		newProps.disabled = true;
-
-		if (isCheckbox) {
-			newProps.checked = Boolean(proposedChangeData.curr_value);
-			newProps.onChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-				handleChange(e.currentTarget.checked);
-		}
-		else if (isCombobox) {
-			newProps.value = proposedChangeData.curr_value ?? '';
-			newProps.onChange = (v: any) => handleChange(v);
-		}
-		else {
-			newProps.value = proposedChangeData.curr_value?.toString() ?? '';
-			newProps.onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => handleChange(e.currentTarget.value);
-		}
-	}
-	else {
-		// No proposedChangeData — input is interactive, but we wrap onChange to capture
-		if (isCheckbox) {
-			newProps.onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-				handleChange(e.currentTarget.checked);
-				origOnChange?.(e);
-			};
-			// do not override checked
-		}
-		else if (isCombobox) {
-			newProps.onChange = (v: any) => {
-				handleChange(v);
-				origOnChange?.(v);
-			};
-			// do not override value
-		}
-		else {
-			newProps.onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-				handleChange(e.currentTarget.value);
-				origOnChange?.(e);
-			};
-			// do not override value
-		}
-		// preserve disabled prop from original if any
-		if (originalInput.props.disabled !== undefined) {
-			newProps.disabled = originalInput.props.disabled;
-		}
-	}
-
-	const cloned = React.cloneElement(originalInput, newProps);
+	const ComponentType = originalInput.type as any;
+	const baseProps = { ...originalInput.props }; // copy but don’t reuse refs
+	const uniqueKey = useId();
 
 	//
-	// B. Handle Actions
+	// B. Local isolated state
+	// Each clone maintains its own independent value, no syncing with original
+	const [localValue, setLocalValue] = useState<any>(
+		proposedChangeData?.curr_value ?? baseProps.defaultValue ?? '',
+	);
 
+	useEffect(() => {
+		if (proposedChangeData) {
+			setLocalValue(proposedChangeData.curr_value);
+		}
+	}, [proposedChangeData]);
+
+	//
+	// C. Handle changes locally
 	const handleChange = (value: any) => {
+		setLocalValue(value);
+
 		setProposedChange({
 			...proposedChangeData,
 			curr_value: value,
@@ -83,13 +53,30 @@ export function ProposedChangesInteractiveInput<S extends ScopeKey>({ originalIn
 	};
 
 	//
-	// C. Render Components
+	// D. Build independent props — no onChange leaks, no shared refs
+	const newProps: any = {
+		...baseProps,
+		disabled: proposedChangeData ? true : baseProps.disabled,
+		id: `${baseProps.id ?? inputName}-${uniqueKey}`,
+	};
 
-	return (
-		<>
-			{cloned}
-		</>
-	);
+	if (isCheckbox) {
+		newProps.checked = Boolean(localValue);
+		newProps.onChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+			handleChange(e.currentTarget.checked);
+	}
+	else if (isCombobox) {
+		newProps.value = localValue ?? '';
+		newProps.onChange = (v: any) => handleChange(v);
+	}
+	else {
+		newProps.value = localValue?.toString() ?? '';
+		newProps.onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+			handleChange(e.currentTarget.value);
+	}
 
 	//
+	// E. Render isolated input — fully detached from the original
+
+	return <ComponentType key={uniqueKey} {...newProps} />;
 }

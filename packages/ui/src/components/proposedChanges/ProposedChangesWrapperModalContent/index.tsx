@@ -1,9 +1,9 @@
 /* * */
 
 import { Button } from '@/components';
+import { ProposedChangesClonedInput } from '@/components/proposedChanges/ProposedChangesClonedInput';
 import { ProposedChangesWrapperContentItemActions } from '@/components/proposedChanges/ProposedChangesWrapperContentItemActions';
 import { ProposedChangesWrapperModalContentHeader } from '@/components/proposedChanges/ProposedChangesWrapperModalContentHeader';
-import { ProposedChangesWrapperModalContentItem } from '@/components/proposedChanges/ProposedChangesWrapperModalContentItem';
 import { ProposedChangesWrapperModalMetadata } from '@/components/proposedChanges/ProposedChangesWrapperModalMetadata';
 import { useMeContext } from '@/contexts';
 import { ScopeEntityMap, ScopeKey, useProposedChangesContext } from '@/contexts/ProposedChanges.context';
@@ -74,7 +74,7 @@ export function ProposedChangesWrapperModalContent<S extends ScopeKey>({ inputNa
 
 			{addingNew && (
 				<div className={styles.proposedChangeItemWrapper}>
-					<ProposedChangesWrapperModalContentItem originalInput={originalInput} proposedChangeData={undefined} setProposedChange={setProposedChangeData} />
+					<ProposedChangesClonedInput originalInput={originalInput} proposedChangeData={undefined} setProposedChange={setProposedChangeData} />
 					<ProposedChangesWrapperContentItemActions isNew={true} permissions={permissions} submit={handleSubmit} />
 				</div>
 			)}
@@ -82,7 +82,7 @@ export function ProposedChangesWrapperModalContent<S extends ScopeKey>({ inputNa
 			{proposedChanges.map(proposedChange => (
 				<div key={proposedChange?._id} className={styles.proposedChangeItemWrapper}>
 					<ProposedChangesWrapperModalMetadata proposedChangeData={proposedChange} />
-					<ProposedChangesWrapperModalContentItem originalInput={originalInput} proposedChangeData={proposedChange} setProposedChange={setProposedChangeData} />
+					<ProposedChangesClonedInput originalInput={originalInput} proposedChangeData={proposedChange} setProposedChange={setProposedChangeData} />
 					<ProposedChangesWrapperContentItemActions approve={() => proposedChangesContext.actions.approve?.(proposedChange?._id, inputName, relatedId, proposedChange.curr_value)} isNew={isNew} permissions={permissions} reject={() => proposedChangesContext.actions.reject?.(proposedChange?._id || '')} status={proposedChange.status} submit={handleSubmit} />
 				</div>
 			))}

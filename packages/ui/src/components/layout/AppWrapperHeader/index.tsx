@@ -8,6 +8,7 @@ import { useState } from 'react';
 
 import styles from './styles.module.css';
 
+import { AppWrapperExportCentral } from '../AppWrapperExportCentral';
 import { AppWrapperNotificationCentral } from '../AppWrapperNotificationCentral';
 import { AppWrapperOptions } from '../AppWrapperOptions';
 import { Spacer } from '../Spacer';
@@ -47,6 +48,7 @@ export function AppWrapperHeader({ userName }: AppWrapperHeaderProps) {
 		<div className={styles.container}>
 			<Label size="md" caps singleLine>{drawnGreeting} {userName}</Label>
 			<Spacer />
+			<AppWrapperExportCentral />
 			<AppWrapperNotificationCentral />
 			<AppWrapperOptions />
 		</div>

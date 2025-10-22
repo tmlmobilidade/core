@@ -26,6 +26,10 @@
 	color: var(--color-system-text-300);
 }
 
+.input:disabled {
+	cursor: not-allowed;
+}
+
 .input:focus {
 	background-color: var(--color-system-background-100);
 	border-color: var(--color-primary);

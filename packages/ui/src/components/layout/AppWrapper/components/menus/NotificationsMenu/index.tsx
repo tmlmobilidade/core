@@ -2,17 +2,17 @@
 
 /* * */
 
+import { AppWrapperMenu } from '@/components/layout/AppWrapper/components/common/AppWrapperMenu';
+import { AppWrapperMenuList } from '@/components/layout/AppWrapper/components/common/AppWrapperMenuList';
+import { AppWrapperMenuNoContent } from '@/components/layout/AppWrapper/components/common/AppWrapperMenuNoContent';
 import { useNotificationsContext } from '@/contexts/Notifications.context';
 import { IconBell, IconBellOff } from '@tabler/icons-react';
 
-import { AppWrapperMenu } from '../AppWrapperMenu';
-import { AppWrapperMenuList } from '../AppWrapperMenuList';
-import { AppWrapperMenuNoContent } from '../AppWrapperMenuNoContent';
-import { AppWrapperNotificationsItem } from '../AppWrapperNotificationsItem';
+import { NotificationsMenuItem } from '../NotificationsMenuItem';
 
 /* * */
 
-export function AppWrapperNotificationCentral() {
+export function NotificationsMenu() {
 	//
 
 	//
@@ -30,8 +30,8 @@ export function AppWrapperNotificationCentral() {
 	return (
 		<AppWrapperMenu counter={unreadNotifications.length} icon={IconBell}>
 
-			<AppWrapperMenuList data={unreadNotifications} itemComponent={({ item }) => <AppWrapperNotificationsItem notification={item} />} title="Não Lidas" />
-			<AppWrapperMenuList data={readNotifications} itemComponent={({ item }) => <AppWrapperNotificationsItem	notification={item} />} title="Lidas" />
+			<AppWrapperMenuList data={unreadNotifications} itemComponent={({ item }) => <NotificationsMenuItem notification={item} />} title="Não Lidas" />
+			<AppWrapperMenuList data={readNotifications} itemComponent={({ item }) => <NotificationsMenuItem notification={item} />} title="Lidas" />
 
 			{notifications.length === 0 && (
 				<AppWrapperMenuNoContent icon={IconBellOff} text="Sem notificações disponíveis" />

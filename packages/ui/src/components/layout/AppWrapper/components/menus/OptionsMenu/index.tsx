@@ -8,7 +8,7 @@ import { AVAILABLE_MODES, AVAILABLE_THEMES, useThemeContext } from '@/contexts/T
 import { ColorSwatch, Menu } from '@mantine/core';
 import { IconBellRinging, IconChevronRight, IconColorSwatch, IconLogout, IconSettings, IconSunMoon } from '@tabler/icons-react';
 
-import { AppWrapperMenu } from '../AppWrapperMenu';
+import { AppWrapperMenu } from '../../common/AppWrapperMenu';
 
 /* * */
 
@@ -22,7 +22,7 @@ interface MenuItem {
 
 /* * */
 
-export function AppWrapperOptions() {
+export function OptionsMenu() {
 	//
 
 	//

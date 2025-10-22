@@ -13,7 +13,7 @@ import styles from './styles.module.css';
 
 /* * */
 
-export function AppWrapperNotificationsItem({ notification }: { notification: Notification }) {
+export function NotificationsMenuItem({ notification }: { notification: Notification }) {
 	//
 
 	//

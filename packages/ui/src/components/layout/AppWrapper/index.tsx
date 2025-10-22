@@ -2,7 +2,7 @@
 
 /* * */
 
-import { AppWrapperHeader } from '@/components/layout/AppWrapperHeader';
+import { AppWrapperHeader } from '@/components/layout/AppWrapper/components/common/AppWrapperHeader';
 import { Loader } from '@/components/loaders/Loader';
 import { Sidebar } from '@/components/sidebar/Sidebar';
 import { useMeContext } from '@/contexts/Me.context';

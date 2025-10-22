@@ -3,16 +3,14 @@
 /* * */
 
 import { Label } from '@/components/display/Label';
+import { Section } from '@/components/layout/Section';
+import { Spacer } from '@/components/layout/Spacer';
 import { Skeleton } from '@mantine/core';
 import { useState } from 'react';
 
 import styles from './styles.module.css';
 
-import { AppWrapperExportCentral } from '../AppWrapperExports';
-import { AppWrapperNotificationCentral } from '../AppWrapperNotifications';
-import { AppWrapperOptions } from '../AppWrapperOptions';
-import { Section } from '../Section';
-import { Spacer } from '../Spacer';
+import { ExportsMenu, NotificationsMenu, OptionsMenu } from '../../menus';
 
 /* * */
 
@@ -50,9 +48,9 @@ export function AppWrapperHeader({ userName }: AppWrapperHeaderProps) {
 			<Label size="md" caps singleLine>{drawnGreeting} {userName}</Label>
 			<Spacer />
 			<Section flexDirection="row" gap="xs" width="fit-content">
-				<AppWrapperExportCentral />
-				<AppWrapperNotificationCentral />
-				<AppWrapperOptions />
+				<ExportsMenu />
+				<NotificationsMenu />
+				<OptionsMenu />
 			</Section>
 		</div>
 	);

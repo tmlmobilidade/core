@@ -4,6 +4,7 @@ import { Button } from '@/components';
 import { ProposedChangesClonedInput } from '@/components/proposedChanges/ProposedChangesClonedInput';
 import { ProposedChangesWrapperContentItemActions } from '@/components/proposedChanges/ProposedChangesWrapperContentItemActions';
 import { ProposedChangesWrapperModalContentHeader } from '@/components/proposedChanges/ProposedChangesWrapperModalContentHeader';
+import { ProposedChangesWrapperModalContentNoData } from '@/components/proposedChanges/ProposedChangesWrapperModalContentNoData';
 import { ProposedChangesWrapperModalMetadata } from '@/components/proposedChanges/ProposedChangesWrapperModalMetadata';
 import { useMeContext } from '@/contexts';
 import { ScopeEntityMap, ScopeKey, useProposedChangesContext } from '@/contexts/ProposedChanges.context';
@@ -88,9 +89,7 @@ export function ProposedChangesWrapperModalContent<S extends ScopeKey>({ inputNa
 			))}
 
 			{!addingNew && proposedChanges.length === 0 && (
-				<div className={styles.proposedChangeItemWrapper}>
-					<p>Nenhum valor proposto para este campo.</p>
-				</div>
+				<ProposedChangesWrapperModalContentNoData />
 			)}
 		</>
 	);

@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
+import { useToast } from '@/hooks';
 import { Line } from '@carrismetropolitana/api-types/network';
 import { getAppConfig, HttpException } from '@tmlmobilidade/lib';
 import { CreateProposedChangeDto, Facilities, facilitiesSchema, ProposedChange, Stop } from '@tmlmobilidade/types';
 import { fetchData } from '@tmlmobilidade/utils';
 import { createContext, type PropsWithChildren, useContext, useEffect, useMemo, useState } from 'react';
-import useSWR from 'swr';
+import useSWR, { mutate } from 'swr';
 
 /* * */
 
@@ -71,33 +72,20 @@ export function ProposedChangesContextProvider<S extends ScopeKey>({ children, r
 	const approve = async <S extends ScopeKey>(id: string, field: keyof ScopeEntityMap[S] | string, relatedId: string, value: unknown) => {
 		try {
 			const normalizedField = String(field).startsWith('near_') ? String(field).replace(/^near_/, '') : String(field);
-
-			// 1. Map scope to API endpoint on the correct entity
 			const entityEndpoints: Record<ScopeKey, string> = {
 				line: 'lines',
 				stop: 'stops',
 			};
-
 			const app = entityEndpoints[scope];
-
 			const entityResponse = await fetchData(`${getAppConfig(app, 'api_url')}/${app}/${relatedId}`, 'GET');
 			const entity = entityResponse.data as ScopeEntityMap[S];
-
-			// 2. Prepare update body
-
 			const updateBody: Record<string, unknown> = {};
-
-			// 3. Special handling for facilities array (only for stops)
-
 			if (scope === 'stop' && normalizedField === 'facilities' && Array.isArray(entity['facilities'])) {
 				const currentArray = entity['facilities'] as Facilities[];
 				const typedValue = value as Facilities;
 				const exists = currentArray.includes(typedValue);
 				updateBody['facilities'] = exists ? currentArray.filter(item => item !== typedValue) : [...currentArray, typedValue];
 			}
-
-			// 4. Special handling for individual facility item (only for stops)
-
 			else if (
 				scope === 'stop'
 				&& facilitiesSchema.options.includes(normalizedField as Facilities)
@@ -110,38 +98,52 @@ export function ProposedChangesContextProvider<S extends ScopeKey>({ children, r
 					? currentArray.filter(item => item !== stringValue)
 					: [...currentArray, stringValue];
 			}
-			// 5. Generic field update for any entity
-
 			else if (normalizedField in entity) {
 				updateBody[normalizedField] = value;
 			}
-
-			// 6. Update entity and approve proposal
-
+			// Optimistic update for proposed changes list
+			const updated = [...proposedChangesData || []]?.map(change => change._id === id ? { ...change, status: 'approved' } : change);
+			await mutate(proposedChangesData, updated, false);
 			await fetchData(`${getAppConfig(app, 'api_url')}/${app}/${relatedId}`, 'PUT', updateBody);
 			await fetchData(`${getAppConfig('auth', 'api_url')}/proposed-changes/${id}`, 'PUT', { status: 'approved' });
+			useToast.success({ message: 'Proposta aprovada com sucesso', title: 'Sucesso' });
+			await mutate(proposedChangesData);
 		}
 		catch (error) {
 			console.error('Error approving proposed change:', error);
+			useToast.error({ message: 'Erro ao aprovar proposta', title: 'Erro' });
+			await mutate(proposedChangesData);
 			await fetchData(`${getAppConfig('auth', 'api_url')}/proposed-changes/${id}`, 'PUT', { status: 'pending' });
 		}
 	};
 
 	const reject = async (id: string) => {
+		const updated = [...proposedChangesData || []]?.map(change => change._id === id ? { ...change, status: 'rejected' } : change);
 		try {
+			await mutate(proposedChangesData, updated, false);
 			await fetchData(`${getAppConfig('auth', 'api_url')}/proposed-changes/${id}`, 'PUT', { status: 'rejected' });
+			useToast.success({ message: 'Proposta rejeitada com sucesso', title: 'Sucesso' });
+			await mutate(proposedChangesData);
 		}
 		catch (error) {
 			console.error('Error rejecting proposed change:', error);
+			useToast.error({ message: 'Erro ao reprovar proposta', title: 'Erro' });
+			await mutate(proposedChangesData);
 		}
 	};
 
 	const submit = async (data: CreateProposedChangeDto<Entity>) => {
 		try {
+			const optimistic = [...proposedChangesData || [], { ...data, status: 'pending' }];
+			await mutate(optimistic, false);
 			await fetchData(`${getAppConfig('auth', 'api_url')}/proposed-changes`, 'POST', data);
+			useToast.success({ message: 'Proposta submetida com sucesso', title: 'Sucesso' });
+			await mutate(proposedChangesData);
 		}
 		catch (error) {
 			console.error('Error submitting proposed change:', error);
+			useToast.error({ message: 'Erro ao submeter proposta', title: 'Erro' });
+			await mutate(proposedChangesData);
 		}
 	};
 

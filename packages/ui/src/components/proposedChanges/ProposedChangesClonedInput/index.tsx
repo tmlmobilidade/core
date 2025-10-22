@@ -30,6 +30,7 @@ export function ProposedChangesClonedInput<S extends ScopeKey>({ originalInput, 
 	const ComponentType = originalInput.type as any;
 	const baseProps = { ...originalInput.props };
 	const uniqueKey = useId();
+	const newProps: any = { ...baseProps, disabled: proposedChangeData ? true : baseProps.disabled, id: `${baseProps.id ?? inputName}-${uniqueKey}` };
 
 	const [localValue, setLocalValue] = useState<any>(proposedChangeData?.curr_value ?? baseProps.defaultValue ?? '');
 
@@ -37,12 +38,9 @@ export function ProposedChangesClonedInput<S extends ScopeKey>({ originalInput, 
 	// B. Transform Data
 
 	useEffect(() => {
-		if (proposedChangeData) {
-			setLocalValue(proposedChangeData.curr_value);
-		}
+		if (!proposedChangeData) return;
+		setLocalValue(proposedChangeData.curr_value);
 	}, [proposedChangeData]);
-
-	const newProps: any = { ...baseProps, disabled: proposedChangeData ? true : baseProps.disabled, id: `${baseProps.id ?? inputName}-${uniqueKey}` };
 
 	if (isCheckbox) {
 		newProps.checked = Boolean(localValue);

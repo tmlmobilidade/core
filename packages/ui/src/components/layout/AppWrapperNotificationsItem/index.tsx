@@ -12,7 +12,8 @@ import React from 'react';
 import styles from './styles.module.css';
 
 /* * */
-export const AppWrapperNotificationCentralItemContent = ({ notification }: { notification: Notification }) => {
+
+export function AppWrapperNotificationsItem({ notification }: { notification: Notification }) {
 	//
 
 	//

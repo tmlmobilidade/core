@@ -2,7 +2,7 @@
 
 /* * */
 
-import { ActionIcon, Menu as MantineMenu } from '@mantine/core';
+import { ActionIcon, Menu } from '@mantine/core';
 import React from 'react';
 
 import styles from './styles.module.css';
@@ -29,22 +29,22 @@ export function AppWrapperMenu({ children, counter, icon, withArrow }: AppWrappe
 	// B. Render components
 
 	return (
-		<MantineMenu offset={0} position="bottom-end" shadow="lg" width="40%" withArrow={withArrow}>
-			<MantineMenu.Target>
+		<Menu offset={0} position="bottom-end" shadow="lg" width="40%" withArrow={withArrow}>
+			<Menu.Target>
 				<ActionIcon
 					className={styles.target}
 					color={hasCounter ? 'var(--color-status-danger-primary)' : 'var(--color-system-text-200)'}
 					variant="subtle"
 				>
-					{React.createElement(icon, { size: 28 })}
+					{React.createElement(icon, { size: 24 })}
 					{hasCounter && (
 						<div className={styles.counter}>{counterText}</div>
 					)}
 				</ActionIcon>
-			</MantineMenu.Target>
-			<MantineMenu.Dropdown>
+			</Menu.Target>
+			<Menu.Dropdown>
 				{children}
-			</MantineMenu.Dropdown>
-		</MantineMenu>
+			</Menu.Dropdown>
+		</Menu>
 	);
 }

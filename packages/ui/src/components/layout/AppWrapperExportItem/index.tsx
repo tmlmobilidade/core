@@ -11,7 +11,7 @@ import { useMemo } from 'react';
 import styles from './styles.module.css';
 
 /* * */
-export function AppWrapperExportCentralItemContent({ fileExport }: { fileExport: FileExport }) {
+export function AppWrapperExportsItem({ fileExport }: { fileExport: FileExport }) {
 	//
 
 	//

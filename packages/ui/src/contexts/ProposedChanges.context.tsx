@@ -69,11 +69,11 @@ export function ProposedChangesContextProvider<S extends ScopeKey>({ children, r
 	//
 	// C. Handle actions
 
-	const getProposedChangesKeyAndData = () => {
+	function getProposedChangesKeyAndData() {
 		const key = `${getAppConfig('auth', 'api_url')}/proposed-changes`;
 		const prevData = proposedChangesData ?? [];
 		return { key, prevData };
-	};
+	}
 
 	const approve = async <S extends ScopeKey>(id: string, field: keyof ScopeEntityMap[S] | string, relatedId: string, value: unknown) => {
 		const { key, prevData } = getProposedChangesKeyAndData();

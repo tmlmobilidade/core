@@ -5,8 +5,10 @@
 import { Label } from '@/components/display/Label';
 import { useMeContext } from '@/contexts';
 import { AVAILABLE_MODES, AVAILABLE_THEMES, useThemeContext } from '@/contexts/Theme.context';
-import { ActionIcon, ColorSwatch, Menu } from '@mantine/core';
+import { ColorSwatch, Menu } from '@mantine/core';
 import { IconBellRinging, IconChevronRight, IconColorSwatch, IconLogout, IconSettings, IconSunMoon } from '@tabler/icons-react';
+
+import { AppWrapperMenu } from '../../common/AppWrapperMenu';
 
 /* * */
 
@@ -20,7 +22,7 @@ interface MenuItem {
 
 /* * */
 
-export function AppWrapperOptions() {
+export function OptionsMenu() {
 	//
 
 	//
@@ -131,20 +133,13 @@ export function AppWrapperOptions() {
 	// E. Render components
 
 	return (
-		<Menu offset={0} position="bottom-end" shadow="lg" width={200}>
-			<Menu.Target>
-				<ActionIcon color="gray" variant="subtle">
-					<IconSettings size={20} />
-				</ActionIcon>
-			</Menu.Target>
-			<Menu.Dropdown>
-				<Menu.Label>Personalização</Menu.Label>
-				{MENU_ITEMS.slice(0, 2).map(renderMenuItem)}
-				<Menu.Divider />
-				<Menu.Label>Conta</Menu.Label>
-				{MENU_ITEMS.slice(2).map(renderMenuItem)}
-			</Menu.Dropdown>
-		</Menu>
+		<AppWrapperMenu icon={IconSettings}>
+			<Menu.Label>Personalização</Menu.Label>
+			{MENU_ITEMS.slice(0, 2).map(renderMenuItem)}
+			<Menu.Divider />
+			<Menu.Label>Conta</Menu.Label>
+			{MENU_ITEMS.slice(2).map(renderMenuItem)}
+		</AppWrapperMenu>
 	);
 
 	//

@@ -5,7 +5,7 @@
 import { ErrorDisplay } from '@/components/display/ErrorDisplay';
 import { LoadingOverlay } from '@/components/loaders/LoadingOverlay';
 import { getAppConfig, HttpException } from '@tmlmobilidade/lib';
-import { type User, type UserPreferenceValue } from '@tmlmobilidade/types';
+import { FileExport, type User, type UserPreferenceValue } from '@tmlmobilidade/types';
 import { fetchData, type HasPermissionResourceArgs, hasPermissionResource as hasPermissionResourceUtils, hasPermission as hasPermissionUtils } from '@tmlmobilidade/utils';
 import { createContext, type PropsWithChildren, useContext, useEffect, useMemo } from 'react';
 import useSWR from 'swr';
@@ -18,9 +18,11 @@ interface MeContextState {
 		hasPermission: (scope: string, action: string) => boolean
 		hasPermissionResource: <T>(args: HasPermissionResourceArgs<T>) => boolean
 		logout: () => Promise<void>
+		mutateFileExports: () => void
 		updatePreference: (scope: string, key: string, value: undefined | UserPreferenceValue) => Promise<void>
 	}
 	data: {
+		fileExports: FileExport[]
 		user: undefined | User
 	}
 	flags: {
@@ -48,6 +50,7 @@ export const MeContextProvider = ({ children }: PropsWithChildren) => {
 	// B. Fetch data
 
 	const { data: meData, error: meError, isLoading: meLoading, mutate: meMutate } = useSWR<User, HttpException>(`${getAppConfig('auth', 'api_url')}/users/me`);
+	const { data: fileExportsData, error: fileExportsError, isLoading: fileExportsLoading, mutate: mutateFileExports } = useSWR<FileExport[], HttpException>(`${getAppConfig('auth', 'api_url')}/file-exports`, { refreshInterval: 5_000 });
 
 	//
 	// C. Handle actions
@@ -105,16 +108,18 @@ export const MeContextProvider = ({ children }: PropsWithChildren) => {
 			hasPermission,
 			hasPermissionResource,
 			logout,
+			mutateFileExports,
 			updatePreference,
 		},
 		data: {
+			fileExports: fileExportsData || [],
 			user: meData,
 		},
 		flags: {
 			error: meError,
 			loading: meLoading,
 		},
-	}), [meData, meLoading, meError]);
+	}), [meData, meLoading, meError, fileExportsData, fileExportsLoading, fileExportsError]);
 
 	//
 	// E. Render components

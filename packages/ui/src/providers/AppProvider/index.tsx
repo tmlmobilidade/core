@@ -2,7 +2,7 @@
 
 /* * */
 
-import { ExportsContextProvider } from '@/contexts/Exports.context';
+import { ExportsContextProvider } from '@/contexts/exports.context';
 import { MapContextProvider } from '@/contexts/Map.context';
 import { MeContextProvider } from '@/contexts/Me.context';
 import { NotificationsContextProvider } from '@/contexts/Notifications.context';

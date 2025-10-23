@@ -84,7 +84,7 @@ export function ProposedChangesWrapperModalContent<S extends ScopeKey>({ inputNa
 
 			<Timeline>
 				{proposedChanges.filter(pc => pc?._id).map(proposedChange => (
-					<TimelineItem key={proposedChange._id}>
+					<TimelineItem key={proposedChange._id} status={proposedChange.status}>
 						<div className={styles.proposedChangeItemWrapper}>
 							<ProposedChangesWrapperModalMetadata proposedChangeData={proposedChange} />
 							<ProposedChangesClonedInput originalInput={originalInput} proposedChangeData={proposedChange} setProposedChange={setProposedChangeData} />

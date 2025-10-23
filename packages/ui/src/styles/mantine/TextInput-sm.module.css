@@ -13,6 +13,10 @@
 	border-radius: var(--border-radius-sm);
 }
 
+ .input:disabled{
+	color: var(--color-system-text-100);
+ }
+
 .input::placeholder {
 	color: var(--color-system-text-300);
 }

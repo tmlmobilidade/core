@@ -27,6 +27,10 @@
 	color: var(--color-system-text-300);
 }
 
+.input:disabled{
+	color: var(--color-system-text-100);
+ }
+
 .input:focus {
 	background-color: var(--color-system-background-100);
 	border-color: var(--color-primary);

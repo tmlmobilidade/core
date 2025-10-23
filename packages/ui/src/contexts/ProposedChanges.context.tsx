@@ -49,13 +49,13 @@ export function useProposedChangesContext<S extends ScopeKey>(scope: S): Propose
 /* * */
 
 export function ProposedChangesContextProvider<S extends ScopeKey>({ children, relatedId, scope }: PropsWithChildren<{ relatedId?: string, scope: S }>) {
-	type Entity = ScopeEntityMap[S];
-
 	//
 	// A. Setup variables
 
+	const entityEndpoints: Record<ScopeKey, string> = { line: 'lines', stop: 'stops' };
 	const [relatedProposedChanges, setRelatedProposedChanges] = useState<ProposedChange<Entity>[]>([]);
 	const { data: proposedChangesData, error: proposedChangesError, isLoading: proposedChangesLoading } = useSWR<ProposedChange<Entity>[], HttpException>(`${getAppConfig('auth', 'api_url')}/proposed-changes?scope=${scope}`, { refreshInterval: 2000 });
+	type Entity = ScopeEntityMap[S];
 
 	//
 	// B. Transform data
@@ -69,46 +69,14 @@ export function ProposedChangesContextProvider<S extends ScopeKey>({ children, r
 	//
 	// C. Handle actions
 
-	function getProposedChangesKeyAndData() {
-		const key = `${getAppConfig('auth', 'api_url')}/proposed-changes`;
-		const prevData = proposedChangesData ?? [];
-		return { key, prevData };
-	}
-
 	const approve = async <S extends ScopeKey>(id: string, field: keyof ScopeEntityMap[S] | string, relatedId: string, value: unknown) => {
 		const { key, prevData } = getProposedChangesKeyAndData();
 		try {
-			const normalizedField = String(field).startsWith('near_') ? String(field).replace(/^near_/, '') : String(field);
-			const entityEndpoints: Record<ScopeKey, string> = {
-				line: 'lines',
-				stop: 'stops',
-			};
 			const app = entityEndpoints[scope];
 			const entityResponse = await fetchData(`${getAppConfig(app, 'api_url')}/${app}/${relatedId}`, 'GET');
 			const entity = entityResponse.data as ScopeEntityMap[S];
-			const updateBody: Record<string, unknown> = {};
-			if (scope === 'stop' && normalizedField === 'facilities' && Array.isArray(entity['facilities'])) {
-				const currentArray = entity['facilities'] as Facilities[];
-				const typedValue = value as Facilities;
-				const exists = currentArray.includes(typedValue);
-				updateBody['facilities'] = exists ? currentArray.filter(item => item !== typedValue) : [...currentArray, typedValue];
-			}
-			else if (
-				scope === 'stop'
-				&& facilitiesSchema.options.includes(normalizedField as Facilities)
-				&& Array.isArray(entity['facilities'])
-			) {
-				const currentArray = entity['facilities'] as Facilities[];
-				const stringValue = normalizedField as Facilities;
-				const exists = currentArray.includes(stringValue);
-				updateBody['facilities'] = exists
-					? currentArray.filter(item => item !== stringValue)
-					: [...currentArray, stringValue];
-			}
-			else if (normalizedField in entity) {
-				updateBody[normalizedField] = value;
-			}
-
+			// Use helper for update body
+			const updateBody = getUpdateBodyForScope(entity, field as string, value, scope);
 			const updated = prevData.map(change => change._id === id ? { ...change, status: 'approved' } : change);
 			await mutate(key, updated, false);
 			await fetchData(`${getAppConfig(app, 'api_url')}/${app}/${relatedId}`, 'PUT', updateBody);
@@ -156,8 +124,36 @@ export function ProposedChangesContextProvider<S extends ScopeKey>({ children, r
 		}
 	};
 
+	const getProposedChangesKeyAndData = () => {
+		const key = `${getAppConfig('auth', 'api_url')}/proposed-changes?scope=${scope}`;
+		const prevData = proposedChangesData ?? [];
+		return { key, prevData };
+	};
+
+	const getUpdateBodyForScope = (entity: Record<string, any>, field: string, value: unknown, scope: ScopeKey) => {
+		const normalizedField = String(field).startsWith('near_') ? String(field).replace(/^near_/, '') : String(field);
+		const updateBody: Record<string, unknown> = {};
+
+		// Special case: facilities for stops
+		if (scope === 'stop' && Array.isArray(entity['facilities']) && (normalizedField === 'facilities' || facilitiesSchema.options.includes(normalizedField as Facilities))) {
+			const currentArray = entity['facilities'] as Facilities[];
+			const item = normalizedField === 'facilities' ? value as Facilities : normalizedField as Facilities;
+			const exists = currentArray.includes(item);
+			updateBody['facilities'] = exists ? currentArray.filter(f => f !== item) : [...currentArray, item];
+			return updateBody;
+		}
+
+		if (normalizedField in entity) {
+			updateBody[normalizedField] = value;
+			return updateBody;
+		}
+
+		return updateBody;
+	};
+
 	//
 	// E. Define context value
+
 	const contextValue: ProposedChangesContextState<Entity> = useMemo(() => ({
 		actions: { approve, reject, submit },
 		data: {
@@ -176,4 +172,6 @@ export function ProposedChangesContextProvider<S extends ScopeKey>({ children, r
 	// F. Render Components
 
 	return <ProposedChangesContext.Provider value={contextValue}>{children}</ProposedChangesContext.Provider>;
+
+	//
 }

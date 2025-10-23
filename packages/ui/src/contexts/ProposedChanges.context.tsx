@@ -44,6 +44,7 @@ interface ProposedChangesContextState<T> {
 const ProposedChangesContext = createContext<ProposedChangesContextState<any> | undefined>(undefined);
 
 export function useProposedChangesContext<S extends ScopeKey>(scope: S): ProposedChangesContextState<ScopeEntityMap[S]> {
+	void scope;
 	const context = useContext(ProposedChangesContext);
 	if (!context) {
 		throw new Error('useProposedChangesContext must be used within a ProposedChangesContextProvider');

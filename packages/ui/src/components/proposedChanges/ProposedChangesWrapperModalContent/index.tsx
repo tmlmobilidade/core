@@ -1,6 +1,6 @@
 /* * */
 
-import { Button } from '@/components';
+import { Button } from '@/components/buttons/Button';
 import { Timeline } from '@/components/common/Timeline';
 import { TimelineItem } from '@/components/common/Timeline/TimelineItem';
 import { ProposedChangesClonedInput } from '@/components/proposedChanges/ProposedChangesClonedInput';
@@ -8,7 +8,7 @@ import { ProposedChangesWrapperContentItemActions } from '@/components/proposedC
 import { ProposedChangesWrapperModalContentHeader } from '@/components/proposedChanges/ProposedChangesWrapperModalContentHeader';
 import { ProposedChangesWrapperModalContentNoData } from '@/components/proposedChanges/ProposedChangesWrapperModalContentNoData';
 import { ProposedChangesWrapperModalMetadata } from '@/components/proposedChanges/ProposedChangesWrapperModalMetadata';
-import { useMeContext } from '@/contexts';
+import { useMeContext } from '@/contexts/Me.context';
 import { ScopeEntityMap, ScopeKey, useProposedChangesContext } from '@/contexts/ProposedChanges.context';
 import { CreateProposedChangeDto, ProposedChange } from '@tmlmobilidade/types';
 import { useState } from 'react';

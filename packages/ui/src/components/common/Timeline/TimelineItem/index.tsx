@@ -19,12 +19,12 @@ export function TimelineItem({ status, ...props }: TimelineItemWithStatusProps) 
 	//
 	// A. Setup Variables
 
-	function getStatusBullet(status: Status) {
+	const getStatusBullet = (status: Status) => {
 		if (status === 'approved') return <IconCheck color="var(--color-status-success-primary)" size={16} />;
 		if (status === 'rejected') return <IconX color="var(--color-status-danger-primary)" size={16} />;
 		if (status === 'pending') return <IconHourglass color="var(--color-status-warning-primary)" size={16} />;
 		return <Icon24Hours color="var(--color-status-default)" size={16} />;
-	}
+	};
 
 	//
 	// B. Render Components

@@ -71,7 +71,7 @@ export function ProposedChangesWrapperModalContent<S extends ScopeKey>({ inputNa
 
 			<div className={styles.modalContentHeaderWrapper}>
 				<span>Valores Propostos</span>
-				<Button label="Adicionar"onClick={handleNew} />
+				{permissions.find(p => p.action === 'create') && (<Button label="Adicionar"onClick={handleNew} />)}
 			</div>
 
 			{addingNew && (

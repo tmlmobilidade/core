@@ -1,7 +1,7 @@
 /* * */
 
 import { ProposedChangesWrapperModal } from '@/components/proposedChanges/ProposedChangesWrapperModal';
-import { useProposedChangesContext } from '@/contexts';
+import { useMeContext, useProposedChangesContext } from '@/contexts';
 import { ScopeEntityMap, ScopeKey } from '@/contexts/ProposedChanges.context';
 import { IconInfoCircle } from '@tabler/icons-react';
 import { ProposedChange, Status } from '@tmlmobilidade/types';
@@ -26,7 +26,7 @@ export function ProposedChangesWrapper<S extends ScopeKey>({ children, inputName
 
 	//
 	// A. Setup variables
-
+	const meContext = useMeContext();
 	const proposedChangesContext = useProposedChangesContext(scope);
 
 	const [proposedChangesOfField, setProposedChangesOfField] = useState<ProposedChange<ScopeEntityMap[S]>[]>();
@@ -49,7 +49,7 @@ export function ProposedChangesWrapper<S extends ScopeKey>({ children, inputName
 		<div className={isCheckbox ? styles.checkboxWrapper : ''}>
 			<div className={styles.labelWrapper}>
 				{label}
-				<IconInfoCircle color={colorLevel} onClick={() => setOpened(!opened)} size={18} />
+				{meContext.data.user?.permissions.find(p => p.action === 'read' && p.scope === 'proposed_changes') && <IconInfoCircle color={colorLevel} onClick={() => setOpened(!opened)} size={18} /> }
 				<ProposedChangesWrapperModal
 					inputName={inputName}
 					isOpen={opened}

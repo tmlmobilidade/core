@@ -1,7 +1,7 @@
 /* * */
 
 import { TimelineItem as MantineTimelineItem, TimelineItemProps as MantineTimelineItemProps } from '@mantine/core';
-import { Icon24Hours, IconCheck } from '@tabler/icons-react';
+import { Icon24Hours, IconCheck, IconHourglass, IconX } from '@tabler/icons-react';
 
 /* * */
 
@@ -20,10 +20,10 @@ export function TimelineItem({ status, ...props }: TimelineItemWithStatusProps) 
 	// A. Setup Variables
 
 	function getStatusBullet(status: Status) {
-		if (status === 'approved') return <IconCheck color="var(--color-status-success-primary)" size={20} />;
-		if (status === 'rejected') return <Icon24Hours color="var(--color-status-danger-primary)" size={20} />;
-		if (status === 'pending') return <Icon24Hours color="var(--color-status-warning-primary)" size={20} />;
-		return <Icon24Hours color="var(--color-status-default)" size={20} />;
+		if (status === 'approved') return <IconCheck color="var(--color-status-success-primary)" size={16} />;
+		if (status === 'rejected') return <IconX color="var(--color-status-danger-primary)" size={16} />;
+		if (status === 'pending') return <IconHourglass color="var(--color-status-warning-primary)" size={16} />;
+		return <Icon24Hours color="var(--color-status-default)" size={16} />;
 	}
 
 	//

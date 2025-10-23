@@ -10,7 +10,7 @@ export function Timeline(props: MantineTimelineProps) {
 	//
 	// A. Render Components
 
-	return <MantineTimeline active={-1} bulletSize={24} lineWidth={2} {...props} />;
+	return <MantineTimeline active={-1} bulletSize={26} lineWidth={2} {...props} />;
 
 	//
 }

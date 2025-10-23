@@ -5,7 +5,7 @@ import { Icon24Hours, IconCheck } from '@tabler/icons-react';
 
 /* * */
 
-type Status = 'approved' | 'nonwe' | 'pending' | 'rejected';
+type Status = 'approved' | 'none' | 'pending' | 'rejected';
 
 /* * */
 

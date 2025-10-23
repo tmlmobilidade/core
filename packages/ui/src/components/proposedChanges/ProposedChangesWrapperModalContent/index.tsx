@@ -19,7 +19,6 @@ import styles from './styles.module.css';
 
 interface ProposedChangesWrapperModalContentProps<S extends ScopeKey> {
 	inputName: string
-	isNew: boolean
 	originalInput: React.ReactElement<{ disabled?: boolean }>
 	proposedChanges: ProposedChange<ScopeEntityMap[S]>[]
 	relatedId: string
@@ -28,7 +27,7 @@ interface ProposedChangesWrapperModalContentProps<S extends ScopeKey> {
 
 /* * */
 
-export function ProposedChangesWrapperModalContent<S extends ScopeKey>({ inputName, isNew, originalInput, proposedChanges, relatedId, scope }: ProposedChangesWrapperModalContentProps<S>) {
+export function ProposedChangesWrapperModalContent<S extends ScopeKey>({ inputName, originalInput, proposedChanges, relatedId, scope }: ProposedChangesWrapperModalContentProps<S>) {
 	//
 
 	//
@@ -88,7 +87,7 @@ export function ProposedChangesWrapperModalContent<S extends ScopeKey>({ inputNa
 						<div className={styles.proposedChangeItemWrapper}>
 							<ProposedChangesWrapperModalMetadata proposedChangeData={proposedChange} />
 							<ProposedChangesClonedInput originalInput={originalInput} proposedChangeData={proposedChange} setProposedChange={setProposedChangeData} />
-							<ProposedChangesWrapperContentItemActions approve={() => proposedChangesContext.actions.approve?.(proposedChange._id, inputName, relatedId, proposedChange.curr_value)} isNew={isNew} permissions={permissions} reject={() => proposedChangesContext.actions.reject?.(proposedChange._id)} status={proposedChange.status} submit={handleSubmit} />
+							<ProposedChangesWrapperContentItemActions approve={() => proposedChangesContext.actions.approve?.(proposedChange._id, inputName, relatedId, proposedChange.curr_value)} isNew={addingNew} permissions={permissions} reject={() => proposedChangesContext.actions.reject?.(proposedChange._id)} status={proposedChange.status} submit={handleSubmit} />
 						</div>
 					</TimelineItem>
 				))}

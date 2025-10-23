@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 /* * */
+
 import { ScopeEntityMap, ScopeKey } from '@/contexts/ProposedChanges.context';
 import { CreateProposedChangeDto, ProposedChange } from '@tmlmobilidade/types';
 import React, { useEffect, useId, useState } from 'react';

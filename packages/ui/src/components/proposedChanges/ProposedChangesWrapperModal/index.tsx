@@ -9,7 +9,6 @@ import { ProposedChange } from '@tmlmobilidade/types';
 
 interface ProposedChangesWrapperModalProps<S extends ScopeKey> {
 	inputName: string
-	isNew: boolean
 	isOpen: boolean
 	label: string
 	onClose: () => void
@@ -21,7 +20,7 @@ interface ProposedChangesWrapperModalProps<S extends ScopeKey> {
 
 /* * */
 
-export function ProposedChangesWrapperModal<S extends ScopeKey>({ inputName, isNew, isOpen, label, onClose, originalInput, proposedChangesData, relatedId, scope }: ProposedChangesWrapperModalProps<S>) {
+export function ProposedChangesWrapperModal<S extends ScopeKey>({ inputName, isOpen, label, onClose, originalInput, proposedChangesData, relatedId, scope }: ProposedChangesWrapperModalProps<S>) {
 	//
 
 	//
@@ -31,7 +30,6 @@ export function ProposedChangesWrapperModal<S extends ScopeKey>({ inputName, isN
 		<Modal onClose={onClose} opened={isOpen} size="xl" title={`Proposta de alteração para: ${label}`}>
 			<ProposedChangesWrapperModalContent
 				inputName={inputName}
-				isNew={isNew}
 				originalInput={originalInput}
 				proposedChanges={proposedChangesData || []}
 				relatedId={relatedId}

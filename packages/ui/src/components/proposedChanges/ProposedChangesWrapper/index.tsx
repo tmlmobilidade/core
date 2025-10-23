@@ -31,14 +31,9 @@ export function ProposedChangesWrapper<S extends ScopeKey>({ children, inputName
 
 	const [proposedChangesOfField, setProposedChangesOfField] = useState<ProposedChange<ScopeEntityMap[S]>[]>();
 	const [opened, setOpened] = useState(false);
-	const [isNew, setIsNew] = useState(true);
 	const [status, setStatus] = useState<'none' | Status>('none');
 	const isCheckbox = children.type.toString().toLowerCase().includes('checkbox');
 	const colorLevel = status === 'pending' ? 'var(	--color-status-warning-primary)' : status === 'approved' ? ' var(--color-status-success-primary)' : status === 'rejected' ? 'var(--color-status-danger-primary)' : 'var(--color-system-text-200)';
-
-	useEffect(() => {
-		setIsNew(proposedChangesContext.data.allProposedChangesByRelatedId.length === 0);
-	}, [proposedChangesContext.data.allProposedChangesByRelatedId]);
 
 	useEffect(() => {
 		const hasPending = proposedChangesContext.data.allProposedChangesByRelatedId?.find(pc => pc?.status === 'pending' && pc.field === inputName);
@@ -57,7 +52,6 @@ export function ProposedChangesWrapper<S extends ScopeKey>({ children, inputName
 				<IconInfoCircle color={colorLevel} onClick={() => setOpened(!opened)} size={18} />
 				<ProposedChangesWrapperModal
 					inputName={inputName}
-					isNew={isNew}
 					isOpen={opened}
 					label={label || ''}
 					onClose={() => setOpened(!opened)}

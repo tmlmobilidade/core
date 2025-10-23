@@ -1,11 +1,14 @@
 /* * */
 
 import { MongoCollectionClass } from '@/mongo-collection.js';
-import { CreateNotificationDto, Notification, NotificationSchema, UpdateNotificationDto, UpdateNotificationSchema } from '@tmlmobilidade/types';
-import { AsyncSingletonProxy } from '@tmlmobilidade/utils';
+import { sendNotificationEmail } from '@tmlmobilidade/emails';
+import { getAppConfig } from '@tmlmobilidade/lib';
+import { CreateNotificationDto, Notification, NotificationPermission, NotificationSchema, Permission, Role, UpdateNotificationDto, UpdateNotificationSchema, User } from '@tmlmobilidade/types';
+import { AsyncSingletonProxy, mergeObjects } from '@tmlmobilidade/utils';
 import { IndexDescription } from 'mongodb';
 import { z } from 'zod';
 
+import { roles } from '../auth/roles.js';
 import { users } from '../auth/users.js';
 
 /* * */
@@ -28,13 +31,65 @@ class NotificationsClass extends MongoCollectionClass<Notification, CreateNotifi
 		return NotificationsClass._instance;
 	}
 
-	public async sendNotification(notification: CreateNotificationDto): Promise<void> {
-		const usersWithTopic = await users.findMany({ 'permissions.action': notification.topic });
+	public async sendNotification(
+		scope: string,
+		topic: string,
+		user: User,
+		id: string,
+		title: string,
+		description: string,
+	): Promise<void> {
+		// Fetch roles and users that have access to this topic
+		const rolesWithTopic = await roles.findMany({ 'permissions.action': topic });
+		const roleIdsWithTopic = rolesWithTopic.map(r => r._id);
+
+		const usersWithTopic = await users.findMany({
+			$or: [
+				{ 'permissions.action': topic },
+				{ role_ids: { $in: roleIdsWithTopic } },
+			],
+		});
 
 		if (usersWithTopic.length === 0) return;
 
-		for (const user of usersWithTopic.filter(u => u._id !== notification.created_by)) {
-			const newNotification: CreateNotificationDto = { ...notification, user_id: user._id };
+		// Base notification template
+		const baseNotification: CreateNotificationDto = {
+			created_by: user?._id,
+			is_read: false,
+			payload: {
+				body: description,
+				href: `${getAppConfig(scope, 'frontend_url')}/${scope}/${id}`,
+				icon: scope,
+				title,
+			},
+			priority: 'normal',
+			scope,
+			topic,
+			updated_by: user?._id,
+		};
+
+		// Iterate over eligible users (excluding creator)
+		for (const recipient of usersWithTopic.filter(u => u._id !== baseNotification.created_by)) {
+			const permissions = this.collectUserPermissions(recipient, rolesWithTopic);
+			const canReceiveEmail = this.getNotificationPermission(permissions, topic);
+
+			const newNotification: CreateNotificationDto = { ...baseNotification, user_id: recipient._id };
+
+			// Send email if permission allows
+			if (canReceiveEmail) {
+				await sendNotificationEmail({
+					props: {
+						body: baseNotification.payload.body,
+						href: baseNotification.payload.href ?? '',
+						priority: baseNotification.priority,
+						scope: baseNotification.scope,
+						title: baseNotification.payload.title,
+						topic: baseNotification.topic,
+					},
+					to: recipient.email,
+				});
+			}
+
 			await notifications.insertOne(newNotification);
 		}
 	}
@@ -55,6 +110,40 @@ class NotificationsClass extends MongoCollectionClass<Notification, CreateNotifi
 
 	protected getEnvName(): string {
 		return 'DATABASE_URI';
+	}
+
+	/**
+	 * Collects all effective permissions of a user (direct + via roles),
+	 * merging duplicates by (scope:action).
+	 */
+	private collectUserPermissions(user: User, rolesWithTopic: Role[]): Map<string, Permission<unknown>> {
+		const rolePermissions = rolesWithTopic
+			.filter(role => user.role_ids?.includes(role._id))
+			.flatMap(role => role.permissions ?? []);
+
+		const allPermissions = [...rolePermissions, ...(user.permissions ?? [])];
+
+		const map = new Map<string, Permission<unknown>>();
+
+		for (const permission of allPermissions) {
+			const key = `${permission.scope}:${permission.action}`;
+			const existing = map.get(key);
+
+			map.set(key, existing ? mergeObjects(existing, permission as Permission<unknown>) : permission as Permission<unknown>);
+		}
+
+		return map;
+	}
+
+	/**
+	 * Determines whether a user can receive email notifications for a topic.
+	 */
+	private getNotificationPermission(
+		permissions: Map<string, Permission<unknown>>,
+		topic: string,
+	): boolean {
+		const permission = permissions.get(`notifications:${topic}`);
+		return (permission?.resource as NotificationPermission)?.send_mail ?? false;
 	}
 }
 

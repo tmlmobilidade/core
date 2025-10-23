@@ -31,3 +31,12 @@ We have a [code of conduct](/code-of-conduct) that we expect all contributors to
 ## 📝 License
 
 This project is licensed under the [GNU AFFERO GENERAL PUBLIC LICENSE](https://www.github.com/tmlmobilidade/core/blob/main/LICENSE).
+
+
+----
+
+To setup yalc
+
+In this repo: `npm run build:packages && npm run yalc:push`
+
+In the other repos: `yalc link @tmlmobilidade/connectors @tmlmobilidade/interfaces @tmlmobilidade/lib @tmlmobilidade/utils @tmlmobilidade/types @tmlmobilidade/ui --no-pure`

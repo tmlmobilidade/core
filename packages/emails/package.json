@@ -37,21 +37,21 @@
 		"lint": "eslint ./src/ && tsc --noEmit"
 	},
 	"dependencies": {
-		"@react-email/components": "0.5.5",
+		"@react-email/components": "0.5.7",
 		"@tmlmobilidade/utils": "*",
 		"@types/nodemailer": "7.0.2",
 		"browserslist": "4.26.3",
-		"nodemailer": "7.0.7",
+		"nodemailer": "7.0.9",
 		"react": "19.1.1",
-		"react-email": "4.2.12"
+		"react-email": "4.3.1"
 	},
 	"devDependencies": {
 		"@carrismetropolitana/eslint": "20250622.1204.50",
-		"@react-email/preview-server": "4.2.12",
+		"@react-email/preview-server": "4.3.1",
 		"@tmlmobilidade/lib": "*",
 		"@tmlmobilidade/tsconfig": "*",
 		"@tmlmobilidade/types": "*",
-		"@types/node": "24.7.0",
+		"@types/node": "24.9.1",
 		"resolve-tspaths": "0.8.23",
 		"rimraf": "6.0.1",
 		"typescript": "5.9.3"

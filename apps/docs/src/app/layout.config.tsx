@@ -1,16 +1,15 @@
-import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
+/* * */
 
-import { Themer, TMLogoDark, TMLogoLight } from '@tmlmobilidade/ui';
+import { TMLogoDark, TMLogoLight, WhenMode } from '@tmlmobilidade/ui';
+import { type BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
 
 /**
- * Shared layout configurations
- *
+ * Shared layout configurations.
  * you can customise layouts individually from:
  * Home Layout: app/(home)/layout.tsx
  * Docs Layout: app/docs/layout.tsx
  */
 export const baseOptions: BaseLayoutProps = {
-	disableThemeSwitch: true,
 	githubUrl: 'https://github.com/tmlmobilidade',
 	i18n: false,
 	// links: [
@@ -23,7 +22,7 @@ export const baseOptions: BaseLayoutProps = {
 	nav: {
 		title: (
 			<div className="px-4 pb-4">
-				<Themer
+				<WhenMode
 					dark={<TMLogoDark />}
 					light={<TMLogoLight />}
 				/>

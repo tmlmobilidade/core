@@ -21,6 +21,12 @@
 }
 
 /* * */
+/* ROW / IS SELECTED */
+.row[data-is-selected='true'] {
+	background-color: var(--color-background);
+}
+
+/* * */
 /* * */
 /* * */
 

@@ -108,6 +108,27 @@ const APP_CONFIGS: Record<string, Record<Environment, AppConfigGroup>> = {
 		},
 	},
 
+	performance: {
+		development: {
+			api_port: 52006,
+			api_url: 'http://localhost:52006',
+			cookie_domain: 'localhost',
+			cors_origin: true,
+			frontend_port: 51006,
+			frontend_url: 'http://localhost:51006',
+		},
+		production: {
+			api_url: 'https://performance.sae.carrismetropolitana.pt/api',
+			frontend_url: 'https://performance.sae.carrismetropolitana.pt',
+			...DEFAULT_NON_DEV_CONFIG,
+		},
+		staging: {
+			api_url: 'https://staging.performance.sae.carrismetropolitana.pt/api',
+			frontend_url: 'https://staging.performance.sae.carrismetropolitana.pt',
+			...DEFAULT_NON_DEV_CONFIG,
+		},
+	},
+
 	plans: {
 		development: {
 			api_port: 52004,

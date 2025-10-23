@@ -48,6 +48,11 @@ export interface DataTableProps<T> {
 	 */
 	rowIdAccessor?: keyof T
 
+	/**
+	 * The id of the selected record.
+	 */
+	selectedId?: string
+
 }
 
 export interface DataTableColumn<T> {

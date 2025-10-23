@@ -14,7 +14,7 @@ export interface ButtonProps extends MantineButtonProps {
 	onClick?: () => void
 	target?: string
 	type?: 'button' | 'reset' | 'submit'
-	variant?: 'danger' | 'disabled' | 'muted' | 'primary' | 'secondary'
+	variant?: 'danger' | 'disabled' | 'muted' | 'primary' | 'secondary' | 'transparent'
 }
 
 /* * */

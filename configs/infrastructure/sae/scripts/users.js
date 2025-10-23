@@ -41,6 +41,12 @@ db.createUser({
 });
 
 db.createUser({
+	pwd: USER_PERFORMANCE_PASSWORD,
+	roles: [{ db: 'admin', role: 'performance' }],
+	user: 'performance',
+});
+
+db.createUser({
 	pwd: USER_CMET_API_PASSWORD,
 	roles: [{ db: 'admin', role: 'cmet-api' }],
 	user: 'cmet-api',

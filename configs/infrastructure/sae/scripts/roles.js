@@ -12,6 +12,7 @@ db.createRole({
 		{ actions: ['find'], resource: { collection: 'parishes', db: 'production' } },
 		{ actions: ['find'], resource: { collection: 'verification_tokens', db: 'production' } },
 		{ actions: ['find'], resource: { collection: 'organizations', db: 'production' } },
+		{ actions: ['find', 'insert', 'update', 'remove'], resource: { collection: 'notifications', db: 'production' } },
 	],
 	role: 'common',
 	roles: [],
@@ -26,9 +27,15 @@ db.createRole({
 		{ actions: ['find', 'update', 'insert', 'remove'], resource: { collection: 'files', db: 'production' } },
 		{ actions: ['find', 'update', 'insert', 'remove'], resource: { collection: 'verification_tokens', db: 'production' } },
 		{ actions: ['find', 'update', 'insert', 'remove'], resource: { collection: 'organizations', db: 'production' } },
+		{ actions: ['find', 'update', 'insert', 'remove'], resource: { collection: 'file_exports', db: 'production' } },
+		{ actions: ['find'], resource: { collection: 'rides', db: 'production' } },
+		{ actions: ['find'], resource: { collection: 'ride_acceptances', db: 'production' } },
 	],
 	role: 'auth',
-	roles: [],
+	roles: [{
+		db: 'admin',
+		role: 'common',
+	}],
 });
 
 db.createRole({
@@ -115,8 +122,23 @@ db.createRole({
 db.createRole({
 	privileges: [
 		{ actions: ['find'], resource: { collection: 'rides', db: 'production' } },
+		{ actions: ['find'], resource: { collection: 'sams', db: 'production' } },
+		{ actions: ['find'], resource: { collection: 'simplified_apex_locations', db: 'production' } },
+		{ actions: ['find'], resource: { collection: 'simplified_apex_on_board_refunds', db: 'production' } },
+		{ actions: ['find'], resource: { collection: 'simplified_apex_on_board_sales', db: 'production' } },
+		{ actions: ['find'], resource: { collection: 'simplified_apex_validations', db: 'production' } },
+		{ actions: ['find', 'update', 'insert', 'remove'], resource: { collection: 'metrics', db: 'production' } },
+	],
+	role: 'performance',
+	roles: [],
+});
+
+db.createRole({
+	privileges: [
+		{ actions: ['find'], resource: { collection: 'rides', db: 'production' } },
 		{ actions: ['find'], resource: { collection: 'simplified_apex_validations', db: 'production' } },
 		{ actions: ['find'], resource: { collection: 'alerts', db: 'production' } },
+		{ actions: ['find'], resource: { collection: 'metrics', db: 'production' } },
 	],
 	role: 'cmet-api',
 	roles: [],
@@ -147,6 +169,7 @@ db.createRole({
 		{ actions: ['find', 'listIndexes', 'collStats'], resource: { collection: 'simplified_apex_on_board_sales', db: 'production' } },
 		{ actions: ['find', 'listIndexes', 'collStats'], resource: { collection: 'simplified_apex_validations', db: 'production' } },
 		{ actions: ['find', 'listIndexes', 'collStats'], resource: { collection: 'ride_acceptances', db: 'production' } },
+		{ actions: ['find', 'listIndexes', 'collStats'], resource: { collection: 'metrics', db: 'production' } },
 	],
 	role: 'dgc-user',
 	roles: [],

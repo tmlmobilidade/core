@@ -2,7 +2,7 @@
 
 /* * */
 
-import { AppWrapperHeader } from '@/components/layout/AppWrapperHeader';
+import { AppWrapperHeader } from '@/components/layout/AppWrapper/components/common/AppWrapperHeader';
 import { Loader } from '@/components/loaders/Loader';
 import { Sidebar } from '@/components/sidebar/Sidebar';
 import { useMeContext } from '@/contexts/Me.context';
@@ -21,7 +21,8 @@ export function AppWrapper({ children }: PropsWithChildren) {
 	// A. Setup variables
 
 	const meContext = useMeContext();
-	const logo = useOrganizationLogo(meContext.data.user?.organization_id || '');
+
+	const logoImgSrc = useOrganizationLogo(meContext.data.user?.organization_id || '');
 
 	//
 	// B. Render components
@@ -30,7 +31,7 @@ export function AppWrapper({ children }: PropsWithChildren) {
 		<Suspense fallback={<Loader size="xl" />}>
 			<div className={styles.container}>
 				<div className={styles.appLogo}>
-					<Image key={logo} alt="Logo" height={40} src={logo} />
+					{logoImgSrc && <Image key={logoImgSrc} alt="Logo" fallbackSrc="" height={50} src={logoImgSrc} width={70} />}
 				</div>
 				<AppWrapperHeader userName={meContext.data.user?.first_name} />
 				<Sidebar />

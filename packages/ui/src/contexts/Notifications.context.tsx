@@ -4,20 +4,22 @@
 
 import { getAppConfig, HttpException } from '@tmlmobilidade/lib';
 import { Notification as TmlNotification } from '@tmlmobilidade/types';
-import { createContext, type PropsWithChildren, useContext, useEffect, useMemo, useRef, useState } from 'react';
-import useSWR from 'swr';
-
-import { useMeContext } from './Me.context';
+import { fetchData } from '@tmlmobilidade/utils';
+import { createContext, type PropsWithChildren, useContext, useEffect, useMemo } from 'react';
+import useSWR, { mutate } from 'swr';
 
 /* * */
 
 interface NotificationsContextState {
 	actions: {
+		deleteNotification: (id: string) => void
+		markAsRead: (notification: TmlNotification) => void
 		triggerNotificationToast: (title: string, body: string) => void
 	}
 	data: {
 		allNotifications: TmlNotification[]
-		allUserNotifications: TmlNotification[]
+		readNotifications: TmlNotification[]
+		unreadNotifications: TmlNotification[]
 	}
 	flags: {
 		error?: HttpException
@@ -43,34 +45,38 @@ export const NotificationsContextProvider = ({ children }: PropsWithChildren) =>
 	//
 	// A. Setup variables
 
-	const meContext = useMeContext();
-	const prevNotificationIdsRef = useRef<string[]>([]);
-	const [userNotifications, setUserNotificationsData] = useState<[] | TmlNotification[]>([]);
-
-	//
-	// B. Fetch data
-
-	const { data: notificationsData, error: notificationsError, isLoading: notificationsLoading } = useSWR<TmlNotification[], HttpException>(`${getAppConfig('auth', 'api_url')}/notifications`, { refreshInterval: 2000 });
+	const { data: notificationsData, error: notificationsError, isLoading: notificationsLoading } = useSWR<TmlNotification[], HttpException>(`${getAppConfig('auth', 'api_url')}/notifications`, { refreshInterval: 10_000 });
 
 	//
 	// C. Transform data
 
 	useEffect(() => {
-		if (!notificationsData) return;
-		const userNotifications = notificationsData.filter(notification => notification.user_id === meContext.data?.user?._id);
-		setUserNotificationsData(userNotifications);
-	}, [notificationsData, meContext.data?.user?._id]);
+		askNotificationPermission();
+	}, []);
 
+	/**
+	 * Effect to trigger a notification toast when new notifications are detected.
+	 *
+	 * This effect compares the current list of user notification IDs with the previous list.
+	 * If there are new notification IDs (i.e., notifications that were not present before),
+	 * and this is not the initial load (prevIds.length > 0), it triggers a notification toast.
+	 *
+	 * Dependencies:
+	 * - userNotifications: The current list of user notifications.
+	 * - notificationsLoading: Loading state for notifications.
+	 */
 	useEffect(() => {
-		if (!userNotifications && !notificationsLoading && !notificationsError) return;
-		const currentIds = userNotifications.map(n => n._id);
-		const prevIds = prevNotificationIdsRef.current;
-		const newIds = currentIds.filter(id => !prevIds.includes(id));
-		if (prevIds.length > 0 && newIds.length > 0) {
-			triggerNotificationToast('Tem uma nova notificação', 'Clique no sino para ver suas notificações.');
-		}
-		prevNotificationIdsRef.current = currentIds;
-	}, [userNotifications, notificationsLoading]);
+		if (!notificationsData || !notificationsLoading || !notificationsError) return;
+
+		notificationsData.map((n) => {
+			if (!n.is_read) {
+				triggerNotificationToast(
+					'Tem uma nova notificação',
+					'Clique no sino para ver suas notificações.',
+				);
+			}
+		});
+	}, [notificationsData, notificationsLoading, notificationsError]);
 
 	//
 	// D. Handle actions
@@ -125,22 +131,58 @@ export const NotificationsContextProvider = ({ children }: PropsWithChildren) =>
 		}
 	};
 
+	const deleteNotification = async (id: string) => {
+		if (!notificationsData) return;
+
+		// Optimistically update UI
+		mutate(
+			notificationsData.filter(n => n._id !== id),
+			false, // don't revalidate yet
+		);
+
+		try {
+			await fetchData(`${getAppConfig('auth', 'api_url')}/notifications/${id}`, 'DELETE');
+
+			// Revalidate after successful delete to ensure consistency
+			mutate(`${getAppConfig('auth', 'api_url')}/notifications`);
+		}
+		catch (error) {
+			// Rollback if something goes wrong
+			mutate(`${getAppConfig('auth', 'api_url')}/notifications`);
+			console.error('Failed to delete notification:', error);
+		}
+	};
+
+	const markAsRead = async (notification: TmlNotification) => {
+		if (notification.payload.href) {
+			fetchData(`${getAppConfig('auth', 'api_url')}/notifications/${notification._id}/mark-as-read`);
+			window.location.href = notification.payload.href;
+		}
+		else {
+			await fetchData(`${getAppConfig('auth', 'api_url')}/notifications/${notification._id}/mark-as-read`);
+			mutate(`${getAppConfig('auth', 'api_url')}/notifications`);
+		}
+	};
+
 	//
 	// E. Define context value
 
 	const contextValue: NotificationsContextState = useMemo(() => ({
 		actions: {
+			deleteNotification,
+			markAsRead,
 			triggerNotificationToast,
 		},
 		data: {
 			allNotifications: notificationsData ?? [],
-			allUserNotifications: userNotifications ?? [],
+			readNotifications: notificationsData?.filter(n => n.is_read) ?? [],
+			unreadNotifications: notificationsData?.filter(n => !n.is_read) ?? [],
 		},
 		flags: {
 			error: notificationsError,
 			loading: notificationsLoading,
 		},
-	}), [notificationsData, notificationsError, notificationsLoading, userNotifications]);
+	}), [notificationsData, notificationsError, notificationsLoading]);
 
 	//
 	// E. Render components

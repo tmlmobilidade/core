@@ -28,6 +28,7 @@ db.createRole({
 		{ actions: ['find', 'update', 'insert', 'remove'], resource: { collection: 'verification_tokens', db: 'production' } },
 		{ actions: ['find', 'update', 'insert', 'remove'], resource: { collection: 'organizations', db: 'production' } },
 		{ actions: ['find', 'update', 'insert', 'remove'], resource: { collection: 'file_exports', db: 'production' } },
+		{ actions: ['find', 'update', 'insert', 'remove'], resource: { collection: 'proposed_changes', db: 'production' } },
 		{ actions: ['find'], resource: { collection: 'rides', db: 'production' } },
 		{ actions: ['find'], resource: { collection: 'ride_acceptances', db: 'production' } },
 	],

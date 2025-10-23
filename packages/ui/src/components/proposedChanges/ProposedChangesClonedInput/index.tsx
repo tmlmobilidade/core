@@ -43,7 +43,8 @@ export function ProposedChangesClonedInput<S extends ScopeKey>({ originalInput, 
 	}, [proposedChangeData]);
 
 	if (isCheckbox) {
-		newProps.checked = Boolean(localValue);
+		newProps.defaultChecked = localValue || false;
+		newProps.checked = localValue;
 		newProps.onChange = (e: React.ChangeEvent<HTMLInputElement>) => handleChange(e.currentTarget.checked);
 	}
 	else if (isCombobox) {

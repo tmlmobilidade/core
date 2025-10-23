@@ -80,11 +80,11 @@ export function ProposedChangesWrapperModalContent<S extends ScopeKey>({ inputNa
 				</div>
 			)}
 
-			{proposedChanges.map(proposedChange => (
-				<div key={proposedChange?._id} className={styles.proposedChangeItemWrapper}>
+			{proposedChanges.filter(pc => pc?._id).map(proposedChange => (
+				<div key={proposedChange._id} className={styles.proposedChangeItemWrapper}>
 					<ProposedChangesWrapperModalMetadata proposedChangeData={proposedChange} />
 					<ProposedChangesClonedInput originalInput={originalInput} proposedChangeData={proposedChange} setProposedChange={setProposedChangeData} />
-					<ProposedChangesWrapperContentItemActions approve={() => proposedChangesContext.actions.approve?.(proposedChange?._id, inputName, relatedId, proposedChange.curr_value)} isNew={isNew} permissions={permissions} reject={() => proposedChangesContext.actions.reject?.(proposedChange?._id || '')} status={proposedChange.status} submit={handleSubmit} />
+					<ProposedChangesWrapperContentItemActions approve={() => proposedChangesContext.actions.approve?.(proposedChange._id, inputName, relatedId, proposedChange.curr_value)} isNew={isNew} permissions={permissions} reject={() => proposedChangesContext.actions.reject?.(proposedChange._id)} status={proposedChange.status} submit={handleSubmit} />
 				</div>
 			))}
 

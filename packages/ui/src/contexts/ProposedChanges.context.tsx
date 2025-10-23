@@ -16,7 +16,12 @@ export interface ScopeEntityMap {
 	stop: Stop
 }
 
+/* * */
+
 export type ScopeKey = keyof ScopeEntityMap;
+type Entity = ScopeEntityMap[ScopeKey];
+
+/* * */
 
 interface ProposedChangesContextState<T> {
 	actions: {
@@ -55,14 +60,13 @@ export function ProposedChangesContextProvider<S extends ScopeKey>({ children, r
 	const entityEndpoints: Record<ScopeKey, string> = { line: 'lines', stop: 'stops' };
 	const [relatedProposedChanges, setRelatedProposedChanges] = useState<ProposedChange<Entity>[]>([]);
 	const { data: proposedChangesData, error: proposedChangesError, isLoading: proposedChangesLoading } = useSWR<ProposedChange<Entity>[], HttpException>(`${getAppConfig('auth', 'api_url')}/proposed-changes?scope=${scope}`, { refreshInterval: 2000 });
-	type Entity = ScopeEntityMap[S];
 
 	//
 	// B. Transform data
 
 	useEffect(() => {
 		if (!proposedChangesData || proposedChangesError || !relatedId) return;
-		const filtered = proposedChangesData.filter(change => change.related_id === relatedId);
+		const filtered = proposedChangesData.filter(change => change?.related_id === relatedId);
 		setRelatedProposedChanges(filtered ?? []);
 	}, [proposedChangesData, relatedId, proposedChangesError, proposedChangesLoading]);
 
@@ -72,14 +76,12 @@ export function ProposedChangesContextProvider<S extends ScopeKey>({ children, r
 	const approve = async <S extends ScopeKey>(id: string, field: keyof ScopeEntityMap[S] | string, relatedId: string, value: unknown) => {
 		const { key, prevData } = getProposedChangesKeyAndData();
 		try {
-			const app = entityEndpoints[scope];
-			const entityResponse = await fetchData(`${getAppConfig(app, 'api_url')}/${app}/${relatedId}`, 'GET');
+			const entityResponse = await fetchData(`${getAppConfig(entityEndpoints[scope], 'api_url')}/${entityEndpoints[scope]}/${relatedId}`, 'GET');
 			const entity = entityResponse.data as ScopeEntityMap[S];
-			// Use helper for update body
 			const updateBody = getUpdateBodyForScope(entity, field as string, value, scope);
-			const updated = prevData.map(change => change._id === id ? { ...change, status: 'approved' } : change);
+			const updated = prevData.map(change => change?._id === id ? { ...change, status: 'approved' } : change);
 			await mutate(key, updated, false);
-			await fetchData(`${getAppConfig(app, 'api_url')}/${app}/${relatedId}`, 'PUT', updateBody);
+			await fetchData(`${getAppConfig(entityEndpoints[scope], 'api_url')}/${entityEndpoints[scope]}/${relatedId}`, 'PUT', updateBody);
 			await fetchData(`${getAppConfig('auth', 'api_url')}/proposed-changes/${id}`, 'PUT', { status: 'approved' });
 			useToast.success({ message: 'Proposta aprovada com sucesso', title: 'Sucesso' });
 			await mutate(key);
@@ -94,7 +96,7 @@ export function ProposedChangesContextProvider<S extends ScopeKey>({ children, r
 
 	const reject = async (id: string) => {
 		const { key, prevData } = getProposedChangesKeyAndData();
-		const updated = prevData.map(change => change._id === id ? { ...change, status: 'rejected' } : change);
+		const updated = prevData.map(change => change?._id === id ? { ...change, status: 'rejected' } : change);
 		try {
 			await mutate(key, updated, false);
 			await fetchData(`${getAppConfig('auth', 'api_url')}/proposed-changes/${id}`, 'PUT', { status: 'rejected' });

@@ -1,6 +1,8 @@
 /* * */
 
 import { Button } from '@/components';
+import { Timeline } from '@/components/common/Timeline';
+import { TimelineItem } from '@/components/common/Timeline/TimelineItem';
 import { ProposedChangesClonedInput } from '@/components/proposedChanges/ProposedChangesClonedInput';
 import { ProposedChangesWrapperContentItemActions } from '@/components/proposedChanges/ProposedChangesWrapperContentItemActions';
 import { ProposedChangesWrapperModalContentHeader } from '@/components/proposedChanges/ProposedChangesWrapperModalContentHeader';
@@ -80,13 +82,17 @@ export function ProposedChangesWrapperModalContent<S extends ScopeKey>({ inputNa
 				</div>
 			)}
 
-			{proposedChanges.filter(pc => pc?._id).map(proposedChange => (
-				<div key={proposedChange._id} className={styles.proposedChangeItemWrapper}>
-					<ProposedChangesWrapperModalMetadata proposedChangeData={proposedChange} />
-					<ProposedChangesClonedInput originalInput={originalInput} proposedChangeData={proposedChange} setProposedChange={setProposedChangeData} />
-					<ProposedChangesWrapperContentItemActions approve={() => proposedChangesContext.actions.approve?.(proposedChange._id, inputName, relatedId, proposedChange.curr_value)} isNew={isNew} permissions={permissions} reject={() => proposedChangesContext.actions.reject?.(proposedChange._id)} status={proposedChange.status} submit={handleSubmit} />
-				</div>
-			))}
+			<Timeline>
+				{proposedChanges.filter(pc => pc?._id).map(proposedChange => (
+					<TimelineItem key={proposedChange._id}>
+						<div className={styles.proposedChangeItemWrapper}>
+							<ProposedChangesWrapperModalMetadata proposedChangeData={proposedChange} />
+							<ProposedChangesClonedInput originalInput={originalInput} proposedChangeData={proposedChange} setProposedChange={setProposedChangeData} />
+							<ProposedChangesWrapperContentItemActions approve={() => proposedChangesContext.actions.approve?.(proposedChange._id, inputName, relatedId, proposedChange.curr_value)} isNew={isNew} permissions={permissions} reject={() => proposedChangesContext.actions.reject?.(proposedChange._id)} status={proposedChange.status} submit={handleSubmit} />
+						</div>
+					</TimelineItem>
+				))}
+			</Timeline>
 
 			{!addingNew && proposedChanges.length === 0 && (
 				<ProposedChangesWrapperModalContentNoData />

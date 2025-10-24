@@ -87,7 +87,7 @@ export function ProposedChangesWrapperModalContent<S extends ScopeKey>({ inputNa
 						<div className={styles.proposedChangeItemWrapper}>
 							<ProposedChangesWrapperModalMetadata proposedChangeData={proposedChange} />
 							<ProposedChangesClonedInput originalInput={originalInput} proposedChangeData={proposedChange} setProposedChange={setProposedChangeData} />
-							<ProposedChangesWrapperContentItemActions approve={() => proposedChangesContext.actions.approve?.(proposedChange._id, inputName, relatedId, proposedChange.curr_value)} isNew={addingNew} permissions={permissions} reject={() => proposedChangesContext.actions.reject?.(proposedChange._id)} status={proposedChange.status} submit={handleSubmit} />
+							<ProposedChangesWrapperContentItemActions approve={() => proposedChangesContext.actions.approve?.(proposedChange._id, inputName, relatedId, proposedChange.curr_value)} isNew={false} permissions={permissions} reject={() => proposedChangesContext.actions.reject?.(proposedChange._id)} status={proposedChange.status} submit={handleSubmit} />
 						</div>
 					</TimelineItem>
 				))}

@@ -1,6 +1,9 @@
 /* * */
 
-import { RideSchema } from '@/rides/ride.js';
+import { unixTimeStampSchema } from '@/_common/unix-timestamp.js';
+import { RideAcceptanceStatusSchema } from '@/rides/ride-acceptance.js';
+import { RideAnalysisGradeWithNoneSchema } from '@/rides/ride-analysis.js';
+import { DelayStatusSchema, OperationalStatusSchema, SeenStatusSchema } from '@/rides/ride.js';
 import { z } from 'zod';
 
 import { FileExportBaseSchema } from './common.js';
@@ -91,10 +94,33 @@ export const FlatRideSchema = z.object({
 /* * */
 export const RideExportPropertiesSchema = z.object({
 	properties: z.object({
-		agency_ids: z.array(RideSchema.shape.agency_id).optional(),
-		end_date: RideSchema.shape.end_time_scheduled,
-		line_ids: z.array(RideSchema.shape.line_id).optional(),
-		start_date: RideSchema.shape.start_time_scheduled,
+		agency_ids: z.array(z.string()).optional(),
+
+		/* * */
+
+		analysis_ended_at_last_stop_grade: z.array(RideAnalysisGradeWithNoneSchema).optional(),
+		analysis_expected_apex_validation_interval: z.array(RideAnalysisGradeWithNoneSchema).optional(),
+		analysis_simple_three_vehicle_events_grade: z.array(RideAnalysisGradeWithNoneSchema).optional(),
+		analysis_transaction_sequentiality: z.array(RideAnalysisGradeWithNoneSchema).optional(),
+
+		/* * */
+
+		date_end: unixTimeStampSchema,
+		date_start: unixTimeStampSchema,
+
+		/* * */
+
+		delay_statuses: z.array(DelayStatusSchema).optional(),
+		operational_statuses: z.array(OperationalStatusSchema).optional(),
+		seen_statuses: z.array(SeenStatusSchema).optional(),
+
+		/* * */
+
+		line_ids: z.array(z.string()).optional(),
+		stop_ids: z.array(z.string()).optional(),
+
+		/* * */
+		acceptance_status: z.array(z.enum([...RideAcceptanceStatusSchema.options, 'none'])).optional(),
 	}),
 	type: z.literal('ride'),
 });

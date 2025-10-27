@@ -9,6 +9,23 @@ import { z } from 'zod';
 
 /* * */
 
+/* * */
+
+export const OPERATIONAL_STATUS_OPTIONS = ['ended', 'missed', 'running', 'scheduled'] as const;
+export const OperationalStatusSchema = z.enum(OPERATIONAL_STATUS_OPTIONS);
+
+/* * */
+
+export const DELAY_STATUS_OPTIONS = ['delayed', 'early', 'ontime', 'none'] as const;
+export const DelayStatusSchema = z.enum(DELAY_STATUS_OPTIONS);
+
+/* * */
+
+export const SEEN_STATUS_OPTIONS = ['gone', 'seen', 'unseen'] as const;
+export const SeenStatusSchema = z.enum(SEEN_STATUS_OPTIONS);
+
+/* * */
+
 export const RideSchema = DocumentSchema.extend({
 	agency_id: z.string(),
 	analysis: z.object({

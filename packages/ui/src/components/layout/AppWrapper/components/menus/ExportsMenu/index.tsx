@@ -26,11 +26,9 @@ export function ExportsMenu() {
 
 	return (
 		<AppWrapperMenu counter={fileExports.length} icon={IconCloudDown}>
-			<AppWrapperMenuList data={fileExports} itemComponent={({ item }) => <ExportsMenuItem fileExport={item} />} title="Exportações" />
-
-			{fileExports.length === 0 && (
-				<AppWrapperMenuNoContent icon={IconCloudMinus} text="Sem exportações disponíveis" />
-			)}
+			{fileExports.length === 0
+				? <AppWrapperMenuNoContent icon={IconCloudMinus} text="Sem exportações disponíveis" />
+				: <AppWrapperMenuList data={fileExports} itemComponent={({ item }) => <ExportsMenuItem fileExport={item} />} title="Exportações" />}
 		</AppWrapperMenu>
 	);
 

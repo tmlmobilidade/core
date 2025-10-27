@@ -39,7 +39,7 @@ export function ExportsMenuItem({ fileExport }: { fileExport: FileExport }) {
 		<div className={styles.root}>
 			<div
 				className={styles.left}
-				onClick={() => exportsContext.actions.download(fileExport._id)}
+				onClick={() => fileExport.processing_status === 'complete' && exportsContext.actions.download(fileExport._id)}
 			>
 				<Section flexDirection="row" gap="sm" justifyContent="space-between" padding="none" width="fit-content">
 					<div className={styles.iconWrapper}>{icon}</div>

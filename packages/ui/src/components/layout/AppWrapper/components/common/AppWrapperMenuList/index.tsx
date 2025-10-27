@@ -43,7 +43,7 @@ export function AppWrapperMenuList<T>({ data, itemComponent, maxDisplayedItems, 
 				React.createElement(itemComponent, { item, key: idx })
 			))}
 
-			{(data.length > (maxDisplayedItems ?? 0)) && (
+			{(data.length > (maxDisplayedItems ?? Infinity)) && (
 				<button className={styles.moreButton} onClick={() => setShowAll(!showAll)}>
 					{showAll ? 'Ver menos' : 'Ver mais'}
 				</button>

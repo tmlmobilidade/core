@@ -3,27 +3,30 @@
 import { DocumentSchema } from '@/_common/document.js';
 import { operationalDateSchema } from '@/_common/operational-date.js';
 import { unixTimeStampSchema } from '@/_common/unix-timestamp.js';
-import { atLeastOneVehicleEventOnFirstStopSchema, endedAtLastStopSchema, expectedApexValidationIntervalSchema, expectedDriverIdQtySchema, expectedStartTimeSchema, expectedVehicleEventDelaySchema, expectedVehicleEventIntervalSchema, expectedVehicleEventQtySchema, expectedVehicleIdQtySchema, matchingApexLocationsSchema, matchingVehicleIdsSchema, simpleOneApexValidationSchema, simpleOneVehicleEventOrApexValidationSchema, simpleThreeVehicleEventsSchema, transactionSequentialitySchema } from '@/rides/ride-analysis.js';
+import { atLeastOneVehicleEventOnFirstStopSchema, endedAtLastStopSchema, expectedApexValidationIntervalSchema, expectedDriverIdQtySchema, expectedStartTimeSchema, expectedVehicleEventDelaySchema, expectedVehicleEventIntervalSchema, expectedVehicleEventQtySchema, expectedVehicleIdQtySchema, matchingApexLocationsSchema, matchingVehicleIdsSchema, RideAnalysis, simpleOneApexValidationSchema, simpleOneVehicleEventOrApexValidationSchema, simpleThreeVehicleEventsSchema, transactionSequentialitySchema } from '@/rides/ride-analysis.js';
 import { ProcessingStatusSchema } from '@/system/processing-status.js';
 import { z } from 'zod';
 
-/* * */
+import { RideAcceptanceStatusSchema } from './ride-acceptance.js';
 
 /* * */
 
-export const OPERATIONAL_STATUS_OPTIONS = ['ended', 'missed', 'running', 'scheduled'] as const;
-export const OperationalStatusSchema = z.enum(OPERATIONAL_STATUS_OPTIONS);
+/* * */
+
+export const RIDE_OPERATIONAL_STATUS_OPTIONS = ['ended', 'missed', 'running', 'scheduled'] as const;
+export const RideOperationalStatusSchema = z.enum(RIDE_OPERATIONAL_STATUS_OPTIONS);
+export type RideOperationalStatus = z.infer<typeof RideOperationalStatusSchema>;
 
 /* * */
 
-export const DELAY_STATUS_OPTIONS = ['delayed', 'early', 'ontime', 'none'] as const;
-export const DelayStatusSchema = z.enum(DELAY_STATUS_OPTIONS);
-
+export const RIDE_DELAY_STATUS_OPTIONS = ['delayed', 'early', 'ontime', 'none'] as const;
+export const RideDelayStatusSchema = z.enum(RIDE_DELAY_STATUS_OPTIONS);
+export type RideDelayStatus = z.infer<typeof RideDelayStatusSchema>;
 /* * */
 
-export const SEEN_STATUS_OPTIONS = ['gone', 'seen', 'unseen'] as const;
-export const SeenStatusSchema = z.enum(SEEN_STATUS_OPTIONS);
-
+export const RIDE_SEEN_STATUS_OPTIONS = ['gone', 'seen', 'unseen'] as const;
+export const RideSeenStatusSchema = z.enum(RIDE_SEEN_STATUS_OPTIONS);
+export type RideSeenStatus = z.infer<typeof RideSeenStatusSchema>;
 /* * */
 
 export const RideSchema = DocumentSchema.extend({
@@ -86,6 +89,37 @@ export const UpdateRideSchema = CreateRideSchema.omit({ created_by: true }).part
 export type Ride = z.infer<typeof RideSchema>;
 export type CreateRideDto = z.infer<typeof CreateRideSchema>;
 export type UpdateRideDto = z.infer<typeof UpdateRideSchema>;
+
+/* * */
+
+export interface RideNormalized extends Ride {
+	acceptance_status: typeof RideAcceptanceStatusSchema.options[number]
+	analysis_ended_at_last_stop_grade: 'none' | RideAnalysis['grade']
+	analysis_expected_apex_validation_interval: 'none' | RideAnalysis['grade']
+	analysis_simple_three_vehicle_events_grade: 'none' | RideAnalysis['grade']
+	analysis_transaction_sequentiality: 'none' | RideAnalysis['grade']
+
+	/**
+	 * @deprecated use `start_time_observed_display` instead
+	 */
+	delay_status: typeof RIDE_DELAY_STATUS_OPTIONS[number]
+
+	/**
+	 * @deprecated use `start_time_observed_display` instead
+	 */
+	delay_value_display: null | string
+
+	end_delay_status: typeof RIDE_DELAY_STATUS_OPTIONS[number]
+	end_delay_value_display: null | string
+	end_time_observed_display: null | string
+	end_time_scheduled_display: string
+	operational_status: typeof RIDE_OPERATIONAL_STATUS_OPTIONS[number]
+	seen_status: typeof RIDE_SEEN_STATUS_OPTIONS[number]
+	start_delay_status: typeof RIDE_DELAY_STATUS_OPTIONS[number]
+	start_delay_value_display: null | string
+	start_time_observed_display: null | string
+	start_time_scheduled_display: string
+}
 
 /* * */
 

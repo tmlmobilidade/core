@@ -3,7 +3,7 @@
 import { unixTimeStampSchema } from '@/_common/unix-timestamp.js';
 import { RideAcceptanceStatusSchema } from '@/rides/ride-acceptance.js';
 import { RideAnalysisGradeWithNoneSchema } from '@/rides/ride-analysis.js';
-import { DelayStatusSchema, OperationalStatusSchema, SeenStatusSchema } from '@/rides/ride.js';
+import { RideDelayStatusSchema, RideOperationalStatusSchema, RideSeenStatusSchema } from '@/rides/ride.js';
 import { z } from 'zod';
 
 import { FileExportBaseSchema } from './common.js';
@@ -60,6 +60,7 @@ export const FlatRideSchema = z.object({
 	apex_validations_qty: z.number(),
 	created_at: z.number(),
 	driver_ids: z.string(),
+	end_delay_status: z.string(),
 	end_time_observed: z.number(),
 	end_time_scheduled: z.number(),
 	extension_observed: z.number(),
@@ -70,6 +71,7 @@ export const FlatRideSchema = z.object({
 	is_locked: z.boolean(),
 	line_id: z.number(),
 	operational_date: z.string(),
+	operational_status: z.string(),
 	passengers_estimated: z.number(),
 	passengers_observed: z.number(),
 	passengers_observed_on_board_sales_amount: z.number(),
@@ -82,6 +84,8 @@ export const FlatRideSchema = z.object({
 	route_id: z.string(),
 	seen_first_at: z.number(),
 	seen_last_at: z.number(),
+	seen_status: z.string(),
+	start_delay_status: z.string(),
 	start_time_observed: z.number(),
 	start_time_scheduled: z.number(),
 	system_status: z.string(),
@@ -110,9 +114,9 @@ export const RideExportPropertiesSchema = z.object({
 
 		/* * */
 
-		delay_statuses: z.array(DelayStatusSchema).optional(),
-		operational_statuses: z.array(OperationalStatusSchema).optional(),
-		seen_statuses: z.array(SeenStatusSchema).optional(),
+		delay_statuses: z.array(RideDelayStatusSchema).optional(),
+		operational_statuses: z.array(RideOperationalStatusSchema).optional(),
+		seen_statuses: z.array(RideSeenStatusSchema).optional(),
 
 		/* * */
 

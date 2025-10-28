@@ -1,12 +1,13 @@
+import z from 'zod';
+
 export const GTFS_CAUSE_VALUES = ['ACCIDENT', 'CONSTRUCTION', 'DEMONSTRATION', 'HOLIDAY', 'MAINTENANCE', 'MEDICAL_EMERGENCY', 'OTHER_CAUSE', 'POLICE_ACTIVITY', 'STRIKE', 'TECHNICAL_PROBLEM', 'UNKNOWN_CAUSE', 'WEATHER'] as const;
 export const GTFS_EFFECT_VALUES = ['ACCESSIBILITY_ISSUE', 'ADDITIONAL_SERVICE', 'DETOUR', 'MODIFIED_SERVICE', 'NO_EFFECT', 'NO_SERVICE', 'OTHER_EFFECT', 'REDUCED_SERVICE', 'SIGNIFICANT_DELAYS', 'STOP_MOVED', 'UNKNOWN_EFFECT'] as const;
 
-export type GtfsCause = Record<string, {
-	code: string
-	gtfs_code: typeof GTFS_CAUSE_VALUES[number]
-}>;
+/* * */
 
-export const GtfsExtendedCause = Object.freeze<GtfsCause>({
+export const GTFS_CAUSE_EXTENDED_VALUES = [...GTFS_CAUSE_VALUES, 'DRIVER_ABSENCE', 'DRIVER_ISSUE', 'HIGH_PASSENGER_LOAD', 'ROAD_INCIDENT', 'SYSTEM_FAILURE', 'TRAFFIC_JAM', 'VEHICLE_ISSUE'] as const;
+
+export const GtfsExtendedCauseMap = Object.freeze({
 	/* --- Standard GtfsExtended Causes --- */
 	ACCIDENT: { code: 'ACCIDENT', gtfs_code: 'ACCIDENT' },
 	CONSTRUCTION: { code: 'CONSTRUCTION', gtfs_code: 'CONSTRUCTION' },
@@ -31,9 +32,10 @@ export const GtfsExtendedCause = Object.freeze<GtfsCause>({
 	VEHICLE_ISSUE: { code: 'VEHICLE_ISSUE', gtfs_code: 'OTHER_CAUSE' },
 });
 
-/* --------------------------------------------- */
-/* Utility Types                                 */
-/* --------------------------------------------- */
+/* * */
 
-export type ExtendedCauseCode = keyof typeof GtfsExtendedCause;
-export type ExtendedCause = (typeof GtfsExtendedCause)[ExtendedCauseCode];
+export const gtfsCauseSchema = z.enum(GTFS_CAUSE_EXTENDED_VALUES);
+export const gtfsEffectSchema = z.enum(GTFS_EFFECT_VALUES);
+
+export type GtfsCause = z.infer<typeof gtfsCauseSchema>;
+export type GtfsEffect = z.infer<typeof gtfsEffectSchema>;

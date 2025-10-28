@@ -4,23 +4,19 @@ import { DocumentSchema } from '@/_common/document.js';
 import { unixTimeStampSchema } from '@/_common/unix-timestamp.js';
 import { z } from 'zod';
 
+import { gtfsCauseSchema, gtfsEffectSchema } from './gtfs/cause-effetcs.js';
+
 /* * */
 
 // Define constants for enum values for better maintainability
-const CAUSE_VALUES = ['ACCIDENT', 'CONSTRUCTION', 'DEMONSTRATION', 'HOLIDAY', 'MAINTENANCE', 'MEDICAL_EMERGENCY', 'OTHER_CAUSE', 'POLICE_ACTIVITY', 'STRIKE', 'TECHNICAL_PROBLEM', 'UNKNOWN_CAUSE', 'WEATHER'] as const;
-const EFFECT_VALUES = ['ACCESSIBILITY_ISSUE', 'ADDITIONAL_SERVICE', 'DETOUR', 'MODIFIED_SERVICE', 'NO_EFFECT', 'NO_SERVICE', 'OTHER_EFFECT', 'REDUCED_SERVICE', 'SIGNIFICANT_DELAYS', 'STOP_MOVED', 'UNKNOWN_EFFECT'] as const;
 const PUBLISH_STATUS_VALUES = ['PUBLISHED', 'ARCHIVED', 'DRAFT'] as const;
 const ALERT_TYPE_VALUES = ['PLANNED', 'REALTIME'] as const;
 const REFERENCE_TYPE_VALUES = ['LINE', 'STOP', 'AGENCY', 'TRIP'] as const;
 
-export const causeSchema = z.enum(CAUSE_VALUES);
-export const effectSchema = z.enum(EFFECT_VALUES);
 export const publishStatusSchema = z.enum(PUBLISH_STATUS_VALUES);
 export const alertTypeSchema = z.enum(ALERT_TYPE_VALUES);
 export const referenceTypeSchema = z.enum(REFERENCE_TYPE_VALUES);
 
-export type Cause = z.infer<typeof causeSchema>;
-export type Effect = z.infer<typeof effectSchema>;
 export type PublishStatus = z.infer<typeof publishStatusSchema>;
 export type AlertType = z.infer<typeof alertTypeSchema>;
 export type ReferenceType = z.infer<typeof referenceTypeSchema>;
@@ -31,11 +27,11 @@ export type ReferenceType = z.infer<typeof referenceTypeSchema>;
 export const AlertSchema = DocumentSchema.extend({
 	active_period_end_date: unixTimeStampSchema.nullish(),
 	active_period_start_date: unixTimeStampSchema,
-	cause: causeSchema,
+	cause: gtfsCauseSchema,
 	coordinates: z.tuple([z.number(), z.number()]).nullish(),
 	created_by: z.string().min(1),
 	description: z.string(),
-	effect: effectSchema,
+	effect: gtfsEffectSchema,
 	file_id: z.string().nullish(),
 	info_url: z.string().url().optional().or(z.literal('')),
 	modified_by: z.string().min(1),

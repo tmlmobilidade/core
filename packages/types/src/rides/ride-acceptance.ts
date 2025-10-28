@@ -26,6 +26,7 @@ export type RideJustificationStatusType = z.infer<typeof RideJustificationStatus
 export const RideJustificationSchema = DocumentSchema.extend({
 	justification_cause: gtfsCauseSchema,
 	justification_source: RideJustificationSourceSchema,
+	manual_trip_id: z.string().optional(),
 	pto_message: z.string().min(2).max(5000).default(''),
 }).omit({ _id: true }).strict();
 

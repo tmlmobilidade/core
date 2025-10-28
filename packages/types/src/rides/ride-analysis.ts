@@ -6,6 +6,10 @@ import { z } from 'zod';
 
 export const RIDE_ANALYSIS_GRADE_OPTIONS = ['pass', 'fail', 'skip', 'error'] as const;
 export const RideAnalysisGradeSchema = z.enum(RIDE_ANALYSIS_GRADE_OPTIONS);
+export type RideAnalysisGrade = z.infer<typeof RideAnalysisGradeSchema>;
+
+export const RideAnalysisGradeWithNoneSchema = RideAnalysisGradeSchema.or(z.literal('none'));
+export type RideAnalysisGradeWithNone = z.infer<typeof RideAnalysisGradeWithNoneSchema>;
 
 /* * */
 

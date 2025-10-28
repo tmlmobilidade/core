@@ -2,6 +2,7 @@
 
 import { CommentSchema } from '@/_common/comment.js';
 import { DocumentSchema } from '@/_common/document.js';
+import { gtfsCauseSchema } from '@/gtfs/cause-effetcs.js';
 import { z } from 'zod';
 
 import { RideAnalysisSummarySchema } from './ride-analysis.js';
@@ -11,10 +12,6 @@ import { RideAnalysisSummarySchema } from './ride-analysis.js';
 export const RIDE_ACCEPTANCE_STATUS_OPTIONS = ['justification_required', 'under_review', 'accepted', 'rejected'] as const;
 export const RideAcceptanceStatusSchema = z.enum(RIDE_ACCEPTANCE_STATUS_OPTIONS);
 export type RideAcceptanceStatus = z.infer<typeof RideAcceptanceStatusSchema>;
-
-export const RIDE_JUSTIFICATION_CAUSE_OPTIONS = ['TECHNICAL_PROBLEM', 'DEMONSTRATION', 'ACCIDENT', 'WEATHER', 'CONSTRUCTION', 'POLICE_ACTIVITY', 'MEDICAL_EMERGENCY', 'OTHER_CAUSE'] as const;
-export const RideJustificationCauseSchema = z.enum(RIDE_JUSTIFICATION_CAUSE_OPTIONS);
-export type RideJustificationCause = z.infer<typeof RideJustificationCauseSchema>;
 
 export const RIDE_JUSTIFICATION_SOURCE_OPTIONS = ['MANUAL', 'ALERT'] as const;
 export const RideJustificationSourceSchema = z.enum(RIDE_JUSTIFICATION_SOURCE_OPTIONS);
@@ -27,7 +24,7 @@ export type RideJustificationStatusType = z.infer<typeof RideJustificationStatus
 /* * */
 
 export const RideJustificationSchema = DocumentSchema.extend({
-	justification_cause: RideJustificationCauseSchema,
+	justification_cause: gtfsCauseSchema,
 	justification_source: RideJustificationSourceSchema,
 	pto_message: z.string().min(2).max(5000).default(''),
 }).omit({ _id: true }).strict();

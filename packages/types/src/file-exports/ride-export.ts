@@ -1,7 +1,8 @@
 /* * */
 
 import { unixTimeStampSchema } from '@/_common/unix-timestamp.js';
-import { RideAcceptanceStatusSchema } from '@/rides/ride-acceptance.js';
+import { gtfsCauseSchema } from '@/gtfs/cause-effetcs.js';
+import { RideAcceptanceSchema, RideAcceptanceStatusSchema, RideJustificationSchema } from '@/rides/ride-acceptance.js';
 import { RideAnalysisGradeWithNoneSchema } from '@/rides/ride-analysis.js';
 import { RideDelayStatusSchema, RideOperationalStatusSchema, RideSeenStatusSchema } from '@/rides/ride.js';
 import { z } from 'zod';
@@ -92,6 +93,15 @@ export const FlatRideSchema = z.object({
 	trip_id: z.string(),
 	updated_at: z.number(),
 	vehicle_ids: z.string(),
+
+	/* ACCEPTANCE / JUSTIFICATION */
+	/* * */
+
+	acceptance_status: RideAcceptanceSchema.shape.acceptance_status,
+	justification_cause: RideJustificationSchema.shape.justification_cause,
+	justification_source: RideJustificationSchema.shape.justification_source,
+	manual_trip_id: RideJustificationSchema.shape.manual_trip_id,
+	pto_message: RideJustificationSchema.shape.pto_message,
 });
 
 /* PROPERTIES SCHEMA */

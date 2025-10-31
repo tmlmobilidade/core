@@ -3,7 +3,7 @@
 import { roles, sessions, users, verificationTokens } from '@/interfaces/index.js';
 import { sendWelcomeEmail } from '@tmlmobilidade/emails';
 import { getAppConfig, HttpException, HttpStatus } from '@tmlmobilidade/lib';
-import { CreateUserDto, LoginDto, Permission, Session, User } from '@tmlmobilidade/types';
+import { CreateUserDto, LoginDto, OneOrTheOther, Permission, Session, User } from '@tmlmobilidade/types';
 import { AsyncSingletonProxy, Dates, generateRandomString, generateRandomToken, mergeObjects } from '@tmlmobilidade/utils';
 import bcrypt from 'bcryptjs';
 
@@ -24,10 +24,11 @@ class AuthProvider {
 
 	/**
 	 * Get Permissions for a user based on their session token or user_id.
-	 * @param params - Object containing either sessionToken or user_id
+	 * @param sessionToken - The session token (optional if user_id is provided)
+	 * @param user_id - The user ID (optional if sessionToken is provided)
 	 * @returns The permissions that the user has
 	 */
-	public async getPermissions<T>(params: { sessionToken: string } | { user_id: string }): Promise<Permission<T>[]> {
+	public async getPermissions<T>(params: OneOrTheOther<{ sessionToken: string }, { user_id: string }>): Promise<Permission<T>[]> {
 		//
 
 		//

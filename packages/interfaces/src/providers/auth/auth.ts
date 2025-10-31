@@ -23,19 +23,32 @@ class AuthProvider {
 	}
 
 	/**
-	 * Get Permissions for a user based on their session token.
-	 * @param sessionToken - The session token
-	 * @param scope - The scope to check
-	 * @param action - The action to check
+	 * Get Permissions for a user based on their session token or user_id.
+	 * @param params - Object containing either sessionToken or user_id
 	 * @returns The permissions that the user has
 	 */
-	public async getPermissions<T>(sessionToken: string): Promise<Permission<T>[]> {
+	public async getPermissions<T>(params: { sessionToken: string } | { user_id: string }): Promise<Permission<T>[]> {
 		//
 
 		//
 		// Get the user and their roles
 
-		const userData = await this.getUser(sessionToken);
+		let userData: User;
+
+		if ('user_id' in params) {
+			const foundUser = await users.findOne({ _id: { $eq: params.user_id } });
+			if (!foundUser) {
+				throw new HttpException(HttpStatus.UNAUTHORIZED, 'User not found');
+			}
+			userData = foundUser;
+		}
+		else if ('sessionToken' in params) {
+			userData = await this.getUser(params.sessionToken);
+		}
+		else {
+			throw new HttpException(HttpStatus.BAD_REQUEST, 'Either sessionToken or user_id must be provided');
+		}
+
 		const rolesData = await roles.findMany({ _id: { $in: userData.role_ids } });
 
 		const allPermissions = [...rolesData.flatMap(role => role.permissions), ...userData.permissions] as Permission<unknown>[];
